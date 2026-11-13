@@ -1,3 +1,11 @@
+# 0.0.23
+
+- Replaced flat interior fills with matching detailed leather and shaded aged-silver/wheat trim assets.
+- Applied the material set to sidebar/subtabs, action buttons, global research nodes, Overview, production/local research panels and header.
+- Kept quieter, darker surfaces behind live text; selected and hovered controls use brighter material tints.
+- Preserved the original outer crest frame, information layout, all five navigation tabs and existing action bindings.
+- Static addon validation and all 32 automated checks passed. An offline asset/layout render was inspected; native Minecraft rendering remains unverified.
+
 # 0.0.22
 
 - Added the approved option A Realm and Information icons as transparent 64×64 sprites in every sidebar state.

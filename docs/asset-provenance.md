@@ -78,3 +78,15 @@ generation `exec-42b0b859-cb6a-40fb-adf1-5a45c14bc2a5.png` was split into
 two square cells, trimmed, nearest-neighbor resized to fit 60×60, and centered
 on transparent 64×64 PNG canvases with binary alpha. These replace the former
 procedurally painted Realm sidebar icon.
+
+## Matching interior materials (0.0.23)
+
+Original AI-generated assets were created using Frontier's own harvest border
+as a style reference. `exec-8a9e86fe-3340-4ed4-9639-eb800fef5caf.png` is the
+crimson leather and silver/wheat button; it was trimmed and nearest-neighbor
+resized to 176×56 (`material_button.png`).
+`exec-815b8045-5a04-4627-8389-ed9353c261c3.png` is the matching brown leather
+panel, trimmed and resized to 294×210 (`material_panel.png`). An interior
+1000×700 crop at +240+180, resized to 364×189, supplies the quiet leather
+lining (`material_leather.png`). Button and panel use binary alpha.
+No third-party game textures were used.

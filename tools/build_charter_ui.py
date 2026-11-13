@@ -107,7 +107,7 @@ def record(name, index, height):
     text = collection_scope(template, [240, height - 8])
     text.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [7, 4]})
     return control(name, {"type": "panel", "size": [254, height], "controls": [
-        control("paper", image("frontier/solid", [254, height - 2], color=[0.29, 0.22, 0.14])),
+        control("paper", image("frontier/material_panel", [254, height - 2], color=[0.8, 0.8, 0.8])),
         control("data", text),
     ]})
 
@@ -120,8 +120,8 @@ def action(name, index, caption, width=254, height=21):
                                   ("hover", "frontier_red", None),
                                   ("pressed", "frontier_red", [0.7, 0.6, 0.5])]:
         states.append(control(state, {"type": "panel", "size": [width, height], "controls": [
-            control("gold", image("frontier/solid", [width, height], color=[0.63, 0.62, 0.54])),
-            control("wood", image("frontier/solid", [width - 2, height - 2], (1, 1), 1, {"default": [0.39, 0.20, 0.13], "hover": [0.55, 0.29, 0.17], "pressed": [0.29, 0.15, 0.11]}[state])),
+            control("gold", image("frontier/material_button", [width, height], color={"default": [0.86, 0.86, 0.86], "hover": [1, 1, 1], "pressed": [0.65, 0.65, 0.65]}[state])),
+            control("wood", {"type": "panel", "size": [width - 2, height - 2]}),
             control("caption", label(caption, [width - 12, 12], (6, 4), (1, 0.91, 0.65))),
         ]}))
     bindings = [
@@ -156,7 +156,7 @@ def tab(name, index):
     for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:
         selected = state.startswith("checked")
         states.append(control(state, {"type": "panel", "size": [88, 28], "controls": [
-            control("face", image(f"frontier/tab_{lower}_{state}", [88, 28], layer=1)),
+            control("face", image("frontier/material_button", [88, 28], layer=1, color=([1, 0.93, 0.76] if selected else ([0.96, 0.96, 0.96] if "hover" in state else [0.70, 0.70, 0.70])))),
             *([control("icon", image(f"frontier/icons/{lower}", [20, 20], (6, 4), 4))]
               if lower in ["overview", "research", "production", "realm", "information"] else []),
             control("caption", label(name, [55, 12], (29, 9), (0.95, 0.90, 0.78), 0.8)),
@@ -234,7 +234,7 @@ def research_node(name, title, subtitle, position, sprite):
     states = []
     for state in ["default", "hover", "pressed"]:
         states.append(control(state, {"type": "panel", "size": [122, 34], "controls": [
-            control("face", image("frontier/research_button_" + state, [122, 34])),
+            control("face", image("frontier/material_button", [122, 34], color={"default": [0.86, 0.86, 0.86], "hover": [1, 1, 1], "pressed": [0.65, 0.65, 0.65]}[state])),
             control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
             control("name", label(title, [78, 11], (39, 4), color=(1, 0.94, 0.77), scale=0.72)),
             control("note", label(subtitle, [78, 13], (39, 18), color=(0.94, 0.80, 0.61), scale=0.55)),
@@ -277,6 +277,9 @@ def build():
     ]}
     frame = [
         control("frame", image("frontier/charter_frame", [380, 240], layer=1)),
+        control("leather", image("frontier/material_leather", [364, 189], (8, 30), layer=2, color=[0.58, 0.58, 0.58])),
+        control("banner", image("frontier/material_leather", [354, 25], (13, 31), layer=3, color=[0.95, 0.50, 0.42])),
+        control("banner_rule", image("frontier/solid", [346, 1], (17, 55), layer=4, color=[0.62, 0.54, 0.37])),
         control("ornament", image("frontier/harvest_border", [380, 240], layer=20)),
         control("title", label("Village Charter", [236, 17], (30, 34), (1, 0.93, 0.71), 1.0)),
         control("close@common.close_button", {"$close_button_offset": [-7, 7], "layer": 30, "bindings": []}),
@@ -334,7 +337,7 @@ def build():
         purchase.update({"offset": [178, 10], "anchor_from": "top_left", "anchor_to": "top_left"})
         local_controls.append(control(key, {"type": "panel", "size": [254, 40],
             "offset": [0, i * 44], "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-                control("paper", image("frontier/solid", [254, 40], color=[0.29, 0.22, 0.14])),
+                control("paper", image("frontier/material_panel", [254, 40], color=[0.8, 0.8, 0.8])),
                 control("data", values), control("purchase", purchase),
             ]}))
     ui["jf_research_local_content"] = {"type": "panel", "size": [254, 131], "controls": local_controls}
@@ -362,10 +365,6 @@ def build():
     for state in GENERATED_CONTROLS["jf_action_rename@common.button"]["controls"]:
         name, panel = next(iter(state.items()))
         controls = {key: value for item in panel["controls"] for key, value in item.items()}
-        controls["wood"].update({"texture": "textures/ui/frontier/solid", "color": {
-            "default": [0.39, 0.20, 0.13], "hover": [0.55, 0.29, 0.17],
-            "pressed": [0.29, 0.15, 0.11],
-        }[name]})
         controls["caption"].update({"offset": [0, 3], "size": [58, 11],
                                     "text_alignment": "center", "font_scale_factor": 0.85})
     dashboard.append(control("header_rename", rename))
@@ -404,8 +403,7 @@ def build():
                   "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
     identity = control("identity", {"type": "panel", "size": [147, 105], "offset": [0, 4],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("edge", image("frontier/solid", [147, 105], color=[0.65, 0.63, 0.54])),
-            control("paper", image("frontier/solid", [145, 103], (1, 1), 1, [0.29, 0.22, 0.14])),
+            control("surface", image("frontier/material_panel", [147, 105], color=[0.82, 0.82, 0.82])),
             name,
             control("divider", image("frontier/solid", [131, 1], (8, 25), 2, [0.65, 0.53, 0.31])),
             *rows, control("claim", claim),

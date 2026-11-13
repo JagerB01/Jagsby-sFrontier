@@ -153,3 +153,16 @@ UI units alongside the existing sidebar sprites. Information is the fifth
 local toggle immediately below Realm, with matching focus links and a fixed
 placeholder page for future guides. No form record indexes or gameplay
 actions changed. Footer branding was removed to leave the fifth tab clear.
+
+## 0.0.23 matching material detail
+
+The interior now references a matching original material set rather than flat
+color rectangles: `material_button`, `material_panel` and `material_leather`.
+Silver bevels, restrained wheat engraving and textured crimson leather match
+the outer frame. Live text remains cream/gold. Default, selected/hover and
+pressed controls use different tints of the same material.
+
+The button's texture is the visual face; native form bindings, toggle logic
+and the visual-only global research tree are unchanged. Existing action
+renderer child slots are retained for picker/rename reuse, with the obsolete
+flat fill slot becoming an empty panel so it does not cover the new art.
