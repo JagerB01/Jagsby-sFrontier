@@ -1,4 +1,4 @@
-# Standalone charter dashboard (0.0.6)
+# Standalone charter dashboard (0.0.7)
 
 Frontier's custom menu is independent. It does not bundle MineScape UI, textures,
 behavior scripts or identifiers, and it does not require MineScape to be enabled.
@@ -53,3 +53,17 @@ bounded to 24 characters for new renames and clipped within the name region.
 Renaming saves to persistent settlement state and returns to the same Overview;
 it does not rerun the villager census. A ≥ prefix on power indicates a minimum
 estimate if trade rank data could not be obtained.
+
+## Research subtabs and binding correction
+
+Research has Global and Local radio-toggle subtabs in a separate toggle group
+from the main sidebar. They select separate upgrade lists without submitting a
+form or scanning villagers again. After a purchase or failed affordability check,
+the menu returns to the corresponding research group.
+
+Each fixed data label and action button carries its own `collection_index`.
+Indices on the enclosing panel alone do not select the nested native binding's
+record, which caused 0.0.6 to repeat the name in other fields and Rename to send
+the wrong selection. Fixed labels, all purchase actions and Rename are now bound
+at the control that consumes their data. Factory-generated biome options retain
+their generated indices instead of being pinned to option 0.

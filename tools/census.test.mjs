@@ -151,7 +151,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[0].records[0],'Settlement 1');
   assert.equal(forms[0].records[1],'Plains');
   assert.equal(forms[0].records[2],'0.2');
-  assert.equal(forms[1].text,'[JF:tab:research]');
+  assert.equal(forms[1].text,'[JF:tab:research][JF:research:local]');
   nativeTier = 4;
   handlers.beforeInteract(event);
   await queued.shift()();

@@ -63,13 +63,15 @@ def record(name, index, height):
     if height is None:
         text = label("#text", [240, "default"], (7, 0))
         text["bindings"] = collection_bindings()
+        text["collection_index"] = index
         return control(name, {"type": "stack_panel", "orientation": "vertical",
-            "size": [254, "100%c"], "collection_name": "form_buttons", "collection_index": index,
+            "size": [254, "100%c"], "collection_name": "form_buttons",
             "controls": [control("text", text), control("spacing", {"type": "panel", "size": [254, 8]})]})
     text = label("#text", [240, height - 8], (7, 4))
     text["bindings"] = collection_bindings()
+    text["collection_index"] = index
     return control(name, {"type": "panel", "size": [254, height],
-        "collection_name": "form_buttons", "collection_index": index,
+        "collection_name": "form_buttons",
         "controls": [control("paper", image("frontier/solid", [254, height - 2],
                                              color=[0.84, 0.69, 0.44])),
                      control("text", text)]})
@@ -86,9 +88,15 @@ def action(name, index, caption):
             control("caption", label(caption, [242, 12], (6, 4), (1, 0.91, 0.65))),
         ]}))
     return control(name, {"type": "stack_panel", "orientation": "vertical",
-        "size": [254, 24], "collection_name": "form_buttons", "collection_index": index,
+        "size": [254, 24], "collection_name": "form_buttons",
         "controls": [control("purchase@common.button", {
             "size": [254, 21], "$pressed_button_name": "button.form_button_click",
+            "collection_index": index,
+            "focus_enabled": True, "hover_enabled": True,
+            "button_mappings": [
+                {"from_button_id": "button.menu_select", "to_button_id": "button.form_button_click", "mapping_type": "pressed"},
+                {"from_button_id": "button.menu_ok", "to_button_id": "button.form_button_click", "mapping_type": "focused"},
+            ],
             "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}],
             "controls": states,
         })]})
@@ -143,9 +151,31 @@ def tab(name, index):
 def overview_value(name, index, offset, size, scale=0.9):
     text = label("#text", size, color=(0.20, 0.12, 0.055), scale=scale)
     text["bindings"] = collection_bindings()
+    text["collection_index"] = index
     return control(name, {"type": "panel", "anchor_from": "top_left", "anchor_to": "top_left",
-        "offset": offset, "size": size, "collection_name": "form_buttons", "collection_index": index,
+        "offset": offset, "size": size, "collection_name": "form_buttons",
         "clips_children": True, "controls": [control("value", text)]})
+
+
+def research_tab(scope, index):
+    toggle = tab("Research", index)["jf_tab_research"]
+    toggle.update({"size": [124, 23], "offset": [index * 129, 0],
+        "toggle_name": "jagsby_frontier_research_tabs", "tts_name": scope.title(),
+        "focus_identifier": "jf_research_focus_" + scope,
+        "focus_change_left": "jf_research_focus_global",
+        "focus_change_right": "jf_research_focus_local"})
+    toggle.pop("focus_change_up", None)
+    toggle.pop("focus_change_down", None)
+    for binding in toggle["bindings"]:
+        if "binding_name" in binding:
+            binding["binding_name"] = binding["binding_name"].replace("[JF:tab:research]", f"[JF:research:{scope}]")
+    for state in toggle["controls"]:
+        panel = next(iter(state.values()))
+        panel["size"] = [124, 23]
+        panel["controls"][0]["face"]["size"] = [124, 23]
+        caption = panel["controls"][1]["caption"]
+        caption.update({"text": scope.title(), "size": [124, 13], "offset": [0, 6], "text_alignment": "center"})
+    return control("jf_research_tab_" + scope, toggle)
 
 
 def build():
@@ -169,11 +199,11 @@ def build():
     dashboard.append(control("seal_text", label("JAGSBY'S FRONTIER", [86, 12], (10, 212), (1, 0.84, 0.45), 0.55)))
     for name in TABS:
         lower = name.lower()
-        if lower == "overview":
-            dashboard.append(control("overview@jagsby_frontier.jf_overview_content", {
+        if lower in ["overview", "research"]:
+            dashboard.append(control(lower + "@jagsby_frontier.jf_" + lower + "_content", {
                 "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 47],
                 "size": [257, 177], "layer": 5,
-                "bindings": [view("#toggle_state", target, "jf_tab_overview")
+                "bindings": [view("#toggle_state", target, "jf_tab_" + lower)
                              for target in ["#visible", "#enabled"]],
             }))
             continue
@@ -196,14 +226,26 @@ def build():
         "stockpile": [heading("SHARED STOCKPILE"), record("capacity", 12, 50),
             record("resources", 13, None), action("collect", ACTIONS["collect"], "Collect produced resources")],
     }
-    for group, names in [("LOCAL SETTLEMENT RESEARCH", ["efficiency", "hearth", "biome"]),
-                         ("CIVILIZATION RESEARCH", ["frontier", "capacity", "development", "storage"])]:
-        pages["research"].append(heading(group))
+    for scope, group, names in [("local", "LOCAL SETTLEMENT RESEARCH", ["efficiency", "hearth", "biome"]),
+                         ("global", "CIVILIZATION RESEARCH", ["frontier", "capacity", "development", "storage"])]:
+        children = [heading(group)]
         for name in names:
-            pages["research"] += [record(name, DATA[name], 80), action(name + "_buy", ACTIONS[name], "Research / upgrade")]
+            children += [record(name, DATA[name], 80), action(name + "_buy", ACTIONS[name], "Research / upgrade")]
+        pages["research_" + scope] = children
     for name, children in pages.items():
         ui["jf_" + name + "_content"] = {"type": "stack_panel", "orientation": "vertical",
             "size": [254, "100%c"], "anchor_from": "top_left", "anchor_to": "top_left", "controls": children}
+    research_controls = [research_tab("global", 0), research_tab("local", 1)]
+    for scope in ["global", "local"]:
+        research_controls.append(control(scope + "@common.scrolling_panel", {
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 27],
+            "size": [257, 150], "$show_background": False,
+            "$scrolling_content": "jagsby_frontier.jf_research_" + scope + "_content",
+            "$scroll_size": [4, "100% - 4px"], "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
+            "bindings": [view("#toggle_state", target, "jf_research_tab_" + scope)
+                         for target in ["#visible", "#enabled"]],
+        }))
+    ui["jf_research_content"] = {"type": "panel", "size": [257, 177], "controls": research_controls}
     rename = action("rename", ACTIONS["rename"], "Rename")["rename"]
     rename.update({"type": "panel", "anchor_from": "top_left", "anchor_to": "top_left",
                    "offset": [180, 16], "size": [74, 24]})
@@ -243,7 +285,7 @@ def build():
             "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length"}],
         })]}
     choice = action("choice", 0, "#text")["choice"]
-    choice.pop("collection_index")
+    choice["controls"][0]["purchase@common.button"].pop("collection_index")
     for state in choice["controls"][0]["purchase@common.button"]["controls"]:
         next(iter(state.values()))["controls"][-1]["caption"]["bindings"] = collection_bindings()
     ui["jf_choice"] = choice
@@ -253,6 +295,9 @@ def build():
     ]}
     submit = copy.deepcopy(action("submit", 0, "Save name")["submit"]["controls"][0]["purchase@common.button"])
     submit["$pressed_button_name"] = "button.submit_custom_form"
+    for mapping in submit["button_mappings"]:
+        mapping["to_button_id"] = "button.submit_custom_form"
+    submit.pop("collection_index")
     submit["bindings"] = []
     submit.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 151]})
     ui["jf_rename"] = {"type": "panel", "size": [380, 240], "controls": copy.deepcopy(frame) + [

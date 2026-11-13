@@ -77,7 +77,7 @@ function researchText(s,v,key,player){
   if(key==='efficiency'&&current>=1+s.global.development&&cost)status='Requires Settlement Development';
   return `§6${names[key]}§r  ${current}/${COSTS[key].length}\n${benefits[key]}\n${cost?'Test cost: '+costText(cost):'Maximum level'}\n${status}`;
 }
-function open(player,vId,page='Overview'){
+function open(player,vId,page='Overview',researchScope='global'){
   const s=state(),v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
   const {data,actions,recordCount,tabs}=CHARTER_LAYOUT;
   const records=Array(recordCount).fill('');
@@ -99,7 +99,7 @@ function open(player,vId,page='Overview'){
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}]`);
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}]`);
   records.forEach(text=>form.button(text));
   displayMenu(player,form,system).then(r=>{if(!r.canceled)handlers.get(r.selection)?.();}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
@@ -123,13 +123,13 @@ async function renameSettlement(player,vId){
 }
 function upgrade(player,vid,key){let s=state(),v=s.villages[vid];if(!v)return;
   const global=['frontier','capacity','development','storage'].includes(key);let current=global?s.global[key]:key==='biome'?Number(v.biomeUnlocked):key==='hearth'?v.hearth:v.efficiency;
-  const list=COSTS[key];if(current>=list.length){player.sendMessage('§7Already at maximum research level.');return open(player,vid,'Research');}
-  if(!global && key==='efficiency' && current>=1+s.global.development){player.sendMessage('§cResearch Settlement Development globally to unlock higher local tiers.');return open(player,vid,'Research');}
-  if(key==='frontier'){player.sendMessage('§eFrontier Expansion is reserved until the existing MineScape zone logic is integrated. Nothing charged.');return open(player,vid,'Research');}
-  if(key==='capacity'){player.sendMessage('§eSettlement Capacity is reserved until existing Diplomacy settlements are integrated. Nothing charged.');return open(player,vid,'Research');}
-  const c=list[current];if(!pay(player,c)){player.sendMessage(`§cInsufficient materials: ${costText(c)}`);return open(player,vid,'Research');}
+  const list=COSTS[key];if(current>=list.length){player.sendMessage('§7Already at maximum research level.');return open(player,vid,'Research',global?'global':'local');}
+  if(!global && key==='efficiency' && current>=1+s.global.development){player.sendMessage('§cResearch Settlement Development globally to unlock higher local tiers.');return open(player,vid,'Research',global?'global':'local');}
+  if(key==='frontier'){player.sendMessage('§eFrontier Expansion is reserved until the existing MineScape zone logic is integrated. Nothing charged.');return open(player,vid,'Research',global?'global':'local');}
+  if(key==='capacity'){player.sendMessage('§eSettlement Capacity is reserved until existing Diplomacy settlements are integrated. Nothing charged.');return open(player,vid,'Research',global?'global':'local');}
+  const c=list[current];if(!pay(player,c)){player.sendMessage(`§cInsufficient materials: ${costText(c)}`);return open(player,vid,'Research',global?'global':'local');}
   if(global)s.global[key]++;else if(key==='biome')v.biomeUnlocked=true;else if(key==='hearth')v.hearth=1;else v.efficiency++;
-  save(s);player.sendMessage(`§aResearch complete: ${key}.`);open(player,vid,'Research');
+  save(s);player.sendMessage(`§aResearch complete: ${key}.`);open(player,vid,'Research',global?'global':'local');
 }
 function scan(player,vid){const s=state(),v=s.villages[vid];if(!v)return;
   const dim=world.getDimension(v.dimension), seen=new Set(v.available||[]);

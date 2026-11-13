@@ -1,5 +1,16 @@
 # Changes
 
+## 0.0.7
+
+- Fix native JSON UI collection scoping: put record indices on the labels and
+  clickable buttons that consume them, rather than only their containers.
+  This addresses Overview fields repeating the name and Rename submitting record 0.
+- Add explicit mouse/controller mappings to action controls and the rename Save button.
+- Research now has independent Global and Local subtabs; returning from a
+  research purchase preserves the appropriate group without another census.
+- In-game name: Jagsby's Frontier 0.0.7.
+- 21 automated tests pass; native client rendering/input remain unverified.
+
 ## 0.0.6
 
 - Overview now contains only settlement name with Rename, village biome and

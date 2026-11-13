@@ -5,13 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.6.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.7.mcaddon?raw=true)
 
 The Overview shows only settlement name with Rename, village biome, and Realm
 Power, in a fixed layout without scrolling. This build also contains a native
 trading-tier bridge for the interaction-triggered 64-block census. MineScape
 is not required or bundled. Enable Frontier's linked behavior and resource
-packs in a disposable test world. The in-game name is **Jagsby's Frontier 0.0.6**.
+packs in a disposable test world. The in-game name is **Jagsby's Frontier 0.0.7**.
 Minecraft rendering and native trade-tier execution remain unverified in-game.
 
 - Requirements: [village system specification](docs/village-system-spec.md).
@@ -33,7 +33,7 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.0.6.mcaddon`. Packaging is
+Build output is `dist/Jagsbys_Frontier_v0.0.7.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and vanilla villager bridge.
 The pack targets Bedrock 1.26.0+ with `@minecraft/server` 2.9.0 and
 `@minecraft/server-ui` 2.1.0.

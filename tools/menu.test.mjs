@@ -59,7 +59,7 @@ test('four local sidebar toggles control custom pages without submitting form bu
     assert.equal(tab.type,'toggle');
     assert.equal(tab.radio_toggle_group,true);
     assert.equal(JSON.stringify(tab).includes('button.form_button_click'),false);
-    const key=name==='overview'?'overview@jagsby_frontier.jf_overview_content':name+'@common.scrolling_panel';
+    const key=['overview','research'].includes(name)?name+'@jagsby_frontier.jf_'+name+'_content':name+'@common.scrolling_panel';
     const page=ui.jf_dashboard.controls.find(c=>c[key])[key];
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#visible'));
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#enabled'));
@@ -76,7 +76,7 @@ test('all fixed data and action records agree with the generated script layout',
     if(Number.isInteger(value.collection_index))indices.push(value.collection_index);
     for(const child of Object.values(value))walk(child);
   }
-  for(const name of ['overview','research','production','stockpile'])walk(ui['jf_'+name+'_content']);
+  for(const name of ['overview','research_global','research_local','production','stockpile'])walk(ui['jf_'+name+'_content']);
   assert.deepEqual(indices.sort((a,b)=>a-b),Array.from({length:layout.recordCount},(_,i)=>i).filter(i=>i!==3));
   assert.equal(new Set(Object.values(layout.actions)).size,11);
   assert.equal(layout.actions.collect,23);
@@ -94,7 +94,48 @@ test('overview is a fixed three-field panel with rename alongside the name',asyn
     assert.ok(control.offset[1]+control.size[1]<=177,'Overview content must fit without scrolling');
   }
   assert.equal(controls.rename.offset[1],16);
-  assert.equal(controls.rename.collection_index,24);
+  assert.equal(controls.rename.controls[0]['purchase@common.button'].collection_index,24);
+});
+
+test('overview binds distinct records on the labels and Rename button themselves',async()=>{
+  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
+  const controls=Object.assign({},...ui.jf_overview_content.controls);
+  const records=['Oakfield','Plains','2.8'];
+  const values=['name','biome','power'].map((name,index)=>{
+    const text=controls[name].controls[0].value;
+    assert.equal(text.collection_index,index,'Collection indices must be on the bound label, not only its container');
+    assert.ok(text.bindings.some(b=>b.binding_name==='#form_button_text'));
+    return records[text.collection_index];
+  });
+  assert.deepEqual(values,['Oakfield','Plains','2.8']);
+  const button=controls.rename.controls[0]['purchase@common.button'];
+  assert.equal(button.collection_index,24);
+  assert.equal(button.$pressed_button_name,'button.form_button_click');
+  assert.ok(button.button_mappings.every(m=>m.to_button_id==='button.form_button_click'));
+  const submit=ui.jf_rename.controls.find(c=>c['submit@common.button'])['submit@common.button'];
+  assert.ok(submit.button_mappings.every(m=>m.to_button_id==='button.submit_custom_form'));
+});
+
+test('Research has independent Global and Local toggles with the correct upgrade actions',async()=>{
+  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
+  const controls=Object.assign({},...ui.jf_research_content.controls);
+  for(const scope of ['global','local']) {
+    const toggle=controls['jf_research_tab_'+scope];
+    assert.equal(toggle.toggle_name,'jagsby_frontier_research_tabs');
+    assert.equal(toggle.radio_toggle_group,true);
+    assert.equal(JSON.stringify(toggle).includes('button.form_button_click'),false);
+    const page=controls[scope+'@common.scrolling_panel'];
+    assert.ok(page.bindings.some(b=>b.source_control_name==='jf_research_tab_'+scope&&b.target_property_name==='#enabled'));
+  }
+  function actionIndices(value,result=[]) {
+    if(value&&typeof value==='object') {
+      if(value.$pressed_button_name==='button.form_button_click')result.push(value.collection_index);
+      for(const child of Object.values(value))actionIndices(child,result);
+    }
+    return result;
+  }
+  assert.deepEqual(actionIndices(ui.jf_research_global_content),[17,18,19,20]);
+  assert.deepEqual(actionIndices(ui.jf_research_local_content),[14,15,16]);
 });
 
 test('standalone UI references resolve to Frontier files and definitions',async()=>{
