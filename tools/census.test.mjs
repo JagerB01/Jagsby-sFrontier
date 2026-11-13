@@ -6,6 +6,8 @@ const scriptBase = new URL('../packs/behavior/scripts/', import.meta.url);
 const source = await readFile(new URL('village-census.js', scriptBase), 'utf8');
 const moduleUrl = `data:text/javascript;base64,${Buffer.from(source).toString('base64')}`;
 const { takeCensus, censusText, describeTradeTier } = await import(moduleUrl);
+const menuSource = await readFile(new URL('menu-display.js', scriptBase), 'utf8');
+const menuModuleUrl = `data:text/javascript;base64,${Buffer.from(menuSource).toString('base64')}`;
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });
 
 test('native trading levels give linear 0.2 to 1.0 contributions', () => {
@@ -78,6 +80,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   globalThis.__frontierTest = {
     world: { afterEvents: Object.fromEntries(['playerPlaceBlock','playerInteractWithBlock','playerBreakBlock']
       .map(name => [name,{subscribe: fn => {handlers[name] = fn;}}])),
+      beforeEvents: {playerInteractWithBlock: {subscribe: fn => {handlers.beforeInteract = fn;}}},
       getDimension: id => dimensions.get(id), getPlayers: () => [],
       getDynamicProperty: key => properties.get(key),
       setDynamicProperty: (key,value) => properties.set(key,value) },
@@ -89,7 +92,8 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
     'const {world,system}=globalThis.__frontierTest; class ItemStack {}')
     .replace('import { ActionFormData } from "@minecraft/server-ui";',
       'const ActionFormData=globalThis.__frontierTest.Form;')
-    .replace('"./village-census.js"', JSON.stringify(moduleUrl));
+    .replace('"./village-census.js"', JSON.stringify(moduleUrl))
+    .replace('"./menu-display.js"', JSON.stringify(menuModuleUrl));
   await import(`data:text/javascript;base64,${Buffer.from(main).toString('base64')}`);
   const location = { x:0, y:64, z:0 };
   const player = { id:'p', sendMessage() {} };
@@ -98,10 +102,14 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(scans, 0);
   for (const callback of intervals) callback();
   assert.equal(scans, 0);
-  handlers.playerInteractWithBlock({...event,isFirstEvent:false});
+  assert.equal(handlers.playerInteractWithBlock, undefined, 'Must not depend on successful vanilla interactions');
+  const heldEvent = {...event,isFirstEvent:false};
+  handlers.beforeInteract(heldEvent);
+  assert.equal(heldEvent.cancel, true);
   assert.equal(queued.length, 0);
-  handlers.playerInteractWithBlock(event);
-  handlers.playerInteractWithBlock(event);
+  handlers.beforeInteract(event);
+  assert.equal(event.cancel, true);
+  handlers.beforeInteract(event);
   assert.equal(queued.length, 1);
   menuResponse = {canceled:false,selection:0}; // Navigate from Overview to Research.
   queued.shift()();
@@ -110,7 +118,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   let saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.villagers, 1);
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
-  handlers.playerInteractWithBlock({...event,block:nether.getBlock(location)});
+  handlers.beforeInteract({...event,block:nether.getBlock(location)});
   queued.shift()();
   saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
   assert.equal(Object.keys(saved.villages).length, 2);

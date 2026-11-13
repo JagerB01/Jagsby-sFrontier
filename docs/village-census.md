@@ -3,6 +3,8 @@
 ## Confirmed behavior
 
 - Use a 64-block range and normal vanilla trading level, as requested.
+- Handle the before-interaction event so the charter need not complete a vanilla
+  block interaction. Cancel default item use and defer world changes/menu display.
 - Run a census only on the first event of a charter interaction. Holding interact
   and duplicate events in the same pending player interaction do not repeat it.
 - Placement does not scan villagers. No interval scans villagers. Tab navigation
@@ -51,6 +53,6 @@ proof that the pinned version supports this method.
 
 ## Checks
 
-Run `node --test tools/census.test.mjs` and `python tools/addon.py build`.
-Six tests passed with mocked engine objects. In-game tests are still required
+Run `node --test tools/*.test.mjs` and `python tools/addon.py build`.
+Ten tests passed with mocked engine objects and JSON UI structure checks. In-game tests are still required
 for entity query behavior, unloaded chunks, client UI and Realm interaction.

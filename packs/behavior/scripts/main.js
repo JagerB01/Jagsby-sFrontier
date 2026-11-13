@@ -1,6 +1,7 @@
 import { world, system, ItemStack } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { takeCensus, censusText } from "./village-census.js";
+import { displayMenu } from "./menu-display.js";
 
 const BLOCK = "jagsby_frontier:village_charter";
 const KEY = "jagsby_frontier:state_v1";
@@ -76,7 +77,7 @@ function open(player, vId, page="Overview"){
   if(page==='Stockpile')actions.push({text:'§aCollect produced items',run:()=>collect(player,vId)});
   const form=new ActionFormData().title(pageTitle(page)).body(body);
   for(const a of actions)form.button(a.text);
-  form.show(player).then(r=>{if(!r.canceled&&actions[r.selection])actions[r.selection].run();}).catch(e=>console.warn(`Frontier menu: ${e}`));
+  displayMenu(player,form,system).then(r=>{if(!r.canceled&&actions[r.selection])actions[r.selection].run();}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
 function upgrade(player,vid,key){let s=state(),v=s.villages[vid];if(!v)return;
   const global=['frontier','capacity','development','storage'].includes(key);let current=global?s.global[key]:key==='biome'?Number(v.biomeUnlocked):key==='hearth'?v.hearth:v.efficiency;
@@ -113,10 +114,13 @@ function tick(){const s=state();const now=Date.now();const elapsed=Math.max(0,Ma
 }
 world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=state();addVillage(s,ev.block);ev.player.sendMessage('§6Village Charter established. Interact to open the settlement menu.');});
 const pendingCharterInteractions=new Set();
-world.afterEvents.playerInteractWithBlock.subscribe(ev=>{
+world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
   if(ev.block.typeId!==BLOCK)return;
+  // Custom decorative blocks need not complete a vanilla interaction. Handle
+  // the attempted interaction, and prevent held items from placing/using here.
+  ev.cancel=true;
   // Holding interact emits additional events. One press schedules one census.
-  if(!ev.isFirstEvent)return;
+  if(ev.isFirstEvent===false)return;
   const player=ev.player,dim=ev.block.dimension,location={...ev.block.location};
   const pendingKey=`${player.id}|${dim.id}|${id(location)}`;
   if(pendingCharterInteractions.has(pendingKey))return;
@@ -128,7 +132,7 @@ world.afterEvents.playerInteractWithBlock.subscribe(ev=>{
       let s=state(),v=addVillage(s,block);
       refreshVillage(s,v);
       open(player,v.id);
-    }catch(e){console.warn(`Frontier charter interaction: ${e}`);}
+    }catch(e){console.warn(`Frontier charter interaction: ${e}`);player.sendMessage('§cThe Village Charter could not open. Check the Minecraft content log for Frontier charter errors.');}
     finally{pendingCharterInteractions.delete(pendingKey);}
   });
 });
