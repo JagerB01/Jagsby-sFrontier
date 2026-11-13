@@ -1784,7 +1784,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            0,
+            161,
             0
           ]
         }
@@ -1794,10 +1794,10 @@
           "type": "panel",
           "size": [
             147,
-            144
+            125
           ],
           "offset": [
-            106,
+            0,
             4
           ],
           "anchor_from": "top_left",
@@ -1809,7 +1809,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   147,
-                  144
+                  125
                 ],
                 "offset": [
                   0,
@@ -1833,7 +1833,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   145,
-                  142
+                  123
                 ],
                 "offset": [
                   1,
@@ -1845,9 +1845,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.9,
-                  0.8,
-                  0.6
+                  0.91,
+                  0.82,
+                  0.65
                 ]
               }
             },
@@ -1910,7 +1910,7 @@
                 ],
                 "offset": [
                   8,
-                  35
+                  34
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -1946,58 +1946,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   62,
-                  35
-                ],
-                "clips_children": true
-              }
-            },
-            {
-              "population_label": {
-                "type": "label",
-                "text": "Size",
-                "size": [
-                  50,
-                  11
-                ],
-                "offset": [
-                  8,
-                  52
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.75,
-                "color": [
-                  0.2,
-                  0.12,
-                  0.055
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "population": {
-                "type": "stack_panel",
-                "orientation": "vertical",
-                "size": [
-                  77,
-                  12
-                ],
-                "collection_name": "form_buttons",
-                "controls": [
-                  {
-                    "record@jagsby_frontier.jf_data_population": {
-                      "collection_index": 33
-                    }
-                  }
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  62,
-                  52
+                  34
                 ],
                 "clips_children": true
               }
@@ -2012,7 +1961,7 @@
                 ],
                 "offset": [
                   8,
-                  69
+                  51
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2048,7 +1997,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   62,
-                  69
+                  51
                 ],
                 "clips_children": true
               }
@@ -2063,7 +2012,7 @@
                 ],
                 "offset": [
                   8,
-                  86
+                  68
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2099,7 +2048,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   62,
-                  86
+                  68
                 ],
                 "clips_children": true
               }
@@ -2114,7 +2063,7 @@
                 ],
                 "offset": [
                   8,
-                  103
+                  85
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2150,7 +2099,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   62,
-                  103
+                  85
                 ],
                 "clips_children": true
               }
@@ -2173,7 +2122,7 @@
                 ],
                 "offset": [
                   97,
-                  121
+                  104
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -3814,9 +3763,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -3840,9 +3789,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -3915,9 +3864,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -3941,9 +3890,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -4016,9 +3965,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -4042,9 +3991,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -4141,9 +4090,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -4167,9 +4116,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -4242,9 +4191,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -4268,9 +4217,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -4343,9 +4292,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -4369,9 +4318,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -4468,9 +4417,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -4494,9 +4443,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -4569,9 +4518,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -4595,9 +4544,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -4670,9 +4619,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -4696,9 +4645,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -4795,9 +4744,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -4821,9 +4770,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -4896,9 +4845,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -4922,9 +4871,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -4997,9 +4946,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -5023,9 +4972,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -5122,9 +5071,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -5148,9 +5097,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -5223,9 +5172,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -5249,9 +5198,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -5324,9 +5273,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        0.2,
-                        0.12,
-                        0.055
+                        1,
+                        0.94,
+                        0.77
                       ],
                       "shadow": false
                     }
@@ -5350,9 +5299,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.6,
                       "color": [
-                        0.38,
-                        0.26,
-                        0.13
+                        0.94,
+                        0.8,
+                        0.61
                       ],
                       "shadow": false
                     }
@@ -7056,7 +7005,7 @@
                   {
                     "wood": {
                       "type": "image",
-                      "texture": "textures/ui/frontier_wood",
+                      "texture": "textures/ui/frontier_red",
                       "size": [
                         252,
                         19
@@ -7446,7 +7395,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   252,
                   19
@@ -7735,7 +7684,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   252,
                   19
@@ -8116,7 +8065,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   252,
                   19
@@ -8451,7 +8400,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   74,
                   19
@@ -8786,7 +8735,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   74,
                   19
@@ -9121,7 +9070,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   74,
                   19
@@ -9728,44 +9677,6 @@
     ],
     "text_alignment": "left"
   },
-  "jf_data_population": {
-    "type": "label",
-    "text": "#form_button_text",
-    "size": [
-      77,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_type": "unicode",
-    "font_size": "normal",
-    "font_scale_factor": 0.8,
-    "color": [
-      0.2,
-      0.12,
-      0.055
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      }
-    ],
-    "property_bag": {
-      "#form_button_text": "Unavailable"
-    }
-  },
   "jf_data_owner": {
     "type": "label",
     "text": "#text",
@@ -9973,7 +9884,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   40,
                   14
@@ -10308,7 +10219,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   120,
                   19
@@ -10597,7 +10508,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   120,
                   19
@@ -10932,7 +10843,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   120,
                   19
@@ -11221,7 +11132,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier_red",
                 "size": [
                   120,
                   19

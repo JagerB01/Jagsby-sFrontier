@@ -86,7 +86,7 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   for(const key of Object.keys(layout.data).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
-    if(['census','population'].includes(key)) {
+    if(key==='census') {
       assert.equal(label.text,'#form_button_text');
       assert.equal(label.property_bag['#form_button_text'],'Unavailable');
       assert.equal(label.bindings.some(b=>b.target_property_name==='#visible'),false);
@@ -105,12 +105,14 @@ test('Compact village identity fits without scrolling and Rename remains in the 
   const ui=await loadUI();
   const fields=children(ui.jf_overview_content);
   assert.deepEqual(Object.keys(fields),['portrait','identity']);
-  assert.ok(fields.portrait.offset[0]<fields.identity.offset[0]);
+  assert.ok(fields.portrait.offset[0]>fields.identity.offset[0]);
   assert.equal(Object.keys(fields).some(key=>key.endsWith('_card')),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=177);
-  assert.deepEqual(fields.identity.size,[147,144]);
-  for(const key of ['name','tier','population'])assert.ok(children(fields.identity)[key]);
+  assert.deepEqual(fields.identity.size,[147,125]);
+  assert.equal(JSON.stringify(ui.jf_overview_content).includes('Size'),false);
+  assert.equal(JSON.stringify(ui.jf_overview_content).includes('population'),false);
+  for(const key of ['name','tier','owner','biomes','census'])assert.ok(children(fields.identity)[key]);
   const header=children(ui.jf_dashboard);
   assert.ok(header.header_rename.offset[1]+header.header_rename.size[1]<=37);
   assert.deepEqual(header.header_name.controls,[{'record@jagsby_frontier.jf_data_overview':{collection_index:0}}]);
@@ -133,7 +135,6 @@ test('framed portrait and compact details preserve native binding scopes',async(
     assert.equal(value.type,'stack_panel');
     assert.deepEqual(value.controls,[{['record@jagsby_frontier.jf_data_'+key]:{collection_index:index}}]);
   }
-  assert.deepEqual(children(fields.identity).population.controls,[{'record@jagsby_frontier.jf_data_population':{collection_index:33}}]);
   assert.ok(ui.jf_tier_portrait.bindings.some(b=>b.binding_name==='#form_button_texture'));
   for(const name of ['outpost','hamlet','village','town','city']) {
     const data=await readFile(new URL(`../packs/resource/textures/ui/frontier/settlements/${name}.png`,import.meta.url));

@@ -11,7 +11,7 @@ DATA = {
     "efficiency": 4, "hearth": 5, "biome": 6, "frontier": 7,
     "capacity": 8, "development": 9, "storage": 10,
     "production": 11, "stockpile": 12, "resources": 13,
-    "owner": 25, "realmMine": 26, "realmAll": 27, "population": 33,
+    "owner": 25, "realmMine": 26, "realmAll": 27,
 }
 ACTIONS = {name: i + 14 for i, name in enumerate([
     "efficiency", "hearth", "biome", "frontier", "capacity", "development",
@@ -90,7 +90,7 @@ def data_template(index, size, scale=0.8):
         view(f"(#record_text - '{marker}')", "#text"),
         view(f"(not ((#record_text - '{marker}') = #record_text))"),
     ]
-    if key in ("census", "population"):
+    if key == "census":
         text["text"] = "#form_button_text"
         text["property_bag"] = {"#form_button_text": "Unavailable"}
         text["bindings"] = [
@@ -116,7 +116,7 @@ def action(name, index, caption, width=254, height=21):
     key = next(key for key, value in ACTIONS.items() if value == index)
     template = "jf_action_" + key
     states = []
-    for state, texture, tint in [("default", "frontier_wood", None),
+    for state, texture, tint in [("default", "frontier_red", None),
                                   ("hover", "frontier_red", None),
                                   ("pressed", "frontier_red", [0.7, 0.6, 0.5])]:
         states.append(control(state, {"type": "panel", "size": [width, height], "controls": [
@@ -236,8 +236,8 @@ def research_node(name, title, subtitle, position, sprite):
         states.append(control(state, {"type": "panel", "size": [122, 40], "controls": [
             control("face", image("frontier/research_button_" + state, [122, 40])),
             control("icon", image("frontier/research/" + sprite, [32, 32], (4, 4), 6)),
-            control("name", label(title, [78, 12], (39, 6), scale=0.72)),
-            control("note", label(subtitle, [78, 17], (39, 20), color=(0.38, 0.26, 0.13), scale=0.6)),
+            control("name", label(title, [78, 12], (39, 6), color=(1, 0.94, 0.77), scale=0.72)),
+            control("note", label(subtitle, [78, 17], (39, 20), color=(0.94, 0.80, 0.61), scale=0.6)),
         ]}))
     return control(name, {"type": "button", "size": [122, 40], "offset": position,
         "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
@@ -392,25 +392,24 @@ def build():
     GENERATED_CONTROLS["jf_data_overview"] = header_name
     name["name"]["controls"] = [control("record@jagsby_frontier.jf_identity_name", {"collection_index": DATA["overview"]})]
     rows = []
-    for key, title, y in [("tier", "Tier", 35), ("population", "Size", 52),
-                          ("owner", "Owner", 69), ("biomes", "Biome", 86),
-                          ("census", "Realm Power", 103)]:
+    for key, title, y in [("tier", "Tier", 34), ("owner", "Owner", 51),
+                          ("biomes", "Biome", 68), ("census", "Realm Power", 85)]:
         rows += [control(key + "_label", label(title, [50, 11], (8, y), scale=0.75)),
                  overview_value(key, DATA[key], [62, y], [77, 12], scale=0.8)]
     claim = action("claim", ACTIONS["claim"], "Claim", width=42, height=16)["claim"]
-    claim.update({"offset": [97, 121], "anchor_from": "top_left", "anchor_to": "top_left",
+    claim.update({"offset": [97, 104], "anchor_from": "top_left", "anchor_to": "top_left",
                   "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
-    identity = control("identity", {"type": "panel", "size": [147, 144], "offset": [106, 4],
+    identity = control("identity", {"type": "panel", "size": [147, 125], "offset": [0, 4],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("edge", image("frontier/solid", [147, 144], color=[0.70, 0.54, 0.33])),
-            control("paper", image("frontier/solid", [145, 142], (1, 1), 1, [0.90, 0.80, 0.60])),
+            control("edge", image("frontier/solid", [147, 125], color=[0.70, 0.54, 0.33])),
+            control("paper", image("frontier/solid", [145, 123], (1, 1), 1, [0.91, 0.82, 0.65])),
             name,
             control("divider", image("frontier/solid", [131, 1], (8, 25), 2, [0.73, 0.57, 0.34])),
             *rows, control("claim", claim),
         ]})
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [96, 168]),
-            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0]}),
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [161, 0]}),
         identity,
     ]}
     GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left"})
@@ -493,7 +492,7 @@ def build():
         "namespace": "server_form", "main_screen_content/server_form_factory": {
             "control_ids": {"long_form": "@jagsby_frontier.jf_router",
                             "custom_form": "@jagsby_frontier.jf_modal_router"}}}, indent=2) + "\n")
-    layout = {"data": DATA, "actions": ACTIONS, "recordCount": 34, "tabs": TABS}
+    layout = {"data": DATA, "actions": ACTIONS, "recordCount": 33, "tabs": TABS}
     (ROOT / "packs/behavior/scripts/charter-layout.js").write_text(
         "// Generated by tools/build_charter_ui.py; indices match the JSON UI.\n"
         "export const CHARTER_LAYOUT = " + json.dumps(layout, indent=2) + ";\n")

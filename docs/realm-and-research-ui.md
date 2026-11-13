@@ -95,3 +95,13 @@ rows underneath. Claim for unclaimed settlements is inside the same panel.
 The framed 96×168 portrait is on the left. Population uses raw native form text
 binding, like Realm Power, to avoid the blank marker-expression value observed
 in the supplied 0.0.16 screenshot. No new census scans were added.
+
+## 0.0.18 placement and styling correction
+
+The single 147×125 information box is on the left at x=0. The 96×168
+framed portrait is on the right at x=161. Size/population has been removed
+from the UI and form records; census collection itself is unchanged.
+The box contains village name, tier, owner, biome and Realm Power.
+All sidebar/subtab faces and global research buttons are crimson in default
+and active states, with lighter hover and darker pressed states where supported.
+Action buttons also default to crimson. The research sprites are preserved.

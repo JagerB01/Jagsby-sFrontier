@@ -89,7 +89,6 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   const power=powerValue(v.census);
   records[data.census]=power==='Unavailable'?power:`${power} RP`;
   records[data.owner]=ownerName(v);
-  records[data.population]=Number.isInteger(v.census?.villagers)&&!v.census.error ? `${v.census.villagers} villager${v.census.villagers===1?'':'s'}` : 'Unavailable';
   const mine=settlementDirectory(s.villages,player,realmPage,true);
   const all=settlementDirectory(s.villages,player,realmPage,false);
   records[data.realmMine]=mine.text;
@@ -114,7 +113,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     handlers.set(actions[scope+'Next'],()=>open(player,vId,'Realm','global',directory.page+1,scope));
   }
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
-  for(const [key,index] of Object.entries(data))if(!['census','population'].includes(key))records[index]=`[JF:data:${key}]${records[index]}`;
+  for(const [key,index] of Object.entries(data))if(key!=='census')records[index]=`[JF:data:${key}]${records[index]}`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.

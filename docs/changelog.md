@@ -1,3 +1,11 @@
+# 0.0.18
+
+- Moved the single Overview information box to the left and framed portrait to the right.
+- Removed the Size field and its extra form record. Village name, tier, owner, biome and Realm Power remain together.
+- Shortened the information box and tightened its rows.
+- Changed sidebar/subtab, global research and action buttons to crimson faces with restrained gold edging and readable light text. Simplified nested button borders.
+- Build, 29 Node checks and three Python checks passed; native rendering still requires in-game verification.
+
 # 0.0.17
 
 - Consolidated all Overview information into one right-hand box: village name, tier, size, owner, biome and Realm Power. Framed portrait remains on the left.

@@ -93,13 +93,13 @@ def build():
         for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:
             selected = state.startswith("checked")
             hover = "hover" in state
-            c = Canvas(92, 35, (39, 25, 17))
-            c.bevel(1, 1, 90, 33, (211, 155, 54) if selected else (123, 82, 38),
-                    (255, 218, 104) if selected else (176, 127, 64), (56, 33, 16))
-            c.bevel(3, 3, 86, 29, (132, 31, 24) if selected else (125 if hover else 106, 67, 34),
-                    (192, 72, 44) if selected else (160, 106, 53), (62, 27, 18))
-            for y in [9, 24]:
-                c.rect(26, y, 59, 1, (146, 44, 28) if selected else (117, 73, 38))
+            c = Canvas(92, 35, (74, 21, 19))
+            rim = (235, 188, 87) if selected else (170, 113, 48)
+            face = (155, 39, 29) if hover else ((133, 29, 24) if selected else (108, 25, 23))
+            c.rect(1, 1, 90, 33, rim)
+            c.grain(2, 2, 88, 31, face, 2)
+            c.rect(2, 2, 88, 1, (188, 66, 43))
+            if selected: c.rect(3, 5, 2, 25, (244, 198, 92))
             if name == "realm":
                 c.bevel(6, 8, 17, 18, (213, 183, 124), (244, 217, 155), (91, 57, 29))
                 c.rect(14, 10, 1, 14, (155, 110, 56))
@@ -107,16 +107,13 @@ def build():
                 c.rect(10, 17, 3, 3, (99, 125, 57))
                 c.rect(17, 20, 3, 3, (147, 48, 35))
             c.save(f"tab_{name}_{state}.png")
-    # Compact research cards: restrained gilding, parchment, inset icon well.
-    for state, paper in [("default", (226, 201, 151)), ("hover", (243, 220, 169)), ("pressed", (207, 177, 124))]:
-        c = Canvas(122, 40, (76, 48, 25))
-        c.bevel(1, 1, 120, 38, (173, 125, 56), (241, 200, 107), (94, 60, 27))
-        c.grain(3, 3, 116, 34, paper, 2)
-        c.bevel(4, 4, 32, 32, (164, 117, 59), (213, 170, 98), (127, 85, 39))
-        c.grain(5, 5, 30, 30, (193, 154, 98), 2)
-        c.rect(38, 6, 1, 28, (186, 143, 79))
-        for x in [2, 118]:
-            for y in [2, 36]: c.rect(x, y, 2, 2, (251, 217, 135))
+    # Crimson research buttons with a single restrained gold edge.
+    for state, face in [("default", (111, 25, 22)), ("hover", (153, 39, 29)), ("pressed", (84, 19, 19))]:
+        c = Canvas(122, 40, (74, 21, 19))
+        c.rect(1, 1, 120, 38, (202, 151, 68))
+        c.grain(2, 2, 118, 36, face, 2)
+        c.rect(2, 2, 118, 1, (182, 65, 42))
+        c.rect(38, 7, 1, 26, (171, 92, 48))
         c.save(f"research_button_{state}.png")
     print("Generated original pixel-art charter frame and sidebar textures.")
 
