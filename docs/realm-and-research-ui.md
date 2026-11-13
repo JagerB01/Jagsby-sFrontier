@@ -1,4 +1,4 @@
-# Header, Overview cards, Realm and Global tree (0.0.14)
+# Header, Overview cards, Realm and Global tree (0.0.15)
 
 ## Header and Overview
 
@@ -38,18 +38,18 @@ would otherwise double-count villagers.
 The layout follows the user's supplied diagram:
 
 ```text
-                   Settlement Capacity
+                   Settlement Charters
                     /              \
-        Frontier Expansion     Settlement Development
+        Frontier Mandate     Stewardship
                 |                       |
-           Colonization            Shared Storage
+           Reclamation            Hoards
 ```
 
 All five nodes are native button controls with default, hover and pressed art.
 They have empty button mappings, no form-record bindings and no script callbacks.
 They neither spend materials nor change research state. Existing global purchase
 callbacks are disconnected; global data and existing levels are preserved.
-Colonization is a visual placeholder only, with no invented gameplay effect.
+Reclamation is a visual placeholder only, with no invented gameplay effect.
 Local research retains its current functional controls in the Local subtab.
 
 The tree now fits in a fixed 254×150 research panel without scrolling. The Overview remains fixed
@@ -68,3 +68,11 @@ unknown ranks and no errors. The power UI now binds directly to the native form
 button text, skipping data tags, expressions and visibility filters. The raw
 record contains the formatted amount plus RP; its fallback text is Unavailable.
 The updated native rendering still requires an in-game check.
+
+## 0.0.15 research art
+
+The five approved icons are transparent 64×64 PNG sprites in
+`textures/ui/frontier/research`. Reclamation uses the selected map-and-farmland
+option B; the other four use original option A. Each compact research button
+has a 32×32 icon well, gilded parchment border and default/hover/pressed faces.
+The fixed tree dimensions and unbound button mappings are preserved.

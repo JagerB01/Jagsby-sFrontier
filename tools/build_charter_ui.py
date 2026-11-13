@@ -230,14 +230,14 @@ def info_card(name, title, index, y):
         ]})
 
 
-def research_node(name, title, subtitle, position):
+def research_node(name, title, subtitle, position, sprite):
     states = []
-    for state, tint in [("default", [0.82, 0.68, 0.43]), ("hover", [0.92, 0.79, 0.53]), ("pressed", [0.74, 0.59, 0.35])]:
+    for state in ["default", "hover", "pressed"]:
         states.append(control(state, {"type": "panel", "size": [122, 40], "controls": [
-            control("edge", image("frontier/solid", [122, 40], color=[0.55, 0.35, 0.14])),
-            control("paper", image("frontier/solid", [120, 38], (1, 1), 1, tint)),
-            control("name", label(title, [112, 17], (5, 4), scale=0.8)),
-            control("note", label(subtitle, [112, 14], (5, 23), color=(0.38, 0.26, 0.13), scale=0.65)),
+            control("face", image("frontier/research_button_" + state, [122, 40])),
+            control("icon", image("frontier/research/" + sprite, [32, 32], (4, 4), 6)),
+            control("name", label(title, [78, 12], (39, 6), scale=0.72)),
+            control("note", label(subtitle, [78, 17], (39, 20), color=(0.38, 0.26, 0.13), scale=0.6)),
         ]}))
     return control(name, {"type": "button", "size": [122, 40], "offset": position,
         "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
@@ -255,11 +255,11 @@ def global_tree():
         control("tier_one", label("Tier I", [50, 9], (0, 14), scale=0.65)),
         control("tier_two", label("Tier II", [50, 9], (0, 44), scale=0.65)),
         control("tier_three", label("Tier III", [50, 9], (0, 99), scale=0.65)),
-        research_node("settlement_capacity", "Settlement Capacity", "More settlements · Repeatable", [66, 0]),
-        research_node("frontier_expansion", "Frontier Expansion", "Unlock through Blackreach\n5 levels", [0, 55]),
-        research_node("settlement_development", "Settlement Development", "Higher local research\nRepeatable", [132, 55]),
-        research_node("colonization", "Colonization", "Frontier production\nProposed: 5 levels", [0, 110]),
-        research_node("shared_storage", "Shared Storage", "Civilization stockpile\nRepeatable", [132, 110]),
+        research_node("settlement_capacity", "Settlement Charters", "More settlements\nRepeatable", [66, 0], "settlement_charters"),
+        research_node("frontier_expansion", "Frontier Mandate", "Distant settlements\n5 levels", [0, 55], "frontier_mandate"),
+        research_node("settlement_development", "Stewardship", "Higher local research\nRepeatable", [132, 55], "stewardship"),
+        research_node("colonization", "Reclamation", "Frontier production\n5 levels proposed", [0, 110], "reclamation"),
+        research_node("shared_storage", "Hoards", "Shared storage\nRepeatable", [132, 110], "hoards"),
     ]
     return {"type": "panel", "size": [254, 150], "controls": controls}
 

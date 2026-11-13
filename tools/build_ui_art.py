@@ -107,6 +107,17 @@ def build():
                 c.rect(10, 17, 3, 3, (99, 125, 57))
                 c.rect(17, 20, 3, 3, (147, 48, 35))
             c.save(f"tab_{name}_{state}.png")
+    # Compact research cards: restrained gilding, parchment, inset icon well.
+    for state, paper in [("default", (226, 201, 151)), ("hover", (243, 220, 169)), ("pressed", (207, 177, 124))]:
+        c = Canvas(122, 40, (76, 48, 25))
+        c.bevel(1, 1, 120, 38, (173, 125, 56), (241, 200, 107), (94, 60, 27))
+        c.grain(3, 3, 116, 34, paper, 2)
+        c.bevel(4, 4, 32, 32, (164, 117, 59), (213, 170, 98), (127, 85, 39))
+        c.grain(5, 5, 30, 30, (193, 154, 98), 2)
+        c.rect(38, 6, 1, 28, (186, 143, 79))
+        for x in [2, 118]:
+            for y in [2, 36]: c.rect(x, y, 2, 2, (251, 217, 135))
+        c.save(f"research_button_{state}.png")
     print("Generated original pixel-art charter frame and sidebar textures.")
 
 

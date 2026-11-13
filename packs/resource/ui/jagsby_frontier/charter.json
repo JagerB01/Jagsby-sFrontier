@@ -3853,9 +3853,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_default",
                       "size": [
                         122,
                         40
@@ -3868,56 +3868,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/settlement_charters",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.82,
-                        0.68,
-                        0.43
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Settlement Capacity",
+                      "text": "Settlement Charters",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -3929,21 +3919,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "More settlements \u00b7 Repeatable",
+                      "text": "More settlements\nRepeatable",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -3964,9 +3954,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_hover",
                       "size": [
                         122,
                         40
@@ -3979,56 +3969,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/settlement_charters",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.92,
-                        0.79,
-                        0.53
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Settlement Capacity",
+                      "text": "Settlement Charters",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -4040,21 +4020,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "More settlements \u00b7 Repeatable",
+                      "text": "More settlements\nRepeatable",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -4075,9 +4055,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_pressed",
                       "size": [
                         122,
                         40
@@ -4090,56 +4070,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/settlement_charters",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.74,
-                        0.59,
-                        0.35
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Settlement Capacity",
+                      "text": "Settlement Charters",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -4151,21 +4121,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "More settlements \u00b7 Repeatable",
+                      "text": "More settlements\nRepeatable",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -4210,9 +4180,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_default",
                       "size": [
                         122,
                         40
@@ -4225,56 +4195,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/frontier_mandate",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.82,
-                        0.68,
-                        0.43
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Frontier Expansion",
+                      "text": "Frontier Mandate",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -4286,21 +4246,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "Unlock through Blackreach\n5 levels",
+                      "text": "Distant settlements\n5 levels",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -4321,9 +4281,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_hover",
                       "size": [
                         122,
                         40
@@ -4336,56 +4296,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/frontier_mandate",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.92,
-                        0.79,
-                        0.53
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Frontier Expansion",
+                      "text": "Frontier Mandate",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -4397,21 +4347,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "Unlock through Blackreach\n5 levels",
+                      "text": "Distant settlements\n5 levels",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -4432,9 +4382,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_pressed",
                       "size": [
                         122,
                         40
@@ -4447,56 +4397,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/frontier_mandate",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.74,
-                        0.59,
-                        0.35
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Frontier Expansion",
+                      "text": "Frontier Mandate",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -4508,21 +4448,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "Unlock through Blackreach\n5 levels",
+                      "text": "Distant settlements\n5 levels",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -4567,9 +4507,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_default",
                       "size": [
                         122,
                         40
@@ -4582,56 +4522,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/stewardship",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.82,
-                        0.68,
-                        0.43
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Settlement Development",
+                      "text": "Stewardship",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -4645,19 +4575,19 @@
                       "type": "label",
                       "text": "Higher local research\nRepeatable",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -4678,9 +4608,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_hover",
                       "size": [
                         122,
                         40
@@ -4693,56 +4623,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/stewardship",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.92,
-                        0.79,
-                        0.53
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Settlement Development",
+                      "text": "Stewardship",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -4756,19 +4676,19 @@
                       "type": "label",
                       "text": "Higher local research\nRepeatable",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -4789,9 +4709,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_pressed",
                       "size": [
                         122,
                         40
@@ -4804,56 +4724,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/stewardship",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.74,
-                        0.59,
-                        0.35
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Settlement Development",
+                      "text": "Stewardship",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -4867,19 +4777,19 @@
                       "type": "label",
                       "text": "Higher local research\nRepeatable",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -4924,9 +4834,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_default",
                       "size": [
                         122,
                         40
@@ -4939,56 +4849,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/reclamation",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.82,
-                        0.68,
-                        0.43
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Colonization",
+                      "text": "Reclamation",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -5000,21 +4900,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "Frontier production\nProposed: 5 levels",
+                      "text": "Frontier production\n5 levels proposed",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -5035,9 +4935,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_hover",
                       "size": [
                         122,
                         40
@@ -5050,56 +4950,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/reclamation",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.92,
-                        0.79,
-                        0.53
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Colonization",
+                      "text": "Reclamation",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -5111,21 +5001,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "Frontier production\nProposed: 5 levels",
+                      "text": "Frontier production\n5 levels proposed",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -5146,9 +5036,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_pressed",
                       "size": [
                         122,
                         40
@@ -5161,56 +5051,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/reclamation",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.74,
-                        0.59,
-                        0.35
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Colonization",
+                      "text": "Reclamation",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -5222,21 +5102,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "Frontier production\nProposed: 5 levels",
+                      "text": "Frontier production\n5 levels proposed",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -5281,9 +5161,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_default",
                       "size": [
                         122,
                         40
@@ -5296,56 +5176,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/hoards",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.82,
-                        0.68,
-                        0.43
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Shared Storage",
+                      "text": "Hoards",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -5357,21 +5227,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "Civilization stockpile\nRepeatable",
+                      "text": "Shared storage\nRepeatable",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -5392,9 +5262,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_hover",
                       "size": [
                         122,
                         40
@@ -5407,56 +5277,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/hoards",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.92,
-                        0.79,
-                        0.53
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Shared Storage",
+                      "text": "Hoards",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -5468,21 +5328,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "Civilization stockpile\nRepeatable",
+                      "text": "Shared storage\nRepeatable",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,
@@ -5503,9 +5363,9 @@
                 ],
                 "controls": [
                   {
-                    "edge": {
+                    "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research_button_pressed",
                       "size": [
                         122,
                         40
@@ -5518,56 +5378,46 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.55,
-                        0.35,
-                        0.14
-                      ]
+                      "layer": 0
                     }
                   },
                   {
-                    "paper": {
+                    "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/solid",
+                      "texture": "textures/ui/frontier/research/hoards",
                       "size": [
-                        120,
-                        38
+                        32,
+                        32
                       ],
                       "offset": [
-                        1,
-                        1
+                        4,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1,
-                      "color": [
-                        0.74,
-                        0.59,
-                        0.35
-                      ]
+                      "layer": 6
                     }
                   },
                   {
                     "name": {
                       "type": "label",
-                      "text": "Shared Storage",
+                      "text": "Hoards",
                       "size": [
-                        112,
-                        17
+                        78,
+                        12
                       ],
                       "offset": [
-                        5,
-                        4
+                        39,
+                        6
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.8,
+                      "font_scale_factor": 0.72,
                       "color": [
                         0.2,
                         0.12,
@@ -5579,21 +5429,21 @@
                   {
                     "note": {
                       "type": "label",
-                      "text": "Civilization stockpile\nRepeatable",
+                      "text": "Shared storage\nRepeatable",
                       "size": [
-                        112,
-                        14
+                        78,
+                        17
                       ],
                       "offset": [
-                        5,
-                        23
+                        39,
+                        20
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.65,
+                      "font_scale_factor": 0.6,
                       "color": [
                         0.38,
                         0.26,

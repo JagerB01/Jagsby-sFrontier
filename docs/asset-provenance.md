@@ -36,3 +36,13 @@ The vanilla entity references are used again by the new server-controller bridge
 generation used by the probe, with the production namespace and five rank states.
 It preserves the original components, AI and trades, and keeps native tier queries
 out of set_property events. The user confirmed the probe's raw Apprentice reading.
+
+## Global research sprites (0.0.15)
+
+AI-generated art selected by the user: original option A for Settlement Charters,
+Frontier Mandate, Stewardship and Hoards; alternative B for Reclamation.
+Transparent sprite strip generated 2026-11-13, source
+`exec-d9a10841-7863-4dec-b499-8e531ab0540e.png`. Each isolated icon was trimmed,
+nearest-neighbor resized to fit 60×60 and centered in a transparent 64×64 PNG,
+with binary alpha. No MineScape assets are included. Button faces are generated
+by `tools/build_ui_art.py`.

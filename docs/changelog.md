@@ -1,3 +1,11 @@
+# 0.0.15
+
+- Renamed the global research tree to Settlement Charters, Frontier Mandate, Stewardship, Reclamation and Hoards.
+- Added five approved transparent 64×64 research sprites and compact parchment buttons with icon wells and hover/pressed art.
+- Kept all five global nodes visible without scrolling and left actions unbound.
+- Updated in-game pack name to Jagsby's Frontier 0.0.15.
+- Validation: addon build, 29 Node checks and three Python checks passed; Minecraft rendering still needs in-game verification.
+
 # Changes
 
 ## 0.0.14
