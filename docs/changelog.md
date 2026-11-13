@@ -1,5 +1,16 @@
 # Changes
 
+## 0.0.11
+
+- Remove the dark portrait frame from the displayed image with a shared UV crop,
+  preserving the approved original artwork files and tier switching.
+- Group a larger settlement name and tier together, put biome on one compact row,
+  and place Realm Power below instead of three equally spaced information blocks.
+- Use quieter secondary-label colors and a subtle divider on the parchment.
+- Simplify the header Rename action to a smaller flat crimson button.
+- Keep the working stack-panel collection scopes and non-scrolling Overview.
+- In-game name: Jagsby's Frontier 0.0.11.
+
 ## 0.0.10
 
 - Fix the exact UI schema error in the user's 0.0.9 content log: collection scopes

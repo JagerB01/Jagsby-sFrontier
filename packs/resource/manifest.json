@@ -1,13 +1,13 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Jagsby's Frontier 0.0.10",
+    "name": "Jagsby's Frontier 0.0.11",
     "description": "Village Charter block, pack icon and JSON UI styling",
     "uuid": "d3c24899-08b6-4399-a037-e6d4b6e46cba",
     "version": [
       0,
       0,
-      10
+      11
     ],
     "min_engine_version": [
       1,
@@ -22,7 +22,7 @@
       "version": [
         0,
         0,
-        10
+        11
       ]
     }
   ]

@@ -280,11 +280,24 @@ def build():
                          for target in ["#visible", "#enabled"]],
         }))
     ui["jf_research_content"] = {"type": "panel", "size": [257, 177], "controls": research_controls}
-    rename = action("header_rename", ACTIONS["rename"], "Rename", width=68, height=19)["header_rename"]
+    rename = action("header_rename", ACTIONS["rename"], "Rename", width=58, height=17)["header_rename"]
     rename.update({"anchor_from": "top_left", "anchor_to": "top_left",
-                   "offset": [278, 13], "layer": 25})
+                   "offset": [289, 14], "layer": 25})
+    # Flat crimson faces keep the header action quieter than the main title.
+    for state in GENERATED_CONTROLS["jf_action_rename@common.button"]["controls"]:
+        name, panel = next(iter(state.items()))
+        controls = {key: value for item in panel["controls"] for key, value in item.items()}
+        controls["wood"].update({"texture": "textures/ui/frontier/solid", "color": {
+            "default": [0.45, 0.08, 0.07], "hover": [0.62, 0.14, 0.10],
+            "pressed": [0.35, 0.06, 0.05],
+        }[name]})
+        controls["caption"].update({"offset": [0, 3], "size": [58, 11],
+                                    "text_alignment": "center", "font_scale_factor": 0.75})
     dashboard.append(control("header_rename", rename))
     portrait = image("frontier/settlements/outpost", [96, 168], layer=8)
+    # All five 96x168 textures share the same frame. Sample only the painting,
+    # removing the baked dark stone/wood surround without altering the artwork.
+    portrait.update({"uv": [8, 12], "uv_size": [80, 144]})
     portrait["bindings"] = [
         {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
         {"binding_name": "#form_button_text", "binding_name_override": "#record_text",
@@ -299,15 +312,16 @@ def build():
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [96, 168]),
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0]}),
-        overview_value("tier", DATA["tier"], [0, 168], [96, 9], scale=0.65),
-        control("name_label", label("SETTLEMENT NAME", [145, 12], (108, 5), scale=0.7)),
-        overview_value("name", DATA["overview"], [108, 24], [145, 28], scale=0.8),
-        control("biome_label", label("VILLAGE BIOME", [145, 12], (108, 64), scale=0.7)),
-        overview_value("biome", DATA["biomes"], [108, 83], [145, 28], scale=0.8),
-        control("power_label", label("REALM POWER", [145, 12], (108, 123), scale=0.7)),
-        overview_value("power", DATA["census"], [108, 141], [145, 30], scale=1.4),
+        control("name_label", label("SETTLEMENT", [143, 10], (110, 3), color=(0.42, 0.30, 0.16), scale=0.65)),
+        overview_value("name", DATA["overview"], [110, 18], [143, 28], scale=1.05),
+        overview_value("tier", DATA["tier"], [110, 47], [143, 12], scale=0.75),
+        control("divider", image("frontier/solid", [143, 1], (110, 68), layer=2, color=[0.70, 0.52, 0.30])),
+        control("biome_label", label("Biome", [40, 12], (110, 80), color=(0.42, 0.30, 0.16), scale=0.75)),
+        overview_value("biome", DATA["biomes"], [153, 79], [100, 22], scale=0.85),
+        control("power_label", label("Realm Power", [143, 12], (110, 111), color=(0.42, 0.30, 0.16), scale=0.75)),
+        overview_value("power", DATA["census"], [110, 129], [143, 30], scale=1.5),
     ]}
-    GENERATED_CONTROLS["jf_data_tier"]["text_alignment"] = "center"
+    GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left", "color": [0.42, 0.30, 0.16]})
     picker = copy.deepcopy(frame)
     # Secondary-biome choices have their own custom button renderer, not the
     # vanilla long-form dynamic list used by the previous prototype.

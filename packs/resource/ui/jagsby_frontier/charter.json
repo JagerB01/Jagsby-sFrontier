@@ -1711,8 +1711,8 @@
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
-            68,
-            22
+            58,
+            20
           ],
           "collection_name": "form_buttons",
           "controls": [
@@ -1725,8 +1725,8 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            278,
-            13
+            289,
+            14
           ],
           "layer": 25
         }
@@ -1765,51 +1765,26 @@
         }
       },
       {
-        "tier": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            96,
-            9
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_tier": {
-                "collection_index": 3
-              }
-            }
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "offset": [
-            0,
-            168
-          ],
-          "clips_children": true
-        }
-      },
-      {
         "name_label": {
           "type": "label",
-          "text": "SETTLEMENT NAME",
+          "text": "SETTLEMENT",
           "size": [
-            145,
-            12
+            143,
+            10
           ],
           "offset": [
-            108,
-            5
+            110,
+            3
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "layer": 8,
           "font_type": "default",
-          "font_scale_factor": 0.7,
+          "font_scale_factor": 0.65,
           "color": [
-            0.2,
-            0.12,
-            0.055
+            0.42,
+            0.3,
+            0.16
           ],
           "shadow": false
         }
@@ -1819,7 +1794,7 @@
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
-            145,
+            143,
             28
           ],
           "collection_name": "form_buttons",
@@ -1833,33 +1808,82 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            108,
-            24
+            110,
+            18
           ],
           "clips_children": true
         }
       },
       {
+        "tier": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            143,
+            12
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_data_tier": {
+                "collection_index": 3
+              }
+            }
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            110,
+            47
+          ],
+          "clips_children": true
+        }
+      },
+      {
+        "divider": {
+          "type": "image",
+          "texture": "textures/ui/frontier/solid",
+          "size": [
+            143,
+            1
+          ],
+          "offset": [
+            110,
+            68
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 2,
+          "color": [
+            0.7,
+            0.52,
+            0.3
+          ]
+        }
+      },
+      {
         "biome_label": {
           "type": "label",
-          "text": "VILLAGE BIOME",
+          "text": "Biome",
           "size": [
-            145,
+            40,
             12
           ],
           "offset": [
-            108,
-            64
+            110,
+            80
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "layer": 8,
           "font_type": "default",
-          "font_scale_factor": 0.7,
+          "font_scale_factor": 0.75,
           "color": [
-            0.2,
-            0.12,
-            0.055
+            0.42,
+            0.3,
+            0.16
           ],
           "shadow": false
         }
@@ -1869,8 +1893,8 @@
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
-            145,
-            28
+            100,
+            22
           ],
           "collection_name": "form_buttons",
           "controls": [
@@ -1883,8 +1907,8 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            108,
-            83
+            153,
+            79
           ],
           "clips_children": true
         }
@@ -1892,24 +1916,24 @@
       {
         "power_label": {
           "type": "label",
-          "text": "REALM POWER",
+          "text": "Realm Power",
           "size": [
-            145,
+            143,
             12
           ],
           "offset": [
-            108,
-            123
+            110,
+            111
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "layer": 8,
           "font_type": "default",
-          "font_scale_factor": 0.7,
+          "font_scale_factor": 0.75,
           "color": [
-            0.2,
-            0.12,
-            0.055
+            0.42,
+            0.3,
+            0.16
           ],
           "shadow": false
         }
@@ -1919,7 +1943,7 @@
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
-            145,
+            143,
             30
           ],
           "collection_name": "form_buttons",
@@ -1933,8 +1957,8 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            108,
-            141
+            110,
+            129
           ],
           "clips_children": true
         }
@@ -3684,6 +3708,14 @@
     "anchor_from": "top_left",
     "anchor_to": "top_left",
     "layer": 8,
+    "uv": [
+      8,
+      12
+    ],
+    "uv_size": [
+      80,
+      144
+    ],
     "bindings": [
       {
         "binding_type": "collection_details",
@@ -3988,7 +4020,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -4001,7 +4033,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.45,
+                  0.08,
+                  0.07
+                ]
               }
             },
             {
@@ -4013,20 +4050,21 @@
                   12
                 ],
                 "offset": [
-                  6,
-                  4
+                  0,
+                  3
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "default",
-                "font_scale_factor": 0.8,
+                "font_scale_factor": 0.75,
                 "color": [
                   1,
                   0.91,
                   0.65
                 ],
                 "shadow": false,
+                "text_alignment": "center",
                 "bindings": [
                   {
                     "binding_type": "collection_details",
@@ -4079,7 +4117,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -4092,7 +4130,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.62,
+                  0.14,
+                  0.1
+                ]
               }
             },
             {
@@ -4104,20 +4147,21 @@
                   12
                 ],
                 "offset": [
-                  6,
-                  4
+                  0,
+                  3
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "default",
-                "font_scale_factor": 0.8,
+                "font_scale_factor": 0.75,
                 "color": [
                   1,
                   0.91,
                   0.65
                 ],
                 "shadow": false,
+                "text_alignment": "center",
                 "bindings": [
                   {
                     "binding_type": "collection_details",
@@ -4170,7 +4214,7 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -4185,9 +4229,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.35,
+                  0.06,
+                  0.05
                 ]
               }
             },
@@ -4200,20 +4244,21 @@
                   12
                 ],
                 "offset": [
-                  6,
-                  4
+                  0,
+                  3
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "default",
-                "font_scale_factor": 0.8,
+                "font_scale_factor": 0.75,
                 "color": [
                   1,
                   0.91,
                   0.65
                 ],
                 "shadow": false,
+                "text_alignment": "center",
                 "bindings": [
                   {
                     "binding_type": "collection_details",
@@ -7971,8 +8016,8 @@
   },
   "jf_action_rename@common.button": {
     "size": [
-      68,
-      19
+      58,
+      17
     ],
     "$pressed_button_name": "button.form_button_click",
     "focus_enabled": true,
@@ -8015,8 +8060,8 @@
         "default": {
           "type": "panel",
           "size": [
-            68,
-            19
+            58,
+            17
           ],
           "controls": [
             {
@@ -8024,8 +8069,8 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  68,
-                  19
+                  58,
+                  17
                 ],
                 "offset": [
                   0,
@@ -8046,168 +8091,10 @@
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_wood",
-                "size": [
-                  66,
-                  17
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 1
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Rename",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   56,
-                  12
-                ],
-                "offset": [
-                  6,
-                  4
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "default",
-                "font_scale_factor": 0.8,
-                "color": [
-                  1,
-                  0.91,
-                  0.65
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "hover": {
-          "type": "panel",
-          "size": [
-            68,
-            19
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  68,
-                  19
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0,
-                "color": [
-                  0.88,
-                  0.62,
-                  0.18
-                ]
-              }
-            },
-            {
-              "wood": {
-                "type": "image",
-                "texture": "textures/ui/frontier_red",
-                "size": [
-                  66,
-                  17
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 1
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Rename",
-                "size": [
-                  56,
-                  12
-                ],
-                "offset": [
-                  6,
-                  4
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "default",
-                "font_scale_factor": 0.8,
-                "color": [
-                  1,
-                  0.91,
-                  0.65
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "pressed": {
-          "type": "panel",
-          "size": [
-            68,
-            19
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  68,
-                  19
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0,
-                "color": [
-                  0.88,
-                  0.62,
-                  0.18
-                ]
-              }
-            },
-            {
-              "wood": {
-                "type": "image",
-                "texture": "textures/ui/frontier_red",
-                "size": [
-                  66,
-                  17
+                  15
                 ],
                 "offset": [
                   1,
@@ -8219,9 +8106,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.45,
+                  0.08,
+                  0.07
                 ]
               }
             },
@@ -8230,24 +8117,195 @@
                 "type": "label",
                 "text": "Rename",
                 "size": [
-                  56,
-                  12
+                  58,
+                  11
                 ],
                 "offset": [
-                  6,
-                  4
+                  0,
+                  3
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "default",
-                "font_scale_factor": 0.8,
+                "font_scale_factor": 0.75,
                 "color": [
                   1,
                   0.91,
                   0.65
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            58,
+            17
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  58,
+                  17
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.88,
+                  0.62,
+                  0.18
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  56,
+                  15
+                ],
+                "offset": [
+                  1,
+                  1
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 1,
+                "color": [
+                  0.62,
+                  0.14,
+                  0.1
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Rename",
+                "size": [
+                  58,
+                  11
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "default",
+                "font_scale_factor": 0.75,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false,
+                "text_alignment": "center"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            58,
+            17
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  58,
+                  17
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.88,
+                  0.62,
+                  0.18
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  56,
+                  15
+                ],
+                "offset": [
+                  1,
+                  1
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.06,
+                  0.05
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Rename",
+                "size": [
+                  58,
+                  11
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "default",
+                "font_scale_factor": 0.75,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -8255,57 +8313,11 @@
       }
     ]
   },
-  "jf_data_tier": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      96,
-      9
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_type": "default",
-    "font_scale_factor": 0.65,
-    "color": [
-      0.2,
-      0.12,
-      0.055
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:tier]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:tier]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ],
-    "text_alignment": "center"
-  },
   "jf_data_overview": {
     "type": "label",
     "text": "#text",
     "size": [
-      145,
+      143,
       28
     ],
     "offset": [
@@ -8316,7 +8328,7 @@
     "anchor_to": "top_left",
     "layer": 8,
     "font_type": "default",
-    "font_scale_factor": 0.8,
+    "font_scale_factor": 1.05,
     "color": [
       0.2,
       0.12,
@@ -8346,12 +8358,12 @@
       }
     ]
   },
-  "jf_data_biomes": {
+  "jf_data_tier": {
     "type": "label",
     "text": "#text",
     "size": [
-      145,
-      28
+      143,
+      12
     ],
     "offset": [
       0,
@@ -8361,7 +8373,53 @@
     "anchor_to": "top_left",
     "layer": 8,
     "font_type": "default",
-    "font_scale_factor": 0.8,
+    "font_scale_factor": 0.75,
+    "color": [
+      0.42,
+      0.3,
+      0.16
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:tier]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:tier]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ],
+    "text_alignment": "left"
+  },
+  "jf_data_biomes": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      100,
+      22
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "default",
+    "font_scale_factor": 0.85,
     "color": [
       0.2,
       0.12,
@@ -8395,7 +8453,7 @@
     "type": "label",
     "text": "#text",
     "size": [
-      145,
+      143,
       30
     ],
     "offset": [
@@ -8406,7 +8464,7 @@
     "anchor_to": "top_left",
     "layer": 8,
     "font_type": "default",
-    "font_scale_factor": 1.4,
+    "font_scale_factor": 1.5,
     "color": [
       0.2,
       0.12,

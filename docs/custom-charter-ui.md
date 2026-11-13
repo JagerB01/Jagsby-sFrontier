@@ -1,4 +1,4 @@
-# Standalone charter dashboard (0.0.10)
+# Standalone charter dashboard (0.0.11)
 
 Frontier's custom menu is independent. It does not bundle MineScape UI, textures,
 behavior scripts or identifiers, and it does not require MineScape to be enabled.
@@ -101,3 +101,16 @@ that concrete error; the unit tests had not executed Minecraft's UI parser.
 The same log rejects `query.trade_tier` in server entity property events. That
 separate failure is documented in `village-census.md`; the broken bridge is no
 longer shipped. New client validation remains outstanding.
+
+## Overview visual cleanup (0.0.11)
+
+The portrait still occupies the left 96×168 region, but the image samples only
+UV (8,12) through an 80×144 area inside each shared 96×168 texture. This removes
+the baked dark frame at display time without redrawing the approved paintings.
+The texture files and downloaded portrait ZIPs retain their original frames.
+
+On the right, the settlement name has greater typographic emphasis and the tier
+sits immediately below it. Biome appears as one compact label/value row. Realm
+Power sits below that group, rather than being pushed to the panel's bottom by
+equal vertical spacing. Rename remains in the header with a smaller flat crimson
+face. Collection scope behavior is unchanged from the user's working 0.0.10 view.
