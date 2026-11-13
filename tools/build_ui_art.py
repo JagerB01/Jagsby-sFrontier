@@ -89,7 +89,7 @@ def build():
     c.bevel(8, 204, 90, 23, (142, 91, 36), (218, 168, 71), (49, 28, 17))
     c.grain(10, 206, 86, 19, (112, 26, 22))
     c.save("charter_frame.png")
-    for name in ["overview", "research", "production", "stockpile"]:
+    for name in ["overview", "research", "production", "realm"]:
         for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:
             selected = state.startswith("checked")
             hover = "hover" in state
@@ -100,8 +100,12 @@ def build():
                     (192, 72, 44) if selected else (160, 106, 53), (62, 27, 18))
             for y in [9, 24]:
                 c.rect(26, y, 59, 1, (146, 44, 28) if selected else (117, 73, 38))
-            if name == "stockpile":
-                icon(c, name, 6, 9)
+            if name == "realm":
+                c.bevel(6, 8, 17, 18, (213, 183, 124), (244, 217, 155), (91, 57, 29))
+                c.rect(14, 10, 1, 14, (155, 110, 56))
+                c.rect(8, 14, 12, 1, (155, 110, 56))
+                c.rect(10, 17, 3, 3, (99, 125, 57))
+                c.rect(17, 20, 3, 3, (147, 48, 35))
             c.save(f"tab_{name}_{state}.png")
     print("Generated original pixel-art charter frame and sidebar textures.")
 

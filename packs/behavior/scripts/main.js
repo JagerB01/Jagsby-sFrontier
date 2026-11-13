@@ -5,6 +5,7 @@ import { sampleTradingRanks } from "./villager-trade-bridge.js";
 import { CHARTER_LAYOUT } from "./charter-layout.js";
 import { settlementName, biomeName, powerValue } from "./settlement-overview.js";
 import { settlementTier } from "./settlement-tiers.js";
+import { ownerName, ownerRecord, claimSettlement, settlementDirectory } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
 
 const BLOCK = "jagsby_frontier:village_charter";
@@ -53,11 +54,12 @@ async function refreshVillage(vId){
   const latest=state(),v=latest.villages[vId];if(!v)return;
   if(biome!=='unknown')v.biome=biome;
   v.census=census;save(latest);
+  if(!census.error)console.log(`[Frontier census] villagers=${census.villagers} power_tenths=${census.realmPowerTenths} unknown_ranks=${census.unknownRanks}`);
 }
-function addVillage(s,block){const legacy=id(block.location),k=`${block.dimension.id}|${legacy}`;
+function addVillage(s,block,creator){const legacy=id(block.location),k=`${block.dimension.id}|${legacy}`;
 if(!s.villages[k]&&s.villages[legacy]?.dimension===block.dimension.id){s.villages[k]=s.villages[legacy];s.villages[k].id=k;delete s.villages[legacy];save(s);}
 if(!s.villages[k]){
-  s.villages[k]={id:k,location:{...block.location},dimension:block.dimension.id,name:`Settlement ${Object.keys(s.villages).length+1}`,biome:getBiome(block.dimension,block.location),secondary:null,available:[],efficiency:0,hearth:0,biomeUnlocked:false};save(s);
+  s.villages[k]={id:k,location:{...block.location},dimension:block.dimension.id,name:`Settlement ${Object.keys(s.villages).length+1}`,owner:creator?ownerRecord(creator):null,biome:getBiome(block.dimension,block.location),secondary:null,available:[],efficiency:0,hearth:0,biomeUnlocked:false};save(s);
 }return s.villages[k];}
 function canPay(player,cost){const inv=player.getComponent("minecraft:inventory")?.container;if(!inv)return false;
   for(const [item,num] of Object.entries(cost)) {let count=0;for(let i=0;i<inv.size;i++){const it=inv.getItem(i);if(it?.typeId===item)count+=it.amount;}if(count<num)return false;}return true;}
@@ -78,13 +80,19 @@ function researchText(s,v,key,player){
   if(key==='efficiency'&&current>=1+s.global.development&&cost)status='Requires Settlement Development';
   return `§6${names[key]}§r  ${current}/${COSTS[key].length}\n${benefits[key]}\n${cost?'Test cost: '+costText(cost):'Maximum level'}\n${status}`;
 }
-function open(player,vId,page='Overview',researchScope='global'){
+function open(player,vId,page='Overview',researchScope='global',realmPage=0,realmScope='mine'){
   const s=state(),v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
   const {data,actions,recordCount,tabs}=CHARTER_LAYOUT;
   const records=Array(recordCount).fill('');
   records[data.overview]=v.name;
   records[data.biomes]=biomeName(v.biome);
-  records[data.census]=powerValue(v.census);
+  const power=powerValue(v.census);
+  records[data.census]=power==='Unavailable'?power:`${power} RP`;
+  records[data.owner]=ownerName(v);
+  const mine=settlementDirectory(s.villages,player,realmPage,true);
+  const all=settlementDirectory(s.villages,player,realmPage,false);
+  records[data.realmMine]=mine.text;
+  records[data.realmAll]=all.text;
   const tier=settlementTier(v.census);
   records[data.tier]=tier.label;
   for(const key of ['efficiency','hearth','biome','frontier','capacity','development','storage'])records[data[key]]=researchText(s,v,key,player);
@@ -93,17 +101,23 @@ function open(player,vId,page='Overview',researchScope='global'){
   records[data.stockpile]=`Stored: ${total(s)} / ${cap(s)}\nRemaining capacity: ${cap(s)-total(s)}\nProduced resources only; shared by every settlement.`;
   records[data.resources]=Object.entries(s.stock).map(([r,n])=>`${r.replace('minecraft:','').replaceAll('_',' ')}: ${n}`).join('\n')||'No produced resources yet.';
   const handlers=new Map();
-  for(const key of ['efficiency','hearth','biome','frontier','capacity','development','storage'])handlers.set(actions[key],()=>upgrade(player,vId,key));
+  // Global tree nodes are visual-only until their progression is approved.
+  for(const key of ['efficiency','hearth','biome'])handlers.set(actions[key],()=>upgrade(player,vId,key));
   handlers.set(actions.scan,()=>scan(player,vId));
   handlers.set(actions.selectBiome,()=>selectBiome(player,vId));
   handlers.set(actions.collect,()=>collect(player,vId));
   handlers.set(actions.rename,()=>renameSettlement(player,vId));
+  handlers.set(actions.claim,()=>{const latest=state();if(claimSettlement(latest,vId,player))save(latest);open(player,vId);});
+  for(const [scope,directory]of [['mine',mine],['all',all]]){
+    handlers.set(actions[scope+'Prev'],()=>open(player,vId,'Realm','global',directory.page-1,scope));
+    handlers.set(actions[scope+'Next'],()=>open(player,vId,'Realm','global',directory.page+1,scope));
+  }
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
   for(const [key,index] of Object.entries(data))records[index]=`[JF:data:${key}]${records[index]}`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}]`);
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}]${v.owner?'':'[JF:unclaimed]'}`);
   records.forEach((text,index)=>form.button(text,index===data.tier?tier.texture:undefined));
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
@@ -150,7 +164,7 @@ function selectBiome(player,vid){const s=state(),v=s.villages[vid];if(!v.biomeUn
 }
 function collect(player,vid){const s=state();const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
  let moved=0;for(const [type,qty] of Object.entries(s.stock)){let remain=qty;while(remain>0){const n=Math.min(64,remain);try{const left=inv.addItem(new ItemStack(type,n));const count=n-(left?.amount||0);if(count<=0)break;remain-=count;moved+=count;if(left)break;}catch(e){break;}}s.stock[type]=remain;if(!remain)delete s.stock[type];}
- save(s);player.sendMessage(`§aCollected ${moved} items. Remaining stockpile: ${total(s)}/${cap(s)}.`);open(player,vid,'Stockpile');}
+ save(s);player.sendMessage(`§aCollected ${moved} items. Remaining stockpile: ${total(s)}/${cap(s)}.`);open(player,vid,'Production');}
 function tick(){const s=state();const now=Date.now();const elapsed=Math.max(0,Math.min(now-(s.lastTick||now),4*60*60*1000));if(elapsed<PRODUCTION_MS)return;
  const cycles=Math.min(8,Math.floor(elapsed/PRODUCTION_MS));s.lastTick=now;
  for(const v of Object.values(s.villages)){
@@ -158,7 +172,7 @@ function tick(){const s=state();const now=Date.now();const elapsed=Math.max(0,Ma
    for(const b of biomes)for(const r of RESOURCE_TABLE[b]||[]){if(total(s)>=cap(s))break;const n=Math.min(cap(s)-total(s),Math.max(1,Math.floor(cycles*(1+v.efficiency*0.1))));s.stock[r.id]=(s.stock[r.id]||0)+n;}
  }save(s);
 }
-world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=state();addVillage(s,ev.block);ev.player.sendMessage('§6Village Charter established. Interact to open the settlement menu.');});
+world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=state();addVillage(s,ev.block,ev.player);ev.player.sendMessage('§6Village Charter established. Interact to open the settlement menu.');});
 const pendingCharterInteractions=new Set();
 world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
   if(ev.block.typeId!==BLOCK)return;

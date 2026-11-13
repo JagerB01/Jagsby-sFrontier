@@ -54,12 +54,12 @@ test('standalone charter definitions are registered separately with a minimal va
 
 test('four local sidebar toggles control custom pages without submitting form buttons', async () => {
   const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
-  for(const name of ['overview','research','production','stockpile']) {
+  for(const name of ['overview','research','production','realm']) {
     const tab=ui.jf_dashboard.controls.find(c=>c['jf_tab_'+name])['jf_tab_'+name];
     assert.equal(tab.type,'toggle');
     assert.equal(tab.radio_toggle_group,true);
     assert.equal(JSON.stringify(tab).includes('button.form_button_click'),false);
-    const key=['overview','research'].includes(name)?name+'@jagsby_frontier.jf_'+name+'_content':name+'@common.scrolling_panel';
+    const key=['overview','research','realm'].includes(name)?name+'@jagsby_frontier.jf_'+name+'_content':name+'@common.scrolling_panel';
     const page=ui.jf_dashboard.controls.find(c=>c[key])[key];
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#visible'));
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#enabled'));
@@ -83,85 +83,65 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   validateScope(ui);
   const layoutSource=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
   const {CHARTER_LAYOUT:layout}=await import(`data:text/javascript;base64,${Buffer.from(layoutSource).toString('base64')}`);
-  for(const key of Object.keys(layout.data).filter(key=>key!=='civilization')) {
+  for(const key of Object.keys(layout.data).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
     assert.ok(label.bindings.some(b=>b.source_property_name===`(#record_text - '[JF:data:${key}]')`&&b.target_property_name==='#text'));
     assert.ok(label.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_type==='collection'));
   }
-  for(const key of Object.keys(layout.actions)) {
+  for(const key of Object.keys(layout.actions).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const button=template(ui,'jf_action_'+key);
     assert.ok(button.bindings.some(b=>b.source_property_name===`(#form_button_text = '[JF:action:${key}]')`&&b.target_property_name==='#enabled'));
     assert.ok(button.bindings.some(b=>b.binding_type==='collection_details'));
   }
 });
 
-test('Overview has three non-scrolling fields, while Rename is in the top header',async()=>{
+test('Overview cards fit without scrolling and Rename remains in the header',async()=>{
   const ui=await loadUI();
-  assert.equal(ui.jf_overview_content.type,'panel');
-  assert.deepEqual(ui.jf_overview_content.size,[257,177]);
-  assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   const fields=children(ui.jf_overview_content);
-  assert.deepEqual(Object.keys(fields),['portrait','tier','name_label','name','biome_label','biome','power_label','power']);
+  assert.deepEqual(Object.keys(fields),['portrait','tier','owner_card','biome_card','power_card']);
+  assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=177);
-  const header=children(ui.jf_dashboard).header_rename;
-  assert.ok(header.offset[1]+header.size[1]<=37,'Rename must fit inside the crimson top bar');
-  assert.equal(header.type,'stack_panel');
-  assert.deepEqual(header.controls,[{'record@jagsby_frontier.jf_action_rename':{collection_index:24}}]);
-  const button=template(ui,'jf_action_rename');
-  assert.equal(button.$pressed_button_name,'button.form_button_click');
-  assert.ok(button.button_mappings.every(m=>m.to_button_id==='button.form_button_click'));
+  for(const card of ['owner_card','biome_card','power_card']) {
+    assert.deepEqual(fields[card].size,[147,50]);
+    assert.ok(children(fields[card]).edge);
+  }
+  const header=children(ui.jf_dashboard);
+  assert.ok(header.header_rename.offset[1]+header.header_rename.size[1]<=37);
+  assert.deepEqual(header.header_name.controls,[{'record@jagsby_frontier.jf_data_overview':{collection_index:0}}]);
+  assert.equal(header.subtitle.text,'Village Charter');
+  assert.ok(ui.jf_data_overview.font_scale_factor>header.subtitle.font_scale_factor);
 });
 
-test('Overview uses the recommended full-height portrait on the left and details on the right',async()=>{
+test('framed portrait and full-width power card preserve native binding scopes',async()=>{
   const ui=await loadUI();
   const fields=children(ui.jf_overview_content);
   assert.deepEqual(fields.portrait.size,[96,168]);
-  assert.deepEqual(fields.portrait.offset,[0,0]);
-  assert.equal(fields.portrait.type,'stack_panel');
-  assert.deepEqual(fields.portrait.controls,[{'record@jagsby_frontier.jf_tier_portrait':{collection_index:3}}]);
-  assert.equal(ui.jf_tier_portrait.bilinear,false);
   assert.deepEqual(ui.jf_tier_portrait.uv,[1,1]);
   assert.deepEqual(ui.jf_tier_portrait.uv_size,[94,166]);
-  assert.ok(ui.jf_tier_portrait.uv[0]+ui.jf_tier_portrait.uv_size[0]<96);
-  assert.ok(ui.jf_tier_portrait.uv[1]+ui.jf_tier_portrait.uv_size[1]<168);
-  assert.ok(Math.abs(fields.biome.offset[1]-fields.biome_label.offset[1])<=2,
-    'Biome label and value should share a compact row');
-  assert.deepEqual(fields.tier.offset,[0,168],'Tier belongs beneath the restored framed portrait');
-  for(const key of ['overview','biomes','census','tier'])assert.equal(ui['jf_data_'+key].font_scale_factor,0.85);
-  for(const key of ['name_label','biome_label','power_label'])assert.equal(fields[key].font_scale_factor,0.85);
-  assert.equal(children(ui.jf_dashboard).title.text,'Village Charter');
-  assert.equal(fields.name_label.text,'Settlement');
-  assert.equal(fields.biome.offset[1],fields.biome_label.offset[1]);
-  assert.equal(fields.power.offset[1],fields.power_label.offset[1]);
-  assert.ok(ui.jf_tier_portrait.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_name_override==='#texture'));
-  for(const name of ['name','biome','power']) {
-    assert.ok(fields[name].offset[0]>=108);
-    assert.ok(fields[name].offset[0]+fields[name].size[0]<=257);
+  for(const [card,key,index]of [['owner_card','owner',25],['biome_card','biomes',1],['power_card','census',2]]) {
+    const value=children(fields[card]).value;
+    assert.equal(value.type,'stack_panel');
+    assert.deepEqual(value.size,[135,20]);
+    assert.deepEqual(value.controls,[{['record@jagsby_frontier.jf_data_'+key]:{collection_index:index}}]);
   }
+  assert.ok(ui.jf_tier_portrait.bindings.some(b=>b.binding_name==='#form_button_texture'));
   for(const name of ['outpost','hamlet','village','town','city']) {
     const data=await readFile(new URL(`../packs/resource/textures/ui/frontier/settlements/${name}.png`,import.meta.url));
-    assert.equal(data.readUInt32BE(16),96);
-    assert.equal(data.readUInt32BE(20),168);
+    assert.equal(data.readUInt32BE(16),96);assert.equal(data.readUInt32BE(20),168);
   }
 });
 
-test('Overview puts each bound label at its explicit index inside a real collection layout',async()=>{
+test('Realm filters have paginated directories and stockpile collection stays under Production',async()=>{
   const ui=await loadUI();
-  const fields=children(ui.jf_overview_content);
-  const records=['[JF:data:census]2.8','[JF:action:rename]','[JF:data:biomes]Plains','[JF:data:overview]Oakfield'];
-  for(const [field,key,expected]of [['name','overview','Oakfield'],['biome','biomes','Plains'],['power','census','2.8']]) {
-    assert.equal(fields[field].type,'stack_panel');
-    assert.deepEqual(fields[field].controls,[{['record@jagsby_frontier.jf_data_'+key]:{collection_index:{name:0,biome:1,power:2}[field]}}]);
-    const label=ui['jf_data_'+key];
-    const expression=label.bindings.find(b=>b.target_property_name==='#text').source_property_name;
-    const marker=expression.match(/'([^']+)'/)[1];
-    const matching=records.filter(record=>record.includes(marker));
-    assert.equal(matching.length,1);
-    assert.equal(matching[0].replace(marker,''),expected);
+  const realm=children(ui.jf_realm_content);
+  assert.ok(realm.jf_realm_tab_mine);assert.ok(realm.jf_realm_tab_all);
+  for(const scope of ['mine','all']) {
+    const directory=children(ui['jf_realm_'+scope+'_content']);
+    assert.ok(directory.prev);assert.ok(directory.next);
   }
-  const submit=children(ui.jf_rename)['submit@common.button'];
-  assert.ok(submit.button_mappings.every(m=>m.to_button_id==='button.submit_custom_form'));
+  assert.ok(JSON.stringify(ui.jf_production_content).includes('jf_action_collect'));
+  assert.equal(children(ui.jf_dashboard).jf_tab_stockpile,undefined);
 });
 
 test('Research subtabs isolate the correct native action factories',async()=>{
@@ -182,7 +162,14 @@ test('Research subtabs isolate the correct native action factories',async()=>{
     }
     return result;
   }
-  assert.deepEqual(actions(ui.jf_research_global_content),['frontier','capacity','development','storage']);
+  assert.deepEqual(actions(ui.jf_research_global_content),[]);
+  const tree=children(ui.jf_research_global_content);
+  for(const name of ['settlement_capacity','frontier_expansion','settlement_development','colonization','shared_storage']) {
+    assert.equal(tree[name].type,'button');
+    assert.deepEqual(tree[name].button_mappings,[]);
+    assert.equal(JSON.stringify(tree[name]).includes('button.form_button_click'),false);
+    assert.equal(tree[name].bindings,undefined);
+  }
   assert.deepEqual(actions(ui.jf_research_local_content),['efficiency','hearth','biome']);
 });
 

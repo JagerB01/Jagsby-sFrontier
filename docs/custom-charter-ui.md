@@ -1,4 +1,4 @@
-# Standalone charter dashboard (0.0.12)
+# Standalone charter dashboard (0.0.13)
 
 Frontier's custom menu is independent. It does not bundle MineScape UI, textures,
 behavior scripts or identifiers, and it does not require MineScape to be enabled.
@@ -102,7 +102,7 @@ The same log rejects `query.trade_tier` in server entity property events. That
 separate failure is documented in `village-census.md`; the broken bridge is no
 longer shipped. New client validation remains outstanding.
 
-## Overview visual cleanup (0.0.12)
+## Overview visual cleanup (0.0.13)
 
 The portrait still occupies the left 96×168 region, but the image samples only
 UV (8,12) through an 80×144 area inside each shared 96×168 texture. This removes
@@ -115,7 +115,7 @@ Power sits below that group, rather than being pushed to the panel's bottom by
 equal vertical spacing. Rename remains in the header with a smaller flat crimson
 face. Collection scope behavior is unchanged from the user's working 0.0.10 view.
 
-## Corrected visual direction (0.0.12)
+## Corrected visual direction (0.0.13)
 
 The 0.0.11 crop removed the decorative portrait frame, which the user wanted
 retained. The new UV rectangle is (1,1) with size 94×166, trimming only the outer
@@ -128,3 +128,23 @@ are aligned compact label/value rows rather than separated display blocks.
 The oversized power number, mixed capitalisation and heavy divider are removed.
 Header and sidebar typography use the same family; the title has a single modest
 heading scale. The resulting in-game rendering needs user verification.
+
+## 0.0.13 header, cards, Realm and Global tree
+
+The village name's native record is displayed in the header at scale 1.05, above
+Village Charter at scale 0.65. The Overview contains the portrait and three
+147×50 cards for Owner, Biome and Realm Power. Their text uses one body scale,
+and the power value has a full-width region with a nonnumeric RP suffix. No
+extra Overview scrolling is introduced.
+
+Realm uses separate My/All local toggles and paged directory records. Paging
+reopens the same directory filter without refreshing the villager census.
+Production retains stockpile display and collection. New ownership metadata
+comes from the server-side placing player; existing records are not silently
+assigned to the first interacting player.
+
+Global research now renders a fixed three-row tree inside its existing scroll
+viewport. Settlement Capacity branches to Frontier Expansion / Settlement
+Development, followed by Colonization / Shared Storage. These are native button
+controls with hover/pressed artwork but empty button mappings and no form-record
+or script purchase bindings. Local research keeps its existing functional cards.

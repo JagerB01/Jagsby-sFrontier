@@ -16,6 +16,10 @@ const overviewSource = await readFile(new URL('settlement-overview.js',scriptBas
 const overviewModuleUrl = `data:text/javascript;base64,${Buffer.from(overviewSource).toString('base64')}`;
 const tiersSource = await readFile(new URL('settlement-tiers.js',scriptBase),'utf8');
 const tiersModuleUrl = `data:text/javascript;base64,${Buffer.from(tiersSource).toString('base64')}`;
+const realmSource=(await readFile(new URL('settlement-realm.js',scriptBase),'utf8'))
+  .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
+  .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl));
+const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toString('base64')}`;
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });
 
 test('native trading levels give linear 0.2 to 1.0 contributions', () => {
@@ -124,10 +128,11 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
     .replace('"./charter-layout.js"', JSON.stringify(layoutModuleUrl))
     .replace('"./villager-trade-bridge.js"', JSON.stringify(bridgeModuleUrl))
     .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl))
-    .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl));
+    .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
+    .replace('"./settlement-realm.js"',JSON.stringify(realmModuleUrl));
   await import(`data:text/javascript;base64,${Buffer.from(main).toString('base64')}`);
   const location = { x:0, y:64, z:0 };
-  const player = { id:'p', sendMessage() {}, getComponent() {} };
+  const player = { id:'p', name:'Builder', sendMessage() {}, getComponent() {} };
   const event = { player, block:dimension.getBlock(location), isFirstEvent:true };
   handlers.playerPlaceBlock(event);
   assert.equal(scans, 0);
@@ -151,14 +156,16 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,25);
+  assert.equal(forms[0].records.length,33);
   assert.equal(forms[0].records[24],'[JF:action:rename]');
+  assert.equal(forms[0].records[25],'[JF:data:owner]Builder');
+  assert.equal(saved.villages['minecraft:overworld|0,64,0'].owner.id,'p');
   assert.equal(forms[0].records[0],'[JF:data:overview]Settlement 1');
   assert.equal(forms[0].records[1],'[JF:data:biomes]Plains');
-  assert.equal(forms[0].records[2],'[JF:data:census]0.2');
+  assert.equal(forms[0].records[2],'[JF:data:census]0.2 RP');
   assert.equal(forms[0].records[3],'[JF:data:tier]Outpost');
   assert.equal(forms[0].icons[3],'textures/ui/frontier/settlements/outpost');
-  assert.equal(forms[1].text,'[JF:tab:research][JF:research:local]');
+  assert.equal(forms[1].text,'[JF:tab:research][JF:research:local][JF:realm:mine]');
   nativeTier = 4;
   handlers.beforeInteract(event);
   await queued.shift()();

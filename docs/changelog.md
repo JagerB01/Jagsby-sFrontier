@@ -1,5 +1,21 @@
 # Changes
 
+## 0.0.13
+
+- Use the village name as the larger header title with Village Charter below it.
+- Add Owner, Biome and Realm Power cards, retaining the framed tier portrait.
+- Give power a full-width value and explicit RP suffix to avoid the blank narrow
+  numerical field. In-game rendering still needs verification.
+- Persist placer ownership for new charters; legacy settlements remain Unclaimed
+  with an explicit Claim action that cannot overwrite another owner.
+- Replace Stockpile navigation with Realm: paged My Settlements / All Settlements
+  directories showing saved owner, tier, coordinates and power.
+- Move shared stockpile viewing and collection to Production.
+- Add the visual-only Global research tree from the user's reference, including
+  Colonization. No global node is wired to a purchase or gameplay action.
+- Keep Local research working separately.
+- In-game name: Jagsby's Frontier 0.0.13.
+
 ## 0.0.12
 
 - Restore the decorative portrait frame; trim only one outer pixel instead of

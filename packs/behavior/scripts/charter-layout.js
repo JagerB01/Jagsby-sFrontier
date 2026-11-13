@@ -14,7 +14,10 @@ export const CHARTER_LAYOUT = {
     "storage": 10,
     "production": 11,
     "stockpile": 12,
-    "resources": 13
+    "resources": 13,
+    "owner": 25,
+    "realmMine": 26,
+    "realmAll": 27
   },
   "actions": {
     "efficiency": 14,
@@ -27,13 +30,18 @@ export const CHARTER_LAYOUT = {
     "scan": 21,
     "selectBiome": 22,
     "collect": 23,
-    "rename": 24
+    "rename": 24,
+    "claim": 28,
+    "minePrev": 29,
+    "mineNext": 30,
+    "allPrev": 31,
+    "allNext": 32
   },
-  "recordCount": 25,
+  "recordCount": 33,
   "tabs": [
     "Overview",
     "Research",
     "Production",
-    "Stockpile"
+    "Realm"
   ]
 };

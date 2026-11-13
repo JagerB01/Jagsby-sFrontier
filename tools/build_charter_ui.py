@@ -11,12 +11,14 @@ DATA = {
     "efficiency": 4, "hearth": 5, "biome": 6, "frontier": 7,
     "capacity": 8, "development": 9, "storage": 10,
     "production": 11, "stockpile": 12, "resources": 13,
+    "owner": 25, "realmMine": 26, "realmAll": 27,
 }
 ACTIONS = {name: i + 14 for i, name in enumerate([
     "efficiency", "hearth", "biome", "frontier", "capacity", "development",
     "storage", "scan", "selectBiome", "collect", "rename",
 ])}
-TABS = ["Overview", "Research", "Production", "Stockpile"]
+ACTIONS.update({"claim": 28, "minePrev": 29, "mineNext": 30, "allPrev": 31, "allNext": 32})
+TABS = ["Overview", "Research", "Production", "Realm"]
 GENERATED_CONTROLS = {}
 
 
@@ -189,26 +191,71 @@ def overview_value(name, index, offset, size, scale=0.9):
     return control(name, value)
 
 
-def research_tab(scope, index):
+def research_tab(scope, index, section="research", caption_text=None):
     toggle = tab("Research", index)["jf_tab_research"]
     toggle.update({"size": [124, 23], "offset": [index * 129, 0],
-        "toggle_name": "jagsby_frontier_research_tabs", "tts_name": scope.title(),
-        "focus_identifier": "jf_research_focus_" + scope,
-        "focus_change_left": "jf_research_focus_global",
-        "focus_change_right": "jf_research_focus_local"})
+        "toggle_name": "jagsby_frontier_" + section + "_tabs", "tts_name": caption_text or scope.title(),
+        "focus_identifier": "jf_" + section + "_focus_" + scope,
+        "focus_change_left": "jf_" + section + "_focus_" + ("mine" if section == "realm" else "global"),
+        "focus_change_right": "jf_" + section + "_focus_" + ("all" if section == "realm" else "local")})
     toggle.pop("focus_change_up", None)
     toggle.pop("focus_change_down", None)
     for binding in toggle["bindings"]:
         if "binding_name" in binding:
-            binding["binding_name"] = binding["binding_name"].replace("[JF:tab:research]", f"[JF:research:{scope}]")
+            binding["binding_name"] = binding["binding_name"].replace("[JF:tab:research]", f"[JF:{section}:{scope}]")
     for state in toggle["controls"]:
         panel = next(iter(state.values()))
         panel["size"] = [124, 23]
         panel["controls"][0]["face"]["size"] = [124, 23]
         panel["controls"] = [entry for entry in panel["controls"] if "icon" not in entry]
         caption = next(entry["caption"] for entry in panel["controls"] if "caption" in entry)
-        caption.update({"text": scope.title(), "size": [124, 13], "offset": [0, 6], "text_alignment": "center"})
-    return control("jf_research_tab_" + scope, toggle)
+        caption.update({"text": caption_text or scope.title(), "size": [124, 13], "offset": [0, 6], "text_alignment": "center"})
+    return control("jf_" + section + "_tab_" + scope, toggle)
+
+
+def info_card(name, title, index, y):
+    return control(name, {"type": "panel", "size": [147, 50], "offset": [106, y],
+        "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
+            control("edge", image("frontier/solid", [147, 50], color=[0.66, 0.48, 0.26])),
+            control("paper", image("frontier/solid", [145, 48], (1, 1), 1, [0.88, 0.76, 0.55])),
+            control("label", label(title, [135, 12], (6, 6), scale=0.85)),
+            overview_value("value", index, [6, 25], [135, 20], scale=0.85),
+        ]})
+
+
+def research_node(name, title, subtitle, position):
+    states = []
+    for state, tint in [("default", [0.82, 0.68, 0.43]), ("hover", [0.92, 0.79, 0.53]), ("pressed", [0.74, 0.59, 0.35])]:
+        states.append(control(state, {"type": "panel", "size": [122, 51], "controls": [
+            control("edge", image("frontier/solid", [122, 51], color=[0.55, 0.35, 0.14])),
+            control("paper", image("frontier/solid", [120, 49], (1, 1), 1, tint)),
+            control("name", label(title, [112, 22], (5, 5), scale=0.8)),
+            control("note", label(subtitle, [112, 18], (5, 31), color=(0.38, 0.26, 0.13), scale=0.65)),
+        ]}))
+    return control(name, {"type": "button", "size": [122, 51], "offset": position,
+        "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
+        "focus_enabled": True, "hover_enabled": True, "button_mappings": [],
+        "default_control": "default", "hover_control": "hover", "pressed_control": "pressed",
+        "controls": states})
+
+
+def global_tree():
+    lines = [(127, 51, 1, 20), (61, 70, 133, 1), (61, 70, 1, 15), (193, 70, 1, 15),
+             (61, 136, 1, 34), (193, 136, 1, 34)]
+    controls = [control("branch_" + str(i), image("frontier/solid", [w, h], (x, y), 2, [0.55, 0.35, 0.14]))
+                for i, (x, y, w, h) in enumerate(lines)]
+    controls += [
+        control("tier_one", label("Tier I", [50, 10], (0, 18), scale=0.65)),
+        control("tier_two", label("Tier II", [50, 10], (0, 72), scale=0.65)),
+        control("tier_three", label("Tier III", [50, 10], (0, 157), scale=0.65)),
+        research_node("settlement_capacity", "Settlement Capacity", "More settlements · Repeatable", [66, 0]),
+        research_node("frontier_expansion", "Frontier Expansion", "Unlock through Blackreach\n5 levels", [0, 85]),
+        research_node("settlement_development", "Settlement Development", "Higher local research\nRepeatable", [132, 85]),
+        research_node("colonization", "Colonization", "Frontier production\nProposed: 5 levels", [0, 170]),
+        research_node("shared_storage", "Shared Storage", "Civilization stockpile\nRepeatable", [132, 170]),
+        control("preview_note", label("Tree preview — purchases not connected", [254, 14], (0, 228), scale=0.7)),
+    ]
+    return {"type": "panel", "size": [254, 246], "controls": controls}
 
 
 def build():
@@ -227,13 +274,16 @@ def build():
         control("title", label("Village Charter", [236, 17], (25, 14), (1, 0.93, 0.71), 1.0)),
         control("close@common.close_button", {"$close_button_offset": [-7, 7], "layer": 30, "bindings": []}),
     ]
-    dashboard = copy.deepcopy(frame)
+    dashboard = [copy.deepcopy(item) for item in frame if 'title' not in item]
+    dashboard.append(overview_value("header_name", DATA["overview"], [25, 8], [235, 17], scale=1.05))
+    GENERATED_CONTROLS["jf_data_overview"]["color"] = [1, 0.93, 0.71]
+    dashboard.append(control("subtitle", label("Village Charter", [235, 9], (25, 26), (1, 0.85, 0.60), 0.65)))
     dashboard += [tab(name, index) for index, name in enumerate(TABS)]
     dashboard.append(control("seal", image("frontier_red", [86, 24], (9, 204), 3)))
     dashboard.append(control("seal_text", label("Jagsby's Frontier", [86, 12], (10, 212), (1, 0.84, 0.45), 0.65)))
     for name in TABS:
         lower = name.lower()
-        if lower in ["overview", "research"]:
+        if lower in ["overview", "research", "realm"]:
             dashboard.append(control(lower + "@jagsby_frontier.jf_" + lower + "_content", {
                 "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 47],
                 "size": [257, 177], "layer": 5,
@@ -256,12 +306,12 @@ def build():
         "research": [],
         "production": [heading("PRODUCTION MANAGEMENT"), record("production", 11, None),
             action("survey", ACTIONS["scan"], "Survey nearby biomes"),
-            action("choose", ACTIONS["selectBiome"], "Choose secondary biome")],
-        "stockpile": [heading("SHARED STOCKPILE"), record("capacity", 12, 50),
+            action("choose", ACTIONS["selectBiome"], "Choose secondary biome"),
+            heading("Shared Stockpile"), record("capacity", 12, 50),
             record("resources", 13, None), action("collect", ACTIONS["collect"], "Collect produced resources")],
     }
     for scope, group, names in [("local", "LOCAL SETTLEMENT RESEARCH", ["efficiency", "hearth", "biome"]),
-                         ("global", "CIVILIZATION RESEARCH", ["frontier", "capacity", "development", "storage"])]:
+                         ("global", "CIVILIZATION RESEARCH", [])]:
         children = [heading(group)]
         for name in names:
             children += [record(name, DATA[name], 80), action(name + "_buy", ACTIONS[name], "Research / upgrade")]
@@ -269,6 +319,7 @@ def build():
     for name, children in pages.items():
         ui["jf_" + name + "_content"] = {"type": "stack_panel", "orientation": "vertical",
             "size": [254, "100%c"], "anchor_from": "top_left", "anchor_to": "top_left", "controls": children}
+    ui["jf_research_global_content"] = global_tree()
     research_controls = [research_tab("global", 0), research_tab("local", 1)]
     for scope in ["global", "local"]:
         research_controls.append(control(scope + "@common.scrolling_panel", {
@@ -309,18 +360,32 @@ def build():
         view("(not ((#record_text - '[JF:data:tier]') = #record_text))"),
     ]
     ui["jf_tier_portrait"] = portrait
+    owner_card = info_card("owner_card", "Owner", DATA["owner"], 0)
+    claim = action("claim", ACTIONS["claim"], "Claim", width=48, height=17)["claim"]
+    claim.update({"offset": [91, 27], "anchor_from": "top_left", "anchor_to": "top_left",
+                  "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
+    owner_card["owner_card"]["controls"].append(control("claim", claim))
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [96, 168]),
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0]}),
         overview_value("tier", DATA["tier"], [0, 168], [96, 9], scale=0.85),
-        control("name_label", label("Settlement", [143, 12], (110, 12), color=(0.36, 0.25, 0.13), scale=0.85)),
-        overview_value("name", DATA["overview"], [110, 30], [143, 24], scale=0.85),
-        control("biome_label", label("Biome", [58, 12], (110, 70), color=(0.36, 0.25, 0.13), scale=0.85)),
-        overview_value("biome", DATA["biomes"], [176, 70], [77, 24], scale=0.85),
-        control("power_label", label("Realm Power", [77, 12], (110, 100), color=(0.36, 0.25, 0.13), scale=0.85)),
-        overview_value("power", DATA["census"], [192, 100], [61, 18], scale=0.85),
+        owner_card, info_card("biome_card", "Biome", DATA["biomes"], 57),
+        info_card("power_card", "Realm Power", DATA["census"], 114),
     ]}
     GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "center"})
+    realm_controls = [research_tab("mine", 0, "realm", "My Settlements"), research_tab("all", 1, "realm", "All Settlements")]
+    for scope, data_key in [("mine", "realmMine"), ("all", "realmAll")]:
+        content = [record("directory", DATA[data_key], 121)]
+        for suffix, caption, x in [("Prev", "Previous", 0), ("Next", "Next", 129)]:
+            button = action(scope + suffix, ACTIONS[scope + suffix], caption, width=122)[scope + suffix]
+            button.update({"offset": [x, 125], "anchor_from": "top_left", "anchor_to": "top_left"})
+            content.append(control(suffix.lower(), button))
+        ui["jf_realm_" + scope + "_content"] = {"type": "panel", "size": [257, 150], "controls": content}
+        realm_controls.append(control(scope + "@jagsby_frontier.jf_realm_" + scope + "_content", {
+            "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "size": [257, 150],
+            "bindings": [view("#toggle_state", target, "jf_realm_tab_" + scope) for target in ["#visible", "#enabled"]],
+        }))
+    ui["jf_realm_content"] = {"type": "panel", "size": [257, 177], "controls": realm_controls}
     picker = copy.deepcopy(frame)
     # Secondary-biome choices have their own custom button renderer, not the
     # vanilla long-form dynamic list used by the previous prototype.
@@ -380,7 +445,7 @@ def build():
         "namespace": "server_form", "main_screen_content/server_form_factory": {
             "control_ids": {"long_form": "@jagsby_frontier.jf_router",
                             "custom_form": "@jagsby_frontier.jf_modal_router"}}}, indent=2) + "\n")
-    layout = {"data": DATA, "actions": ACTIONS, "recordCount": 25, "tabs": TABS}
+    layout = {"data": DATA, "actions": ACTIONS, "recordCount": 33, "tabs": TABS}
     (ROOT / "packs/behavior/scripts/charter-layout.js").write_text(
         "// Generated by tools/build_charter_ui.py; indices match the JSON UI.\n"
         "export const CHARTER_LAYOUT = " + json.dumps(layout, indent=2) + ";\n")
