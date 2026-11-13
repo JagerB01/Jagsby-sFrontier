@@ -62,6 +62,7 @@ def icon(c, name, x, y):
 
 def build():
     DEST.mkdir(parents=True, exist_ok=True)
+    Canvas(1, 1, (255, 255, 255)).save("solid.png")
     c = Canvas(380, 240, (38, 30, 24))
     c.grain(5, 5, 370, 230, (87, 53, 28), 7)
     for y in range(5, 235, 12):

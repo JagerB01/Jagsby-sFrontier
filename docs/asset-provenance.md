@@ -1,12 +1,13 @@
 # Reference sources
 
-## MineScape
+## Frontier UI
 
-The user supplied `MineScape_v1.5.119.mcaddon` for custom-menu integration.
-`tools/reference/minescape-1.5.119-server_form.json` is its original resource UI.
-`tools/reference/minescape-ui-assets.json` lists the UI/item assets copied from
-that archive to preserve its existing dashboard routes. No behavior scripts from
-MineScape are included in Frontier's behavior pack.
+The user supplied MineScape 1.5.119 as a technical reference. No MineScape UI
+files or textures are included in the current pack. The copies introduced in
+0.0.4 were removed in 0.0.5. Frontier's own controls are in its own namespace and
+file. Its frame and sidebar artwork are generated from original pixel shapes by
+`tools/build_ui_art.py`; the initial charter textures and block model came from
+the user's Frontier prototype.
 
 ## Vanilla villagers
 

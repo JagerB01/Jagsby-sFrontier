@@ -1,5 +1,16 @@
 # Changes
 
+## 0.0.5
+
+- Remove all bundled MineScape menu definitions and 129 copied textures.
+- Move Frontier controls to `ui/jagsby_frontier/charter.json` in the independent
+  `jagsby_frontier` namespace, registered by `_ui_defs.json`.
+- Retain only a minimal Bedrock form-entry hook in `server_form.json`; ordinary
+  forms use the vanilla renderer. MineScape is not required.
+- Generate Frontier's own solid-color texture rather than copying one.
+- Keep the custom sidebar design and interaction-triggered villager rank bridge.
+- In-game name: Jagsby's Frontier 0.0.5.
+
 ## 0.0.4
 
 - Custom four-page charter dashboard with local sidebar toggles, parchment panels,

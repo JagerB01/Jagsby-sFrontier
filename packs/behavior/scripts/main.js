@@ -97,7 +97,7 @@ function open(player,vId,page='Overview'){
   handlers.set(actions.rename,()=>player.sendMessage('§7Settlement renaming is not implemented yet.'));
   for(const [key,index] of Object.entries(actions))records[index]=key;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
-  // Like MineScape's Tome: the records transport data to fixed custom JSON UI
+  // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
   const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}]`);
   records.forEach(text=>form.button(text));

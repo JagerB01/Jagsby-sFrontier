@@ -1,4 +1,4 @@
-"""Build Frontier's custom dashboard while retaining MineScape 1.5.119 UI routes."""
+"""Build the standalone Frontier dashboard and its minimal Bedrock entry hook."""
 import copy
 import json
 from pathlib import Path
@@ -70,7 +70,7 @@ def record(name, index, height):
     text["bindings"] = collection_bindings()
     return control(name, {"type": "panel", "size": [254, height],
         "collection_name": "form_buttons", "collection_index": index,
-        "controls": [control("paper", image("frontier_solid", [254, height - 2],
+        "controls": [control("paper", image("frontier/solid", [254, height - 2],
                                              color=[0.84, 0.69, 0.44])),
                      control("text", text)]})
 
@@ -81,7 +81,7 @@ def action(name, index, caption):
                                   ("hover", "frontier_red", None),
                                   ("pressed", "frontier_red", [0.7, 0.6, 0.5])]:
         states.append(control(state, {"type": "panel", "size": [254, 21], "controls": [
-            control("gold", image("frontier_solid", [254, 21], color=[0.88, 0.62, 0.18])),
+            control("gold", image("frontier/solid", [254, 21], color=[0.88, 0.62, 0.18])),
             control("wood", image(texture, [252, 19], (1, 1), 1, tint)),
             control("caption", label(caption, [242, 12], (6, 4), (1, 0.91, 0.65))),
         ]}))
@@ -97,7 +97,7 @@ def action(name, index, caption):
 def heading(text):
     return control("heading_" + text.replace(" ", "_"), {
         "type": "panel", "size": [254, 19], "controls": [
-            control("ribbon", image("frontier_solid", [254, 17], color=[0.71, 0.50, 0.24])),
+            control("ribbon", image("frontier/solid", [254, 17], color=[0.71, 0.50, 0.24])),
             control("caption", label(text, [244, 12], (5, 3))),
         ]})
 
@@ -142,15 +142,13 @@ def tab(name, index):
 
 def build():
     build_ui_art()
-    ui = json.loads((ROOT / "tools/reference/minescape-1.5.119-server_form.json").read_text())
-    # MineScape's exact nested-control hook; retain its router and definitions.
-    ui["main_screen_content/server_form_factory"]["control_ids"]["long_form"] = "@server_form.jf_router"
+    ui = {"namespace": "jagsby_frontier"}
     is_charter = "(not ((#title_text - 'JF_CHARTER|') = #title_text))"
     is_dashboard = "(#title_text = 'JF_CHARTER|Dashboard')"
     ui["jf_router"] = {"type": "panel", "size": [380, 240], "controls": [
-        control("minescape@server_form.minescape_form_router", {"bindings": condition(f"(not {is_charter})")}),
-        control("charter@server_form.jf_dashboard", {"bindings": condition(is_dashboard)}),
-        control("picker@server_form.jf_picker", {"bindings": condition(f"({is_charter} and (not {is_dashboard}))")}),
+        control("vanilla@server_form.long_form", {"bindings": condition(f"(not {is_charter})")}),
+        control("charter@jagsby_frontier.jf_dashboard", {"bindings": condition(is_dashboard)}),
+        control("picker@jagsby_frontier.jf_picker", {"bindings": condition(f"({is_charter} and (not {is_dashboard}))")}),
     ]}
     frame = [
         control("frame", image("frontier/charter_frame", [380, 240], layer=1)),
@@ -166,7 +164,7 @@ def build():
         dashboard.append(control(lower + "@common.scrolling_panel", {
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 47],
             "size": [257, 177], "layer": 5, "$show_background": False,
-            "$scrolling_content": "server_form.jf_" + lower + "_content",
+            "$scrolling_content": "jagsby_frontier.jf_" + lower + "_content",
             "$scroll_size": [4, "100% - 4px"], "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
             "$scrolling_pane_offset": [0, 0], "$scroll_bar_right_padding_size": [0, 0],
             "bindings": [view("#toggle_state", target, "jf_tab_" + lower)
@@ -198,7 +196,7 @@ def build():
     picker.append(control("options@common.scrolling_panel", {
         "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 47],
         "size": [257, 177], "layer": 5, "$show_background": False,
-        "$scrolling_content": "server_form.jf_picker_content", "$scroll_size": [4, "100% - 4px"],
+        "$scrolling_content": "jagsby_frontier.jf_picker_content", "$scroll_size": [4, "100% - 4px"],
         "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
     }))
     picker.append(control("caption", label("SECONDARY\nBIOME", [88, 32], (10, 65), (1, 0.91, 0.65))))
@@ -207,7 +205,7 @@ def build():
         "controls": [heading("CHOOSE ONE BIOME"), control("choices", {
             "type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"],
             "collection_name": "form_buttons", "factory": {"name": "buttons",
-                "control_ids": {"button": "@server_form.jf_choice"}},
+                "control_ids": {"button": "@jagsby_frontier.jf_choice"}},
             "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length"}],
         })]}
     choice = action("choice", 0, "#text")["choice"]
@@ -215,12 +213,21 @@ def build():
     for state in choice["controls"][0]["purchase@common.button"]["controls"]:
         next(iter(state.values()))["controls"][-1]["caption"]["bindings"] = collection_bindings()
     ui["jf_choice"] = choice
-    (RP / "ui/server_form.json").write_text(json.dumps(ui, separators=(",", ":")) + "\n")
+    custom_path = RP / "ui/jagsby_frontier/charter.json"
+    custom_path.parent.mkdir(parents=True, exist_ok=True)
+    custom_path.write_text(json.dumps(ui, indent=2) + "\n")
+    (RP / "ui/_ui_defs.json").write_text(json.dumps({
+        "ui_defs": ["ui/jagsby_frontier/charter.json"]}, indent=2) + "\n")
+    # The game creates Script API forms through this vanilla control. Keep only
+    # the entry hook here; Frontier definitions and artwork live separately.
+    (RP / "ui/server_form.json").write_text(json.dumps({
+        "namespace": "server_form", "main_screen_content/server_form_factory": {
+            "control_ids": {"long_form": "@jagsby_frontier.jf_router"}}}, indent=2) + "\n")
     layout = {"data": DATA, "actions": ACTIONS, "recordCount": 25, "tabs": TABS}
     (ROOT / "packs/behavior/scripts/charter-layout.js").write_text(
         "// Generated by tools/build_charter_ui.py; indices match the JSON UI.\n"
         "export const CHARTER_LAYOUT = " + json.dumps(layout, indent=2) + ";\n")
-    print("Generated custom charter dashboard and preserved MineScape UI definitions.")
+    print("Generated standalone Frontier UI, registration and minimal Bedrock entry hook.")
 
 
 if __name__ == "__main__":

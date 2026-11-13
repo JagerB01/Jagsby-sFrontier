@@ -3,8 +3,9 @@
 The supplied project brief is the implementation request. Source imported from
 the supplied v0.1 mcaddon is the starting point. Its art is retained. The current
 changes add an interaction-only 64-block villager census, native trade-tier bridge,
-custom charter dashboard and dimension-qualified settlement IDs. MineScape
-1.5.119 was supplied for the UI integration; Diplomacy remains unavailable.
+standalone custom charter dashboard and dimension-qualified settlement IDs.
+MineScape 1.5.119 was supplied as a reference only; its UI is not bundled or
+required. Diplomacy remains unavailable.
 
 ## Required integration inputs
 
@@ -15,7 +16,7 @@ custom charter dashboard and dimension-qualified settlement IDs. MineScape
 3. Diplomacy settlement registration, annexation, removal, identity, ownership,
    boundaries/radius and persistence interfaces, plus any existing saved-data format.
 4. MineScape UI and a charter visual reference are now supplied. The custom
-   dashboard preserves MineScape 1.5.119 routes; see `custom-charter-ui.md`.
+   dashboard is now independent; see `custom-charter-ui.md`.
 
 The archive contains exported geometry, textures and 64x64 pack icons. It does
 not include the editable Blockbench `.bbmodel`. A separate overview concept
@@ -38,7 +39,7 @@ The exported assets are retained; a model redesign is unnecessary.
 | Research | Hard-coded provisional costs remain, labeled as test costs. Custom cards now show current levels, benefits, costs and affordability. |
 | Collection | Uses returned inventory remainder, but no multiplayer/reload runtime validation has been performed. |
 | Hearthstone | Fixed 32-block radius rather than Diplomacy boundaries; Regeneration I is the only applied effect. |
-| UI | Custom four-page JSON dashboard now uses local tabs and fixed data records, preserving MineScape's router. Rename remains a placeholder. In-game rendering is unverified. |
+| UI | Custom four-page JSON dashboard now uses local tabs and fixed data records, using its own namespace and files. Rename remains a placeholder. In-game rendering is unverified. |
 | Persistence | One unversioned JSON payload behind a versioned key; parse failures silently fall back to fresh state. No migration or recovery policy. |
 
 ## Validation performed
@@ -47,8 +48,7 @@ The local tool checks JSON parsing, JavaScript syntax, UUID uniqueness, pack
 dependency linkage, script entry points, 64x64 icons, and block geometry/texture
 references. It can build a deterministic mcaddon with the same source contents.
 Node tests check scoring, native bridge sampling, trade upgrades, interaction-only
-scheduling, dimension isolation, preserved vanilla entity behavior, MineScape UI
-preservation, local sidebar toggles and matching data/action records. Engine
+scheduling, dimension isolation, preserved vanilla entity behavior, standalone UI reference resolution, local sidebar toggles and matching data/action records. Engine
 objects are mocked.
 These checks do not establish Minecraft engine compatibility or playable behavior.
 
