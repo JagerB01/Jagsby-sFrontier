@@ -1,0 +1,9 @@
+{
+  "resource_pack_name": "jagsbys_frontier",
+  "texture_name": "atlas.terrain",
+  "texture_data": {
+    "frontier_charter": {
+      "textures": "textures/blocks/village_charter"
+    }
+  }
+}
