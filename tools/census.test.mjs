@@ -156,8 +156,9 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,33);
+  assert.equal(forms[0].records.length,34);
   assert.equal(forms[0].records[24],'[JF:action:rename]');
+  assert.equal(forms[0].records[33],'[JF:data:population]1 villager');
   assert.equal(forms[0].records[25],'[JF:data:owner]Builder');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].owner.id,'p');
   assert.equal(forms[0].records[0],'[JF:data:overview]Settlement 1');

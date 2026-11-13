@@ -76,3 +76,13 @@ The five approved icons are transparent 64×64 PNG sprites in
 option B; the other four use original option A. Each compact research button
 has a 32×32 icon well, gilded parchment border and default/hover/pressed faces.
 The fixed tree dimensions and unbound button mappings are preserved.
+
+## 0.0.16 compact village identity
+
+Overview now groups the village name, tier and size into one 147×64 identity
+box. Size means the number of villagers recorded by the existing 64-block
+interaction census, not land area. Owner, biome and Realm Power are compact
+unboxed text groups underneath. The portrait keeps its decorative frame.
+Population is an appended form record at index 33, preserving all previous
+action indexes and the direct native power text binding. Header and identity
+name use separate templates so their sizing and colors cannot override each other.

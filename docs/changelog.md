@@ -1,3 +1,11 @@
+# 0.0.16
+
+- Replaced the four oversized Overview cards with one compact village identity box containing name, tier and size (nearby villager count).
+- Owner, biome and Realm Power appear as closely grouped text below, without individual boxes.
+- Population uses the existing interaction census within 64 blocks; no extra scans.
+- Preserved the framed portrait and working native Realm Power binding.
+- Build, 29 Node checks and three Python checks passed; rendering requires in-game verification.
+
 # 0.0.15
 
 - Renamed the global research tree to Settlement Charters, Frontier Mandate, Stewardship, Reclamation and Hoards.

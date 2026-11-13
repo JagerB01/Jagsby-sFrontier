@@ -1790,11 +1790,11 @@
         }
       },
       {
-        "owner_card": {
+        "identity": {
           "type": "panel",
           "size": [
             147,
-            32
+            64
           ],
           "offset": [
             106,
@@ -1809,7 +1809,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   147,
-                  32
+                  64
                 ],
                 "offset": [
                   0,
@@ -1833,7 +1833,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   145,
-                  30
+                  62
                 ],
                 "offset": [
                   1,
@@ -1852,180 +1852,72 @@
               }
             },
             {
-              "label": {
-                "type": "label",
-                "text": "Owner",
-                "size": [
-                  135,
-                  9
-                ],
-                "offset": [
-                  6,
-                  4
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.7,
-                "color": [
-                  0.2,
-                  0.12,
-                  0.055
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "value": {
+              "name": {
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  135,
-                  12
+                  131,
+                  14
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "record@jagsby_frontier.jf_data_owner": {
-                      "collection_index": 25
+                    "record@jagsby_frontier.jf_identity_name": {
+                      "collection_index": 0
                     }
                   }
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  6,
-                  16
+                  8,
+                  7
                 ],
                 "clips_children": true
               }
             },
             {
-              "claim": {
-                "type": "stack_panel",
-                "orientation": "vertical",
-                "size": [
-                  48,
-                  20
-                ],
-                "collection_name": "form_buttons",
-                "controls": [
-                  {
-                    "record@jagsby_frontier.jf_action_claim": {
-                      "collection_index": 28
-                    }
-                  }
-                ],
-                "offset": [
-                  91,
-                  12
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 12,
-                "bindings": [
-                  {
-                    "binding_name": "#form_text",
-                    "binding_type": "none"
-                  },
-                  {
-                    "binding_type": "view",
-                    "source_property_name": "(not ((#form_text - '[JF:unclaimed]') = #form_text))",
-                    "target_property_name": "#visible"
-                  },
-                  {
-                    "binding_type": "view",
-                    "source_property_name": "(not ((#form_text - '[JF:unclaimed]') = #form_text))",
-                    "target_property_name": "#enabled"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      {
-        "tier_card": {
-          "type": "panel",
-          "size": [
-            147,
-            32
-          ],
-          "offset": [
-            106,
-            42
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "controls": [
-            {
-              "edge": {
+              "divider": {
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  147,
-                  32
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0,
-                "color": [
-                  0.7,
-                  0.54,
-                  0.33
-                ]
-              }
-            },
-            {
-              "paper": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  145,
-                  30
-                ],
-                "offset": [
-                  1,
+                  131,
                   1
                 ],
+                "offset": [
+                  8,
+                  25
+                ],
                 "keep_ratio": false,
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1,
+                "layer": 2,
                 "color": [
-                  0.9,
-                  0.8,
-                  0.6
+                  0.73,
+                  0.57,
+                  0.34
                 ]
               }
             },
             {
-              "label": {
+              "tier_label": {
                 "type": "label",
-                "text": "Village Tier",
+                "text": "Tier",
                 "size": [
-                  135,
-                  9
+                  35,
+                  10
                 ],
                 "offset": [
-                  6,
-                  4
+                  8,
+                  32
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.7,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.2,
                   0.12,
@@ -2035,12 +1927,12 @@
               }
             },
             {
-              "value": {
+              "tier": {
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  135,
-                  12
+                  91,
+                  11
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -2053,95 +1945,30 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  6,
-                  16
+                  48,
+                  32
                 ],
                 "clips_children": true
               }
-            }
-          ]
-        }
-      },
-      {
-        "biome_card": {
-          "type": "panel",
-          "size": [
-            147,
-            32
-          ],
-          "offset": [
-            106,
-            80
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "controls": [
-            {
-              "edge": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  147,
-                  32
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0,
-                "color": [
-                  0.7,
-                  0.54,
-                  0.33
-                ]
-              }
             },
             {
-              "paper": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  145,
-                  30
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 1,
-                "color": [
-                  0.9,
-                  0.8,
-                  0.6
-                ]
-              }
-            },
-            {
-              "label": {
+              "size_label": {
                 "type": "label",
-                "text": "Biome",
+                "text": "Size",
                 "size": [
-                  135,
-                  9
+                  35,
+                  10
                 ],
                 "offset": [
-                  6,
-                  4
+                  8,
+                  47
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.7,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.2,
                   0.12,
@@ -2151,26 +1978,26 @@
               }
             },
             {
-              "value": {
+              "population": {
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  135,
-                  12
+                  91,
+                  11
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "record@jagsby_frontier.jf_data_biomes": {
-                      "collection_index": 1
+                    "record@jagsby_frontier.jf_data_population": {
+                      "collection_index": 33
                     }
                   }
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  6,
-                  16
+                  48,
+                  47
                 ],
                 "clips_children": true
               }
@@ -2179,117 +2006,195 @@
         }
       },
       {
-        "power_card": {
-          "type": "panel",
+        "owner_label": {
+          "type": "label",
+          "text": "Owner",
           "size": [
-            147,
-            32
+            131,
+            9
           ],
           "offset": [
-            106,
-            118
+            114,
+            79
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.7,
+          "color": [
+            0.2,
+            0.12,
+            0.055
+          ],
+          "shadow": false
+        }
+      },
+      {
+        "owner": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            131,
+            12
+          ],
+          "collection_name": "form_buttons",
           "controls": [
             {
-              "edge": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  147,
-                  32
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0,
-                "color": [
-                  0.7,
-                  0.54,
-                  0.33
-                ]
+              "record@jagsby_frontier.jf_data_owner": {
+                "collection_index": 25
               }
+            }
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            114,
+            89
+          ],
+          "clips_children": true
+        }
+      },
+      {
+        "biomes_label": {
+          "type": "label",
+          "text": "Biome",
+          "size": [
+            131,
+            9
+          ],
+          "offset": [
+            114,
+            103
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.7,
+          "color": [
+            0.2,
+            0.12,
+            0.055
+          ],
+          "shadow": false
+        }
+      },
+      {
+        "biomes": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            131,
+            12
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_data_biomes": {
+                "collection_index": 1
+              }
+            }
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            114,
+            113
+          ],
+          "clips_children": true
+        }
+      },
+      {
+        "census_label": {
+          "type": "label",
+          "text": "Realm Power",
+          "size": [
+            131,
+            9
+          ],
+          "offset": [
+            114,
+            127
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.7,
+          "color": [
+            0.2,
+            0.12,
+            0.055
+          ],
+          "shadow": false
+        }
+      },
+      {
+        "census": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            131,
+            12
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_data_census": {
+                "collection_index": 2
+              }
+            }
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            114,
+            137
+          ],
+          "clips_children": true
+        }
+      },
+      {
+        "claim": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            42,
+            19
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_action_claim": {
+                "collection_index": 28
+              }
+            }
+          ],
+          "offset": [
+            203,
+            85
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 12,
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
             },
             {
-              "paper": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  145,
-                  30
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 1,
-                "color": [
-                  0.9,
-                  0.8,
-                  0.6
-                ]
-              }
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:unclaimed]') = #form_text))",
+              "target_property_name": "#visible"
             },
             {
-              "label": {
-                "type": "label",
-                "text": "Realm Power",
-                "size": [
-                  135,
-                  9
-                ],
-                "offset": [
-                  6,
-                  4
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.7,
-                "color": [
-                  0.2,
-                  0.12,
-                  0.055
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "value": {
-                "type": "stack_panel",
-                "orientation": "vertical",
-                "size": [
-                  135,
-                  12
-                ],
-                "collection_name": "form_buttons",
-                "controls": [
-                  {
-                    "record@jagsby_frontier.jf_data_census": {
-                      "collection_index": 2
-                    }
-                  }
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  6,
-                  16
-                ],
-                "clips_children": true
-              }
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:unclaimed]') = #form_text))",
+              "target_property_name": "#enabled"
             }
           ]
         }
@@ -9730,11 +9635,150 @@
       }
     ]
   },
+  "jf_identity_name": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      131,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.95,
+    "color": [
+      0.2,
+      0.12,
+      0.055
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:overview]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:overview]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_data_tier": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      91,
+      11
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.8,
+    "color": [
+      0.2,
+      0.12,
+      0.055
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:tier]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:tier]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ],
+    "text_alignment": "left"
+  },
+  "jf_data_population": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      91,
+      11
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.8,
+    "color": [
+      0.2,
+      0.12,
+      0.055
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:population]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:population]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
   "jf_data_owner": {
     "type": "label",
     "text": "#text",
     "size": [
-      135,
+      131,
       12
     ],
     "offset": [
@@ -9776,347 +9820,11 @@
       }
     ]
   },
-  "jf_action_claim@common.button": {
-    "size": [
-      48,
-      17
-    ],
-    "$pressed_button_name": "button.form_button_click",
-    "focus_enabled": true,
-    "hover_enabled": true,
-    "button_mappings": [
-      {
-        "from_button_id": "button.menu_select",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "pressed"
-      },
-      {
-        "from_button_id": "button.menu_ok",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "focused"
-      }
-    ],
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:claim]')",
-        "target_property_name": "#visible"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:claim]')",
-        "target_property_name": "#enabled"
-      }
-    ],
-    "controls": [
-      {
-        "default": {
-          "type": "panel",
-          "size": [
-            48,
-            17
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  48,
-                  17
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0,
-                "color": [
-                  0.88,
-                  0.62,
-                  0.18
-                ]
-              }
-            },
-            {
-              "wood": {
-                "type": "image",
-                "texture": "textures/ui/frontier_wood",
-                "size": [
-                  46,
-                  15
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 1
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Claim",
-                "size": [
-                  36,
-                  12
-                ],
-                "offset": [
-                  6,
-                  4
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.8,
-                "color": [
-                  1,
-                  0.91,
-                  0.65
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "hover": {
-          "type": "panel",
-          "size": [
-            48,
-            17
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  48,
-                  17
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0,
-                "color": [
-                  0.88,
-                  0.62,
-                  0.18
-                ]
-              }
-            },
-            {
-              "wood": {
-                "type": "image",
-                "texture": "textures/ui/frontier_red",
-                "size": [
-                  46,
-                  15
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 1
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Claim",
-                "size": [
-                  36,
-                  12
-                ],
-                "offset": [
-                  6,
-                  4
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.8,
-                "color": [
-                  1,
-                  0.91,
-                  0.65
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "pressed": {
-          "type": "panel",
-          "size": [
-            48,
-            17
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  48,
-                  17
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0,
-                "color": [
-                  0.88,
-                  0.62,
-                  0.18
-                ]
-              }
-            },
-            {
-              "wood": {
-                "type": "image",
-                "texture": "textures/ui/frontier_red",
-                "size": [
-                  46,
-                  15
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 1,
-                "color": [
-                  0.7,
-                  0.6,
-                  0.5
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Claim",
-                "size": [
-                  36,
-                  12
-                ],
-                "offset": [
-                  6,
-                  4
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.8,
-                "color": [
-                  1,
-                  0.91,
-                  0.65
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "jf_data_tier": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      135,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_type": "unicode",
-    "font_size": "normal",
-    "font_scale_factor": 0.85,
-    "color": [
-      0.2,
-      0.12,
-      0.055
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:tier]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:tier]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ],
-    "text_alignment": "left"
-  },
   "jf_data_biomes": {
     "type": "label",
     "text": "#text",
     "size": [
-      135,
+      131,
       12
     ],
     "offset": [
@@ -10162,7 +9870,7 @@
     "type": "label",
     "text": "#form_button_text",
     "size": [
-      135,
+      131,
       12
     ],
     "offset": [
@@ -10195,6 +9903,295 @@
     "property_bag": {
       "#form_button_text": "Unavailable"
     }
+  },
+  "jf_action_claim@common.button": {
+    "size": [
+      42,
+      16
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:claim]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:claim]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            42,
+            16
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  42,
+                  16
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.88,
+                  0.62,
+                  0.18
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "image",
+                "texture": "textures/ui/frontier_wood",
+                "size": [
+                  40,
+                  14
+                ],
+                "offset": [
+                  1,
+                  1
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 1
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Claim",
+                "size": [
+                  30,
+                  12
+                ],
+                "offset": [
+                  6,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.8,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            42,
+            16
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  42,
+                  16
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.88,
+                  0.62,
+                  0.18
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "image",
+                "texture": "textures/ui/frontier_red",
+                "size": [
+                  40,
+                  14
+                ],
+                "offset": [
+                  1,
+                  1
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 1
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Claim",
+                "size": [
+                  30,
+                  12
+                ],
+                "offset": [
+                  6,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.8,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            42,
+            16
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  42,
+                  16
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.88,
+                  0.62,
+                  0.18
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "image",
+                "texture": "textures/ui/frontier_red",
+                "size": [
+                  40,
+                  14
+                ],
+                "offset": [
+                  1,
+                  1
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 1,
+                "color": [
+                  0.7,
+                  0.6,
+                  0.5
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Claim",
+                "size": [
+                  30,
+                  12
+                ],
+                "offset": [
+                  6,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.8,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      }
+    ]
   },
   "jf_data_realmMine": {
     "type": "label",

@@ -89,6 +89,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   const power=powerValue(v.census);
   records[data.census]=power==='Unavailable'?power:`${power} RP`;
   records[data.owner]=ownerName(v);
+  records[data.population]=Number.isInteger(v.census?.villagers)&&!v.census.error ? `${v.census.villagers} villager${v.census.villagers===1?'':'s'}` : 'Unavailable';
   const mine=settlementDirectory(s.villages,player,realmPage,true);
   const all=settlementDirectory(s.villages,player,realmPage,false);
   records[data.realmMine]=mine.text;

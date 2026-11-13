@@ -101,16 +101,15 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   }
 });
 
-test('Overview cards fit without scrolling and Rename remains in the header',async()=>{
+test('Compact village identity fits without scrolling and Rename remains in the header',async()=>{
   const ui=await loadUI();
   const fields=children(ui.jf_overview_content);
-  assert.deepEqual(Object.keys(fields),['portrait','owner_card','tier_card','biome_card','power_card']);
+  assert.ok(fields.identity);
+  assert.equal(Object.keys(fields).some(key=>key.endsWith('_card')),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=177);
-  for(const card of ['owner_card','tier_card','biome_card','power_card']) {
-    assert.deepEqual(fields[card].size,[147,32]);
-    assert.ok(children(fields[card]).edge);
-  }
+  assert.deepEqual(fields.identity.size,[147,64]);
+  for(const key of ['name','tier','population'])assert.ok(children(fields.identity)[key]);
   const header=children(ui.jf_dashboard);
   assert.ok(header.header_rename.offset[1]+header.header_rename.size[1]<=37);
   assert.deepEqual(header.header_name.controls,[{'record@jagsby_frontier.jf_data_overview':{collection_index:0}}]);
@@ -122,18 +121,18 @@ test('Overview cards fit without scrolling and Rename remains in the header',asy
   assert.ok(header.subtitle.offset[1]+header.subtitle.size[1]<=35);
 });
 
-test('framed portrait and full-width power card preserve native binding scopes',async()=>{
+test('framed portrait and compact details preserve native binding scopes',async()=>{
   const ui=await loadUI();
   const fields=children(ui.jf_overview_content);
   assert.deepEqual(fields.portrait.size,[96,168]);
   assert.deepEqual(ui.jf_tier_portrait.uv,[1,1]);
   assert.deepEqual(ui.jf_tier_portrait.uv_size,[94,166]);
-  for(const [card,key,index]of [['owner_card','owner',25],['tier_card','tier',3],['biome_card','biomes',1],['power_card','census',2]]) {
-    const value=children(fields[card]).value;
+  for(const [key,index]of [['owner',25],['biomes',1],['census',2]]) {
+    const value=fields[key];
     assert.equal(value.type,'stack_panel');
-    assert.deepEqual(value.size,[135,12]);
     assert.deepEqual(value.controls,[{['record@jagsby_frontier.jf_data_'+key]:{collection_index:index}}]);
   }
+  assert.deepEqual(children(fields.identity).population.controls,[{'record@jagsby_frontier.jf_data_population':{collection_index:33}}]);
   assert.ok(ui.jf_tier_portrait.bindings.some(b=>b.binding_name==='#form_button_texture'));
   for(const name of ['outpost','hamlet','village','town','city']) {
     const data=await readFile(new URL(`../packs/resource/textures/ui/frontier/settlements/${name}.png`,import.meta.url));

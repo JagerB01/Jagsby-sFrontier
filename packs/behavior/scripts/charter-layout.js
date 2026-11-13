@@ -17,7 +17,8 @@ export const CHARTER_LAYOUT = {
     "resources": 13,
     "owner": 25,
     "realmMine": 26,
-    "realmAll": 27
+    "realmAll": 27,
+    "population": 33
   },
   "actions": {
     "efficiency": 14,
@@ -37,7 +38,7 @@ export const CHARTER_LAYOUT = {
     "allPrev": 31,
     "allNext": 32
   },
-  "recordCount": 33,
+  "recordCount": 34,
   "tabs": [
     "Overview",
     "Research",
