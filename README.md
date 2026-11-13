@@ -22,6 +22,15 @@ Minecraft rendering and native trade-tier execution remain unverified in-game.
 
 ## Development
 
+### Tab sprites
+
+[Download the three transparent 64×64 tab sprites](downloads/Jagsbys_Frontier_Tab_Sprites_64x64.zip?raw=true).
+The approved set A artwork is in `packs/resource/textures/ui/frontier/icons/`:
+`overview.png` (charter scroll), `research.png` (open book), and `production.png`
+(resource crate). Each is an RGBA PNG with binary transparency and crisp edges.
+These are exported assets; the current published 0.0.7 addon has not been rebuilt
+or wired to display them yet.
+
 Use the existing checkout; cloud tasks already have isolated environments.
 Python 3.12 and Node.js 24 are available in the prepared cloud environment.
 No third-party build dependencies or credentials are needed for static validation.
