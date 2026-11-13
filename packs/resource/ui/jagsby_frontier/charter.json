@@ -111,7 +111,7 @@
           "orientation": "vertical",
           "size": [
             235,
-            17
+            12
           ],
           "collection_name": "form_buttons",
           "controls": [
@@ -125,7 +125,7 @@
           "anchor_to": "top_left",
           "offset": [
             25,
-            8
+            13
           ],
           "clips_children": true
         }
@@ -136,11 +136,11 @@
           "text": "Village Charter",
           "size": [
             235,
-            9
+            8
           ],
           "offset": [
             25,
-            26
+            25
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -1790,40 +1790,15 @@
         }
       },
       {
-        "tier": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            96,
-            9
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_tier": {
-                "collection_index": 3
-              }
-            }
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "offset": [
-            0,
-            168
-          ],
-          "clips_children": true
-        }
-      },
-      {
         "owner_card": {
           "type": "panel",
           "size": [
             147,
-            50
+            32
           ],
           "offset": [
             106,
-            0
+            4
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -1834,7 +1809,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   147,
-                  50
+                  32
                 ],
                 "offset": [
                   0,
@@ -1846,9 +1821,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.66,
-                  0.48,
-                  0.26
+                  0.7,
+                  0.54,
+                  0.33
                 ]
               }
             },
@@ -1858,7 +1833,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   145,
-                  48
+                  30
                 ],
                 "offset": [
                   1,
@@ -1870,9 +1845,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.88,
-                  0.76,
-                  0.55
+                  0.9,
+                  0.8,
+                  0.6
                 ]
               }
             },
@@ -1882,18 +1857,18 @@
                 "text": "Owner",
                 "size": [
                   135,
-                  12
+                  9
                 ],
                 "offset": [
                   6,
-                  6
+                  4
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.85,
+                "font_scale_factor": 0.7,
                 "color": [
                   0.2,
                   0.12,
@@ -1908,7 +1883,7 @@
                 "orientation": "vertical",
                 "size": [
                   135,
-                  20
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -1922,7 +1897,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   6,
-                  25
+                  16
                 ],
                 "clips_children": true
               }
@@ -1945,7 +1920,7 @@
                 ],
                 "offset": [
                   91,
-                  27
+                  12
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -1972,15 +1947,15 @@
         }
       },
       {
-        "biome_card": {
+        "tier_card": {
           "type": "panel",
           "size": [
             147,
-            50
+            32
           ],
           "offset": [
             106,
-            57
+            42
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -1991,7 +1966,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   147,
-                  50
+                  32
                 ],
                 "offset": [
                   0,
@@ -2003,9 +1978,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.66,
-                  0.48,
-                  0.26
+                  0.7,
+                  0.54,
+                  0.33
                 ]
               }
             },
@@ -2015,7 +1990,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   145,
-                  48
+                  30
                 ],
                 "offset": [
                   1,
@@ -2027,30 +2002,30 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.88,
-                  0.76,
-                  0.55
+                  0.9,
+                  0.8,
+                  0.6
                 ]
               }
             },
             {
               "label": {
                 "type": "label",
-                "text": "Biome",
+                "text": "Village Tier",
                 "size": [
                   135,
-                  12
+                  9
                 ],
                 "offset": [
                   6,
-                  6
+                  4
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.85,
+                "font_scale_factor": 0.7,
                 "color": [
                   0.2,
                   0.12,
@@ -2065,7 +2040,123 @@
                 "orientation": "vertical",
                 "size": [
                   135,
-                  20
+                  12
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_tier": {
+                      "collection_index": 3
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  6,
+                  16
+                ],
+                "clips_children": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "biome_card": {
+          "type": "panel",
+          "size": [
+            147,
+            32
+          ],
+          "offset": [
+            106,
+            80
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "edge": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  147,
+                  32
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.7,
+                  0.54,
+                  0.33
+                ]
+              }
+            },
+            {
+              "paper": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  145,
+                  30
+                ],
+                "offset": [
+                  1,
+                  1
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 1,
+                "color": [
+                  0.9,
+                  0.8,
+                  0.6
+                ]
+              }
+            },
+            {
+              "label": {
+                "type": "label",
+                "text": "Biome",
+                "size": [
+                  135,
+                  9
+                ],
+                "offset": [
+                  6,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.7,
+                "color": [
+                  0.2,
+                  0.12,
+                  0.055
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "value": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  135,
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -2079,7 +2170,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   6,
-                  25
+                  16
                 ],
                 "clips_children": true
               }
@@ -2092,11 +2183,11 @@
           "type": "panel",
           "size": [
             147,
-            50
+            32
           ],
           "offset": [
             106,
-            114
+            118
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -2107,7 +2198,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   147,
-                  50
+                  32
                 ],
                 "offset": [
                   0,
@@ -2119,9 +2210,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.66,
-                  0.48,
-                  0.26
+                  0.7,
+                  0.54,
+                  0.33
                 ]
               }
             },
@@ -2131,7 +2222,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   145,
-                  48
+                  30
                 ],
                 "offset": [
                   1,
@@ -2143,9 +2234,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.88,
-                  0.76,
-                  0.55
+                  0.9,
+                  0.8,
+                  0.6
                 ]
               }
             },
@@ -2155,18 +2246,18 @@
                 "text": "Realm Power",
                 "size": [
                   135,
-                  12
+                  9
                 ],
                 "offset": [
                   6,
-                  6
+                  4
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.85,
+                "font_scale_factor": 0.7,
                 "color": [
                   0.2,
                   0.12,
@@ -2181,7 +2272,7 @@
                 "orientation": "vertical",
                 "size": [
                   135,
-                  20
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -2195,7 +2286,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   6,
-                  25
+                  16
                 ],
                 "clips_children": true
               }
@@ -2805,7 +2896,7 @@
         }
       },
       {
-        "global@common.scrolling_panel": {
+        "global@jagsby_frontier.jf_research_global_content": {
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
@@ -2813,18 +2904,8 @@
             27
           ],
           "size": [
-            257,
+            254,
             150
-          ],
-          "$show_background": false,
-          "$scrolling_content": "jagsby_frontier.jf_research_global_content",
-          "$scroll_size": [
-            4,
-            "100% - 4px"
-          ],
-          "$scrolling_pane_size": [
-            "100% - 5px",
-            "100% - 2px"
           ],
           "bindings": [
             {
@@ -2843,7 +2924,7 @@
         }
       },
       {
-        "local@common.scrolling_panel": {
+        "local@jagsby_frontier.jf_research_local_content": {
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
@@ -2851,18 +2932,8 @@
             27
           ],
           "size": [
-            257,
+            254,
             150
-          ],
-          "$show_background": false,
-          "$scrolling_content": "jagsby_frontier.jf_research_local_content",
-          "$scroll_size": [
-            4,
-            "100% - 4px"
-          ],
-          "$scrolling_pane_size": [
-            "100% - 5px",
-            "100% - 2px"
           ],
           "bindings": [
             {
@@ -3248,83 +3319,25 @@
     ]
   },
   "jf_research_local_content": {
-    "type": "stack_panel",
-    "orientation": "vertical",
+    "type": "panel",
     "size": [
       254,
-      "100%c"
+      150
     ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
     "controls": [
-      {
-        "heading_LOCAL_SETTLEMENT_RESEARCH": {
-          "type": "panel",
-          "size": [
-            254,
-            19
-          ],
-          "controls": [
-            {
-              "ribbon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  254,
-                  17
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0,
-                "color": [
-                  0.71,
-                  0.5,
-                  0.24
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Local Settlement Research",
-                "size": [
-                  244,
-                  12
-                ],
-                "offset": [
-                  5,
-                  3
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.85,
-                "color": [
-                  0.2,
-                  0.12,
-                  0.055
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
       {
         "efficiency": {
           "type": "panel",
           "size": [
             254,
-            80
+            47
           ],
+          "offset": [
+            0,
+            0
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
           "controls": [
             {
               "paper": {
@@ -3332,7 +3345,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   254,
-                  78
+                  47
                 ],
                 "offset": [
                   0,
@@ -3344,9 +3357,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.84,
-                  0.69,
-                  0.44
+                  0.86,
+                  0.73,
+                  0.5
                 ]
               }
             },
@@ -3355,8 +3368,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  240,
-                  72
+                  166,
+                  42
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -3366,30 +3379,36 @@
                     }
                   }
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
                 "offset": [
-                  7,
-                  4
-                ]
+                  4,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left"
               }
-            }
-          ]
-        }
-      },
-      {
-        "efficiency_buy": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            254,
-            24
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
+            },
             {
-              "record@jagsby_frontier.jf_action_efficiency": {
-                "collection_index": 14
+              "purchase": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  76,
+                  24
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_action_efficiency": {
+                      "collection_index": 14
+                    }
+                  }
+                ],
+                "offset": [
+                  178,
+                  13
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left"
               }
             }
           ]
@@ -3400,8 +3419,14 @@
           "type": "panel",
           "size": [
             254,
-            80
+            47
           ],
+          "offset": [
+            0,
+            50
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
           "controls": [
             {
               "paper": {
@@ -3409,7 +3434,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   254,
-                  78
+                  47
                 ],
                 "offset": [
                   0,
@@ -3421,9 +3446,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.84,
-                  0.69,
-                  0.44
+                  0.86,
+                  0.73,
+                  0.5
                 ]
               }
             },
@@ -3432,8 +3457,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  240,
-                  72
+                  166,
+                  42
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -3443,30 +3468,36 @@
                     }
                   }
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
                 "offset": [
-                  7,
-                  4
-                ]
+                  4,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left"
               }
-            }
-          ]
-        }
-      },
-      {
-        "hearth_buy": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            254,
-            24
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
+            },
             {
-              "record@jagsby_frontier.jf_action_hearth": {
-                "collection_index": 15
+              "purchase": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  76,
+                  24
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_action_hearth": {
+                      "collection_index": 15
+                    }
+                  }
+                ],
+                "offset": [
+                  178,
+                  13
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left"
               }
             }
           ]
@@ -3477,8 +3508,14 @@
           "type": "panel",
           "size": [
             254,
-            80
+            47
           ],
+          "offset": [
+            0,
+            100
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
           "controls": [
             {
               "paper": {
@@ -3486,7 +3523,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   254,
-                  78
+                  47
                 ],
                 "offset": [
                   0,
@@ -3498,9 +3535,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.84,
-                  0.69,
-                  0.44
+                  0.86,
+                  0.73,
+                  0.5
                 ]
               }
             },
@@ -3509,8 +3546,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  240,
-                  72
+                  166,
+                  42
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -3520,30 +3557,36 @@
                     }
                   }
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
                 "offset": [
-                  7,
-                  4
-                ]
+                  4,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left"
               }
-            }
-          ]
-        }
-      },
-      {
-        "biome_buy": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            254,
-            24
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
+            },
             {
-              "record@jagsby_frontier.jf_action_biome": {
-                "collection_index": 16
+              "purchase": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  76,
+                  24
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_action_biome": {
+                      "collection_index": 16
+                    }
+                  }
+                ],
+                "offset": [
+                  178,
+                  13
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left"
               }
             }
           ]
@@ -3555,7 +3598,7 @@
     "type": "panel",
     "size": [
       254,
-      246
+      150
     ],
     "controls": [
       {
@@ -3564,11 +3607,11 @@
           "texture": "textures/ui/frontier/solid",
           "size": [
             1,
-            20
+            6
           ],
           "offset": [
             127,
-            51
+            40
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3592,7 +3635,7 @@
           ],
           "offset": [
             61,
-            70
+            45
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3612,11 +3655,11 @@
           "texture": "textures/ui/frontier/solid",
           "size": [
             1,
-            15
+            10
           ],
           "offset": [
             61,
-            70
+            45
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3636,11 +3679,11 @@
           "texture": "textures/ui/frontier/solid",
           "size": [
             1,
-            15
+            10
           ],
           "offset": [
             193,
-            70
+            45
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3660,11 +3703,11 @@
           "texture": "textures/ui/frontier/solid",
           "size": [
             1,
-            34
+            15
           ],
           "offset": [
             61,
-            136
+            95
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3684,11 +3727,11 @@
           "texture": "textures/ui/frontier/solid",
           "size": [
             1,
-            34
+            15
           ],
           "offset": [
             193,
-            136
+            95
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3708,11 +3751,11 @@
           "text": "Tier I",
           "size": [
             50,
-            10
+            9
           ],
           "offset": [
             0,
-            18
+            14
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -3734,11 +3777,11 @@
           "text": "Tier II",
           "size": [
             50,
-            10
+            9
           ],
           "offset": [
             0,
-            72
+            44
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -3760,11 +3803,11 @@
           "text": "Tier III",
           "size": [
             50,
-            10
+            9
           ],
           "offset": [
             0,
-            157
+            99
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -3785,7 +3828,7 @@
           "type": "button",
           "size": [
             122,
-            51
+            40
           ],
           "offset": [
             66,
@@ -3806,7 +3849,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -3815,7 +3858,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -3839,7 +3882,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -3863,11 +3906,11 @@
                       "text": "Settlement Capacity",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -3889,11 +3932,11 @@
                       "text": "More settlements \u00b7 Repeatable",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -3917,7 +3960,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -3926,7 +3969,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -3950,7 +3993,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -3974,11 +4017,11 @@
                       "text": "Settlement Capacity",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4000,11 +4043,11 @@
                       "text": "More settlements \u00b7 Repeatable",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4028,7 +4071,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -4037,7 +4080,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -4061,7 +4104,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -4085,11 +4128,11 @@
                       "text": "Settlement Capacity",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4111,11 +4154,11 @@
                       "text": "More settlements \u00b7 Repeatable",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4142,11 +4185,11 @@
           "type": "button",
           "size": [
             122,
-            51
+            40
           ],
           "offset": [
             0,
-            85
+            55
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -4163,7 +4206,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -4172,7 +4215,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -4196,7 +4239,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -4220,11 +4263,11 @@
                       "text": "Frontier Expansion",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4246,11 +4289,11 @@
                       "text": "Unlock through Blackreach\n5 levels",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4274,7 +4317,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -4283,7 +4326,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -4307,7 +4350,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -4331,11 +4374,11 @@
                       "text": "Frontier Expansion",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4357,11 +4400,11 @@
                       "text": "Unlock through Blackreach\n5 levels",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4385,7 +4428,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -4394,7 +4437,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -4418,7 +4461,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -4442,11 +4485,11 @@
                       "text": "Frontier Expansion",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4468,11 +4511,11 @@
                       "text": "Unlock through Blackreach\n5 levels",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4499,11 +4542,11 @@
           "type": "button",
           "size": [
             122,
-            51
+            40
           ],
           "offset": [
             132,
-            85
+            55
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -4520,7 +4563,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -4529,7 +4572,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -4553,7 +4596,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -4577,11 +4620,11 @@
                       "text": "Settlement Development",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4603,11 +4646,11 @@
                       "text": "Higher local research\nRepeatable",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4631,7 +4674,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -4640,7 +4683,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -4664,7 +4707,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -4688,11 +4731,11 @@
                       "text": "Settlement Development",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4714,11 +4757,11 @@
                       "text": "Higher local research\nRepeatable",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4742,7 +4785,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -4751,7 +4794,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -4775,7 +4818,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -4799,11 +4842,11 @@
                       "text": "Settlement Development",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4825,11 +4868,11 @@
                       "text": "Higher local research\nRepeatable",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4856,11 +4899,11 @@
           "type": "button",
           "size": [
             122,
-            51
+            40
           ],
           "offset": [
             0,
-            170
+            110
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -4877,7 +4920,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -4886,7 +4929,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -4910,7 +4953,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -4934,11 +4977,11 @@
                       "text": "Colonization",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4960,11 +5003,11 @@
                       "text": "Frontier production\nProposed: 5 levels",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4988,7 +5031,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -4997,7 +5040,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -5021,7 +5064,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -5045,11 +5088,11 @@
                       "text": "Colonization",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5071,11 +5114,11 @@
                       "text": "Frontier production\nProposed: 5 levels",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5099,7 +5142,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -5108,7 +5151,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -5132,7 +5175,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -5156,11 +5199,11 @@
                       "text": "Colonization",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5182,11 +5225,11 @@
                       "text": "Frontier production\nProposed: 5 levels",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5213,11 +5256,11 @@
           "type": "button",
           "size": [
             122,
-            51
+            40
           ],
           "offset": [
             132,
-            170
+            110
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -5234,7 +5277,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -5243,7 +5286,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -5267,7 +5310,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -5291,11 +5334,11 @@
                       "text": "Shared Storage",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5317,11 +5360,11 @@
                       "text": "Civilization stockpile\nRepeatable",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5345,7 +5388,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -5354,7 +5397,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -5378,7 +5421,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -5402,11 +5445,11 @@
                       "text": "Shared Storage",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5428,11 +5471,11 @@
                       "text": "Civilization stockpile\nRepeatable",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5456,7 +5499,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  51
+                  40
                 ],
                 "controls": [
                   {
@@ -5465,7 +5508,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         122,
-                        51
+                        40
                       ],
                       "offset": [
                         0,
@@ -5489,7 +5532,7 @@
                       "texture": "textures/ui/frontier/solid",
                       "size": [
                         120,
-                        49
+                        38
                       ],
                       "offset": [
                         1,
@@ -5513,11 +5556,11 @@
                       "text": "Shared Storage",
                       "size": [
                         112,
-                        22
+                        17
                       ],
                       "offset": [
                         5,
-                        5
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5539,11 +5582,11 @@
                       "text": "Civilization stockpile\nRepeatable",
                       "size": [
                         112,
-                        18
+                        14
                       ],
                       "offset": [
                         5,
-                        31
+                        23
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5563,32 +5606,6 @@
               }
             }
           ]
-        }
-      },
-      {
-        "preview_note": {
-          "type": "label",
-          "text": "Tree preview \u2014 purchases not connected",
-          "size": [
-            254,
-            14
-          ],
-          "offset": [
-            0,
-            228
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 8,
-          "font_type": "unicode",
-          "font_size": "normal",
-          "font_scale_factor": 0.7,
-          "color": [
-            0.2,
-            0.12,
-            0.055
-          ],
-          "shadow": false
         }
       }
     ]
@@ -7510,7 +7527,7 @@
     "text": "#text",
     "size": [
       235,
-      17
+      12
     ],
     "offset": [
       0,
@@ -7521,7 +7538,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 1.05,
+    "font_scale_factor": 1.0,
     "color": [
       1,
       0.93,
@@ -8560,8 +8577,8 @@
     "type": "label",
     "text": "#text",
     "size": [
-      240,
-      72
+      166,
+      42
     ],
     "offset": [
       0,
@@ -8572,7 +8589,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.8,
+    "font_scale_factor": 0.75,
     "color": [
       0.2,
       0.12,
@@ -8604,7 +8621,7 @@
   },
   "jf_action_efficiency@common.button": {
     "size": [
-      254,
+      76,
       21
     ],
     "$pressed_button_name": "button.form_button_click",
@@ -8648,7 +8665,7 @@
         "default": {
           "type": "panel",
           "size": [
-            254,
+            76,
             21
           ],
           "controls": [
@@ -8657,7 +8674,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  254,
+                  76,
                   21
                 ],
                 "offset": [
@@ -8681,7 +8698,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier_wood",
                 "size": [
-                  252,
+                  74,
                   19
                 ],
                 "offset": [
@@ -8698,9 +8715,9 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Research / upgrade",
+                "text": "Research",
                 "size": [
-                  242,
+                  64,
                   12
                 ],
                 "offset": [
@@ -8728,7 +8745,7 @@
         "hover": {
           "type": "panel",
           "size": [
-            254,
+            76,
             21
           ],
           "controls": [
@@ -8737,7 +8754,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  254,
+                  76,
                   21
                 ],
                 "offset": [
@@ -8761,7 +8778,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier_red",
                 "size": [
-                  252,
+                  74,
                   19
                 ],
                 "offset": [
@@ -8778,9 +8795,9 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Research / upgrade",
+                "text": "Research",
                 "size": [
-                  242,
+                  64,
                   12
                 ],
                 "offset": [
@@ -8808,7 +8825,7 @@
         "pressed": {
           "type": "panel",
           "size": [
-            254,
+            76,
             21
           ],
           "controls": [
@@ -8817,7 +8834,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  254,
+                  76,
                   21
                 ],
                 "offset": [
@@ -8841,7 +8858,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier_red",
                 "size": [
-                  252,
+                  74,
                   19
                 ],
                 "offset": [
@@ -8863,9 +8880,9 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Research / upgrade",
+                "text": "Research",
                 "size": [
-                  242,
+                  64,
                   12
                 ],
                 "offset": [
@@ -8895,8 +8912,8 @@
     "type": "label",
     "text": "#text",
     "size": [
-      240,
-      72
+      166,
+      42
     ],
     "offset": [
       0,
@@ -8907,7 +8924,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.8,
+    "font_scale_factor": 0.75,
     "color": [
       0.2,
       0.12,
@@ -8939,7 +8956,7 @@
   },
   "jf_action_hearth@common.button": {
     "size": [
-      254,
+      76,
       21
     ],
     "$pressed_button_name": "button.form_button_click",
@@ -8983,7 +9000,7 @@
         "default": {
           "type": "panel",
           "size": [
-            254,
+            76,
             21
           ],
           "controls": [
@@ -8992,7 +9009,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  254,
+                  76,
                   21
                 ],
                 "offset": [
@@ -9016,7 +9033,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier_wood",
                 "size": [
-                  252,
+                  74,
                   19
                 ],
                 "offset": [
@@ -9033,9 +9050,9 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Research / upgrade",
+                "text": "Research",
                 "size": [
-                  242,
+                  64,
                   12
                 ],
                 "offset": [
@@ -9063,7 +9080,7 @@
         "hover": {
           "type": "panel",
           "size": [
-            254,
+            76,
             21
           ],
           "controls": [
@@ -9072,7 +9089,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  254,
+                  76,
                   21
                 ],
                 "offset": [
@@ -9096,7 +9113,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier_red",
                 "size": [
-                  252,
+                  74,
                   19
                 ],
                 "offset": [
@@ -9113,9 +9130,9 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Research / upgrade",
+                "text": "Research",
                 "size": [
-                  242,
+                  64,
                   12
                 ],
                 "offset": [
@@ -9143,7 +9160,7 @@
         "pressed": {
           "type": "panel",
           "size": [
-            254,
+            76,
             21
           ],
           "controls": [
@@ -9152,7 +9169,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  254,
+                  76,
                   21
                 ],
                 "offset": [
@@ -9176,7 +9193,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier_red",
                 "size": [
-                  252,
+                  74,
                   19
                 ],
                 "offset": [
@@ -9198,9 +9215,9 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Research / upgrade",
+                "text": "Research",
                 "size": [
-                  242,
+                  64,
                   12
                 ],
                 "offset": [
@@ -9230,8 +9247,8 @@
     "type": "label",
     "text": "#text",
     "size": [
-      240,
-      72
+      166,
+      42
     ],
     "offset": [
       0,
@@ -9242,7 +9259,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.8,
+    "font_scale_factor": 0.75,
     "color": [
       0.2,
       0.12,
@@ -9274,7 +9291,7 @@
   },
   "jf_action_biome@common.button": {
     "size": [
-      254,
+      76,
       21
     ],
     "$pressed_button_name": "button.form_button_click",
@@ -9318,7 +9335,7 @@
         "default": {
           "type": "panel",
           "size": [
-            254,
+            76,
             21
           ],
           "controls": [
@@ -9327,7 +9344,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  254,
+                  76,
                   21
                 ],
                 "offset": [
@@ -9351,7 +9368,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier_wood",
                 "size": [
-                  252,
+                  74,
                   19
                 ],
                 "offset": [
@@ -9368,9 +9385,9 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Research / upgrade",
+                "text": "Research",
                 "size": [
-                  242,
+                  64,
                   12
                 ],
                 "offset": [
@@ -9398,7 +9415,7 @@
         "hover": {
           "type": "panel",
           "size": [
-            254,
+            76,
             21
           ],
           "controls": [
@@ -9407,7 +9424,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  254,
+                  76,
                   21
                 ],
                 "offset": [
@@ -9431,7 +9448,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier_red",
                 "size": [
-                  252,
+                  74,
                   19
                 ],
                 "offset": [
@@ -9448,9 +9465,9 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Research / upgrade",
+                "text": "Research",
                 "size": [
-                  242,
+                  64,
                   12
                 ],
                 "offset": [
@@ -9478,7 +9495,7 @@
         "pressed": {
           "type": "panel",
           "size": [
-            254,
+            76,
             21
           ],
           "controls": [
@@ -9487,7 +9504,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  254,
+                  76,
                   21
                 ],
                 "offset": [
@@ -9511,7 +9528,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier_red",
                 "size": [
-                  252,
+                  74,
                   19
                 ],
                 "offset": [
@@ -9533,9 +9550,9 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Research / upgrade",
+                "text": "Research",
                 "size": [
-                  242,
+                  64,
                   12
                 ],
                 "offset": [
@@ -9868,7 +9885,7 @@
     "text": "#text",
     "size": [
       135,
-      20
+      12
     ],
     "offset": [
       0,
@@ -10202,8 +10219,8 @@
     "type": "label",
     "text": "#text",
     "size": [
-      96,
-      9
+      135,
+      12
     ],
     "offset": [
       0,
@@ -10243,14 +10260,14 @@
         "target_property_name": "#visible"
       }
     ],
-    "text_alignment": "center"
+    "text_alignment": "left"
   },
   "jf_data_biomes": {
     "type": "label",
     "text": "#text",
     "size": [
       135,
-      20
+      12
     ],
     "offset": [
       0,
@@ -10293,10 +10310,10 @@
   },
   "jf_data_census": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
       135,
-      20
+      12
     ],
     "offset": [
       0,
@@ -10321,21 +10338,13 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:census]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:census]') = #record_text))",
-        "target_property_name": "#visible"
       }
-    ]
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
   },
   "jf_data_realmMine": {
     "type": "label",

@@ -1,4 +1,4 @@
-# Standalone charter dashboard (0.0.13)
+# Standalone charter dashboard (0.0.14)
 
 Frontier's custom menu is independent. It does not bundle MineScape UI, textures,
 behavior scripts or identifiers, and it does not require MineScape to be enabled.
@@ -102,7 +102,7 @@ The same log rejects `query.trade_tier` in server entity property events. That
 separate failure is documented in `village-census.md`; the broken bridge is no
 longer shipped. New client validation remains outstanding.
 
-## Overview visual cleanup (0.0.13)
+## Overview visual cleanup (0.0.14)
 
 The portrait still occupies the left 96×168 region, but the image samples only
 UV (8,12) through an 80×144 area inside each shared 96×168 texture. This removes
@@ -115,7 +115,7 @@ Power sits below that group, rather than being pushed to the panel's bottom by
 equal vertical spacing. Rename remains in the header with a smaller flat crimson
 face. Collection scope behavior is unchanged from the user's working 0.0.10 view.
 
-## Corrected visual direction (0.0.13)
+## Corrected visual direction (0.0.14)
 
 The 0.0.11 crop removed the decorative portrait frame, which the user wanted
 retained. The new UV rectangle is (1,1) with size 94×166, trimming only the outer
@@ -148,3 +148,23 @@ viewport. Settlement Capacity branches to Frontier Expansion / Settlement
 Development, followed by Colonization / Shared Storage. These are native button
 controls with hover/pressed artwork but empty button mappings and no form-record
 or script purchase bindings. Local research keeps its existing functional cards.
+
+## 0.0.14 correction based on in-game evidence
+
+The title region now begins at y=13 within the red banner, and its subtitle begins
+immediately below at y=25. Their group fits inside the banner's y=11..35 interior.
+The Overview's four rows are 32 pixels high, including a right-hand Village Tier
+row; the portrait has no tier caption below it.
+
+The supplied ContentLog2026-11-13_21-55-31_1.txt reports zero unknown ranks and
+computed powers of 1.8, 2.4 and 2.2, with no errors. Power's UI label now uses
+#form_button_text directly in its indexed stack-panel collection scope. The
+corresponding transport record is raw text (e.g. 2.2 RP), with no data marker,
+expression evaluation or visibility filter. Its default is Unavailable. This
+separates the confirmed correct calculation from the failing previous display.
+
+Both research pages are fixed 254×150 panels below their tab strip. Global has
+three rows of 40-pixel nodes at y=0,55,110; all five nodes and connectors fit.
+Local has three 47-pixel research rows at y=0,50,100 with compact metadata and
+purchase controls. No research scrolling or global purchase bindings remain.
+Native rendering of the replacement build still needs verification.

@@ -1,4 +1,4 @@
-# Header, Overview cards, Realm and Global tree (0.0.13)
+# Header, Overview cards, Realm and Global tree (0.0.14)
 
 ## Header and Overview
 
@@ -52,7 +52,19 @@ callbacks are disconnected; global data and existing levels are preserved.
 Colonization is a visual placeholder only, with no invented gameplay effect.
 Local research retains its current functional controls in the Local subtab.
 
-The tree uses its existing research scroll viewport. The Overview remains fixed
+The tree now fits in a fixed 254×150 research panel without scrolling. The Overview remains fixed
 and does not scroll. Automatic checks verify the node set and absence of action
 bindings, ownership/claim safety, directory filtering/pagination, the new header
 and card bindings, and continued access to collection.
+
+## 0.0.14 display correction
+
+Village Tier is on the right with Owner, Biome and Realm Power. All sections are
+32 pixels high. The village name/subtitle fit together inside the red banner.
+Global and Local research use fixed visible panels rather than scroll containers.
+
+The latest supplied live log confirms power_tenths values 18, 24 and 22 with zero
+unknown ranks and no errors. The power UI now binds directly to the native form
+button text, skipping data tags, expressions and visibility filters. The raw
+record contains the formatted amount plus RP; its fallback text is Unavailable.
+The updated native rendering still requires an in-game check.

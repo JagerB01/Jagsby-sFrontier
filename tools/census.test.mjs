@@ -162,7 +162,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].owner.id,'p');
   assert.equal(forms[0].records[0],'[JF:data:overview]Settlement 1');
   assert.equal(forms[0].records[1],'[JF:data:biomes]Plains');
-  assert.equal(forms[0].records[2],'[JF:data:census]0.2 RP');
+  assert.equal(forms[0].records[2],'0.2 RP');
   assert.equal(forms[0].records[3],'[JF:data:tier]Outpost');
   assert.equal(forms[0].icons[3],'textures/ui/frontier/settlements/outpost');
   assert.equal(forms[1].text,'[JF:tab:research][JF:research:local][JF:realm:mine]');

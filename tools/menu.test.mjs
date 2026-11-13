@@ -86,7 +86,12 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   for(const key of Object.keys(layout.data).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
-    assert.ok(label.bindings.some(b=>b.source_property_name===`(#record_text - '[JF:data:${key}]')`&&b.target_property_name==='#text'));
+    if(key==='census') {
+      assert.equal(label.text,'#form_button_text');
+      assert.equal(label.property_bag['#form_button_text'],'Unavailable');
+      assert.equal(label.bindings.some(b=>b.target_property_name==='#visible'),false);
+      assert.ok(label.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_name_override===undefined));
+    } else assert.ok(label.bindings.some(b=>b.source_property_name===`(#record_text - '[JF:data:${key}]')`&&b.target_property_name==='#text'));
     assert.ok(label.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_type==='collection'));
   }
   for(const key of Object.keys(layout.actions).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
@@ -99,11 +104,11 @@ test('record bindings use collection-capable stack panels and explicitly indexed
 test('Overview cards fit without scrolling and Rename remains in the header',async()=>{
   const ui=await loadUI();
   const fields=children(ui.jf_overview_content);
-  assert.deepEqual(Object.keys(fields),['portrait','tier','owner_card','biome_card','power_card']);
+  assert.deepEqual(Object.keys(fields),['portrait','owner_card','tier_card','biome_card','power_card']);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=177);
-  for(const card of ['owner_card','biome_card','power_card']) {
-    assert.deepEqual(fields[card].size,[147,50]);
+  for(const card of ['owner_card','tier_card','biome_card','power_card']) {
+    assert.deepEqual(fields[card].size,[147,32]);
     assert.ok(children(fields[card]).edge);
   }
   const header=children(ui.jf_dashboard);
@@ -111,6 +116,10 @@ test('Overview cards fit without scrolling and Rename remains in the header',asy
   assert.deepEqual(header.header_name.controls,[{'record@jagsby_frontier.jf_data_overview':{collection_index:0}}]);
   assert.equal(header.subtitle.text,'Village Charter');
   assert.ok(ui.jf_data_overview.font_scale_factor>header.subtitle.font_scale_factor);
+  assert.ok(header.header_name.offset[1]>=12);
+  assert.ok(header.header_name.offset[1]+header.header_name.size[1]<=header.subtitle.offset[1]);
+  assert.ok(header.subtitle.offset[1]-(header.header_name.offset[1]+header.header_name.size[1])<=1);
+  assert.ok(header.subtitle.offset[1]+header.subtitle.size[1]<=35);
 });
 
 test('framed portrait and full-width power card preserve native binding scopes',async()=>{
@@ -119,10 +128,10 @@ test('framed portrait and full-width power card preserve native binding scopes',
   assert.deepEqual(fields.portrait.size,[96,168]);
   assert.deepEqual(ui.jf_tier_portrait.uv,[1,1]);
   assert.deepEqual(ui.jf_tier_portrait.uv_size,[94,166]);
-  for(const [card,key,index]of [['owner_card','owner',25],['biome_card','biomes',1],['power_card','census',2]]) {
+  for(const [card,key,index]of [['owner_card','owner',25],['tier_card','tier',3],['biome_card','biomes',1],['power_card','census',2]]) {
     const value=children(fields[card]).value;
     assert.equal(value.type,'stack_panel');
-    assert.deepEqual(value.size,[135,20]);
+    assert.deepEqual(value.size,[135,12]);
     assert.deepEqual(value.controls,[{['record@jagsby_frontier.jf_data_'+key]:{collection_index:index}}]);
   }
   assert.ok(ui.jf_tier_portrait.bindings.some(b=>b.binding_name==='#form_button_texture'));
@@ -152,7 +161,7 @@ test('Research subtabs isolate the correct native action factories',async()=>{
     assert.equal(toggle.toggle_name,'jagsby_frontier_research_tabs');
     assert.equal(toggle.radio_toggle_group,true);
     assert.equal(JSON.stringify(toggle).includes('button.form_button_click'),false);
-    const page=controls[scope+'@common.scrolling_panel'];
+    const page=controls[scope+'@jagsby_frontier.jf_research_'+scope+'_content'];
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_research_tab_'+scope&&b.target_property_name==='#enabled'));
   }
   function actions(value,result=[]) {
@@ -163,9 +172,12 @@ test('Research subtabs isolate the correct native action factories',async()=>{
     return result;
   }
   assert.deepEqual(actions(ui.jf_research_global_content),[]);
+  assert.equal(JSON.stringify(ui.jf_research_content).includes('scroll'),false);
   const tree=children(ui.jf_research_global_content);
   for(const name of ['settlement_capacity','frontier_expansion','settlement_development','colonization','shared_storage']) {
     assert.equal(tree[name].type,'button');
+    assert.ok(tree[name].offset[0]+tree[name].size[0]<=254);
+    assert.ok(tree[name].offset[1]+tree[name].size[1]<=150);
     assert.deepEqual(tree[name].button_mappings,[]);
     assert.equal(JSON.stringify(tree[name]).includes('button.form_button_click'),false);
     assert.equal(tree[name].bindings,undefined);

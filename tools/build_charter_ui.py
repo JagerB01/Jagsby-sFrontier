@@ -90,6 +90,13 @@ def data_template(index, size, scale=0.8):
         view(f"(#record_text - '{marker}')", "#text"),
         view(f"(not ((#record_text - '{marker}') = #record_text))"),
     ]
+    if key == "census":
+        text["text"] = "#form_button_text"
+        text["property_bag"] = {"#form_button_text": "Unavailable"}
+        text["bindings"] = [
+            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_text", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        ]
     GENERATED_CONTROLS[name] = text
     return name
 
@@ -214,25 +221,25 @@ def research_tab(scope, index, section="research", caption_text=None):
 
 
 def info_card(name, title, index, y):
-    return control(name, {"type": "panel", "size": [147, 50], "offset": [106, y],
+    return control(name, {"type": "panel", "size": [147, 32], "offset": [106, y],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("edge", image("frontier/solid", [147, 50], color=[0.66, 0.48, 0.26])),
-            control("paper", image("frontier/solid", [145, 48], (1, 1), 1, [0.88, 0.76, 0.55])),
-            control("label", label(title, [135, 12], (6, 6), scale=0.85)),
-            overview_value("value", index, [6, 25], [135, 20], scale=0.85),
+            control("edge", image("frontier/solid", [147, 32], color=[0.70, 0.54, 0.33])),
+            control("paper", image("frontier/solid", [145, 30], (1, 1), 1, [0.90, 0.80, 0.60])),
+            control("label", label(title, [135, 9], (6, 4), scale=0.7)),
+            overview_value("value", index, [6, 16], [135, 12], scale=0.85),
         ]})
 
 
 def research_node(name, title, subtitle, position):
     states = []
     for state, tint in [("default", [0.82, 0.68, 0.43]), ("hover", [0.92, 0.79, 0.53]), ("pressed", [0.74, 0.59, 0.35])]:
-        states.append(control(state, {"type": "panel", "size": [122, 51], "controls": [
-            control("edge", image("frontier/solid", [122, 51], color=[0.55, 0.35, 0.14])),
-            control("paper", image("frontier/solid", [120, 49], (1, 1), 1, tint)),
-            control("name", label(title, [112, 22], (5, 5), scale=0.8)),
-            control("note", label(subtitle, [112, 18], (5, 31), color=(0.38, 0.26, 0.13), scale=0.65)),
+        states.append(control(state, {"type": "panel", "size": [122, 40], "controls": [
+            control("edge", image("frontier/solid", [122, 40], color=[0.55, 0.35, 0.14])),
+            control("paper", image("frontier/solid", [120, 38], (1, 1), 1, tint)),
+            control("name", label(title, [112, 17], (5, 4), scale=0.8)),
+            control("note", label(subtitle, [112, 14], (5, 23), color=(0.38, 0.26, 0.13), scale=0.65)),
         ]}))
-    return control(name, {"type": "button", "size": [122, 51], "offset": position,
+    return control(name, {"type": "button", "size": [122, 40], "offset": position,
         "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
         "focus_enabled": True, "hover_enabled": True, "button_mappings": [],
         "default_control": "default", "hover_control": "hover", "pressed_control": "pressed",
@@ -240,22 +247,21 @@ def research_node(name, title, subtitle, position):
 
 
 def global_tree():
-    lines = [(127, 51, 1, 20), (61, 70, 133, 1), (61, 70, 1, 15), (193, 70, 1, 15),
-             (61, 136, 1, 34), (193, 136, 1, 34)]
+    lines = [(127, 40, 1, 6), (61, 45, 133, 1), (61, 45, 1, 10), (193, 45, 1, 10),
+             (61, 95, 1, 15), (193, 95, 1, 15)]
     controls = [control("branch_" + str(i), image("frontier/solid", [w, h], (x, y), 2, [0.55, 0.35, 0.14]))
                 for i, (x, y, w, h) in enumerate(lines)]
     controls += [
-        control("tier_one", label("Tier I", [50, 10], (0, 18), scale=0.65)),
-        control("tier_two", label("Tier II", [50, 10], (0, 72), scale=0.65)),
-        control("tier_three", label("Tier III", [50, 10], (0, 157), scale=0.65)),
+        control("tier_one", label("Tier I", [50, 9], (0, 14), scale=0.65)),
+        control("tier_two", label("Tier II", [50, 9], (0, 44), scale=0.65)),
+        control("tier_three", label("Tier III", [50, 9], (0, 99), scale=0.65)),
         research_node("settlement_capacity", "Settlement Capacity", "More settlements · Repeatable", [66, 0]),
-        research_node("frontier_expansion", "Frontier Expansion", "Unlock through Blackreach\n5 levels", [0, 85]),
-        research_node("settlement_development", "Settlement Development", "Higher local research\nRepeatable", [132, 85]),
-        research_node("colonization", "Colonization", "Frontier production\nProposed: 5 levels", [0, 170]),
-        research_node("shared_storage", "Shared Storage", "Civilization stockpile\nRepeatable", [132, 170]),
-        control("preview_note", label("Tree preview — purchases not connected", [254, 14], (0, 228), scale=0.7)),
+        research_node("frontier_expansion", "Frontier Expansion", "Unlock through Blackreach\n5 levels", [0, 55]),
+        research_node("settlement_development", "Settlement Development", "Higher local research\nRepeatable", [132, 55]),
+        research_node("colonization", "Colonization", "Frontier production\nProposed: 5 levels", [0, 110]),
+        research_node("shared_storage", "Shared Storage", "Civilization stockpile\nRepeatable", [132, 110]),
     ]
-    return {"type": "panel", "size": [254, 246], "controls": controls}
+    return {"type": "panel", "size": [254, 150], "controls": controls}
 
 
 def build():
@@ -275,9 +281,9 @@ def build():
         control("close@common.close_button", {"$close_button_offset": [-7, 7], "layer": 30, "bindings": []}),
     ]
     dashboard = [copy.deepcopy(item) for item in frame if 'title' not in item]
-    dashboard.append(overview_value("header_name", DATA["overview"], [25, 8], [235, 17], scale=1.05))
+    dashboard.append(overview_value("header_name", DATA["overview"], [25, 13], [235, 12], scale=1.0))
     GENERATED_CONTROLS["jf_data_overview"]["color"] = [1, 0.93, 0.71]
-    dashboard.append(control("subtitle", label("Village Charter", [235, 9], (25, 26), (1, 0.85, 0.60), 0.65)))
+    dashboard.append(control("subtitle", label("Village Charter", [235, 8], (25, 25), (1, 0.85, 0.60), 0.65)))
     dashboard += [tab(name, index) for index, name in enumerate(TABS)]
     dashboard.append(control("seal", image("frontier_red", [86, 24], (9, 204), 3)))
     dashboard.append(control("seal_text", label("Jagsby's Frontier", [86, 12], (10, 212), (1, 0.84, 0.45), 0.65)))
@@ -320,8 +326,27 @@ def build():
         ui["jf_" + name + "_content"] = {"type": "stack_panel", "orientation": "vertical",
             "size": [254, "100%c"], "anchor_from": "top_left", "anchor_to": "top_left", "controls": children}
     ui["jf_research_global_content"] = global_tree()
+    local_controls = []
+    for i, key in enumerate(["efficiency", "hearth", "biome"]):
+        template = data_template(DATA[key], [166, 42], scale=0.75)
+        values = collection_scope(template, [166, 42])
+        values.update({"offset": [4, 3], "anchor_from": "top_left", "anchor_to": "top_left"})
+        purchase = action(key + "_buy", ACTIONS[key], "Research", width=76)[key + "_buy"]
+        purchase.update({"offset": [178, 13], "anchor_from": "top_left", "anchor_to": "top_left"})
+        local_controls.append(control(key, {"type": "panel", "size": [254, 47],
+            "offset": [0, i * 50], "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
+                control("paper", image("frontier/solid", [254, 47], color=[0.86, 0.73, 0.50])),
+                control("data", values), control("purchase", purchase),
+            ]}))
+    ui["jf_research_local_content"] = {"type": "panel", "size": [254, 150], "controls": local_controls}
     research_controls = [research_tab("global", 0), research_tab("local", 1)]
     for scope in ["global", "local"]:
+        if scope in ["global", "local"]:
+            research_controls.append(control(scope + "@jagsby_frontier.jf_research_" + scope + "_content", {
+                "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 27], "size": [254, 150],
+                "bindings": [view("#toggle_state", target, "jf_research_tab_" + scope) for target in ["#visible", "#enabled"]],
+            }))
+            continue
         research_controls.append(control(scope + "@common.scrolling_panel", {
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 27],
             "size": [257, 150], "$show_background": False,
@@ -360,19 +385,19 @@ def build():
         view("(not ((#record_text - '[JF:data:tier]') = #record_text))"),
     ]
     ui["jf_tier_portrait"] = portrait
-    owner_card = info_card("owner_card", "Owner", DATA["owner"], 0)
+    owner_card = info_card("owner_card", "Owner", DATA["owner"], 4)
     claim = action("claim", ACTIONS["claim"], "Claim", width=48, height=17)["claim"]
-    claim.update({"offset": [91, 27], "anchor_from": "top_left", "anchor_to": "top_left",
+    claim.update({"offset": [91, 12], "anchor_from": "top_left", "anchor_to": "top_left",
                   "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
     owner_card["owner_card"]["controls"].append(control("claim", claim))
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [96, 168]),
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0]}),
-        overview_value("tier", DATA["tier"], [0, 168], [96, 9], scale=0.85),
-        owner_card, info_card("biome_card", "Biome", DATA["biomes"], 57),
-        info_card("power_card", "Realm Power", DATA["census"], 114),
+        owner_card, info_card("tier_card", "Village Tier", DATA["tier"], 42),
+        info_card("biome_card", "Biome", DATA["biomes"], 80),
+        info_card("power_card", "Realm Power", DATA["census"], 118),
     ]}
-    GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "center"})
+    GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left"})
     realm_controls = [research_tab("mine", 0, "realm", "My Settlements"), research_tab("all", 1, "realm", "All Settlements")]
     for scope, data_key in [("mine", "realmMine"), ("all", "realmAll")]:
         content = [record("directory", DATA[data_key], 121)]
@@ -426,6 +451,13 @@ def build():
     for mapping in submit["button_mappings"]:
         mapping["to_button_id"] = "button.submit_custom_form"
     submit["bindings"] = []
+    submit["size"] = [254, 21]
+    for state in submit["controls"]:
+        panel = next(iter(state.values()))
+        panel["size"] = [254, 21]
+        panel["controls"][0]["gold"]["size"] = [254, 21]
+        panel["controls"][1]["wood"]["size"] = [252, 19]
+        panel["controls"][2]["caption"]["size"] = [242, 12]
     submit.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 151]})
     ui["jf_rename"] = {"type": "panel", "size": [380, 240], "controls": copy.deepcopy(frame) + [
         control("caption", label("Rename", [88, 32], (10, 65), (1, 0.91, 0.65))),

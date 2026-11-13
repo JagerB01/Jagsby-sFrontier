@@ -1,5 +1,20 @@
 # Changes
 
+## 0.0.14
+
+- Fit the name/subtitle together inside the red banner instead of clipping the
+  title against its top edge.
+- Replace the oversized Overview cards with four compact rows; Village Tier now
+  appears on the right with Owner, Biome and Realm Power, not below the portrait.
+- Bind Realm Power directly to its raw native form text, with no marker-removal
+  expression or visibility filter, and an Unavailable fallback. The user's live
+  log confirms correct calculations (including 1.8, 2.4 and 2.2 RP); the blank
+  display is a UI problem rather than a calculation failure.
+- Fit all five Global tree nodes within a fixed 254×150 panel; no scroll container.
+- Fit all three Local upgrades within a fixed panel while retaining their actions.
+- Keep Global nodes unbound as requested.
+- In-game name: Jagsby's Frontier 0.0.14.
+
 ## 0.0.13
 
 - Use the village name as the larger header title with Village Charter below it.
