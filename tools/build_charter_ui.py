@@ -140,6 +140,14 @@ def tab(name, index):
     })
 
 
+def overview_value(name, index, offset, size, scale=0.9):
+    text = label("#text", size, color=(0.20, 0.12, 0.055), scale=scale)
+    text["bindings"] = collection_bindings()
+    return control(name, {"type": "panel", "anchor_from": "top_left", "anchor_to": "top_left",
+        "offset": offset, "size": size, "collection_name": "form_buttons", "collection_index": index,
+        "clips_children": True, "controls": [control("value", text)]})
+
+
 def build():
     build_ui_art()
     ui = {"namespace": "jagsby_frontier"}
@@ -161,6 +169,14 @@ def build():
     dashboard.append(control("seal_text", label("JAGSBY'S FRONTIER", [86, 12], (10, 212), (1, 0.84, 0.45), 0.55)))
     for name in TABS:
         lower = name.lower()
+        if lower == "overview":
+            dashboard.append(control("overview@jagsby_frontier.jf_overview_content", {
+                "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 47],
+                "size": [257, 177], "layer": 5,
+                "bindings": [view("#toggle_state", target, "jf_tab_overview")
+                             for target in ["#visible", "#enabled"]],
+            }))
+            continue
         dashboard.append(control(lower + "@common.scrolling_panel", {
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 47],
             "size": [257, 177], "layer": 5, "$show_background": False,
@@ -172,9 +188,7 @@ def build():
         }))
     ui["jf_dashboard"] = {"type": "panel", "size": [380, 240], "controls": dashboard}
     pages = {
-        "overview": [heading("SETTLEMENT OVERVIEW"), record("identity", 0, 53),
-            record("biomes", 1, 39), record("census", 2, None),
-            record("civilization", 3, 44), action("rename", ACTIONS["rename"], "Rename settlement")],
+        "overview": [],
         "research": [],
         "production": [heading("PRODUCTION MANAGEMENT"), record("production", 11, None),
             action("survey", ACTIONS["scan"], "Survey nearby biomes"),
@@ -190,6 +204,26 @@ def build():
     for name, children in pages.items():
         ui["jf_" + name + "_content"] = {"type": "stack_panel", "orientation": "vertical",
             "size": [254, "100%c"], "anchor_from": "top_left", "anchor_to": "top_left", "controls": children}
+    rename = action("rename", ACTIONS["rename"], "Rename")["rename"]
+    rename.update({"type": "panel", "anchor_from": "top_left", "anchor_to": "top_left",
+                   "offset": [180, 16], "size": [74, 24]})
+    button = rename["controls"][0]["purchase@common.button"]
+    button["size"] = [74, 21]
+    for state in button["controls"]:
+        panel = next(iter(state.values()))
+        panel["size"] = [74, 21]
+        panel["controls"][0]["gold"]["size"] = [74, 21]
+        panel["controls"][1]["wood"]["size"] = [72, 19]
+        panel["controls"][2]["caption"]["size"] = [62, 12]
+    ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
+        control("name_label", label("SETTLEMENT NAME", [170, 12], (4, 1))),
+        overview_value("name", DATA["overview"], [4, 20], [170, 25]),
+        control("rename", rename),
+        control("biome_label", label("VILLAGE BIOME", [250, 12], (4, 59))),
+        overview_value("biome", DATA["biomes"], [4, 77], [250, 24]),
+        control("power_label", label("REALM POWER", [250, 12], (4, 113))),
+        overview_value("power", DATA["census"], [4, 132], [250, 32], scale=1.6),
+    ]}
     picker = copy.deepcopy(frame)
     # Secondary-biome choices have their own custom button renderer, not the
     # vanilla long-form dynamic list used by the previous prototype.
@@ -213,6 +247,20 @@ def build():
     for state in choice["controls"][0]["purchase@common.button"]["controls"]:
         next(iter(state.values()))["controls"][-1]["caption"]["bindings"] = collection_bindings()
     ui["jf_choice"] = choice
+    ui["jf_modal_router"] = {"type": "panel", "size": [380, 240], "controls": [
+        control("vanilla@server_form.custom_form", {"bindings": condition("(not (#title_text = 'JF_CHARTER|Rename'))")}),
+        control("rename@jagsby_frontier.jf_rename", {"bindings": condition("(#title_text = 'JF_CHARTER|Rename')")}),
+    ]}
+    submit = copy.deepcopy(action("submit", 0, "Save name")["submit"]["controls"][0]["purchase@common.button"])
+    submit["$pressed_button_name"] = "button.submit_custom_form"
+    submit["bindings"] = []
+    submit.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 151]})
+    ui["jf_rename"] = {"type": "panel", "size": [380, 240], "controls": copy.deepcopy(frame) + [
+        control("caption", label("RENAME", [88, 32], (10, 65), (1, 0.91, 0.65))),
+        control("input@server_form.generated_contents", {"anchor_from": "top_left", "anchor_to": "top_left",
+            "offset": [110, 70], "size": [254, "100%c"], "layer": 5}),
+        control("submit@common.button", submit),
+    ]}
     custom_path = RP / "ui/jagsby_frontier/charter.json"
     custom_path.parent.mkdir(parents=True, exist_ok=True)
     custom_path.write_text(json.dumps(ui, indent=2) + "\n")
@@ -222,7 +270,8 @@ def build():
     # the entry hook here; Frontier definitions and artwork live separately.
     (RP / "ui/server_form.json").write_text(json.dumps({
         "namespace": "server_form", "main_screen_content/server_form_factory": {
-            "control_ids": {"long_form": "@jagsby_frontier.jf_router"}}}, indent=2) + "\n")
+            "control_ids": {"long_form": "@jagsby_frontier.jf_router",
+                            "custom_form": "@jagsby_frontier.jf_modal_router"}}}, indent=2) + "\n")
     layout = {"data": DATA, "actions": ACTIONS, "recordCount": 25, "tabs": TABS}
     (ROOT / "packs/behavior/scripts/charter-layout.js").write_text(
         "// Generated by tools/build_charter_ui.py; indices match the JSON UI.\n"

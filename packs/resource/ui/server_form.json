@@ -2,7 +2,8 @@
   "namespace": "server_form",
   "main_screen_content/server_form_factory": {
     "control_ids": {
-      "long_form": "@jagsby_frontier.jf_router"
+      "long_form": "@jagsby_frontier.jf_router",
+      "custom_form": "@jagsby_frontier.jf_modal_router"
     }
   }
 }

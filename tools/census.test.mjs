@@ -12,6 +12,8 @@ const layoutSource = await readFile(new URL('charter-layout.js', scriptBase), 'u
 const layoutModuleUrl = `data:text/javascript;base64,${Buffer.from(layoutSource).toString('base64')}`;
 const bridgeSource = await readFile(new URL('villager-trade-bridge.js', scriptBase), 'utf8');
 const bridgeModuleUrl = `data:text/javascript;base64,${Buffer.from(bridgeSource).toString('base64')}`;
+const overviewSource = await readFile(new URL('settlement-overview.js',scriptBase),'utf8');
+const overviewModuleUrl = `data:text/javascript;base64,${Buffer.from(overviewSource).toString('base64')}`;
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });
 
 test('native trading levels give linear 0.2 to 1.0 contributions', () => {
@@ -79,12 +81,24 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   const dimension = makeDimension('minecraft:overworld');
   const nether = makeDimension('minecraft:nether');
   let menuResponse;
+  let renameResponse;
   const forms = [];
   class Form {
     constructor() { this.records=[]; forms.push(this); }
     title(value) {this.heading=value; return this; } body(value) {this.text=value; return this; }
     button(value) {this.records.push(value); return this; }
     show() { const response = menuResponse; menuResponse = {canceled:true}; return Promise.resolve(response ?? {canceled:true}); }
+  }
+  class RenameForm {
+    title() {return this;}
+    textField() {return this;}
+    submitButton() {return this;}
+    show() {
+      const latest=JSON.parse(properties.get('jagsby_frontier:state_v1'));
+      latest.stock['minecraft:iron_ingot']=12;
+      properties.set('jagsby_frontier:state_v1',JSON.stringify(latest));
+      return Promise.resolve(renameResponse);
+    }
   }
   globalThis.__frontierTest = {
     world: { afterEvents: Object.fromEntries(['playerPlaceBlock','playerInteractWithBlock','playerBreakBlock']
@@ -95,17 +109,18 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
       setDynamicProperty: (key,value) => properties.set(key,value) },
     system: { run: fn => queued.push(fn), runInterval: fn => intervals.push(fn),
       runTimeout: fn => {fn();} },
-    Form,
+    Form, RenameForm,
   };
   let main = await readFile(new URL('main.js', scriptBase), 'utf8');
   main = main.replace('import { world, system, ItemStack } from "@minecraft/server";',
     'const {world,system}=globalThis.__frontierTest; class ItemStack {}')
-    .replace('import { ActionFormData } from "@minecraft/server-ui";',
-      'const ActionFormData=globalThis.__frontierTest.Form;')
+    .replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";',
+      'const ActionFormData=globalThis.__frontierTest.Form;const ModalFormData=globalThis.__frontierTest.RenameForm;')
     .replace('"./village-census.js"', JSON.stringify(moduleUrl))
     .replace('"./menu-display.js"', JSON.stringify(menuModuleUrl))
     .replace('"./charter-layout.js"', JSON.stringify(layoutModuleUrl))
-    .replace('"./villager-trade-bridge.js"', JSON.stringify(bridgeModuleUrl));
+    .replace('"./villager-trade-bridge.js"', JSON.stringify(bridgeModuleUrl))
+    .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl));
   await import(`data:text/javascript;base64,${Buffer.from(main).toString('base64')}`);
   const location = { x:0, y:64, z:0 };
   const player = { id:'p', sendMessage() {}, getComponent() {} };
@@ -133,6 +148,9 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
   assert.equal(forms[0].records.length,25);
+  assert.equal(forms[0].records[0],'Settlement 1');
+  assert.equal(forms[0].records[1],'Plains');
+  assert.equal(forms[0].records[2],'0.2');
   assert.equal(forms[1].text,'[JF:tab:research]');
   nativeTier = 4;
   handlers.beforeInteract(event);
@@ -146,5 +164,15 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(Object.keys(saved.villages).length, 2);
   assert.equal(scans, 3);
   assert.ok(biomeReads >= 2);
+  menuResponse={canceled:false,selection:24};
+  renameResponse={canceled:false,formValues:['Oakfield']};
+  handlers.beforeInteract(event);
+  await queued.shift()();
+  await new Promise(resolve=>setImmediate(resolve));
+  saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
+  assert.equal(saved.villages['minecraft:overworld|0,64,0'].name,'Oakfield');
+  assert.equal(saved.stock['minecraft:iron_ingot'],12,'Rename must preserve concurrent stockpile changes');
+  assert.equal(forms.at(-1).records[0],'Oakfield');
+  assert.equal(scans,4,'Only the charter interaction should scan; rename must not rescan');
   delete globalThis.__frontierTest;
 });

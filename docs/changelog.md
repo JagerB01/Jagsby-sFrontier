@@ -1,5 +1,15 @@
 # Changes
 
+## 0.0.6
+
+- Overview now contains only settlement name with Rename, village biome and
+  Realm Power, in that order, in a fixed panel without scrolling.
+- Replace the rename placeholder with a themed text-entry screen and persistent
+  save; validate names as 1–24 characters without line breaks or format codes.
+- Re-read current state before saving a name to preserve concurrent changes.
+- Keep other tabs and the interaction-triggered census behavior.
+- In-game name: Jagsby's Frontier 0.0.6.
+
 ## 0.0.5
 
 - Remove all bundled MineScape menu definitions and 129 copied textures.

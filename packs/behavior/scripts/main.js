@@ -1,8 +1,9 @@
 import { world, system, ItemStack } from "@minecraft/server";
-import { ActionFormData } from "@minecraft/server-ui";
-import { nearbyVillagers, summarizeVillagers, censusText } from "./village-census.js";
+import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
+import { nearbyVillagers, summarizeVillagers } from "./village-census.js";
 import { sampleTradingRanks } from "./villager-trade-bridge.js";
 import { CHARTER_LAYOUT } from "./charter-layout.js";
+import { settlementName, biomeName, powerValue } from "./settlement-overview.js";
 import { displayMenu } from "./menu-display.js";
 
 const BLOCK = "jagsby_frontier:village_charter";
@@ -80,10 +81,9 @@ function open(player,vId,page='Overview'){
   const s=state(),v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
   const {data,actions,recordCount,tabs}=CHARTER_LAYOUT;
   const records=Array(recordCount).fill('');
-  records[data.overview]=`§6${v.name}§r\nLocation: ${id(v.location)} (${v.dimension.replace('minecraft:','')})\nZone: ${zoneAt(v.location)}\nVillage tier: Not configured`;
-  records[data.biomes]=`Primary biome: ${v.biome}\nSecondary biome: ${v.biomeUnlocked?v.secondary||'Not selected':'Locked — research Biome Utilization'}`;
-  records[data.census]=censusText(v.census).replace('§8','§6')+(v.census&&!v.census.error?`\nNovice ${v.census.tiers[0]} · Apprentice ${v.census.tiers[1]} · Journeyman ${v.census.tiers[2]}\nExpert ${v.census.tiers[3]} · Master ${v.census.tiers[4]}`:'');
-  records[data.civilization]=`Civilization: ${Object.keys(s.villages).length} settlements\nEfficiency: +${v.efficiency*10}%  Hearthstone: ${v.hearth?'Regeneration I':'Not researched'}\nFrontier: ${s.global.frontier}/5  Storage: ${s.global.storage}/4`;
+  records[data.overview]=v.name;
+  records[data.biomes]=biomeName(v.biome);
+  records[data.census]=powerValue(v.census);
   for(const key of ['efficiency','hearth','biome','frontier','capacity','development','storage'])records[data[key]]=researchText(s,v,key,player);
   const eligible=[...new Set([v.biome,v.secondary].filter(Boolean).flatMap(b=>(RESOURCE_TABLE[b]||[]).map(r=>r.name)))];
   records[data.production]=`Primary biome: ${v.biome}\nSecondary biome: ${v.secondary||'None'}\nSurveyed options: ${v.available.join(', ')||'Survey nearby biomes'}\nEligible resources: ${eligible.join(', ')||'None configured'}\nEfficiency: +${v.efficiency*10}%\nPrototype cycle: ${PRODUCTION_MS/60000} minutes\n§cSample resource table and production balance; not final.§r`;
@@ -94,7 +94,7 @@ function open(player,vId,page='Overview'){
   handlers.set(actions.scan,()=>scan(player,vId));
   handlers.set(actions.selectBiome,()=>selectBiome(player,vId));
   handlers.set(actions.collect,()=>collect(player,vId));
-  handlers.set(actions.rename,()=>player.sendMessage('§7Settlement renaming is not implemented yet.'));
+  handlers.set(actions.rename,()=>renameSettlement(player,vId));
   for(const [key,index] of Object.entries(actions))records[index]=key;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
@@ -102,6 +102,24 @@ function open(player,vId,page='Overview'){
   const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}]`);
   records.forEach(text=>form.button(text));
   displayMenu(player,form,system).then(r=>{if(!r.canceled)handlers.get(r.selection)?.();}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
+}
+async function renameSettlement(player,vId){
+  const current=state().villages[vId];if(!current)return;
+  const form=new ModalFormData().title(pageTitle('Rename'))
+    .textField('Settlement name (1–24 characters)','Settlement name',{defaultValue:current.name})
+    .submitButton('Save name');
+  try{
+    const response=await displayMenu(player,form,system);
+    if(!response.canceled){
+      const name=settlementName(response.formValues?.[0]);
+      if(!name){player.sendMessage('§eUse 1–24 characters, without line breaks or formatting codes.');}
+      else{
+        const latest=state();if(!latest.villages[vId])return;
+        latest.villages[vId].name=name;save(latest);
+      }
+    }
+    open(player,vId);
+  }catch(e){console.warn(`Frontier rename: ${e}`);player.sendMessage('§cSettlement name could not be saved.');}
 }
 function upgrade(player,vid,key){let s=state(),v=s.villages[vid];if(!v)return;
   const global=['frontier','capacity','development','storage'].includes(key);let current=global?s.global[key]:key==='biome'?Number(v.biomeUnlocked):key==='hearth'?v.hearth:v.efficiency;

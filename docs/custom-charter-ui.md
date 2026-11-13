@@ -1,4 +1,4 @@
-# Standalone charter dashboard (0.0.5)
+# Standalone charter dashboard (0.0.6)
 
 Frontier's custom menu is independent. It does not bundle MineScape UI, textures,
 behavior scripts or identifiers, and it does not require MineScape to be enabled.
@@ -23,7 +23,9 @@ Bedrock creates Script API forms through the vanilla `server_form_factory`.
 `ui/server_form.json` contains only the small hook routing long forms into
 Frontier's router. Titles beginning `JF_CHARTER|` use Frontier's custom controls;
 all other titles render through `server_form.long_form`, Minecraft's original
-renderer. Modal forms are not redirected.
+renderer. A separate modal router sends only `JF_CHARTER|Rename` to Frontier's themed
+rename view, which uses Minecraft's text-input control and a custom Save button.
+Other modal forms use the vanilla renderer.
 
 The hook is necessary for this Bedrock JSON UI mechanism; it is not a MineScape
 component or dependency. Other packs modifying the same vanilla entry point can
@@ -41,3 +43,13 @@ do not render the Minecraft client. In a world using only Frontier, check openin
 all four tabs, research, biome selection, collection and closing on the intended
 input devices. The stable API target remains Bedrock 1.26.0+, server 2.9.0 and
 server-ui 2.1.0.
+
+## Compact Overview
+
+The Overview is a fixed 257×177 panel with three fields: settlement name and a
+Rename button, village biome, and Realm Power. It has no scroll container or
+extra research, population, coordinate or stockpile details. Long names are
+bounded to 24 characters for new renames and clipped within the name region.
+Renaming saves to persistent settlement state and returns to the same Overview;
+it does not rerun the villager census. A ≥ prefix on power indicates a minimum
+estimate if trade rank data could not be obtained.

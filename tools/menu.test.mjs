@@ -42,7 +42,7 @@ test('standalone charter definitions are registered separately with a minimal va
   const registration = JSON.parse(await readFile(new URL('../packs/resource/ui/_ui_defs.json',import.meta.url),'utf8'));
   const hook='main_screen_content/server_form_factory';
   assert.deepEqual(hookFile, {namespace:'server_form',[hook]:{
-    control_ids:{long_form:'@jagsby_frontier.jf_router'}}});
+    control_ids:{long_form:'@jagsby_frontier.jf_router',custom_form:'@jagsby_frontier.jf_modal_router'}}});
   assert.deepEqual(registration.ui_defs,['ui/jagsby_frontier/charter.json']);
   assert.equal(ui.namespace,'jagsby_frontier');
   assert.ok(ui.jf_router.controls.some(c=>c['vanilla@server_form.long_form']));
@@ -59,7 +59,8 @@ test('four local sidebar toggles control custom pages without submitting form bu
     assert.equal(tab.type,'toggle');
     assert.equal(tab.radio_toggle_group,true);
     assert.equal(JSON.stringify(tab).includes('button.form_button_click'),false);
-    const page=ui.jf_dashboard.controls.find(c=>c[name+'@common.scrolling_panel'])[name+'@common.scrolling_panel'];
+    const key=name==='overview'?'overview@jagsby_frontier.jf_overview_content':name+'@common.scrolling_panel';
+    const page=ui.jf_dashboard.controls.find(c=>c[key])[key];
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#visible'));
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#enabled'));
   }
@@ -76,10 +77,24 @@ test('all fixed data and action records agree with the generated script layout',
     for(const child of Object.values(value))walk(child);
   }
   for(const name of ['overview','research','production','stockpile'])walk(ui['jf_'+name+'_content']);
-  assert.deepEqual(indices.sort((a,b)=>a-b),Array.from({length:layout.recordCount},(_,i)=>i));
+  assert.deepEqual(indices.sort((a,b)=>a-b),Array.from({length:layout.recordCount},(_,i)=>i).filter(i=>i!==3));
   assert.equal(new Set(Object.values(layout.actions)).size,11);
   assert.equal(layout.actions.collect,23);
   assert.equal(layout.actions.efficiency,14);
+});
+
+test('overview is a fixed three-field panel with rename alongside the name',async()=>{
+  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
+  assert.equal(ui.jf_overview_content.type,'panel');
+  assert.deepEqual(ui.jf_overview_content.size,[257,177]);
+  assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
+  const controls=Object.assign({},...ui.jf_overview_content.controls);
+  assert.deepEqual(Object.keys(controls),['name_label','name','rename','biome_label','biome','power_label','power']);
+  for(const control of Object.values(controls)) {
+    assert.ok(control.offset[1]+control.size[1]<=177,'Overview content must fit without scrolling');
+  }
+  assert.equal(controls.rename.offset[1],16);
+  assert.equal(controls.rename.collection_index,24);
 });
 
 test('standalone UI references resolve to Frontier files and definitions',async()=>{

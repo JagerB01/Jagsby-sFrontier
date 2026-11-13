@@ -39,7 +39,7 @@ The exported assets are retained; a model redesign is unnecessary.
 | Research | Hard-coded provisional costs remain, labeled as test costs. Custom cards now show current levels, benefits, costs and affordability. |
 | Collection | Uses returned inventory remainder, but no multiplayer/reload runtime validation has been performed. |
 | Hearthstone | Fixed 32-block radius rather than Diplomacy boundaries; Regeneration I is the only applied effect. |
-| UI | Custom four-page JSON dashboard now uses local tabs and fixed data records, using its own namespace and files. Rename remains a placeholder. In-game rendering is unverified. |
+| UI | Custom four-page JSON dashboard now uses local tabs and fixed data records, using its own namespace and files. Rename now has a validated, persistent themed text-entry screen. In-game rendering is unverified. |
 | Persistence | One unversioned JSON payload behind a versioned key; parse failures silently fall back to fresh state. No migration or recovery policy. |
 
 ## Validation performed
