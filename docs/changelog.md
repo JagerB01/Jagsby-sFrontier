@@ -1,3 +1,11 @@
+# 0.0.22
+
+- Added the approved option A Realm and Information icons as transparent 64×64 sprites in every sidebar state.
+- Added Information directly below Realm, with a fixed placeholder page for future guides.
+- Extended controller focus navigation to the fifth tab and removed the old painted Realm icon and overlapping footer branding.
+- Kept all five navigation buttons inside the border without scrolling.
+- Build and all 32 automated checks passed; Minecraft rendering remains unverified.
+
 # 0.0.21
 
 - Restored the user's preferred first silver-and-wheat border, including its village crest.

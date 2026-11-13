@@ -18,7 +18,7 @@ ACTIONS = {name: i + 14 for i, name in enumerate([
     "storage", "scan", "selectBiome", "collect", "rename",
 ])}
 ACTIONS.update({"claim": 28, "minePrev": 29, "mineNext": 30, "allPrev": 31, "allNext": 32})
-TABS = ["Overview", "Research", "Production", "Realm"]
+TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 GENERATED_CONTROLS = {}
 
 
@@ -158,7 +158,7 @@ def tab(name, index):
         states.append(control(state, {"type": "panel", "size": [88, 28], "controls": [
             control("face", image(f"frontier/tab_{lower}_{state}", [88, 28], layer=1)),
             *([control("icon", image(f"frontier/icons/{lower}", [20, 20], (6, 4), 4))]
-              if lower in ["overview", "research", "production"] else []),
+              if lower in ["overview", "research", "production", "realm", "information"] else []),
             control("caption", label(name, [55, 12], (29, 9), (0.95, 0.90, 0.78), 0.8)),
         ]}))
     marker = f"[JF:tab:{lower}]"
@@ -171,7 +171,7 @@ def tab(name, index):
         "focus_enabled": True, "hover_enabled": True,
         "focus_identifier": "jf_tab_focus_" + lower,
         "focus_change_up": "jf_tab_focus_" + TABS[max(0, index - 1)].lower(),
-        "focus_change_down": "jf_tab_focus_" + TABS[min(3, index + 1)].lower(),
+        "focus_change_down": "jf_tab_focus_" + TABS[min(len(TABS) - 1, index + 1)].lower(),
         "toggle_on_button": "toggle.toggle_on", "toggle_off_button": "toggle.toggle_off",
         "property_bag": {"#toggle_state": index == 0},
         "bindings": [
@@ -286,10 +286,9 @@ def build():
     GENERATED_CONTROLS["jf_data_overview"]["color"] = [1, 0.93, 0.71]
     dashboard.append(control("subtitle", label("Village Charter", [235, 8], (30, 46), (1, 0.85, 0.60), 0.65)))
     dashboard += [tab(name, index) for index, name in enumerate(TABS)]
-    dashboard.append(control("seal_text", label("Jagsby's Frontier", [86, 12], (10, 205), (0.65, 0.64, 0.55), 0.6)))
     for name in TABS:
         lower = name.lower()
-        if lower in ["overview", "research", "realm"]:
+        if lower in ["overview", "research", "realm", "information"]:
             dashboard.append(control(lower + "@jagsby_frontier.jf_" + lower + "_content", {
                 "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 62],
                 "size": [257, 158], "layer": 5,
@@ -417,6 +416,11 @@ def build():
         identity,
     ]}
     GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left"})
+    ui["jf_information_content"] = {"type": "panel", "size": [257, 158], "controls": [
+        control("heading", label("Information", [233, 14], (8, 8), (0.94, 0.79, 0.45), 0.95)),
+        control("rule", image("frontier/solid", [233, 1], (8, 29), 2, [0.65, 0.53, 0.31])),
+        control("placeholder", label("Guides and reference will appear here.", [233, 30], (8, 40), scale=0.8)),
+    ]}
     realm_controls = [research_tab("mine", 0, "realm", "My Settlements"), research_tab("all", 1, "realm", "All Settlements")]
     for scope, data_key in [("mine", "realmMine"), ("all", "realmAll")]:
         content = [record("directory", DATA[data_key], 103)]

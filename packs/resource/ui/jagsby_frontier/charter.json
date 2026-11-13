@@ -1303,7 +1303,7 @@
           "hover_enabled": true,
           "focus_identifier": "jf_tab_focus_realm",
           "focus_change_up": "jf_tab_focus_production",
-          "focus_change_down": "jf_tab_focus_realm",
+          "focus_change_down": "jf_tab_focus_information",
           "toggle_on_button": "toggle.toggle_on",
           "toggle_off_button": "toggle.toggle_off",
           "property_bag": {
@@ -1372,6 +1372,25 @@
                     }
                   },
                   {
+                    "icon": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/icons/realm",
+                      "size": [
+                        20,
+                        20
+                      ],
+                      "offset": [
+                        6,
+                        4
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 4
+                    }
+                  },
+                  {
                     "caption": {
                       "type": "label",
                       "text": "Realm",
@@ -1425,6 +1444,25 @@
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 1
+                    }
+                  },
+                  {
+                    "icon": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/icons/realm",
+                      "size": [
+                        20,
+                        20
+                      ],
+                      "offset": [
+                        6,
+                        4
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 4
                     }
                   },
                   {
@@ -1484,6 +1522,25 @@
                     }
                   },
                   {
+                    "icon": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/icons/realm",
+                      "size": [
+                        20,
+                        20
+                      ],
+                      "offset": [
+                        6,
+                        4
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 4
+                    }
+                  },
+                  {
                     "caption": {
                       "type": "label",
                       "text": "Realm",
@@ -1540,6 +1597,25 @@
                     }
                   },
                   {
+                    "icon": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/icons/realm",
+                      "size": [
+                        20,
+                        20
+                      ],
+                      "offset": [
+                        6,
+                        4
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 4
+                    }
+                  },
+                  {
                     "caption": {
                       "type": "label",
                       "text": "Realm",
@@ -1572,29 +1648,371 @@
         }
       },
       {
-        "seal_text": {
-          "type": "label",
-          "text": "Jagsby's Frontier",
+        "jf_tab_information": {
+          "type": "toggle",
           "size": [
-            86,
-            12
+            88,
+            28
           ],
           "offset": [
-            10,
-            205
+            12,
+            190
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "layer": 8,
-          "font_type": "unicode",
-          "font_size": "normal",
-          "font_scale_factor": 0.6,
-          "color": [
-            0.65,
-            0.64,
-            0.55
+          "layer": 10,
+          "radio_toggle_group": true,
+          "toggle_name": "jagsby_frontier_tabs",
+          "toggle_group_forced_index": 4,
+          "toggle_group_default_selected": 0,
+          "toggle_default_state": false,
+          "reset_on_focus_lost": false,
+          "focus_enabled": true,
+          "hover_enabled": true,
+          "focus_identifier": "jf_tab_focus_information",
+          "focus_change_up": "jf_tab_focus_realm",
+          "focus_change_down": "jf_tab_focus_information",
+          "toggle_on_button": "toggle.toggle_on",
+          "toggle_off_button": "toggle.toggle_off",
+          "property_bag": {
+            "#toggle_state": false
+          },
+          "bindings": [
+            {
+              "binding_name": "#toggle_state",
+              "binding_type": "none",
+              "binding_condition": "always"
+            },
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_name": "(not ((#form_text - '[JF:tab:information]') = #form_text))",
+              "binding_name_override": "#toggle_state",
+              "binding_type": "none",
+              "binding_condition": "once"
+            }
           ],
-          "shadow": false
+          "button_mappings": [
+            {
+              "from_button_id": "button.menu_select",
+              "to_button_id": "button.menu_select",
+              "mapping_type": "pressed"
+            },
+            {
+              "from_button_id": "button.menu_ok",
+              "to_button_id": "button.menu_ok",
+              "mapping_type": "focused"
+            }
+          ],
+          "unchecked_control": "unchecked",
+          "checked_control": "checked",
+          "unchecked_hover_control": "unchecked_hover",
+          "checked_hover_control": "checked_hover",
+          "tts_name": "Information",
+          "controls": [
+            {
+              "unchecked": {
+                "type": "panel",
+                "size": [
+                  88,
+                  28
+                ],
+                "controls": [
+                  {
+                    "face": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/tab_information_unchecked",
+                      "size": [
+                        88,
+                        28
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "icon": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/icons/information",
+                      "size": [
+                        20,
+                        20
+                      ],
+                      "offset": [
+                        6,
+                        4
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 4
+                    }
+                  },
+                  {
+                    "caption": {
+                      "type": "label",
+                      "text": "Information",
+                      "size": [
+                        55,
+                        12
+                      ],
+                      "offset": [
+                        29,
+                        9
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.95,
+                        0.9,
+                        0.78
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "checked": {
+                "type": "panel",
+                "size": [
+                  88,
+                  28
+                ],
+                "controls": [
+                  {
+                    "face": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/tab_information_checked",
+                      "size": [
+                        88,
+                        28
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "icon": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/icons/information",
+                      "size": [
+                        20,
+                        20
+                      ],
+                      "offset": [
+                        6,
+                        4
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 4
+                    }
+                  },
+                  {
+                    "caption": {
+                      "type": "label",
+                      "text": "Information",
+                      "size": [
+                        55,
+                        12
+                      ],
+                      "offset": [
+                        29,
+                        9
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.95,
+                        0.9,
+                        0.78
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "unchecked_hover": {
+                "type": "panel",
+                "size": [
+                  88,
+                  28
+                ],
+                "controls": [
+                  {
+                    "face": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/tab_information_unchecked_hover",
+                      "size": [
+                        88,
+                        28
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "icon": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/icons/information",
+                      "size": [
+                        20,
+                        20
+                      ],
+                      "offset": [
+                        6,
+                        4
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 4
+                    }
+                  },
+                  {
+                    "caption": {
+                      "type": "label",
+                      "text": "Information",
+                      "size": [
+                        55,
+                        12
+                      ],
+                      "offset": [
+                        29,
+                        9
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.95,
+                        0.9,
+                        0.78
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "checked_hover": {
+                "type": "panel",
+                "size": [
+                  88,
+                  28
+                ],
+                "controls": [
+                  {
+                    "face": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/tab_information_checked_hover",
+                      "size": [
+                        88,
+                        28
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "icon": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/icons/information",
+                      "size": [
+                        20,
+                        20
+                      ],
+                      "offset": [
+                        6,
+                        4
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 4
+                    }
+                  },
+                  {
+                    "caption": {
+                      "type": "label",
+                      "text": "Information",
+                      "size": [
+                        55,
+                        12
+                      ],
+                      "offset": [
+                        29,
+                        9
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.95,
+                        0.9,
+                        0.78
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         }
       },
       {
@@ -1727,6 +2145,35 @@
               "source_property_name": "#toggle_state",
               "target_property_name": "#enabled",
               "source_control_name": "jf_tab_realm"
+            }
+          ]
+        }
+      },
+      {
+        "information@jagsby_frontier.jf_information_content": {
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            110,
+            62
+          ],
+          "size": [
+            257,
+            158
+          ],
+          "layer": 5,
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_property_name": "#toggle_state",
+              "target_property_name": "#visible",
+              "source_control_name": "jf_tab_information"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "#toggle_state",
+              "target_property_name": "#enabled",
+              "source_control_name": "jf_tab_information"
             }
           ]
         }
@@ -5381,6 +5828,91 @@
         "binding_type": "view",
         "source_property_name": "(not ((#record_text - '[JF:data:tier]') = #record_text))",
         "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_information_content": {
+    "type": "panel",
+    "size": [
+      257,
+      158
+    ],
+    "controls": [
+      {
+        "heading": {
+          "type": "label",
+          "text": "Information",
+          "size": [
+            233,
+            14
+          ],
+          "offset": [
+            8,
+            8
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.95,
+          "color": [
+            0.94,
+            0.79,
+            0.45
+          ],
+          "shadow": false
+        }
+      },
+      {
+        "rule": {
+          "type": "image",
+          "texture": "textures/ui/frontier/solid",
+          "size": [
+            233,
+            1
+          ],
+          "offset": [
+            8,
+            29
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 2,
+          "color": [
+            0.65,
+            0.53,
+            0.31
+          ]
+        }
+      },
+      {
+        "placeholder": {
+          "type": "label",
+          "text": "Guides and reference will appear here.",
+          "size": [
+            233,
+            30
+          ],
+          "offset": [
+            8,
+            40
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.8,
+          "color": [
+            0.96,
+            0.91,
+            0.79
+          ],
+          "shadow": false
+        }
       }
     ]
   },

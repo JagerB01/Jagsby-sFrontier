@@ -69,3 +69,12 @@ The transparent ornament is separate from the procedural base panel.
 village crest. It was mechanically nearest-neighbor resized to 380×240 with
 binary alpha. The companion procedural base is RGBA so its exterior does not
 obscure the transparent border silhouette.
+
+## Realm and Information sprites (0.0.22)
+
+User selected row A for both from original concept sheet
+`exec-1e6417b9-771e-443b-a599-b58c478715f0.png`. Transparent extraction
+generation `exec-42b0b859-cb6a-40fb-adf1-5a45c14bc2a5.png` was split into
+two square cells, trimmed, nearest-neighbor resized to fit 60×60, and centered
+on transparent 64×64 PNG canvases with binary alpha. These replace the former
+procedurally painted Realm sidebar icon.

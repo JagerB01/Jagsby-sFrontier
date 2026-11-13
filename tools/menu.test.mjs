@@ -52,14 +52,17 @@ test('standalone charter definitions are registered separately with a minimal va
   assert.equal(JSON.stringify(ui.jf_dashboard).includes('long_form_dynamic_buttons_panel'),false);
 });
 
-test('four local sidebar toggles control custom pages without submitting form buttons', async () => {
+test('five local sidebar toggles control custom pages without submitting form buttons', async () => {
   const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
-  for(const name of ['overview','research','production','realm']) {
+  for(const name of ['overview','research','production','realm','information']) {
     const tab=ui.jf_dashboard.controls.find(c=>c['jf_tab_'+name])['jf_tab_'+name];
     assert.equal(tab.type,'toggle');
+    assert.ok(tab.offset[1]+tab.size[1]<=220);
+    if(name==='realm')assert.equal(tab.focus_change_down,'jf_tab_focus_information');
+    if(name==='information')assert.equal(tab.focus_change_up,'jf_tab_focus_realm');
     assert.equal(tab.radio_toggle_group,true);
     assert.equal(JSON.stringify(tab).includes('button.form_button_click'),false);
-    const key=['overview','research','realm'].includes(name)?name+'@jagsby_frontier.jf_'+name+'_content':name+'@common.scrolling_panel';
+    const key=['overview','research','realm','information'].includes(name)?name+'@jagsby_frontier.jf_'+name+'_content':name+'@common.scrolling_panel';
     const page=ui.jf_dashboard.controls.find(c=>c[key])[key];
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#visible'));
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#enabled'));
@@ -189,7 +192,7 @@ test('Research subtabs isolate the correct native action factories',async()=>{
 test('approved transparent sprites appear in every state of their sidebar tabs',async()=>{
   const ui=await loadUI();
   const dashboard=children(ui.jf_dashboard);
-  for(const name of ['overview','research','production']) {
+  for(const name of ['overview','research','production','realm','information']) {
     for(const state of dashboard['jf_tab_'+name].controls) {
       const icon=children(Object.values(state)[0]).icon;
       assert.equal(icon.texture,'textures/ui/frontier/icons/'+name);

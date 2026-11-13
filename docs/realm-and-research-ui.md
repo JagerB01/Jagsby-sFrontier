@@ -144,3 +144,12 @@ The procedural base supports RGBA and leaves the exterior transparent. Menu
 surfaces use harvest browns and cream, wheat-gold accents and aged-silver
 edges; controls use subdued warm crimson. Neither the village data nor the
 research action bindings changed.
+
+## 0.0.22 Realm and Information icons
+
+User-selected option A icons are transparent 64×64 PNGs under
+`textures/ui/frontier/icons/{realm,information}.png`. They appear at 20×20
+UI units alongside the existing sidebar sprites. Information is the fifth
+local toggle immediately below Realm, with matching focus links and a fixed
+placeholder page for future guides. No form record indexes or gameplay
+actions changed. Footer branding was removed to leave the fifth tab clear.

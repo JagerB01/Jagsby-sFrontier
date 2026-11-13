@@ -42,6 +42,7 @@ export const CHARTER_LAYOUT = {
     "Overview",
     "Research",
     "Production",
-    "Realm"
+    "Realm",
+    "Information"
   ]
 };

@@ -75,7 +75,7 @@ def build():
     c.rect(103, 60, 1, 159, (150, 144, 121))
     c.rect(108, 59, 260, 161, (54, 41, 28))
     c.save("charter_frame.png")
-    for name in ["overview", "research", "production", "realm"]:
+    for name in ["overview", "research", "production", "realm", "information"]:
         for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:
             selected = state.startswith("checked")
             hover = "hover" in state
@@ -89,12 +89,6 @@ def build():
             c.rect(2, 4, 88, 27, face)
             c.rect(4, 3, 84, 1, (155, 71, 56) if hover else (124, 53, 48))
             if selected: c.rect(3, 7, 2, 21, (231, 187, 86))
-            if name == "realm":
-                c.bevel(6, 8, 17, 18, (213, 183, 124), (244, 217, 155), (91, 57, 29))
-                c.rect(14, 10, 1, 14, (155, 110, 56))
-                c.rect(8, 14, 12, 1, (155, 110, 56))
-                c.rect(10, 17, 3, 3, (99, 125, 57))
-                c.rect(17, 20, 3, 3, (147, 48, 35))
             c.save(f"tab_{name}_{state}.png")
     # Crimson research buttons with a single restrained gold edge.
     for state, face in [("default", (99, 51, 34)), ("hover", (141, 75, 43)), ("pressed", (75, 39, 29))]:
