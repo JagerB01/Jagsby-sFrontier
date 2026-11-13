@@ -86,3 +86,12 @@ unboxed text groups underneath. The portrait keeps its decorative frame.
 Population is an appended form record at index 33, preserving all previous
 action indexes and the direct native power text binding. Header and identity
 name use separate templates so their sizing and colors cannot override each other.
+
+## 0.0.17 single Overview box
+
+All six fields are contained in one right-hand 147×144 panel. Name sits above
+a divider; Tier, Size, Owner, Biome and Realm Power use aligned label/value
+rows underneath. Claim for unclaimed settlements is inside the same panel.
+The framed 96×168 portrait is on the left. Population uses raw native form text
+binding, like Realm Power, to avoid the blank marker-expression value observed
+in the supplied 0.0.16 screenshot. No new census scans were added.

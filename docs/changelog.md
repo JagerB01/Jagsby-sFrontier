@@ -1,3 +1,10 @@
+# 0.0.17
+
+- Consolidated all Overview information into one right-hand box: village name, tier, size, owner, biome and Realm Power. Framed portrait remains on the left.
+- Aligned compact label/value rows inside the single box; no information sits outside it.
+- Size now uses direct native text binding, matching the working power binding, instead of marker-removal expressions.
+- Build and 32 automated checks passed; native rendering requires in-game verification.
+
 # 0.0.16
 
 - Replaced the four oversized Overview cards with one compact village identity box containing name, tier and size (nearby villager count).

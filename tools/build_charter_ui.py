@@ -90,7 +90,7 @@ def data_template(index, size, scale=0.8):
         view(f"(#record_text - '{marker}')", "#text"),
         view(f"(not ((#record_text - '{marker}') = #record_text))"),
     ]
-    if key == "census":
+    if key in ("census", "population"):
         text["text"] = "#form_button_text"
         text["property_bag"] = {"#form_button_text": "Unavailable"}
         text["bindings"] = [
@@ -391,28 +391,27 @@ def build():
     GENERATED_CONTROLS["jf_identity_name"] = GENERATED_CONTROLS["jf_data_overview"]
     GENERATED_CONTROLS["jf_data_overview"] = header_name
     name["name"]["controls"] = [control("record@jagsby_frontier.jf_identity_name", {"collection_index": DATA["overview"]})]
-    identity = control("identity", {"type": "panel", "size": [147, 64], "offset": [106, 4],
+    rows = []
+    for key, title, y in [("tier", "Tier", 35), ("population", "Size", 52),
+                          ("owner", "Owner", 69), ("biomes", "Biome", 86),
+                          ("census", "Realm Power", 103)]:
+        rows += [control(key + "_label", label(title, [50, 11], (8, y), scale=0.75)),
+                 overview_value(key, DATA[key], [62, y], [77, 12], scale=0.8)]
+    claim = action("claim", ACTIONS["claim"], "Claim", width=42, height=16)["claim"]
+    claim.update({"offset": [97, 121], "anchor_from": "top_left", "anchor_to": "top_left",
+                  "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
+    identity = control("identity", {"type": "panel", "size": [147, 144], "offset": [106, 4],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("edge", image("frontier/solid", [147, 64], color=[0.70, 0.54, 0.33])),
-            control("paper", image("frontier/solid", [145, 62], (1, 1), 1, [0.90, 0.80, 0.60])),
+            control("edge", image("frontier/solid", [147, 144], color=[0.70, 0.54, 0.33])),
+            control("paper", image("frontier/solid", [145, 142], (1, 1), 1, [0.90, 0.80, 0.60])),
             name,
             control("divider", image("frontier/solid", [131, 1], (8, 25), 2, [0.73, 0.57, 0.34])),
-            control("tier_label", label("Tier", [35, 10], (8, 32), scale=0.75)),
-            overview_value("tier", DATA["tier"], [48, 32], [91, 11], scale=0.8),
-            control("size_label", label("Size", [35, 10], (8, 47), scale=0.75)),
-            overview_value("population", DATA["population"], [48, 47], [91, 11], scale=0.8),
+            *rows, control("claim", claim),
         ]})
-    details = []
-    for key, title, y in [("owner", "Owner", 79), ("biomes", "Biome", 103), ("census", "Realm Power", 127)]:
-        details += [control(key + "_label", label(title, [131, 9], (114, y), scale=0.7)),
-                    overview_value(key, DATA[key], [114, y + 10], [131, 12], scale=0.85)]
-    claim = action("claim", ACTIONS["claim"], "Claim", width=42, height=16)["claim"]
-    claim.update({"offset": [203, 85], "anchor_from": "top_left", "anchor_to": "top_left",
-                  "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [96, 168]),
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0]}),
-        identity, *details, control("claim", claim),
+        identity,
     ]}
     GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left"})
     realm_controls = [research_tab("mine", 0, "realm", "My Settlements"), research_tab("all", 1, "realm", "All Settlements")]

@@ -1794,7 +1794,7 @@
           "type": "panel",
           "size": [
             147,
-            64
+            144
           ],
           "offset": [
             106,
@@ -1809,7 +1809,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   147,
-                  64
+                  144
                 ],
                 "offset": [
                   0,
@@ -1833,7 +1833,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   145,
-                  62
+                  142
                 ],
                 "offset": [
                   1,
@@ -1905,12 +1905,12 @@
                 "type": "label",
                 "text": "Tier",
                 "size": [
-                  35,
-                  10
+                  50,
+                  11
                 ],
                 "offset": [
                   8,
-                  32
+                  35
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -1931,8 +1931,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  91,
-                  11
+                  77,
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -1945,23 +1945,23 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  48,
-                  32
+                  62,
+                  35
                 ],
                 "clips_children": true
               }
             },
             {
-              "size_label": {
+              "population_label": {
                 "type": "label",
                 "text": "Size",
                 "size": [
-                  35,
-                  10
+                  50,
+                  11
                 ],
                 "offset": [
                   8,
-                  47
+                  52
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -1982,8 +1982,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  91,
-                  11
+                  77,
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -1996,205 +1996,205 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  48,
-                  47
+                  62,
+                  52
                 ],
                 "clips_children": true
               }
-            }
-          ]
-        }
-      },
-      {
-        "owner_label": {
-          "type": "label",
-          "text": "Owner",
-          "size": [
-            131,
-            9
-          ],
-          "offset": [
-            114,
-            79
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 8,
-          "font_type": "unicode",
-          "font_size": "normal",
-          "font_scale_factor": 0.7,
-          "color": [
-            0.2,
-            0.12,
-            0.055
-          ],
-          "shadow": false
-        }
-      },
-      {
-        "owner": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            131,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_owner": {
-                "collection_index": 25
-              }
-            }
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "offset": [
-            114,
-            89
-          ],
-          "clips_children": true
-        }
-      },
-      {
-        "biomes_label": {
-          "type": "label",
-          "text": "Biome",
-          "size": [
-            131,
-            9
-          ],
-          "offset": [
-            114,
-            103
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 8,
-          "font_type": "unicode",
-          "font_size": "normal",
-          "font_scale_factor": 0.7,
-          "color": [
-            0.2,
-            0.12,
-            0.055
-          ],
-          "shadow": false
-        }
-      },
-      {
-        "biomes": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            131,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_biomes": {
-                "collection_index": 1
-              }
-            }
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "offset": [
-            114,
-            113
-          ],
-          "clips_children": true
-        }
-      },
-      {
-        "census_label": {
-          "type": "label",
-          "text": "Realm Power",
-          "size": [
-            131,
-            9
-          ],
-          "offset": [
-            114,
-            127
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 8,
-          "font_type": "unicode",
-          "font_size": "normal",
-          "font_scale_factor": 0.7,
-          "color": [
-            0.2,
-            0.12,
-            0.055
-          ],
-          "shadow": false
-        }
-      },
-      {
-        "census": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            131,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_census": {
-                "collection_index": 2
-              }
-            }
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "offset": [
-            114,
-            137
-          ],
-          "clips_children": true
-        }
-      },
-      {
-        "claim": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            42,
-            19
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_action_claim": {
-                "collection_index": 28
-              }
-            }
-          ],
-          "offset": [
-            203,
-            85
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 12,
-          "bindings": [
-            {
-              "binding_name": "#form_text",
-              "binding_type": "none"
             },
             {
-              "binding_type": "view",
-              "source_property_name": "(not ((#form_text - '[JF:unclaimed]') = #form_text))",
-              "target_property_name": "#visible"
+              "owner_label": {
+                "type": "label",
+                "text": "Owner",
+                "size": [
+                  50,
+                  11
+                ],
+                "offset": [
+                  8,
+                  69
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.75,
+                "color": [
+                  0.2,
+                  0.12,
+                  0.055
+                ],
+                "shadow": false
+              }
             },
             {
-              "binding_type": "view",
-              "source_property_name": "(not ((#form_text - '[JF:unclaimed]') = #form_text))",
-              "target_property_name": "#enabled"
+              "owner": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  77,
+                  12
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_owner": {
+                      "collection_index": 25
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  62,
+                  69
+                ],
+                "clips_children": true
+              }
+            },
+            {
+              "biomes_label": {
+                "type": "label",
+                "text": "Biome",
+                "size": [
+                  50,
+                  11
+                ],
+                "offset": [
+                  8,
+                  86
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.75,
+                "color": [
+                  0.2,
+                  0.12,
+                  0.055
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "biomes": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  77,
+                  12
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_biomes": {
+                      "collection_index": 1
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  62,
+                  86
+                ],
+                "clips_children": true
+              }
+            },
+            {
+              "census_label": {
+                "type": "label",
+                "text": "Realm Power",
+                "size": [
+                  50,
+                  11
+                ],
+                "offset": [
+                  8,
+                  103
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.75,
+                "color": [
+                  0.2,
+                  0.12,
+                  0.055
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "census": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  77,
+                  12
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_census": {
+                      "collection_index": 2
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  62,
+                  103
+                ],
+                "clips_children": true
+              }
+            },
+            {
+              "claim": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  42,
+                  19
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_action_claim": {
+                      "collection_index": 28
+                    }
+                  }
+                ],
+                "offset": [
+                  97,
+                  121
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 12,
+                "bindings": [
+                  {
+                    "binding_name": "#form_text",
+                    "binding_type": "none"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:unclaimed]') = #form_text))",
+                    "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:unclaimed]') = #form_text))",
+                    "target_property_name": "#enabled"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -9685,8 +9685,8 @@
     "type": "label",
     "text": "#text",
     "size": [
-      91,
-      11
+      77,
+      12
     ],
     "offset": [
       0,
@@ -9730,10 +9730,10 @@
   },
   "jf_data_population": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      91,
-      11
+      77,
+      12
     ],
     "offset": [
       0,
@@ -9758,27 +9758,19 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:population]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:population]') = #record_text))",
-        "target_property_name": "#visible"
       }
-    ]
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
   },
   "jf_data_owner": {
     "type": "label",
     "text": "#text",
     "size": [
-      131,
+      77,
       12
     ],
     "offset": [
@@ -9790,7 +9782,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.85,
+    "font_scale_factor": 0.8,
     "color": [
       0.2,
       0.12,
@@ -9824,7 +9816,7 @@
     "type": "label",
     "text": "#text",
     "size": [
-      131,
+      77,
       12
     ],
     "offset": [
@@ -9836,7 +9828,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.85,
+    "font_scale_factor": 0.8,
     "color": [
       0.2,
       0.12,
@@ -9870,7 +9862,7 @@
     "type": "label",
     "text": "#form_button_text",
     "size": [
-      131,
+      77,
       12
     ],
     "offset": [
@@ -9882,7 +9874,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.85,
+    "font_scale_factor": 0.8,
     "color": [
       0.2,
       0.12,
