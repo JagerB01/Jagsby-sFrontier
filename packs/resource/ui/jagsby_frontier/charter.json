@@ -143,8 +143,8 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            25,
-            13
+            30,
+            34
           ],
           "clips_children": true
         }
@@ -158,8 +158,8 @@
             8
           ],
           "offset": [
-            25,
-            25
+            30,
+            46
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -184,7 +184,7 @@
           ],
           "offset": [
             12,
-            48
+            62
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -552,7 +552,7 @@
           ],
           "offset": [
             12,
-            80
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -920,7 +920,7 @@
           ],
           "offset": [
             12,
-            112
+            126
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -1288,7 +1288,7 @@
           ],
           "offset": [
             12,
-            144
+            158
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -1581,7 +1581,7 @@
           ],
           "offset": [
             10,
-            216
+            205
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -1603,11 +1603,11 @@
           "anchor_to": "top_left",
           "offset": [
             110,
-            47
+            62
           ],
           "size": [
             257,
-            177
+            158
           ],
           "layer": 5,
           "bindings": [
@@ -1632,11 +1632,11 @@
           "anchor_to": "top_left",
           "offset": [
             110,
-            47
+            62
           ],
           "size": [
             257,
-            177
+            158
           ],
           "layer": 5,
           "bindings": [
@@ -1661,11 +1661,11 @@
           "anchor_to": "top_left",
           "offset": [
             110,
-            47
+            62
           ],
           "size": [
             257,
-            177
+            158
           ],
           "layer": 5,
           "$show_background": false,
@@ -1708,11 +1708,11 @@
           "anchor_to": "top_left",
           "offset": [
             110,
-            47
+            62
           ],
           "size": [
             257,
-            177
+            158
           ],
           "layer": 5,
           "bindings": [
@@ -1751,7 +1751,7 @@
           "anchor_to": "top_left",
           "offset": [
             289,
-            14
+            35
           ],
           "layer": 25
         }
@@ -1762,7 +1762,7 @@
     "type": "panel",
     "size": [
       257,
-      177
+      158
     ],
     "controls": [
       {
@@ -1770,8 +1770,8 @@
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
-            96,
-            168
+            90,
+            158
           ],
           "collection_name": "form_buttons",
           "controls": [
@@ -1784,7 +1784,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            161,
+            167,
             0
           ]
         }
@@ -1821,9 +1821,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.53,
-                  0.52,
-                  0.46
+                  0.65,
+                  0.63,
+                  0.54
                 ]
               }
             },
@@ -1845,8 +1845,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
+                  0.29,
                   0.22,
-                  0.19,
                   0.14
                 ]
               }
@@ -1919,9 +1919,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
+                  0.81,
                   0.76,
-                  0.75,
-                  0.68
+                  0.64
                 ],
                 "shadow": false
               }
@@ -1970,9 +1970,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
+                  0.81,
                   0.76,
-                  0.75,
-                  0.68
+                  0.64
                 ],
                 "shadow": false
               }
@@ -2037,9 +2037,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
+                  0.81,
                   0.76,
-                  0.75,
-                  0.68
+                  0.64
                 ],
                 "shadow": false
               }
@@ -2088,9 +2088,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
+                  0.81,
                   0.76,
-                  0.75,
-                  0.68
+                  0.64
                 ],
                 "shadow": false
               }
@@ -2170,7 +2170,7 @@
     "type": "panel",
     "size": [
       257,
-      177
+      158
     ],
     "controls": [
       {
@@ -2775,7 +2775,7 @@
           ],
           "size": [
             254,
-            150
+            131
           ],
           "bindings": [
             {
@@ -2803,7 +2803,7 @@
           ],
           "size": [
             254,
-            150
+            131
           ],
           "bindings": [
             {
@@ -2884,9 +2884,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  0.92,
-                  0.9,
-                  0.84
+                  0.96,
+                  0.91,
+                  0.79
                 ],
                 "shadow": false
               }
@@ -2920,8 +2920,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
+                  0.29,
                   0.22,
-                  0.19,
                   0.14
                 ]
               }
@@ -3040,9 +3040,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  0.92,
-                  0.9,
-                  0.84
+                  0.96,
+                  0.91,
+                  0.79
                 ],
                 "shadow": false
               }
@@ -3076,8 +3076,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
+                  0.29,
                   0.22,
-                  0.19,
                   0.14
                 ]
               }
@@ -3135,8 +3135,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
+                  0.29,
                   0.22,
-                  0.19,
                   0.14
                 ]
               }
@@ -3192,7 +3192,7 @@
     "type": "panel",
     "size": [
       254,
-      150
+      131
     ],
     "controls": [
       {
@@ -3200,7 +3200,7 @@
           "type": "panel",
           "size": [
             254,
-            47
+            40
           ],
           "offset": [
             0,
@@ -3215,7 +3215,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   254,
-                  47
+                  40
                 ],
                 "offset": [
                   0,
@@ -3227,8 +3227,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
+                  0.29,
                   0.22,
-                  0.19,
                   0.14
                 ]
               }
@@ -3239,7 +3239,7 @@
                 "orientation": "vertical",
                 "size": [
                   166,
-                  42
+                  34
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -3275,7 +3275,7 @@
                 ],
                 "offset": [
                   178,
-                  13
+                  10
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left"
@@ -3289,11 +3289,11 @@
           "type": "panel",
           "size": [
             254,
-            47
+            40
           ],
           "offset": [
             0,
-            50
+            44
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -3304,7 +3304,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   254,
-                  47
+                  40
                 ],
                 "offset": [
                   0,
@@ -3316,8 +3316,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
+                  0.29,
                   0.22,
-                  0.19,
                   0.14
                 ]
               }
@@ -3328,7 +3328,7 @@
                 "orientation": "vertical",
                 "size": [
                   166,
-                  42
+                  34
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -3364,7 +3364,7 @@
                 ],
                 "offset": [
                   178,
-                  13
+                  10
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left"
@@ -3378,11 +3378,11 @@
           "type": "panel",
           "size": [
             254,
-            47
+            40
           ],
           "offset": [
             0,
-            100
+            88
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -3393,7 +3393,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   254,
-                  47
+                  40
                 ],
                 "offset": [
                   0,
@@ -3405,8 +3405,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
+                  0.29,
                   0.22,
-                  0.19,
                   0.14
                 ]
               }
@@ -3417,7 +3417,7 @@
                 "orientation": "vertical",
                 "size": [
                   166,
-                  42
+                  34
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -3453,7 +3453,7 @@
                 ],
                 "offset": [
                   178,
-                  13
+                  10
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left"
@@ -3468,7 +3468,7 @@
     "type": "panel",
     "size": [
       254,
-      150
+      131
     ],
     "controls": [
       {
@@ -3477,11 +3477,11 @@
           "texture": "textures/ui/frontier/solid",
           "size": [
             1,
-            6
+            7
           ],
           "offset": [
             127,
-            40
+            34
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3505,7 +3505,7 @@
           ],
           "offset": [
             61,
-            45
+            40
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3525,11 +3525,11 @@
           "texture": "textures/ui/frontier/solid",
           "size": [
             1,
-            10
+            7
           ],
           "offset": [
             61,
-            45
+            40
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3549,11 +3549,11 @@
           "texture": "textures/ui/frontier/solid",
           "size": [
             1,
-            10
+            7
           ],
           "offset": [
             193,
-            45
+            40
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3573,11 +3573,11 @@
           "texture": "textures/ui/frontier/solid",
           "size": [
             1,
-            15
+            13
           ],
           "offset": [
             61,
-            95
+            81
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3597,11 +3597,11 @@
           "texture": "textures/ui/frontier/solid",
           "size": [
             1,
-            15
+            13
           ],
           "offset": [
             193,
-            95
+            81
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -3632,11 +3632,11 @@
           "layer": 8,
           "font_type": "unicode",
           "font_size": "normal",
-          "font_scale_factor": 0.65,
+          "font_scale_factor": 0.555,
           "color": [
-            0.92,
-            0.9,
-            0.84
+            0.96,
+            0.91,
+            0.79
           ],
           "shadow": false
         }
@@ -3651,18 +3651,18 @@
           ],
           "offset": [
             0,
-            44
+            36
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "layer": 8,
           "font_type": "unicode",
           "font_size": "normal",
-          "font_scale_factor": 0.65,
+          "font_scale_factor": 0.555,
           "color": [
-            0.92,
-            0.9,
-            0.84
+            0.96,
+            0.91,
+            0.79
           ],
           "shadow": false
         }
@@ -3677,18 +3677,18 @@
           ],
           "offset": [
             0,
-            99
+            83
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "layer": 8,
           "font_type": "unicode",
           "font_size": "normal",
-          "font_scale_factor": 0.65,
+          "font_scale_factor": 0.555,
           "color": [
-            0.92,
-            0.9,
-            0.84
+            0.96,
+            0.91,
+            0.79
           ],
           "shadow": false
         }
@@ -3698,7 +3698,7 @@
           "type": "button",
           "size": [
             122,
-            40
+            34
           ],
           "offset": [
             66,
@@ -3719,7 +3719,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -3728,7 +3728,7 @@
                       "texture": "textures/ui/frontier/research_button_default",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -3746,12 +3746,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/settlement_charters",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -3766,11 +3766,11 @@
                       "text": "Settlement Charters",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -3792,18 +3792,18 @@
                       "text": "More settlements\nRepeatable",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -3820,7 +3820,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -3829,7 +3829,7 @@
                       "texture": "textures/ui/frontier/research_button_hover",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -3847,12 +3847,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/settlement_charters",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -3867,11 +3867,11 @@
                       "text": "Settlement Charters",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -3893,18 +3893,18 @@
                       "text": "More settlements\nRepeatable",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -3921,7 +3921,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -3930,7 +3930,7 @@
                       "texture": "textures/ui/frontier/research_button_pressed",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -3948,12 +3948,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/settlement_charters",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -3968,11 +3968,11 @@
                       "text": "Settlement Charters",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -3994,18 +3994,18 @@
                       "text": "More settlements\nRepeatable",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -4025,11 +4025,11 @@
           "type": "button",
           "size": [
             122,
-            40
+            34
           ],
           "offset": [
             0,
-            55
+            47
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -4046,7 +4046,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -4055,7 +4055,7 @@
                       "texture": "textures/ui/frontier/research_button_default",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -4073,12 +4073,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/frontier_mandate",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -4093,11 +4093,11 @@
                       "text": "Frontier Mandate",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4119,18 +4119,18 @@
                       "text": "Distant settlements\n5 levels",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -4147,7 +4147,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -4156,7 +4156,7 @@
                       "texture": "textures/ui/frontier/research_button_hover",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -4174,12 +4174,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/frontier_mandate",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -4194,11 +4194,11 @@
                       "text": "Frontier Mandate",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4220,18 +4220,18 @@
                       "text": "Distant settlements\n5 levels",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -4248,7 +4248,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -4257,7 +4257,7 @@
                       "texture": "textures/ui/frontier/research_button_pressed",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -4275,12 +4275,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/frontier_mandate",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -4295,11 +4295,11 @@
                       "text": "Frontier Mandate",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4321,18 +4321,18 @@
                       "text": "Distant settlements\n5 levels",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -4352,11 +4352,11 @@
           "type": "button",
           "size": [
             122,
-            40
+            34
           ],
           "offset": [
             132,
-            55
+            47
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -4373,7 +4373,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -4382,7 +4382,7 @@
                       "texture": "textures/ui/frontier/research_button_default",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -4400,12 +4400,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/stewardship",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -4420,11 +4420,11 @@
                       "text": "Stewardship",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4446,18 +4446,18 @@
                       "text": "Higher local research\nRepeatable",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -4474,7 +4474,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -4483,7 +4483,7 @@
                       "texture": "textures/ui/frontier/research_button_hover",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -4501,12 +4501,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/stewardship",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -4521,11 +4521,11 @@
                       "text": "Stewardship",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4547,18 +4547,18 @@
                       "text": "Higher local research\nRepeatable",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -4575,7 +4575,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -4584,7 +4584,7 @@
                       "texture": "textures/ui/frontier/research_button_pressed",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -4602,12 +4602,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/stewardship",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -4622,11 +4622,11 @@
                       "text": "Stewardship",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4648,18 +4648,18 @@
                       "text": "Higher local research\nRepeatable",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -4679,11 +4679,11 @@
           "type": "button",
           "size": [
             122,
-            40
+            34
           ],
           "offset": [
             0,
-            110
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -4700,7 +4700,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -4709,7 +4709,7 @@
                       "texture": "textures/ui/frontier/research_button_default",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -4727,12 +4727,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/reclamation",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -4747,11 +4747,11 @@
                       "text": "Reclamation",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4773,18 +4773,18 @@
                       "text": "Frontier production\n5 levels proposed",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -4801,7 +4801,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -4810,7 +4810,7 @@
                       "texture": "textures/ui/frontier/research_button_hover",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -4828,12 +4828,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/reclamation",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -4848,11 +4848,11 @@
                       "text": "Reclamation",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4874,18 +4874,18 @@
                       "text": "Frontier production\n5 levels proposed",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -4902,7 +4902,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -4911,7 +4911,7 @@
                       "texture": "textures/ui/frontier/research_button_pressed",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -4929,12 +4929,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/reclamation",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -4949,11 +4949,11 @@
                       "text": "Reclamation",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -4975,18 +4975,18 @@
                       "text": "Frontier production\n5 levels proposed",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -5006,11 +5006,11 @@
           "type": "button",
           "size": [
             122,
-            40
+            34
           ],
           "offset": [
             132,
-            110
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -5027,7 +5027,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -5036,7 +5036,7 @@
                       "texture": "textures/ui/frontier/research_button_default",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -5054,12 +5054,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/hoards",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -5074,11 +5074,11 @@
                       "text": "Hoards",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5100,18 +5100,18 @@
                       "text": "Shared storage\nRepeatable",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -5128,7 +5128,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -5137,7 +5137,7 @@
                       "texture": "textures/ui/frontier/research_button_hover",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -5155,12 +5155,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/hoards",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -5175,11 +5175,11 @@
                       "text": "Hoards",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5201,18 +5201,18 @@
                       "text": "Shared storage\nRepeatable",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -5229,7 +5229,7 @@
                 "type": "panel",
                 "size": [
                   122,
-                  40
+                  34
                 ],
                 "controls": [
                   {
@@ -5238,7 +5238,7 @@
                       "texture": "textures/ui/frontier/research_button_pressed",
                       "size": [
                         122,
-                        40
+                        34
                       ],
                       "offset": [
                         0,
@@ -5256,12 +5256,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/research/hoards",
                       "size": [
-                        32,
-                        32
+                        28,
+                        28
                       ],
                       "offset": [
                         4,
-                        4
+                        3
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -5276,11 +5276,11 @@
                       "text": "Hoards",
                       "size": [
                         78,
-                        12
+                        11
                       ],
                       "offset": [
                         39,
-                        6
+                        4
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
@@ -5302,18 +5302,18 @@
                       "text": "Shared storage\nRepeatable",
                       "size": [
                         78,
-                        17
+                        13
                       ],
                       "offset": [
                         39,
-                        20
+                        18
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.6,
+                      "font_scale_factor": 0.55,
                       "color": [
                         0.94,
                         0.8,
@@ -5334,8 +5334,8 @@
     "type": "image",
     "texture": "textures/ui/frontier/settlements/outpost",
     "size": [
-      96,
-      168
+      90,
+      158
     ],
     "offset": [
       0,
@@ -5388,7 +5388,7 @@
     "type": "panel",
     "size": [
       257,
-      150
+      131
     ],
     "controls": [
       {
@@ -5396,7 +5396,7 @@
           "type": "panel",
           "size": [
             254,
-            121
+            103
           ],
           "controls": [
             {
@@ -5405,7 +5405,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   254,
-                  119
+                  101
                 ],
                 "offset": [
                   0,
@@ -5417,8 +5417,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
+                  0.29,
                   0.22,
-                  0.19,
                   0.14
                 ]
               }
@@ -5429,7 +5429,7 @@
                 "orientation": "vertical",
                 "size": [
                   240,
-                  113
+                  95
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -5468,7 +5468,7 @@
           ],
           "offset": [
             0,
-            125
+            106
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left"
@@ -5492,7 +5492,7 @@
           ],
           "offset": [
             129,
-            125
+            106
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left"
@@ -5504,7 +5504,7 @@
     "type": "panel",
     "size": [
       257,
-      150
+      131
     ],
     "controls": [
       {
@@ -5512,7 +5512,7 @@
           "type": "panel",
           "size": [
             254,
-            121
+            103
           ],
           "controls": [
             {
@@ -5521,7 +5521,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   254,
-                  119
+                  101
                 ],
                 "offset": [
                   0,
@@ -5533,8 +5533,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
+                  0.29,
                   0.22,
-                  0.19,
                   0.14
                 ]
               }
@@ -5545,7 +5545,7 @@
                 "orientation": "vertical",
                 "size": [
                   240,
-                  113
+                  95
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -5584,7 +5584,7 @@
           ],
           "offset": [
             0,
-            125
+            106
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left"
@@ -5608,7 +5608,7 @@
           ],
           "offset": [
             129,
-            125
+            106
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left"
@@ -5620,7 +5620,7 @@
     "type": "panel",
     "size": [
       257,
-      177
+      158
     ],
     "controls": [
       {
@@ -6225,7 +6225,7 @@
           "anchor_to": "top_left",
           "size": [
             257,
-            150
+            131
           ],
           "bindings": [
             {
@@ -6253,7 +6253,7 @@
           "anchor_to": "top_left",
           "size": [
             257,
-            150
+            131
           ],
           "bindings": [
             {
@@ -6327,8 +6327,8 @@
             17
           ],
           "offset": [
-            25,
-            14
+            30,
+            34
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -6360,11 +6360,11 @@
           "anchor_to": "top_left",
           "offset": [
             110,
-            47
+            62
           ],
           "size": [
             257,
-            177
+            158
           ],
           "layer": 5,
           "$show_background": false,
@@ -6466,9 +6466,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  0.92,
-                  0.9,
-                  0.84
+                  0.96,
+                  0.91,
+                  0.79
                 ],
                 "shadow": false
               }
@@ -6584,9 +6584,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.45,
-                  0.08,
-                  0.07
+                  0.39,
+                  0.2,
+                  0.13
                 ]
               }
             },
@@ -6682,9 +6682,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.62,
-                  0.14,
-                  0.1
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -6780,9 +6780,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.06,
-                  0.05
+                  0.29,
+                  0.15,
+                  0.11
                 ]
               }
             },
@@ -6933,8 +6933,8 @@
             17
           ],
           "offset": [
-            25,
-            14
+            30,
+            34
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -7074,8 +7074,8 @@
                       "anchor_to": "top_left",
                       "layer": 1,
                       "color": [
-                        0.35,
-                        0.13,
+                        0.39,
+                        0.2,
                         0.13
                       ]
                     }
@@ -7159,9 +7159,9 @@
                       "anchor_to": "top_left",
                       "layer": 1,
                       "color": [
-                        0.49,
-                        0.18,
-                        0.16
+                        0.55,
+                        0.29,
+                        0.17
                       ]
                     }
                   },
@@ -7244,8 +7244,8 @@
                       "anchor_to": "top_left",
                       "layer": 1,
                       "color": [
-                        0.27,
-                        0.1,
+                        0.29,
+                        0.15,
                         0.11
                       ]
                     }
@@ -7354,9 +7354,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -7474,8 +7474,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -7559,9 +7559,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -7644,8 +7644,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }
@@ -7773,8 +7773,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -7858,9 +7858,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -7943,8 +7943,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }
@@ -7998,9 +7998,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -8044,9 +8044,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -8164,8 +8164,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -8249,9 +8249,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -8334,8 +8334,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }
@@ -8376,7 +8376,7 @@
     "text": "#text",
     "size": [
       166,
-      42
+      34
     ],
     "offset": [
       0,
@@ -8387,11 +8387,11 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.75,
+    "font_scale_factor": 0.65,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -8509,8 +8509,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -8594,9 +8594,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -8679,8 +8679,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }
@@ -8721,7 +8721,7 @@
     "text": "#text",
     "size": [
       166,
-      42
+      34
     ],
     "offset": [
       0,
@@ -8732,11 +8732,11 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.75,
+    "font_scale_factor": 0.65,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -8854,8 +8854,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -8939,9 +8939,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -9024,8 +9024,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }
@@ -9066,7 +9066,7 @@
     "text": "#text",
     "size": [
       166,
-      42
+      34
     ],
     "offset": [
       0,
@@ -9077,11 +9077,11 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.75,
+    "font_scale_factor": 0.65,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -9199,8 +9199,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -9284,9 +9284,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -9369,8 +9369,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }
@@ -9498,9 +9498,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.45,
-                  0.08,
-                  0.07
+                  0.39,
+                  0.2,
+                  0.13
                 ]
               }
             },
@@ -9584,9 +9584,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.62,
-                  0.14,
-                  0.1
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -9670,9 +9670,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.06,
-                  0.05
+                  0.29,
+                  0.15,
+                  0.11
                 ]
               }
             },
@@ -9772,9 +9772,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -9819,9 +9819,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -9865,9 +9865,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -9911,9 +9911,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -10023,8 +10023,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -10108,9 +10108,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -10193,8 +10193,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }
@@ -10235,7 +10235,7 @@
     "text": "#text",
     "size": [
       240,
-      113
+      95
     ],
     "offset": [
       0,
@@ -10248,9 +10248,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -10368,8 +10368,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -10453,9 +10453,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -10538,8 +10538,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }
@@ -10667,8 +10667,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -10752,9 +10752,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -10837,8 +10837,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }
@@ -10879,7 +10879,7 @@
     "text": "#text",
     "size": [
       240,
-      113
+      95
     ],
     "offset": [
       0,
@@ -10892,9 +10892,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.92,
-      0.9,
-      0.84
+      0.96,
+      0.91,
+      0.79
     ],
     "shadow": false,
     "bindings": [
@@ -11012,8 +11012,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -11097,9 +11097,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -11182,8 +11182,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }
@@ -11311,8 +11311,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.35,
-                  0.13,
+                  0.39,
+                  0.2,
                   0.13
                 ]
               }
@@ -11396,9 +11396,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.49,
-                  0.18,
-                  0.16
+                  0.55,
+                  0.29,
+                  0.17
                 ]
               }
             },
@@ -11481,8 +11481,8 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.27,
-                  0.1,
+                  0.29,
+                  0.15,
                   0.11
                 ]
               }

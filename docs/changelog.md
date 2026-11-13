@@ -1,3 +1,12 @@
+# 0.0.21
+
+- Restored the user's preferred first silver-and-wheat border, including its village crest.
+- Made the base frame RGBA with a transparent exterior, preserving the ornamental silhouette instead of placing an opaque rectangle behind it.
+- Moved the header and content below the crest while keeping the original 380×240 screen bounds. Compacted research/directory panels to remain inside the frame.
+- Matched menus to the border with warm harvest browns, cream text, wheat-gold highlights, aged-silver edges and subdued crimson/terracotta controls.
+- Preserved information on the left and the framed portrait on the right.
+- Build, 29 Node checks and three Python checks passed; an offline layout render was inspected. Minecraft appearance still needs native verification.
+
 # 0.0.20
 
 - Added an original transparent ornamental border with braided aged silver, gold wheat and shaped leaf corners. The frame stays within the screen bounds and leaves header text clear.

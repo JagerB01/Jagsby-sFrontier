@@ -61,3 +61,11 @@ Source generation `exec-515f4a19-00ea-4256-b0b1-ec432479bca2.png` refines
 the earlier raised-crest concept. Mechanically nearest-neighbor resized to
 380×240 with binary alpha as `textures/ui/frontier/harvest_border.png`.
 The transparent ornament is separate from the procedural base panel.
+
+## Restored first frame (0.0.21)
+
+`harvest_border.png` now uses the user's preferred initial generation
+`exec-9fb207c7-7d27-4286-a304-508093800201.png`, including its original
+village crest. It was mechanically nearest-neighbor resized to 380×240 with
+binary alpha. The companion procedural base is RGBA so its exterior does not
+obscure the transparent border silhouette.

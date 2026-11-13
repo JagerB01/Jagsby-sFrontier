@@ -9,9 +9,12 @@ DEST = Path(__file__).resolve().parents[1] / "packs/resource/textures/ui/frontie
 class Canvas:
     def __init__(self, width, height, color):
         self.width, self.height = width, height
+        self.channels = len(color)
         self.pixels = [[color for _ in range(width)] for _ in range(height)]
 
     def rect(self, x, y, width, height, color):
+        if self.channels == 4 and len(color) == 3:
+            color = (*color, 255)
         for row in range(max(0, y), min(self.height, y + height)):
             for col in range(max(0, x), min(self.width, x + width)):
                 self.pixels[row][col] = color
@@ -33,7 +36,7 @@ class Canvas:
         def chunk(kind, data):
             return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data) & 0xffffffff)
         raw = b"".join(b"\0" + bytes(c for pixel in row for c in pixel) for row in self.pixels)
-        data = b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", self.width, self.height, 8, 2, 0, 0, 0))
+        data = b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", self.width, self.height, 8, 6 if self.channels == 4 else 2, 0, 0, 0))
         data += chunk(b"IDAT", zlib.compress(raw, 9)) + chunk(b"IEND", b"")
         (DEST / name).write_bytes(data)
 
@@ -65,20 +68,20 @@ def build():
     Canvas(1, 1, (255, 255, 255)).save("solid.png")
     # Warm dark leather/ink surfaces. The original silver-and-wheat ornament
     # is a separate transparent asset so its silhouette is not boxed in.
-    c = Canvas(380, 240, (31, 28, 23))
-    c.rect(6, 6, 368, 228, (50, 43, 32))
-    c.rect(13, 11, 354, 25, (84, 35, 29))
-    c.rect(17, 35, 346, 1, (132, 112, 73))
-    c.rect(103, 45, 1, 181, (113, 108, 91))
-    c.rect(108, 44, 260, 184, (42, 37, 29))
+    c = Canvas(380, 240, (0, 0, 0, 0))
+    c.rect(8, 30, 364, 189, (67, 48, 31))
+    c.rect(13, 31, 354, 25, (101, 47, 31))
+    c.rect(17, 55, 346, 1, (184, 146, 78))
+    c.rect(103, 60, 1, 159, (150, 144, 121))
+    c.rect(108, 59, 260, 161, (54, 41, 28))
     c.save("charter_frame.png")
     for name in ["overview", "research", "production", "realm"]:
         for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:
             selected = state.startswith("checked")
             hover = "hover" in state
-            c = Canvas(92, 35, (50, 43, 32))
+            c = Canvas(92, 35, (67, 48, 31))
             rim = (215, 178, 89) if selected else (143, 143, 132)
-            face = (128, 43, 40) if hover else ((105, 32, 32) if selected else (79, 32, 33))
+            face = (143, 73, 44) if hover else ((115, 50, 32) if selected else (83, 43, 32))
             # Two-pixel clipped corners, single rim, almost flat face.
             c.rect(2, 1, 88, 33, rim)
             c.rect(1, 3, 90, 29, rim)
@@ -94,8 +97,8 @@ def build():
                 c.rect(17, 20, 3, 3, (147, 48, 35))
             c.save(f"tab_{name}_{state}.png")
     # Crimson research buttons with a single restrained gold edge.
-    for state, face in [("default", (89, 32, 33)), ("hover", (126, 45, 41)), ("pressed", (69, 26, 28))]:
-        c = Canvas(122, 40, (42, 37, 29))
+    for state, face in [("default", (99, 51, 34)), ("hover", (141, 75, 43)), ("pressed", (75, 39, 29))]:
+        c = Canvas(122, 40, (54, 41, 28))
         c.rect(3, 1, 116, 38, (162, 157, 138))
         c.rect(1, 3, 120, 34, (162, 157, 138))
         c.rect(3, 2, 116, 36, face)

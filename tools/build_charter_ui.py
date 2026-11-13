@@ -49,7 +49,7 @@ def image(texture, size, offset=(0, 0), layer=0, color=None):
     return result
 
 
-def label(text, size, offset=(0, 0), color=(0.92, 0.90, 0.84), scale=0.8):
+def label(text, size, offset=(0, 0), color=(0.96, 0.91, 0.79), scale=0.8):
     return {"type": "label", "text": text, "size": size, "offset": list(offset),
             "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8,
             "font_type": "unicode", "font_size": "normal", "font_scale_factor": scale,
@@ -107,7 +107,7 @@ def record(name, index, height):
     text = collection_scope(template, [240, height - 8])
     text.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [7, 4]})
     return control(name, {"type": "panel", "size": [254, height], "controls": [
-        control("paper", image("frontier/solid", [254, height - 2], color=[0.22, 0.19, 0.14])),
+        control("paper", image("frontier/solid", [254, height - 2], color=[0.29, 0.22, 0.14])),
         control("data", text),
     ]})
 
@@ -121,7 +121,7 @@ def action(name, index, caption, width=254, height=21):
                                   ("pressed", "frontier_red", [0.7, 0.6, 0.5])]:
         states.append(control(state, {"type": "panel", "size": [width, height], "controls": [
             control("gold", image("frontier/solid", [width, height], color=[0.63, 0.62, 0.54])),
-            control("wood", image("frontier/solid", [width - 2, height - 2], (1, 1), 1, {"default": [0.35, 0.13, 0.13], "hover": [0.49, 0.18, 0.16], "pressed": [0.27, 0.10, 0.11]}[state])),
+            control("wood", image("frontier/solid", [width - 2, height - 2], (1, 1), 1, {"default": [0.39, 0.20, 0.13], "hover": [0.55, 0.29, 0.17], "pressed": [0.29, 0.15, 0.11]}[state])),
             control("caption", label(caption, [width - 12, 12], (6, 4), (1, 0.91, 0.65))),
         ]}))
     bindings = [
@@ -163,7 +163,7 @@ def tab(name, index):
         ]}))
     marker = f"[JF:tab:{lower}]"
     return control("jf_tab_" + lower, {
-        "type": "toggle", "size": [88, 28], "offset": [12, 48 + 32 * index],
+        "type": "toggle", "size": [88, 28], "offset": [12, 62 + 32 * index],
         "anchor_from": "top_left", "anchor_to": "top_left", "layer": 10,
         "radio_toggle_group": True, "toggle_name": "jagsby_frontier_tabs",
         "toggle_group_forced_index": index, "toggle_group_default_selected": 0,
@@ -223,7 +223,7 @@ def research_tab(scope, index, section="research", caption_text=None):
 def info_card(name, title, index, y):
     return control(name, {"type": "panel", "size": [147, 32], "offset": [106, y],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("edge", image("frontier/solid", [147, 32], color=[0.53, 0.52, 0.46])),
+            control("edge", image("frontier/solid", [147, 32], color=[0.65, 0.63, 0.54])),
             control("paper", image("frontier/solid", [145, 30], (1, 1), 1, [0.90, 0.80, 0.60])),
             control("label", label(title, [135, 9], (6, 4), scale=0.7)),
             overview_value("value", index, [6, 16], [135, 12], scale=0.85),
@@ -233,13 +233,13 @@ def info_card(name, title, index, y):
 def research_node(name, title, subtitle, position, sprite):
     states = []
     for state in ["default", "hover", "pressed"]:
-        states.append(control(state, {"type": "panel", "size": [122, 40], "controls": [
-            control("face", image("frontier/research_button_" + state, [122, 40])),
-            control("icon", image("frontier/research/" + sprite, [32, 32], (4, 4), 6)),
-            control("name", label(title, [78, 12], (39, 6), color=(1, 0.94, 0.77), scale=0.72)),
-            control("note", label(subtitle, [78, 17], (39, 20), color=(0.94, 0.80, 0.61), scale=0.6)),
+        states.append(control(state, {"type": "panel", "size": [122, 34], "controls": [
+            control("face", image("frontier/research_button_" + state, [122, 34])),
+            control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
+            control("name", label(title, [78, 11], (39, 4), color=(1, 0.94, 0.77), scale=0.72)),
+            control("note", label(subtitle, [78, 13], (39, 18), color=(0.94, 0.80, 0.61), scale=0.55)),
         ]}))
-    return control(name, {"type": "button", "size": [122, 40], "offset": position,
+    return control(name, {"type": "button", "size": [122, 34], "offset": position,
         "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
         "focus_enabled": True, "hover_enabled": True, "button_mappings": [],
         "default_control": "default", "hover_control": "hover", "pressed_control": "pressed",
@@ -247,21 +247,21 @@ def research_node(name, title, subtitle, position, sprite):
 
 
 def global_tree():
-    lines = [(127, 40, 1, 6), (61, 45, 133, 1), (61, 45, 1, 10), (193, 45, 1, 10),
-             (61, 95, 1, 15), (193, 95, 1, 15)]
+    lines = [(127, 34, 1, 7), (61, 40, 133, 1), (61, 40, 1, 7), (193, 40, 1, 7),
+             (61, 81, 1, 13), (193, 81, 1, 13)]
     controls = [control("branch_" + str(i), image("frontier/solid", [w, h], (x, y), 2, [0.55, 0.35, 0.14]))
                 for i, (x, y, w, h) in enumerate(lines)]
     controls += [
-        control("tier_one", label("Tier I", [50, 9], (0, 14), scale=0.65)),
-        control("tier_two", label("Tier II", [50, 9], (0, 44), scale=0.65)),
-        control("tier_three", label("Tier III", [50, 9], (0, 99), scale=0.65)),
+        control("tier_one", label("Tier I", [50, 9], (0, 14), scale=0.555)),
+        control("tier_two", label("Tier II", [50, 9], (0, 36), scale=0.555)),
+        control("tier_three", label("Tier III", [50, 9], (0, 83), scale=0.555)),
         research_node("settlement_capacity", "Settlement Charters", "More settlements\nRepeatable", [66, 0], "settlement_charters"),
-        research_node("frontier_expansion", "Frontier Mandate", "Distant settlements\n5 levels", [0, 55], "frontier_mandate"),
-        research_node("settlement_development", "Stewardship", "Higher local research\nRepeatable", [132, 55], "stewardship"),
-        research_node("colonization", "Reclamation", "Frontier production\n5 levels proposed", [0, 110], "reclamation"),
-        research_node("shared_storage", "Hoards", "Shared storage\nRepeatable", [132, 110], "hoards"),
+        research_node("frontier_expansion", "Frontier Mandate", "Distant settlements\n5 levels", [0, 47], "frontier_mandate"),
+        research_node("settlement_development", "Stewardship", "Higher local research\nRepeatable", [132, 47], "stewardship"),
+        research_node("colonization", "Reclamation", "Frontier production\n5 levels proposed", [0, 94], "reclamation"),
+        research_node("shared_storage", "Hoards", "Shared storage\nRepeatable", [132, 94], "hoards"),
     ]
-    return {"type": "panel", "size": [254, 150], "controls": controls}
+    return {"type": "panel", "size": [254, 131], "controls": controls}
 
 
 def build():
@@ -278,28 +278,28 @@ def build():
     frame = [
         control("frame", image("frontier/charter_frame", [380, 240], layer=1)),
         control("ornament", image("frontier/harvest_border", [380, 240], layer=20)),
-        control("title", label("Village Charter", [236, 17], (25, 14), (1, 0.93, 0.71), 1.0)),
+        control("title", label("Village Charter", [236, 17], (30, 34), (1, 0.93, 0.71), 1.0)),
         control("close@common.close_button", {"$close_button_offset": [-7, 7], "layer": 30, "bindings": []}),
     ]
     dashboard = [copy.deepcopy(item) for item in frame if 'title' not in item]
-    dashboard.append(overview_value("header_name", DATA["overview"], [25, 13], [235, 12], scale=1.0))
+    dashboard.append(overview_value("header_name", DATA["overview"], [30, 34], [235, 12], scale=1.0))
     GENERATED_CONTROLS["jf_data_overview"]["color"] = [1, 0.93, 0.71]
-    dashboard.append(control("subtitle", label("Village Charter", [235, 8], (25, 25), (1, 0.85, 0.60), 0.65)))
+    dashboard.append(control("subtitle", label("Village Charter", [235, 8], (30, 46), (1, 0.85, 0.60), 0.65)))
     dashboard += [tab(name, index) for index, name in enumerate(TABS)]
-    dashboard.append(control("seal_text", label("Jagsby's Frontier", [86, 12], (10, 216), (0.65, 0.64, 0.55), 0.6)))
+    dashboard.append(control("seal_text", label("Jagsby's Frontier", [86, 12], (10, 205), (0.65, 0.64, 0.55), 0.6)))
     for name in TABS:
         lower = name.lower()
         if lower in ["overview", "research", "realm"]:
             dashboard.append(control(lower + "@jagsby_frontier.jf_" + lower + "_content", {
-                "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 47],
-                "size": [257, 177], "layer": 5,
+                "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 62],
+                "size": [257, 158], "layer": 5,
                 "bindings": [view("#toggle_state", target, "jf_tab_" + lower)
                              for target in ["#visible", "#enabled"]],
             }))
             continue
         dashboard.append(control(lower + "@common.scrolling_panel", {
-            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 47],
-            "size": [257, 177], "layer": 5, "$show_background": False,
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 62],
+            "size": [257, 158], "layer": 5, "$show_background": False,
             "$scrolling_content": "jagsby_frontier.jf_" + lower + "_content",
             "$scroll_size": [4, "100% - 4px"], "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
             "$scrolling_pane_offset": [0, 0], "$scroll_bar_right_padding_size": [0, 0],
@@ -328,49 +328,49 @@ def build():
     ui["jf_research_global_content"] = global_tree()
     local_controls = []
     for i, key in enumerate(["efficiency", "hearth", "biome"]):
-        template = data_template(DATA[key], [166, 42], scale=0.75)
-        values = collection_scope(template, [166, 42])
+        template = data_template(DATA[key], [166, 34], scale=0.65)
+        values = collection_scope(template, [166, 34])
         values.update({"offset": [4, 3], "anchor_from": "top_left", "anchor_to": "top_left"})
         purchase = action(key + "_buy", ACTIONS[key], "Research", width=76)[key + "_buy"]
-        purchase.update({"offset": [178, 13], "anchor_from": "top_left", "anchor_to": "top_left"})
-        local_controls.append(control(key, {"type": "panel", "size": [254, 47],
-            "offset": [0, i * 50], "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-                control("paper", image("frontier/solid", [254, 47], color=[0.22, 0.19, 0.14])),
+        purchase.update({"offset": [178, 10], "anchor_from": "top_left", "anchor_to": "top_left"})
+        local_controls.append(control(key, {"type": "panel", "size": [254, 40],
+            "offset": [0, i * 44], "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
+                control("paper", image("frontier/solid", [254, 40], color=[0.29, 0.22, 0.14])),
                 control("data", values), control("purchase", purchase),
             ]}))
-    ui["jf_research_local_content"] = {"type": "panel", "size": [254, 150], "controls": local_controls}
+    ui["jf_research_local_content"] = {"type": "panel", "size": [254, 131], "controls": local_controls}
     research_controls = [research_tab("global", 0), research_tab("local", 1)]
     for scope in ["global", "local"]:
         if scope in ["global", "local"]:
             research_controls.append(control(scope + "@jagsby_frontier.jf_research_" + scope + "_content", {
-                "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 27], "size": [254, 150],
+                "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 27], "size": [254, 131],
                 "bindings": [view("#toggle_state", target, "jf_research_tab_" + scope) for target in ["#visible", "#enabled"]],
             }))
             continue
         research_controls.append(control(scope + "@common.scrolling_panel", {
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 27],
-            "size": [257, 150], "$show_background": False,
+            "size": [257, 131], "$show_background": False,
             "$scrolling_content": "jagsby_frontier.jf_research_" + scope + "_content",
             "$scroll_size": [4, "100% - 4px"], "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
             "bindings": [view("#toggle_state", target, "jf_research_tab_" + scope)
                          for target in ["#visible", "#enabled"]],
         }))
-    ui["jf_research_content"] = {"type": "panel", "size": [257, 177], "controls": research_controls}
+    ui["jf_research_content"] = {"type": "panel", "size": [257, 158], "controls": research_controls}
     rename = action("header_rename", ACTIONS["rename"], "Rename", width=58, height=17)["header_rename"]
     rename.update({"anchor_from": "top_left", "anchor_to": "top_left",
-                   "offset": [289, 14], "layer": 25})
+                   "offset": [289, 35], "layer": 25})
     # Flat crimson faces keep the header action quieter than the main title.
     for state in GENERATED_CONTROLS["jf_action_rename@common.button"]["controls"]:
         name, panel = next(iter(state.items()))
         controls = {key: value for item in panel["controls"] for key, value in item.items()}
         controls["wood"].update({"texture": "textures/ui/frontier/solid", "color": {
-            "default": [0.45, 0.08, 0.07], "hover": [0.62, 0.14, 0.10],
-            "pressed": [0.35, 0.06, 0.05],
+            "default": [0.39, 0.20, 0.13], "hover": [0.55, 0.29, 0.17],
+            "pressed": [0.29, 0.15, 0.11],
         }[name]})
         controls["caption"].update({"offset": [0, 3], "size": [58, 11],
                                     "text_alignment": "center", "font_scale_factor": 0.85})
     dashboard.append(control("header_rename", rename))
-    portrait = image("frontier/settlements/outpost", [96, 168], layer=8)
+    portrait = image("frontier/settlements/outpost", [90, 158], layer=8)
     # Retain the decorative stone/oak/gold frame. Trim only its one-pixel outer
     # dark rim; the previous painting-only crop removed the requested frame.
     portrait.update({"uv": [1, 1], "uv_size": [94, 166]})
@@ -395,7 +395,7 @@ def build():
     rows = []
     for key, title, y in [("tier", "Tier", 34), ("owner", "Owner", 51),
                           ("biomes", "Biome", 68), ("census", "Realm Power", 85)]:
-        rows += [control(key + "_label", label(title, [56, 11], (8, y), color=(0.76, 0.75, 0.68), scale=0.75)),
+        rows += [control(key + "_label", label(title, [56, 11], (8, y), color=(0.81, 0.76, 0.64), scale=0.75)),
                  overview_value(key, DATA[key], [70, y], [69, 12], scale=0.8)]
     # In unclaimed villages the red Claim control occupies the Owner value slot.
     next(row["owner"] for row in rows if "owner" in row)["bindings"] = condition(
@@ -405,37 +405,37 @@ def build():
                   "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
     identity = control("identity", {"type": "panel", "size": [147, 105], "offset": [0, 4],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("edge", image("frontier/solid", [147, 105], color=[0.53, 0.52, 0.46])),
-            control("paper", image("frontier/solid", [145, 103], (1, 1), 1, [0.22, 0.19, 0.14])),
+            control("edge", image("frontier/solid", [147, 105], color=[0.65, 0.63, 0.54])),
+            control("paper", image("frontier/solid", [145, 103], (1, 1), 1, [0.29, 0.22, 0.14])),
             name,
             control("divider", image("frontier/solid", [131, 1], (8, 25), 2, [0.65, 0.53, 0.31])),
             *rows, control("claim", claim),
         ]})
-    ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
-        control("portrait", {**collection_scope("jf_tier_portrait", [96, 168]),
-            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [161, 0]}),
+    ui["jf_overview_content"] = {"type": "panel", "size": [257, 158], "controls": [
+        control("portrait", {**collection_scope("jf_tier_portrait", [90, 158]),
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [167, 0]}),
         identity,
     ]}
     GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left"})
     realm_controls = [research_tab("mine", 0, "realm", "My Settlements"), research_tab("all", 1, "realm", "All Settlements")]
     for scope, data_key in [("mine", "realmMine"), ("all", "realmAll")]:
-        content = [record("directory", DATA[data_key], 121)]
+        content = [record("directory", DATA[data_key], 103)]
         for suffix, caption, x in [("Prev", "Previous", 0), ("Next", "Next", 129)]:
             button = action(scope + suffix, ACTIONS[scope + suffix], caption, width=122)[scope + suffix]
-            button.update({"offset": [x, 125], "anchor_from": "top_left", "anchor_to": "top_left"})
+            button.update({"offset": [x, 106], "anchor_from": "top_left", "anchor_to": "top_left"})
             content.append(control(suffix.lower(), button))
-        ui["jf_realm_" + scope + "_content"] = {"type": "panel", "size": [257, 150], "controls": content}
+        ui["jf_realm_" + scope + "_content"] = {"type": "panel", "size": [257, 131], "controls": content}
         realm_controls.append(control(scope + "@jagsby_frontier.jf_realm_" + scope + "_content", {
-            "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "size": [257, 150],
+            "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "size": [257, 131],
             "bindings": [view("#toggle_state", target, "jf_realm_tab_" + scope) for target in ["#visible", "#enabled"]],
         }))
-    ui["jf_realm_content"] = {"type": "panel", "size": [257, 177], "controls": realm_controls}
+    ui["jf_realm_content"] = {"type": "panel", "size": [257, 158], "controls": realm_controls}
     picker = copy.deepcopy(frame)
     # Secondary-biome choices have their own custom button renderer, not the
     # vanilla long-form dynamic list used by the previous prototype.
     picker.append(control("options@common.scrolling_panel", {
-        "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 47],
-        "size": [257, 177], "layer": 5, "$show_background": False,
+        "anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 62],
+        "size": [257, 158], "layer": 5, "$show_background": False,
         "$scrolling_content": "jagsby_frontier.jf_picker_content", "$scroll_size": [4, "100% - 4px"],
         "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
     }))

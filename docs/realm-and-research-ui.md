@@ -131,3 +131,16 @@ frame without changing screen bounds. A raised-crest concept was rejected
 because it crowded the header. Body colors now use warm brown, wheat gold
 and aged silver; crimson controls remain. The information/portrait positions
 and action mappings are preserved.
+
+## 0.0.21 restored crest and matching palette
+
+The first border is restored at 380×240, with its village crest fully inside
+the root bounds. Header text starts at y=34 and the content at y=62. The
+Overview portrait is now 90×158; the information panel remains on the left.
+Research buttons are 122×34 in a fixed 254×131 tree, under the subtabs, so all
+five remain visible. Directory pagination fits the same reduced content height.
+
+The procedural base supports RGBA and leaves the exterior transparent. Menu
+surfaces use harvest browns and cream, wheat-gold accents and aged-silver
+edges; controls use subdued warm crimson. Neither the village data nor the
+research action bindings changed.
