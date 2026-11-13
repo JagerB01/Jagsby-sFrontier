@@ -9,12 +9,21 @@ export function describeTradeTier(tier) {
     ? POWER_TENTHS_BY_TIER[tier] : null;
 }
 
-export function takeCensus(dimension, location, readTradeTier, now = Date.now()) {
+export function nearbyVillagers(dimension, location) {
   // Query once in the charter's dimension. Filter type IDs to exclude wandering
   // traders and zombie villagers; use entity IDs to avoid duplicate observations.
   const entities = dimension.getEntities({
     location, maxDistance: CENSUS_RADIUS, families: ["villager"],
   });
+  return [...new Map(entities.filter(entity => VILLAGERS.has(entity.typeId))
+    .map(entity => [entity.id, entity])).values()];
+}
+
+export function takeCensus(dimension, location, readTradeTier, now = Date.now()) {
+  return summarizeVillagers(nearbyVillagers(dimension, location), readTradeTier, now);
+}
+
+export function summarizeVillagers(entities, readTradeTier, now = Date.now()) {
   const seen = new Set();
   const tiers = [0, 0, 0, 0, 0];
   let unknownRanks = 0;

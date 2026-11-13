@@ -1,5 +1,17 @@
 # Changes
 
+## 0.0.4
+
+- Custom four-page charter dashboard with local sidebar toggles, parchment panels,
+  crimson/gold accents and custom action controls, based on the supplied reference.
+- Reuse MineScape 1.5.119 menu routing and preserve its existing UI definitions/assets.
+- Native on-demand villager trade-tier bridge via Molang entity event properties,
+  scored on interaction from novice 0.2 through master 1.0.
+- Re-read shared state after awaiting entity properties to preserve other players' changes.
+- Match MineScape's Bedrock 1.26.0+ and stable API targets, enabling biome queries.
+- In-game name for both linked packs: Jagsby's Frontier 0.0.4.
+- Automated tests use mocked engine objects; in-game validation remains outstanding.
+
 ## 0.0.3
 
 - Handle attempted charter interactions with the before-event, cancel default

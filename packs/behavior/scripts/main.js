@@ -1,6 +1,8 @@
 import { world, system, ItemStack } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import { takeCensus, censusText } from "./village-census.js";
+import { nearbyVillagers, summarizeVillagers, censusText } from "./village-census.js";
+import { sampleTradingRanks } from "./villager-trade-bridge.js";
+import { CHARTER_LAYOUT } from "./charter-layout.js";
 import { displayMenu } from "./menu-display.js";
 
 const BLOCK = "jagsby_frontier:village_charter";
@@ -34,16 +36,21 @@ function zoneAt(loc){ // MUST BE REPLACED with MineScape's EXISTING exact zone c
   return "Pending MineScape zone integration";
 }
 function getBiome(dim,loc){try{return dim.getBiome(loc).id;}catch(e){return "unknown";}}
-function refreshVillage(s,v){
-  const dim=world.getDimension(v.dimension);
-  const biome=getBiome(dim,v.location);
+async function refreshVillage(vId){
+  const initial=state().villages[vId];if(!initial)return;
+  const dim=world.getDimension(initial.dimension);
+  const biome=getBiome(dim,initial.location);
+  let census;
+  try{
+    const villagers=nearbyVillagers(dim,initial.location);
+    const readTier=await sampleTradingRanks(villagers,system);
+    census=summarizeVillagers(villagers,readTier);
+  }catch(e){census={error:true,observedAt:Date.now()};console.warn(`Frontier census: ${e}`);}
+  // Re-read after awaiting native properties so another player's research or
+  // collection cannot be overwritten by a stale survey state.
+  const latest=state(),v=latest.villages[vId];if(!v)return;
   if(biome!=='unknown')v.biome=biome;
-  // The pinned Script API has no native villager trade-tier accessor. An exact
-  // score requires a live resolver from the existing villager entity integration.
-  // Do not substitute profession/variant, which is not trading level.
-  try{v.census=takeCensus(dim,v.location);}
-  catch(e){v.census={error:true,observedAt:Date.now()};console.warn(`Frontier census: ${e}`);}
-  save(s);
+  v.census=census;save(latest);
 }
 function addVillage(s,block){const legacy=id(block.location),k=`${block.dimension.id}|${legacy}`;
 if(!s.villages[k]&&s.villages[legacy]?.dimension===block.dimension.id){s.villages[k]=s.villages[legacy];s.villages[k].id=k;delete s.villages[legacy];save(s);}
@@ -58,26 +65,43 @@ function costText(c){return Object.entries(c||{}).map(([k,v])=>`${v} ${k.replace
 function cap(s){return BASE_CAP*Math.pow(2,s.global.storage||0);}
 function total(s){return Object.values(s.stock).reduce((a,n)=>a+n,0);}
 function pageTitle(page){return `JF_CHARTER|${page}`;}
-function open(player, vId, page="Overview"){
+function researchText(s,v,key,player){
+  const names={efficiency:'Production Efficiency',hearth:'Hearthstone',biome:'Biome Utilization',frontier:'Frontier Expansion',capacity:'Settlement Capacity',development:'Settlement Development',storage:'Shared Storage'};
+  const global=['frontier','capacity','development','storage'].includes(key);
+  const current=global?s.global[key]:key==='biome'?Number(v.biomeUnlocked):key==='hearth'?v.hearth:v.efficiency;
+  const cost=COSTS[key][current];
+  const benefits={efficiency:`Current: +${current*10}% production. Next: +${(current+1)*10}% total.`,hearth:'Regeneration I within settlement boundaries.',biome:'Select ONE additional biome within 256 blocks.',frontier:'Unlock settlement establishment in the next MineScape zone.',capacity:'Increase civilization settlement limit.',development:`Local efficiency ceiling: ${1+current} -> ${2+current}.`,storage:`Shared capacity: ${cap(s)} -> ${cap(s)*2} produced items.`};
+  let status=!cost?'Complete':canPay(player,cost)?'Affordable':'Materials needed';
+  if(key==='frontier'||key==='capacity')status='Awaiting settlement integration; nothing charged';
+  if(key==='efficiency'&&current>=1+s.global.development&&cost)status='Requires Settlement Development';
+  return `§6${names[key]}§r  ${current}/${COSTS[key].length}\n${benefits[key]}\n${cost?'Test cost: '+costText(cost):'Maximum level'}\n${status}`;
+}
+function open(player,vId,page='Overview'){
   const s=state(),v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
-  let body = `§6${v.name}§r    §7${page}§r\n`;
-  if(page==='Overview')body+=`§8Location:§r ${v.id}\n§8Zone:§r ${zoneAt(v.location)}\n§8Home Biome:§r ${v.biome}\n§8Second Biome:§r ${v.secondary||'Not selected'}\n§8Settlement Production:§r ${v.efficiency*10}% bonus\n§8Hearthstone:§r ${v.hearth?'Regeneration I':'Not researched'}\n§8Civilization:§r ${Object.keys(s.villages).length} settlements`;
-  if(page==='Overview')body+=`\n${censusText(v.census)}`;
-  if(page==='Research')body+=`§6LOCAL§r\nProduction Efficiency: ${v.efficiency}/4\nHearthstone: ${v.hearth?'Complete':'Available'}\nBiome Utilization: ${v.biomeUnlocked?'Unlocked':'Available'}\n§6GLOBAL§r\nFrontier Expansion: ${s.global.frontier}/5\nSettlement Capacity: ${s.global.capacity}/4\nSettlement Development: ${s.global.development}/3\nShared Storage: ${s.global.storage}/4`;
-  if(page==='Production')body+=`§8Active biome:§r ${v.biome}\n§8Secondary biome:§r ${v.secondary||'None'}\n§8Production efficiency:§r +${v.efficiency*10}%\n§8Passive cycle:§r ${PRODUCTION_MS/60000} minutes\n§7Resource table is SAMPLE DATA; replace in config before deploying to Realm.`;
-  if(page==='Stockpile')body+=`§8Civilization shared capacity:§r ${total(s)} / ${cap(s)}\n${Object.entries(s.stock).map(([r,n])=>`${r.replace('minecraft:','')}: ${n}`).join('\n')||'No produced resources yet.'}`;
-  const nav=['Overview','Research','Production','Stockpile'];let actions=[];
-  for(const tab of nav){if(tab!==page)actions.push({text:`§6▸ §r${tab}`,run:()=>open(player,vId,tab)});}
-  if(page==='Overview')actions.push({text:'§eRename settlement',run:()=>{player.sendMessage('§7Renaming requires a custom text-input implementation; pending JSON UI integration.');}});
-  if(page==='Research'){
-    actions.push({text:'§aUpgrade Production Efficiency',run:()=>upgrade(player,vId,'efficiency')},{text:'§aResearch Hearthstone',run:()=>upgrade(player,vId,'hearth')},{text:'§aUnlock 2nd Biome',run:()=>upgrade(player,vId,'biome')});
-    for(const k of ['frontier','capacity','development','storage'])actions.push({text:`§bGlobal: ${k}`,run:()=>upgrade(player,vId,k)});
-  }
-  if(page==='Production')actions.push({text:'§aScan nearby biomes (256 blocks)',run:()=>scan(player,vId)},{text:'§aChoose secondary biome',run:()=>selectBiome(player,vId)});
-  if(page==='Stockpile')actions.push({text:'§aCollect produced items',run:()=>collect(player,vId)});
-  const form=new ActionFormData().title(pageTitle(page)).body(body);
-  for(const a of actions)form.button(a.text);
-  displayMenu(player,form,system).then(r=>{if(!r.canceled&&actions[r.selection])actions[r.selection].run();}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
+  const {data,actions,recordCount,tabs}=CHARTER_LAYOUT;
+  const records=Array(recordCount).fill('');
+  records[data.overview]=`§6${v.name}§r\nLocation: ${id(v.location)} (${v.dimension.replace('minecraft:','')})\nZone: ${zoneAt(v.location)}\nVillage tier: Not configured`;
+  records[data.biomes]=`Primary biome: ${v.biome}\nSecondary biome: ${v.biomeUnlocked?v.secondary||'Not selected':'Locked — research Biome Utilization'}`;
+  records[data.census]=censusText(v.census).replace('§8','§6')+(v.census&&!v.census.error?`\nNovice ${v.census.tiers[0]} · Apprentice ${v.census.tiers[1]} · Journeyman ${v.census.tiers[2]}\nExpert ${v.census.tiers[3]} · Master ${v.census.tiers[4]}`:'');
+  records[data.civilization]=`Civilization: ${Object.keys(s.villages).length} settlements\nEfficiency: +${v.efficiency*10}%  Hearthstone: ${v.hearth?'Regeneration I':'Not researched'}\nFrontier: ${s.global.frontier}/5  Storage: ${s.global.storage}/4`;
+  for(const key of ['efficiency','hearth','biome','frontier','capacity','development','storage'])records[data[key]]=researchText(s,v,key,player);
+  const eligible=[...new Set([v.biome,v.secondary].filter(Boolean).flatMap(b=>(RESOURCE_TABLE[b]||[]).map(r=>r.name)))];
+  records[data.production]=`Primary biome: ${v.biome}\nSecondary biome: ${v.secondary||'None'}\nSurveyed options: ${v.available.join(', ')||'Survey nearby biomes'}\nEligible resources: ${eligible.join(', ')||'None configured'}\nEfficiency: +${v.efficiency*10}%\nPrototype cycle: ${PRODUCTION_MS/60000} minutes\n§cSample resource table and production balance; not final.§r`;
+  records[data.stockpile]=`Stored: ${total(s)} / ${cap(s)}\nRemaining capacity: ${cap(s)-total(s)}\nProduced resources only; shared by every settlement.`;
+  records[data.resources]=Object.entries(s.stock).map(([r,n])=>`${r.replace('minecraft:','').replaceAll('_',' ')}: ${n}`).join('\n')||'No produced resources yet.';
+  const handlers=new Map();
+  for(const key of ['efficiency','hearth','biome','frontier','capacity','development','storage'])handlers.set(actions[key],()=>upgrade(player,vId,key));
+  handlers.set(actions.scan,()=>scan(player,vId));
+  handlers.set(actions.selectBiome,()=>selectBiome(player,vId));
+  handlers.set(actions.collect,()=>collect(player,vId));
+  handlers.set(actions.rename,()=>player.sendMessage('§7Settlement renaming is not implemented yet.'));
+  for(const [key,index] of Object.entries(actions))records[index]=key;
+  const tab=tabs.includes(page)?page.toLowerCase():'overview';
+  // Like MineScape's Tome: the records transport data to fixed custom JSON UI
+  // controls. Local toggle tabs do not submit forms or rerun the village census.
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}]`);
+  records.forEach(text=>form.button(text));
+  displayMenu(player,form,system).then(r=>{if(!r.canceled)handlers.get(r.selection)?.();}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
 function upgrade(player,vid,key){let s=state(),v=s.villages[vid];if(!v)return;
   const global=['frontier','capacity','development','storage'].includes(key);let current=global?s.global[key]:key==='biome'?Number(v.biomeUnlocked):key==='hearth'?v.hearth:v.efficiency;
@@ -90,7 +114,7 @@ function upgrade(player,vid,key){let s=state(),v=s.villages[vid];if(!v)return;
   save(s);player.sendMessage(`§aResearch complete: ${key}.`);open(player,vid,'Research');
 }
 function scan(player,vid){const s=state(),v=s.villages[vid];if(!v)return;
-  const dim=player.dimension, seen=new Set();
+  const dim=world.getDimension(v.dimension), seen=new Set(v.available||[]);
   // Scan only loaded positions in a lattice. Unloaded positions are not treated as nonexistent.
   let successful=0;
   for(let dx=-256;dx<=256;dx+=32)for(let dz=-256;dz<=256;dz+=32){if(dx*dx+dz*dz>256*256)continue;try{const b=dim.getBiome({x:v.location.x+dx,y:v.location.y,z:v.location.z+dz});seen.add(b.id);successful++;}catch(e){}}
@@ -100,7 +124,7 @@ function scan(player,vid){const s=state(),v=s.villages[vid];if(!v)return;
 }
 function selectBiome(player,vid){const s=state(),v=s.villages[vid];if(!v.biomeUnlocked){player.sendMessage('§cResearch Biome Utilization first.');return open(player,vid,'Production');}
   const options=v.available.filter(b=>RESOURCE_TABLE[b]);if(!options.length){player.sendMessage('§eNo supported secondary biomes yet. Survey the surrounding region and check RESOURCE_TABLE.');return open(player,vid,'Production');}
-  const form=new ActionFormData().title(pageTitle('Select Biome')).body('Choose ONE additional biome.');options.forEach(b=>form.button(b));form.show(player).then(r=>{if(!r.canceled){const st=state();st.villages[vid].secondary=options[r.selection];save(st);}open(player,vid,'Production');}).catch(e=>console.warn(String(e)));
+  const form=new ActionFormData().title(pageTitle('Select Biome')).body('Choose ONE additional biome.');options.forEach(b=>form.button(b));displayMenu(player,form,system).then(r=>{if(!r.canceled&&options[r.selection]){const st=state();if(!st.villages[vid])return;st.villages[vid].secondary=options[r.selection];save(st);}open(player,vid,'Production');}).catch(e=>console.warn(String(e)));
 }
 function collect(player,vid){const s=state();const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
  let moved=0;for(const [type,qty] of Object.entries(s.stock)){let remain=qty;while(remain>0){const n=Math.min(64,remain);try{const left=inv.addItem(new ItemStack(type,n));const count=n-(left?.amount||0);if(count<=0)break;remain-=count;moved+=count;if(left)break;}catch(e){break;}}s.stock[type]=remain;if(!remain)delete s.stock[type];}
@@ -125,12 +149,12 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
   const pendingKey=`${player.id}|${dim.id}|${id(location)}`;
   if(pendingCharterInteractions.has(pendingKey))return;
   pendingCharterInteractions.add(pendingKey);
-  system.run(()=>{
+  system.run(async()=>{
     try{
       const block=dim.getBlock(location);
       if(block?.typeId!==BLOCK)return;
       let s=state(),v=addVillage(s,block);
-      refreshVillage(s,v);
+      await refreshVillage(v.id);
       open(player,v.id);
     }catch(e){console.warn(`Frontier charter interaction: ${e}`);player.sendMessage('§cThe Village Charter could not open. Check the Minecraft content log for Frontier charter errors.');}
     finally{pendingCharterInteractions.delete(pendingKey);}

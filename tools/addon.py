@@ -7,6 +7,8 @@ import struct
 import subprocess
 import uuid
 import zipfile
+from build_charter_ui import build as build_charter_ui
+from build_villager_bridge import build as build_villager_bridge
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKS = ROOT / "packs"
@@ -71,6 +73,8 @@ def archive(entries):
 
 
 def build():
+    build_charter_ui()
+    build_villager_bridge()
     validate()
     entries = []
     for kind, suffix in (("behavior", "BP"), ("resource", "RP")):

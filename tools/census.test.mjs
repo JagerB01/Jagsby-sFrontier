@@ -8,6 +8,10 @@ const moduleUrl = `data:text/javascript;base64,${Buffer.from(source).toString('b
 const { takeCensus, censusText, describeTradeTier } = await import(moduleUrl);
 const menuSource = await readFile(new URL('menu-display.js', scriptBase), 'utf8');
 const menuModuleUrl = `data:text/javascript;base64,${Buffer.from(menuSource).toString('base64')}`;
+const layoutSource = await readFile(new URL('charter-layout.js', scriptBase), 'utf8');
+const layoutModuleUrl = `data:text/javascript;base64,${Buffer.from(layoutSource).toString('base64')}`;
+const bridgeSource = await readFile(new URL('villager-trade-bridge.js', scriptBase), 'utf8');
+const bridgeModuleUrl = `data:text/javascript;base64,${Buffer.from(bridgeSource).toString('base64')}`;
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });
 
 test('native trading levels give linear 0.2 to 1.0 contributions', () => {
@@ -63,8 +67,10 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   const properties = new Map();
   const dimensions = new Map();
   let scans = 0, biomeReads = 0;
+  let nativeTier = 0;
+  const nativeVillager = {...villager('a'), triggerEvent() {}, getProperty: () => nativeTier};
   const makeDimension = id => {
-    const dim = { id, getEntities() { scans++; return [villager('a')]; },
+    const dim = { id, getEntities() { scans++; return [nativeVillager]; },
       getBiome() { biomeReads++; return {id:'minecraft:plains'}; },
       getBlock: location => ({ typeId:'jagsby_frontier:village_charter', location, dimension:dim }) };
     dimensions.set(id, dim);
@@ -73,8 +79,11 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   const dimension = makeDimension('minecraft:overworld');
   const nether = makeDimension('minecraft:nether');
   let menuResponse;
+  const forms = [];
   class Form {
-    title() { return this; } body() { return this; } button() { return this; }
+    constructor() { this.records=[]; forms.push(this); }
+    title(value) {this.heading=value; return this; } body(value) {this.text=value; return this; }
+    button(value) {this.records.push(value); return this; }
     show() { const response = menuResponse; menuResponse = {canceled:true}; return Promise.resolve(response ?? {canceled:true}); }
   }
   globalThis.__frontierTest = {
@@ -84,7 +93,8 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
       getDimension: id => dimensions.get(id), getPlayers: () => [],
       getDynamicProperty: key => properties.get(key),
       setDynamicProperty: (key,value) => properties.set(key,value) },
-    system: { run: fn => queued.push(fn), runInterval: fn => intervals.push(fn) },
+    system: { run: fn => queued.push(fn), runInterval: fn => intervals.push(fn),
+      runTimeout: fn => {fn();} },
     Form,
   };
   let main = await readFile(new URL('main.js', scriptBase), 'utf8');
@@ -93,10 +103,12 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
     .replace('import { ActionFormData } from "@minecraft/server-ui";',
       'const ActionFormData=globalThis.__frontierTest.Form;')
     .replace('"./village-census.js"', JSON.stringify(moduleUrl))
-    .replace('"./menu-display.js"', JSON.stringify(menuModuleUrl));
+    .replace('"./menu-display.js"', JSON.stringify(menuModuleUrl))
+    .replace('"./charter-layout.js"', JSON.stringify(layoutModuleUrl))
+    .replace('"./villager-trade-bridge.js"', JSON.stringify(bridgeModuleUrl));
   await import(`data:text/javascript;base64,${Buffer.from(main).toString('base64')}`);
   const location = { x:0, y:64, z:0 };
-  const player = { id:'p', sendMessage() {} };
+  const player = { id:'p', sendMessage() {}, getComponent() {} };
   const event = { player, block:dimension.getBlock(location), isFirstEvent:true };
   handlers.playerPlaceBlock(event);
   assert.equal(scans, 0);
@@ -111,18 +123,28 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(event.cancel, true);
   handlers.beforeInteract(event);
   assert.equal(queued.length, 1);
-  menuResponse = {canceled:false,selection:0}; // Navigate from Overview to Research.
-  queued.shift()();
+  menuResponse = {canceled:false,selection:14}; // Research action; insufficient materials.
+  await queued.shift()();
   await new Promise(resolve => setImmediate(resolve));
   assert.equal(scans, 1);
   let saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.villagers, 1);
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
+  assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
+  assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
+  assert.equal(forms[0].records.length,25);
+  assert.equal(forms[1].text,'[JF:tab:research]');
+  nativeTier = 4;
+  handlers.beforeInteract(event);
+  await queued.shift()();
+  saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
+  assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 10,
+    'Next interaction must reflect a villager promoted from novice to master');
   handlers.beforeInteract({...event,block:nether.getBlock(location)});
-  queued.shift()();
+  await queued.shift()();
   saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
   assert.equal(Object.keys(saved.villages).length, 2);
-  assert.equal(scans, 2);
+  assert.equal(scans, 3);
   assert.ok(biomeReads >= 2);
   delete globalThis.__frontierTest;
 });
