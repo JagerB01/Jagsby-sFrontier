@@ -69,3 +69,17 @@ python -m unittest discover -s tools -p test_trade_rank_probe.py
 
 Offline tests check request gating, literal-only property events, preservation
 of the vanilla AI/trades and script syntax. They do not execute Minecraft Molang.
+
+## Subsequent live result and integration
+
+The later user-provided ContentLog2026-11-13_18-38-21_1.txt contains no errors and
+reports raw_tier=1 three times for the same villager. The user identified it as
+Apprentice and confirmed the probe was working. The native client villager
+renderer uses query.trade_tier directly to index stone, iron, gold, emerald and
+diamond badges, corresponding to Novice through Master (0 through 4).
+
+0.0.12 integrates the same controller pattern, in the production namespace, with
+five valid rank states and batched script sampling. The old event-expression
+query remains absent. Disable the diagnostic pack before enabling the integrated
+build so its vanilla entity definitions do not replace the production bridge.
+The production integration itself remains to be tested in Minecraft.

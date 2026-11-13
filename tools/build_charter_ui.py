@@ -50,7 +50,7 @@ def image(texture, size, offset=(0, 0), layer=0, color=None):
 def label(text, size, offset=(0, 0), color=(0.20, 0.12, 0.055), scale=0.8):
     return {"type": "label", "text": text, "size": size, "offset": list(offset),
             "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8,
-            "font_type": "default", "font_scale_factor": scale,
+            "font_type": "unicode", "font_size": "normal", "font_scale_factor": scale,
             "color": list(color), "shadow": False}
 
 
@@ -137,7 +137,7 @@ def heading(text):
     return control("heading_" + text.replace(" ", "_"), {
         "type": "panel", "size": [254, 19], "controls": [
             control("ribbon", image("frontier/solid", [254, 17], color=[0.71, 0.50, 0.24])),
-            control("caption", label(text, [244, 12], (5, 3))),
+            control("caption", label(text.title(), [244, 12], (5, 3), scale=0.85)),
         ]})
 
 
@@ -150,7 +150,7 @@ def tab(name, index):
             control("face", image(f"frontier/tab_{lower}_{state}", [92, 35], layer=1)),
             *([control("icon", image(f"frontier/icons/{lower}", [24, 24], (3, 5), 4))]
               if lower in ["overview", "research", "production"] else []),
-            control("caption", label(name, [61, 13], (29, 12), (1, 0.93, 0.73), 0.7)),
+            control("caption", label(name, [61, 13], (29, 12), (1, 0.93, 0.73), 0.85)),
         ]}))
     marker = f"[JF:tab:{lower}]"
     return control("jf_tab_" + lower, {
@@ -224,13 +224,13 @@ def build():
     ]}
     frame = [
         control("frame", image("frontier/charter_frame", [380, 240], layer=1)),
-        control("title", label("VILLAGE CHARTER", [236, 17], (25, 14), (1, 0.93, 0.71), 1.1)),
+        control("title", label("Village Charter", [236, 17], (25, 14), (1, 0.93, 0.71), 1.0)),
         control("close@common.close_button", {"$close_button_offset": [-7, 7], "layer": 30, "bindings": []}),
     ]
     dashboard = copy.deepcopy(frame)
     dashboard += [tab(name, index) for index, name in enumerate(TABS)]
     dashboard.append(control("seal", image("frontier_red", [86, 24], (9, 204), 3)))
-    dashboard.append(control("seal_text", label("JAGSBY'S FRONTIER", [86, 12], (10, 212), (1, 0.84, 0.45), 0.55)))
+    dashboard.append(control("seal_text", label("Jagsby's Frontier", [86, 12], (10, 212), (1, 0.84, 0.45), 0.65)))
     for name in TABS:
         lower = name.lower()
         if lower in ["overview", "research"]:
@@ -292,12 +292,12 @@ def build():
             "pressed": [0.35, 0.06, 0.05],
         }[name]})
         controls["caption"].update({"offset": [0, 3], "size": [58, 11],
-                                    "text_alignment": "center", "font_scale_factor": 0.75})
+                                    "text_alignment": "center", "font_scale_factor": 0.85})
     dashboard.append(control("header_rename", rename))
     portrait = image("frontier/settlements/outpost", [96, 168], layer=8)
-    # All five 96x168 textures share the same frame. Sample only the painting,
-    # removing the baked dark stone/wood surround without altering the artwork.
-    portrait.update({"uv": [8, 12], "uv_size": [80, 144]})
+    # Retain the decorative stone/oak/gold frame. Trim only its one-pixel outer
+    # dark rim; the previous painting-only crop removed the requested frame.
+    portrait.update({"uv": [1, 1], "uv_size": [94, 166]})
     portrait["bindings"] = [
         {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
         {"binding_name": "#form_button_text", "binding_name_override": "#record_text",
@@ -312,16 +312,15 @@ def build():
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [96, 168]),
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0]}),
-        control("name_label", label("SETTLEMENT", [143, 10], (110, 3), color=(0.42, 0.30, 0.16), scale=0.65)),
-        overview_value("name", DATA["overview"], [110, 18], [143, 28], scale=1.05),
-        overview_value("tier", DATA["tier"], [110, 47], [143, 12], scale=0.75),
-        control("divider", image("frontier/solid", [143, 1], (110, 68), layer=2, color=[0.70, 0.52, 0.30])),
-        control("biome_label", label("Biome", [40, 12], (110, 80), color=(0.42, 0.30, 0.16), scale=0.75)),
-        overview_value("biome", DATA["biomes"], [153, 79], [100, 22], scale=0.85),
-        control("power_label", label("Realm Power", [143, 12], (110, 111), color=(0.42, 0.30, 0.16), scale=0.75)),
-        overview_value("power", DATA["census"], [110, 129], [143, 30], scale=1.5),
+        overview_value("tier", DATA["tier"], [0, 168], [96, 9], scale=0.85),
+        control("name_label", label("Settlement", [143, 12], (110, 12), color=(0.36, 0.25, 0.13), scale=0.85)),
+        overview_value("name", DATA["overview"], [110, 30], [143, 24], scale=0.85),
+        control("biome_label", label("Biome", [58, 12], (110, 70), color=(0.36, 0.25, 0.13), scale=0.85)),
+        overview_value("biome", DATA["biomes"], [176, 70], [77, 24], scale=0.85),
+        control("power_label", label("Realm Power", [77, 12], (110, 100), color=(0.36, 0.25, 0.13), scale=0.85)),
+        overview_value("power", DATA["census"], [192, 100], [61, 18], scale=0.85),
     ]}
-    GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left", "color": [0.42, 0.30, 0.16]})
+    GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "center"})
     picker = copy.deepcopy(frame)
     # Secondary-biome choices have their own custom button renderer, not the
     # vanilla long-form dynamic list used by the previous prototype.
@@ -331,7 +330,7 @@ def build():
         "$scrolling_content": "jagsby_frontier.jf_picker_content", "$scroll_size": [4, "100% - 4px"],
         "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
     }))
-    picker.append(control("caption", label("SECONDARY\nBIOME", [88, 32], (10, 65), (1, 0.91, 0.65))))
+    picker.append(control("caption", label("Secondary\nBiome", [88, 32], (10, 65), (1, 0.91, 0.65))))
     ui["jf_picker"] = {"type": "panel", "size": [380, 240], "controls": picker}
     ui["jf_picker_content"] = {"type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"],
         "controls": [heading("CHOOSE ONE BIOME"), control("choices", {
@@ -364,7 +363,7 @@ def build():
     submit["bindings"] = []
     submit.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 151]})
     ui["jf_rename"] = {"type": "panel", "size": [380, 240], "controls": copy.deepcopy(frame) + [
-        control("caption", label("RENAME", [88, 32], (10, 65), (1, 0.91, 0.65))),
+        control("caption", label("Rename", [88, 32], (10, 65), (1, 0.91, 0.65))),
         control("input@server_form.generated_contents", {"anchor_from": "top_left", "anchor_to": "top_left",
             "offset": [110, 70], "size": [254, "100%c"], "layer": 5}),
         control("submit@common.button", submit),

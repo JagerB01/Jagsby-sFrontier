@@ -102,7 +102,7 @@ test('Overview has three non-scrolling fields, while Rename is in the top header
   assert.deepEqual(ui.jf_overview_content.size,[257,177]);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   const fields=children(ui.jf_overview_content);
-  assert.deepEqual(Object.keys(fields),['portrait','name_label','name','tier','divider','biome_label','biome','power_label','power']);
+  assert.deepEqual(Object.keys(fields),['portrait','tier','name_label','name','biome_label','biome','power_label','power']);
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=177);
   const header=children(ui.jf_dashboard).header_rename;
   assert.ok(header.offset[1]+header.size[1]<=37,'Rename must fit inside the crimson top bar');
@@ -121,15 +121,19 @@ test('Overview uses the recommended full-height portrait on the left and details
   assert.equal(fields.portrait.type,'stack_panel');
   assert.deepEqual(fields.portrait.controls,[{'record@jagsby_frontier.jf_tier_portrait':{collection_index:3}}]);
   assert.equal(ui.jf_tier_portrait.bilinear,false);
-  assert.deepEqual(ui.jf_tier_portrait.uv,[8,12]);
-  assert.deepEqual(ui.jf_tier_portrait.uv_size,[80,144]);
+  assert.deepEqual(ui.jf_tier_portrait.uv,[1,1]);
+  assert.deepEqual(ui.jf_tier_portrait.uv_size,[94,166]);
   assert.ok(ui.jf_tier_portrait.uv[0]+ui.jf_tier_portrait.uv_size[0]<96);
   assert.ok(ui.jf_tier_portrait.uv[1]+ui.jf_tier_portrait.uv_size[1]<168);
   assert.ok(Math.abs(fields.biome.offset[1]-fields.biome_label.offset[1])<=2,
     'Biome label and value should share a compact row');
-  assert.ok(fields.tier.offset[0]>=108,'Tier should be grouped beneath the settlement name');
-  assert.ok(ui.jf_data_overview.font_scale_factor>ui.jf_data_biomes.font_scale_factor,
-    'Settlement name should have a stronger visual hierarchy');
+  assert.deepEqual(fields.tier.offset,[0,168],'Tier belongs beneath the restored framed portrait');
+  for(const key of ['overview','biomes','census','tier'])assert.equal(ui['jf_data_'+key].font_scale_factor,0.85);
+  for(const key of ['name_label','biome_label','power_label'])assert.equal(fields[key].font_scale_factor,0.85);
+  assert.equal(children(ui.jf_dashboard).title.text,'Village Charter');
+  assert.equal(fields.name_label.text,'Settlement');
+  assert.equal(fields.biome.offset[1],fields.biome_label.offset[1]);
+  assert.equal(fields.power.offset[1],fields.power_label.offset[1]);
   assert.ok(ui.jf_tier_portrait.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_name_override==='#texture'));
   for(const name of ['name','biome','power']) {
     assert.ok(fields[name].offset[0]>=108);

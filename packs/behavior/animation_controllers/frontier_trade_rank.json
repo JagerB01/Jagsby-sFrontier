@@ -1,0 +1,89 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.jagsby_frontier.trade_rank": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "requested": "query.property('jagsby_frontier:requested')"
+            }
+          ]
+        },
+        "requested": {
+          "transitions": [
+            {
+              "raw_0": "query.max_trade_tier > 0 && query.trade_tier == 0"
+            },
+            {
+              "raw_1": "query.max_trade_tier > 0 && query.trade_tier == 1"
+            },
+            {
+              "raw_2": "query.max_trade_tier > 0 && query.trade_tier == 2"
+            },
+            {
+              "raw_3": "query.max_trade_tier > 0 && query.trade_tier == 3"
+            },
+            {
+              "raw_4": "query.max_trade_tier > 0 && query.trade_tier == 4"
+            },
+            {
+              "default": "!query.property('jagsby_frontier:requested')"
+            }
+          ]
+        },
+        "raw_0": {
+          "on_entry": [
+            "@s jagsby_frontier:result_0"
+          ],
+          "transitions": [
+            {
+              "default": "!query.property('jagsby_frontier:requested')"
+            }
+          ]
+        },
+        "raw_1": {
+          "on_entry": [
+            "@s jagsby_frontier:result_1"
+          ],
+          "transitions": [
+            {
+              "default": "!query.property('jagsby_frontier:requested')"
+            }
+          ]
+        },
+        "raw_2": {
+          "on_entry": [
+            "@s jagsby_frontier:result_2"
+          ],
+          "transitions": [
+            {
+              "default": "!query.property('jagsby_frontier:requested')"
+            }
+          ]
+        },
+        "raw_3": {
+          "on_entry": [
+            "@s jagsby_frontier:result_3"
+          ],
+          "transitions": [
+            {
+              "default": "!query.property('jagsby_frontier:requested')"
+            }
+          ]
+        },
+        "raw_4": {
+          "on_entry": [
+            "@s jagsby_frontier:result_4"
+          ],
+          "transitions": [
+            {
+              "default": "!query.property('jagsby_frontier:requested')"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

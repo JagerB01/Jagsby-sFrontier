@@ -1,4 +1,4 @@
-# Standalone charter dashboard (0.0.11)
+# Standalone charter dashboard (0.0.12)
 
 Frontier's custom menu is independent. It does not bundle MineScape UI, textures,
 behavior scripts or identifiers, and it does not require MineScape to be enabled.
@@ -102,7 +102,7 @@ The same log rejects `query.trade_tier` in server entity property events. That
 separate failure is documented in `village-census.md`; the broken bridge is no
 longer shipped. New client validation remains outstanding.
 
-## Overview visual cleanup (0.0.11)
+## Overview visual cleanup (0.0.12)
 
 The portrait still occupies the left 96×168 region, but the image samples only
 UV (8,12) through an 80×144 area inside each shared 96×168 texture. This removes
@@ -114,3 +114,17 @@ sits immediately below it. Biome appears as one compact label/value row. Realm
 Power sits below that group, rather than being pushed to the panel's bottom by
 equal vertical spacing. Rename remains in the header with a smaller flat crimson
 face. Collection scope behavior is unchanged from the user's working 0.0.10 view.
+
+## Corrected visual direction (0.0.12)
+
+The 0.0.11 crop removed the decorative portrait frame, which the user wanted
+retained. The new UV rectangle is (1,1) with size 94×166, trimming only the outer
+one-pixel edge from each 96×168 asset. The original stone/oak/gold framing stays
+visible. The tier caption is back beneath the portrait.
+
+Body labels and values share Unicode normal typography at scale 0.85. Settlement,
+Biome and Realm Power use title case. Name is grouped at the top; biome and power
+are aligned compact label/value rows rather than separated display blocks.
+The oversized power number, mixed capitalisation and heavy divider are removed.
+Header and sidebar typography use the same family; the title has a single modest
+heading scale. The resulting in-game rendering needs user verification.

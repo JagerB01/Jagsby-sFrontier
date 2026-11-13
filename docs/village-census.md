@@ -1,23 +1,31 @@
-# Village census (0.0.10)
+# Village census (0.0.12)
 
 Charter interaction queries loaded vanilla villagers once in a 64-block sphere,
 in the charter's dimension. Placement, menu navigation, Rename and busy-menu
 retries do not rerun that query. Counts are saved with the settlement.
 
-## Native trade-level reading is unresolved
+## Native trade-level bridge
 
-The user's 0.0.9 content log explicitly rejects `query.trade_tier` in the
-`jagsby_frontier:sample_trade_tier` entity set_property event. The event bridge
-introduced in 0.0.4 therefore did not establish a supported native rank source.
-The stable Script API declarations inspected through 2.11.0 expose no native
-trade-tier component/accessor. A query being documented for Molang does not
-establish support in a particular server context.
+The original query inside set_property was rejected by the 0.0.9 live log. A
+separate probe moved the query into behavior animation-controller transitions
+and used literal-valued entity events to export the result. The later probe log
+has no errors and reports raw tier 1; the user identified that villager as an
+Apprentice and confirmed the probe was working. Mojang's client villager
+rendering maps query.trade_tier directly onto the five ordered badge textures.
 
-0.0.10 removes the invalid event, generated vanilla villager overrides and bridge
-builder. It neither triggers that event nor trusts its cached entity property.
-The adapter returns unknown ranks. No trade XP guess, manual rank or false novice
-classification is substituted. Exact vanilla trade-level integration still needs
-a supported engine source and in-game validation.
+0.0.12 integrates that controller context. Charter interaction requests sampling
+for the observed villagers, waits one batch of 10 ticks, reads ready/raw_rank
+properties, and saves the resulting census. Concurrent menu openings share
+in-flight reads of the same entity. A new later interaction samples fresh values.
+Native unemployed/nitwit professions (variant 0 and 14) are unranked and get the
+base contribution without a trade query. Profession is not used to infer an
+employed villager's trade level.
+
+The controller's idle state checks only its request property. Rank queries occur
+only in the requested state. There is no background villager census. Incomplete,
+missing or invalid reads remain unknown instead of being called novice. The
+separate probe pack must be disabled: it also overrides vanilla villagers and
+would replace the production bridge if it wins the pack stack.
 
 The intended score table remains:
 
@@ -29,10 +37,10 @@ The intended score table remains:
 | Expert | 0.8 |
 | Master | 1.0 |
 
-With unknown ranks, each loaded villager contributes 0.2 to a **minimum estimate**.
-UI power and tier show a ≥ prefix. Trading up a villager will not change this
-minimum estimate; it is not a completed native rank score. An empty successful
-census is exactly zero. Survey errors remain unavailable, not a zero population.
+With unknown ranks, each unknown villager contributes 0.2 to a **minimum
+estimate**, and power/tier use a ≥ prefix. Successful rank readings use the table
+above. Exact power can increase on the next charter interaction after trading up
+villagers. An empty successful census is exactly zero; query failures are unknown.
 
 ## Persistence and boundaries
 
@@ -53,8 +61,9 @@ user action in the charter dimension.
 
 ## Verification
 
-Automated tests cover entity filtering, minimum estimates, persistence, absence
-of the rejected event/overrides, UI collection scopes, layout and asset resolution.
-They do not run Minecraft's UI parser or native entity engine. The uploaded live
-content log supplied the evidence of the actual failures; the replacement build
-still needs an in-game check and fresh content log.
+27 Node and 3 Python tests exercise scoring, promotions/demotions, controller
+structure, literal-only property events, unranked villagers, batching, shared
+reads, snapshots and the UI data/layout. The supplied probe log and user's
+Apprentice confirmation provide live evidence for the controller query context.
+The integrated build, full rank range and visual changes still need in-game
+verification; offline tests do not execute Minecraft Molang.

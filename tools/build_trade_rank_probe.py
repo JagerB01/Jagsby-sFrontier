@@ -1,6 +1,5 @@
 """Build an isolated, UNVERIFIED server-animation trade-tier diagnostic pack."""
 import copy
-import io
 import json
 from pathlib import Path
 import subprocess
@@ -12,44 +11,44 @@ PREFIX = "jagsby_frontier_probe:"
 CONTROLLER = "controller.animation.jagsby_frontier_probe.trade_rank"
 
 
-def probe_entity(baseline):
+def probe_entity(baseline, prefix=PREFIX, controller=CONTROLLER, animation="frontier_rank_probe", tier_count=6):
     data = copy.deepcopy(baseline)
     entity = data["minecraft:entity"]
     description = entity["description"]
     description.setdefault("properties", {}).update({
-        PREFIX + "requested": {"type": "bool", "default": False},
-        PREFIX + "ready": {"type": "bool", "default": False},
-        PREFIX + "raw_rank": {"type": "int", "range": [-1, 5], "default": -1},
+        prefix + "requested": {"type": "bool", "default": False},
+        prefix + "ready": {"type": "bool", "default": False},
+        prefix + "raw_rank": {"type": "int", "range": [-1, tier_count - 1], "default": -1},
     })
-    description.setdefault("animations", {})["frontier_rank_probe"] = CONTROLLER
-    description.setdefault("scripts", {}).setdefault("animate", []).append("frontier_rank_probe")
+    description.setdefault("animations", {})[animation] = controller
+    description.setdefault("scripts", {}).setdefault("animate", []).append(animation)
     events = entity.setdefault("events", {})
-    events[PREFIX + "request"] = {"set_property": {
-        PREFIX + "requested": True, PREFIX + "ready": False, PREFIX + "raw_rank": -1,
+    events[prefix + "request"] = {"set_property": {
+        prefix + "requested": True, prefix + "ready": False, prefix + "raw_rank": -1,
     }}
-    events[PREFIX + "reset"] = {"set_property": {PREFIX + "requested": False}}
-    for tier in range(6):
-        events[PREFIX + f"result_{tier}"] = {"set_property": {
-            PREFIX + "requested": False, PREFIX + "ready": True, PREFIX + "raw_rank": tier,
+    events[prefix + "reset"] = {"set_property": {prefix + "requested": False}}
+    for tier in range(tier_count):
+        events[prefix + f"result_{tier}"] = {"set_property": {
+            prefix + "requested": False, prefix + "ready": True, prefix + "raw_rank": tier,
         }}
     return data
 
 
-def probe_controller():
+def probe_controller(prefix=PREFIX, controller=CONTROLLER, tier_count=6):
     states = {
-        "default": {"transitions": [{"requested": f"query.property('{PREFIX}requested')"}]},
+        "default": {"transitions": [{"requested": f"query.property('{prefix}requested')"}]},
         "requested": {"transitions": [
             {f"raw_{tier}": f"query.max_trade_tier > 0 && query.trade_tier == {tier}"}
-            for tier in range(6)
-        ] + [{"default": f"!query.property('{PREFIX}requested')"}]},
+            for tier in range(tier_count)
+        ] + [{"default": f"!query.property('{prefix}requested')"}]},
     }
-    for tier in range(6):
+    for tier in range(tier_count):
         states[f"raw_{tier}"] = {
-            "on_entry": [f"@s {PREFIX}result_{tier}"],
-            "transitions": [{"default": f"!query.property('{PREFIX}requested')"}],
+            "on_entry": [f"@s {prefix}result_{tier}"],
+            "transitions": [{"default": f"!query.property('{prefix}requested')"}],
         }
     return {"format_version": "1.10.0", "animation_controllers": {
-        CONTROLLER: {"initial_state": "default", "states": states},
+        controller: {"initial_state": "default", "states": states},
     }}
 
 

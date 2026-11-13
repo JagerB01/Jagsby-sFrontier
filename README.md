@@ -5,20 +5,20 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.11.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.12.mcaddon?raw=true)
 
-The Overview places the recommended 96×168 tier portrait on the left, with
-a larger settlement name and tier grouped on the right, a compact biome row,
-and Realm Power below. The painted scene displays without its baked dark frame,
-and the Overview has no scrolling.
-Rename remains in the top header bar. Portrait tiers use the provisional
-Realm Power thresholds 0 / 2 / 5 / 10 / 20. The 64-block census runs on
-charter interaction. Native villager trading levels are currently unavailable:
-the attempted Molang bridge was rejected by Minecraft and removed. Power and
-tier show conservative minimum estimates (≥), not exact trade-level scores. MineScape
-is not required or bundled. Enable Frontier's linked behavior and resource
-packs in a disposable test world. The in-game name is **Jagsby's Frontier 0.0.11**.
-Minecraft rendering and native trade-tier execution remain unverified in-game.
+The Overview retains the decorative framed portrait on the left and uses
+consistent title-case labels and body typography on the right. Settlement name,
+biome and Realm Power use a compact layout, with Rename in the header.
+Tier thresholds remain 0 / 2 / 5 / 10 / 20.
+
+The on-demand server-controller trade-rank bridge is now included. **Disable the
+separate Trade Rank Probe pack** when using this build, because both define
+vanilla villagers. Charter interaction samples normal ranks from Novice (0.2)
+through Master (1.0); unknown reads remain labeled minimum estimates. MineScape
+is not required. In-game name: **Jagsby's Frontier 0.0.12**. The user confirmed
+the probe's Apprentice reading; this production integration and updated visual
+layout still need in-game verification.
 
 - Requirements: [village system specification](docs/village-system-spec.md).
 - Integration blockers and prototype defects: [implementation status](docs/implementation-status.md).
@@ -49,7 +49,7 @@ The approved set A artwork is in `packs/resource/textures/ui/frontier/icons/`:
 `overview.png` (charter scroll), `research.png` (open book), and `production.png`
 (resource crate). Each is an RGBA PNG with binary transparency and crisp edges.
 These sprites are wired into all states of the corresponding sidebar tabs in
-the 0.0.11 addon, replacing the earlier placeholder drawings.
+the 0.0.12 addon, replacing the earlier placeholder drawings.
 
 Use the existing checkout; cloud tasks already have isolated environments.
 Python 3.12 and Node.js 24 are available in the prepared cloud environment.
@@ -62,9 +62,9 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.0.11.mcaddon`. Packaging is
-deterministic; the build regenerates the custom UI. Vanilla villager definitions
-are not overridden.
+Build output is `dist/Jagsbys_Frontier_v0.0.12.mcaddon`. Packaging is
+deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
+the controller bridge.
 The pack targets Bedrock 1.26.0+ with `@minecraft/server` 2.9.0 and
 `@minecraft/server-ui` 2.1.0.
 

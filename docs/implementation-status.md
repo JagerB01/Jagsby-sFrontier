@@ -77,3 +77,13 @@ that query.trade_tier cannot be evaluated in the chosen server event context.
 0.0.10 corrects the collection container type and removes the invalid rank bridge.
 Real trade-level reading is an unresolved engine/API integration requirement;
 minimum estimates must not be described as completed native rank detection.
+
+## 0.0.12 current bridge status
+
+The user supplied a later error-free probe log showing raw rank 1 and identified
+the villager as Apprentice, confirming the controller context. The main pack now
+includes that controller-based bridge, using literal property events and batched
+sampling on interaction. Native unemployed/nitwit professions get base power;
+failed reads still produce a conservative estimate. Full production integration
+and the remaining ranks need in-game validation. The previous event-expression
+query has not been restored.

@@ -28,3 +28,11 @@ https://github.com/MicrosoftDocs/minecraft-creator/blob/main/creator/Reference/C
 
 Native entity event property updates and their delayed application are described at:
 https://github.com/MicrosoftDocs/minecraft-creator/blob/main/creator/Documents/IntroductionToEntityProperties.md
+
+## Controller bridge reintroduced in 0.0.12
+
+The vanilla entity references are used again by the new server-controller bridge.
+`tools/build_villager_bridge.py` calls the same parameterized entity/controller
+generation used by the probe, with the production namespace and five rank states.
+It preserves the original components, AI and trades, and keeps native tier queries
+out of set_property events. The user confirmed the probe's raw Apprentice reading.

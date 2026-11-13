@@ -1,5 +1,22 @@
 # Changes
 
+## 0.0.12
+
+- Restore the decorative portrait frame; trim only one outer pixel instead of
+  cropping the entire stone/oak/gold surround away.
+- Use consistent Unicode body typography at 0.85 scale, title-case labels,
+  compact aligned biome/power rows and an ordinary-sized power value.
+- Keep tier caption below the framed portrait and Rename in the header.
+- Integrate the server-animation rank bridge exercised by the probe. Native
+  tier queries stay in requested controller transitions; property events write
+  literal values only. Apprentice raw 1 was confirmed by the user.
+- Batch sampling on charter interaction and share in-flight entity reads across
+  players. Native unemployed/nitwit professions receive the base 0.2 power.
+- Disable the separate probe pack while testing this integrated build.
+- 27 Node tests and 3 Python tests pass; production integration and visual layout
+  still require in-game verification.
+- In-game name: Jagsby's Frontier 0.0.12.
+
 ## 0.0.11
 
 - Remove the dark portrait frame from the displayed image with a shared UV crop,
