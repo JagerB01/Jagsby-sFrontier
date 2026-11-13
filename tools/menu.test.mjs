@@ -66,59 +66,65 @@ test('four local sidebar toggles control custom pages without submitting form bu
   }
 });
 
-test('all fixed data and action records agree with the generated script layout',async()=>{
-  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
-  const source=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
-  const {CHARTER_LAYOUT:layout}=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
-  const indices=[];
-  function walk(value) {
-    if(!value||typeof value!=='object')return;
-    if(Number.isInteger(value.collection_index))indices.push(value.collection_index);
-    for(const child of Object.values(value))walk(child);
+const uiFile=new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url);
+const loadUI=async()=>JSON.parse(await readFile(uiFile,'utf8'));
+const children=control=>Object.assign({},...control.controls);
+const template=(ui,name)=>ui[name]??ui[Object.keys(ui).find(key=>key.split('@')[0]===name)];
+
+test('all displayed record factories use native form context, with no hard-coded indices',async()=>{
+  const ui=await loadUI();
+  assert.equal(JSON.stringify(ui).includes('collection_index'),false);
+  const layoutSource=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
+  const {CHARTER_LAYOUT:layout}=await import(`data:text/javascript;base64,${Buffer.from(layoutSource).toString('base64')}`);
+  for(const key of Object.keys(layout.data).filter(key=>key!=='civilization')) {
+    const label=ui['jf_data_'+key];
+    assert.equal(label.type,'label');
+    assert.ok(label.bindings.some(b=>b.source_property_name===`(#record_text - '[JF:data:${key}]')`&&b.target_property_name==='#text'));
+    assert.ok(label.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_type==='collection'));
   }
-  for(const name of ['overview','research_global','research_local','production','stockpile'])walk(ui['jf_'+name+'_content']);
-  assert.deepEqual(indices.sort((a,b)=>a-b),Array.from({length:layout.recordCount},(_,i)=>i).filter(i=>i!==3));
-  assert.equal(new Set(Object.values(layout.actions)).size,11);
-  assert.equal(layout.actions.collect,23);
-  assert.equal(layout.actions.efficiency,14);
+  for(const key of Object.keys(layout.actions)) {
+    const button=template(ui,'jf_action_'+key);
+    assert.ok(button.bindings.some(b=>b.source_property_name===`(#form_button_text = '[JF:action:${key}]')`&&b.target_property_name==='#enabled'));
+    assert.ok(button.bindings.some(b=>b.binding_type==='collection_details'));
+  }
 });
 
-test('overview is a fixed three-field panel with rename alongside the name',async()=>{
-  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
+test('Overview has three non-scrolling fields, while Rename is in the top header',async()=>{
+  const ui=await loadUI();
   assert.equal(ui.jf_overview_content.type,'panel');
   assert.deepEqual(ui.jf_overview_content.size,[257,177]);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
-  const controls=Object.assign({},...ui.jf_overview_content.controls);
-  assert.deepEqual(Object.keys(controls),['name_label','name','rename','biome_label','biome','power_label','power']);
-  for(const control of Object.values(controls)) {
-    assert.ok(control.offset[1]+control.size[1]<=177,'Overview content must fit without scrolling');
-  }
-  assert.equal(controls.rename.offset[1],16);
-  assert.equal(controls.rename.controls[0]['purchase@common.button'].collection_index,24);
-});
-
-test('overview binds distinct records on the labels and Rename button themselves',async()=>{
-  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
-  const controls=Object.assign({},...ui.jf_overview_content.controls);
-  const records=['Oakfield','Plains','2.8'];
-  const values=['name','biome','power'].map((name,index)=>{
-    const text=controls[name].controls[0].value;
-    assert.equal(text.collection_index,index,'Collection indices must be on the bound label, not only its container');
-    assert.ok(text.bindings.some(b=>b.binding_name==='#form_button_text'));
-    return records[text.collection_index];
-  });
-  assert.deepEqual(values,['Oakfield','Plains','2.8']);
-  const button=controls.rename.controls[0]['purchase@common.button'];
-  assert.equal(button.collection_index,24);
+  const fields=children(ui.jf_overview_content);
+  assert.deepEqual(Object.keys(fields),['name_label','name','biome_label','biome','power_label','power']);
+  for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=177);
+  const header=children(ui.jf_dashboard).header_rename;
+  assert.ok(header.offset[1]+header.size[1]<=37,'Rename must fit inside the crimson top bar');
+  assert.equal(header.factory.control_ids.button,'@jagsby_frontier.jf_action_rename');
+  const button=template(ui,'jf_action_rename');
   assert.equal(button.$pressed_button_name,'button.form_button_click');
   assert.ok(button.button_mappings.every(m=>m.to_button_id==='button.form_button_click'));
-  const submit=ui.jf_rename.controls.find(c=>c['submit@common.button'])['submit@common.button'];
+});
+
+test('Overview fields select named transport records rather than falling back to record zero',async()=>{
+  const ui=await loadUI();
+  const fields=children(ui.jf_overview_content);
+  const records=['[JF:data:census]2.8','[JF:action:rename]','[JF:data:biomes]Plains','[JF:data:overview]Oakfield'];
+  for(const [field,key,expected]of [['name','overview','Oakfield'],['biome','biomes','Plains'],['power','census','2.8']]) {
+    assert.equal(fields[field].factory.control_ids.button,'@jagsby_frontier.jf_data_'+key);
+    const label=ui['jf_data_'+key];
+    const expression=label.bindings.find(b=>b.target_property_name==='#text').source_property_name;
+    const marker=expression.match(/'([^']+)'/)[1];
+    const matching=records.filter(record=>record.includes(marker));
+    assert.equal(matching.length,1);
+    assert.equal(matching[0].replace(marker,''),expected);
+  }
+  const submit=children(ui.jf_rename)['submit@common.button'];
   assert.ok(submit.button_mappings.every(m=>m.to_button_id==='button.submit_custom_form'));
 });
 
-test('Research has independent Global and Local toggles with the correct upgrade actions',async()=>{
-  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
-  const controls=Object.assign({},...ui.jf_research_content.controls);
+test('Research subtabs isolate the correct native action factories',async()=>{
+  const ui=await loadUI();
+  const controls=children(ui.jf_research_content);
   for(const scope of ['global','local']) {
     const toggle=controls['jf_research_tab_'+scope];
     assert.equal(toggle.toggle_name,'jagsby_frontier_research_tabs');
@@ -127,29 +133,43 @@ test('Research has independent Global and Local toggles with the correct upgrade
     const page=controls[scope+'@common.scrolling_panel'];
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_research_tab_'+scope&&b.target_property_name==='#enabled'));
   }
-  function actionIndices(value,result=[]) {
+  function actions(value,result=[]) {
     if(value&&typeof value==='object') {
-      if(value.$pressed_button_name==='button.form_button_click')result.push(value.collection_index);
-      for(const child of Object.values(value))actionIndices(child,result);
+      const ref=value.factory?.control_ids?.button;
+      if(ref?.startsWith('@jagsby_frontier.jf_action_'))result.push(ref.split('jf_action_')[1]);
+      for(const child of Object.values(value))actions(child,result);
     }
     return result;
   }
-  assert.deepEqual(actionIndices(ui.jf_research_global_content),[17,18,19,20]);
-  assert.deepEqual(actionIndices(ui.jf_research_local_content),[14,15,16]);
+  assert.deepEqual(actions(ui.jf_research_global_content),['frontier','capacity','development','storage']);
+  assert.deepEqual(actions(ui.jf_research_local_content),['efficiency','hearth','biome']);
+});
+
+test('approved transparent sprites appear in every state of their sidebar tabs',async()=>{
+  const ui=await loadUI();
+  const dashboard=children(ui.jf_dashboard);
+  for(const name of ['overview','research','production']) {
+    for(const state of dashboard['jf_tab_'+name].controls) {
+      const icon=children(Object.values(state)[0]).icon;
+      assert.equal(icon.texture,'textures/ui/frontier/icons/'+name);
+      assert.deepEqual(icon.size,[24,24]);
+      assert.equal(icon.bilinear,false);
+    }
+  }
 });
 
 test('standalone UI references resolve to Frontier files and definitions',async()=>{
   const resourceRoot=new URL('../packs/resource/',import.meta.url);
-  const ui=JSON.parse(await readFile(new URL('ui/jagsby_frontier/charter.json',resourceRoot),'utf8'));
+  const ui=await loadUI();
   const textures=new Set();
   function walk(value) {
     if(typeof value==='string') {
       if(value.startsWith('textures/'))textures.add(value);
       const match=value.match(/^@?jagsby_frontier\.(\w+)$/);
-      if(match)assert.ok(ui[match[1]],`Missing Frontier control: ${value}`);
+      if(match)assert.ok(template(ui,match[1]),`Missing Frontier control: ${value}`);
     } else if(value&&typeof value==='object') {
       for(const [key,child]of Object.entries(value)) {
-        if(key.includes('@jagsby_frontier.'))assert.ok(ui[key.split('@jagsby_frontier.')[1]]);
+        if(key.includes('@jagsby_frontier.'))assert.ok(template(ui,key.split('@jagsby_frontier.')[1]));
         walk(child);
       }
     }

@@ -1,5 +1,18 @@
 # Changes
 
+## 0.0.8
+
+- Wire the approved transparent 64×64 scroll, book and resource-crate sprites
+  into every sidebar state for Overview, Research and Production.
+- Move Rename from the settlement details into the crimson top header bar.
+- Replace manually indexed static data labels and action buttons with native
+  form-record factories. Tagged records identify each displayed value/action,
+  while Minecraft supplies the generated controls' actual collection context.
+- Keep biome choices generated in native context and the themed Rename input.
+- Log and report unrecognized selections rather than silently ignoring them.
+- 22 automated tests pass; native client behavior remains unverified.
+- In-game name: Jagsby's Frontier 0.0.8.
+
 ## 0.0.7
 
 - Fix native JSON UI collection scoping: put record indices on the labels and

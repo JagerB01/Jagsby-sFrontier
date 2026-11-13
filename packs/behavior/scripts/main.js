@@ -95,13 +95,14 @@ function open(player,vId,page='Overview',researchScope='global'){
   handlers.set(actions.selectBiome,()=>selectBiome(player,vId));
   handlers.set(actions.collect,()=>collect(player,vId));
   handlers.set(actions.rename,()=>renameSettlement(player,vId));
-  for(const [key,index] of Object.entries(actions))records[index]=key;
+  for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
+  for(const [key,index] of Object.entries(data))records[index]=`[JF:data:${key}]${records[index]}`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
   const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}]`);
   records.forEach(text=>form.button(text));
-  displayMenu(player,form,system).then(r=>{if(!r.canceled)handlers.get(r.selection)?.();}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
+  displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
 async function renameSettlement(player,vId){
   const current=state().villages[vId];if(!current)return;

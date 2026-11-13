@@ -17,6 +17,7 @@ ACTIONS = {name: i + 14 for i, name in enumerate([
     "storage", "scan", "selectBiome", "collect", "rename",
 ])}
 TABS = ["Overview", "Research", "Production", "Stockpile"]
+GENERATED_CONTROLS = {}
 
 
 def control(name, definition):
@@ -59,47 +60,67 @@ def collection_bindings():
              "binding_type": "collection", "binding_collection_name": "form_buttons"}]
 
 
+def factory(template, size):
+    return {"type": "panel", "size": size, "collection_name": "form_buttons",
+        "factory": {"name": "buttons", "control_ids": {"button": "@jagsby_frontier." + template}},
+        "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length"}]}
+
+
+def data_template(index, size, scale=0.8):
+    key = next(key for key, value in DATA.items() if value == index)
+    marker = f"[JF:data:{key}]"
+    name = f"jf_data_{key}"
+    text = label("#text", size, scale=scale)
+    text["bindings"] = [
+        {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+        {"binding_name": "#form_button_text", "binding_name_override": "#record_text",
+         "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        view(f"(#record_text - '{marker}')", "#text"),
+        view(f"(not ((#record_text - '{marker}') = #record_text))"),
+    ]
+    GENERATED_CONTROLS[name] = text
+    return name
+
+
 def record(name, index, height):
-    if height is None:
-        text = label("#text", [240, "default"], (7, 0))
-        text["bindings"] = collection_bindings()
-        text["collection_index"] = index
-        return control(name, {"type": "stack_panel", "orientation": "vertical",
-            "size": [254, "100%c"], "collection_name": "form_buttons",
-            "controls": [control("text", text), control("spacing", {"type": "panel", "size": [254, 8]})]})
-    text = label("#text", [240, height - 8], (7, 4))
-    text["bindings"] = collection_bindings()
-    text["collection_index"] = index
-    return control(name, {"type": "panel", "size": [254, height],
-        "collection_name": "form_buttons",
-        "controls": [control("paper", image("frontier/solid", [254, height - 2],
-                                             color=[0.84, 0.69, 0.44])),
-                     control("text", text)]})
+    height = height or (180 if index == DATA["production"] else 256)
+    template = data_template(index, [240, height - 8])
+    text = factory(template, [240, height - 8])
+    text.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [7, 4]})
+    return control(name, {"type": "panel", "size": [254, height], "controls": [
+        control("paper", image("frontier/solid", [254, height - 2], color=[0.84, 0.69, 0.44])),
+        control("data", text),
+    ]})
 
 
-def action(name, index, caption):
+def action(name, index, caption, width=254, height=21):
+    key = next(key for key, value in ACTIONS.items() if value == index)
+    template = "jf_action_" + key
     states = []
     for state, texture, tint in [("default", "frontier_wood", None),
                                   ("hover", "frontier_red", None),
                                   ("pressed", "frontier_red", [0.7, 0.6, 0.5])]:
-        states.append(control(state, {"type": "panel", "size": [254, 21], "controls": [
-            control("gold", image("frontier/solid", [254, 21], color=[0.88, 0.62, 0.18])),
-            control("wood", image(texture, [252, 19], (1, 1), 1, tint)),
-            control("caption", label(caption, [242, 12], (6, 4), (1, 0.91, 0.65))),
+        states.append(control(state, {"type": "panel", "size": [width, height], "controls": [
+            control("gold", image("frontier/solid", [width, height], color=[0.88, 0.62, 0.18])),
+            control("wood", image(texture, [width - 2, height - 2], (1, 1), 1, tint)),
+            control("caption", label(caption, [width - 12, 12], (6, 4), (1, 0.91, 0.65))),
         ]}))
-    return control(name, {"type": "stack_panel", "orientation": "vertical",
-        "size": [254, 24], "collection_name": "form_buttons",
-        "controls": [control("purchase@common.button", {
-            "size": [254, 21], "$pressed_button_name": "button.form_button_click",
-            "collection_index": index,
-            "focus_enabled": True, "hover_enabled": True,
-            "button_mappings": [
-                {"from_button_id": "button.menu_select", "to_button_id": "button.form_button_click", "mapping_type": "pressed"},
-                {"from_button_id": "button.menu_ok", "to_button_id": "button.form_button_click", "mapping_type": "focused"},
-            ],
-            "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}],
-            "controls": states,
-        })]})
+    bindings = [
+        {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+        {"binding_name": "#form_button_text", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        view(f"(#form_button_text = '[JF:action:{key}]')"),
+        view(f"(#form_button_text = '[JF:action:{key}]')", "#enabled"),
+    ]
+    GENERATED_CONTROLS[template + "@common.button"] = {
+        "size": [width, height], "$pressed_button_name": "button.form_button_click",
+        "focus_enabled": True, "hover_enabled": True,
+        "button_mappings": [
+            {"from_button_id": "button.menu_select", "to_button_id": "button.form_button_click", "mapping_type": "pressed"},
+            {"from_button_id": "button.menu_ok", "to_button_id": "button.form_button_click", "mapping_type": "focused"},
+        ],
+        "bindings": bindings, "controls": states,
+    }
+    return control(name, factory(template, [width, height + 3]))
 
 
 def heading(text):
@@ -117,7 +138,9 @@ def tab(name, index):
         selected = state.startswith("checked")
         states.append(control(state, {"type": "panel", "size": [92, 35], "controls": [
             control("face", image(f"frontier/tab_{lower}_{state}", [92, 35], layer=1)),
-            control("caption", label(name, [63, 13], (26, 12), (1, 0.93, 0.73), 0.7)),
+            *([control("icon", image(f"frontier/icons/{lower}", [24, 24], (3, 5), 4))]
+              if lower in ["overview", "research", "production"] else []),
+            control("caption", label(name, [61, 13], (29, 12), (1, 0.93, 0.73), 0.7)),
         ]}))
     marker = f"[JF:tab:{lower}]"
     return control("jf_tab_" + lower, {
@@ -149,12 +172,11 @@ def tab(name, index):
 
 
 def overview_value(name, index, offset, size, scale=0.9):
-    text = label("#text", size, color=(0.20, 0.12, 0.055), scale=scale)
-    text["bindings"] = collection_bindings()
-    text["collection_index"] = index
-    return control(name, {"type": "panel", "anchor_from": "top_left", "anchor_to": "top_left",
-        "offset": offset, "size": size, "collection_name": "form_buttons",
-        "clips_children": True, "controls": [control("value", text)]})
+    template = data_template(index, size, scale)
+    value = factory(template, size)
+    value.update({"anchor_from": "top_left", "anchor_to": "top_left",
+                  "offset": offset, "clips_children": True})
+    return control(name, value)
 
 
 def research_tab(scope, index):
@@ -173,13 +195,15 @@ def research_tab(scope, index):
         panel = next(iter(state.values()))
         panel["size"] = [124, 23]
         panel["controls"][0]["face"]["size"] = [124, 23]
-        caption = panel["controls"][1]["caption"]
+        panel["controls"] = [entry for entry in panel["controls"] if "icon" not in entry]
+        caption = next(entry["caption"] for entry in panel["controls"] if "caption" in entry)
         caption.update({"text": scope.title(), "size": [124, 13], "offset": [0, 6], "text_alignment": "center"})
     return control("jf_research_tab_" + scope, toggle)
 
 
 def build():
     build_ui_art()
+    GENERATED_CONTROLS.clear()
     ui = {"namespace": "jagsby_frontier"}
     is_charter = "(not ((#title_text - 'JF_CHARTER|') = #title_text))"
     is_dashboard = "(#title_text = 'JF_CHARTER|Dashboard')"
@@ -190,7 +214,7 @@ def build():
     ]}
     frame = [
         control("frame", image("frontier/charter_frame", [380, 240], layer=1)),
-        control("title", label("VILLAGE CHARTER", [310, 17], (33, 14), (1, 0.93, 0.71), 1.1)),
+        control("title", label("VILLAGE CHARTER", [236, 17], (25, 14), (1, 0.93, 0.71), 1.1)),
         control("close@common.close_button", {"$close_button_offset": [-7, 7], "layer": 30, "bindings": []}),
     ]
     dashboard = copy.deepcopy(frame)
@@ -246,21 +270,13 @@ def build():
                          for target in ["#visible", "#enabled"]],
         }))
     ui["jf_research_content"] = {"type": "panel", "size": [257, 177], "controls": research_controls}
-    rename = action("rename", ACTIONS["rename"], "Rename")["rename"]
-    rename.update({"type": "panel", "anchor_from": "top_left", "anchor_to": "top_left",
-                   "offset": [180, 16], "size": [74, 24]})
-    button = rename["controls"][0]["purchase@common.button"]
-    button["size"] = [74, 21]
-    for state in button["controls"]:
-        panel = next(iter(state.values()))
-        panel["size"] = [74, 21]
-        panel["controls"][0]["gold"]["size"] = [74, 21]
-        panel["controls"][1]["wood"]["size"] = [72, 19]
-        panel["controls"][2]["caption"]["size"] = [62, 12]
+    rename = action("header_rename", ACTIONS["rename"], "Rename", width=68, height=19)["header_rename"]
+    rename.update({"anchor_from": "top_left", "anchor_to": "top_left",
+                   "offset": [278, 13], "layer": 25})
+    dashboard.append(control("header_rename", rename))
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
         control("name_label", label("SETTLEMENT NAME", [170, 12], (4, 1))),
-        overview_value("name", DATA["overview"], [4, 20], [170, 25]),
-        control("rename", rename),
+        overview_value("name", DATA["overview"], [4, 20], [250, 25]),
         control("biome_label", label("VILLAGE BIOME", [250, 12], (4, 59))),
         overview_value("biome", DATA["biomes"], [4, 77], [250, 24]),
         control("power_label", label("REALM POWER", [250, 12], (4, 113))),
@@ -284,20 +300,27 @@ def build():
                 "control_ids": {"button": "@jagsby_frontier.jf_choice"}},
             "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length"}],
         })]}
-    choice = action("choice", 0, "#text")["choice"]
-    choice["controls"][0]["purchase@common.button"].pop("collection_index")
-    for state in choice["controls"][0]["purchase@common.button"]["controls"]:
-        next(iter(state.values()))["controls"][-1]["caption"]["bindings"] = collection_bindings()
-    ui["jf_choice"] = choice
+    # Native factory context supplies the chosen biome's real record index.
+    picker_template = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
+    picker_template["size"] = [254, 21]
+    picker_template["bindings"] = collection_bindings()
+    for state in picker_template["controls"]:
+        panel = next(iter(state.values()))
+        panel["size"] = [254, 21]
+        panel["controls"][0]["gold"]["size"] = [254, 21]
+        panel["controls"][1]["wood"]["size"] = [252, 19]
+        panel["controls"][2]["caption"].update({"text": "#text", "size": [242, 12], "bindings": collection_bindings()})
+    ui["jf_choice@common.button"] = picker_template
     ui["jf_modal_router"] = {"type": "panel", "size": [380, 240], "controls": [
         control("vanilla@server_form.custom_form", {"bindings": condition("(not (#title_text = 'JF_CHARTER|Rename'))")}),
         control("rename@jagsby_frontier.jf_rename", {"bindings": condition("(#title_text = 'JF_CHARTER|Rename')")}),
     ]}
-    submit = copy.deepcopy(action("submit", 0, "Save name")["submit"]["controls"][0]["purchase@common.button"])
+    submit = copy.deepcopy(GENERATED_CONTROLS["jf_action_efficiency@common.button"])
+    for state in submit["controls"]:
+        next(iter(state.values()))["controls"][2]["caption"]["text"] = "Save name"
     submit["$pressed_button_name"] = "button.submit_custom_form"
     for mapping in submit["button_mappings"]:
         mapping["to_button_id"] = "button.submit_custom_form"
-    submit.pop("collection_index")
     submit["bindings"] = []
     submit.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [110, 151]})
     ui["jf_rename"] = {"type": "panel", "size": [380, 240], "controls": copy.deepcopy(frame) + [
@@ -306,6 +329,7 @@ def build():
             "offset": [110, 70], "size": [254, "100%c"], "layer": 5}),
         control("submit@common.button", submit),
     ]}
+    ui.update(GENERATED_CONTROLS)
     custom_path = RP / "ui/jagsby_frontier/charter.json"
     custom_path.parent.mkdir(parents=True, exist_ok=True)
     custom_path.write_text(json.dumps(ui, indent=2) + "\n")

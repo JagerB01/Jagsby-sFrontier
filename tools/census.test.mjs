@@ -148,9 +148,10 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
   assert.equal(forms[0].records.length,25);
-  assert.equal(forms[0].records[0],'Settlement 1');
-  assert.equal(forms[0].records[1],'Plains');
-  assert.equal(forms[0].records[2],'0.2');
+  assert.equal(forms[0].records[24],'[JF:action:rename]');
+  assert.equal(forms[0].records[0],'[JF:data:overview]Settlement 1');
+  assert.equal(forms[0].records[1],'[JF:data:biomes]Plains');
+  assert.equal(forms[0].records[2],'[JF:data:census]0.2');
   assert.equal(forms[1].text,'[JF:tab:research][JF:research:local]');
   nativeTier = 4;
   handlers.beforeInteract(event);
@@ -172,7 +173,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].name,'Oakfield');
   assert.equal(saved.stock['minecraft:iron_ingot'],12,'Rename must preserve concurrent stockpile changes');
-  assert.equal(forms.at(-1).records[0],'Oakfield');
+  assert.equal(forms.at(-1).records[0],'[JF:data:overview]Oakfield');
   assert.equal(scans,4,'Only the charter interaction should scan; rename must not rescan');
   delete globalThis.__frontierTest;
 });

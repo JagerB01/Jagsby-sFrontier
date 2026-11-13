@@ -100,7 +100,8 @@ def build():
                     (192, 72, 44) if selected else (160, 106, 53), (62, 27, 18))
             for y in [9, 24]:
                 c.rect(26, y, 59, 1, (146, 44, 28) if selected else (117, 73, 38))
-            icon(c, name, 6, 9)
+            if name == "stockpile":
+                icon(c, name, 6, 9)
             c.save(f"tab_{name}_{state}.png")
     print("Generated original pixel-art charter frame and sidebar textures.")
 
