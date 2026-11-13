@@ -52,3 +52,12 @@ by `tools/build_ui_art.py`.
 Original procedural charcoal/brass/crimson UI textures replace the earlier
 procedural stone/plank/parchment surfaces. Authored in `tools/build_ui_art.py`;
 no MineScape textures or UI definitions were copied.
+
+## Silver-and-wheat border (0.0.20)
+
+Original AI-generated frame, guided by the user's harvest gold / silver palette
+reference. No Elder Scrolls logo, emblem or game art was copied into the addon.
+Source generation `exec-515f4a19-00ea-4256-b0b1-ec432479bca2.png` refines
+the earlier raised-crest concept. Mechanically nearest-neighbor resized to
+380×240 with binary alpha as `textures/ui/frontier/harvest_border.png`.
+The transparent ornament is separate from the procedural base panel.

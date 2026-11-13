@@ -1,3 +1,10 @@
+# 0.0.20
+
+- Added an original transparent ornamental border with braided aged silver, gold wheat and shaped leaf corners. The frame stays within the screen bounds and leaves header text clear.
+- Replaced cool charcoal with warm dark brown surfaces, wheat-gold name/accent colors and silver-toned panel/button edges. Crimson remains the control accent.
+- Preserved the single information box on the left, framed portrait on the right and existing gameplay.
+- Build and all 32 automated checks passed. An offline layout render was inspected; Minecraft rendering remains unverified.
+
 # 0.0.19
 
 - Rebuilt the charter styling with charcoal surfaces, a continuous narrow brass frame and a shallow crimson header. Removed masonry, wood planks, bright parchment and stacked gold borders.

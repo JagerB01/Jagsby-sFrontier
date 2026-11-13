@@ -122,3 +122,12 @@ a permanently empty button row. The framed portrait remains unchanged.
 An offline layout render was inspected for spacing and contrast, using real
 assets and generated positions with a substitute font. Minecraft rendering and
 input behavior still need native verification.
+
+## 0.0.20 harvest identity
+
+An original 380×240 transparent silver-and-wheat border overlays the warm dark
+base. Its braided sides, leaf corners and gold grain motifs provide a shaped
+frame without changing screen bounds. A raised-crest concept was rejected
+because it crowded the header. Body colors now use warm brown, wheat gold
+and aged silver; crimson controls remain. The information/portrait positions
+and action mappings are preserved.
