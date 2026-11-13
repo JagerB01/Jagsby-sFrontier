@@ -26,6 +26,12 @@ Minecraft rendering and native trade-tier execution remain unverified in-game.
 
 ## Development
 
+### Trade-rank diagnostic
+
+[Download the isolated trade-rank probe](downloads/Jagsbys_Frontier_Trade_Rank_Probe_0.0.1.mcpack?raw=true).
+This tests a different native Molang context and is **unverified**, not a
+completed scoring fix. See [investigation and test steps](docs/trade-rank-investigation.md).
+
 ### Settlement portraits
 
 - [Download 96×168 portraits](downloads/Jagsbys_Frontier_Settlement_Portraits_96x168.zip?raw=true): recommended; about 62 KiB for all five PNGs.

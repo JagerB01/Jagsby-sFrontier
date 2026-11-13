@@ -1,0 +1,46 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Frontier Trade Rank Probe 0.0.1",
+    "description": "Diagnostic: tests native trade-tier queries in a server animation controller; not a confirmed rank bridge.",
+    "uuid": "772198fe-5fa9-4d6c-a9b1-db8fe8eceeb7",
+    "version": [
+      0,
+      0,
+      1
+    ],
+    "min_engine_version": [
+      1,
+      26,
+      0
+    ]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "ec6eaec0-1ec5-45ba-8009-52541be27962",
+      "version": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "type": "script",
+      "language": "javascript",
+      "entry": "scripts/main.js",
+      "uuid": "56a190f9-b0b9-47a7-89af-fa7af452f899",
+      "version": [
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "2.9.0"
+    }
+  ]
+}
