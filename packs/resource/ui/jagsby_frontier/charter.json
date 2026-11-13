@@ -160,11 +160,11 @@
         "jf_tab_overview": {
           "type": "toggle",
           "size": [
-            92,
-            35
+            88,
+            28
           ],
           "offset": [
-            6,
+            8,
             48
           ],
           "anchor_from": "top_left",
@@ -225,8 +225,8 @@
               "unchecked": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -234,8 +234,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_overview_unchecked",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -253,12 +253,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/overview",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -272,23 +272,23 @@
                       "type": "label",
                       "text": "Overview",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -300,8 +300,8 @@
               "checked": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -309,8 +309,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_overview_checked",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -328,12 +328,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/overview",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -347,23 +347,23 @@
                       "type": "label",
                       "text": "Overview",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -375,8 +375,8 @@
               "unchecked_hover": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -384,8 +384,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_overview_unchecked_hover",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -403,12 +403,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/overview",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -422,23 +422,23 @@
                       "type": "label",
                       "text": "Overview",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -450,8 +450,8 @@
               "checked_hover": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -459,8 +459,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_overview_checked_hover",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -478,12 +478,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/overview",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -497,23 +497,23 @@
                       "type": "label",
                       "text": "Overview",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -528,12 +528,12 @@
         "jf_tab_research": {
           "type": "toggle",
           "size": [
-            92,
-            35
+            88,
+            28
           ],
           "offset": [
-            6,
-            87
+            8,
+            80
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -593,8 +593,8 @@
               "unchecked": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -602,8 +602,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_research_unchecked",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -621,12 +621,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/research",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -640,23 +640,23 @@
                       "type": "label",
                       "text": "Research",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -668,8 +668,8 @@
               "checked": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -677,8 +677,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_research_checked",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -696,12 +696,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/research",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -715,23 +715,23 @@
                       "type": "label",
                       "text": "Research",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -743,8 +743,8 @@
               "unchecked_hover": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -752,8 +752,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_research_unchecked_hover",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -771,12 +771,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/research",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -790,23 +790,23 @@
                       "type": "label",
                       "text": "Research",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -818,8 +818,8 @@
               "checked_hover": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -827,8 +827,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_research_checked_hover",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -846,12 +846,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/research",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -865,23 +865,23 @@
                       "type": "label",
                       "text": "Research",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -896,12 +896,12 @@
         "jf_tab_production": {
           "type": "toggle",
           "size": [
-            92,
-            35
+            88,
+            28
           ],
           "offset": [
-            6,
-            126
+            8,
+            112
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -961,8 +961,8 @@
               "unchecked": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -970,8 +970,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_production_unchecked",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -989,12 +989,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/production",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -1008,23 +1008,23 @@
                       "type": "label",
                       "text": "Production",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -1036,8 +1036,8 @@
               "checked": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -1045,8 +1045,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_production_checked",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -1064,12 +1064,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/production",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -1083,23 +1083,23 @@
                       "type": "label",
                       "text": "Production",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -1111,8 +1111,8 @@
               "unchecked_hover": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -1120,8 +1120,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_production_unchecked_hover",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -1139,12 +1139,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/production",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -1158,23 +1158,23 @@
                       "type": "label",
                       "text": "Production",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -1186,8 +1186,8 @@
               "checked_hover": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -1195,8 +1195,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_production_checked_hover",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -1214,12 +1214,12 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/icons/production",
                       "size": [
-                        24,
-                        24
+                        20,
+                        20
                       ],
                       "offset": [
-                        3,
-                        5
+                        6,
+                        4
                       ],
                       "keep_ratio": false,
                       "bilinear": false,
@@ -1233,23 +1233,23 @@
                       "type": "label",
                       "text": "Production",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -1264,12 +1264,12 @@
         "jf_tab_realm": {
           "type": "toggle",
           "size": [
-            92,
-            35
+            88,
+            28
           ],
           "offset": [
-            6,
-            165
+            8,
+            144
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -1329,8 +1329,8 @@
               "unchecked": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -1338,8 +1338,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_realm_unchecked",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -1357,23 +1357,23 @@
                       "type": "label",
                       "text": "Realm",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -1385,8 +1385,8 @@
               "checked": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -1394,8 +1394,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_realm_checked",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -1413,23 +1413,23 @@
                       "type": "label",
                       "text": "Realm",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -1441,8 +1441,8 @@
               "unchecked_hover": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -1450,8 +1450,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_realm_unchecked_hover",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -1469,23 +1469,23 @@
                       "type": "label",
                       "text": "Realm",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -1497,8 +1497,8 @@
               "checked_hover": {
                 "type": "panel",
                 "size": [
-                  92,
-                  35
+                  88,
+                  28
                 ],
                 "controls": [
                   {
@@ -1506,8 +1506,8 @@
                       "type": "image",
                       "texture": "textures/ui/frontier/tab_realm_checked_hover",
                       "size": [
-                        92,
-                        35
+                        88,
+                        28
                       ],
                       "offset": [
                         0,
@@ -1525,23 +1525,23 @@
                       "type": "label",
                       "text": "Realm",
                       "size": [
-                        61,
-                        13
+                        55,
+                        12
                       ],
                       "offset": [
                         29,
-                        12
+                        9
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false
                     }
@@ -1550,25 +1550,6 @@
               }
             }
           ]
-        }
-      },
-      {
-        "seal": {
-          "type": "image",
-          "texture": "textures/ui/frontier_red",
-          "size": [
-            86,
-            24
-          ],
-          "offset": [
-            9,
-            204
-          ],
-          "keep_ratio": false,
-          "bilinear": false,
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 3
         }
       },
       {
@@ -1581,18 +1562,18 @@
           ],
           "offset": [
             10,
-            212
+            216
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "layer": 8,
           "font_type": "unicode",
           "font_size": "normal",
-          "font_scale_factor": 0.65,
+          "font_scale_factor": 0.6,
           "color": [
-            1,
-            0.84,
-            0.45
+            0.65,
+            0.64,
+            0.55
           ],
           "shadow": false
         }
@@ -1794,7 +1775,7 @@
           "type": "panel",
           "size": [
             147,
-            125
+            105
           ],
           "offset": [
             0,
@@ -1809,7 +1790,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   147,
-                  125
+                  105
                 ],
                 "offset": [
                   0,
@@ -1821,9 +1802,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.7,
-                  0.54,
-                  0.33
+                  0.4,
+                  0.4,
+                  0.32
                 ]
               }
             },
@@ -1833,7 +1814,7 @@
                 "texture": "textures/ui/frontier/solid",
                 "size": [
                   145,
-                  123
+                  103
                 ],
                 "offset": [
                   1,
@@ -1845,9 +1826,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.91,
-                  0.82,
-                  0.65
+                  0.18,
+                  0.2,
+                  0.19
                 ]
               }
             },
@@ -1894,9 +1875,9 @@
                 "anchor_to": "top_left",
                 "layer": 2,
                 "color": [
-                  0.73,
-                  0.57,
-                  0.34
+                  0.39,
+                  0.39,
+                  0.31
                 ]
               }
             },
@@ -1905,7 +1886,7 @@
                 "type": "label",
                 "text": "Tier",
                 "size": [
-                  50,
+                  56,
                   11
                 ],
                 "offset": [
@@ -1919,9 +1900,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
-                  0.2,
-                  0.12,
-                  0.055
+                  0.68,
+                  0.69,
+                  0.61
                 ],
                 "shadow": false
               }
@@ -1931,7 +1912,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  77,
+                  69,
                   12
                 ],
                 "collection_name": "form_buttons",
@@ -1945,7 +1926,7 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  62,
+                  70,
                   34
                 ],
                 "clips_children": true
@@ -1956,7 +1937,7 @@
                 "type": "label",
                 "text": "Owner",
                 "size": [
-                  50,
+                  56,
                   11
                 ],
                 "offset": [
@@ -1970,9 +1951,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
-                  0.2,
-                  0.12,
-                  0.055
+                  0.68,
+                  0.69,
+                  0.61
                 ],
                 "shadow": false
               }
@@ -1982,7 +1963,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  77,
+                  69,
                   12
                 ],
                 "collection_name": "form_buttons",
@@ -1996,10 +1977,26 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  62,
+                  70,
                   51
                 ],
-                "clips_children": true
+                "clips_children": true,
+                "bindings": [
+                  {
+                    "binding_name": "#form_text",
+                    "binding_type": "none"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "((#form_text - '[JF:unclaimed]') = #form_text)",
+                    "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "((#form_text - '[JF:unclaimed]') = #form_text)",
+                    "target_property_name": "#enabled"
+                  }
+                ]
               }
             },
             {
@@ -2007,7 +2004,7 @@
                 "type": "label",
                 "text": "Biome",
                 "size": [
-                  50,
+                  56,
                   11
                 ],
                 "offset": [
@@ -2021,9 +2018,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
-                  0.2,
-                  0.12,
-                  0.055
+                  0.68,
+                  0.69,
+                  0.61
                 ],
                 "shadow": false
               }
@@ -2033,7 +2030,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  77,
+                  69,
                   12
                 ],
                 "collection_name": "form_buttons",
@@ -2047,7 +2044,7 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  62,
+                  70,
                   68
                 ],
                 "clips_children": true
@@ -2058,7 +2055,7 @@
                 "type": "label",
                 "text": "Realm Power",
                 "size": [
-                  50,
+                  56,
                   11
                 ],
                 "offset": [
@@ -2072,9 +2069,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
-                  0.2,
-                  0.12,
-                  0.055
+                  0.68,
+                  0.69,
+                  0.61
                 ],
                 "shadow": false
               }
@@ -2084,7 +2081,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  77,
+                  69,
                   12
                 ],
                 "collection_name": "form_buttons",
@@ -2098,7 +2095,7 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  62,
+                  70,
                   85
                 ],
                 "clips_children": true
@@ -2109,7 +2106,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  42,
+                  69,
                   19
                 ],
                 "collection_name": "form_buttons",
@@ -2121,8 +2118,8 @@
                   }
                 ],
                 "offset": [
-                  97,
-                  104
+                  70,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2264,11 +2261,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -2321,11 +2318,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -2378,11 +2375,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -2435,11 +2432,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -2560,11 +2557,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -2617,11 +2614,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -2674,11 +2671,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -2731,11 +2728,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -2843,9 +2840,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.71,
-                  0.5,
-                  0.24
+                  0.23,
+                  0.25,
+                  0.23
                 ]
               }
             },
@@ -2868,9 +2865,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  0.2,
-                  0.12,
-                  0.055
+                  0.9,
+                  0.88,
+                  0.8
                 ],
                 "shadow": false
               }
@@ -2904,9 +2901,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.84,
-                  0.69,
-                  0.44
+                  0.18,
+                  0.2,
+                  0.19
                 ]
               }
             },
@@ -2999,9 +2996,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.71,
-                  0.5,
-                  0.24
+                  0.23,
+                  0.25,
+                  0.23
                 ]
               }
             },
@@ -3024,9 +3021,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  0.2,
-                  0.12,
-                  0.055
+                  0.9,
+                  0.88,
+                  0.8
                 ],
                 "shadow": false
               }
@@ -3060,9 +3057,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.84,
-                  0.69,
-                  0.44
+                  0.18,
+                  0.2,
+                  0.19
                 ]
               }
             },
@@ -3119,9 +3116,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.84,
-                  0.69,
-                  0.44
+                  0.18,
+                  0.2,
+                  0.19
                 ]
               }
             },
@@ -3211,9 +3208,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.86,
-                  0.73,
-                  0.5
+                  0.18,
+                  0.2,
+                  0.19
                 ]
               }
             },
@@ -3300,9 +3297,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.86,
-                  0.73,
-                  0.5
+                  0.18,
+                  0.2,
+                  0.19
                 ]
               }
             },
@@ -3389,9 +3386,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.86,
-                  0.73,
-                  0.5
+                  0.18,
+                  0.2,
+                  0.19
                 ]
               }
             },
@@ -3618,9 +3615,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.65,
           "color": [
-            0.2,
-            0.12,
-            0.055
+            0.9,
+            0.88,
+            0.8
           ],
           "shadow": false
         }
@@ -3644,9 +3641,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.65,
           "color": [
-            0.2,
-            0.12,
-            0.055
+            0.9,
+            0.88,
+            0.8
           ],
           "shadow": false
         }
@@ -3670,9 +3667,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.65,
           "color": [
-            0.2,
-            0.12,
-            0.055
+            0.9,
+            0.88,
+            0.8
           ],
           "shadow": false
         }
@@ -5401,9 +5398,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.84,
-                  0.69,
-                  0.44
+                  0.18,
+                  0.2,
+                  0.19
                 ]
               }
             },
@@ -5517,9 +5514,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.84,
-                  0.69,
-                  0.44
+                  0.18,
+                  0.2,
+                  0.19
                 ]
               }
             },
@@ -5714,11 +5711,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -5771,11 +5768,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -5828,11 +5825,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -5885,11 +5882,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6010,11 +6007,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6067,11 +6064,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6124,11 +6121,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6181,11 +6178,11 @@
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
-                      "font_scale_factor": 0.85,
+                      "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.93,
-                        0.73
+                        0.95,
+                        0.9,
+                        0.78
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6406,9 +6403,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.71,
-                  0.5,
-                  0.24
+                  0.23,
+                  0.25,
+                  0.23
                 ]
               }
             },
@@ -6431,9 +6428,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  0.2,
-                  0.12,
-                  0.055
+                  0.9,
+                  0.88,
+                  0.8
                 ],
                 "shadow": false
               }
@@ -6525,9 +6522,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
@@ -6623,9 +6620,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
@@ -6721,9 +6718,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
@@ -6996,16 +6993,16 @@
                       "anchor_to": "top_left",
                       "layer": 0,
                       "color": [
-                        0.88,
-                        0.62,
-                        0.18
+                        0.55,
+                        0.46,
+                        0.31
                       ]
                     }
                   },
                   {
                     "wood": {
                       "type": "image",
-                      "texture": "textures/ui/frontier_red",
+                      "texture": "textures/ui/frontier/solid",
                       "size": [
                         252,
                         19
@@ -7018,7 +7015,12 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1
+                      "layer": 1,
+                      "color": [
+                        0.35,
+                        0.13,
+                        0.13
+                      ]
                     }
                   },
                   {
@@ -7076,16 +7078,16 @@
                       "anchor_to": "top_left",
                       "layer": 0,
                       "color": [
-                        0.88,
-                        0.62,
-                        0.18
+                        0.55,
+                        0.46,
+                        0.31
                       ]
                     }
                   },
                   {
                     "wood": {
                       "type": "image",
-                      "texture": "textures/ui/frontier_red",
+                      "texture": "textures/ui/frontier/solid",
                       "size": [
                         252,
                         19
@@ -7098,7 +7100,12 @@
                       "bilinear": false,
                       "anchor_from": "top_left",
                       "anchor_to": "top_left",
-                      "layer": 1
+                      "layer": 1,
+                      "color": [
+                        0.49,
+                        0.18,
+                        0.16
+                      ]
                     }
                   },
                   {
@@ -7156,16 +7163,16 @@
                       "anchor_to": "top_left",
                       "layer": 0,
                       "color": [
-                        0.88,
-                        0.62,
-                        0.18
+                        0.55,
+                        0.46,
+                        0.31
                       ]
                     }
                   },
                   {
                     "wood": {
                       "type": "image",
-                      "texture": "textures/ui/frontier_red",
+                      "texture": "textures/ui/frontier/solid",
                       "size": [
                         252,
                         19
@@ -7180,9 +7187,9 @@
                       "anchor_to": "top_left",
                       "layer": 1,
                       "color": [
-                        0.7,
-                        0.6,
-                        0.5
+                        0.27,
+                        0.1,
+                        0.11
                       ]
                     }
                   },
@@ -7290,9 +7297,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -7386,16 +7393,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -7408,7 +7415,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -7466,16 +7478,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -7488,7 +7500,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -7546,16 +7563,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -7570,9 +7587,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },
@@ -7675,16 +7692,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -7697,7 +7714,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -7755,16 +7777,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -7777,7 +7799,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -7835,16 +7862,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -7859,9 +7886,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },
@@ -7914,9 +7941,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -7960,9 +7987,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -8056,16 +8083,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -8078,7 +8105,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -8136,16 +8168,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -8158,7 +8190,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -8216,16 +8253,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   252,
                   19
@@ -8240,9 +8277,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },
@@ -8295,9 +8332,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.75,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -8391,16 +8428,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   74,
                   19
@@ -8413,7 +8450,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -8471,16 +8513,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   74,
                   19
@@ -8493,7 +8535,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -8551,16 +8598,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   74,
                   19
@@ -8575,9 +8622,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },
@@ -8630,9 +8677,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.75,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -8726,16 +8773,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   74,
                   19
@@ -8748,7 +8795,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -8806,16 +8858,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   74,
                   19
@@ -8828,7 +8880,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -8886,16 +8943,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   74,
                   19
@@ -8910,9 +8967,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },
@@ -8965,9 +9022,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.75,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -9061,16 +9118,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   74,
                   19
@@ -9083,7 +9140,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -9141,16 +9203,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   74,
                   19
@@ -9163,7 +9225,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -9221,16 +9288,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   74,
                   19
@@ -9245,9 +9312,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },
@@ -9350,9 +9417,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
@@ -9436,9 +9503,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
@@ -9522,9 +9589,9 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
@@ -9602,9 +9669,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.95,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -9634,7 +9701,7 @@
     "type": "label",
     "text": "#text",
     "size": [
-      77,
+      69,
       12
     ],
     "offset": [
@@ -9648,9 +9715,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -9681,7 +9748,7 @@
     "type": "label",
     "text": "#text",
     "size": [
-      77,
+      69,
       12
     ],
     "offset": [
@@ -9695,9 +9762,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -9727,7 +9794,7 @@
     "type": "label",
     "text": "#text",
     "size": [
-      77,
+      69,
       12
     ],
     "offset": [
@@ -9741,9 +9808,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -9773,7 +9840,7 @@
     "type": "label",
     "text": "#form_button_text",
     "size": [
-      77,
+      69,
       12
     ],
     "offset": [
@@ -9787,9 +9854,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -9809,7 +9876,7 @@
   },
   "jf_action_claim@common.button": {
     "size": [
-      42,
+      69,
       16
     ],
     "$pressed_button_name": "button.form_button_click",
@@ -9853,7 +9920,7 @@
         "default": {
           "type": "panel",
           "size": [
-            42,
+            69,
             16
           ],
           "controls": [
@@ -9862,7 +9929,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  42,
+                  69,
                   16
                 ],
                 "offset": [
@@ -9875,18 +9942,18 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
-                  40,
+                  67,
                   14
                 ],
                 "offset": [
@@ -9897,7 +9964,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -9905,7 +9977,7 @@
                 "type": "label",
                 "text": "Claim",
                 "size": [
-                  30,
+                  57,
                   12
                 ],
                 "offset": [
@@ -9933,7 +10005,7 @@
         "hover": {
           "type": "panel",
           "size": [
-            42,
+            69,
             16
           ],
           "controls": [
@@ -9942,7 +10014,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  42,
+                  69,
                   16
                 ],
                 "offset": [
@@ -9955,18 +10027,18 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
-                  40,
+                  67,
                   14
                 ],
                 "offset": [
@@ -9977,7 +10049,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -9985,7 +10062,7 @@
                 "type": "label",
                 "text": "Claim",
                 "size": [
-                  30,
+                  57,
                   12
                 ],
                 "offset": [
@@ -10013,7 +10090,7 @@
         "pressed": {
           "type": "panel",
           "size": [
-            42,
+            69,
             16
           ],
           "controls": [
@@ -10022,7 +10099,7 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/solid",
                 "size": [
-                  42,
+                  69,
                   16
                 ],
                 "offset": [
@@ -10035,18 +10112,18 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
-                  40,
+                  67,
                   14
                 ],
                 "offset": [
@@ -10059,9 +10136,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },
@@ -10070,7 +10147,7 @@
                 "type": "label",
                 "text": "Claim",
                 "size": [
-                  30,
+                  57,
                   12
                 ],
                 "offset": [
@@ -10114,9 +10191,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -10210,16 +10287,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -10232,7 +10309,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -10290,16 +10372,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -10312,7 +10394,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -10370,16 +10457,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -10394,9 +10481,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },
@@ -10499,16 +10586,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -10521,7 +10608,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -10579,16 +10671,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -10601,7 +10693,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -10659,16 +10756,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -10683,9 +10780,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },
@@ -10738,9 +10835,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.2,
-      0.12,
-      0.055
+      0.9,
+      0.88,
+      0.8
     ],
     "shadow": false,
     "bindings": [
@@ -10834,16 +10931,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -10856,7 +10953,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -10914,16 +11016,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -10936,7 +11038,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -10994,16 +11101,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -11018,9 +11125,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },
@@ -11123,16 +11230,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -11145,7 +11252,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.35,
+                  0.13,
+                  0.13
+                ]
               }
             },
             {
@@ -11203,16 +11315,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -11225,7 +11337,12 @@
                 "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 1
+                "layer": 1,
+                "color": [
+                  0.49,
+                  0.18,
+                  0.16
+                ]
               }
             },
             {
@@ -11283,16 +11400,16 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.88,
-                  0.62,
-                  0.18
+                  0.55,
+                  0.46,
+                  0.31
                 ]
               }
             },
             {
               "wood": {
                 "type": "image",
-                "texture": "textures/ui/frontier_red",
+                "texture": "textures/ui/frontier/solid",
                 "size": [
                   120,
                   19
@@ -11307,9 +11424,9 @@
                 "anchor_to": "top_left",
                 "layer": 1,
                 "color": [
-                  0.7,
-                  0.6,
-                  0.5
+                  0.27,
+                  0.1,
+                  0.11
                 ]
               }
             },

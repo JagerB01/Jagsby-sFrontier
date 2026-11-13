@@ -49,7 +49,7 @@ def image(texture, size, offset=(0, 0), layer=0, color=None):
     return result
 
 
-def label(text, size, offset=(0, 0), color=(0.20, 0.12, 0.055), scale=0.8):
+def label(text, size, offset=(0, 0), color=(0.90, 0.88, 0.80), scale=0.8):
     return {"type": "label", "text": text, "size": size, "offset": list(offset),
             "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8,
             "font_type": "unicode", "font_size": "normal", "font_scale_factor": scale,
@@ -107,7 +107,7 @@ def record(name, index, height):
     text = collection_scope(template, [240, height - 8])
     text.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [7, 4]})
     return control(name, {"type": "panel", "size": [254, height], "controls": [
-        control("paper", image("frontier/solid", [254, height - 2], color=[0.84, 0.69, 0.44])),
+        control("paper", image("frontier/solid", [254, height - 2], color=[0.18, 0.20, 0.19])),
         control("data", text),
     ]})
 
@@ -120,8 +120,8 @@ def action(name, index, caption, width=254, height=21):
                                   ("hover", "frontier_red", None),
                                   ("pressed", "frontier_red", [0.7, 0.6, 0.5])]:
         states.append(control(state, {"type": "panel", "size": [width, height], "controls": [
-            control("gold", image("frontier/solid", [width, height], color=[0.88, 0.62, 0.18])),
-            control("wood", image(texture, [width - 2, height - 2], (1, 1), 1, tint)),
+            control("gold", image("frontier/solid", [width, height], color=[0.55, 0.46, 0.31])),
+            control("wood", image("frontier/solid", [width - 2, height - 2], (1, 1), 1, {"default": [0.35, 0.13, 0.13], "hover": [0.49, 0.18, 0.16], "pressed": [0.27, 0.10, 0.11]}[state])),
             control("caption", label(caption, [width - 12, 12], (6, 4), (1, 0.91, 0.65))),
         ]}))
     bindings = [
@@ -145,7 +145,7 @@ def action(name, index, caption, width=254, height=21):
 def heading(text):
     return control("heading_" + text.replace(" ", "_"), {
         "type": "panel", "size": [254, 19], "controls": [
-            control("ribbon", image("frontier/solid", [254, 17], color=[0.71, 0.50, 0.24])),
+            control("ribbon", image("frontier/solid", [254, 17], color=[0.23, 0.25, 0.23])),
             control("caption", label(text.title(), [244, 12], (5, 3), scale=0.85)),
         ]})
 
@@ -155,15 +155,15 @@ def tab(name, index):
     states = []
     for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:
         selected = state.startswith("checked")
-        states.append(control(state, {"type": "panel", "size": [92, 35], "controls": [
-            control("face", image(f"frontier/tab_{lower}_{state}", [92, 35], layer=1)),
-            *([control("icon", image(f"frontier/icons/{lower}", [24, 24], (3, 5), 4))]
+        states.append(control(state, {"type": "panel", "size": [88, 28], "controls": [
+            control("face", image(f"frontier/tab_{lower}_{state}", [88, 28], layer=1)),
+            *([control("icon", image(f"frontier/icons/{lower}", [20, 20], (6, 4), 4))]
               if lower in ["overview", "research", "production"] else []),
-            control("caption", label(name, [61, 13], (29, 12), (1, 0.93, 0.73), 0.85)),
+            control("caption", label(name, [55, 12], (29, 9), (0.95, 0.90, 0.78), 0.8)),
         ]}))
     marker = f"[JF:tab:{lower}]"
     return control("jf_tab_" + lower, {
-        "type": "toggle", "size": [92, 35], "offset": [6, 48 + 39 * index],
+        "type": "toggle", "size": [88, 28], "offset": [8, 48 + 32 * index],
         "anchor_from": "top_left", "anchor_to": "top_left", "layer": 10,
         "radio_toggle_group": True, "toggle_name": "jagsby_frontier_tabs",
         "toggle_group_forced_index": index, "toggle_group_default_selected": 0,
@@ -223,7 +223,7 @@ def research_tab(scope, index, section="research", caption_text=None):
 def info_card(name, title, index, y):
     return control(name, {"type": "panel", "size": [147, 32], "offset": [106, y],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("edge", image("frontier/solid", [147, 32], color=[0.70, 0.54, 0.33])),
+            control("edge", image("frontier/solid", [147, 32], color=[0.40, 0.40, 0.32])),
             control("paper", image("frontier/solid", [145, 30], (1, 1), 1, [0.90, 0.80, 0.60])),
             control("label", label(title, [135, 9], (6, 4), scale=0.7)),
             overview_value("value", index, [6, 16], [135, 12], scale=0.85),
@@ -285,8 +285,7 @@ def build():
     GENERATED_CONTROLS["jf_data_overview"]["color"] = [1, 0.93, 0.71]
     dashboard.append(control("subtitle", label("Village Charter", [235, 8], (25, 25), (1, 0.85, 0.60), 0.65)))
     dashboard += [tab(name, index) for index, name in enumerate(TABS)]
-    dashboard.append(control("seal", image("frontier_red", [86, 24], (9, 204), 3)))
-    dashboard.append(control("seal_text", label("Jagsby's Frontier", [86, 12], (10, 212), (1, 0.84, 0.45), 0.65)))
+    dashboard.append(control("seal_text", label("Jagsby's Frontier", [86, 12], (10, 216), (0.65, 0.64, 0.55), 0.6)))
     for name in TABS:
         lower = name.lower()
         if lower in ["overview", "research", "realm"]:
@@ -335,7 +334,7 @@ def build():
         purchase.update({"offset": [178, 13], "anchor_from": "top_left", "anchor_to": "top_left"})
         local_controls.append(control(key, {"type": "panel", "size": [254, 47],
             "offset": [0, i * 50], "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-                control("paper", image("frontier/solid", [254, 47], color=[0.86, 0.73, 0.50])),
+                control("paper", image("frontier/solid", [254, 47], color=[0.18, 0.20, 0.19])),
                 control("data", values), control("purchase", purchase),
             ]}))
     ui["jf_research_local_content"] = {"type": "panel", "size": [254, 150], "controls": local_controls}
@@ -394,17 +393,20 @@ def build():
     rows = []
     for key, title, y in [("tier", "Tier", 34), ("owner", "Owner", 51),
                           ("biomes", "Biome", 68), ("census", "Realm Power", 85)]:
-        rows += [control(key + "_label", label(title, [50, 11], (8, y), scale=0.75)),
-                 overview_value(key, DATA[key], [62, y], [77, 12], scale=0.8)]
-    claim = action("claim", ACTIONS["claim"], "Claim", width=42, height=16)["claim"]
-    claim.update({"offset": [97, 104], "anchor_from": "top_left", "anchor_to": "top_left",
+        rows += [control(key + "_label", label(title, [56, 11], (8, y), color=(0.68, 0.69, 0.61), scale=0.75)),
+                 overview_value(key, DATA[key], [70, y], [69, 12], scale=0.8)]
+    # In unclaimed villages the red Claim control occupies the Owner value slot.
+    next(row["owner"] for row in rows if "owner" in row)["bindings"] = condition(
+        "((#form_text - '[JF:unclaimed]') = #form_text)", "#form_text")
+    claim = action("claim", ACTIONS["claim"], "Claim", width=69, height=16)["claim"]
+    claim.update({"offset": [70, 48], "anchor_from": "top_left", "anchor_to": "top_left",
                   "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
-    identity = control("identity", {"type": "panel", "size": [147, 125], "offset": [0, 4],
+    identity = control("identity", {"type": "panel", "size": [147, 105], "offset": [0, 4],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("edge", image("frontier/solid", [147, 125], color=[0.70, 0.54, 0.33])),
-            control("paper", image("frontier/solid", [145, 123], (1, 1), 1, [0.91, 0.82, 0.65])),
+            control("edge", image("frontier/solid", [147, 105], color=[0.40, 0.40, 0.32])),
+            control("paper", image("frontier/solid", [145, 103], (1, 1), 1, [0.18, 0.20, 0.19])),
             name,
-            control("divider", image("frontier/solid", [131, 1], (8, 25), 2, [0.73, 0.57, 0.34])),
+            control("divider", image("frontier/solid", [131, 1], (8, 25), 2, [0.39, 0.39, 0.31])),
             *rows, control("claim", claim),
         ]})
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [

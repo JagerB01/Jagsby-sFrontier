@@ -109,7 +109,7 @@ test('Compact village identity fits without scrolling and Rename remains in the 
   assert.equal(Object.keys(fields).some(key=>key.endsWith('_card')),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=177);
-  assert.deepEqual(fields.identity.size,[147,125]);
+  assert.deepEqual(fields.identity.size,[147,105]);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('Size'),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('population'),false);
   for(const key of ['name','tier','owner','biomes','census'])assert.ok(children(fields.identity)[key]);
@@ -193,7 +193,7 @@ test('approved transparent sprites appear in every state of their sidebar tabs',
     for(const state of dashboard['jf_tab_'+name].controls) {
       const icon=children(Object.values(state)[0]).icon;
       assert.equal(icon.texture,'textures/ui/frontier/icons/'+name);
-      assert.deepEqual(icon.size,[24,24]);
+      assert.deepEqual(icon.size,[20,20]);
       assert.equal(icon.bilinear,false);
     }
   }

@@ -105,3 +105,20 @@ The box contains village name, tier, owner, biome and Realm Power.
 All sidebar/subtab faces and global research buttons are crimson in default
 and active states, with lighter hover and darker pressed states where supported.
 Action buttons also default to crimson. The research sprites are preserved.
+
+## 0.0.19 visual redesign
+
+Charcoal surfaces and a narrow brass frame replace the stone/wood/parchment
+background. Navigation is compact and crimson, with restrained clipped corners.
+Text colors are consistent: ivory values and muted labels. Production, Realm
+and local research use the same dark surface palette. Artwork is Frontier's own;
+no MineScape files were used.
+
+Overview retains the left information panel and right portrait. The panel is
+147×105 with name, tier, owner, biome and Realm Power. Labels and values have
+a wider gap. In unclaimed villages Claim replaces the Owner value, avoiding
+a permanently empty button row. The framed portrait remains unchanged.
+
+An offline layout render was inspected for spacing and contrast, using real
+assets and generated positions with a substitute font. Minecraft rendering and
+input behavior still need native verification.

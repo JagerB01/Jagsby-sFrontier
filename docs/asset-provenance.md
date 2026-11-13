@@ -46,3 +46,9 @@ Transparent sprite strip generated 2026-11-13, source
 nearest-neighbor resized to fit 60×60 and centered in a transparent 64×64 PNG,
 with binary alpha. No MineScape assets are included. Button faces are generated
 by `tools/build_ui_art.py`.
+
+## Charter surfaces (0.0.19)
+
+Original procedural charcoal/brass/crimson UI textures replace the earlier
+procedural stone/plank/parchment surfaces. Authored in `tools/build_ui_art.py`;
+no MineScape textures or UI definitions were copied.

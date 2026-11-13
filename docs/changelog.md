@@ -1,3 +1,12 @@
+# 0.0.19
+
+- Rebuilt the charter styling with charcoal surfaces, a continuous narrow brass frame and a shallow crimson header. Removed masonry, wood planks, bright parchment and stacked gold borders.
+- Reduced navigation button and icon sizes; crimson controls use clipped corners, subtle outlines and visible selected states.
+- Applied ivory body text and muted labels across Overview, Realm, Production and local research.
+- Kept the single information panel on the left and framed tier portrait on the right. Reduced the information panel to 147×105, aligned values, and removed unused Claim space for owned villages.
+- Global research buttons retain approved sprites, crimson faces and unbound actions.
+- Static addon validation, 29 Node checks and three Python checks passed. Inspected an offline layout rendering using real assets and generated control positions; this does not validate Minecraft rendering or native font metrics.
+
 # 0.0.18
 
 - Moved the single Overview information box to the left and framed portrait to the right.
