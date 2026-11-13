@@ -2,7 +2,7 @@
 
 The supplied project brief is the implementation request. Source imported from
 the supplied v0.1 mcaddon is the starting point. Its art is retained. The current
-changes add an interaction-only 64-block villager census, native trade-tier bridge,
+changes add an interaction-only 64-block villager census, minimum power estimates,
 standalone custom charter dashboard and dimension-qualified settlement IDs.
 MineScape 1.5.119 was supplied as a reference only; its UI is not bundled or
 required. Diplomacy remains unavailable.
@@ -47,8 +47,8 @@ The exported assets are retained; a model redesign is unnecessary.
 The local tool checks JSON parsing, JavaScript syntax, UUID uniqueness, pack
 dependency linkage, script entry points, 64x64 icons, and block geometry/texture
 references. It can build a deterministic mcaddon with the same source contents.
-Node tests check scoring, native bridge sampling, trade upgrades, interaction-only
-scheduling, dimension isolation, preserved vanilla entity behavior, standalone UI reference resolution, local sidebar toggles and matching data/action records. Engine
+Node tests check scoring, unsupported-rank fallback, interaction-only
+scheduling, dimension isolation, absence of the invalid vanilla entity overrides, standalone UI reference resolution, local sidebar toggles and matching data/action records. Engine
 objects are mocked.
 These checks do not establish Minecraft engine compatibility or playable behavior.
 
@@ -69,3 +69,11 @@ These checks do not establish Minecraft engine compatibility or playable behavio
 
 No goblin, invasion, military, world-threat, parallel resource-site or arbitrary
 item-deposit systems belong in this phase.
+
+## 0.0.9 live log findings
+
+The user's content log proves that plain panel collection scopes are invalid and
+that query.trade_tier cannot be evaluated in the chosen server event context.
+0.0.10 corrects the collection container type and removes the invalid rank bridge.
+Real trade-level reading is an unresolved engine/API integration requirement;
+minimum estimates must not be described as completed native rank detection.

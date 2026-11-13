@@ -47,7 +47,7 @@ with a ≥ tier label; an unavailable census displays an Outpost illustration wi
 "Tier unavailable", rather than claiming a measured tier.
 
 The tier's texture travels with its tagged form record and the custom image
-control binds `#form_button_texture` in the native factory context. The portrait
+control binds `#form_button_texture` in a stack-panel collection scope. The portrait
 uses `bilinear: false`; no duplicate higher-resolution assets are packaged.
 Automated tests cover boundaries, promotions/demotions, asset dimensions and the
 fixed layout. Native Minecraft rendering remains unverified.

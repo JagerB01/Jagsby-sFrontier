@@ -18,9 +18,10 @@ Both vanilla entity definitions come from Mojang's Bedrock samples, tag
 - https://github.com/Mojang/bedrock-samples/blob/6ecff5fb86d6149cec0507665ea5686f3800b193/behavior_pack/entities/villager_v2.json
 
 JSONC comments were removed when retaining normalized reference JSON; gameplay
-data is unchanged. `tools/build_villager_bridge.py` adds exactly one namespaced
-integer property and one sample event to each entity. Tests compare all other
-fields against the retained vanilla source. See `licenses/Mojang-bedrock-samples-LICENSE.md`.
+data is unchanged in the retained references. The villager bridge builder and
+its generated entity overrides were removed in 0.0.10 after the live content log
+rejected its Molang query context. These files are historical references, not
+active pack entities. See `licenses/Mojang-bedrock-samples-LICENSE.md`.
 
 The Molang query is listed in Microsoft's query reference:
 https://github.com/MicrosoftDocs/minecraft-creator/blob/main/creator/Reference/Content/MolangReference/Examples/MolangConcepts/QueryFunctions.md

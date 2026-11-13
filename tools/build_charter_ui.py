@@ -60,10 +60,20 @@ def collection_bindings():
              "binding_type": "collection", "binding_collection_name": "form_buttons"}]
 
 
-def factory(template, size):
-    return {"type": "panel", "size": size, "collection_name": "form_buttons",
-        "factory": {"name": "buttons", "control_ids": {"button": "@jagsby_frontier." + template}},
-        "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length"}]}
+def collection_scope(template, size):
+    # A collection_name belongs on a collection-capable stack_panel, not panel.
+    # Use one explicitly indexed child in that native collection scope.
+    if template.startswith("jf_data_"):
+        index = DATA[template.removeprefix("jf_data_")]
+    elif template.startswith("jf_action_"):
+        index = ACTIONS[template.removeprefix("jf_action_")]
+    elif template == "jf_tier_portrait":
+        index = DATA["tier"]
+    else:
+        raise ValueError("Unknown fixed collection template: " + template)
+    return {"type": "stack_panel", "orientation": "vertical", "size": size,
+        "collection_name": "form_buttons", "controls": [
+            control("record@jagsby_frontier." + template, {"collection_index": index})]}
 
 
 def data_template(index, size, scale=0.8):
@@ -85,7 +95,7 @@ def data_template(index, size, scale=0.8):
 def record(name, index, height):
     height = height or (180 if index == DATA["production"] else 256)
     template = data_template(index, [240, height - 8])
-    text = factory(template, [240, height - 8])
+    text = collection_scope(template, [240, height - 8])
     text.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [7, 4]})
     return control(name, {"type": "panel", "size": [254, height], "controls": [
         control("paper", image("frontier/solid", [254, height - 2], color=[0.84, 0.69, 0.44])),
@@ -120,7 +130,7 @@ def action(name, index, caption, width=254, height=21):
         ],
         "bindings": bindings, "controls": states,
     }
-    return control(name, factory(template, [width, height + 3]))
+    return control(name, collection_scope(template, [width, height + 3]))
 
 
 def heading(text):
@@ -173,7 +183,7 @@ def tab(name, index):
 
 def overview_value(name, index, offset, size, scale=0.9):
     template = data_template(index, size, scale)
-    value = factory(template, size)
+    value = collection_scope(template, size)
     value.update({"anchor_from": "top_left", "anchor_to": "top_left",
                   "offset": offset, "clips_children": True})
     return control(name, value)
@@ -287,7 +297,7 @@ def build():
     ]
     ui["jf_tier_portrait"] = portrait
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
-        control("portrait", {**factory("jf_tier_portrait", [96, 168]),
+        control("portrait", {**collection_scope("jf_tier_portrait", [96, 168]),
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0]}),
         overview_value("tier", DATA["tier"], [0, 168], [96, 9], scale=0.65),
         control("name_label", label("SETTLEMENT NAME", [145, 12], (108, 5), scale=0.7)),
@@ -313,7 +323,7 @@ def build():
         "controls": [heading("CHOOSE ONE BIOME"), control("choices", {
             "type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"],
             "collection_name": "form_buttons", "factory": {"name": "buttons",
-                "control_ids": {"button": "@jagsby_frontier.jf_choice"}},
+                "control_ids": {"button": "jagsby_frontier.jf_choice"}},
             "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length"}],
         })]}
     # Native factory context supplies the chosen biome's real record index.

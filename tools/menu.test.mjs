@@ -71,9 +71,16 @@ const loadUI=async()=>JSON.parse(await readFile(uiFile,'utf8'));
 const children=control=>Object.assign({},...control.controls);
 const template=(ui,name)=>ui[name]??ui[Object.keys(ui).find(key=>key.split('@')[0]===name)];
 
-test('all displayed record factories use native form context, with no hard-coded indices',async()=>{
+test('record bindings use collection-capable stack panels and explicitly indexed native children',async()=>{
   const ui=await loadUI();
-  assert.equal(JSON.stringify(ui).includes('collection_index'),false);
+  function validateScope(value) {
+    if(value && typeof value==='object') {
+      if('collection_name' in value) assert.equal(value.type,'stack_panel',
+        'Content log regression: collection_name is unsupported on plain panel');
+      for(const child of Object.values(value))validateScope(child);
+    }
+  }
+  validateScope(ui);
   const layoutSource=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
   const {CHARTER_LAYOUT:layout}=await import(`data:text/javascript;base64,${Buffer.from(layoutSource).toString('base64')}`);
   for(const key of Object.keys(layout.data).filter(key=>key!=='civilization')) {
@@ -99,7 +106,8 @@ test('Overview has three non-scrolling fields, while Rename is in the top header
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=177);
   const header=children(ui.jf_dashboard).header_rename;
   assert.ok(header.offset[1]+header.size[1]<=37,'Rename must fit inside the crimson top bar');
-  assert.equal(header.factory.control_ids.button,'@jagsby_frontier.jf_action_rename');
+  assert.equal(header.type,'stack_panel');
+  assert.deepEqual(header.controls,[{'record@jagsby_frontier.jf_action_rename':{collection_index:24}}]);
   const button=template(ui,'jf_action_rename');
   assert.equal(button.$pressed_button_name,'button.form_button_click');
   assert.ok(button.button_mappings.every(m=>m.to_button_id==='button.form_button_click'));
@@ -110,7 +118,8 @@ test('Overview uses the recommended full-height portrait on the left and details
   const fields=children(ui.jf_overview_content);
   assert.deepEqual(fields.portrait.size,[96,168]);
   assert.deepEqual(fields.portrait.offset,[0,0]);
-  assert.equal(fields.portrait.factory.control_ids.button,'@jagsby_frontier.jf_tier_portrait');
+  assert.equal(fields.portrait.type,'stack_panel');
+  assert.deepEqual(fields.portrait.controls,[{'record@jagsby_frontier.jf_tier_portrait':{collection_index:3}}]);
   assert.equal(ui.jf_tier_portrait.bilinear,false);
   assert.ok(ui.jf_tier_portrait.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_name_override==='#texture'));
   for(const name of ['name','biome','power']) {
@@ -124,12 +133,13 @@ test('Overview uses the recommended full-height portrait on the left and details
   }
 });
 
-test('Overview fields select named transport records rather than falling back to record zero',async()=>{
+test('Overview puts each bound label at its explicit index inside a real collection layout',async()=>{
   const ui=await loadUI();
   const fields=children(ui.jf_overview_content);
   const records=['[JF:data:census]2.8','[JF:action:rename]','[JF:data:biomes]Plains','[JF:data:overview]Oakfield'];
   for(const [field,key,expected]of [['name','overview','Oakfield'],['biome','biomes','Plains'],['power','census','2.8']]) {
-    assert.equal(fields[field].factory.control_ids.button,'@jagsby_frontier.jf_data_'+key);
+    assert.equal(fields[field].type,'stack_panel');
+    assert.deepEqual(fields[field].controls,[{['record@jagsby_frontier.jf_data_'+key]:{collection_index:{name:0,biome:1,power:2}[field]}}]);
     const label=ui['jf_data_'+key];
     const expression=label.bindings.find(b=>b.target_property_name==='#text').source_property_name;
     const marker=expression.match(/'([^']+)'/)[1];
@@ -154,8 +164,7 @@ test('Research subtabs isolate the correct native action factories',async()=>{
   }
   function actions(value,result=[]) {
     if(value&&typeof value==='object') {
-      const ref=value.factory?.control_ids?.button;
-      if(ref?.startsWith('@jagsby_frontier.jf_action_'))result.push(ref.split('jf_action_')[1]);
+      for(const key of Object.keys(value))if(key.startsWith('record@jagsby_frontier.jf_action_'))result.push(key.split('jf_action_')[1]);
       for(const child of Object.values(value))actions(child,result);
     }
     return result;

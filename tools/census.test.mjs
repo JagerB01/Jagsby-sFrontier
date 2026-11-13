@@ -149,22 +149,22 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   let saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.villagers, 1);
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
-  assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
+  assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, null);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
   assert.equal(forms[0].records.length,25);
   assert.equal(forms[0].records[24],'[JF:action:rename]');
   assert.equal(forms[0].records[0],'[JF:data:overview]Settlement 1');
   assert.equal(forms[0].records[1],'[JF:data:biomes]Plains');
-  assert.equal(forms[0].records[2],'[JF:data:census]0.2');
-  assert.equal(forms[0].records[3],'[JF:data:tier]Outpost');
+  assert.equal(forms[0].records[2],'[JF:data:census]≥ 0.2');
+  assert.equal(forms[0].records[3],'[JF:data:tier]≥ Outpost');
   assert.equal(forms[0].icons[3],'textures/ui/frontier/settlements/outpost');
   assert.equal(forms[1].text,'[JF:tab:research][JF:research:local]');
   nativeTier = 4;
   handlers.beforeInteract(event);
   await queued.shift()();
   saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
-  assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 10,
-    'Next interaction must reflect a villager promoted from novice to master');
+  assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, null,
+    'An unavailable trade-tier query must not claim that a villager promotion was detected');
   handlers.beforeInteract({...event,block:nether.getBlock(location)});
   await queued.shift()();
   saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
@@ -181,15 +181,15 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.stock['minecraft:iron_ingot'],12,'Rename must preserve concurrent stockpile changes');
   assert.equal(forms.at(-1).records[0],'[JF:data:overview]Oakfield');
   assert.equal(scans,4,'Only the charter interaction should scan; rename must not rescan');
-  population=20;
+  population=100;
   handlers.beforeInteract(event);
   await queued.shift()();
-  assert.equal(forms.at(-1).records[3],'[JF:data:tier]City');
+  assert.equal(forms.at(-1).records[3],'[JF:data:tier]≥ City');
   assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/city');
-  population=5;
+  population=25;
   handlers.beforeInteract(event);
   await queued.shift()();
-  assert.equal(forms.at(-1).records[3],'[JF:data:tier]Village');
+  assert.equal(forms.at(-1).records[3],'[JF:data:tier]≥ Village');
   assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/village');
   assert.equal(scans,6);
   delete globalThis.__frontierTest;

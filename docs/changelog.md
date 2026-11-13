@@ -1,5 +1,19 @@
 # Changes
 
+## 0.0.10
+
+- Fix the exact UI schema error in the user's 0.0.9 content log: collection scopes
+  now use stack_panel, not panel. Bind one explicitly indexed child within each
+  scope for labels, the portrait and action buttons, including header Rename.
+- Add build validation against collection_name on plain panels.
+- Remove the invalid query.trade_tier entity event and vanilla villager overrides.
+  The log proves that query is unsupported in that server event context.
+- Do not trust cached properties from the invalid bridge. Native trade-level
+  reading remains unresolved; power and tier are conservative minimum estimates.
+- Keep portraits, sidebar artwork, header Rename and Global/Local research tabs.
+- 24 automated tests pass; live client behavior needs retesting against a new log.
+- In-game name: Jagsby's Frontier 0.0.10.
+
 ## 0.0.9
 
 - Display the recommended 96×168 tier portraits down the left Overview column.

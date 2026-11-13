@@ -1,4 +1,4 @@
-# Standalone charter dashboard (0.0.9)
+# Standalone charter dashboard (0.0.10)
 
 Frontier's custom menu is independent. It does not bundle MineScape UI, textures,
 behavior scripts or identifiers, and it does not require MineScape to be enabled.
@@ -35,7 +35,7 @@ relative to an absent MineScape pack.
 ## Development and verification
 
 `python tools/addon.py build` regenerates the artwork, separate JSON UI, matching
-script layout and vanilla villager bridge before validating and packaging.
+script layout before validating and packaging.
 
 Tests check standalone registration, default-form routing, local tabs, matching
 record indices and resolution of Frontier's own control/texture references. They
@@ -82,3 +82,22 @@ beginning at x=108. All regions fit within the fixed area. The tagged tier recor
 includes its image texture so the native image factory can display Outpost,
 Hamlet, Village, Town or City from the latest saved census. See
 `settlement-portrait-assets.md` for the agreed provisional thresholds.
+
+## Confirmed 0.0.9 errors and 0.0.10 correction
+
+The user's ContentLog2026-11-13_18-10-27_1.txt contains 99 UI error occurrences
+of `Unknown property [collection_name]` on plain panels. Those panels held all
+transported labels, the portrait and actions, so the static artwork rendered
+while the dynamic content was absent.
+
+0.0.10 uses `stack_panel` collection scopes, each containing one native child
+with its explicit record index. This matches Bedrock's collection-layout
+mechanism. The plain panel scopes/factories introduced in 0.0.8 are removed.
+Build validation rejects the exact invalid property/type combination. Earlier
+claims that manually indexed controls were inherently the problem were incomplete:
+the collection-capable parent layout was missing. The provided log established
+that concrete error; the unit tests had not executed Minecraft's UI parser.
+
+The same log rejects `query.trade_tier` in server entity property events. That
+separate failure is documented in `village-census.md`; the broken bridge is no
+longer shipped. New client validation remains outstanding.

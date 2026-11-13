@@ -8,7 +8,6 @@ import subprocess
 import uuid
 import zipfile
 from build_charter_ui import build as build_charter_ui
-from build_villager_bridge import build as build_villager_bridge
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKS = ROOT / "packs"
@@ -31,7 +30,15 @@ def validate():
                 continue
             files += 1
             if path.suffix == ".json":
-                json.loads(path.read_text())
+                data = json.loads(path.read_text())
+                if path.is_relative_to(PACKS / "resource/ui"):
+                    def check_ui(value):
+                        if isinstance(value, dict):
+                            assert not (value.get("type") == "panel" and "collection_name" in value), f"collection_name is unsupported on panel: {path}"
+                            for child in value.values(): check_ui(child)
+                        elif isinstance(value, list):
+                            for child in value: check_ui(child)
+                    check_ui(data)
             if path.suffix == ".png":
                 data = path.read_bytes()
                 assert data[:8] == b"\x89PNG\r\n\x1a\n", f"Invalid PNG: {path}"
@@ -74,7 +81,6 @@ def archive(entries):
 
 def build():
     build_charter_ui()
-    build_villager_bridge()
     validate()
     entries = []
     for kind, suffix in (("behavior", "BP"), ("resource", "RP")):

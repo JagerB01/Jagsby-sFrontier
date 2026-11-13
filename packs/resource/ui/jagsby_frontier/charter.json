@@ -1708,22 +1708,18 @@
       },
       {
         "header_rename": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             68,
             22
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_rename"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_rename": {
+                "collection_index": 24
+              }
             }
           ],
           "anchor_from": "top_left",
@@ -1746,22 +1742,18 @@
     "controls": [
       {
         "portrait": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             96,
             168
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_tier_portrait"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_tier_portrait": {
+                "collection_index": 3
+              }
             }
           ],
           "anchor_from": "top_left",
@@ -1774,22 +1766,18 @@
       },
       {
         "tier": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             96,
             9
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_data_tier"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_data_tier": {
+                "collection_index": 3
+              }
             }
           ],
           "anchor_from": "top_left",
@@ -1828,22 +1816,18 @@
       },
       {
         "name": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             145,
             28
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_data_overview"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_data_overview": {
+                "collection_index": 0
+              }
             }
           ],
           "anchor_from": "top_left",
@@ -1882,22 +1866,18 @@
       },
       {
         "biome": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             145,
             28
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_data_biomes"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_data_biomes": {
+                "collection_index": 1
+              }
             }
           ],
           "anchor_from": "top_left",
@@ -1936,22 +1916,18 @@
       },
       {
         "power": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             145,
             30
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_data_census"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_data_census": {
+                "collection_index": 2
+              }
             }
           ],
           "anchor_from": "top_left",
@@ -2738,22 +2714,18 @@
             },
             {
               "data": {
-                "type": "panel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   240,
                   172
                 ],
                 "collection_name": "form_buttons",
-                "factory": {
-                  "name": "buttons",
-                  "control_ids": {
-                    "button": "@jagsby_frontier.jf_data_production"
-                  }
-                },
-                "bindings": [
+                "controls": [
                   {
-                    "binding_name": "#form_button_contents",
-                    "binding_name_override": "#collection_length"
+                    "record@jagsby_frontier.jf_data_production": {
+                      "collection_index": 11
+                    }
                   }
                 ],
                 "anchor_from": "top_left",
@@ -2769,44 +2741,36 @@
       },
       {
         "survey": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             254,
             24
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_scan"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_scan": {
+                "collection_index": 21
+              }
             }
           ]
         }
       },
       {
         "choose": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             254,
             24
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_selectBiome"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_selectBiome": {
+                "collection_index": 22
+              }
             }
           ]
         }
@@ -2917,22 +2881,18 @@
             },
             {
               "data": {
-                "type": "panel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   240,
                   42
                 ],
                 "collection_name": "form_buttons",
-                "factory": {
-                  "name": "buttons",
-                  "control_ids": {
-                    "button": "@jagsby_frontier.jf_data_stockpile"
-                  }
-                },
-                "bindings": [
+                "controls": [
                   {
-                    "binding_name": "#form_button_contents",
-                    "binding_name_override": "#collection_length"
+                    "record@jagsby_frontier.jf_data_stockpile": {
+                      "collection_index": 12
+                    }
                   }
                 ],
                 "anchor_from": "top_left",
@@ -2980,22 +2940,18 @@
             },
             {
               "data": {
-                "type": "panel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   240,
                   248
                 ],
                 "collection_name": "form_buttons",
-                "factory": {
-                  "name": "buttons",
-                  "control_ids": {
-                    "button": "@jagsby_frontier.jf_data_resources"
-                  }
-                },
-                "bindings": [
+                "controls": [
                   {
-                    "binding_name": "#form_button_contents",
-                    "binding_name_override": "#collection_length"
+                    "record@jagsby_frontier.jf_data_resources": {
+                      "collection_index": 13
+                    }
                   }
                 ],
                 "anchor_from": "top_left",
@@ -3011,22 +2967,18 @@
       },
       {
         "collect": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             254,
             24
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_collect"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_collect": {
+                "collection_index": 23
+              }
             }
           ]
         }
@@ -3137,22 +3089,18 @@
             },
             {
               "data": {
-                "type": "panel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   240,
                   72
                 ],
                 "collection_name": "form_buttons",
-                "factory": {
-                  "name": "buttons",
-                  "control_ids": {
-                    "button": "@jagsby_frontier.jf_data_efficiency"
-                  }
-                },
-                "bindings": [
+                "controls": [
                   {
-                    "binding_name": "#form_button_contents",
-                    "binding_name_override": "#collection_length"
+                    "record@jagsby_frontier.jf_data_efficiency": {
+                      "collection_index": 4
+                    }
                   }
                 ],
                 "anchor_from": "top_left",
@@ -3168,22 +3116,18 @@
       },
       {
         "efficiency_buy": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             254,
             24
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_efficiency"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_efficiency": {
+                "collection_index": 14
+              }
             }
           ]
         }
@@ -3222,22 +3166,18 @@
             },
             {
               "data": {
-                "type": "panel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   240,
                   72
                 ],
                 "collection_name": "form_buttons",
-                "factory": {
-                  "name": "buttons",
-                  "control_ids": {
-                    "button": "@jagsby_frontier.jf_data_hearth"
-                  }
-                },
-                "bindings": [
+                "controls": [
                   {
-                    "binding_name": "#form_button_contents",
-                    "binding_name_override": "#collection_length"
+                    "record@jagsby_frontier.jf_data_hearth": {
+                      "collection_index": 5
+                    }
                   }
                 ],
                 "anchor_from": "top_left",
@@ -3253,22 +3193,18 @@
       },
       {
         "hearth_buy": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             254,
             24
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_hearth"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_hearth": {
+                "collection_index": 15
+              }
             }
           ]
         }
@@ -3307,22 +3243,18 @@
             },
             {
               "data": {
-                "type": "panel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   240,
                   72
                 ],
                 "collection_name": "form_buttons",
-                "factory": {
-                  "name": "buttons",
-                  "control_ids": {
-                    "button": "@jagsby_frontier.jf_data_biome"
-                  }
-                },
-                "bindings": [
+                "controls": [
                   {
-                    "binding_name": "#form_button_contents",
-                    "binding_name_override": "#collection_length"
+                    "record@jagsby_frontier.jf_data_biome": {
+                      "collection_index": 6
+                    }
                   }
                 ],
                 "anchor_from": "top_left",
@@ -3338,22 +3270,18 @@
       },
       {
         "biome_buy": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             254,
             24
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_biome"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_biome": {
+                "collection_index": 16
+              }
             }
           ]
         }
@@ -3464,22 +3392,18 @@
             },
             {
               "data": {
-                "type": "panel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   240,
                   72
                 ],
                 "collection_name": "form_buttons",
-                "factory": {
-                  "name": "buttons",
-                  "control_ids": {
-                    "button": "@jagsby_frontier.jf_data_frontier"
-                  }
-                },
-                "bindings": [
+                "controls": [
                   {
-                    "binding_name": "#form_button_contents",
-                    "binding_name_override": "#collection_length"
+                    "record@jagsby_frontier.jf_data_frontier": {
+                      "collection_index": 7
+                    }
                   }
                 ],
                 "anchor_from": "top_left",
@@ -3495,22 +3419,18 @@
       },
       {
         "frontier_buy": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             254,
             24
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_frontier"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_frontier": {
+                "collection_index": 17
+              }
             }
           ]
         }
@@ -3549,22 +3469,18 @@
             },
             {
               "data": {
-                "type": "panel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   240,
                   72
                 ],
                 "collection_name": "form_buttons",
-                "factory": {
-                  "name": "buttons",
-                  "control_ids": {
-                    "button": "@jagsby_frontier.jf_data_capacity"
-                  }
-                },
-                "bindings": [
+                "controls": [
                   {
-                    "binding_name": "#form_button_contents",
-                    "binding_name_override": "#collection_length"
+                    "record@jagsby_frontier.jf_data_capacity": {
+                      "collection_index": 8
+                    }
                   }
                 ],
                 "anchor_from": "top_left",
@@ -3580,22 +3496,18 @@
       },
       {
         "capacity_buy": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             254,
             24
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_capacity"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_capacity": {
+                "collection_index": 18
+              }
             }
           ]
         }
@@ -3634,22 +3546,18 @@
             },
             {
               "data": {
-                "type": "panel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   240,
                   72
                 ],
                 "collection_name": "form_buttons",
-                "factory": {
-                  "name": "buttons",
-                  "control_ids": {
-                    "button": "@jagsby_frontier.jf_data_development"
-                  }
-                },
-                "bindings": [
+                "controls": [
                   {
-                    "binding_name": "#form_button_contents",
-                    "binding_name_override": "#collection_length"
+                    "record@jagsby_frontier.jf_data_development": {
+                      "collection_index": 9
+                    }
                   }
                 ],
                 "anchor_from": "top_left",
@@ -3665,22 +3573,18 @@
       },
       {
         "development_buy": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             254,
             24
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_development"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_development": {
+                "collection_index": 19
+              }
             }
           ]
         }
@@ -3719,22 +3623,18 @@
             },
             {
               "data": {
-                "type": "panel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   240,
                   72
                 ],
                 "collection_name": "form_buttons",
-                "factory": {
-                  "name": "buttons",
-                  "control_ids": {
-                    "button": "@jagsby_frontier.jf_data_storage"
-                  }
-                },
-                "bindings": [
+                "controls": [
                   {
-                    "binding_name": "#form_button_contents",
-                    "binding_name_override": "#collection_length"
+                    "record@jagsby_frontier.jf_data_storage": {
+                      "collection_index": 10
+                    }
                   }
                 ],
                 "anchor_from": "top_left",
@@ -3750,22 +3650,18 @@
       },
       {
         "storage_buy": {
-          "type": "panel",
+          "type": "stack_panel",
+          "orientation": "vertical",
           "size": [
             254,
             24
           ],
           "collection_name": "form_buttons",
-          "factory": {
-            "name": "buttons",
-            "control_ids": {
-              "button": "@jagsby_frontier.jf_action_storage"
-            }
-          },
-          "bindings": [
+          "controls": [
             {
-              "binding_name": "#form_button_contents",
-              "binding_name_override": "#collection_length"
+              "record@jagsby_frontier.jf_action_storage": {
+                "collection_index": 20
+              }
             }
           ]
         }
@@ -4011,7 +3907,7 @@
           "factory": {
             "name": "buttons",
             "control_ids": {
-              "button": "@jagsby_frontier.jf_choice"
+              "button": "jagsby_frontier.jf_choice"
             }
           },
           "bindings": [

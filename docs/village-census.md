@@ -1,66 +1,60 @@
-# Village census (0.0.4)
+# Village census (0.0.10)
 
-Interact with the charter to query loaded vanilla villagers in a **64-block
-sphere**, in the charter's dimension. The before-interaction handler cancels
-default item use and schedules the survey safely. Holding interact does not
-repeat it. No villager census runs on placement, an interval, local tab changes,
-or a menu-busy retry.
+Charter interaction queries loaded vanilla villagers once in a 64-block sphere,
+in the charter's dimension. Placement, menu navigation, Rename and busy-menu
+retries do not rerun that query. Counts are saved with the settlement.
 
-## Normal trade-level bridge
+## Native trade-level reading is unresolved
 
-On interaction, the script queries villagers once and triggers
-`jagsby_frontier:sample_trade_tier` on each. The entity event evaluates native
-Molang `query.trade_tier` and writes `jagsby_frontier:trade_tier`, a script-readable
-entity property. After two ticks to allow the native update, the script reads
-those properties and scores the same observed entities. A later interaction
-resamples them, so trade upgrades can change the next snapshot.
+The user's 0.0.9 content log explicitly rejects `query.trade_tier` in the
+`jagsby_frontier:sample_trade_tier` entity set_property event. The event bridge
+introduced in 0.0.4 therefore did not establish a supported native rank source.
+The stable Script API declarations inspected through 2.11.0 expose no native
+trade-tier component/accessor. A query being documented for Molang does not
+establish support in a particular server context.
 
-| Native tier | Trading level | Power |
-| --- | --- | --- |
-| 0 | Unranked / Novice | 0.2 |
-| 1 | Apprentice | 0.4 |
-| 2 | Journeyman | 0.6 |
-| 3 | Expert | 0.8 |
-| 4 | Master | 1.0 |
+0.0.10 removes the invalid event, generated vanilla villager overrides and bridge
+builder. It neither triggers that event nor trusts its cached entity property.
+The adapter returns unknown ranks. No trade XP guess, manual rank or false novice
+classification is substituted. Exact vanilla trade-level integration still needs
+a supported engine source and in-game validation.
 
-The bridge overrides the two vanilla villager entity definitions using pinned
-Mojang samples, adding only a namespaced property and event. Vanilla AI and
-trades are retained. It does not use a continuous animation controller, polling,
-profession guesses, XP estimates, manual rank tags or commands requiring cheats.
-Another addon overriding these same entities must incorporate the property/event
-or it can replace this bridge. MineScape 1.5.119 contains no competing villager
-entity definition.
+The intended score table remains:
 
-Unavailable rank data stays unknown and produces a clearly labeled minimum
-estimate rather than an exact score. Deduplicate by entity ID and sum integer
-tenths. Wandering traders and zombie villagers do not contribute. This is a
-**settlement observation**, not a whole-world total: overlapping charter ranges
-must not be summed without realm-wide deduplication.
+| Trading level | Power |
+| --- | --- |
+| Unranked / Novice | 0.2 |
+| Apprentice | 0.4 |
+| Journeyman | 0.6 |
+| Expert | 0.8 |
+| Master | 1.0 |
 
-## Persistence and concurrency
+With unknown ranks, each loaded villager contributes 0.2 to a **minimum estimate**.
+UI power and tier show a ≥ prefix. Trading up a villager will not change this
+minimum estimate; it is not a completed native rank score. An empty successful
+census is exactly zero. Survey errors remain unavailable, not a zero population.
 
-Store count, tier counts, observation time and power with the settlement. The
-menu reads this saved snapshot until the next charter interaction. After the
-native-property wait, re-read world state before saving the census so concurrent
-research and collection are preserved. Removed settlement records are not
-recreated by an in-flight survey. Dimension-qualified IDs prevent cross-dimension
-coordinate collisions; matching legacy records migrate on interaction.
+## Persistence and boundaries
+
+Observations use dimension-qualified settlement IDs, and matching legacy records
+migrate on interaction. Re-read current world state before storing a completed
+observation so another player's research or collection is not overwritten.
+Tier selection derives from saved power with the user-approved provisional
+thresholds 2, 5, 10 and 20. It can change on the next charter interaction. Counts
+are local to each settlement; overlapping charter ranges cannot be summed into
+a realm total without deduplication.
 
 ## Biome
 
-The update targets stable server API 2.9.0 and Bedrock 1.26.0+, matching the
-supplied MineScape target. `Dimension.getBiome` is available at this API version.
-Placement reads the primary biome; charter interaction refreshes it. A failed
-lookup retains an existing known biome. The separate production-page biome
-survey is also an explicit user action, uses the charter dimension, respects the
-256-block circle and retains earlier observations from partial loaded surveys.
+The current stable server API target supports Dimension.getBiome. Placement and
+interaction read the primary biome, retaining an existing known biome on a failed
+query. The separate production-page 256-block circular survey remains an explicit
+user action in the charter dimension.
 
-## Validation
+## Verification
 
-Run `node --test tools/*.test.mjs` and `python tools/addon.py build`.
-Tests simulate property commits, trade upgrades, unknown ranks, local tab routing,
-entity filtering, dimension isolation and saved observations. They preserve the
-vanilla entity data outside the bridge additions. These tests **do not execute
-Minecraft Molang or render the client**. In a test world, compare novice and
-master villagers, upgrade an existing villager, interact again, reopen after a
-restart and verify the count/score and content log.
+Automated tests cover entity filtering, minimum estimates, persistence, absence
+of the rejected event/overrides, UI collection scopes, layout and asset resolution.
+They do not run Minecraft's UI parser or native entity engine. The uploaded live
+content log supplied the evidence of the actual failures; the replacement build
+still needs an in-game check and fresh content log.

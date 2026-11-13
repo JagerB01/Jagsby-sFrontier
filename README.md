@@ -5,15 +5,17 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.9.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.10.mcaddon?raw=true)
 
 The Overview places the recommended 96×168 tier portrait on the left, with
 settlement name, village biome and Realm Power on the right, without scrolling.
 Rename remains in the top header bar. Portrait tiers use the provisional
-Realm Power thresholds 0 / 2 / 5 / 10 / 20. This build also contains a native
-trading-tier bridge for the interaction-triggered 64-block census. MineScape
+Realm Power thresholds 0 / 2 / 5 / 10 / 20. The 64-block census runs on
+charter interaction. Native villager trading levels are currently unavailable:
+the attempted Molang bridge was rejected by Minecraft and removed. Power and
+tier show conservative minimum estimates (≥), not exact trade-level scores. MineScape
 is not required or bundled. Enable Frontier's linked behavior and resource
-packs in a disposable test world. The in-game name is **Jagsby's Frontier 0.0.9**.
+packs in a disposable test world. The in-game name is **Jagsby's Frontier 0.0.10**.
 Minecraft rendering and native trade-tier execution remain unverified in-game.
 
 - Requirements: [village system specification](docs/village-system-spec.md).
@@ -39,7 +41,7 @@ The approved set A artwork is in `packs/resource/textures/ui/frontier/icons/`:
 `overview.png` (charter scroll), `research.png` (open book), and `production.png`
 (resource crate). Each is an RGBA PNG with binary transparency and crisp edges.
 These sprites are wired into all states of the corresponding sidebar tabs in
-the 0.0.9 addon, replacing the earlier placeholder drawings.
+the 0.0.10 addon, replacing the earlier placeholder drawings.
 
 Use the existing checkout; cloud tasks already have isolated environments.
 Python 3.12 and Node.js 24 are available in the prepared cloud environment.
@@ -52,8 +54,9 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.0.9.mcaddon`. Packaging is
-deterministic; the build regenerates the custom UI and vanilla villager bridge.
+Build output is `dist/Jagsbys_Frontier_v0.0.10.mcaddon`. Packaging is
+deterministic; the build regenerates the custom UI. Vanilla villager definitions
+are not overridden.
 The pack targets Bedrock 1.26.0+ with `@minecraft/server` 2.9.0 and
 `@minecraft/server-ui` 2.1.0.
 
