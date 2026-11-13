@@ -26,7 +26,13 @@
   ],
   "palette_max_colors": 128,
   "resampling": "nearest neighbor",
-  "tier_thresholds": null,
+  "tier_thresholds": {
+    "outpost": 0,
+    "hamlet": 2,
+    "village": 5,
+    "town": 10,
+    "city": 20
+  },
   "textures": {
     "outpost": "textures/ui/frontier/settlements/outpost",
     "hamlet": "textures/ui/frontier/settlements/hamlet",

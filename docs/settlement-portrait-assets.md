@@ -22,6 +22,32 @@ avoiding duplicate texture storage. Original high-resolution generated art is
 retained in the workspace outside the pack. Crop bounds, source checksum and
 export settings are recorded in `settlement-portrait-assets.json`.
 
-These are assets for subsequent integration. No tier thresholds have been
-invented, no tier-switching logic is implemented here, and the published 0.0.8
-addon has not been rebuilt with these portraits.
+## Overview integration (0.0.9)
+
+The recommended portrait fills the left Overview column at its native 96×168
+size; a live tier label sits beneath it. Settlement name, biome and Realm Power
+occupy the right column. The entire panel fits without scrolling and Rename
+remains in the header.
+
+The provisional thresholds approved by the user are:
+
+| Realm Power | Tier |
+| --- | --- |
+| 0 to below 2 | Outpost |
+| 2 to below 5 | Hamlet |
+| 5 to below 10 | Village |
+| 10 to below 20 | Town |
+| 20 or more | City |
+
+Edit `packs/behavior/scripts/settlement-tiers.js` to rebalance. Classification is
+derived from the persisted census when the menu opens. Charter interaction
+refreshes the census, so the next observation can promote or demote the portrait.
+No background scan is added. Unknown trade ranks use the conservative minimum
+with a ≥ tier label; an unavailable census displays an Outpost illustration with
+"Tier unavailable", rather than claiming a measured tier.
+
+The tier's texture travels with its tagged form record and the custom image
+control binds `#form_button_texture` in the native factory context. The portrait
+uses `bilinear: false`; no duplicate higher-resolution assets are packaged.
+Automated tests cover boundaries, promotions/demotions, asset dimensions and the
+fixed layout. Native Minecraft rendering remains unverified.

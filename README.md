@@ -5,13 +5,15 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.8.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.9.mcaddon?raw=true)
 
-The Overview shows settlement name, village biome, and Realm Power in a fixed
-layout without scrolling. Rename is in the top header bar. This build also contains a native
+The Overview places the recommended 96×168 tier portrait on the left, with
+settlement name, village biome and Realm Power on the right, without scrolling.
+Rename remains in the top header bar. Portrait tiers use the provisional
+Realm Power thresholds 0 / 2 / 5 / 10 / 20. This build also contains a native
 trading-tier bridge for the interaction-triggered 64-block census. MineScape
 is not required or bundled. Enable Frontier's linked behavior and resource
-packs in a disposable test world. The in-game name is **Jagsby's Frontier 0.0.8**.
+packs in a disposable test world. The in-game name is **Jagsby's Frontier 0.0.9**.
 Minecraft rendering and native trade-tier execution remain unverified in-game.
 
 - Requirements: [village system specification](docs/village-system-spec.md).
@@ -27,8 +29,8 @@ Minecraft rendering and native trade-tier execution remain unverified in-game.
 - [Download 96×168 portraits](downloads/Jagsbys_Frontier_Settlement_Portraits_96x168.zip?raw=true): recommended; about 62 KiB for all five PNGs.
 - [Download 64×112 portraits](downloads/Jagsbys_Frontier_Settlement_Portraits_64x112.zip?raw=true): compact; about 30 KiB for all five PNGs.
 
-See [asset details](docs/settlement-portrait-assets.md). These are prepared artwork;
-automatic tier classification and Overview display are not wired in yet.
+See [asset details](docs/settlement-portrait-assets.md). The recommended set is
+wired into the Overview and changes with the settlement's Realm Power tier.
 
 ### Tab sprites
 
@@ -37,7 +39,7 @@ The approved set A artwork is in `packs/resource/textures/ui/frontier/icons/`:
 `overview.png` (charter scroll), `research.png` (open book), and `production.png`
 (resource crate). Each is an RGBA PNG with binary transparency and crisp edges.
 These sprites are wired into all states of the corresponding sidebar tabs in
-the 0.0.8 addon, replacing the earlier placeholder drawings.
+the 0.0.9 addon, replacing the earlier placeholder drawings.
 
 Use the existing checkout; cloud tasks already have isolated environments.
 Python 3.12 and Node.js 24 are available in the prepared cloud environment.
@@ -50,7 +52,7 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.0.8.mcaddon`. Packaging is
+Build output is `dist/Jagsbys_Frontier_v0.0.9.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and vanilla villager bridge.
 The pack targets Bedrock 1.26.0+ with `@minecraft/server` 2.9.0 and
 `@minecraft/server-ui` 2.1.0.

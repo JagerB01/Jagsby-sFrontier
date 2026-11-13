@@ -95,7 +95,7 @@ test('Overview has three non-scrolling fields, while Rename is in the top header
   assert.deepEqual(ui.jf_overview_content.size,[257,177]);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   const fields=children(ui.jf_overview_content);
-  assert.deepEqual(Object.keys(fields),['name_label','name','biome_label','biome','power_label','power']);
+  assert.deepEqual(Object.keys(fields),['portrait','tier','name_label','name','biome_label','biome','power_label','power']);
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=177);
   const header=children(ui.jf_dashboard).header_rename;
   assert.ok(header.offset[1]+header.size[1]<=37,'Rename must fit inside the crimson top bar');
@@ -103,6 +103,25 @@ test('Overview has three non-scrolling fields, while Rename is in the top header
   const button=template(ui,'jf_action_rename');
   assert.equal(button.$pressed_button_name,'button.form_button_click');
   assert.ok(button.button_mappings.every(m=>m.to_button_id==='button.form_button_click'));
+});
+
+test('Overview uses the recommended full-height portrait on the left and details on the right',async()=>{
+  const ui=await loadUI();
+  const fields=children(ui.jf_overview_content);
+  assert.deepEqual(fields.portrait.size,[96,168]);
+  assert.deepEqual(fields.portrait.offset,[0,0]);
+  assert.equal(fields.portrait.factory.control_ids.button,'@jagsby_frontier.jf_tier_portrait');
+  assert.equal(ui.jf_tier_portrait.bilinear,false);
+  assert.ok(ui.jf_tier_portrait.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_name_override==='#texture'));
+  for(const name of ['name','biome','power']) {
+    assert.ok(fields[name].offset[0]>=108);
+    assert.ok(fields[name].offset[0]+fields[name].size[0]<=257);
+  }
+  for(const name of ['outpost','hamlet','village','town','city']) {
+    const data=await readFile(new URL(`../packs/resource/textures/ui/frontier/settlements/${name}.png`,import.meta.url));
+    assert.equal(data.readUInt32BE(16),96);
+    assert.equal(data.readUInt32BE(20),168);
+  }
 });
 
 test('Overview fields select named transport records rather than falling back to record zero',async()=>{

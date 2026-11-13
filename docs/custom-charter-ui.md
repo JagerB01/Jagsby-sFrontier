@@ -1,4 +1,4 @@
-# Standalone charter dashboard (0.0.8)
+# Standalone charter dashboard (0.0.9)
 
 Frontier's custom menu is independent. It does not bundle MineScape UI, textures,
 behavior scripts or identifiers, and it does not require MineScape to be enabled.
@@ -73,3 +73,12 @@ The approved 64×64 transparent sprite assets are displayed in all four visual
 states of Overview, Research and Production. The generated button backgrounds
 no longer bake the old placeholder drawings underneath them. Research subtabs
 remain text-only.
+
+## Tier portrait Overview
+
+The Overview's 257×177 area now contains a 96×168 tier portrait at the left,
+a 96×9 tier caption below it, and the three detail fields in the right column
+beginning at x=108. All regions fit within the fixed area. The tagged tier record
+includes its image texture so the native image factory can display Outpost,
+Hamlet, Village, Town or City from the latest saved census. See
+`settlement-portrait-assets.md` for the agreed provisional thresholds.

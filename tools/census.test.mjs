@@ -14,6 +14,8 @@ const bridgeSource = await readFile(new URL('villager-trade-bridge.js', scriptBa
 const bridgeModuleUrl = `data:text/javascript;base64,${Buffer.from(bridgeSource).toString('base64')}`;
 const overviewSource = await readFile(new URL('settlement-overview.js',scriptBase),'utf8');
 const overviewModuleUrl = `data:text/javascript;base64,${Buffer.from(overviewSource).toString('base64')}`;
+const tiersSource = await readFile(new URL('settlement-tiers.js',scriptBase),'utf8');
+const tiersModuleUrl = `data:text/javascript;base64,${Buffer.from(tiersSource).toString('base64')}`;
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });
 
 test('native trading levels give linear 0.2 to 1.0 contributions', () => {
@@ -70,9 +72,10 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   const dimensions = new Map();
   let scans = 0, biomeReads = 0;
   let nativeTier = 0;
+  let population = 1;
   const nativeVillager = {...villager('a'), triggerEvent() {}, getProperty: () => nativeTier};
   const makeDimension = id => {
-    const dim = { id, getEntities() { scans++; return [nativeVillager]; },
+    const dim = { id, getEntities() { scans++; return Array.from({length:population},(_,i)=>({...nativeVillager,id:'v'+i})); },
       getBiome() { biomeReads++; return {id:'minecraft:plains'}; },
       getBlock: location => ({ typeId:'jagsby_frontier:village_charter', location, dimension:dim }) };
     dimensions.set(id, dim);
@@ -84,9 +87,9 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   let renameResponse;
   const forms = [];
   class Form {
-    constructor() { this.records=[]; forms.push(this); }
+    constructor() { this.records=[]; this.icons=[]; forms.push(this); }
     title(value) {this.heading=value; return this; } body(value) {this.text=value; return this; }
-    button(value) {this.records.push(value); return this; }
+    button(value,icon) {this.records.push(value); this.icons.push(icon); return this; }
     show() { const response = menuResponse; menuResponse = {canceled:true}; return Promise.resolve(response ?? {canceled:true}); }
   }
   class RenameForm {
@@ -120,7 +123,8 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
     .replace('"./menu-display.js"', JSON.stringify(menuModuleUrl))
     .replace('"./charter-layout.js"', JSON.stringify(layoutModuleUrl))
     .replace('"./villager-trade-bridge.js"', JSON.stringify(bridgeModuleUrl))
-    .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl));
+    .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl))
+    .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl));
   await import(`data:text/javascript;base64,${Buffer.from(main).toString('base64')}`);
   const location = { x:0, y:64, z:0 };
   const player = { id:'p', sendMessage() {}, getComponent() {} };
@@ -152,6 +156,8 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[0].records[0],'[JF:data:overview]Settlement 1');
   assert.equal(forms[0].records[1],'[JF:data:biomes]Plains');
   assert.equal(forms[0].records[2],'[JF:data:census]0.2');
+  assert.equal(forms[0].records[3],'[JF:data:tier]Outpost');
+  assert.equal(forms[0].icons[3],'textures/ui/frontier/settlements/outpost');
   assert.equal(forms[1].text,'[JF:tab:research][JF:research:local]');
   nativeTier = 4;
   handlers.beforeInteract(event);
@@ -175,5 +181,16 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.stock['minecraft:iron_ingot'],12,'Rename must preserve concurrent stockpile changes');
   assert.equal(forms.at(-1).records[0],'[JF:data:overview]Oakfield');
   assert.equal(scans,4,'Only the charter interaction should scan; rename must not rescan');
+  population=20;
+  handlers.beforeInteract(event);
+  await queued.shift()();
+  assert.equal(forms.at(-1).records[3],'[JF:data:tier]City');
+  assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/city');
+  population=5;
+  handlers.beforeInteract(event);
+  await queued.shift()();
+  assert.equal(forms.at(-1).records[3],'[JF:data:tier]Village');
+  assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/village');
+  assert.equal(scans,6);
   delete globalThis.__frontierTest;
 });

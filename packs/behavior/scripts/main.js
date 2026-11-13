@@ -4,6 +4,7 @@ import { nearbyVillagers, summarizeVillagers } from "./village-census.js";
 import { sampleTradingRanks } from "./villager-trade-bridge.js";
 import { CHARTER_LAYOUT } from "./charter-layout.js";
 import { settlementName, biomeName, powerValue } from "./settlement-overview.js";
+import { settlementTier } from "./settlement-tiers.js";
 import { displayMenu } from "./menu-display.js";
 
 const BLOCK = "jagsby_frontier:village_charter";
@@ -84,6 +85,8 @@ function open(player,vId,page='Overview',researchScope='global'){
   records[data.overview]=v.name;
   records[data.biomes]=biomeName(v.biome);
   records[data.census]=powerValue(v.census);
+  const tier=settlementTier(v.census);
+  records[data.tier]=tier.label;
   for(const key of ['efficiency','hearth','biome','frontier','capacity','development','storage'])records[data[key]]=researchText(s,v,key,player);
   const eligible=[...new Set([v.biome,v.secondary].filter(Boolean).flatMap(b=>(RESOURCE_TABLE[b]||[]).map(r=>r.name)))];
   records[data.production]=`Primary biome: ${v.biome}\nSecondary biome: ${v.secondary||'None'}\nSurveyed options: ${v.available.join(', ')||'Survey nearby biomes'}\nEligible resources: ${eligible.join(', ')||'None configured'}\nEfficiency: +${v.efficiency*10}%\nPrototype cycle: ${PRODUCTION_MS/60000} minutes\n§cSample resource table and production balance; not final.§r`;
@@ -101,7 +104,7 @@ function open(player,vId,page='Overview',researchScope='global'){
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
   const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}]`);
-  records.forEach(text=>form.button(text));
+  records.forEach((text,index)=>form.button(text,index===data.tier?tier.texture:undefined));
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
 async function renameSettlement(player,vId){

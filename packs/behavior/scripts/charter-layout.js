@@ -4,7 +4,7 @@ export const CHARTER_LAYOUT = {
     "overview": 0,
     "biomes": 1,
     "census": 2,
-    "civilization": 3,
+    "tier": 3,
     "efficiency": 4,
     "hearth": 5,
     "biome": 6,

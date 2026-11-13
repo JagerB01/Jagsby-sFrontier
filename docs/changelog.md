@@ -1,5 +1,18 @@
 # Changes
 
+## 0.0.9
+
+- Display the recommended 96×168 tier portraits down the left Overview column.
+- Keep name, biome and Realm Power on the right, without scrolling; Rename stays
+  in the top header bar.
+- Use user-approved provisional Realm Power thresholds: Hamlet 2, Village 5,
+  Town 10, City 20; Outpost below 2.
+- Select the portrait from persisted census power and update it on subsequent
+  charter interactions; support both promotion and demotion without extra scans.
+- Supply the texture through the native tagged record factory, not fixed indices.
+- 25 automated tests pass; in-game rendering remains unverified.
+- In-game name: Jagsby's Frontier 0.0.9.
+
 ## 0.0.8
 
 - Wire the approved transparent 64×64 scroll, book and resource-crate sprites

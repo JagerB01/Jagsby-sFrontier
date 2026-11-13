@@ -7,7 +7,7 @@ from build_ui_art import build as build_ui_art
 ROOT = Path(__file__).resolve().parents[1]
 RP = ROOT / "packs/resource"
 DATA = {
-    "overview": 0, "biomes": 1, "census": 2, "civilization": 3,
+    "overview": 0, "biomes": 1, "census": 2, "tier": 3,
     "efficiency": 4, "hearth": 5, "biome": 6, "frontier": 7,
     "capacity": 8, "development": 9, "storage": 10,
     "production": 11, "stockpile": 12, "resources": 13,
@@ -274,14 +274,30 @@ def build():
     rename.update({"anchor_from": "top_left", "anchor_to": "top_left",
                    "offset": [278, 13], "layer": 25})
     dashboard.append(control("header_rename", rename))
+    portrait = image("frontier/settlements/outpost", [96, 168], layer=8)
+    portrait["bindings"] = [
+        {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+        {"binding_name": "#form_button_text", "binding_name_override": "#record_text",
+         "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        {"binding_name": "#form_button_texture", "binding_name_override": "#texture",
+         "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system",
+         "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        view("(not ((#record_text - '[JF:data:tier]') = #record_text))"),
+    ]
+    ui["jf_tier_portrait"] = portrait
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 177], "controls": [
-        control("name_label", label("SETTLEMENT NAME", [170, 12], (4, 1))),
-        overview_value("name", DATA["overview"], [4, 20], [250, 25]),
-        control("biome_label", label("VILLAGE BIOME", [250, 12], (4, 59))),
-        overview_value("biome", DATA["biomes"], [4, 77], [250, 24]),
-        control("power_label", label("REALM POWER", [250, 12], (4, 113))),
-        overview_value("power", DATA["census"], [4, 132], [250, 32], scale=1.6),
+        control("portrait", {**factory("jf_tier_portrait", [96, 168]),
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0]}),
+        overview_value("tier", DATA["tier"], [0, 168], [96, 9], scale=0.65),
+        control("name_label", label("SETTLEMENT NAME", [145, 12], (108, 5), scale=0.7)),
+        overview_value("name", DATA["overview"], [108, 24], [145, 28], scale=0.8),
+        control("biome_label", label("VILLAGE BIOME", [145, 12], (108, 64), scale=0.7)),
+        overview_value("biome", DATA["biomes"], [108, 83], [145, 28], scale=0.8),
+        control("power_label", label("REALM POWER", [145, 12], (108, 123), scale=0.7)),
+        overview_value("power", DATA["census"], [108, 141], [145, 30], scale=1.4),
     ]}
+    GENERATED_CONTROLS["jf_data_tier"]["text_alignment"] = "center"
     picker = copy.deepcopy(frame)
     # Secondary-biome choices have their own custom button renderer, not the
     # vanilla long-form dynamic list used by the previous prototype.
