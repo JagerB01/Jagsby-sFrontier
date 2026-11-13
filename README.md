@@ -22,6 +22,14 @@ Minecraft rendering and native trade-tier execution remain unverified in-game.
 
 ## Development
 
+### Settlement portraits
+
+- [Download 96×168 portraits](downloads/Jagsbys_Frontier_Settlement_Portraits_96x168.zip?raw=true): recommended; about 62 KiB for all five PNGs.
+- [Download 64×112 portraits](downloads/Jagsbys_Frontier_Settlement_Portraits_64x112.zip?raw=true): compact; about 30 KiB for all five PNGs.
+
+See [asset details](docs/settlement-portrait-assets.md). These are prepared artwork;
+automatic tier classification and Overview display are not wired in yet.
+
 ### Tab sprites
 
 [Download the three transparent 64×64 tab sprites](downloads/Jagsbys_Frontier_Tab_Sprites_64x64.zip?raw=true).

@@ -1,0 +1,37 @@
+{
+  "source_sha256": "fdaae09b01dc840d16ba74ecaf310c1b5bde6e1625000927ced94a4027ed8d3e",
+  "source_dimensions": [
+    1920,
+    819
+  ],
+  "crop_dimensions": [
+    373,
+    652
+  ],
+  "crop_y": 41,
+  "crop_x": {
+    "outpost": 10,
+    "hamlet": 394,
+    "village": 777,
+    "town": 1160,
+    "city": 1543
+  },
+  "primary_dimensions": [
+    96,
+    168
+  ],
+  "compact_dimensions": [
+    64,
+    112
+  ],
+  "palette_max_colors": 128,
+  "resampling": "nearest neighbor",
+  "tier_thresholds": null,
+  "textures": {
+    "outpost": "textures/ui/frontier/settlements/outpost",
+    "hamlet": "textures/ui/frontier/settlements/hamlet",
+    "village": "textures/ui/frontier/settlements/village",
+    "town": "textures/ui/frontier/settlements/town",
+    "city": "textures/ui/frontier/settlements/city"
+  }
+}
