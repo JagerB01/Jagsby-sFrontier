@@ -5,7 +5,7 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.1_Prototype.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.2.mcaddon?raw=true)
 
 This build includes the interaction-triggered 64-block villager census. Exact
 trading-rank power and biome detection remain unfinished; it has not been tested
@@ -29,7 +29,7 @@ node --test tools/census.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.1_Prototype.mcaddon`. Packaging is
+Build output is `dist/Jagsbys_Frontier_v0.0.2.mcaddon`. Packaging is
 deterministic. The pack targets
 Bedrock 1.21.100 or newer with `@minecraft/server` and `@minecraft/server-ui` 2.0.0.
 

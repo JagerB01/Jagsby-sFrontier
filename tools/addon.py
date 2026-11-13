@@ -78,7 +78,8 @@ def build():
         content = archive([(p.relative_to(base).as_posix(), p.read_bytes())
                            for p in base.rglob("*") if p.is_file()])
         entries.append((f"Jagsbys_Frontier_{suffix}.mcpack", content))
-    destination = ROOT / "dist/Jagsbys_Frontier_v0.1_Prototype.mcaddon"
+    version = ".".join(map(str, json.loads((PACKS / "behavior/manifest.json").read_text())["header"]["version"]))
+    destination = ROOT / f"dist/Jagsbys_Frontier_v{version}.mcaddon"
     destination.parent.mkdir(exist_ok=True)
     destination.write_bytes(archive(entries))
     print(f"Built {destination}")

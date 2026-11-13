@@ -1,13 +1,13 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Jagsby’s Frontier [Prototype BP]",
+    "name": "Jagsby\u2019s Frontier [Prototype BP]",
     "description": "Village Charter prototype and settlement management",
     "uuid": "3cc6a938-a48b-41fe-9bca-64d6003abd40",
     "version": [
       0,
-      1,
-      0
+      0,
+      2
     ],
     "min_engine_version": [
       1,
@@ -21,8 +21,8 @@
       "uuid": "5006faa0-c44d-4d64-8911-be7c0a85668b",
       "version": [
         0,
-        1,
-        0
+        0,
+        2
       ]
     },
     {
@@ -32,8 +32,8 @@
       "uuid": "66c7d08e-a3a6-485f-a267-82021845e412",
       "version": [
         0,
-        1,
-        0
+        0,
+        2
       ]
     }
   ],
@@ -42,8 +42,8 @@
       "uuid": "d3c24899-08b6-4399-a037-e6d4b6e46cba",
       "version": [
         0,
-        1,
-        0
+        0,
+        2
       ]
     },
     {
