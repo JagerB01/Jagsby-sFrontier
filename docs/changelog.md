@@ -1,3 +1,9 @@
+# 0.0.26
+
+- Moved Local research to the left and Global research to the right. Local is the initial research tab.
+- Updated controller left/right focus navigation to follow the visible order; each tab retains its existing content and action bindings.
+- Build/static validation and all 32 automated checks passed. Native Minecraft rendering remains unverified.
+
 # 0.0.25
 
 - Refined button faces with shallow aged-silver bevels, charcoal grain, subtle top lighting and engraved wheat-gold corner strokes.

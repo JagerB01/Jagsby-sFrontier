@@ -206,8 +206,8 @@ def research_tab(scope, index, section="research", caption_text=None):
     toggle.update({"size": [124, 23], "offset": [index * 129, 0],
         "toggle_name": "jagsby_frontier_" + section + "_tabs", "tts_name": caption_text or scope.title(),
         "focus_identifier": "jf_" + section + "_focus_" + scope,
-        "focus_change_left": "jf_" + section + "_focus_" + ("mine" if section == "realm" else "global"),
-        "focus_change_right": "jf_" + section + "_focus_" + ("all" if section == "realm" else "local")})
+        "focus_change_left": "jf_" + section + "_focus_" + ("mine" if section == "realm" else "local"),
+        "focus_change_right": "jf_" + section + "_focus_" + ("all" if section == "realm" else "global")})
     toggle.pop("focus_change_up", None)
     toggle.pop("focus_change_down", None)
     for binding in toggle["bindings"]:
@@ -345,7 +345,7 @@ def build():
                 control("data", values), control("purchase", purchase),
             ]}))
     ui["jf_research_local_content"] = {"type": "panel", "size": [254, 131], "controls": local_controls}
-    research_controls = [research_tab("global", 0), research_tab("local", 1)]
+    research_controls = [research_tab("local", 0), research_tab("global", 1)]
     for scope in ["global", "local"]:
         if scope in ["global", "local"]:
             research_controls.append(control(scope + "@jagsby_frontier.jf_research_" + scope + "_content", {

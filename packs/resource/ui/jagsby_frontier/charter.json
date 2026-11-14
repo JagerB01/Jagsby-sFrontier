@@ -2669,7 +2669,7 @@
     ],
     "controls": [
       {
-        "jf_research_tab_global": {
+        "jf_research_tab_local": {
           "type": "toggle",
           "size": [
             124,
@@ -2690,307 +2690,11 @@
           "reset_on_focus_lost": false,
           "focus_enabled": true,
           "hover_enabled": true,
-          "focus_identifier": "jf_research_focus_global",
-          "toggle_on_button": "toggle.toggle_on",
-          "toggle_off_button": "toggle.toggle_off",
-          "property_bag": {
-            "#toggle_state": true
-          },
-          "bindings": [
-            {
-              "binding_name": "#toggle_state",
-              "binding_type": "none",
-              "binding_condition": "always"
-            },
-            {
-              "binding_name": "#form_text",
-              "binding_type": "none"
-            },
-            {
-              "binding_name": "(not ((#form_text - '[JF:research:global]') = #form_text))",
-              "binding_name_override": "#toggle_state",
-              "binding_type": "none",
-              "binding_condition": "once"
-            }
-          ],
-          "button_mappings": [
-            {
-              "from_button_id": "button.menu_select",
-              "to_button_id": "button.menu_select",
-              "mapping_type": "pressed"
-            },
-            {
-              "from_button_id": "button.menu_ok",
-              "to_button_id": "button.menu_ok",
-              "mapping_type": "focused"
-            }
-          ],
-          "unchecked_control": "unchecked",
-          "checked_control": "checked",
-          "unchecked_hover_control": "unchecked_hover",
-          "checked_hover_control": "checked_hover",
-          "tts_name": "Global",
-          "controls": [
-            {
-              "unchecked": {
-                "type": "panel",
-                "size": [
-                  124,
-                  23
-                ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/button_124x23_unchecked",
-                      "size": [
-                        124,
-                        23
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 1
-                    }
-                  },
-                  {
-                    "caption": {
-                      "type": "label",
-                      "text": "Global",
-                      "size": [
-                        124,
-                        13
-                      ],
-                      "offset": [
-                        0,
-                        6
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.8,
-                      "color": [
-                        0.94,
-                        0.92,
-                        0.85
-                      ],
-                      "shadow": false,
-                      "text_alignment": "center"
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "checked": {
-                "type": "panel",
-                "size": [
-                  124,
-                  23
-                ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/button_124x23_checked",
-                      "size": [
-                        124,
-                        23
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 1
-                    }
-                  },
-                  {
-                    "caption": {
-                      "type": "label",
-                      "text": "Global",
-                      "size": [
-                        124,
-                        13
-                      ],
-                      "offset": [
-                        0,
-                        6
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.8,
-                      "color": [
-                        0.82,
-                        0.7,
-                        0.44
-                      ],
-                      "shadow": false,
-                      "text_alignment": "center"
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "unchecked_hover": {
-                "type": "panel",
-                "size": [
-                  124,
-                  23
-                ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/button_124x23_unchecked_hover",
-                      "size": [
-                        124,
-                        23
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 1
-                    }
-                  },
-                  {
-                    "caption": {
-                      "type": "label",
-                      "text": "Global",
-                      "size": [
-                        124,
-                        13
-                      ],
-                      "offset": [
-                        0,
-                        6
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.8,
-                      "color": [
-                        0.94,
-                        0.92,
-                        0.85
-                      ],
-                      "shadow": false,
-                      "text_alignment": "center"
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "checked_hover": {
-                "type": "panel",
-                "size": [
-                  124,
-                  23
-                ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/button_124x23_checked_hover",
-                      "size": [
-                        124,
-                        23
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 1
-                    }
-                  },
-                  {
-                    "caption": {
-                      "type": "label",
-                      "text": "Global",
-                      "size": [
-                        124,
-                        13
-                      ],
-                      "offset": [
-                        0,
-                        6
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.8,
-                      "color": [
-                        0.82,
-                        0.7,
-                        0.44
-                      ],
-                      "shadow": false,
-                      "text_alignment": "center"
-                    }
-                  }
-                ]
-              }
-            }
-          ],
-          "focus_change_left": "jf_research_focus_global",
-          "focus_change_right": "jf_research_focus_local"
-        }
-      },
-      {
-        "jf_research_tab_local": {
-          "type": "toggle",
-          "size": [
-            124,
-            23
-          ],
-          "offset": [
-            129,
-            0
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 10,
-          "radio_toggle_group": true,
-          "toggle_name": "jagsby_frontier_research_tabs",
-          "toggle_group_forced_index": 1,
-          "toggle_group_default_selected": 0,
-          "toggle_default_state": false,
-          "reset_on_focus_lost": false,
-          "focus_enabled": true,
-          "hover_enabled": true,
           "focus_identifier": "jf_research_focus_local",
           "toggle_on_button": "toggle.toggle_on",
           "toggle_off_button": "toggle.toggle_off",
           "property_bag": {
-            "#toggle_state": false
+            "#toggle_state": true
           },
           "bindings": [
             {
@@ -3256,8 +2960,304 @@
               }
             }
           ],
-          "focus_change_left": "jf_research_focus_global",
-          "focus_change_right": "jf_research_focus_local"
+          "focus_change_left": "jf_research_focus_local",
+          "focus_change_right": "jf_research_focus_global"
+        }
+      },
+      {
+        "jf_research_tab_global": {
+          "type": "toggle",
+          "size": [
+            124,
+            23
+          ],
+          "offset": [
+            129,
+            0
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 10,
+          "radio_toggle_group": true,
+          "toggle_name": "jagsby_frontier_research_tabs",
+          "toggle_group_forced_index": 1,
+          "toggle_group_default_selected": 0,
+          "toggle_default_state": false,
+          "reset_on_focus_lost": false,
+          "focus_enabled": true,
+          "hover_enabled": true,
+          "focus_identifier": "jf_research_focus_global",
+          "toggle_on_button": "toggle.toggle_on",
+          "toggle_off_button": "toggle.toggle_off",
+          "property_bag": {
+            "#toggle_state": false
+          },
+          "bindings": [
+            {
+              "binding_name": "#toggle_state",
+              "binding_type": "none",
+              "binding_condition": "always"
+            },
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_name": "(not ((#form_text - '[JF:research:global]') = #form_text))",
+              "binding_name_override": "#toggle_state",
+              "binding_type": "none",
+              "binding_condition": "once"
+            }
+          ],
+          "button_mappings": [
+            {
+              "from_button_id": "button.menu_select",
+              "to_button_id": "button.menu_select",
+              "mapping_type": "pressed"
+            },
+            {
+              "from_button_id": "button.menu_ok",
+              "to_button_id": "button.menu_ok",
+              "mapping_type": "focused"
+            }
+          ],
+          "unchecked_control": "unchecked",
+          "checked_control": "checked",
+          "unchecked_hover_control": "unchecked_hover",
+          "checked_hover_control": "checked_hover",
+          "tts_name": "Global",
+          "controls": [
+            {
+              "unchecked": {
+                "type": "panel",
+                "size": [
+                  124,
+                  23
+                ],
+                "controls": [
+                  {
+                    "face": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_124x23_unchecked",
+                      "size": [
+                        124,
+                        23
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "caption": {
+                      "type": "label",
+                      "text": "Global",
+                      "size": [
+                        124,
+                        13
+                      ],
+                      "offset": [
+                        0,
+                        6
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.94,
+                        0.92,
+                        0.85
+                      ],
+                      "shadow": false,
+                      "text_alignment": "center"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "checked": {
+                "type": "panel",
+                "size": [
+                  124,
+                  23
+                ],
+                "controls": [
+                  {
+                    "face": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_124x23_checked",
+                      "size": [
+                        124,
+                        23
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "caption": {
+                      "type": "label",
+                      "text": "Global",
+                      "size": [
+                        124,
+                        13
+                      ],
+                      "offset": [
+                        0,
+                        6
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false,
+                      "text_alignment": "center"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "unchecked_hover": {
+                "type": "panel",
+                "size": [
+                  124,
+                  23
+                ],
+                "controls": [
+                  {
+                    "face": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_124x23_unchecked_hover",
+                      "size": [
+                        124,
+                        23
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "caption": {
+                      "type": "label",
+                      "text": "Global",
+                      "size": [
+                        124,
+                        13
+                      ],
+                      "offset": [
+                        0,
+                        6
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.94,
+                        0.92,
+                        0.85
+                      ],
+                      "shadow": false,
+                      "text_alignment": "center"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "checked_hover": {
+                "type": "panel",
+                "size": [
+                  124,
+                  23
+                ],
+                "controls": [
+                  {
+                    "face": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_124x23_checked_hover",
+                      "size": [
+                        124,
+                        23
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 1
+                    }
+                  },
+                  {
+                    "caption": {
+                      "type": "label",
+                      "text": "Global",
+                      "size": [
+                        124,
+                        13
+                      ],
+                      "offset": [
+                        0,
+                        6
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false,
+                      "text_alignment": "center"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "focus_change_left": "jf_research_focus_local",
+          "focus_change_right": "jf_research_focus_global"
         }
       },
       {
