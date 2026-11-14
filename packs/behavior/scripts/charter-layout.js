@@ -30,7 +30,10 @@ export const CHARTER_LAYOUT = {
     "mapRow8": 42,
     "mapRow9": 43,
     "mapRow10": 44,
-    "mapRow11": 45
+    "mapRow11": 45,
+    "sanctuary": 55,
+    "roads": 56,
+    "developmentStats": 60
   },
   "actions": {
     "efficiency": 14,
@@ -57,9 +60,12 @@ export const CHARTER_LAYOUT = {
     "mapZoomOut": 51,
     "mapCenter": 52,
     "mapDimension": 53,
-    "mapRefresh": 54
+    "mapRefresh": 54,
+    "sanctuary": 57,
+    "roads": 58,
+    "mapInteractive": 59
   },
-  "recordCount": 55,
+  "recordCount": 61,
   "tabs": [
     "Overview",
     "Research",

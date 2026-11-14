@@ -1,3 +1,29 @@
+# Interactive map addition — 0.0.32
+
+Select the map rectangle under Realm > Map to open the larger HUD overlay.
+Joystick or WASD pans. Moving the mouse/look camera also pans; actual
+mouse-drag input is not available in this implementation. Jump cycles the four
+zoom levels; Sneak (normally controller B/Back) exits and reopens Realm. The
+menu's pan/zoom/centre/dimension buttons remain as fallback controls.
+
+Only an active map session runs its input loop (every four game ticks); it draws
+a cached map at most once every eight ticks. It does not trigger terrain scans,
+censuses or production accounting. Lateral movement and jumping are temporarily
+disabled while their input is used by the map. Their exact prior permission
+values are saved on the player and restored on exit, damage, reconnect and
+world load. Damage/death/dimension changes close the map. A disconnect retains
+the recovery marker so the next spawn can restore permissions.
+
+The original HUD overlay uses the current biome glyph page and a JF_MAP| title
+payload. It is not a mouse-cursor screen. Native input, title binding, alignment,
+permission recovery and compatibility with other HUD packs need live testing.
+
+Disposable-world trial: select the map, move with each input device, cycle zoom,
+exit, reopen, take damage, reconnect and confirm normal movement returns in each
+case. Confirm existing disabled movement permissions remain disabled after exit.
+
+---
+
 # Shared biome Realm map — 0.0.31
 
 This version replaces the 0.0.29 surface map described below. Open Realm > Map

@@ -5,9 +5,9 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.31.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.32.mcaddon?raw=true)
 
-Version 0.0.31 replaces the terrain map with a shared biome map. Open Realm → Map and press Refresh to load it; initial charter opening no longer renders the map. Version 0.0.30 applies the supplied five Local research icons and Hearthstone / Resource Prospecting / Sanctuary / Prosperity / Road Networks tree layout. Sanctuary and Road Networks remain planned. Version 0.0.29 adds a shared explored-surface map under Realm, with settlement markers, pan, zoom, dimension selection and refresh. This is a coarse prototype; see [map details and in-game checks](docs/shared-realm-map.md). Version 0.0.28 gives Local research a connected card tree matching Global; select a Local card to research and hover for its live level, benefit, cost and status. Version 0.0.27 adds hover descriptions for all Local and Global research techs. Version 0.0.26 places Local research on the left and Global on the right. Version 0.0.25 refines buttons with aged-silver bevels, engraved wheat-gold corners, a selected gold inner edge, brighter hover faces and inset pressed states. It retains the D2-style silver-leaf and gold-wheat frame with charcoal surfaces, aged-silver trim, ivory text and wheat-gold accents.
+Version 0.0.32 adds a selectable interactive Realm map (joystick/WASD and mouse-look), offline production, permanent Development, functional Local research and logical roads with food-powered travel. See [economy and research details](docs/settlement-economy.md) and [interactive map controls](docs/shared-realm-map.md). Trial costs/timings are configurable; back up the world and test this build before Realm deployment. Version 0.0.31 replaces the terrain map with a shared biome map. Open Realm → Map and press Refresh to load it; initial charter opening no longer renders the map. Version 0.0.30 applies the supplied five Local research icons and Hearthstone / Resource Prospecting / Sanctuary / Prosperity / Road Networks tree layout. Sanctuary and Road Networks remain planned. Version 0.0.29 adds a shared explored-surface map under Realm, with settlement markers, pan, zoom, dimension selection and refresh. This is a coarse prototype; see [map details and in-game checks](docs/shared-realm-map.md). Version 0.0.28 gives Local research a connected card tree matching Global; select a Local card to research and hover for its live level, benefit, cost and status. Version 0.0.27 adds hover descriptions for all Local and Global research techs. Version 0.0.26 places Local research on the left and Global on the right. Version 0.0.25 refines buttons with aged-silver bevels, engraved wheat-gold corners, a selected gold inner edge, brighter hover faces and inset pressed states. It retains the D2-style silver-leaf and gold-wheat frame with charcoal surfaces, aged-silver trim, ivory text and wheat-gold accents.
 
 The header shows the village name above a smaller Village Charter subtitle.
 Overview keeps the framed portrait beside compact Owner, Village Tier, Biome
@@ -24,7 +24,7 @@ The on-demand server-controller trade-rank bridge is now included. **Disable the
 separate Trade Rank Probe pack** when using this build, because both define
 vanilla villagers. Charter interaction samples normal ranks from Novice (0.2)
 through Master (1.0); unknown reads remain labeled minimum estimates. MineScape
-is not required. In-game name: **Jagsby's Frontier 0.0.31**. The user confirmed
+is not required. In-game name: **Jagsby's Frontier 0.0.32**. The user confirmed
 the probe's Apprentice reading; this production integration and updated visual
 layout still need in-game verification.
 
@@ -70,7 +70,7 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.0.31.mcaddon`. Packaging is
+Build output is `dist/Jagsbys_Frontier_v0.0.32.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.0+ with `@minecraft/server` 2.9.0 and

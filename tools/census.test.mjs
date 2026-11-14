@@ -22,6 +22,14 @@ const realmSource=(await readFile(new URL('settlement-realm.js',scriptBase),'utf
 const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toString('base64')}`;
 const mapSource=await readFile(new URL('realm-map.js',scriptBase),'utf8');
 const mapModuleUrl=`data:text/javascript;base64,${Buffer.from(mapSource).toString('base64')}`;
+const configSource=await readFile(new URL('economy-config.js',scriptBase),'utf8');
+const configUrl=`data:text/javascript;base64,${Buffer.from(configSource).toString('base64')}`;
+const extraUrls={};
+for(const name of ['settlement-economy','settlement-effects','map-navigation']) {
+ const code=(await readFile(new URL(name+'.js',scriptBase),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl));
+ extraUrls[name]=`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
+}
+
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });
 
 test('native trading levels give linear 0.2 to 1.0 contributions', () => {
@@ -132,7 +140,9 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
     .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl))
     .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
     .replace('"./settlement-realm.js"',JSON.stringify(realmModuleUrl))
-    .replace('"./realm-map.js"',JSON.stringify(mapModuleUrl));
+    .replace('"./realm-map.js"',JSON.stringify(mapModuleUrl))
+    .replace('"./economy-config.js"',JSON.stringify(configUrl));
+  for(const [name,url] of Object.entries(extraUrls))main=main.replace(JSON.stringify('./'+name+'.js'),JSON.stringify(url));
   await import(`data:text/javascript;base64,${Buffer.from(main).toString('base64')}`);
   const location = { x:0, y:64, z:0 };
   const player = { id:'p', name:'Builder', sendMessage() {}, getComponent() {} };
@@ -159,7 +169,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,55);
+  assert.equal(forms[0].records.length,61);
   assert.equal(forms[0].records[24],'[JF:action:rename]');
   assert.equal(forms[0].records[25],'[JF:data:owner]Builder');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].owner.id,'p');

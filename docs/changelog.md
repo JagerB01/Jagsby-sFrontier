@@ -1,3 +1,13 @@
+# 0.0.32
+
+- Added a selectable interactive Realm map overlay. Joystick/WASD and mouse-look pan, Jump cycles zoom, and Sneak/Back returns to Realm. Previous movement permissions are restored on exit, damage, reconnect and world reload. Button controls remain available; mouse dragging is not implemented.
+- Replaced periodic placeholder production with lazy real-time accounting for all settlement records, including offline/unloaded ones. Implemented the requested category rates, +5% Prosperity, +0.1% per permanent Development point, fractional shared stock and lifetime output tracking.
+- Added threshold-by-threshold Development/route accounting, proportional admission at shared capacity, no banking of blocked production, and a resumable work budget. RP/biome/research changes settle old rates before applying new ones.
+- Activated Hearthstone I–II, verified Resource Prospecting, repeatable Sanctuary/Prosperity and Road Networks research in the existing five-node tree. Hostile damage is scaled through the stable before-hurt event; daily villager healing is bounded and avoids excess HP.
+- Added persistent unique roads with initiator ownership, distance-based game-tick construction, Trail/Road/Highway upgrades, directional offline Development rewards and bidirectional food-powered travel. Trial timing/food/research values live in economy-config.js. Teleport failure refunds food.
+- Development/progress/bonuses are shown in Overview and production details; Local hover descriptions show live levels, prices and requirements. The Road Networks card opens connection/research/travel management.
+- Build/static validation (141 pack files), all 53 JavaScript tests and all 3 Python tests passed. Native Bedrock input/HUD, damage, healing, travel and multiplayer persistence remain unverified and require the documented disposable-world trial.
+
 # 0.0.31
 
 - Replaced surface-block sampling with bounded biome-ID sampling and climate colors, including shared persistence and separate dimension data.

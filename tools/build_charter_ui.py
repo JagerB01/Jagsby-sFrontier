@@ -3,6 +3,7 @@ import copy
 import json
 from pathlib import Path
 from build_ui_art import build as build_ui_art, button_texture
+from build_map_hud import build as build_map_hud
 
 ROOT = Path(__file__).resolve().parents[1]
 RP = ROOT / "packs/resource"
@@ -22,6 +23,8 @@ DATA["mapInfo"] = 33
 DATA.update({"mapRow" + str(i): 34 + i for i in range(12)})
 ACTIONS.update({"map" + key: 46 + i for i, key in enumerate([
     "North", "South", "West", "East", "ZoomIn", "ZoomOut", "Center", "Dimension", "Refresh"])})
+DATA.update({"sanctuary": 55, "roads": 56, "developmentStats": 60})
+ACTIONS.update({"sanctuary": 57, "roads": 58, "mapInteractive": 59})
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -29,11 +32,11 @@ SILVER = (0.73, 0.73, 0.68)
 WHEAT = (0.82, 0.70, 0.44)
 CHARCOAL = (0.16, 0.17, 0.18)
 RESEARCH_HELP = {
-    "efficiency": ("Prosperity", "Raises this settlement's production bonus\nby 10% per level. Higher levels require\nglobal Settlement Development research."),
-    "hearth": ("Hearthstone", "Intended to grant Regeneration I inside\nsettlement boundaries. The prototype records\nthe upgrade; the healing effect is not active."),
+    "efficiency": ("Prosperity", "Each level adds 5% production.\nRepeatable; requires Resource Prospecting."),
+    "hearth": ("Hearthstone", "I: Regeneration I inside the settlement.\nII: villagers recover 2 HP once per game day."),
     "biome": ("Resource Prospecting", "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks."),
-    "sanctuary": ("Sanctuary", "Planned: upgradeable protection from hostile\nmobs inside the settlement.\nThis research is not yet available."),
-    "road_networks": ("Road Networks", "Planned: establish and upgrade fast-travel\nroutes between settlements.\nThis research is not yet available."),
+    "sanctuary": ("Sanctuary", "Repeatable hostile-mob protection.\nEach level removes 5% of remaining damage.\nLasts three minutes after leaving."),
+    "roads": ("Road Networks", "Establish and upgrade food-powered travel\nroutes. Connections progress from Trail\nto Road to Highway."),
     "settlement_capacity": ("Settlement Charters", "Planned: increase the number of settlements\nyour civilization can establish. Repeatable.\nGlobal purchases are not yet available."),
     "frontier_expansion": ("Frontier Mandate", "Planned: establish settlements in more\ndistant frontier zones. Five levels.\nGlobal purchases are not yet available."),
     "settlement_development": ("Stewardship", "Planned: unlock higher levels of local\nProduction Efficiency. Repeatable.\nGlobal purchases are not yet available."),
@@ -260,7 +263,7 @@ def research_tooltip(key, offset, live=False):
         details = collection_scope(template, [222, 54])
         details.update({"offset": [9, 28], "anchor_from": "top_left", "anchor_to": "top_left"})
         body = [control("live_details", details),
-                control("hint", label("Healing effect not active." if key == "hearth" else "Select this tech to research.",
+                control("hint", label("Select to manage connections." if key == "roads" else "Select this tech to research.",
                                       [222, 9], (9, 83), SILVER, 0.6))]
     else:
         body = [control("description", label(description, [222, 39], (9, 28), IVORY, 0.65))]
@@ -326,17 +329,18 @@ def local_tree():
     controls = [control("branch_" + str(i), image("frontier/solid", [w, h], (x, y), 2, [0.55, 0.35, 0.14]))
                 for i, (x, y, w, h) in enumerate(lines)]
     controls += [
-        research_node("hearth", "Hearthstone", "Settlement healing\nPrototype", [66, 0], "hearthstone", local=True),
+        research_node("hearth", "Hearthstone", "Regeneration / healing\nTwo levels", [66, 0], "hearthstone", local=True),
         research_node("biome", "Resource Prospecting", "Additional biome\nProduction", [0, 47], "resource_prospecting", local=True),
-        research_node("sanctuary", "Sanctuary", "Hostile protection\nPlanned", [132, 47], "sanctuary"),
-        research_node("efficiency", "Prosperity", "+10% production\nper level", [0, 94], "prosperity", local=True),
-        research_node("road_networks", "Road Networks", "Fast-travel routes\nPlanned", [132, 94], "road_networks"),
+        research_node("sanctuary", "Sanctuary", "Hostile protection\nRepeatable", [132, 47], "sanctuary", local=True),
+        research_node("efficiency", "Prosperity", "+5% production\nper level", [0, 94], "prosperity", local=True),
+        research_node("roads", "Road Networks", "Food-powered travel\nManage connections", [132, 94], "road_networks", local=True),
     ]
     return {"type": "panel", "size": [254, 131], "controls": controls}
 
 
 def build():
     build_ui_art()
+    build_map_hud()
     GENERATED_CONTROLS.clear()
     ui = {"namespace": "jagsby_frontier"}
     is_charter = "(not ((#title_text - 'JF_CHARTER|') = #title_text))"
@@ -471,6 +475,7 @@ def build():
         control("portrait", {**collection_scope("jf_tier_portrait", [90, 158]),
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [167, 0]}),
         identity,
+        overview_value("development", DATA["developmentStats"], [0, 114], [157, 40], scale=0.65),
     ]}
     GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left"})
     ui["jf_information_content"] = {"type": "panel", "size": [257, 158], "controls": [
@@ -489,6 +494,12 @@ def build():
         row = collection_scope(template, [240, 12])
         row.update({"offset": [15, i * 7], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5})
         map_controls.append(control("row_" + str(i), row))
+    interactive = action("map_interactive", ACTIONS["mapInteractive"], "Open interactive map", width=224, height=84)["map_interactive"]
+    for state in GENERATED_CONTROLS["jf_action_mapInteractive@common.button"]["controls"]:
+        panel = next(iter(state.values()))
+        panel["controls"] = [control("hint", label("Select to open interactive map", [220, 10], (2, 73), WHEAT, 0.6))] if next(iter(state)) != "default" else []
+    interactive.update({"offset": [15, 0], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 15})
+    map_controls.append(control("interactive", interactive))
     map_controls.append(overview_value("map_status", DATA["mapInfo"], [0, 86], [254, 10], scale=0.55))
     for row, entries in enumerate([
         [("West", "West"), ("North", "North"), ("South", "South"), ("East", "East")],
@@ -528,10 +539,10 @@ def build():
         "$scrolling_content": "jagsby_frontier.jf_picker_content", "$scroll_size": [4, "100% - 4px"],
         "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
     }))
-    picker.append(control("caption", label("Secondary\nBiome", [88, 32], (10, 65), WHEAT)))
+    picker.append(control("caption", label("Select", [88, 32], (10, 65), WHEAT)))
     ui["jf_picker"] = {"type": "panel", "size": [380, 240], "controls": picker}
     ui["jf_picker_content"] = {"type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"],
-        "controls": [heading("CHOOSE ONE BIOME"), control("choices", {
+        "controls": [heading("CHOOSE AN OPTION"), control("choices", {
             "type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"],
             "collection_name": "form_buttons", "factory": {"name": "buttons",
                 "control_ids": {"button": "jagsby_frontier.jf_choice"}},
@@ -587,7 +598,7 @@ def build():
         "namespace": "server_form", "main_screen_content/server_form_factory": {
             "control_ids": {"long_form": "@jagsby_frontier.jf_router",
                             "custom_form": "@jagsby_frontier.jf_modal_router"}}}, indent=2) + "\n")
-    layout = {"data": DATA, "actions": ACTIONS, "recordCount": 55, "tabs": TABS}
+    layout = {"data": DATA, "actions": ACTIONS, "recordCount": 61, "tabs": TABS}
     (ROOT / "packs/behavior/scripts/charter-layout.js").write_text(
         "// Generated by tools/build_charter_ui.py; indices match the JSON UI.\n"
         "export const CHARTER_LAYOUT = " + json.dumps(layout, indent=2) + ";\n")

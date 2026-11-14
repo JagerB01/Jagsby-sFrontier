@@ -206,3 +206,21 @@ upgrades. Sanctuary and Road Networks are informational planned nodes, with no
 purchase mapping. The two-level Hearthstone design, hostile protection and
 fast-travel mechanics require future gameplay work. This update does not add
 new prerequisites or change existing costs/effects.
+
+## Economy and functional Local tree (0.0.32)
+
+All five Local cards now have actions. Hearthstone is capped at II, Resource
+Prospecting at I, Sanctuary and Prosperity are repeatable, and Road Networks
+unlocks connection management. Hearthstone I unlocks Prospecting and Sanctuary;
+Prospecting unlocks Prosperity, and Sanctuary unlocks Road Networks. Existing
+research levels survive migration. Individual road connections, rather than the
+settlement's unlock level, progress through Trail/Road/Highway. The Road Networks
+menu also permits return travel over completed incoming routes even if the
+receiver has not researched its own Road Networks unlock.
+
+Development and next-point progress appear below Overview's identity panel.
+Production shows hourly rates, the Development/Prosperity multipliers, lifetime
+output and road Development income. Fractional stock remains visible and only
+whole items can be collected. The Road Networks menu reuses the existing themed
+picker shell. Global research remains informational; no capital assignment or
+physical road generation was added. See settlement-economy.md for full details.

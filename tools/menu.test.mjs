@@ -107,7 +107,7 @@ test('record bindings use collection-capable stack panels and explicitly indexed
 test('Compact village identity fits without scrolling and Rename remains in the header',async()=>{
   const ui=await loadUI();
   const fields=children(ui.jf_overview_content);
-  assert.deepEqual(Object.keys(fields),['portrait','identity']);
+  assert.deepEqual(Object.keys(fields),['portrait','identity','development']);
   assert.ok(fields.portrait.offset[0]>fields.identity.offset[0]);
   assert.equal(Object.keys(fields).some(key=>key.endsWith('_card')),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
@@ -186,7 +186,7 @@ test('Research subtabs isolate the correct native action factories',async()=>{
     assert.equal(JSON.stringify(tree[name]).includes('button.form_button_click'),false);
     assert.equal(tree[name].bindings,undefined);
   }
-  assert.deepEqual(actions(ui.jf_research_local_content).sort(),['biome','efficiency','hearth']);
+  assert.deepEqual(actions(ui.jf_research_local_content).sort(),['biome','efficiency','hearth','roads','sanctuary']);
 });
 
 test('approved transparent sprites appear in every state of their sidebar tabs',async()=>{
@@ -248,7 +248,7 @@ test('research explanations appear only in hover/pressed states and stay inside 
       entry=>entry.description?.text.includes('not yet available')));
   }
   const local=children(ui.jf_research_local_content);
-  for(const [key,index] of [['efficiency',14],['hearth',15],['biome',16]]) {
+  for(const [key,index] of [['efficiency',14],['hearth',15],['biome',16],['sanctuary',57],['roads',58]]) {
     const node=local[key];
     assert.deepEqual(node.size,[122,34]);
     assert.ok(node.offset[0]+node.size[0]<=254);
@@ -264,11 +264,7 @@ test('research explanations appear only in hover/pressed states and stay inside 
   assert.ok(local.hearth.offset[1]<local.biome.offset[1]);
   assert.ok(local.biome.offset[1]<local.efficiency.offset[1]);
   assert.equal(local.sanctuary.offset[1],local.biome.offset[1]);
-  assert.equal(local.road_networks.offset[1],local.efficiency.offset[1]);
-  for(const key of ['sanctuary','road_networks']) {
-    assert.deepEqual(local[key].button_mappings,[]);
-    check(local[key],104+local[key].offset[0],89+local[key].offset[1]);
-  }
+  assert.equal(local.roads.offset[1],local.efficiency.offset[1]);
   assert.ok(local.branch_0&&local.branch_1&&local.branch_2&&local.branch_3);
   assert.equal(JSON.stringify(ui.jf_rename).includes('research_tooltip'),false);
   assert.equal(JSON.stringify(ui['jf_choice@common.button']).includes('research_tooltip'),false);

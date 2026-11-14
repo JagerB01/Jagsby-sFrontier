@@ -120,7 +120,12 @@ export function createSharedMap(world) {
     if(player.dimension?.id===v.dimension)mark(player.location,'player');
     const current=villages[currentId];if(current?.dimension===v.dimension)mark(current.location,'current');
     const rows=Array.from({length:MAP_ROWS},(_,r)=>cells.slice(r*MAP_COLS,(r+1)*MAP_COLS).map(c=>String.fromCharCode(0xE100+MAP_COLORS.indexOf(c))).join(''));
-    return {cells,rows,info:`${v.dimension.replace('minecraft:','')} | ${v.x}, ${v.z} | ${step} blocks/tile${capacity?' | Storage full':''}`};
+    return {cells,rows,info:`${v.dimension.replace('minecraft:','')} | ${Math.round(v.x)}, ${Math.round(v.z)} | ${step} blocks/tile${capacity?' | Storage full':''}`};
   }
-  return {tick,flush,view,render,observe,read};
+  function adjustView(player,village,dx,dz,zoomDelta=0){
+    const v=view(player,village),step=MAP_ZOOMS[v.zoom];
+    v.x+=dx*step;v.z+=dz*step;v.zoom=Math.max(0,Math.min(3,v.zoom+zoomDelta));
+    views.set(`${player.id}|${village.id}`,v);return {...v};
+  }
+  return {tick,flush,view,render,observe,read,adjustView};
 }

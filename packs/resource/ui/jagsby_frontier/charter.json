@@ -2658,6 +2658,31 @@
             }
           ]
         }
+      },
+      {
+        "development": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            157,
+            40
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_data_developmentStats": {
+                "collection_index": 60
+              }
+            }
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            0,
+            114
+          ],
+          "clips_children": true
+        }
       }
     ]
   },
@@ -3908,7 +3933,7 @@
       },
       {
         "sanctuary": {
-          "type": "button",
+          "type": "panel",
           "size": [
             122,
             34
@@ -3920,537 +3945,20 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "layer": 5,
-          "focus_enabled": true,
-          "hover_enabled": true,
-          "button_mappings": [],
-          "default_control": "default",
-          "hover_control": "hover",
-          "pressed_control": "pressed",
           "controls": [
             {
-              "default": {
-                "type": "panel",
+              "sanctuary_buy": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   122,
-                  34
+                  37
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/button_122x34_default",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/sanctuary",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Sanctuary",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        0.94,
-                        0.92,
-                        0.85
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Hostile protection\nPlanned",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "hover": {
-                "type": "panel",
-                "size": [
-                  122,
-                  34
-                ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/button_122x34_hover",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/sanctuary",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Sanctuary",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        0.94,
-                        0.92,
-                        0.85
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Hostile protection\nPlanned",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "research_tooltip": {
-                      "type": "panel",
-                      "size": [
-                        240,
-                        70
-                      ],
-                      "offset": [
-                        -125,
-                        -74
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 100,
-                      "controls": [
-                        {
-                          "frame": {
-                            "type": "image",
-                            "texture": "textures/ui/frontier/button_240x70_default",
-                            "size": [
-                              240,
-                              70
-                            ],
-                            "offset": [
-                              0,
-                              0
-                            ],
-                            "keep_ratio": false,
-                            "bilinear": false,
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 0
-                          }
-                        },
-                        {
-                          "title": {
-                            "type": "label",
-                            "text": "Sanctuary",
-                            "size": [
-                              222,
-                              12
-                            ],
-                            "offset": [
-                              9,
-                              7
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 8,
-                            "font_type": "unicode",
-                            "font_size": "normal",
-                            "font_scale_factor": 0.8,
-                            "color": [
-                              0.82,
-                              0.7,
-                              0.44
-                            ],
-                            "shadow": false
-                          }
-                        },
-                        {
-                          "rule": {
-                            "type": "image",
-                            "texture": "textures/ui/frontier/solid",
-                            "size": [
-                              222,
-                              1
-                            ],
-                            "offset": [
-                              9,
-                              23
-                            ],
-                            "keep_ratio": false,
-                            "bilinear": false,
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 2,
-                            "color": [
-                              0.73,
-                              0.73,
-                              0.68
-                            ]
-                          }
-                        },
-                        {
-                          "description": {
-                            "type": "label",
-                            "text": "Planned: upgradeable protection from hostile\nmobs inside the settlement.\nThis research is not yet available.",
-                            "size": [
-                              222,
-                              39
-                            ],
-                            "offset": [
-                              9,
-                              28
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 8,
-                            "font_type": "unicode",
-                            "font_size": "normal",
-                            "font_scale_factor": 0.65,
-                            "color": [
-                              0.94,
-                              0.92,
-                              0.85
-                            ],
-                            "shadow": false
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "pressed": {
-                "type": "panel",
-                "size": [
-                  122,
-                  34
-                ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/button_122x34_pressed",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/sanctuary",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Sanctuary",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        0.94,
-                        0.92,
-                        0.85
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Hostile protection\nPlanned",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "research_tooltip": {
-                      "type": "panel",
-                      "size": [
-                        240,
-                        70
-                      ],
-                      "offset": [
-                        -125,
-                        -74
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 100,
-                      "controls": [
-                        {
-                          "frame": {
-                            "type": "image",
-                            "texture": "textures/ui/frontier/button_240x70_default",
-                            "size": [
-                              240,
-                              70
-                            ],
-                            "offset": [
-                              0,
-                              0
-                            ],
-                            "keep_ratio": false,
-                            "bilinear": false,
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 0
-                          }
-                        },
-                        {
-                          "title": {
-                            "type": "label",
-                            "text": "Sanctuary",
-                            "size": [
-                              222,
-                              12
-                            ],
-                            "offset": [
-                              9,
-                              7
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 8,
-                            "font_type": "unicode",
-                            "font_size": "normal",
-                            "font_scale_factor": 0.8,
-                            "color": [
-                              0.82,
-                              0.7,
-                              0.44
-                            ],
-                            "shadow": false
-                          }
-                        },
-                        {
-                          "rule": {
-                            "type": "image",
-                            "texture": "textures/ui/frontier/solid",
-                            "size": [
-                              222,
-                              1
-                            ],
-                            "offset": [
-                              9,
-                              23
-                            ],
-                            "keep_ratio": false,
-                            "bilinear": false,
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 2,
-                            "color": [
-                              0.73,
-                              0.73,
-                              0.68
-                            ]
-                          }
-                        },
-                        {
-                          "description": {
-                            "type": "label",
-                            "text": "Planned: upgradeable protection from hostile\nmobs inside the settlement.\nThis research is not yet available.",
-                            "size": [
-                              222,
-                              39
-                            ],
-                            "offset": [
-                              9,
-                              28
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 8,
-                            "font_type": "unicode",
-                            "font_size": "normal",
-                            "font_scale_factor": 0.65,
-                            "color": [
-                              0.94,
-                              0.92,
-                              0.85
-                            ],
-                            "shadow": false
-                          }
-                        }
-                      ]
+                    "record@jagsby_frontier.jf_action_sanctuary": {
+                      "collection_index": 57
                     }
                   }
                 ]
@@ -4496,8 +4004,8 @@
         }
       },
       {
-        "road_networks": {
-          "type": "button",
+        "roads": {
+          "type": "panel",
           "size": [
             122,
             34
@@ -4509,537 +4017,20 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "layer": 5,
-          "focus_enabled": true,
-          "hover_enabled": true,
-          "button_mappings": [],
-          "default_control": "default",
-          "hover_control": "hover",
-          "pressed_control": "pressed",
           "controls": [
             {
-              "default": {
-                "type": "panel",
+              "roads_buy": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   122,
-                  34
+                  37
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/button_122x34_default",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/road_networks",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Road Networks",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        0.94,
-                        0.92,
-                        0.85
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Fast-travel routes\nPlanned",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "hover": {
-                "type": "panel",
-                "size": [
-                  122,
-                  34
-                ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/button_122x34_hover",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/road_networks",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Road Networks",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        0.94,
-                        0.92,
-                        0.85
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Fast-travel routes\nPlanned",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "research_tooltip": {
-                      "type": "panel",
-                      "size": [
-                        240,
-                        70
-                      ],
-                      "offset": [
-                        -125,
-                        -74
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 100,
-                      "controls": [
-                        {
-                          "frame": {
-                            "type": "image",
-                            "texture": "textures/ui/frontier/button_240x70_default",
-                            "size": [
-                              240,
-                              70
-                            ],
-                            "offset": [
-                              0,
-                              0
-                            ],
-                            "keep_ratio": false,
-                            "bilinear": false,
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 0
-                          }
-                        },
-                        {
-                          "title": {
-                            "type": "label",
-                            "text": "Road Networks",
-                            "size": [
-                              222,
-                              12
-                            ],
-                            "offset": [
-                              9,
-                              7
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 8,
-                            "font_type": "unicode",
-                            "font_size": "normal",
-                            "font_scale_factor": 0.8,
-                            "color": [
-                              0.82,
-                              0.7,
-                              0.44
-                            ],
-                            "shadow": false
-                          }
-                        },
-                        {
-                          "rule": {
-                            "type": "image",
-                            "texture": "textures/ui/frontier/solid",
-                            "size": [
-                              222,
-                              1
-                            ],
-                            "offset": [
-                              9,
-                              23
-                            ],
-                            "keep_ratio": false,
-                            "bilinear": false,
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 2,
-                            "color": [
-                              0.73,
-                              0.73,
-                              0.68
-                            ]
-                          }
-                        },
-                        {
-                          "description": {
-                            "type": "label",
-                            "text": "Planned: establish and upgrade fast-travel\nroutes between settlements.\nThis research is not yet available.",
-                            "size": [
-                              222,
-                              39
-                            ],
-                            "offset": [
-                              9,
-                              28
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 8,
-                            "font_type": "unicode",
-                            "font_size": "normal",
-                            "font_scale_factor": 0.65,
-                            "color": [
-                              0.94,
-                              0.92,
-                              0.85
-                            ],
-                            "shadow": false
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "pressed": {
-                "type": "panel",
-                "size": [
-                  122,
-                  34
-                ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/button_122x34_pressed",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/road_networks",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Road Networks",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        0.94,
-                        0.92,
-                        0.85
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Fast-travel routes\nPlanned",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "research_tooltip": {
-                      "type": "panel",
-                      "size": [
-                        240,
-                        70
-                      ],
-                      "offset": [
-                        -125,
-                        -74
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 100,
-                      "controls": [
-                        {
-                          "frame": {
-                            "type": "image",
-                            "texture": "textures/ui/frontier/button_240x70_default",
-                            "size": [
-                              240,
-                              70
-                            ],
-                            "offset": [
-                              0,
-                              0
-                            ],
-                            "keep_ratio": false,
-                            "bilinear": false,
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 0
-                          }
-                        },
-                        {
-                          "title": {
-                            "type": "label",
-                            "text": "Road Networks",
-                            "size": [
-                              222,
-                              12
-                            ],
-                            "offset": [
-                              9,
-                              7
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 8,
-                            "font_type": "unicode",
-                            "font_size": "normal",
-                            "font_scale_factor": 0.8,
-                            "color": [
-                              0.82,
-                              0.7,
-                              0.44
-                            ],
-                            "shadow": false
-                          }
-                        },
-                        {
-                          "rule": {
-                            "type": "image",
-                            "texture": "textures/ui/frontier/solid",
-                            "size": [
-                              222,
-                              1
-                            ],
-                            "offset": [
-                              9,
-                              23
-                            ],
-                            "keep_ratio": false,
-                            "bilinear": false,
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 2,
-                            "color": [
-                              0.73,
-                              0.73,
-                              0.68
-                            ]
-                          }
-                        },
-                        {
-                          "description": {
-                            "type": "label",
-                            "text": "Planned: establish and upgrade fast-travel\nroutes between settlements.\nThis research is not yet available.",
-                            "size": [
-                              222,
-                              39
-                            ],
-                            "offset": [
-                              9,
-                              28
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left",
-                            "layer": 8,
-                            "font_type": "unicode",
-                            "font_size": "normal",
-                            "font_scale_factor": 0.65,
-                            "color": [
-                              0.94,
-                              0.92,
-                              0.85
-                            ],
-                            "shadow": false
-                          }
-                        }
-                      ]
+                    "record@jagsby_frontier.jf_action_roads": {
+                      "collection_index": 58
                     }
                   }
                 ]
@@ -8517,6 +7508,31 @@
         }
       },
       {
+        "interactive": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            224,
+            87
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_action_mapInteractive": {
+                "collection_index": 59
+              }
+            }
+          ],
+          "offset": [
+            15,
+            0
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 15
+        }
+      },
+      {
         "map_status": {
           "type": "stack_panel",
           "orientation": "vertical",
@@ -10153,7 +9169,7 @@
       {
         "caption": {
           "type": "label",
-          "text": "Secondary\nBiome",
+          "text": "Select",
           "size": [
             88,
             32
@@ -10187,7 +9203,7 @@
     ],
     "controls": [
       {
-        "heading_CHOOSE_ONE_BIOME": {
+        "heading_CHOOSE_AN_OPTION": {
           "type": "panel",
           "size": [
             254,
@@ -10221,7 +9237,7 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Choose One Biome",
+                "text": "Choose An Option",
                 "size": [
                   244,
                   12
@@ -12077,7 +11093,7 @@
             {
               "note": {
                 "type": "label",
-                "text": "+10% production\nper level",
+                "text": "+5% production\nper level",
                 "size": [
                   78,
                   13
@@ -12178,7 +11194,7 @@
             {
               "note": {
                 "type": "label",
-                "text": "+10% production\nper level",
+                "text": "+5% production\nper level",
                 "size": [
                   78,
                   13
@@ -12416,7 +11432,7 @@
             {
               "note": {
                 "type": "label",
-                "text": "+10% production\nper level",
+                "text": "+5% production\nper level",
                 "size": [
                   78,
                   13
@@ -12744,7 +11760,7 @@
             {
               "note": {
                 "type": "label",
-                "text": "Settlement healing\nPrototype",
+                "text": "Regeneration / healing\nTwo levels",
                 "size": [
                   78,
                   13
@@ -12845,7 +11861,7 @@
             {
               "note": {
                 "type": "label",
-                "text": "Settlement healing\nPrototype",
+                "text": "Regeneration / healing\nTwo levels",
                 "size": [
                   78,
                   13
@@ -12979,7 +11995,7 @@
                   {
                     "hint": {
                       "type": "label",
-                      "text": "Healing effect not active.",
+                      "text": "Select this tech to research.",
                       "size": [
                         222,
                         9
@@ -13083,7 +12099,7 @@
             {
               "note": {
                 "type": "label",
-                "text": "Settlement healing\nPrototype",
+                "text": "Regeneration / healing\nTwo levels",
                 "size": [
                   78,
                   13
@@ -13217,7 +12233,7 @@
                   {
                     "hint": {
                       "type": "label",
-                      "text": "Healing effect not active.",
+                      "text": "Select this tech to research.",
                       "size": [
                         222,
                         9
@@ -13885,6 +12901,1340 @@
                     "hint": {
                       "type": "label",
                       "text": "Select this tech to research.",
+                      "size": [
+                        222,
+                        9
+                      ],
+                      "offset": [
+                        9,
+                        83
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.6,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_data_sanctuary": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      222,
+      54
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.65,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:sanctuary]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:sanctuary]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_action_sanctuary@common.button": {
+    "size": [
+      122,
+      34
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:sanctuary]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:sanctuary]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "face": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_122x34_default",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/sanctuary",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            },
+            {
+              "name": {
+                "type": "label",
+                "text": "Sanctuary",
+                "size": [
+                  78,
+                  11
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.72,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "note": {
+                "type": "label",
+                "text": "Hostile protection\nRepeatable",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  18
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.55,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "face": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_122x34_hover",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/sanctuary",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            },
+            {
+              "name": {
+                "type": "label",
+                "text": "Sanctuary",
+                "size": [
+                  78,
+                  11
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.72,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "note": {
+                "type": "label",
+                "text": "Hostile protection\nRepeatable",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  18
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.55,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "research_tooltip": {
+                "type": "panel",
+                "size": [
+                  240,
+                  96
+                ],
+                "offset": [
+                  -125,
+                  -100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 100,
+                "controls": [
+                  {
+                    "frame": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "size": [
+                        240,
+                        96
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 0
+                    }
+                  },
+                  {
+                    "title": {
+                      "type": "label",
+                      "text": "Sanctuary",
+                      "size": [
+                        222,
+                        12
+                      ],
+                      "offset": [
+                        9,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "rule": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/solid",
+                      "size": [
+                        222,
+                        1
+                      ],
+                      "offset": [
+                        9,
+                        23
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 2,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ]
+                    }
+                  },
+                  {
+                    "live_details": {
+                      "type": "stack_panel",
+                      "orientation": "vertical",
+                      "size": [
+                        222,
+                        54
+                      ],
+                      "collection_name": "form_buttons",
+                      "controls": [
+                        {
+                          "record@jagsby_frontier.jf_data_sanctuary": {
+                            "collection_index": 55
+                          }
+                        }
+                      ],
+                      "offset": [
+                        9,
+                        28
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left"
+                    }
+                  },
+                  {
+                    "hint": {
+                      "type": "label",
+                      "text": "Select this tech to research.",
+                      "size": [
+                        222,
+                        9
+                      ],
+                      "offset": [
+                        9,
+                        83
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.6,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "face": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_122x34_pressed",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/sanctuary",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            },
+            {
+              "name": {
+                "type": "label",
+                "text": "Sanctuary",
+                "size": [
+                  78,
+                  11
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.72,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "note": {
+                "type": "label",
+                "text": "Hostile protection\nRepeatable",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  18
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.55,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "research_tooltip": {
+                "type": "panel",
+                "size": [
+                  240,
+                  96
+                ],
+                "offset": [
+                  -125,
+                  -100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 100,
+                "controls": [
+                  {
+                    "frame": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "size": [
+                        240,
+                        96
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 0
+                    }
+                  },
+                  {
+                    "title": {
+                      "type": "label",
+                      "text": "Sanctuary",
+                      "size": [
+                        222,
+                        12
+                      ],
+                      "offset": [
+                        9,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "rule": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/solid",
+                      "size": [
+                        222,
+                        1
+                      ],
+                      "offset": [
+                        9,
+                        23
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 2,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ]
+                    }
+                  },
+                  {
+                    "live_details": {
+                      "type": "stack_panel",
+                      "orientation": "vertical",
+                      "size": [
+                        222,
+                        54
+                      ],
+                      "collection_name": "form_buttons",
+                      "controls": [
+                        {
+                          "record@jagsby_frontier.jf_data_sanctuary": {
+                            "collection_index": 55
+                          }
+                        }
+                      ],
+                      "offset": [
+                        9,
+                        28
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left"
+                    }
+                  },
+                  {
+                    "hint": {
+                      "type": "label",
+                      "text": "Select this tech to research.",
+                      "size": [
+                        222,
+                        9
+                      ],
+                      "offset": [
+                        9,
+                        83
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.6,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_data_roads": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      222,
+      54
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.65,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:roads]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:roads]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_action_roads@common.button": {
+    "size": [
+      122,
+      34
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:roads]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:roads]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "face": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_122x34_default",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/road_networks",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            },
+            {
+              "name": {
+                "type": "label",
+                "text": "Road Networks",
+                "size": [
+                  78,
+                  11
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.72,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "note": {
+                "type": "label",
+                "text": "Food-powered travel\nManage connections",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  18
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.55,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "face": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_122x34_hover",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/road_networks",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            },
+            {
+              "name": {
+                "type": "label",
+                "text": "Road Networks",
+                "size": [
+                  78,
+                  11
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.72,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "note": {
+                "type": "label",
+                "text": "Food-powered travel\nManage connections",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  18
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.55,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "research_tooltip": {
+                "type": "panel",
+                "size": [
+                  240,
+                  96
+                ],
+                "offset": [
+                  -125,
+                  -100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 100,
+                "controls": [
+                  {
+                    "frame": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "size": [
+                        240,
+                        96
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 0
+                    }
+                  },
+                  {
+                    "title": {
+                      "type": "label",
+                      "text": "Road Networks",
+                      "size": [
+                        222,
+                        12
+                      ],
+                      "offset": [
+                        9,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "rule": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/solid",
+                      "size": [
+                        222,
+                        1
+                      ],
+                      "offset": [
+                        9,
+                        23
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 2,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ]
+                    }
+                  },
+                  {
+                    "live_details": {
+                      "type": "stack_panel",
+                      "orientation": "vertical",
+                      "size": [
+                        222,
+                        54
+                      ],
+                      "collection_name": "form_buttons",
+                      "controls": [
+                        {
+                          "record@jagsby_frontier.jf_data_roads": {
+                            "collection_index": 56
+                          }
+                        }
+                      ],
+                      "offset": [
+                        9,
+                        28
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left"
+                    }
+                  },
+                  {
+                    "hint": {
+                      "type": "label",
+                      "text": "Select to manage connections.",
+                      "size": [
+                        222,
+                        9
+                      ],
+                      "offset": [
+                        9,
+                        83
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.6,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "face": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_122x34_pressed",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/road_networks",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            },
+            {
+              "name": {
+                "type": "label",
+                "text": "Road Networks",
+                "size": [
+                  78,
+                  11
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.72,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "note": {
+                "type": "label",
+                "text": "Food-powered travel\nManage connections",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  18
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.55,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "research_tooltip": {
+                "type": "panel",
+                "size": [
+                  240,
+                  96
+                ],
+                "offset": [
+                  -125,
+                  -100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 100,
+                "controls": [
+                  {
+                    "frame": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "size": [
+                        240,
+                        96
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 0
+                    }
+                  },
+                  {
+                    "title": {
+                      "type": "label",
+                      "text": "Road Networks",
+                      "size": [
+                        222,
+                        12
+                      ],
+                      "offset": [
+                        9,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "rule": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/solid",
+                      "size": [
+                        222,
+                        1
+                      ],
+                      "offset": [
+                        9,
+                        23
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 2,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ]
+                    }
+                  },
+                  {
+                    "live_details": {
+                      "type": "stack_panel",
+                      "orientation": "vertical",
+                      "size": [
+                        222,
+                        54
+                      ],
+                      "collection_name": "form_buttons",
+                      "controls": [
+                        {
+                          "record@jagsby_frontier.jf_data_roads": {
+                            "collection_index": 56
+                          }
+                        }
+                      ],
+                      "offset": [
+                        9,
+                        28
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left"
+                    }
+                  },
+                  {
+                    "hint": {
+                      "type": "label",
+                      "text": "Select to manage connections.",
                       "size": [
                         222,
                         9
@@ -14619,6 +14969,52 @@
       }
     ]
   },
+  "jf_data_developmentStats": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      157,
+      40
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.65,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:developmentStats]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:developmentStats]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
   "jf_data_mapRow0": {
     "type": "label",
     "text": "#text",
@@ -15156,6 +15552,134 @@
         "binding_type": "view",
         "source_property_name": "(not ((#record_text - '[JF:data:mapRow11]') = #record_text))",
         "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_action_mapInteractive@common.button": {
+    "size": [
+      224,
+      84
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:mapInteractive]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:mapInteractive]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            224,
+            84
+          ],
+          "controls": []
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            224,
+            84
+          ],
+          "controls": [
+            {
+              "hint": {
+                "type": "label",
+                "text": "Select to open interactive map",
+                "size": [
+                  220,
+                  10
+                ],
+                "offset": [
+                  2,
+                  73
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.6,
+                "color": [
+                  0.82,
+                  0.7,
+                  0.44
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            224,
+            84
+          ],
+          "controls": [
+            {
+              "hint": {
+                "type": "label",
+                "text": "Select to open interactive map",
+                "size": [
+                  220,
+                  10
+                ],
+                "offset": [
+                  2,
+                  73
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.6,
+                "color": [
+                  0.82,
+                  0.7,
+                  0.44
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
       }
     ]
   },
