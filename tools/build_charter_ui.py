@@ -2,7 +2,7 @@
 import copy
 import json
 from pathlib import Path
-from build_ui_art import build as build_ui_art
+from build_ui_art import build as build_ui_art, button_texture
 
 ROOT = Path(__file__).resolve().parents[1]
 RP = ROOT / "packs/resource"
@@ -123,9 +123,9 @@ def action(name, index, caption, width=254, height=21):
     states = []
     for state in ["default", "hover", "pressed"]:
         states.append(control(state, {"type": "panel", "size": [width, height], "controls": [
-            control("gold", image("frontier/palette_button", [width, height], color={"default": [0.86, 0.86, 0.86], "hover": [1, 1, 1], "pressed": [0.65, 0.65, 0.65]}[state])),
+            control("gold", image(button_texture(width, height, state), [width, height])),
             control("wood", {"type": "panel", "size": [width - 2, height - 2]}),
-            control("caption", label(caption, [width - 12, 12], (6, 4), WHEAT)),
+            control("caption", label(caption, [width - 12, 12], (6, 5 if state == "pressed" else 4), IVORY)),
         ]}))
     bindings = [
         {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
@@ -159,10 +159,10 @@ def tab(name, index):
     for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:
         selected = state.startswith("checked")
         states.append(control(state, {"type": "panel", "size": [80, 28], "controls": [
-            control("face", image("frontier/palette_button", [80, 28], layer=1, color=([1, 0.93, 0.76] if selected else ([0.96, 0.96, 0.96] if "hover" in state else [0.70, 0.70, 0.70])))),
+            control("face", image(button_texture(80, 28, state), [80, 28], layer=1)),
             *([control("icon", image(f"frontier/icons/{lower}", [20, 20], (6, 4), 4))]
               if lower in ["overview", "research", "production", "realm", "information"] else []),
-            control("caption", label(name, [49, 12], (27, 9), IVORY, 0.8)),
+            control("caption", label(name, [49, 12], (27, 9), WHEAT if selected else IVORY, 0.8)),
         ]}))
     marker = f"[JF:tab:{lower}]"
     return control("jf_tab_" + lower, {
@@ -214,9 +214,10 @@ def research_tab(scope, index, section="research", caption_text=None):
         if "binding_name" in binding:
             binding["binding_name"] = binding["binding_name"].replace("[JF:tab:research]", f"[JF:{section}:{scope}]")
     for state in toggle["controls"]:
+        state_name = next(iter(state))
         panel = next(iter(state.values()))
         panel["size"] = [124, 23]
-        panel["controls"][0]["face"]["size"] = [124, 23]
+        panel["controls"][0]["face"] = image(button_texture(124, 23, state_name), [124, 23], layer=1)
         panel["controls"] = [entry for entry in panel["controls"] if "icon" not in entry]
         caption = next(entry["caption"] for entry in panel["controls"] if "caption" in entry)
         caption.update({"text": caption_text or scope.title(), "size": [124, 13], "offset": [0, 6], "text_alignment": "center"})
@@ -237,7 +238,7 @@ def research_node(name, title, subtitle, position, sprite):
     states = []
     for state in ["default", "hover", "pressed"]:
         states.append(control(state, {"type": "panel", "size": [122, 34], "controls": [
-            control("face", image("frontier/palette_button", [122, 34], color={"default": [0.86, 0.86, 0.86], "hover": [1, 1, 1], "pressed": [0.65, 0.65, 0.65]}[state])),
+            control("face", image(button_texture(122, 34, state), [122, 34])),
             control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
             control("name", label(title, [78, 11], (39, 4), color=IVORY, scale=0.72)),
             control("note", label(subtitle, [78, 13], (39, 18), color=SILVER, scale=0.55)),
@@ -460,7 +461,7 @@ def build():
     for state in picker_template["controls"]:
         panel = next(iter(state.values()))
         panel["size"] = [254, 21]
-        panel["controls"][0]["gold"]["size"] = [254, 21]
+        panel["controls"][0]["gold"] = image(button_texture(254, 21, next(iter(state))), [254, 21])
         panel["controls"][1]["wood"]["size"] = [252, 19]
         panel["controls"][2]["caption"].update({"text": "#text", "size": [242, 12], "bindings": collection_bindings()})
     ui["jf_choice@common.button"] = picker_template
@@ -479,7 +480,7 @@ def build():
     for state in submit["controls"]:
         panel = next(iter(state.values()))
         panel["size"] = [254, 21]
-        panel["controls"][0]["gold"]["size"] = [254, 21]
+        panel["controls"][0]["gold"] = image(button_texture(254, 21, next(iter(state))), [254, 21])
         panel["controls"][1]["wood"]["size"] = [252, 19]
         panel["controls"][2]["caption"]["size"] = [242, 12]
     submit.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [104, 151]})

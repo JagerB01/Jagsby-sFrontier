@@ -1,3 +1,11 @@
+# 0.0.25
+
+- Refined button faces with shallow aged-silver bevels, charcoal grain, subtle top lighting and engraved wheat-gold corner strokes.
+- Selected tabs have a gold inner edge and wheat-gold captions; hover brightens silver, while pressed actions use a recessed bevel and a lowered caption.
+- Generated textures at each control's actual dimensions to keep borders crisp across navigation, subtabs, research, short actions, biome choices and rename submission.
+- Kept existing button sizes, icons, layout and action bindings.
+- Build/static validation (100 pack files), all 29 JavaScript tests and all 3 Python tests passed. Native Minecraft rendering remains unverified.
+
 # 0.0.24
 
 - Replaced brown/crimson menu surfaces with procedural textured charcoal, aged-silver trim, ivory body text and wheat-gold headings and selection accents.

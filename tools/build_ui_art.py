@@ -63,6 +63,37 @@ def icon(c, name, x, y):
             c.rect(x, y + 7, 17, 1, dark)
 
 
+def button_texture(width, height, state):
+    """Draw at the actual control size to keep bevels sharp on small buttons."""
+    selected = state.startswith("checked")
+    hover = "hover" in state
+    pressed = state == "pressed"
+    name = f"button_{width}x{height}_{state}"
+    c = Canvas(width, height, (0, 0, 0, 0))
+    light = (218, 215, 198) if hover else (171, 172, 161)
+    shadow = (57, 60, 59)
+    c.bevel(1, 1, width - 2, height - 2, (113, 116, 109),
+            shadow if pressed else light, light if pressed else shadow)
+    edge = (203, 174, 110) if selected else (83, 87, 83)
+    c.rect(2, 2, width - 4, height - 4, edge)
+    base = 29 if pressed else (51 if hover else (43 if selected else 36))
+    # A shallow curved highlight and fine grain suggest worn leather/metal,
+    # without bright patterns behind the caption.
+    for y in range(3, height - 3):
+        shade = base + int(7 * (1 - (y - 3) / max(1, height - 7)))
+        c.grain(3, y, width - 6, 1, (shade, shade + 2, shade + 2), amount=2)
+    if not pressed:
+        c.rect(4, 3, width - 8, 1, (88, 91, 86) if hover else (65, 69, 66))
+    # Small engraved corner strokes leave the face and icon well quiet.
+    gold = (225, 199, 138) if hover or selected else (156, 139, 99)
+    for x, direction in [(4, 1), (width - 5, -1)]:
+        for y, vertical in [(4, 1), (height - 5, -1)]:
+            c.rect(min(x, x + direction * 3), y, 4, 1, gold)
+            c.rect(x, min(y, y + vertical * 2), 1, 3, gold)
+    c.save(name + ".png")
+    return "frontier/" + name
+
+
 def build():
     DEST.mkdir(parents=True, exist_ok=True)
     Canvas(1, 1, (255, 255, 255)).save("solid.png")
