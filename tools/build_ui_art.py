@@ -66,39 +66,58 @@ def icon(c, name, x, y):
 def build():
     DEST.mkdir(parents=True, exist_ok=True)
     Canvas(1, 1, (255, 255, 255)).save("solid.png")
-    # Warm dark leather/ink surfaces. The original silver-and-wheat ornament
+    # Palette materials are generated at their native UI sizes so all screens
+    # share neutral charcoal surfaces, aged silver trim and wheat highlights.
+    for name, width, height, framed in [
+        ("palette_leather", 364, 189, False),
+        ("palette_panel", 294, 210, True),
+        ("palette_button", 176, 56, True),
+    ]:
+        c = Canvas(width, height, (0, 0, 0, 0))
+        inset = 2 if framed else 0
+        c.grain(inset, inset, width - inset * 2, height - inset * 2, (39, 41, 42), amount=3)
+        if framed:
+            c.bevel(1, 1, width - 2, height - 2, (139, 139, 129), (192, 190, 173), (76, 78, 76))
+            c.grain(3, 3, width - 6, height - 6, (39, 41, 42), amount=3)
+            c.rect(5, 4, width - 10, 1, (91, 92, 85))
+            for x in (5, width - 8):
+                for y in (5, height - 8):
+                    c.rect(x, y, 3, 3, (193, 163, 98))
+                    c.rect(x, y, 1, 1, (231, 213, 164))
+        c.save(name + ".png")
+    # Charcoal/ink surfaces. The original silver-and-wheat ornament
     # is a separate transparent asset so its silhouette is not boxed in.
     c = Canvas(380, 240, (0, 0, 0, 0))
-    c.rect(8, 30, 364, 189, (67, 48, 31))
-    c.rect(13, 31, 354, 25, (101, 47, 31))
-    c.rect(17, 55, 346, 1, (184, 146, 78))
+    c.rect(18, 30, 344, 197, (35, 37, 38))
+    c.rect(18, 31, 344, 25, (47, 49, 49))
+    c.rect(18, 55, 344, 1, (184, 146, 78))
     c.rect(103, 60, 1, 159, (150, 144, 121))
-    c.rect(108, 59, 260, 161, (54, 41, 28))
+    c.rect(104, 59, 258, 161, (30, 32, 33))
     c.save("charter_frame.png")
     for name in ["overview", "research", "production", "realm", "information"]:
         for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:
             selected = state.startswith("checked")
             hover = "hover" in state
-            c = Canvas(92, 35, (67, 48, 31))
+            c = Canvas(92, 35, (35, 37, 38))
             rim = (215, 178, 89) if selected else (143, 143, 132)
-            face = (143, 73, 44) if hover else ((115, 50, 32) if selected else (83, 43, 32))
+            face = (70, 72, 69) if hover else ((57, 59, 56) if selected else (39, 41, 42))
             # Two-pixel clipped corners, single rim, almost flat face.
             c.rect(2, 1, 88, 33, rim)
             c.rect(1, 3, 90, 29, rim)
             c.rect(3, 2, 86, 31, face)
             c.rect(2, 4, 88, 27, face)
-            c.rect(4, 3, 84, 1, (155, 71, 56) if hover else (124, 53, 48))
+            c.rect(4, 3, 84, 1, (153, 151, 137) if hover else (105, 106, 98))
             if selected: c.rect(3, 7, 2, 21, (231, 187, 86))
             c.save(f"tab_{name}_{state}.png")
-    # Crimson research buttons with a single restrained gold edge.
-    for state, face in [("default", (99, 51, 34)), ("hover", (141, 75, 43)), ("pressed", (75, 39, 29))]:
-        c = Canvas(122, 40, (54, 41, 28))
+    # Charcoal research buttons with aged silver edges.
+    for state, face in [("default", (39, 41, 42)), ("hover", (70, 72, 69)), ("pressed", (29, 31, 32))]:
+        c = Canvas(122, 40, (30, 32, 33))
         c.rect(3, 1, 116, 38, (162, 157, 138))
         c.rect(1, 3, 120, 34, (162, 157, 138))
         c.rect(3, 2, 116, 36, face)
         c.rect(2, 4, 118, 32, face)
-        c.rect(2, 2, 118, 1, (143, 62, 51))
-        c.rect(38, 7, 1, 26, (139, 88, 65))
+        c.rect(2, 2, 118, 1, (151, 149, 135))
+        c.rect(38, 7, 1, 26, (139, 139, 129))
         c.save(f"research_button_{state}.png")
     print("Generated original pixel-art charter frame and sidebar textures.")
 

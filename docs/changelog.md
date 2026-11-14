@@ -1,3 +1,10 @@
+# 0.0.24
+
+- Replaced brown/crimson menu surfaces with procedural textured charcoal, aged-silver trim, ivory body text and wheat-gold headings and selection accents.
+- Applied the palette to all five navigation tabs, Overview, Research, Production, Realm, Information, action buttons, secondary-biome picker and rename screen.
+- Preserved layout, icons, portraits and action bindings. Applied the selected D2-style straight gold frame with silver leaf corners and village crest; fitted the surfaces and navigation inside its rails.
+- Build/static validation (74 pack files), 29 JavaScript tests and 3 Python tests passed. Native Minecraft rendering remains unverified.
+
 # 0.0.23
 
 - Replaced flat interior fills with matching detailed leather and shaded aged-silver/wheat trim assets.

@@ -98,13 +98,13 @@
       {
         "leather": {
           "type": "image",
-          "texture": "textures/ui/frontier/material_leather",
+          "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            364,
-            189
+            344,
+            197
           ],
           "offset": [
-            8,
+            18,
             30
           ],
           "keep_ratio": false,
@@ -122,13 +122,13 @@
       {
         "banner": {
           "type": "image",
-          "texture": "textures/ui/frontier/material_leather",
+          "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            354,
+            344,
             25
           ],
           "offset": [
-            13,
+            18,
             31
           ],
           "keep_ratio": false,
@@ -137,9 +137,9 @@
           "anchor_to": "top_left",
           "layer": 3,
           "color": [
-            0.95,
-            0.5,
-            0.42
+            1,
+            1,
+            1
           ]
         }
       },
@@ -148,11 +148,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/solid",
           "size": [
-            346,
+            344,
             1
           ],
           "offset": [
-            17,
+            18,
             55
           ],
           "keep_ratio": false,
@@ -161,9 +161,9 @@
           "anchor_to": "top_left",
           "layer": 4,
           "color": [
-            0.62,
-            0.54,
-            0.37
+            0.82,
+            0.7,
+            0.44
           ]
         }
       },
@@ -240,9 +240,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.65,
           "color": [
-            1,
-            0.85,
-            0.6
+            0.73,
+            0.73,
+            0.68
           ],
           "shadow": false
         }
@@ -251,11 +251,11 @@
         "jf_tab_overview": {
           "type": "toggle",
           "size": [
-            88,
+            80,
             28
           ],
           "offset": [
-            12,
+            20,
             62
           ],
           "anchor_from": "top_left",
@@ -316,16 +316,16 @@
               "unchecked": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -368,11 +368,11 @@
                       "type": "label",
                       "text": "Overview",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -382,9 +382,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -396,16 +396,16 @@
               "checked": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -448,11 +448,11 @@
                       "type": "label",
                       "text": "Overview",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -462,9 +462,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -476,16 +476,16 @@
               "unchecked_hover": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -528,11 +528,11 @@
                       "type": "label",
                       "text": "Overview",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -542,9 +542,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -556,16 +556,16 @@
               "checked_hover": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -608,11 +608,11 @@
                       "type": "label",
                       "text": "Overview",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -622,9 +622,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -639,11 +639,11 @@
         "jf_tab_research": {
           "type": "toggle",
           "size": [
-            88,
+            80,
             28
           ],
           "offset": [
-            12,
+            20,
             94
           ],
           "anchor_from": "top_left",
@@ -704,16 +704,16 @@
               "unchecked": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -756,11 +756,11 @@
                       "type": "label",
                       "text": "Research",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -770,9 +770,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -784,16 +784,16 @@
               "checked": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -836,11 +836,11 @@
                       "type": "label",
                       "text": "Research",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -850,9 +850,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -864,16 +864,16 @@
               "unchecked_hover": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -916,11 +916,11 @@
                       "type": "label",
                       "text": "Research",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -930,9 +930,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -944,16 +944,16 @@
               "checked_hover": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -996,11 +996,11 @@
                       "type": "label",
                       "text": "Research",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -1010,9 +1010,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -1027,11 +1027,11 @@
         "jf_tab_production": {
           "type": "toggle",
           "size": [
-            88,
+            80,
             28
           ],
           "offset": [
-            12,
+            20,
             126
           ],
           "anchor_from": "top_left",
@@ -1092,16 +1092,16 @@
               "unchecked": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -1144,11 +1144,11 @@
                       "type": "label",
                       "text": "Production",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -1158,9 +1158,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -1172,16 +1172,16 @@
               "checked": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -1224,11 +1224,11 @@
                       "type": "label",
                       "text": "Production",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -1238,9 +1238,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -1252,16 +1252,16 @@
               "unchecked_hover": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -1304,11 +1304,11 @@
                       "type": "label",
                       "text": "Production",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -1318,9 +1318,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -1332,16 +1332,16 @@
               "checked_hover": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -1384,11 +1384,11 @@
                       "type": "label",
                       "text": "Production",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -1398,9 +1398,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -1415,11 +1415,11 @@
         "jf_tab_realm": {
           "type": "toggle",
           "size": [
-            88,
+            80,
             28
           ],
           "offset": [
-            12,
+            20,
             158
           ],
           "anchor_from": "top_left",
@@ -1480,16 +1480,16 @@
               "unchecked": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -1532,11 +1532,11 @@
                       "type": "label",
                       "text": "Realm",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -1546,9 +1546,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -1560,16 +1560,16 @@
               "checked": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -1612,11 +1612,11 @@
                       "type": "label",
                       "text": "Realm",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -1626,9 +1626,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -1640,16 +1640,16 @@
               "unchecked_hover": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -1692,11 +1692,11 @@
                       "type": "label",
                       "text": "Realm",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -1706,9 +1706,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -1720,16 +1720,16 @@
               "checked_hover": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -1772,11 +1772,11 @@
                       "type": "label",
                       "text": "Realm",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -1786,9 +1786,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -1803,11 +1803,11 @@
         "jf_tab_information": {
           "type": "toggle",
           "size": [
-            88,
+            80,
             28
           ],
           "offset": [
-            12,
+            20,
             190
           ],
           "anchor_from": "top_left",
@@ -1868,16 +1868,16 @@
               "unchecked": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -1920,11 +1920,11 @@
                       "type": "label",
                       "text": "Information",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -1934,9 +1934,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -1948,16 +1948,16 @@
               "checked": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -2000,11 +2000,11 @@
                       "type": "label",
                       "text": "Information",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -2014,9 +2014,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -2028,16 +2028,16 @@
               "unchecked_hover": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -2080,11 +2080,11 @@
                       "type": "label",
                       "text": "Information",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -2094,9 +2094,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -2108,16 +2108,16 @@
               "checked_hover": {
                 "type": "panel",
                 "size": [
-                  88,
+                  80,
                   28
                 ],
                 "controls": [
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
-                        88,
+                        80,
                         28
                       ],
                       "offset": [
@@ -2160,11 +2160,11 @@
                       "type": "label",
                       "text": "Information",
                       "size": [
-                        55,
+                        49,
                         12
                       ],
                       "offset": [
-                        29,
+                        27,
                         9
                       ],
                       "anchor_from": "top_left",
@@ -2174,9 +2174,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -2192,7 +2192,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            110,
+            104,
             62
           ],
           "size": [
@@ -2221,7 +2221,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            110,
+            104,
             62
           ],
           "size": [
@@ -2250,7 +2250,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            110,
+            104,
             62
           ],
           "size": [
@@ -2297,7 +2297,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            110,
+            104,
             62
           ],
           "size": [
@@ -2326,7 +2326,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            110,
+            104,
             62
           ],
           "size": [
@@ -2425,7 +2425,7 @@
             {
               "surface": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_panel",
+                "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   147,
                   105
@@ -2489,9 +2489,9 @@
                 "anchor_to": "top_left",
                 "layer": 2,
                 "color": [
-                  0.65,
-                  0.53,
-                  0.31
+                  0.82,
+                  0.7,
+                  0.44
                 ]
               }
             },
@@ -2514,9 +2514,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
-                  0.81,
-                  0.76,
-                  0.64
+                  0.73,
+                  0.73,
+                  0.68
                 ],
                 "shadow": false
               }
@@ -2565,9 +2565,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
-                  0.81,
-                  0.76,
-                  0.64
+                  0.73,
+                  0.73,
+                  0.68
                 ],
                 "shadow": false
               }
@@ -2632,9 +2632,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
-                  0.81,
-                  0.76,
-                  0.64
+                  0.73,
+                  0.73,
+                  0.68
                 ],
                 "shadow": false
               }
@@ -2683,9 +2683,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.75,
                 "color": [
-                  0.81,
-                  0.76,
-                  0.64
+                  0.73,
+                  0.73,
+                  0.68
                 ],
                 "shadow": false
               }
@@ -2842,7 +2842,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -2882,9 +2882,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -2904,7 +2904,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -2944,9 +2944,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -2966,7 +2966,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -3006,9 +3006,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -3028,7 +3028,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -3068,9 +3068,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -3158,7 +3158,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -3198,9 +3198,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -3220,7 +3220,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -3260,9 +3260,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -3282,7 +3282,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -3322,9 +3322,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -3344,7 +3344,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -3384,9 +3384,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -3494,8 +3494,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.3,
-                  0.26,
+                  0.16,
+                  0.17,
                   0.18
                 ]
               }
@@ -3519,9 +3519,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  0.96,
-                  0.91,
-                  0.79
+                  0.94,
+                  0.92,
+                  0.85
                 ],
                 "shadow": false
               }
@@ -3540,7 +3540,7 @@
             {
               "paper": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_panel",
+                "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   254,
                   178
@@ -3650,8 +3650,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.3,
-                  0.26,
+                  0.16,
+                  0.17,
                   0.18
                 ]
               }
@@ -3675,9 +3675,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  0.96,
-                  0.91,
-                  0.79
+                  0.94,
+                  0.92,
+                  0.85
                 ],
                 "shadow": false
               }
@@ -3696,7 +3696,7 @@
             {
               "paper": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_panel",
+                "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   254,
                   48
@@ -3755,7 +3755,7 @@
             {
               "paper": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_panel",
+                "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   254,
                   254
@@ -3847,7 +3847,7 @@
             {
               "paper": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_panel",
+                "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   254,
                   40
@@ -3936,7 +3936,7 @@
             {
               "paper": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_panel",
+                "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   254,
                   40
@@ -4025,7 +4025,7 @@
             {
               "paper": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_panel",
+                "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   254,
                   40
@@ -4269,9 +4269,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.555,
           "color": [
-            0.96,
-            0.91,
-            0.79
+            0.94,
+            0.92,
+            0.85
           ],
           "shadow": false
         }
@@ -4295,9 +4295,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.555,
           "color": [
-            0.96,
-            0.91,
-            0.79
+            0.94,
+            0.92,
+            0.85
           ],
           "shadow": false
         }
@@ -4321,9 +4321,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.555,
           "color": [
-            0.96,
-            0.91,
-            0.79
+            0.94,
+            0.92,
+            0.85
           ],
           "shadow": false
         }
@@ -4360,7 +4360,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -4419,9 +4419,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -4445,9 +4445,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -4466,7 +4466,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -4525,9 +4525,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -4551,9 +4551,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -4572,7 +4572,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -4631,9 +4631,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -4657,9 +4657,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -4702,7 +4702,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -4761,9 +4761,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -4787,9 +4787,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -4808,7 +4808,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -4867,9 +4867,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -4893,9 +4893,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -4914,7 +4914,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -4973,9 +4973,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -4999,9 +4999,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -5044,7 +5044,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -5103,9 +5103,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -5129,9 +5129,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -5150,7 +5150,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -5209,9 +5209,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -5235,9 +5235,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -5256,7 +5256,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -5315,9 +5315,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -5341,9 +5341,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -5386,7 +5386,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -5445,9 +5445,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -5471,9 +5471,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -5492,7 +5492,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -5551,9 +5551,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -5577,9 +5577,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -5598,7 +5598,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -5657,9 +5657,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -5683,9 +5683,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -5728,7 +5728,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -5787,9 +5787,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -5813,9 +5813,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -5834,7 +5834,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -5893,9 +5893,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -5919,9 +5919,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -5940,7 +5940,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         122,
                         34
@@ -5999,9 +5999,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.72,
                       "color": [
-                        1,
                         0.94,
-                        0.77
+                        0.92,
+                        0.85
                       ],
                       "shadow": false
                     }
@@ -6025,9 +6025,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.55,
                       "color": [
-                        0.94,
-                        0.8,
-                        0.61
+                        0.73,
+                        0.73,
+                        0.68
                       ],
                       "shadow": false
                     }
@@ -6120,9 +6120,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.95,
           "color": [
-            0.94,
-            0.79,
-            0.45
+            0.82,
+            0.7,
+            0.44
           ],
           "shadow": false
         }
@@ -6145,9 +6145,9 @@
           "anchor_to": "top_left",
           "layer": 2,
           "color": [
-            0.65,
-            0.53,
-            0.31
+            0.82,
+            0.7,
+            0.44
           ]
         }
       },
@@ -6170,9 +6170,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.8,
           "color": [
-            0.96,
-            0.91,
-            0.79
+            0.94,
+            0.92,
+            0.85
           ],
           "shadow": false
         }
@@ -6197,7 +6197,7 @@
             {
               "paper": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_panel",
+                "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   254,
                   101
@@ -6313,7 +6313,7 @@
             {
               "paper": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_panel",
+                "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   254,
                   101
@@ -6492,7 +6492,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -6532,9 +6532,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6554,7 +6554,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -6594,9 +6594,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6616,7 +6616,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -6656,9 +6656,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6678,7 +6678,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -6718,9 +6718,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6808,7 +6808,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -6848,9 +6848,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6870,7 +6870,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -6910,9 +6910,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6932,7 +6932,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -6972,9 +6972,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -6994,7 +6994,7 @@
                   {
                     "face": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         124,
                         23
@@ -7034,9 +7034,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        0.95,
-                        0.9,
-                        0.78
+                        0.94,
+                        0.92,
+                        0.85
                       ],
                       "shadow": false,
                       "text_alignment": "center"
@@ -7137,13 +7137,13 @@
       {
         "leather": {
           "type": "image",
-          "texture": "textures/ui/frontier/material_leather",
+          "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            364,
-            189
+            344,
+            197
           ],
           "offset": [
-            8,
+            18,
             30
           ],
           "keep_ratio": false,
@@ -7161,13 +7161,13 @@
       {
         "banner": {
           "type": "image",
-          "texture": "textures/ui/frontier/material_leather",
+          "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            354,
+            344,
             25
           ],
           "offset": [
-            13,
+            18,
             31
           ],
           "keep_ratio": false,
@@ -7176,9 +7176,9 @@
           "anchor_to": "top_left",
           "layer": 3,
           "color": [
-            0.95,
-            0.5,
-            0.42
+            1,
+            1,
+            1
           ]
         }
       },
@@ -7187,11 +7187,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/solid",
           "size": [
-            346,
+            344,
             1
           ],
           "offset": [
-            17,
+            18,
             55
           ],
           "keep_ratio": false,
@@ -7200,9 +7200,9 @@
           "anchor_to": "top_left",
           "layer": 4,
           "color": [
-            0.62,
-            0.54,
-            0.37
+            0.82,
+            0.7,
+            0.44
           ]
         }
       },
@@ -7244,9 +7244,9 @@
           "font_size": "normal",
           "font_scale_factor": 1.0,
           "color": [
-            1,
-            0.93,
-            0.71
+            0.82,
+            0.7,
+            0.44
           ],
           "shadow": false
         }
@@ -7266,7 +7266,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            110,
+            104,
             62
           ],
           "size": [
@@ -7305,9 +7305,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.8,
           "color": [
-            1,
-            0.91,
-            0.65
+            0.82,
+            0.7,
+            0.44
           ],
           "shadow": false
         }
@@ -7348,8 +7348,8 @@
                 "anchor_to": "top_left",
                 "layer": 0,
                 "color": [
-                  0.3,
-                  0.26,
+                  0.16,
+                  0.17,
                   0.18
                 ]
               }
@@ -7373,9 +7373,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  0.96,
-                  0.91,
-                  0.79
+                  0.94,
+                  0.92,
+                  0.85
                 ],
                 "shadow": false
               }
@@ -7452,7 +7452,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -7501,9 +7501,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false,
                 "text_alignment": "center",
@@ -7535,7 +7535,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -7584,9 +7584,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false,
                 "text_alignment": "center",
@@ -7618,7 +7618,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -7667,9 +7667,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false,
                 "text_alignment": "center",
@@ -7770,13 +7770,13 @@
       {
         "leather": {
           "type": "image",
-          "texture": "textures/ui/frontier/material_leather",
+          "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            364,
-            189
+            344,
+            197
           ],
           "offset": [
-            8,
+            18,
             30
           ],
           "keep_ratio": false,
@@ -7794,13 +7794,13 @@
       {
         "banner": {
           "type": "image",
-          "texture": "textures/ui/frontier/material_leather",
+          "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            354,
+            344,
             25
           ],
           "offset": [
-            13,
+            18,
             31
           ],
           "keep_ratio": false,
@@ -7809,9 +7809,9 @@
           "anchor_to": "top_left",
           "layer": 3,
           "color": [
-            0.95,
-            0.5,
-            0.42
+            1,
+            1,
+            1
           ]
         }
       },
@@ -7820,11 +7820,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/solid",
           "size": [
-            346,
+            344,
             1
           ],
           "offset": [
-            17,
+            18,
             55
           ],
           "keep_ratio": false,
@@ -7833,9 +7833,9 @@
           "anchor_to": "top_left",
           "layer": 4,
           "color": [
-            0.62,
-            0.54,
-            0.37
+            0.82,
+            0.7,
+            0.44
           ]
         }
       },
@@ -7877,9 +7877,9 @@
           "font_size": "normal",
           "font_scale_factor": 1.0,
           "color": [
-            1,
-            0.93,
-            0.71
+            0.82,
+            0.7,
+            0.44
           ],
           "shadow": false
         }
@@ -7913,9 +7913,9 @@
           "font_size": "normal",
           "font_scale_factor": 0.8,
           "color": [
-            1,
-            0.91,
-            0.65
+            0.82,
+            0.7,
+            0.44
           ],
           "shadow": false
         }
@@ -7925,7 +7925,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            110,
+            104,
             70
           ],
           "size": [
@@ -7969,7 +7969,7 @@
                   {
                     "gold": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         254,
                         21
@@ -8018,9 +8018,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.91,
-                        0.65
+                        0.82,
+                        0.7,
+                        0.44
                       ],
                       "shadow": false
                     }
@@ -8039,7 +8039,7 @@
                   {
                     "gold": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         254,
                         21
@@ -8088,9 +8088,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.91,
-                        0.65
+                        0.82,
+                        0.7,
+                        0.44
                       ],
                       "shadow": false
                     }
@@ -8109,7 +8109,7 @@
                   {
                     "gold": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
+                      "texture": "textures/ui/frontier/palette_button",
                       "size": [
                         254,
                         21
@@ -8158,9 +8158,9 @@
                       "font_size": "normal",
                       "font_scale_factor": 0.8,
                       "color": [
-                        1,
-                        0.91,
-                        0.65
+                        0.82,
+                        0.7,
+                        0.44
                       ],
                       "shadow": false
                     }
@@ -8172,7 +8172,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            110,
+            104,
             151
           ]
         }
@@ -8197,9 +8197,9 @@
     "font_size": "normal",
     "font_scale_factor": 1.0,
     "color": [
-      1,
-      0.93,
-      0.71
+      0.82,
+      0.7,
+      0.44
     ],
     "shadow": false,
     "bindings": [
@@ -8243,9 +8243,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -8324,7 +8324,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -8373,9 +8373,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -8394,7 +8394,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -8443,9 +8443,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -8464,7 +8464,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -8513,9 +8513,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -8578,7 +8578,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -8627,9 +8627,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -8648,7 +8648,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -8697,9 +8697,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -8718,7 +8718,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -8767,9 +8767,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -8797,9 +8797,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -8843,9 +8843,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -8924,7 +8924,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -8973,9 +8973,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -8994,7 +8994,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -9043,9 +9043,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -9064,7 +9064,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   254,
                   21
@@ -9113,9 +9113,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -9143,9 +9143,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.65,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -9224,7 +9224,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   76,
                   21
@@ -9273,9 +9273,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -9294,7 +9294,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   76,
                   21
@@ -9343,9 +9343,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -9364,7 +9364,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   76,
                   21
@@ -9413,9 +9413,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -9443,9 +9443,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.65,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -9524,7 +9524,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   76,
                   21
@@ -9573,9 +9573,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -9594,7 +9594,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   76,
                   21
@@ -9643,9 +9643,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -9664,7 +9664,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   76,
                   21
@@ -9713,9 +9713,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -9743,9 +9743,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.65,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -9824,7 +9824,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   76,
                   21
@@ -9873,9 +9873,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -9894,7 +9894,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   76,
                   21
@@ -9943,9 +9943,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -9964,7 +9964,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   76,
                   21
@@ -10013,9 +10013,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -10078,7 +10078,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   58,
                   17
@@ -10127,9 +10127,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false,
                 "text_alignment": "center"
@@ -10149,7 +10149,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   58,
                   17
@@ -10198,9 +10198,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false,
                 "text_alignment": "center"
@@ -10220,7 +10220,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   58,
                   17
@@ -10269,9 +10269,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.85,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false,
                 "text_alignment": "center"
@@ -10300,9 +10300,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.95,
     "color": [
-      0.94,
-      0.79,
-      0.45
+      0.82,
+      0.7,
+      0.44
     ],
     "shadow": false,
     "bindings": [
@@ -10346,9 +10346,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -10393,9 +10393,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -10439,9 +10439,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -10485,9 +10485,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -10558,7 +10558,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   69,
                   16
@@ -10607,9 +10607,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -10628,7 +10628,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   69,
                   16
@@ -10677,9 +10677,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -10698,7 +10698,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   69,
                   16
@@ -10747,9 +10747,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -10777,9 +10777,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -10858,7 +10858,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -10907,9 +10907,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -10928,7 +10928,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -10977,9 +10977,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -10998,7 +10998,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -11047,9 +11047,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -11112,7 +11112,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -11161,9 +11161,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -11182,7 +11182,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -11231,9 +11231,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -11252,7 +11252,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -11301,9 +11301,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -11331,9 +11331,9 @@
     "font_size": "normal",
     "font_scale_factor": 0.8,
     "color": [
-      0.96,
-      0.91,
-      0.79
+      0.94,
+      0.92,
+      0.85
     ],
     "shadow": false,
     "bindings": [
@@ -11412,7 +11412,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -11461,9 +11461,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -11482,7 +11482,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -11531,9 +11531,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -11552,7 +11552,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -11601,9 +11601,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -11666,7 +11666,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -11715,9 +11715,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -11736,7 +11736,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -11785,9 +11785,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
@@ -11806,7 +11806,7 @@
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/material_button",
+                "texture": "textures/ui/frontier/palette_button",
                 "size": [
                   122,
                   21
@@ -11855,9 +11855,9 @@
                 "font_size": "normal",
                 "font_scale_factor": 0.8,
                 "color": [
-                  1,
-                  0.91,
-                  0.65
+                  0.82,
+                  0.7,
+                  0.44
                 ],
                 "shadow": false
               }
