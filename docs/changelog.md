@@ -1,3 +1,11 @@
+# 0.0.30
+
+- Applied all five supplied 64×64 transparent Local research icons without changing the artwork.
+- Matched the diagram: Hearthstone at the top, Resource Prospecting / Sanctuary in the middle, Prosperity / Road Networks at the bottom.
+- Renamed the displayed biome and efficiency upgrades to Resource Prospecting and Prosperity while preserving their save keys, costs, effects and purchase bindings.
+- Sanctuary and Road Networks have explanatory hover boxes and are clearly marked Planned; they cannot purchase or charge materials. Hearthstone's existing single prototype upgrade is unchanged; the diagram's two-level healing system is not implemented in this visual update.
+- Build/static validation (132 pack files), all 36 JavaScript tests and 3 Python tests passed. Native Minecraft rendering remains unverified.
+
 # 0.0.29
 
 - Added Map / My Settlements / All Settlements under Realm, with a 32×12 terrain viewport, settlement/player markers, pan, zoom, centre, dimension and refresh controls.

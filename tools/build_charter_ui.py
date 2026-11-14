@@ -29,9 +29,11 @@ SILVER = (0.73, 0.73, 0.68)
 WHEAT = (0.82, 0.70, 0.44)
 CHARCOAL = (0.16, 0.17, 0.18)
 RESEARCH_HELP = {
-    "efficiency": ("Production Efficiency", "Raises this settlement's production bonus\nby 10% per level. Higher levels require\nglobal Settlement Development research."),
+    "efficiency": ("Prosperity", "Raises this settlement's production bonus\nby 10% per level. Higher levels require\nglobal Settlement Development research."),
     "hearth": ("Hearthstone", "Intended to grant Regeneration I inside\nsettlement boundaries. The prototype records\nthe upgrade; the healing effect is not active."),
-    "biome": ("Biome Utilization", "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks."),
+    "biome": ("Resource Prospecting", "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks."),
+    "sanctuary": ("Sanctuary", "Planned: upgradeable protection from hostile\nmobs inside the settlement.\nThis research is not yet available."),
+    "road_networks": ("Road Networks", "Planned: establish and upgrade fast-travel\nroutes between settlements.\nThis research is not yet available."),
     "settlement_capacity": ("Settlement Charters", "Planned: increase the number of settlements\nyour civilization can establish. Repeatable.\nGlobal purchases are not yet available."),
     "frontier_expansion": ("Frontier Mandate", "Planned: establish settlements in more\ndistant frontier zones. Five levels.\nGlobal purchases are not yet available."),
     "settlement_development": ("Stewardship", "Planned: unlock higher levels of local\nProduction Efficiency. Repeatable.\nGlobal purchases are not yet available."),
@@ -280,7 +282,7 @@ def research_node(name, title, subtitle, position, sprite, local=False):
         states.append(control(state, {"type": "panel", "size": [122, 34], "controls": [
             control("face", image(button_texture(122, 34, state), [122, 34])),
             control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
-            control("name", label(title, [78, 11], (39, 4), color=IVORY, scale=0.72)),
+            control("name", label(title, [78, 11], (39, 4), color=IVORY, scale=0.62 if len(title) > 18 else 0.72)),
             control("note", label(subtitle, [78, 13], (39, 18), color=SILVER, scale=0.55)),
             *([research_tooltip(name, [7 - position[0], 38 if position[1] == 0 else (-100 if local else -74)], live=local)]
               if state in ["hover", "pressed"] else []),
@@ -319,14 +321,16 @@ def global_tree():
 def local_tree():
     # Visual grouping only: this does not introduce gameplay prerequisites.
     lines = [(127, 34, 1, 7), (61, 40, 133, 1),
-             (61, 40, 1, 7), (193, 40, 1, 7)]
+             (61, 40, 1, 7), (193, 40, 1, 7),
+             (61, 81, 1, 13), (193, 81, 1, 13)]
     controls = [control("branch_" + str(i), image("frontier/solid", [w, h], (x, y), 2, [0.55, 0.35, 0.14]))
                 for i, (x, y, w, h) in enumerate(lines)]
     controls += [
-        research_node("efficiency", "Efficiency", "+10% production\nper level", [66, 0], "stewardship", local=True),
-        research_node("hearth", "Hearthstone", "Settlement healing\nPrototype", [0, 47], "settlement_charters", local=True),
-        research_node("biome", "Biome Utilization", "Secondary biome\nProduction", [132, 47], "reclamation", local=True),
-        control("hint", label("Hover for details. Select a tech to research.", [254, 14], (0, 108), SILVER, 0.65)),
+        research_node("hearth", "Hearthstone", "Settlement healing\nPrototype", [66, 0], "hearthstone", local=True),
+        research_node("biome", "Resource Prospecting", "Additional biome\nProduction", [0, 47], "resource_prospecting", local=True),
+        research_node("sanctuary", "Sanctuary", "Hostile protection\nPlanned", [132, 47], "sanctuary"),
+        research_node("efficiency", "Prosperity", "+10% production\nper level", [0, 94], "prosperity", local=True),
+        research_node("road_networks", "Road Networks", "Fast-travel routes\nPlanned", [132, 94], "road_networks"),
     ]
     return {"type": "panel", "size": [254, 131], "controls": controls}
 

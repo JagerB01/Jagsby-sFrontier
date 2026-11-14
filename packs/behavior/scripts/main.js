@@ -73,7 +73,7 @@ function cap(s){return BASE_CAP*Math.pow(2,s.global.storage||0);}
 function total(s){return Object.values(s.stock).reduce((a,n)=>a+n,0);}
 function pageTitle(page){return `JF_CHARTER|${page}`;}
 function researchText(s,v,key,player){
-  const names={efficiency:'Production Efficiency',hearth:'Hearthstone',biome:'Biome Utilization',frontier:'Frontier Expansion',capacity:'Settlement Capacity',development:'Settlement Development',storage:'Shared Storage'};
+  const names={efficiency:'Prosperity',hearth:'Hearthstone',biome:'Resource Prospecting',frontier:'Frontier Expansion',capacity:'Settlement Capacity',development:'Settlement Development',storage:'Shared Storage'};
   const global=['frontier','capacity','development','storage'].includes(key);
   const current=global?s.global[key]:key==='biome'?Number(v.biomeUnlocked):key==='hearth'?v.hearth:v.efficiency;
   const cost=COSTS[key][current];

@@ -194,3 +194,15 @@ status from the existing research record. Hearthstone retains an explicit note
 that healing is inactive. Global remains informational with its existing static
 descriptions. Popups are positioned inside the charter's bounds; actual Bedrock
 input, text wrapping, focus and layering remain unverified.
+
+## Supplied five-node Local layout (0.0.30)
+
+The user's supplied icons now replace reused Global art. Hearthstone sits at
+[66,0], Resource Prospecting / Sanctuary at [0,47] / [132,47], and Prosperity /
+Road Networks at [0,94] / [132,94]. Long card names use a slightly smaller font.
+The original biome and efficiency save/action keys are retained under the new
+display names Resource Prospecting and Prosperity. Existing worlds retain their
+upgrades. Sanctuary and Road Networks are informational planned nodes, with no
+purchase mapping. The two-level Hearthstone design, hostile protection and
+fast-travel mechanics require future gameplay work. This update does not add
+new prerequisites or change existing costs/effects.

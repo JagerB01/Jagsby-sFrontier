@@ -113,3 +113,11 @@ from `tools/build_ui_art.py`. The supplied Advanced Minimap v4 by ExterLeo was
 inspected as a technical reference. Its scripts, textures, glyph pages and UI
 files are not included or required. Frontier uses its own shared surface cache
 and native form image collections instead of overriding HUD titles or fonts.
+
+## Supplied Local research icons (0.0.30)
+
+The user supplied `Jagsbys_Frontier_Local_Icons_Matched.zip`. Its five original
+64×64 RGBA files are copied byte-for-byte to `textures/ui/frontier/research/`:
+`hearthstone.png`, `resource_prospecting.png`, `sanctuary.png`, `prosperity.png`
+and `road_networks.png`. The comparison preview is not packaged. No icon
+regeneration, recoloring or extraction from the layout screenshot was used.

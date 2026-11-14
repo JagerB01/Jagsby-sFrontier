@@ -192,7 +192,7 @@ test('Research subtabs isolate the correct native action factories',async()=>{
     assert.equal(JSON.stringify(tree[name]).includes('button.form_button_click'),false);
     assert.equal(tree[name].bindings,undefined);
   }
-  assert.deepEqual(actions(ui.jf_research_local_content),['efficiency','hearth','biome']);
+  assert.deepEqual(actions(ui.jf_research_local_content).sort(),['biome','efficiency','hearth']);
 });
 
 test('approved transparent sprites appear in every state of their sidebar tabs',async()=>{
@@ -267,9 +267,14 @@ test('research explanations appear only in hover/pressed states and stay inside 
     const details=children(children(children(purchase).hover).research_tooltip).live_details;
     assert.ok(details.controls[0]['record@jagsby_frontier.jf_data_'+key]);
   }
-  assert.ok(local.efficiency.offset[1]<local.hearth.offset[1]);
-  assert.equal(local.hearth.offset[1],local.biome.offset[1]);
-  assert.ok(local.hearth.offset[0]<local.biome.offset[0]);
+  assert.ok(local.hearth.offset[1]<local.biome.offset[1]);
+  assert.ok(local.biome.offset[1]<local.efficiency.offset[1]);
+  assert.equal(local.sanctuary.offset[1],local.biome.offset[1]);
+  assert.equal(local.road_networks.offset[1],local.efficiency.offset[1]);
+  for(const key of ['sanctuary','road_networks']) {
+    assert.deepEqual(local[key].button_mappings,[]);
+    check(local[key],104+local[key].offset[0],89+local[key].offset[1]);
+  }
   assert.ok(local.branch_0&&local.branch_1&&local.branch_2&&local.branch_3);
   assert.equal(JSON.stringify(ui.jf_rename).includes('research_tooltip'),false);
   assert.equal(JSON.stringify(ui['jf_choice@common.button']).includes('research_tooltip'),false);
