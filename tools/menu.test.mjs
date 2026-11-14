@@ -87,12 +87,6 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   const layoutSource=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
   const {CHARTER_LAYOUT:layout}=await import(`data:text/javascript;base64,${Buffer.from(layoutSource).toString('base64')}`);
   for(const key of Object.keys(layout.data).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
-    if(key.startsWith('mapCell')) {
-      const cell=ui['jf_map_cell_'+key.slice(7)];
-      assert.equal(cell.type,'image');
-      assert.ok(cell.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.target_property_name===undefined));
-      continue;
-    }
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
     if(key==='census') {
@@ -280,16 +274,18 @@ test('research explanations appear only in hover/pressed states and stay inside 
   assert.equal(JSON.stringify(ui['jf_choice@common.button']).includes('research_tooltip'),false);
 });
 
-test('Realm map has three tabs and 384 correctly indexed terrain cells with navigation actions',async()=>{
+test('Realm biome map uses twelve text rows instead of hundreds of tile records',async()=>{
   const ui=await loadUI(),realm=children(ui.jf_realm_content),map=children(ui.jf_realm_map_content);
   const tabs=['map','mine','all'].map(k=>realm['jf_realm_tab_'+k]);
   assert.deepEqual(tabs.map(t=>t.offset[0]),[0,86,172]);
   assert.equal(tabs[0].toggle_default_state,true);
   assert.ok(realm['map@jagsby_frontier.jf_realm_map_content'].bindings.some(b=>b.source_control_name==='jf_realm_tab_map'));
-  for(let i=0;i<384;i++){
-    const cell=map['cell_'+i];
-    assert.equal(cell.controls[0]['tile@jagsby_frontier.jf_map_cell_'+i].collection_index,34+i);
-    assert.ok(cell.offset[0]+7<=254&&cell.offset[1]+7<=84);
+  assert.equal(Object.keys(map).some(k=>k.startsWith('cell_')),false);
+  for(let i=0;i<12;i++){
+    const row=map['row_'+i];
+    assert.equal(row.controls[0]['record@jagsby_frontier.jf_data_mapRow'+i].collection_index,34+i);
+    assert.equal(ui['jf_data_mapRow'+i].font_size,'small');
+    assert.deepEqual(ui['jf_data_mapRow'+i].color,[1,1,1]);
   }
   for(const key of ['West','North','South','East','ZoomIn','ZoomOut','Center','Dimension','Refresh']){
     assert.ok(map['map_'+key]);

@@ -1,3 +1,36 @@
+# Shared biome Realm map — 0.0.31
+
+This version replaces the 0.0.29 surface map described below. Open Realm > Map
+and press Refresh to load it. Pan, zoom, Centre and Dim also load the view.
+Initial charter opening supplies empty map rows and does not render a map.
+The menu now carries 55 form records instead of 427, with twelve glyph text
+rows replacing 384 native tile images. Glyphs use the original E1 font page.
+The map viewport remains 32×12; native spacing/appearance must be verified.
+
+Scanning uses Dimension.getBiome at Y=64, not getTopmostBlock or a block-column
+scan. Colors classify plains, forest, water, dry, mountainous, snowy, savanna,
+swamp, Nether and other regions. It is a coarse biome map, not a terrain/building
+atlas, and does not represent vertical cave-biome variation. The combined six
+samples/second budget, shared discovery, dimension isolation, bounded storage,
+ten-second save cycle, cached rendering and settlement/player markers remain.
+
+Biome discoveries use `jagsby_frontier:biome_map_v1:`. Prior surface-map data
+under `jagsby_frontier:map_v1:` is left intact and is not misinterpreted as biome
+IDs. Revisit old areas to populate the new shared biome cache. No research or
+settlement data is reset. The biome map cannot import historical exploration.
+
+All 36 JavaScript and 3 Python checks pass. They verify shared/reloaded biome
+data, record count, blank initial map rows, navigation and the absence of
+terrain-column queries. No native opening latency has been measured. Compare
+charter opening against 0.0.30, then press Refresh to check colored glyph cells,
+marker alignment, zoom and two-player discoveries. Wait ten seconds before
+save/restart to check persistence. If glyphs show as characters or squares,
+report the screenshot/content log; do not assume font rendering is validated.
+
+---
+
+## Historical surface-map implementation (0.0.29; superseded)
+
 # Shared Realm map prototype — 0.0.29
 
 Realm now contains Map, My Settlements and All Settlements. The map is a 32×12

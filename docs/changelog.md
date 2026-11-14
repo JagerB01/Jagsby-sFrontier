@@ -1,3 +1,11 @@
+# 0.0.31
+
+- Replaced surface-block sampling with bounded biome-ID sampling and climate colors, including shared persistence and separate dimension data.
+- Removed the 384 per-tile form images; twelve glyph text rows reduce each charter from 427 to 55 form records. Initial charter opening does not rasterize the map. Realm > Map > Refresh loads it explicitly; pan/zoom also load the map.
+- Added an original E1 glyph page for colored map cells and settlement/player markers. Existing research icons/layout and purchase actions are retained.
+- Biome discoveries use a new storage namespace. Old surface discoveries are preserved, but players must revisit areas to populate the biome map.
+- Build/static validation (133 pack files), all 36 JavaScript tests and all 3 Python tests passed. Native font rendering, map alignment and the opening-lag improvement require an in-game comparison.
+
 # 0.0.30
 
 - Applied all five supplied 64×64 transparent Local research icons without changing the artwork.

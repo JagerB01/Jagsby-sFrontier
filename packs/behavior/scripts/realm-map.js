@@ -1,24 +1,24 @@
-// Shared, bounded surface exploration. Rendering never reads world blocks.
+// Shared, bounded biome exploration. Rendering never scans world columns.
 export const MAP_COLS = 32, MAP_ROWS = 12, MAP_CELL = 16;
 export const MAP_ZOOMS = [16, 32, 64, 128];
 export const MAP_DIMENSIONS = ['minecraft:overworld','minecraft:nether','minecraft:the_end'];
-const PREFIX = 'jagsby_frontier:map_v1:';
+const PREFIX = 'jagsby_frontier:biome_map_v1:';
 const MAX_REGIONS = 1024;
-export const MAP_COLORS = ['unknown','grass','leaves','water','sand','stone','snow','wood','earth','lava','built','current','settlement','player'];
+export const MAP_COLORS = ['unknown','plains','forest','ocean','desert','mountains','snow','savanna','swamp','nether','other','current','settlement','player'];
 const OFFSETS=[];
 for(let z=-3;z<=3;z++)for(let x=-3;x<=3;x++)OFFSETS.push([x,z]);
 OFFSETS.sort((a,b)=>a[0]*a[0]+a[1]*a[1]-b[0]*b[0]-b[1]*b[1]);
-export function terrainCode(type) {
-  if(!type||type.endsWith(':air'))return 0;
-  if(/water|bubble_column/.test(type))return 3;
-  if(/lava|magma/.test(type))return 9;
-  if(/snow|ice|quartz/.test(type))return 6;
-  if(/leaves|azalea|moss/.test(type))return 2;
-  if(/sand|terracotta/.test(type))return 4;
-  if(/grass|fern|flower/.test(type))return 1;
-  if(/log|wood|stem|hyphae/.test(type))return 7;
-  if(/dirt|mud|gravel|soul|farmland|podzol/.test(type))return 8;
-  if(/stone|ore|deepslate|bedrock|basalt|obsidian|netherrack|tuff/.test(type))return 5;
+export function biomeCode(type) {
+  if(!type)return 0;
+  if(/nether|hell|crimson|warped|soul_sand|basalt/.test(type))return 9;
+  if(/frozen|snow|ice|grove/.test(type))return 6;
+  if(/ocean|river|beach/.test(type))return 3;
+  if(/desert|badlands|mesa/.test(type))return 4;
+  if(/swamp|mangrove/.test(type))return 8;
+  if(/forest|taiga|jungle|cherry/.test(type))return 2;
+  if(/savanna/.test(type))return 7;
+  if(/mountain|peak|hill|windswept/.test(type))return 5;
+  if(/plains|meadow/.test(type))return 1;
   return 10;
 }
 function address(dimension,x,z) {
@@ -81,9 +81,9 @@ export function createSharedMap(world) {
         if(recent.has(key)&&now-recent.get(key)<60000)continue;
         recent.set(key,now);if(recent.size>4096)recent.delete(recent.keys().next().value);
         reads++;
-        const block=p.dimension.getTopmostBlock({x:x*16+8,z:z*16+8});
+        const biome=p.dimension.getBiome({x:x*16+8,y:64,z:z*16+8});
         // Missing/unloaded columns never erase an earlier discovery.
-        if(block)observe(p.dimension.id,x,z,terrainCode(block.typeId));
+        if(biome)observe(p.dimension.id,x,z,biomeCode(biome.id));
       } catch { /* Unloaded columns are normal near exploration boundaries. */ }
     }
     if(++scans%10===0)flush();
@@ -119,7 +119,8 @@ export function createSharedMap(world) {
     for(const village of Object.values(villages))if(village.dimension===v.dimension&&village.id!==currentId)mark(village.location,'settlement');
     if(player.dimension?.id===v.dimension)mark(player.location,'player');
     const current=villages[currentId];if(current?.dimension===v.dimension)mark(current.location,'current');
-    return {cells:cells.map(c=>'textures/ui/frontier/map/'+c),info:`${v.dimension.replace('minecraft:','')} | ${v.x}, ${v.z} | ${step} blocks/tile${capacity?' | Storage full':''}`};
+    const rows=Array.from({length:MAP_ROWS},(_,r)=>cells.slice(r*MAP_COLS,(r+1)*MAP_COLS).map(c=>String.fromCharCode(0xE100+MAP_COLORS.indexOf(c))).join(''));
+    return {cells,rows,info:`${v.dimension.replace('minecraft:','')} | ${v.x}, ${v.z} | ${step} blocks/tile${capacity?' | Storage full':''}`};
   }
   return {tick,flush,view,render,observe,read};
 }

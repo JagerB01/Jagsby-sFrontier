@@ -159,7 +159,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,427);
+  assert.equal(forms[0].records.length,55);
   assert.equal(forms[0].records[24],'[JF:action:rename]');
   assert.equal(forms[0].records[25],'[JF:data:owner]Builder');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].owner.id,'p');
@@ -202,7 +202,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms.at(-1).records[3],'[JF:data:tier]Village');
   assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/village');
   assert.equal(scans,6);
-  menuResponse={canceled:false,selection:421}; // Realm map East.
+  menuResponse={canceled:false,selection:49}; // Realm map East.
   handlers.beforeInteract(event);
   await queued.shift()();
   await new Promise(resolve=>setImmediate(resolve));
@@ -210,6 +210,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.ok(forms.at(-1).text.startsWith('[JF:tab:realm]'));
   assert.ok(forms.at(-1).text.includes('[JF:realm:map]'));
   assert.ok(forms.at(-1).records[33].includes('64, 0'));
-  assert.ok(forms.at(-1).icons.slice(34,418).every(path=>path.startsWith('textures/ui/frontier/map/')));
+  assert.ok(forms.at(-1).records.slice(34,46).every(text=>text.includes('\ue100')));
+  assert.ok(forms[0].records.slice(34,46).every(text=>!text.includes('\ue100')));
   delete globalThis.__frontierTest;
 });

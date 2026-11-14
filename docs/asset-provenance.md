@@ -121,3 +121,10 @@ The user supplied `Jagsbys_Frontier_Local_Icons_Matched.zip`. Its five original
 `hearthstone.png`, `resource_prospecting.png`, `sanctuary.png`, `prosperity.png`
 and `road_networks.png`. The comparison preview is not packaged. No icon
 regeneration, recoloring or extraction from the layout screenshot was used.
+
+## Biome map glyphs (0.0.31)
+
+`font/glyph_E1.png` is original procedural artwork from `tools/build_ui_art.py`.
+It contains fourteen equal-advance glyphs: eleven biome/fog colors and three
+settlement/player symbols. No glyphs from Advanced Minimap were copied. The
+biome map uses twelve text rows instead of hundreds of native image controls.

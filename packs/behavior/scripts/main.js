@@ -103,14 +103,16 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   records[data.production]=`Primary biome: ${v.biome}\nSecondary biome: ${v.secondary||'None'}\nSurveyed options: ${v.available.join(', ')||'Survey nearby biomes'}\nEligible resources: ${eligible.join(', ')||'None configured'}\nEfficiency: +${v.efficiency*10}%\nPrototype cycle: ${PRODUCTION_MS/60000} minutes\n§cSample resource table and production balance; not final.§r`;
   records[data.stockpile]=`Stored: ${total(s)} / ${cap(s)}\nRemaining capacity: ${cap(s)-total(s)}\nProduced resources only; shared by every settlement.`;
   records[data.resources]=Object.entries(s.stock).map(([r,n])=>`${r.replace('minecraft:','').replaceAll('_',' ')}: ${n}`).join('\n')||'No produced resources yet.';
-  let mapFrame;
-  try {
+  // Initial charter opening carries no map rasterization or hundreds of tiles.
+  let mapFrame={rows:Array(12).fill(''),info:'Press Refresh to load the shared biome map.'};
+  if(page==='Realm'&&realmScope==='map')try {
     mapFrame=sharedMap.render(sharedMap.view(player,v),s.villages,player,vId);
   } catch(e) {
-    mapFrame={cells:Array(384).fill('textures/ui/frontier/map/unknown'),info:'Map unavailable; refresh to retry.'};
+    mapFrame.info='Map unavailable; refresh to retry.';
     console.warn(`Frontier map: ${e}`);
   }
   records[data.mapInfo]=mapFrame.info;
+  for(let row=0;row<12;row++)records[data['mapRow'+row]]=mapFrame.rows[row];
   const handlers=new Map();
   for(const command of ['North','South','West','East','ZoomIn','ZoomOut','Center','Dimension','Refresh']) {
     handlers.set(actions['map'+command],()=>{
@@ -135,7 +137,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
   const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}]${v.owner?'':'[JF:unclaimed]'}`);
-  records.forEach((text,index)=>form.button(text,index===data.tier?tier.texture:index>=data.mapCell0&&index<data.mapCell0+384?mapFrame.cells[index-data.mapCell0]:undefined));
+  records.forEach((text,index)=>form.button(text,index===data.tier?tier.texture:undefined));
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
 async function renameSettlement(player,vId){

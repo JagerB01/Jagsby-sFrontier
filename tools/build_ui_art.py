@@ -96,6 +96,24 @@ def button_texture(width, height, state):
 
 def build():
     DEST.mkdir(parents=True, exist_ok=True)
+    # A compact original font page replaces hundreds of native image controls.
+    # Fourteen-pixel glyph width gives a uniform advance; unused cells are clear.
+    font = Canvas(256, 256, (0, 0, 0, 0))
+    biome_colors = [(27, 29, 34), (116, 145, 77), (48, 94, 57), (61, 112, 170),
+                    (209, 182, 115), (132, 135, 128), (224, 233, 231), (167, 159, 70),
+                    (75, 102, 90), (151, 67, 61), (148, 127, 163),
+                    (218, 184, 104), (210, 210, 193), (248, 248, 239)]
+    for i, color in enumerate(biome_colors):
+        x = i * 16
+        font.rect(x, 0, 14, 16, color)
+        if i >= 11:
+            font.rect(x, 0, 14, 16, (27, 29, 34))
+            if i == 13:
+                font.rect(x + 6, 3, 2, 10, color); font.rect(x + 2, 7, 10, 2, color)
+            else:
+                font.rect(x + 3, 7, 8, 6, color); font.rect(x + 5, 4, 4, 3, color)
+    (DEST.parents[2] / "font").mkdir(exist_ok=True)
+    font.save("../../../font/glyph_E1.png")
     map_colors = {
         "unknown": (27, 29, 34), "grass": (98, 126, 68), "leaves": (53, 85, 49),
         "water": (62, 108, 151), "sand": (193, 171, 114), "stone": (118, 120, 115),
