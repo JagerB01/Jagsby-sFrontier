@@ -3729,27 +3729,354 @@
               }
             },
             {
-              "data": {
-                "type": "stack_panel",
-                "orientation": "vertical",
+              "explanation": {
+                "type": "button",
                 "size": [
-                  166,
-                  34
-                ],
-                "collection_name": "form_buttons",
-                "controls": [
-                  {
-                    "record@jagsby_frontier.jf_data_efficiency": {
-                      "collection_index": 4
-                    }
-                  }
-                ],
-                "offset": [
-                  4,
-                  3
+                  174,
+                  40
                 ],
                 "anchor_from": "top_left",
-                "anchor_to": "top_left"
+                "anchor_to": "top_left",
+                "layer": 5,
+                "focus_enabled": true,
+                "hover_enabled": true,
+                "button_mappings": [],
+                "default_control": "default",
+                "hover_control": "hover",
+                "pressed_control": "pressed",
+                "controls": [
+                  {
+                    "default": {
+                      "type": "panel",
+                      "size": [
+                        174,
+                        40
+                      ],
+                      "controls": [
+                        {
+                          "data": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              166,
+                              34
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_efficiency": {
+                                  "collection_index": 4
+                                }
+                              }
+                            ],
+                            "offset": [
+                              4,
+                              3
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "hover": {
+                      "type": "panel",
+                      "size": [
+                        174,
+                        40
+                      ],
+                      "controls": [
+                        {
+                          "data": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              166,
+                              34
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_efficiency": {
+                                  "collection_index": 4
+                                }
+                              }
+                            ],
+                            "offset": [
+                              4,
+                              3
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left"
+                          }
+                        },
+                        {
+                          "research_tooltip": {
+                            "type": "panel",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              7,
+                              44
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 100,
+                            "controls": [
+                              {
+                                "frame": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/button_240x70_default",
+                                  "size": [
+                                    240,
+                                    70
+                                  ],
+                                  "offset": [
+                                    0,
+                                    0
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 0
+                                }
+                              },
+                              {
+                                "title": {
+                                  "type": "label",
+                                  "text": "Production Efficiency",
+                                  "size": [
+                                    222,
+                                    12
+                                  ],
+                                  "offset": [
+                                    9,
+                                    7
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.8,
+                                  "color": [
+                                    0.82,
+                                    0.7,
+                                    0.44
+                                  ],
+                                  "shadow": false
+                                }
+                              },
+                              {
+                                "rule": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/solid",
+                                  "size": [
+                                    222,
+                                    1
+                                  ],
+                                  "offset": [
+                                    9,
+                                    23
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 2,
+                                  "color": [
+                                    0.73,
+                                    0.73,
+                                    0.68
+                                  ]
+                                }
+                              },
+                              {
+                                "description": {
+                                  "type": "label",
+                                  "text": "Raises this settlement's production bonus\nby 10% per level. Higher levels require\nglobal Settlement Development research.",
+                                  "size": [
+                                    222,
+                                    39
+                                  ],
+                                  "offset": [
+                                    9,
+                                    28
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.65,
+                                  "color": [
+                                    0.94,
+                                    0.92,
+                                    0.85
+                                  ],
+                                  "shadow": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "pressed": {
+                      "type": "panel",
+                      "size": [
+                        174,
+                        40
+                      ],
+                      "controls": [
+                        {
+                          "data": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              166,
+                              34
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_efficiency": {
+                                  "collection_index": 4
+                                }
+                              }
+                            ],
+                            "offset": [
+                              4,
+                              3
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left"
+                          }
+                        },
+                        {
+                          "research_tooltip": {
+                            "type": "panel",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              7,
+                              44
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 100,
+                            "controls": [
+                              {
+                                "frame": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/button_240x70_default",
+                                  "size": [
+                                    240,
+                                    70
+                                  ],
+                                  "offset": [
+                                    0,
+                                    0
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 0
+                                }
+                              },
+                              {
+                                "title": {
+                                  "type": "label",
+                                  "text": "Production Efficiency",
+                                  "size": [
+                                    222,
+                                    12
+                                  ],
+                                  "offset": [
+                                    9,
+                                    7
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.8,
+                                  "color": [
+                                    0.82,
+                                    0.7,
+                                    0.44
+                                  ],
+                                  "shadow": false
+                                }
+                              },
+                              {
+                                "rule": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/solid",
+                                  "size": [
+                                    222,
+                                    1
+                                  ],
+                                  "offset": [
+                                    9,
+                                    23
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 2,
+                                  "color": [
+                                    0.73,
+                                    0.73,
+                                    0.68
+                                  ]
+                                }
+                              },
+                              {
+                                "description": {
+                                  "type": "label",
+                                  "text": "Raises this settlement's production bonus\nby 10% per level. Higher levels require\nglobal Settlement Development research.",
+                                  "size": [
+                                    222,
+                                    39
+                                  ],
+                                  "offset": [
+                                    9,
+                                    28
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.65,
+                                  "color": [
+                                    0.94,
+                                    0.92,
+                                    0.85
+                                  ],
+                                  "shadow": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
               }
             },
             {
@@ -3818,27 +4145,354 @@
               }
             },
             {
-              "data": {
-                "type": "stack_panel",
-                "orientation": "vertical",
+              "explanation": {
+                "type": "button",
                 "size": [
-                  166,
-                  34
-                ],
-                "collection_name": "form_buttons",
-                "controls": [
-                  {
-                    "record@jagsby_frontier.jf_data_hearth": {
-                      "collection_index": 5
-                    }
-                  }
-                ],
-                "offset": [
-                  4,
-                  3
+                  174,
+                  40
                 ],
                 "anchor_from": "top_left",
-                "anchor_to": "top_left"
+                "anchor_to": "top_left",
+                "layer": 5,
+                "focus_enabled": true,
+                "hover_enabled": true,
+                "button_mappings": [],
+                "default_control": "default",
+                "hover_control": "hover",
+                "pressed_control": "pressed",
+                "controls": [
+                  {
+                    "default": {
+                      "type": "panel",
+                      "size": [
+                        174,
+                        40
+                      ],
+                      "controls": [
+                        {
+                          "data": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              166,
+                              34
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_hearth": {
+                                  "collection_index": 5
+                                }
+                              }
+                            ],
+                            "offset": [
+                              4,
+                              3
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "hover": {
+                      "type": "panel",
+                      "size": [
+                        174,
+                        40
+                      ],
+                      "controls": [
+                        {
+                          "data": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              166,
+                              34
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_hearth": {
+                                  "collection_index": 5
+                                }
+                              }
+                            ],
+                            "offset": [
+                              4,
+                              3
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left"
+                          }
+                        },
+                        {
+                          "research_tooltip": {
+                            "type": "panel",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              7,
+                              -74
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 100,
+                            "controls": [
+                              {
+                                "frame": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/button_240x70_default",
+                                  "size": [
+                                    240,
+                                    70
+                                  ],
+                                  "offset": [
+                                    0,
+                                    0
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 0
+                                }
+                              },
+                              {
+                                "title": {
+                                  "type": "label",
+                                  "text": "Hearthstone",
+                                  "size": [
+                                    222,
+                                    12
+                                  ],
+                                  "offset": [
+                                    9,
+                                    7
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.8,
+                                  "color": [
+                                    0.82,
+                                    0.7,
+                                    0.44
+                                  ],
+                                  "shadow": false
+                                }
+                              },
+                              {
+                                "rule": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/solid",
+                                  "size": [
+                                    222,
+                                    1
+                                  ],
+                                  "offset": [
+                                    9,
+                                    23
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 2,
+                                  "color": [
+                                    0.73,
+                                    0.73,
+                                    0.68
+                                  ]
+                                }
+                              },
+                              {
+                                "description": {
+                                  "type": "label",
+                                  "text": "Intended to grant Regeneration I inside\nsettlement boundaries. The prototype records\nthe upgrade; the healing effect is not active.",
+                                  "size": [
+                                    222,
+                                    39
+                                  ],
+                                  "offset": [
+                                    9,
+                                    28
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.65,
+                                  "color": [
+                                    0.94,
+                                    0.92,
+                                    0.85
+                                  ],
+                                  "shadow": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "pressed": {
+                      "type": "panel",
+                      "size": [
+                        174,
+                        40
+                      ],
+                      "controls": [
+                        {
+                          "data": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              166,
+                              34
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_hearth": {
+                                  "collection_index": 5
+                                }
+                              }
+                            ],
+                            "offset": [
+                              4,
+                              3
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left"
+                          }
+                        },
+                        {
+                          "research_tooltip": {
+                            "type": "panel",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              7,
+                              -74
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 100,
+                            "controls": [
+                              {
+                                "frame": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/button_240x70_default",
+                                  "size": [
+                                    240,
+                                    70
+                                  ],
+                                  "offset": [
+                                    0,
+                                    0
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 0
+                                }
+                              },
+                              {
+                                "title": {
+                                  "type": "label",
+                                  "text": "Hearthstone",
+                                  "size": [
+                                    222,
+                                    12
+                                  ],
+                                  "offset": [
+                                    9,
+                                    7
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.8,
+                                  "color": [
+                                    0.82,
+                                    0.7,
+                                    0.44
+                                  ],
+                                  "shadow": false
+                                }
+                              },
+                              {
+                                "rule": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/solid",
+                                  "size": [
+                                    222,
+                                    1
+                                  ],
+                                  "offset": [
+                                    9,
+                                    23
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 2,
+                                  "color": [
+                                    0.73,
+                                    0.73,
+                                    0.68
+                                  ]
+                                }
+                              },
+                              {
+                                "description": {
+                                  "type": "label",
+                                  "text": "Intended to grant Regeneration I inside\nsettlement boundaries. The prototype records\nthe upgrade; the healing effect is not active.",
+                                  "size": [
+                                    222,
+                                    39
+                                  ],
+                                  "offset": [
+                                    9,
+                                    28
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.65,
+                                  "color": [
+                                    0.94,
+                                    0.92,
+                                    0.85
+                                  ],
+                                  "shadow": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
               }
             },
             {
@@ -3907,27 +4561,354 @@
               }
             },
             {
-              "data": {
-                "type": "stack_panel",
-                "orientation": "vertical",
+              "explanation": {
+                "type": "button",
                 "size": [
-                  166,
-                  34
-                ],
-                "collection_name": "form_buttons",
-                "controls": [
-                  {
-                    "record@jagsby_frontier.jf_data_biome": {
-                      "collection_index": 6
-                    }
-                  }
-                ],
-                "offset": [
-                  4,
-                  3
+                  174,
+                  40
                 ],
                 "anchor_from": "top_left",
-                "anchor_to": "top_left"
+                "anchor_to": "top_left",
+                "layer": 5,
+                "focus_enabled": true,
+                "hover_enabled": true,
+                "button_mappings": [],
+                "default_control": "default",
+                "hover_control": "hover",
+                "pressed_control": "pressed",
+                "controls": [
+                  {
+                    "default": {
+                      "type": "panel",
+                      "size": [
+                        174,
+                        40
+                      ],
+                      "controls": [
+                        {
+                          "data": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              166,
+                              34
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_biome": {
+                                  "collection_index": 6
+                                }
+                              }
+                            ],
+                            "offset": [
+                              4,
+                              3
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "hover": {
+                      "type": "panel",
+                      "size": [
+                        174,
+                        40
+                      ],
+                      "controls": [
+                        {
+                          "data": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              166,
+                              34
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_biome": {
+                                  "collection_index": 6
+                                }
+                              }
+                            ],
+                            "offset": [
+                              4,
+                              3
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left"
+                          }
+                        },
+                        {
+                          "research_tooltip": {
+                            "type": "panel",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              7,
+                              -74
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 100,
+                            "controls": [
+                              {
+                                "frame": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/button_240x70_default",
+                                  "size": [
+                                    240,
+                                    70
+                                  ],
+                                  "offset": [
+                                    0,
+                                    0
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 0
+                                }
+                              },
+                              {
+                                "title": {
+                                  "type": "label",
+                                  "text": "Biome Utilization",
+                                  "size": [
+                                    222,
+                                    12
+                                  ],
+                                  "offset": [
+                                    9,
+                                    7
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.8,
+                                  "color": [
+                                    0.82,
+                                    0.7,
+                                    0.44
+                                  ],
+                                  "shadow": false
+                                }
+                              },
+                              {
+                                "rule": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/solid",
+                                  "size": [
+                                    222,
+                                    1
+                                  ],
+                                  "offset": [
+                                    9,
+                                    23
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 2,
+                                  "color": [
+                                    0.73,
+                                    0.73,
+                                    0.68
+                                  ]
+                                }
+                              },
+                              {
+                                "description": {
+                                  "type": "label",
+                                  "text": "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks.",
+                                  "size": [
+                                    222,
+                                    39
+                                  ],
+                                  "offset": [
+                                    9,
+                                    28
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.65,
+                                  "color": [
+                                    0.94,
+                                    0.92,
+                                    0.85
+                                  ],
+                                  "shadow": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "pressed": {
+                      "type": "panel",
+                      "size": [
+                        174,
+                        40
+                      ],
+                      "controls": [
+                        {
+                          "data": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              166,
+                              34
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_biome": {
+                                  "collection_index": 6
+                                }
+                              }
+                            ],
+                            "offset": [
+                              4,
+                              3
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left"
+                          }
+                        },
+                        {
+                          "research_tooltip": {
+                            "type": "panel",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              7,
+                              -74
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 100,
+                            "controls": [
+                              {
+                                "frame": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/button_240x70_default",
+                                  "size": [
+                                    240,
+                                    70
+                                  ],
+                                  "offset": [
+                                    0,
+                                    0
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 0
+                                }
+                              },
+                              {
+                                "title": {
+                                  "type": "label",
+                                  "text": "Biome Utilization",
+                                  "size": [
+                                    222,
+                                    12
+                                  ],
+                                  "offset": [
+                                    9,
+                                    7
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.8,
+                                  "color": [
+                                    0.82,
+                                    0.7,
+                                    0.44
+                                  ],
+                                  "shadow": false
+                                }
+                              },
+                              {
+                                "rule": {
+                                  "type": "image",
+                                  "texture": "textures/ui/frontier/solid",
+                                  "size": [
+                                    222,
+                                    1
+                                  ],
+                                  "offset": [
+                                    9,
+                                    23
+                                  ],
+                                  "keep_ratio": false,
+                                  "bilinear": false,
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 2,
+                                  "color": [
+                                    0.73,
+                                    0.73,
+                                    0.68
+                                  ]
+                                }
+                              },
+                              {
+                                "description": {
+                                  "type": "label",
+                                  "text": "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks.",
+                                  "size": [
+                                    222,
+                                    39
+                                  ],
+                                  "offset": [
+                                    9,
+                                    28
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left",
+                                  "layer": 8,
+                                  "font_type": "unicode",
+                                  "font_size": "normal",
+                                  "font_scale_factor": 0.65,
+                                  "color": [
+                                    0.94,
+                                    0.92,
+                                    0.85
+                                  ],
+                                  "shadow": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
               }
             },
             {
@@ -4407,6 +5388,119 @@
                       ],
                       "shadow": false
                     }
+                  },
+                  {
+                    "research_tooltip": {
+                      "type": "panel",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        -59,
+                        38
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 100,
+                      "controls": [
+                        {
+                          "frame": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/button_240x70_default",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "title": {
+                            "type": "label",
+                            "text": "Settlement Charters",
+                            "size": [
+                              222,
+                              12
+                            ],
+                            "offset": [
+                              9,
+                              7
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.8,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              222,
+                              1
+                            ],
+                            "offset": [
+                              9,
+                              23
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 2,
+                            "color": [
+                              0.73,
+                              0.73,
+                              0.68
+                            ]
+                          }
+                        },
+                        {
+                          "description": {
+                            "type": "label",
+                            "text": "Planned: increase the number of settlements\nyour civilization can establish. Repeatable.\nGlobal purchases are not yet available.",
+                            "size": [
+                              222,
+                              39
+                            ],
+                            "offset": [
+                              9,
+                              28
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.65,
+                            "color": [
+                              0.94,
+                              0.92,
+                              0.85
+                            ],
+                            "shadow": false
+                          }
+                        }
+                      ]
+                    }
                   }
                 ]
               }
@@ -4507,6 +5601,119 @@
                         0.68
                       ],
                       "shadow": false
+                    }
+                  },
+                  {
+                    "research_tooltip": {
+                      "type": "panel",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        -59,
+                        38
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 100,
+                      "controls": [
+                        {
+                          "frame": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/button_240x70_default",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "title": {
+                            "type": "label",
+                            "text": "Settlement Charters",
+                            "size": [
+                              222,
+                              12
+                            ],
+                            "offset": [
+                              9,
+                              7
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.8,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              222,
+                              1
+                            ],
+                            "offset": [
+                              9,
+                              23
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 2,
+                            "color": [
+                              0.73,
+                              0.73,
+                              0.68
+                            ]
+                          }
+                        },
+                        {
+                          "description": {
+                            "type": "label",
+                            "text": "Planned: increase the number of settlements\nyour civilization can establish. Repeatable.\nGlobal purchases are not yet available.",
+                            "size": [
+                              222,
+                              39
+                            ],
+                            "offset": [
+                              9,
+                              28
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.65,
+                            "color": [
+                              0.94,
+                              0.92,
+                              0.85
+                            ],
+                            "shadow": false
+                          }
+                        }
+                      ]
                     }
                   }
                 ]
@@ -4734,6 +5941,119 @@
                       ],
                       "shadow": false
                     }
+                  },
+                  {
+                    "research_tooltip": {
+                      "type": "panel",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        7,
+                        -74
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 100,
+                      "controls": [
+                        {
+                          "frame": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/button_240x70_default",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "title": {
+                            "type": "label",
+                            "text": "Frontier Mandate",
+                            "size": [
+                              222,
+                              12
+                            ],
+                            "offset": [
+                              9,
+                              7
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.8,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              222,
+                              1
+                            ],
+                            "offset": [
+                              9,
+                              23
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 2,
+                            "color": [
+                              0.73,
+                              0.73,
+                              0.68
+                            ]
+                          }
+                        },
+                        {
+                          "description": {
+                            "type": "label",
+                            "text": "Planned: establish settlements in more\ndistant frontier zones. Five levels.\nGlobal purchases are not yet available.",
+                            "size": [
+                              222,
+                              39
+                            ],
+                            "offset": [
+                              9,
+                              28
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.65,
+                            "color": [
+                              0.94,
+                              0.92,
+                              0.85
+                            ],
+                            "shadow": false
+                          }
+                        }
+                      ]
+                    }
                   }
                 ]
               }
@@ -4834,6 +6154,119 @@
                         0.68
                       ],
                       "shadow": false
+                    }
+                  },
+                  {
+                    "research_tooltip": {
+                      "type": "panel",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        7,
+                        -74
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 100,
+                      "controls": [
+                        {
+                          "frame": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/button_240x70_default",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "title": {
+                            "type": "label",
+                            "text": "Frontier Mandate",
+                            "size": [
+                              222,
+                              12
+                            ],
+                            "offset": [
+                              9,
+                              7
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.8,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              222,
+                              1
+                            ],
+                            "offset": [
+                              9,
+                              23
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 2,
+                            "color": [
+                              0.73,
+                              0.73,
+                              0.68
+                            ]
+                          }
+                        },
+                        {
+                          "description": {
+                            "type": "label",
+                            "text": "Planned: establish settlements in more\ndistant frontier zones. Five levels.\nGlobal purchases are not yet available.",
+                            "size": [
+                              222,
+                              39
+                            ],
+                            "offset": [
+                              9,
+                              28
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.65,
+                            "color": [
+                              0.94,
+                              0.92,
+                              0.85
+                            ],
+                            "shadow": false
+                          }
+                        }
+                      ]
                     }
                   }
                 ]
@@ -5061,6 +6494,119 @@
                       ],
                       "shadow": false
                     }
+                  },
+                  {
+                    "research_tooltip": {
+                      "type": "panel",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        -125,
+                        -74
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 100,
+                      "controls": [
+                        {
+                          "frame": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/button_240x70_default",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "title": {
+                            "type": "label",
+                            "text": "Stewardship",
+                            "size": [
+                              222,
+                              12
+                            ],
+                            "offset": [
+                              9,
+                              7
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.8,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              222,
+                              1
+                            ],
+                            "offset": [
+                              9,
+                              23
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 2,
+                            "color": [
+                              0.73,
+                              0.73,
+                              0.68
+                            ]
+                          }
+                        },
+                        {
+                          "description": {
+                            "type": "label",
+                            "text": "Planned: unlock higher levels of local\nProduction Efficiency. Repeatable.\nGlobal purchases are not yet available.",
+                            "size": [
+                              222,
+                              39
+                            ],
+                            "offset": [
+                              9,
+                              28
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.65,
+                            "color": [
+                              0.94,
+                              0.92,
+                              0.85
+                            ],
+                            "shadow": false
+                          }
+                        }
+                      ]
+                    }
                   }
                 ]
               }
@@ -5161,6 +6707,119 @@
                         0.68
                       ],
                       "shadow": false
+                    }
+                  },
+                  {
+                    "research_tooltip": {
+                      "type": "panel",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        -125,
+                        -74
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 100,
+                      "controls": [
+                        {
+                          "frame": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/button_240x70_default",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "title": {
+                            "type": "label",
+                            "text": "Stewardship",
+                            "size": [
+                              222,
+                              12
+                            ],
+                            "offset": [
+                              9,
+                              7
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.8,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              222,
+                              1
+                            ],
+                            "offset": [
+                              9,
+                              23
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 2,
+                            "color": [
+                              0.73,
+                              0.73,
+                              0.68
+                            ]
+                          }
+                        },
+                        {
+                          "description": {
+                            "type": "label",
+                            "text": "Planned: unlock higher levels of local\nProduction Efficiency. Repeatable.\nGlobal purchases are not yet available.",
+                            "size": [
+                              222,
+                              39
+                            ],
+                            "offset": [
+                              9,
+                              28
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.65,
+                            "color": [
+                              0.94,
+                              0.92,
+                              0.85
+                            ],
+                            "shadow": false
+                          }
+                        }
+                      ]
                     }
                   }
                 ]
@@ -5388,6 +7047,119 @@
                       ],
                       "shadow": false
                     }
+                  },
+                  {
+                    "research_tooltip": {
+                      "type": "panel",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        7,
+                        -74
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 100,
+                      "controls": [
+                        {
+                          "frame": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/button_240x70_default",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "title": {
+                            "type": "label",
+                            "text": "Reclamation",
+                            "size": [
+                              222,
+                              12
+                            ],
+                            "offset": [
+                              9,
+                              7
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.8,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              222,
+                              1
+                            ],
+                            "offset": [
+                              9,
+                              23
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 2,
+                            "color": [
+                              0.73,
+                              0.73,
+                              0.68
+                            ]
+                          }
+                        },
+                        {
+                          "description": {
+                            "type": "label",
+                            "text": "Planned: enable production in frontier\nsettlements. Five levels are proposed.\nGlobal purchases are not yet available.",
+                            "size": [
+                              222,
+                              39
+                            ],
+                            "offset": [
+                              9,
+                              28
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.65,
+                            "color": [
+                              0.94,
+                              0.92,
+                              0.85
+                            ],
+                            "shadow": false
+                          }
+                        }
+                      ]
+                    }
                   }
                 ]
               }
@@ -5488,6 +7260,119 @@
                         0.68
                       ],
                       "shadow": false
+                    }
+                  },
+                  {
+                    "research_tooltip": {
+                      "type": "panel",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        7,
+                        -74
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 100,
+                      "controls": [
+                        {
+                          "frame": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/button_240x70_default",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "title": {
+                            "type": "label",
+                            "text": "Reclamation",
+                            "size": [
+                              222,
+                              12
+                            ],
+                            "offset": [
+                              9,
+                              7
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.8,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              222,
+                              1
+                            ],
+                            "offset": [
+                              9,
+                              23
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 2,
+                            "color": [
+                              0.73,
+                              0.73,
+                              0.68
+                            ]
+                          }
+                        },
+                        {
+                          "description": {
+                            "type": "label",
+                            "text": "Planned: enable production in frontier\nsettlements. Five levels are proposed.\nGlobal purchases are not yet available.",
+                            "size": [
+                              222,
+                              39
+                            ],
+                            "offset": [
+                              9,
+                              28
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.65,
+                            "color": [
+                              0.94,
+                              0.92,
+                              0.85
+                            ],
+                            "shadow": false
+                          }
+                        }
+                      ]
                     }
                   }
                 ]
@@ -5715,6 +7600,119 @@
                       ],
                       "shadow": false
                     }
+                  },
+                  {
+                    "research_tooltip": {
+                      "type": "panel",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        -125,
+                        -74
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 100,
+                      "controls": [
+                        {
+                          "frame": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/button_240x70_default",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "title": {
+                            "type": "label",
+                            "text": "Hoards",
+                            "size": [
+                              222,
+                              12
+                            ],
+                            "offset": [
+                              9,
+                              7
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.8,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              222,
+                              1
+                            ],
+                            "offset": [
+                              9,
+                              23
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 2,
+                            "color": [
+                              0.73,
+                              0.73,
+                              0.68
+                            ]
+                          }
+                        },
+                        {
+                          "description": {
+                            "type": "label",
+                            "text": "Planned: expand shared storage for produced\nresources. Repeatable.\nGlobal purchases are not yet available.",
+                            "size": [
+                              222,
+                              39
+                            ],
+                            "offset": [
+                              9,
+                              28
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.65,
+                            "color": [
+                              0.94,
+                              0.92,
+                              0.85
+                            ],
+                            "shadow": false
+                          }
+                        }
+                      ]
+                    }
                   }
                 ]
               }
@@ -5815,6 +7813,119 @@
                         0.68
                       ],
                       "shadow": false
+                    }
+                  },
+                  {
+                    "research_tooltip": {
+                      "type": "panel",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        -125,
+                        -74
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 100,
+                      "controls": [
+                        {
+                          "frame": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/button_240x70_default",
+                            "size": [
+                              240,
+                              70
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "title": {
+                            "type": "label",
+                            "text": "Hoards",
+                            "size": [
+                              222,
+                              12
+                            ],
+                            "offset": [
+                              9,
+                              7
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.8,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              222,
+                              1
+                            ],
+                            "offset": [
+                              9,
+                              23
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 2,
+                            "color": [
+                              0.73,
+                              0.73,
+                              0.68
+                            ]
+                          }
+                        },
+                        {
+                          "description": {
+                            "type": "label",
+                            "text": "Planned: expand shared storage for produced\nresources. Repeatable.\nGlobal purchases are not yet available.",
+                            "size": [
+                              222,
+                              39
+                            ],
+                            "offset": [
+                              9,
+                              28
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.65,
+                            "color": [
+                              0.94,
+                              0.92,
+                              0.85
+                            ],
+                            "shadow": false
+                          }
+                        }
+                      ]
                     }
                   }
                 ]
@@ -9009,6 +11120,119 @@
                 ],
                 "shadow": false
               }
+            },
+            {
+              "research_tooltip": {
+                "type": "panel",
+                "size": [
+                  240,
+                  70
+                ],
+                "offset": [
+                  -171,
+                  34
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 100,
+                "controls": [
+                  {
+                    "frame": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_240x70_default",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 0
+                    }
+                  },
+                  {
+                    "title": {
+                      "type": "label",
+                      "text": "Production Efficiency",
+                      "size": [
+                        222,
+                        12
+                      ],
+                      "offset": [
+                        9,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "rule": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/solid",
+                      "size": [
+                        222,
+                        1
+                      ],
+                      "offset": [
+                        9,
+                        23
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 2,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ]
+                    }
+                  },
+                  {
+                    "description": {
+                      "type": "label",
+                      "text": "Raises this settlement's production bonus\nby 10% per level. Higher levels require\nglobal Settlement Development research.",
+                      "size": [
+                        222,
+                        39
+                      ],
+                      "offset": [
+                        9,
+                        28
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.65,
+                      "color": [
+                        0.94,
+                        0.92,
+                        0.85
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
@@ -9073,6 +11297,119 @@
                   0.85
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "research_tooltip": {
+                "type": "panel",
+                "size": [
+                  240,
+                  70
+                ],
+                "offset": [
+                  -171,
+                  34
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 100,
+                "controls": [
+                  {
+                    "frame": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_240x70_default",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 0
+                    }
+                  },
+                  {
+                    "title": {
+                      "type": "label",
+                      "text": "Production Efficiency",
+                      "size": [
+                        222,
+                        12
+                      ],
+                      "offset": [
+                        9,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "rule": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/solid",
+                      "size": [
+                        222,
+                        1
+                      ],
+                      "offset": [
+                        9,
+                        23
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 2,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ]
+                    }
+                  },
+                  {
+                    "description": {
+                      "type": "label",
+                      "text": "Raises this settlement's production bonus\nby 10% per level. Higher levels require\nglobal Settlement Development research.",
+                      "size": [
+                        222,
+                        39
+                      ],
+                      "offset": [
+                        9,
+                        28
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.65,
+                      "color": [
+                        0.94,
+                        0.92,
+                        0.85
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
               }
             }
           ]
@@ -9294,6 +11631,119 @@
                 ],
                 "shadow": false
               }
+            },
+            {
+              "research_tooltip": {
+                "type": "panel",
+                "size": [
+                  240,
+                  70
+                ],
+                "offset": [
+                  -171,
+                  -84
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 100,
+                "controls": [
+                  {
+                    "frame": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_240x70_default",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 0
+                    }
+                  },
+                  {
+                    "title": {
+                      "type": "label",
+                      "text": "Hearthstone",
+                      "size": [
+                        222,
+                        12
+                      ],
+                      "offset": [
+                        9,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "rule": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/solid",
+                      "size": [
+                        222,
+                        1
+                      ],
+                      "offset": [
+                        9,
+                        23
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 2,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ]
+                    }
+                  },
+                  {
+                    "description": {
+                      "type": "label",
+                      "text": "Intended to grant Regeneration I inside\nsettlement boundaries. The prototype records\nthe upgrade; the healing effect is not active.",
+                      "size": [
+                        222,
+                        39
+                      ],
+                      "offset": [
+                        9,
+                        28
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.65,
+                      "color": [
+                        0.94,
+                        0.92,
+                        0.85
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
@@ -9358,6 +11808,119 @@
                   0.85
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "research_tooltip": {
+                "type": "panel",
+                "size": [
+                  240,
+                  70
+                ],
+                "offset": [
+                  -171,
+                  -84
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 100,
+                "controls": [
+                  {
+                    "frame": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_240x70_default",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 0
+                    }
+                  },
+                  {
+                    "title": {
+                      "type": "label",
+                      "text": "Hearthstone",
+                      "size": [
+                        222,
+                        12
+                      ],
+                      "offset": [
+                        9,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "rule": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/solid",
+                      "size": [
+                        222,
+                        1
+                      ],
+                      "offset": [
+                        9,
+                        23
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 2,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ]
+                    }
+                  },
+                  {
+                    "description": {
+                      "type": "label",
+                      "text": "Intended to grant Regeneration I inside\nsettlement boundaries. The prototype records\nthe upgrade; the healing effect is not active.",
+                      "size": [
+                        222,
+                        39
+                      ],
+                      "offset": [
+                        9,
+                        28
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.65,
+                      "color": [
+                        0.94,
+                        0.92,
+                        0.85
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
               }
             }
           ]
@@ -9579,6 +12142,119 @@
                 ],
                 "shadow": false
               }
+            },
+            {
+              "research_tooltip": {
+                "type": "panel",
+                "size": [
+                  240,
+                  70
+                ],
+                "offset": [
+                  -171,
+                  -84
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 100,
+                "controls": [
+                  {
+                    "frame": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_240x70_default",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 0
+                    }
+                  },
+                  {
+                    "title": {
+                      "type": "label",
+                      "text": "Biome Utilization",
+                      "size": [
+                        222,
+                        12
+                      ],
+                      "offset": [
+                        9,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "rule": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/solid",
+                      "size": [
+                        222,
+                        1
+                      ],
+                      "offset": [
+                        9,
+                        23
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 2,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ]
+                    }
+                  },
+                  {
+                    "description": {
+                      "type": "label",
+                      "text": "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks.",
+                      "size": [
+                        222,
+                        39
+                      ],
+                      "offset": [
+                        9,
+                        28
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.65,
+                      "color": [
+                        0.94,
+                        0.92,
+                        0.85
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
@@ -9643,6 +12319,119 @@
                   0.85
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "research_tooltip": {
+                "type": "panel",
+                "size": [
+                  240,
+                  70
+                ],
+                "offset": [
+                  -171,
+                  -84
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 100,
+                "controls": [
+                  {
+                    "frame": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/button_240x70_default",
+                      "size": [
+                        240,
+                        70
+                      ],
+                      "offset": [
+                        0,
+                        0
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 0
+                    }
+                  },
+                  {
+                    "title": {
+                      "type": "label",
+                      "text": "Biome Utilization",
+                      "size": [
+                        222,
+                        12
+                      ],
+                      "offset": [
+                        9,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.8,
+                      "color": [
+                        0.82,
+                        0.7,
+                        0.44
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "rule": {
+                      "type": "image",
+                      "texture": "textures/ui/frontier/solid",
+                      "size": [
+                        222,
+                        1
+                      ],
+                      "offset": [
+                        9,
+                        23
+                      ],
+                      "keep_ratio": false,
+                      "bilinear": false,
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 2,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ]
+                    }
+                  },
+                  {
+                    "description": {
+                      "type": "label",
+                      "text": "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks.",
+                      "size": [
+                        222,
+                        39
+                      ],
+                      "offset": [
+                        9,
+                        28
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.65,
+                      "color": [
+                        0.94,
+                        0.92,
+                        0.85
+                      ],
+                      "shadow": false
+                    }
+                  }
+                ]
               }
             }
           ]

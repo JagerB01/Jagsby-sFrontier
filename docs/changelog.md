@@ -1,3 +1,11 @@
+# 0.0.27
+
+- Added charcoal/silver tooltip boxes with wheat-gold titles and ivory explanations for all three Local and five Global research techs.
+- Local explanations appear over the tech description or its Research button. Global explanations appear over each card. Hover and pressed states include the popup; normal states do not.
+- Placed popups above or below their tech to stay inside the charter. Explanation controls do not submit actions or change research; existing purchase bindings remain intact.
+- Descriptions distinguish planned Global effects and Hearthstone's inactive healing effect from available prototype features.
+- Build/static validation (101 pack files), 30 JavaScript tests and 3 Python tests passed. In-game hover, controller focus, layering and dismissal still need verification.
+
 # 0.0.26
 
 - Moved Local research to the left and Global research to the right. Local is the initial research tab.

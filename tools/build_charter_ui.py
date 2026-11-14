@@ -24,6 +24,16 @@ IVORY = (0.94, 0.92, 0.85)
 SILVER = (0.73, 0.73, 0.68)
 WHEAT = (0.82, 0.70, 0.44)
 CHARCOAL = (0.16, 0.17, 0.18)
+RESEARCH_HELP = {
+    "efficiency": ("Production Efficiency", "Raises this settlement's production bonus\nby 10% per level. Higher levels require\nglobal Settlement Development research."),
+    "hearth": ("Hearthstone", "Intended to grant Regeneration I inside\nsettlement boundaries. The prototype records\nthe upgrade; the healing effect is not active."),
+    "biome": ("Biome Utilization", "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks."),
+    "settlement_capacity": ("Settlement Charters", "Planned: increase the number of settlements\nyour civilization can establish. Repeatable.\nGlobal purchases are not yet available."),
+    "frontier_expansion": ("Frontier Mandate", "Planned: establish settlements in more\ndistant frontier zones. Five levels.\nGlobal purchases are not yet available."),
+    "settlement_development": ("Stewardship", "Planned: unlock higher levels of local\nProduction Efficiency. Repeatable.\nGlobal purchases are not yet available."),
+    "colonization": ("Reclamation", "Planned: enable production in frontier\nsettlements. Five levels are proposed.\nGlobal purchases are not yet available."),
+    "shared_storage": ("Hoards", "Planned: expand shared storage for produced\nresources. Repeatable.\nGlobal purchases are not yet available."),
+}
 GENERATED_CONTROLS = {}
 
 
@@ -234,6 +244,20 @@ def info_card(name, title, index, y):
         ]})
 
 
+def research_tooltip(key, offset):
+    title, description = RESEARCH_HELP[key]
+    return control("research_tooltip", {
+        "type": "panel", "size": [240, 70], "offset": offset,
+        "anchor_from": "top_left", "anchor_to": "top_left", "layer": 100,
+        "controls": [
+            control("frame", image(button_texture(240, 70, "default"), [240, 70])),
+            control("title", label(title, [222, 12], (9, 7), WHEAT, 0.8)),
+            control("rule", image("frontier/solid", [222, 1], (9, 23), 2, list(SILVER))),
+            control("description", label(description, [222, 39], (9, 28), IVORY, 0.65)),
+        ],
+    })
+
+
 def research_node(name, title, subtitle, position, sprite):
     states = []
     for state in ["default", "hover", "pressed"]:
@@ -242,6 +266,8 @@ def research_node(name, title, subtitle, position, sprite):
             control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
             control("name", label(title, [78, 11], (39, 4), color=IVORY, scale=0.72)),
             control("note", label(subtitle, [78, 13], (39, 18), color=SILVER, scale=0.55)),
+            *([research_tooltip(name, [7 - position[0], 38 if position[1] == 0 else -74])]
+              if state in ["hover", "pressed"] else []),
         ]}))
     return control(name, {"type": "button", "size": [122, 34], "offset": position,
         "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
@@ -339,10 +365,31 @@ def build():
         values.update({"offset": [4, 3], "anchor_from": "top_left", "anchor_to": "top_left"})
         purchase = action(key + "_buy", ACTIONS[key], "Research", width=76)[key + "_buy"]
         purchase.update({"offset": [178, 10], "anchor_from": "top_left", "anchor_to": "top_left"})
+        tooltip_y = 44 if i == 0 else -74
+        # The explanation area never submits a form action. The adjacent
+        # purchase button keeps its existing native collection/index binding.
+        info_states = []
+        for state in ["default", "hover", "pressed"]:
+            info_states.append(control(state, {
+                "type": "panel", "size": [174, 40], "controls": [
+                    control("data", copy.deepcopy(values)),
+                    *([research_tooltip(key, [7, tooltip_y])]
+                      if state in ["hover", "pressed"] else []),
+                ],
+            }))
+        info = {"type": "button", "size": [174, 40],
+            "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
+            "focus_enabled": True, "hover_enabled": True, "button_mappings": [],
+            "default_control": "default", "hover_control": "hover", "pressed_control": "pressed",
+            "controls": info_states}
+        for state in GENERATED_CONTROLS["jf_action_" + key + "@common.button"]["controls"]:
+            if next(iter(state)) in ["hover", "pressed"]:
+                next(iter(state.values()))["controls"].append(
+                    research_tooltip(key, [7 - 178, tooltip_y - 10]))
         local_controls.append(control(key, {"type": "panel", "size": [254, 40],
             "offset": [0, i * 44], "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
                 control("paper", image("frontier/palette_panel", [254, 40], color=[0.8, 0.8, 0.8])),
-                control("data", values), control("purchase", purchase),
+                control("explanation", info), control("purchase", purchase),
             ]}))
     ui["jf_research_local_content"] = {"type": "panel", "size": [254, 131], "controls": local_controls}
     research_controls = [research_tab("local", 0), research_tab("global", 1)]
@@ -471,7 +518,9 @@ def build():
     ]}
     submit = copy.deepcopy(GENERATED_CONTROLS["jf_action_efficiency@common.button"])
     for state in submit["controls"]:
-        next(iter(state.values()))["controls"][2]["caption"]["text"] = "Save name"
+        panel = next(iter(state.values()))
+        panel["controls"] = [entry for entry in panel["controls"] if "research_tooltip" not in entry]
+        panel["controls"][2]["caption"]["text"] = "Save name"
     submit["$pressed_button_name"] = "button.submit_custom_form"
     for mapping in submit["button_mappings"]:
         mapping["to_button_id"] = "button.submit_custom_form"

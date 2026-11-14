@@ -166,3 +166,17 @@ The button's texture is the visual face; native form bindings, toggle logic
 and the visual-only global research tree are unchanged. Existing action
 renderer child slots are retained for picker/rename reuse, with the obsolete
 flat fill slot becoming an empty panel so it does not cover the new art.
+
+## Research explanations (0.0.27)
+
+Hover a Global tech card, a Local tech's text area, or its Research button to
+show a small silver-edged charcoal explanation box. The box contains a gold
+title and ivory description. It disappears when the control returns to its
+normal state; pressed states retain the explanation while held. Focus-enabled
+controls use the existing native button hover state for controller navigation.
+Native focus/hover behaviour and popup layering require an in-game check.
+
+Descriptions cover all eight techs and explicitly identify planned Global
+effects and the inactive Hearthstone healing effect. Viewing an explanation
+never purchases research. Local purchases retain their original actions.
+Local stays on the left and Global on the right.

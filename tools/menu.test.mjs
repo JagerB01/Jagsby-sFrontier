@@ -224,3 +224,36 @@ test('standalone UI references resolve to Frontier files and definitions',async(
     await access(new URL(path+'.png',resourceRoot));
   }
 });
+
+test('research explanations appear only in hover/pressed states and stay inside the charter',async()=>{
+  const ui=await loadUI();
+  function check(button,x,y) {
+    const states=children(button);
+    assert.equal(children(states.default).research_tooltip,undefined);
+    for(const state of ['hover','pressed']) {
+      const tip=children(states[state]).research_tooltip;
+      assert.ok(tip,'Missing research explanation');
+      const content=children(tip);
+      assert.ok(content.title.text.length>0);
+      assert.ok(content.description.text.length>0);
+      assert.ok(x+tip.offset[0]>=18&&x+tip.offset[0]+tip.size[0]<=362);
+      assert.ok(y+tip.offset[1]>=30&&y+tip.offset[1]+tip.size[1]<=227);
+      assert.equal(JSON.stringify(tip).includes('button.form_button_click'),false);
+    }
+  }
+  for(const node of Object.values(children(ui.jf_research_global_content))) {
+    if(node.type!=='button')continue;
+    check(node,104+node.offset[0],89+node.offset[1]);
+    assert.ok(children(children(node).hover).research_tooltip.controls.some(
+      entry=>entry.description?.text.includes('not yet available')));
+  }
+  for(const [key,row] of Object.entries(children(ui.jf_research_local_content))) {
+    const info=children(row).explanation;
+    assert.deepEqual(info.button_mappings,[]);
+    check(info,104,89+row.offset[1]);
+    const purchase=ui['jf_action_'+key+'@common.button'];
+    check(purchase,104+178,89+row.offset[1]+10);
+  }
+  assert.equal(JSON.stringify(ui.jf_rename).includes('research_tooltip'),false);
+  assert.equal(JSON.stringify(ui['jf_choice@common.button']).includes('research_tooltip'),false);
+});
