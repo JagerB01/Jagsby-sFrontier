@@ -235,7 +235,7 @@ test('research explanations appear only in hover/pressed states and stay inside 
       assert.ok(tip,'Missing research explanation');
       const content=children(tip);
       assert.ok(content.title.text.length>0);
-      assert.ok(content.description.text.length>0);
+      assert.ok(content.description?.text.length>0 || content.live_details);
       assert.ok(x+tip.offset[0]>=18&&x+tip.offset[0]+tip.size[0]<=362);
       assert.ok(y+tip.offset[1]>=30&&y+tip.offset[1]+tip.size[1]<=227);
       assert.equal(JSON.stringify(tip).includes('button.form_button_click'),false);
@@ -247,13 +247,24 @@ test('research explanations appear only in hover/pressed states and stay inside 
     assert.ok(children(children(node).hover).research_tooltip.controls.some(
       entry=>entry.description?.text.includes('not yet available')));
   }
-  for(const [key,row] of Object.entries(children(ui.jf_research_local_content))) {
-    const info=children(row).explanation;
-    assert.deepEqual(info.button_mappings,[]);
-    check(info,104,89+row.offset[1]);
+  const local=children(ui.jf_research_local_content);
+  for(const [key,index] of [['efficiency',14],['hearth',15],['biome',16]]) {
+    const node=local[key];
+    assert.deepEqual(node.size,[122,34]);
+    assert.ok(node.offset[0]+node.size[0]<=254);
+    const scope=children(node)[key+'_buy'];
+    const record=scope.controls[0]['record@jagsby_frontier.jf_action_'+key];
+    assert.equal(record.collection_index,index);
     const purchase=ui['jf_action_'+key+'@common.button'];
-    check(purchase,104+178,89+row.offset[1]+10);
+    assert.equal(purchase.$pressed_button_name,'button.form_button_click');
+    check(purchase,104+node.offset[0],89+node.offset[1]);
+    const details=children(children(children(purchase).hover).research_tooltip).live_details;
+    assert.ok(details.controls[0]['record@jagsby_frontier.jf_data_'+key]);
   }
+  assert.ok(local.efficiency.offset[1]<local.hearth.offset[1]);
+  assert.equal(local.hearth.offset[1],local.biome.offset[1]);
+  assert.ok(local.hearth.offset[0]<local.biome.offset[0]);
+  assert.ok(local.branch_0&&local.branch_1&&local.branch_2&&local.branch_3);
   assert.equal(JSON.stringify(ui.jf_rename).includes('research_tooltip'),false);
   assert.equal(JSON.stringify(ui['jf_choice@common.button']).includes('research_tooltip'),false);
 });

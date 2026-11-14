@@ -244,21 +244,31 @@ def info_card(name, title, index, y):
         ]})
 
 
-def research_tooltip(key, offset):
+def research_tooltip(key, offset, live=False):
     title, description = RESEARCH_HELP[key]
+    height = 96 if live else 70
+    if live:
+        template = data_template(DATA[key], [222, 54], scale=0.65)
+        details = collection_scope(template, [222, 54])
+        details.update({"offset": [9, 28], "anchor_from": "top_left", "anchor_to": "top_left"})
+        body = [control("live_details", details),
+                control("hint", label("Healing effect not active." if key == "hearth" else "Select this tech to research.",
+                                      [222, 9], (9, 83), SILVER, 0.6))]
+    else:
+        body = [control("description", label(description, [222, 39], (9, 28), IVORY, 0.65))]
     return control("research_tooltip", {
-        "type": "panel", "size": [240, 70], "offset": offset,
+        "type": "panel", "size": [240, height], "offset": offset,
         "anchor_from": "top_left", "anchor_to": "top_left", "layer": 100,
         "controls": [
-            control("frame", image(button_texture(240, 70, "default"), [240, 70])),
+            control("frame", image(button_texture(240, height, "default"), [240, height])),
             control("title", label(title, [222, 12], (9, 7), WHEAT, 0.8)),
             control("rule", image("frontier/solid", [222, 1], (9, 23), 2, list(SILVER))),
-            control("description", label(description, [222, 39], (9, 28), IVORY, 0.65)),
+            *body,
         ],
     })
 
 
-def research_node(name, title, subtitle, position, sprite):
+def research_node(name, title, subtitle, position, sprite, local=False):
     states = []
     for state in ["default", "hover", "pressed"]:
         states.append(control(state, {"type": "panel", "size": [122, 34], "controls": [
@@ -266,9 +276,15 @@ def research_node(name, title, subtitle, position, sprite):
             control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
             control("name", label(title, [78, 11], (39, 4), color=IVORY, scale=0.72)),
             control("note", label(subtitle, [78, 13], (39, 18), color=SILVER, scale=0.55)),
-            *([research_tooltip(name, [7 - position[0], 38 if position[1] == 0 else -74])]
+            *([research_tooltip(name, [7 - position[0], 38 if position[1] == 0 else (-100 if local else -74)], live=local)]
               if state in ["hover", "pressed"] else []),
         ]}))
+    if local:
+        purchase = action(name + "_buy", ACTIONS[name], title, width=122, height=34)
+        GENERATED_CONTROLS["jf_action_" + name + "@common.button"]["controls"] = states
+        return control(name, {"type": "panel", "size": [122, 34], "offset": position,
+            "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
+            "controls": [purchase]})
     return control(name, {"type": "button", "size": [122, 34], "offset": position,
         "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
         "focus_enabled": True, "hover_enabled": True, "button_mappings": [],
@@ -290,6 +306,21 @@ def global_tree():
         research_node("settlement_development", "Stewardship", "Higher local research\nRepeatable", [132, 47], "stewardship"),
         research_node("colonization", "Reclamation", "Frontier production\n5 levels proposed", [0, 94], "reclamation"),
         research_node("shared_storage", "Hoards", "Shared storage\nRepeatable", [132, 94], "hoards"),
+    ]
+    return {"type": "panel", "size": [254, 131], "controls": controls}
+
+
+def local_tree():
+    # Visual grouping only: this does not introduce gameplay prerequisites.
+    lines = [(127, 34, 1, 7), (61, 40, 133, 1),
+             (61, 40, 1, 7), (193, 40, 1, 7)]
+    controls = [control("branch_" + str(i), image("frontier/solid", [w, h], (x, y), 2, [0.55, 0.35, 0.14]))
+                for i, (x, y, w, h) in enumerate(lines)]
+    controls += [
+        research_node("efficiency", "Efficiency", "+10% production\nper level", [66, 0], "stewardship", local=True),
+        research_node("hearth", "Hearthstone", "Settlement healing\nPrototype", [0, 47], "settlement_charters", local=True),
+        research_node("biome", "Biome Utilization", "Secondary biome\nProduction", [132, 47], "reclamation", local=True),
+        control("hint", label("Hover for details. Select a tech to research.", [254, 14], (0, 108), SILVER, 0.65)),
     ]
     return {"type": "panel", "size": [254, 131], "controls": controls}
 
@@ -358,40 +389,7 @@ def build():
         ui["jf_" + name + "_content"] = {"type": "stack_panel", "orientation": "vertical",
             "size": [254, "100%c"], "anchor_from": "top_left", "anchor_to": "top_left", "controls": children}
     ui["jf_research_global_content"] = global_tree()
-    local_controls = []
-    for i, key in enumerate(["efficiency", "hearth", "biome"]):
-        template = data_template(DATA[key], [166, 34], scale=0.65)
-        values = collection_scope(template, [166, 34])
-        values.update({"offset": [4, 3], "anchor_from": "top_left", "anchor_to": "top_left"})
-        purchase = action(key + "_buy", ACTIONS[key], "Research", width=76)[key + "_buy"]
-        purchase.update({"offset": [178, 10], "anchor_from": "top_left", "anchor_to": "top_left"})
-        tooltip_y = 44 if i == 0 else -74
-        # The explanation area never submits a form action. The adjacent
-        # purchase button keeps its existing native collection/index binding.
-        info_states = []
-        for state in ["default", "hover", "pressed"]:
-            info_states.append(control(state, {
-                "type": "panel", "size": [174, 40], "controls": [
-                    control("data", copy.deepcopy(values)),
-                    *([research_tooltip(key, [7, tooltip_y])]
-                      if state in ["hover", "pressed"] else []),
-                ],
-            }))
-        info = {"type": "button", "size": [174, 40],
-            "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
-            "focus_enabled": True, "hover_enabled": True, "button_mappings": [],
-            "default_control": "default", "hover_control": "hover", "pressed_control": "pressed",
-            "controls": info_states}
-        for state in GENERATED_CONTROLS["jf_action_" + key + "@common.button"]["controls"]:
-            if next(iter(state)) in ["hover", "pressed"]:
-                next(iter(state.values()))["controls"].append(
-                    research_tooltip(key, [7 - 178, tooltip_y - 10]))
-        local_controls.append(control(key, {"type": "panel", "size": [254, 40],
-            "offset": [0, i * 44], "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-                control("paper", image("frontier/palette_panel", [254, 40], color=[0.8, 0.8, 0.8])),
-                control("explanation", info), control("purchase", purchase),
-            ]}))
-    ui["jf_research_local_content"] = {"type": "panel", "size": [254, 131], "controls": local_controls}
+    ui["jf_research_local_content"] = local_tree()
     research_controls = [research_tab("local", 0), research_tab("global", 1)]
     for scope in ["global", "local"]:
         if scope in ["global", "local"]:
@@ -516,7 +514,7 @@ def build():
         control("vanilla@server_form.custom_form", {"bindings": condition("(not (#title_text = 'JF_CHARTER|Rename'))")}),
         control("rename@jagsby_frontier.jf_rename", {"bindings": condition("(#title_text = 'JF_CHARTER|Rename')")}),
     ]}
-    submit = copy.deepcopy(GENERATED_CONTROLS["jf_action_efficiency@common.button"])
+    submit = copy.deepcopy(GENERATED_CONTROLS["jf_action_scan@common.button"])
     for state in submit["controls"]:
         panel = next(iter(state.values()))
         panel["controls"] = [entry for entry in panel["controls"] if "research_tooltip" not in entry]

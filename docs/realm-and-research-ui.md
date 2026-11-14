@@ -180,3 +180,17 @@ Descriptions cover all eight techs and explicitly identify planned Global
 effects and the inactive Hearthstone healing effect. Viewing an explanation
 never purchases research. Local purchases retain their original actions.
 Local stays on the left and Global on the right.
+
+## Local research tree (0.0.28)
+
+Local now uses the same 122×34 icon-card design and branching lines as Global.
+Efficiency is centered above Hearthstone and Biome Utilization. Branches are
+visual grouping and do not add prerequisites. The three cards reuse the existing
+Stewardship, Settlement Charters and Reclamation artwork respectively.
+
+Select a Local card to run its existing research/upgrade action. Hover or focus
+uses a larger 240×96 popup containing the live level, benefit, material cost and
+status from the existing research record. Hearthstone retains an explicit note
+that healing is inactive. Global remains informational with its existing static
+descriptions. Popups are positioned inside the charter's bounds; actual Bedrock
+input, text wrapping, focus and layering remain unverified.

@@ -1,3 +1,11 @@
+# 0.0.28
+
+- Replaced Local research's full-width rows with the same 122×34 icon cards, branch lines and charcoal/silver styling as Global.
+- Efficiency sits above Hearthstone and Biome Utilization. The lines group the upgrades visually; no new prerequisites were added.
+- Selecting a Local card uses its original purchase action. Hover explanations retain live level, benefit, cost and affordability/requirement text, plus the Hearthstone healing limitation.
+- Kept Local left and Global right, with Global cards remaining informational.
+- Build/static validation (102 pack files), all 30 JavaScript tests and all 3 Python tests passed. Native Minecraft layout, hover and selection need in-game verification.
+
 # 0.0.27
 
 - Added charcoal/silver tooltip boxes with wheat-gold titles and ivory explanations for all three Local and five Global research techs.
