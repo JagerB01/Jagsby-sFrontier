@@ -1,3 +1,11 @@
+# 0.0.29
+
+- Added Map / My Settlements / All Settlements under Realm, with a 32×12 terrain viewport, settlement/player markers, pan, zoom, centre, dimension and refresh controls.
+- Shared explored surface samples are stored in world dynamic properties, visible to every player and partitioned by dimension. Exploration starts with this version; historical discoveries are not imported.
+- Scanning samples at most six columns per second across online players. Rendering uses saved data only. Storage is capped; unloaded columns do not erase discoveries.
+- Added a map legend in Information. UI rendering uses original palette tiles and indexed form images, with no HUD/font overrides or dependency on Advanced Minimap.
+- Build/static validation, 36 JavaScript tests and 3 Python tests passed. Native Bedrock UI, live persistence and performance require in-game verification. See shared-realm-map.md for limits and trial steps.
+
 # 0.0.28
 
 - Replaced Local research's full-width rows with the same 122×34 icon cards, branch lines and charcoal/silver styling as Global.

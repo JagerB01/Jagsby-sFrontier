@@ -18,6 +18,10 @@ ACTIONS = {name: i + 14 for i, name in enumerate([
     "storage", "scan", "selectBiome", "collect", "rename",
 ])}
 ACTIONS.update({"claim": 28, "minePrev": 29, "mineNext": 30, "allPrev": 31, "allNext": 32})
+DATA["mapInfo"] = 33
+DATA.update({"mapCell" + str(i): 34 + i for i in range(32 * 12)})
+ACTIONS.update({"map" + key: 418 + i for i, key in enumerate([
+    "North", "South", "West", "East", "ZoomIn", "ZoomOut", "Center", "Dimension", "Refresh"])})
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -212,12 +216,14 @@ def overview_value(name, index, offset, size, scale=0.9):
 
 
 def research_tab(scope, index, section="research", caption_text=None):
+    width, spacing = (82, 86) if section == "realm" else (124, 129)
+    order = ["map", "mine", "all"] if section == "realm" else ["local", "global"]
     toggle = tab("Research", index)["jf_tab_research"]
-    toggle.update({"size": [124, 23], "offset": [index * 129, 0],
+    toggle.update({"size": [width, 23], "offset": [index * spacing, 0],
         "toggle_name": "jagsby_frontier_" + section + "_tabs", "tts_name": caption_text or scope.title(),
         "focus_identifier": "jf_" + section + "_focus_" + scope,
-        "focus_change_left": "jf_" + section + "_focus_" + ("mine" if section == "realm" else "local"),
-        "focus_change_right": "jf_" + section + "_focus_" + ("all" if section == "realm" else "global")})
+        "focus_change_left": "jf_" + section + "_focus_" + order[max(0, index - 1)],
+        "focus_change_right": "jf_" + section + "_focus_" + order[min(len(order) - 1, index + 1)]})
     toggle.pop("focus_change_up", None)
     toggle.pop("focus_change_down", None)
     for binding in toggle["bindings"]:
@@ -226,11 +232,11 @@ def research_tab(scope, index, section="research", caption_text=None):
     for state in toggle["controls"]:
         state_name = next(iter(state))
         panel = next(iter(state.values()))
-        panel["size"] = [124, 23]
-        panel["controls"][0]["face"] = image(button_texture(124, 23, state_name), [124, 23], layer=1)
+        panel["size"] = [width, 23]
+        panel["controls"][0]["face"] = image(button_texture(width, 23, state_name), [width, 23], layer=1)
         panel["controls"] = [entry for entry in panel["controls"] if "icon" not in entry]
         caption = next(entry["caption"] for entry in panel["controls"] if "caption" in entry)
-        caption.update({"text": caption_text or scope.title(), "size": [124, 13], "offset": [0, 6], "text_alignment": "center"})
+        caption.update({"text": caption_text or scope.title(), "size": [width, 13], "offset": [0, 6], "text_alignment": "center"})
     return control("jf_" + section + "_tab_" + scope, toggle)
 
 
@@ -466,9 +472,43 @@ def build():
     ui["jf_information_content"] = {"type": "panel", "size": [257, 158], "controls": [
         control("heading", label("Information", [233, 14], (8, 8), WHEAT, 0.95)),
         control("rule", image("frontier/solid", [233, 1], (8, 29), 2, list(WHEAT))),
-        control("placeholder", label("Guides and reference will appear here.", [233, 30], (8, 40), scale=0.8)),
+        control("placeholder", label("Realm Map\nGold house: current settlement\nIvory house: other settlement\nWhite cross: your position\nDark terrain: not yet explored\nRefresh to see new discoveries.", [233, 96], (8, 40), scale=0.75)),
     ]}
-    realm_controls = [research_tab("mine", 0, "realm", "My Settlements"), research_tab("all", 1, "realm", "All Settlements")]
+    realm_controls = [research_tab("map", 0, "realm", "Map"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
+    map_controls = []
+    for i in range(32 * 12):
+        template = "jf_map_cell_" + str(i)
+        tile = image("frontier/map/unknown", [7, 7])
+        tile["bindings"] = [
+            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        ]
+        GENERATED_CONTROLS[template] = tile
+        map_controls.append(control("cell_" + str(i), {
+            "type": "stack_panel", "orientation": "vertical", "size": [7, 7],
+            "offset": [15 + (i % 32) * 7, (i // 32) * 7],
+            "anchor_from": "top_left", "anchor_to": "top_left", "collection_name": "form_buttons",
+            "controls": [control("tile@jagsby_frontier." + template, {"collection_index": DATA["mapCell" + str(i)]})],
+        }))
+    map_controls.append(overview_value("map_status", DATA["mapInfo"], [0, 86], [254, 10], scale=0.55))
+    for row, entries in enumerate([
+        [("West", "West"), ("North", "North"), ("South", "South"), ("East", "East")],
+        [("ZoomIn", "Zoom +"), ("ZoomOut", "Zoom -"), ("Center", "Centre"), ("Dimension", "Dim"), ("Refresh", "Refresh")],
+    ]):
+        width = 48 if row else 60
+        for i, (key, caption) in enumerate(entries):
+            button = action("map_" + key, ACTIONS["map" + key], caption, width=width, height=15)["map_" + key]
+            button.update({"offset": [i * (width + 3), 98 + row * 17], "anchor_from": "top_left", "anchor_to": "top_left"})
+            for state in GENERATED_CONTROLS["jf_action_map" + key + "@common.button"]["controls"]:
+                caption_control = next(iter(state.values()))["controls"][2]["caption"]
+                caption_control.update({"offset": [3, 2], "size": [width - 6, 10], "font_scale_factor": 0.65})
+            map_controls.append(control("map_" + key, button))
+    ui["jf_realm_map_content"] = {"type": "panel", "size": [257, 131], "controls": map_controls}
+    realm_controls.append(control("map@jagsby_frontier.jf_realm_map_content", {
+        "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "size": [257, 131],
+        "bindings": [view("#toggle_state", target, "jf_realm_tab_map") for target in ["#visible", "#enabled"]],
+    }))
     for scope, data_key in [("mine", "realmMine"), ("all", "realmAll")]:
         content = [record("directory", DATA[data_key], 103)]
         for suffix, caption, x in [("Prev", "Previous", 0), ("Next", "Next", 129)]:
@@ -549,7 +589,7 @@ def build():
         "namespace": "server_form", "main_screen_content/server_form_factory": {
             "control_ids": {"long_form": "@jagsby_frontier.jf_router",
                             "custom_form": "@jagsby_frontier.jf_modal_router"}}}, indent=2) + "\n")
-    layout = {"data": DATA, "actions": ACTIONS, "recordCount": 33, "tabs": TABS}
+    layout = {"data": DATA, "actions": ACTIONS, "recordCount": 427, "tabs": TABS}
     (ROOT / "packs/behavior/scripts/charter-layout.js").write_text(
         "// Generated by tools/build_charter_ui.py; indices match the JSON UI.\n"
         "export const CHARTER_LAYOUT = " + json.dumps(layout, indent=2) + ";\n")

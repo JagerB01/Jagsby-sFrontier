@@ -20,6 +20,8 @@ const realmSource=(await readFile(new URL('settlement-realm.js',scriptBase),'utf
   .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
   .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl));
 const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toString('base64')}`;
+const mapSource=await readFile(new URL('realm-map.js',scriptBase),'utf8');
+const mapModuleUrl=`data:text/javascript;base64,${Buffer.from(mapSource).toString('base64')}`;
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });
 
 test('native trading levels give linear 0.2 to 1.0 contributions', () => {
@@ -129,7 +131,8 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
     .replace('"./villager-trade-bridge.js"', JSON.stringify(bridgeModuleUrl))
     .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl))
     .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
-    .replace('"./settlement-realm.js"',JSON.stringify(realmModuleUrl));
+    .replace('"./settlement-realm.js"',JSON.stringify(realmModuleUrl))
+    .replace('"./realm-map.js"',JSON.stringify(mapModuleUrl));
   await import(`data:text/javascript;base64,${Buffer.from(main).toString('base64')}`);
   const location = { x:0, y:64, z:0 };
   const player = { id:'p', name:'Builder', sendMessage() {}, getComponent() {} };
@@ -156,7 +159,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,33);
+  assert.equal(forms[0].records.length,427);
   assert.equal(forms[0].records[24],'[JF:action:rename]');
   assert.equal(forms[0].records[25],'[JF:data:owner]Builder');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].owner.id,'p');
@@ -165,7 +168,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[0].records[2],'0.2 RP');
   assert.equal(forms[0].records[3],'[JF:data:tier]Outpost');
   assert.equal(forms[0].icons[3],'textures/ui/frontier/settlements/outpost');
-  assert.equal(forms[1].text,'[JF:tab:research][JF:research:local][JF:realm:mine]');
+  assert.equal(forms[1].text,'[JF:tab:research][JF:research:local][JF:realm:map]');
   nativeTier = 4;
   handlers.beforeInteract(event);
   await queued.shift()();
@@ -199,5 +202,14 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms.at(-1).records[3],'[JF:data:tier]Village');
   assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/village');
   assert.equal(scans,6);
+  menuResponse={canceled:false,selection:421}; // Realm map East.
+  handlers.beforeInteract(event);
+  await queued.shift()();
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(scans,7,'Map action must not trigger another villager census');
+  assert.ok(forms.at(-1).text.startsWith('[JF:tab:realm]'));
+  assert.ok(forms.at(-1).text.includes('[JF:realm:map]'));
+  assert.ok(forms.at(-1).records[33].includes('64, 0'));
+  assert.ok(forms.at(-1).icons.slice(34,418).every(path=>path.startsWith('textures/ui/frontier/map/')));
   delete globalThis.__frontierTest;
 });

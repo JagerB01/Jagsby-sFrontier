@@ -8,6 +8,9 @@ import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
 
+import { createSharedMap } from "./realm-map.js";
+
+const sharedMap=createSharedMap(world);
 const BLOCK = "jagsby_frontier:village_charter";
 const KEY = "jagsby_frontier:state_v1";
 const BIOME_RADIUS = 256;
@@ -80,7 +83,7 @@ function researchText(s,v,key,player){
   if(key==='efficiency'&&current>=1+s.global.development&&cost)status='Requires Settlement Development';
   return `§6${names[key]}§r  ${current}/${COSTS[key].length}\n${benefits[key]}\n${cost?'Test cost: '+costText(cost):'Maximum level'}\n${status}`;
 }
-function open(player,vId,page='Overview',researchScope='global',realmPage=0,realmScope='mine'){
+function open(player,vId,page='Overview',researchScope='global',realmPage=0,realmScope='map'){
   const s=state(),v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
   const {data,actions,recordCount,tabs}=CHARTER_LAYOUT;
   const records=Array(recordCount).fill('');
@@ -100,7 +103,21 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   records[data.production]=`Primary biome: ${v.biome}\nSecondary biome: ${v.secondary||'None'}\nSurveyed options: ${v.available.join(', ')||'Survey nearby biomes'}\nEligible resources: ${eligible.join(', ')||'None configured'}\nEfficiency: +${v.efficiency*10}%\nPrototype cycle: ${PRODUCTION_MS/60000} minutes\n§cSample resource table and production balance; not final.§r`;
   records[data.stockpile]=`Stored: ${total(s)} / ${cap(s)}\nRemaining capacity: ${cap(s)-total(s)}\nProduced resources only; shared by every settlement.`;
   records[data.resources]=Object.entries(s.stock).map(([r,n])=>`${r.replace('minecraft:','').replaceAll('_',' ')}: ${n}`).join('\n')||'No produced resources yet.';
+  let mapFrame;
+  try {
+    mapFrame=sharedMap.render(sharedMap.view(player,v),s.villages,player,vId);
+  } catch(e) {
+    mapFrame={cells:Array(384).fill('textures/ui/frontier/map/unknown'),info:'Map unavailable; refresh to retry.'};
+    console.warn(`Frontier map: ${e}`);
+  }
+  records[data.mapInfo]=mapFrame.info;
   const handlers=new Map();
+  for(const command of ['North','South','West','East','ZoomIn','ZoomOut','Center','Dimension','Refresh']) {
+    handlers.set(actions['map'+command],()=>{
+      sharedMap.view(player,v,command[0].toLowerCase()+command.slice(1));
+      open(player,vId,'Realm','local',0,'map');
+    });
+  }
   // Global tree nodes are visual-only until their progression is approved.
   for(const key of ['efficiency','hearth','biome'])handlers.set(actions[key],()=>upgrade(player,vId,key));
   handlers.set(actions.scan,()=>scan(player,vId));
@@ -118,7 +135,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
   const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}]${v.owner?'':'[JF:unclaimed]'}`);
-  records.forEach((text,index)=>form.button(text,index===data.tier?tier.texture:undefined));
+  records.forEach((text,index)=>form.button(text,index===data.tier?tier.texture:index>=data.mapCell0&&index<data.mapCell0+384?mapFrame.cells[index-data.mapCell0]:undefined));
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
 async function renameSettlement(player,vId){
@@ -199,3 +216,10 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
 world.afterEvents.playerBreakBlock.subscribe(ev=>{if(ev.brokenBlockPermutation.type.id!==BLOCK)return;const s=state(),legacy=id(ev.block.location);delete s.villages[`${ev.block.dimension.id}|${legacy}`];if(s.villages[legacy]?.dimension===ev.block.dimension.id)delete s.villages[legacy];save(s);});
 system.runInterval(tick,20*30);
 system.runInterval(()=>{const s=state();for(const player of world.getPlayers()){for(const v of Object.values(s.villages)){if(!v.hearth||player.dimension.id!==v.dimension)continue;const d=Math.hypot(player.location.x-v.location.x,player.location.z-v.location.z);if(d<=32){try{player.addEffect('regeneration',120,{amplifier:0,showParticles:false});}catch(e){}break;}}}},20*4);
+
+// Shared discovery is independent of charter census and runs on a small budget.
+let mapWarningShown=false;
+system.runInterval(()=>{
+  try { sharedMap.tick(world.getPlayers());mapWarningShown=false; }
+  catch(e){if(!mapWarningShown){console.warn(`Frontier shared exploration: ${e}`);mapWarningShown=true;}}
+},20);

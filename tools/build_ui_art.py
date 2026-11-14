@@ -96,6 +96,23 @@ def button_texture(width, height, state):
 
 def build():
     DEST.mkdir(parents=True, exist_ok=True)
+    map_colors = {
+        "unknown": (27, 29, 34), "grass": (98, 126, 68), "leaves": (53, 85, 49),
+        "water": (62, 108, 151), "sand": (193, 171, 114), "stone": (118, 120, 115),
+        "snow": (218, 225, 220), "wood": (117, 88, 58), "earth": (117, 101, 76),
+        "lava": (200, 86, 38), "built": (166, 151, 129),
+        "current": (218, 184, 104), "settlement": (210, 210, 193), "player": (248, 248, 239),
+    }
+    (DEST / "map").mkdir(exist_ok=True)
+    for name, color in map_colors.items():
+        c = Canvas(7, 7, color)
+        if name in ["current", "settlement", "player"]:
+            c.rect(1, 1, 5, 5, (29, 32, 34))
+            if name == "player":
+                c.rect(3, 2, 1, 3, color); c.rect(2, 3, 3, 1, color)
+            else:
+                c.rect(2, 3, 3, 2, color); c.rect(3, 2, 1, 1, color)
+        c.save("map/" + name + ".png")
     Canvas(1, 1, (255, 255, 255)).save("solid.png")
     # Palette materials are generated at their native UI sizes so all screens
     # share neutral charcoal surfaces, aged silver trim and wheat highlights.
