@@ -1,3 +1,12 @@
+# 0.0.64
+
+- Opening the charter uses the last saved census and no longer queries villagers
+  or waits for trade ranks. Survey explicitly refreshes both villagers/RP within
+  80 blocks and nearby biomes within 256 blocks, then redraws the current tab.
+- Share concurrent Survey requests for the same settlement across the complete
+  census/biome job. Keep existing census and production power until surveyed;
+  new settlements require their first Survey. Retain the compact menu payload.
+
 # 0.0.63
 
 - Compact later UI transport IDs from a sparse 506-record array to 289 records

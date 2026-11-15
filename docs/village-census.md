@@ -1,14 +1,15 @@
-> 0.0.57 restores census refresh on each charter activation. Survey scans nearby
-> biomes only. Menu navigation does not add another census, and the radius stays
-> 80 blocks. Crafting is described in [Village Charter crafting](village-charter-crafting.md).
+> 0.0.64 makes villagers/RP and biome discovery manual through **Survey**.
+> Opening and navigation use the saved census without a query or rank wait.
+> The villager radius remains 80 blocks; biome discovery remains 256 blocks.
+> New settlements need their first Survey to record RP.
 
 > 0.0.55 displays inferred RP and tier names plainly, without ≥ or at-least
 > decorations. The existing unknown-rank fallback calculation is retained.
 
 # Village census (0.0.12)
 
-Charter interaction queries loaded vanilla villagers once in a 80-block sphere,
-in the charter's dimension. Placement, menu navigation, Rename and busy-menu
+Survey queries loaded vanilla villagers once in an 80-block sphere,
+in the charter's dimension. Placement, opening, menu navigation, Rename and busy-menu
 retries do not rerun that query. Counts are saved with the settlement.
 
 ## Native trade-level bridge
@@ -20,9 +21,9 @@ has no errors and reports raw tier 1; the user identified that villager as an
 Apprentice and confirmed the probe was working. Mojang's client villager
 rendering maps query.trade_tier directly onto the five ordered badge textures.
 
-0.0.12 integrates that controller context. Charter interaction requests sampling
-for the observed villagers, waits one batch of 10 ticks, reads ready/raw_rank
-properties, and saves the resulting census. Concurrent menu openings share
+Survey requests fresh controller sampling for the observed villagers, polls
+ready/raw_rank each tick up to ten ticks, and saves the resulting census.
+Concurrent surveys share
 in-flight reads of the same entity. A new later interaction samples fresh values.
 Native unemployed/nitwit professions (variant 0 and 14) are unranked and get the
 base contribution without a trade query. Profession is not used to infer an

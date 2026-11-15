@@ -79,7 +79,7 @@ test('empty observations score zero; entity rank read failures remain unknown', 
   assert.equal(census.unknownRanks, 1);
 });
 
-test('opening refreshes villagers; only the Survey button refreshes nearby biomes', async () => {
+test('opening uses cached results; Survey refreshes villagers and nearby biomes', async () => {
   const handlers = {};
   const queued = [];
   const intervals = [];
@@ -159,14 +159,14 @@ test('opening refreshes villagers; only the Survey button refreshes nearby biome
   handlers.beforeInteract(heldEvent);assert.equal(heldEvent.cancel,true);assert.equal(queued.length,0);
   handlers.beforeInteract(event);handlers.beforeInteract(event);assert.equal(queued.length,1);
   menuResponse={canceled:true};await queued.shift()();await new Promise(resolve=>setImmediate(resolve));
-  assert.equal(scans,1);assert.equal(rankWaits,1);assert.equal(biomeReads,1,'Opening refreshes villagers without scanning nearby biomes');
-  assert.equal(forms[0].records[2],'0.2 RP');
+  assert.equal(scans,0);assert.equal(rankWaits,0);assert.equal(biomeReads,1,'Opening performs no census or biome scan');
+  assert.equal(forms[0].records[2],'Unavailable');
   const interact=async(response={canceled:true},block=event.block)=>{
     menuResponse=response;handlers.beforeInteract({...event,block});await queued.shift()();
     await new Promise(resolve=>setImmediate(resolve));
   };
   await interact({canceled:false,selection:21});
-  assert.equal(scans,2);assert.equal(rankWaits,2);assert.equal(biomeReads,198);
+  assert.equal(scans,1);assert.equal(rankWaits,1);assert.equal(biomeReads,198);
   let saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
   const sourceId='minecraft:overworld|0,64,0';
   assert.equal(saved.villages[sourceId].census.villagers,1);
@@ -178,29 +178,31 @@ test('opening refreshes villagers; only the Survey button refreshes nearby biome
   assert.equal(surveyed.records[64],'Development 0');assert.equal(surveyed.records[60],'+ 0.000');
   assert.equal(surveyed.icons[3],'textures/ui/frontier/settlements/outpost');
   await interact({canceled:false,selection:14});
-  assert.ok(forms.at(-1).text.startsWith('[JF:tab:research]'));assert.equal(scans,3);assert.equal(biomeReads,198);
+  assert.ok(forms.at(-1).text.startsWith('[JF:tab:research]'));assert.equal(scans,1);assert.equal(biomeReads,198);
   nativeTier=4;biomeResult='minecraft:forest';
   await interact();saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
-  assert.equal(saved.villages[sourceId].census.realmPowerTenths,10,'Reopening refreshes villager trading levels immediately');
-  assert.equal(scans,4);assert.equal(rankWaits,4);assert.equal(biomeReads,198);
+  assert.equal(saved.villages[sourceId].census.realmPowerTenths,2,'Reopening retains the last Survey results');
+  assert.equal(scans,1);assert.equal(rankWaits,1);assert.equal(biomeReads,198);
   await interact({canceled:false,selection:21});saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
   assert.equal(saved.villages[sourceId].census.realmPowerTenths,10);
   assert.equal(saved.villages[sourceId].nativeBiome,'minecraft:plains');
   assert.ok(saved.villages[sourceId].available.includes('minecraft:forest'));
   await interact({canceled:true},nether.getBlock(location));
   saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
-  assert.equal(Object.keys(saved.villages).length,2);assert.equal(scans,6);assert.equal(biomeReads,396);
+  assert.equal(Object.keys(saved.villages).length,2);assert.equal(scans,2);assert.equal(biomeReads,396);
   renameResponse={canceled:false,formValues:['Oakfield']};await interact({canceled:false,selection:24});
   saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
   assert.equal(saved.villages[sourceId].name,'Oakfield');assert.equal(saved.stock['minecraft:iron_ingot'],12);
-  assert.equal(forms.at(-1).records[0],'[JF:data:overview]Oakfield');assert.equal(scans,7);
+  assert.equal(forms.at(-1).records[0],'[JF:data:overview]Oakfield');assert.equal(scans,2);
   population=20;await interact();
+  assert.equal(scans,2);
+  await interact({canceled:false,selection:21});
   assert.equal(forms.at(-1).records[3],'[JF:data:tier]City');assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/city');
-  population=5;await interact();
-  assert.equal(forms.at(-1).records[3],'[JF:data:tier]Village');assert.equal(scans,9);assert.equal(rankWaits,9);
+  population=5;await interact({canceled:false,selection:21});
+  assert.equal(forms.at(-1).records[3],'[JF:data:tier]Village');assert.equal(scans,4);assert.equal(rankWaits,4);
   const previousBiomeReads=biomeReads;
   await interact({canceled:false,selection:47});
-  assert.equal(scans,10);assert.equal(biomeReads,previousBiomeReads,'Navigation never scans nearby biomes or adds another census');
+  assert.equal(scans,4);assert.equal(biomeReads,previousBiomeReads,'Navigation never scans nearby biomes or adds another census');
   assert.ok(forms.at(-1).text.startsWith('[JF:tab:realm]'));assert.ok(forms.at(-1).text.includes('[JF:realm:roads]'));
   delete globalThis.__frontierTest;
 });

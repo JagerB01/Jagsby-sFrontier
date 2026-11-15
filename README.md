@@ -5,7 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.63.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.64.mcaddon?raw=true)
+
+Version 0.0.64 makes **Survey** refresh both villagers/RP (80 blocks) and nearby
+biomes (256 blocks). Opening and navigating use saved census results with no rank
+sampling wait. New settlements need their first Survey before they have RP.
 
 Version 0.0.63 reduces menu transport from 506 to 289 records and reads fresh
 villager rank results as soon as the server controller is ready (one tick minimum,
