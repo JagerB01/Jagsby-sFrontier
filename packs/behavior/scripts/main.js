@@ -210,14 +210,13 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     records[data[key+'Level']]=`Lv ${level}`;
   }
   const production=productionView(s,v,productionPages);
-  records[data.production]=production.modifiers;
+  records[data.production]=production.modifierLabels;
+  records[data.modifierValues]=production.modifierValues;
   records[data.productionOutput]=production.status;
   records[data.productionBiomes]=production.biomeText;
   records[data.stockpile]=production.stockHeading;
-  records[data.resources]=production.stockLeft;
-  records[data.stockRight]=production.stockRight;
+  production.stock.forEach((item,slot)=>records[data['stockCount'+slot]]=String(item.count));
   for(let slot=0;slot<2;slot++)records[data['productionItem'+slot]]=production.items[slot]?.text||'';
-  records[data.stockPage]=production.stockFooter;
   records[data.biomePage]=production.biomeFooter;
   for(let slot=0;slot<3;slot++)records[data['biomeOption'+slot]]=production.choices[slot]?.text||(slot===0?'Survey nearby loaded biomes to find options.':'');
   const roadView=roadNetworkOverview(s,v,realmPage);
@@ -228,8 +227,8 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   handlers.set(actions.roadsNext,()=>open(player,vId,'Realm','global',roadView.page+1,'roads'));
   for(const [key,choice]of researchChoices)handlers.set(actions[key],()=>contributeResearchCard(player,vId,key,choice));
   handlers.set(actions.manageRoads,()=>roadMenu(player,vId));
-  const pages={output:production.output.page,stock:production.stock.page,biomes:production.biomes.page};
-  for(const [scope,previous,next]of [['stock','stockPrev','stockNext'],['biomes','biomePrev','biomeNext']]){
+  const pages={output:production.output.page,biomes:production.biomes.page};
+  for(const [scope,previous,next]of [['biomes','biomePrev','biomeNext']]){
    handlers.set(actions[previous],()=>openProduction(player,vId,scope==='biomes'?'biomes':'summary',{...pages,[scope]:pages[scope]-1}));
    handlers.set(actions[next],()=>openProduction(player,vId,scope==='biomes'?'biomes':'summary',{...pages,[scope]:pages[scope]+1}));
   }

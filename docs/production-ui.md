@@ -1,4 +1,4 @@
-# Production panels — 0.0.47
+# Production panels — 0.0.48
 
 Production has exactly two fixed, non-scrolling tabs: **Overview** and
 **Resource Prospecting**. Both use the existing charter frame. Local tab
@@ -9,20 +9,27 @@ switches do not trigger terrain or villager scans.
 The upper section has two compact boxes side by side:
 
 - **Output:** an item image, name and **+ X.XXX/hour** for each produced resource.
-  At most two different items are possible; allocations producing the same item
-  combine. Rates include Prosperity, Development, Colonization and any applicable
-  River crop bonus. Full shared storage shows a paused status and zero actual
-  output. Missing power and unsupported biomes have explicit status text.
-- **Modifiers:** recorded Realm Power and the Prosperity, Development,
-  Colonization and River crop percentages. A minimum RP estimate is marked.
+  Two rows fit both possible resources; matching items combine into one row.
+  Text is larger and Producing uses the same orange/gold as Modifiers. Rates
+  include all active bonuses; full stock shows a paused status and zero output.
+- **Modifiers:** Prosperity, Development, Colonization and River crop increases
+  only, in percent. Labels and values occupy separate, aligned columns with a
+  consistent text size. Realm Power is a production input, not a percentage
+  modifier, so it is omitted here. Missing power still has explicit status text.
 
-The **stockpile** sits below both boxes. Its heading shows shared usage/capacity.
-Six item types appear per page in two columns of three rows, with fractional
-balances retained. Prev/Next changes only the stock page and stays in Overview.
-**Collect stockpile** collects all whole items that fit the player's inventory,
-including items on other pages, preserving fractions and anything that did not
-fit. Collection returns to Overview and clamps the page if stock has changed.
-There are no separate Resources or Stockpile tabs.
+The **stockpile** sits below both boxes on a single page. All 30 producible item
+icons appear in a fixed 10-column, 3-row grid, including zero balances. Every
+icon has its whole stored quantity in the bottom-right corner with a shadow for
+contrast. There are no stock Prev/Next buttons or page indicator. The heading
+shows the sum of whole stored items against the existing shared capacity.
+Fractions remain saved internally, continue accumulating, and are neither shown
+as collectable items nor discarded by collection.
+
+**Collect stockpile** is centered on its button. It collects all whole items that
+fit the player's inventory and preserves fractions and items that did not fit.
+Previously saved items outside the new production table remain in storage and
+are still collected. Collection returns to Overview. There are no separate
+Resources or Stockpile tabs, and the panel remains fixed and non-scrolling.
 
 All 30 distinct producible resources have packaged icons. Flat item images use
 Mojang's vanilla textures, and block items use compact isometric cubes generated
@@ -79,7 +86,7 @@ existing 2-health-point villager heal once per Minecraft day.
 
 ## Validation
 
-180 Node tests and 3 Python tests pass. Static packaging validates 181 pack
+181 Node tests and 3 Python tests pass. Static packaging validates 184 pack
 files. Coverage includes rate components, full-stock paused output, combined
 allocation output, bounded pages/empty states, research and sample gating,
 previewed verified selection, unloaded rejection, clearing, whole-item collection

@@ -1,3 +1,18 @@
+# 0.0.48
+
+- Replace paged stock text with a single 10-column, 3-row grid showing every
+  producible item icon and its whole-number count at the bottom right. Show
+  zero balances; remove stock Prev/Next controls and page text entirely.
+- Preserve fractional balances internally and collect only whole items. The
+  heading reports the sum of whole stored items against existing capacity.
+- Enlarge output/modifier text and keep two output rows within the production
+  box. Match Producing and Modifiers heading colors.
+- Show only Prosperity, Development, Colonization and River crop percentages,
+  with labels and values in aligned columns. Remove raw Realm Power from bonuses.
+- Center Collect stockpile horizontally and vertically on its button.
+- 181 Node tests and 3 Python tests pass; static validation checks 184 pack files.
+  Native rendering still requires an in-game check.
+
 # 0.0.47
 
 - Replace four Production tabs with Overview and Resource Prospecting.

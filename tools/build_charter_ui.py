@@ -10,7 +10,7 @@ DATA = {
     "overview": 0, "biomes": 1, "census": 2, "tier": 3,
     "efficiency": 4, "hearth": 5, "biome": 6, "frontier": 7,
     "capacity": 8, "innovation": 9, "storage": 10,
-    "production": 11, "stockpile": 12, "resources": 13,
+    "production": 11, "stockpile": 12,
     "owner": 25, "realmMine": 26, "realmAll": 27,
 }
 ACTIONS = {name: i + 14 for i, name in enumerate([
@@ -30,12 +30,13 @@ TECHS = ["innovation", "frontier", "capacity", "colonization", "storage",
 DATA.update({key + "Level": 66 + i for i, key in enumerate(TECHS)})
 DATA["tradeRoute"] = 76
 ACTIONS["manageRoads"] = 77
-DATA.update({"productionOutput": 78, "productionBiomes": 79, "stockPage": 81, "biomePage": 82,
+DATA.update({"productionOutput": 78, "productionBiomes": 79, "biomePage": 82,
              "biomeOption0": 93, "biomeOption1": 94, "biomeOption2": 95})
-ACTIONS.update({"stockPrev": 85, "stockNext": 86,
-                "biomePrev": 87, "biomeNext": 88, "chooseBiome1": 89, "chooseBiome2": 90,
+ACTIONS.update({"biomePrev": 87, "biomeNext": 88, "chooseBiome1": 89, "chooseBiome2": 90,
                 "clearSecondary": 91})
-DATA.update({"productionItem0": 96, "productionItem1": 97, "stockRight": 98})
+DATA.update({"productionItem0": 96, "productionItem1": 97, "modifierValues": 98})
+STOCK_ITEMS = json.loads((ROOT / "docs/production-icon-assets.json").read_text())["items"]
+DATA.update({"stockCount" + str(i): 100 + i for i in range(len(STOCK_ITEMS))})
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -467,24 +468,37 @@ def build():
     def production_surface(name, size, offset):
         return control(name, image("frontier/palette_panel", size, offset, color=[0.82, 0.82, 0.82]))
     summary_controls = [
-        production_surface("output_box", [131, 65], [0, 0]),
-        production_surface("modifiers_box", [118, 65], [136, 0]),
-        production_surface("stock_box", [254, 61], [0, 70]),
-        production_value("status", "productionOutput", 5, 10, scale=0.65, width=119),
-        control("modifiers_title", label("Modifiers", [104, 10], (143, 5), WHEAT, 0.7)),
-        production_value("modifiers", "production", 19, 41, scale=0.6, x=143, width=104),
-        production_value("stock_heading", "stockpile", 75, 10, scale=0.65, width=163),
-        production_value("stock_page", "stockPage", 76, 8, scale=0.55, x=177, width=70),
-        production_value("stock_left", "resources", 88, 22, scale=0.6, width=117),
-        production_value("stock_right", "stockRight", 88, 22, scale=0.6, x=132, width=115),
-        production_button("previous", "stockPrev", "Prev", 0, 112, 43, 18),
-        production_button("collect", "collect", "Collect stockpile", 48, 112, 158, 18),
-        production_button("next", "stockNext", "Next", 211, 112, 43, 18),
+        production_surface("output_box", [131, 49], [0, 0]),
+        production_surface("modifiers_box", [118, 49], [136, 0]),
+        production_surface("stock_box", [254, 78], [0, 53]),
+        production_value("status", "productionOutput", 5, 10, scale=0.8, width=119),
+        control("modifiers_title", label("Modifiers", [104, 10], (143, 5), WHEAT, 0.8)),
+        production_value("modifier_labels", "production", 17, 28, scale=0.75, x=143, width=70),
+        production_value("modifier_values", "modifierValues", 17, 28, scale=0.75, x=215, width=32),
+        production_value("stock_heading", "stockpile", 56, 9, scale=0.75, width=240),
+        production_button("collect", "collect", "Collect stockpile", 48, 115, 158, 15),
     ]
-    for slot, y in enumerate([18, 41]):
+    GENERATED_CONTROLS["jf_data_productionOutput"]["color"] = list(WHEAT)
+    GENERATED_CONTROLS["jf_data_modifierValues"]["localize"] = False
+    for key in ["production", "modifierValues"]:
+        GENERATED_CONTROLS["jf_data_" + key]["text_alignment"] = "left"
+    for state in GENERATED_CONTROLS["jf_action_collect@common.button"]["controls"]:
+        caption = next(c["caption"] for c in next(iter(state.values()))["controls"] if "caption" in c)
+        caption.update({"text_alignment": "center", "offset": [0, 2], "size": [158, 11], "font_scale_factor": 0.75})
+    for slot, item in enumerate(STOCK_ITEMS):
+        key = "stockCount" + str(slot)
+        count = overview_value("count", DATA[key], [0, 8], [23, 8], scale=0.65)
+        GENERATED_CONTROLS["jf_data_" + key].update({"text_alignment": "right", "shadow": True, "layer": 12})
+        icon = image(item["icon"].removeprefix("textures/ui/"), [14, 14], (3, 0), layer=8)
+        icon["keep_ratio"] = True
+        summary_controls.append(control("stock_item" + str(slot), {
+            "type": "panel", "size": [24, 16], "offset": [7 + (slot % 10) * 24, 66 + (slot // 10) * 16],
+            "anchor_from": "top_left", "anchor_to": "top_left", "controls": [control("icon", icon), count],
+        }))
+    for slot, y in enumerate([17, 33]):
         key = "productionItem" + str(slot)
-        summary_controls.append(production_value("item" + str(slot), key, y, 21, scale=0.6, x=32, width=92))
-        icon = image("frontier/production/wheat", [20, 20], layer=8)
+        summary_controls.append(production_value("item" + str(slot), key, y, 15, scale=0.75, x=28, width=92))
+        icon = image("frontier/production/wheat", [14, 14], layer=8)
         icon["keep_ratio"] = True
         icon["bindings"] = [
             {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
@@ -495,7 +509,7 @@ def build():
         template = "jf_production_icon" + str(slot)
         ui[template] = icon
         summary_controls.append(control("icon" + str(slot), {
-            "type": "stack_panel", "orientation": "vertical", "size": [20, 20],
+            "type": "stack_panel", "orientation": "vertical", "size": [14, 14],
             "offset": [7, y], "anchor_from": "top_left", "anchor_to": "top_left",
             "collection_name": "form_buttons", "controls": [
                 control("record@jagsby_frontier." + template, {"collection_index": DATA[key]})],

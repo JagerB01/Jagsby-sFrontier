@@ -336,18 +336,16 @@ test('Selecting a secondary allocation cannot bypass research, eligibility, diff
  for(const candidate of [{...v,biomeUnlocked:false},{...v,dimension:'minecraft:nether'},{...v,biomeSamples:{'minecraft:forest':{x:257,z:0}}}])assert.throws(()=>h.api.productionSelection(candidate,'minecraft:forest','diversify'));
  for(const id of ['minecraft:plains','minecraft:lush_caves'])assert.throws(()=>h.api.productionSelection(v,id,'diversify'));
 });
-test('Production sends item images and stockpile pages stay on the Overview',async()=>{
+test('Production sends item images, aligned bonus percentages and whole stock counts on one page',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),biome:'minecraft:river',biomeUnlocked:true,productionMode:'specialize'};
  for(const id of ['bamboo','coal','iron_ingot','potato','sand','stone','wheat'])s.stock['minecraft:'+id]=10.25;
- let clicked=false;const h=await runtime(s,()=>{if(!clicked){clicked=true;return {canceled:false,selection:86};}return {canceled:true};});
- h.api.openProduction(h.player,'a');await new Promise(resolve=>setImmediate(resolve));
+ const h=await runtime(s);h.api.openProduction(h.player,'a');
  assert.equal(h.forms[0].icons[96],'textures/ui/frontier/production/wheat');
  assert.equal(h.forms[0].icons[97],undefined);
  assert.ok(h.forms[0].buttons[96].includes('Wheat\n+ 3.850/hour'));
- assert.ok(h.forms[0].buttons[11].includes('River crops: + 10%'));
- assert.equal(h.forms.length,2);
- assert.ok(h.forms[1].text.includes('[JF:production:summary]'));
- assert.ok(h.forms[1].buttons[81].includes('Page 2 / 2'));
- assert.ok(h.forms[1].buttons[13].includes('Wheat'));
- assert.equal(h.forms[1].buttons[98],'[JF:data:stockRight]');
+ assert.equal(h.forms[0].buttons[11],'[JF:data:production]Prosperity\nDevelopment\nColonization\nRiver crops');
+ assert.equal(h.forms[0].buttons[98],'[JF:data:modifierValues]+ 0%\n+ 0%\n+ 0%\n+ 10%');
+ assert.equal(h.forms.length,1);assert.ok(h.forms[0].text.includes('[JF:production:summary]'));
+ const {STOCK_ITEMS}=await import('../packs/behavior/scripts/production-display.js');
+ for(const [i,item]of STOCK_ITEMS.entries())assert.equal(h.forms[0].buttons[100+i],`[JF:data:stockCount${i}]${s.stock[item.id]?10:0}`);
 });

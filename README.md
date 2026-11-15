@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.47.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.48.mcaddon?raw=true)
+
+Version 0.0.48 puts all 30 stockpile item icons on one page, with whole-item
+counts in the bottom-right corner and no stock paging. Collect stockpile is
+centered. Larger text, matching orange headings and aligned percentage-only
+modifiers keep the production overview compact and readable.
 
 Version 0.0.47 rebuilds Production with just **Overview** and **Resource
 Prospecting**. Overview shows item images and **+ X.XXX/hour**, a separate

@@ -386,3 +386,27 @@ test('Allocation preview routes to a fixed panel and preserves native Confirm/Ba
   assert.ok(scope.offset[1]+scope.size[1]<=240);
  }
 });
+test('Stockpile has all 30 icons and bottom-right counts without paging; headings and bonus columns align',async()=>{
+ const ui=await loadUI(),summary=children(ui.jf_production_summary_content);
+ assert.equal(summary.previous,undefined);assert.equal(summary.next,undefined);assert.equal(summary.stock_page,undefined);
+ assert.deepEqual(ui.jf_data_productionOutput.color,summary.modifiers_title.color);
+ assert.equal(ui.jf_data_productionOutput.font_scale_factor,0.8);
+ assert.equal(summary.modifier_labels.offset[1],summary.modifier_values.offset[1]);
+ assert.equal(ui.jf_data_production.font_scale_factor,0.75);assert.equal(ui.jf_data_modifierValues.font_scale_factor,0.75);
+ assert.equal(ui.jf_data_modifierValues.localize,false);
+ for(const state of ui['jf_action_collect@common.button'].controls){
+  const caption=children(nextValue(state)).caption;
+  assert.equal(caption.text_alignment,'center');assert.deepEqual(caption.offset,[0,2]);
+ }
+ const {readFile}=await import('node:fs/promises');
+ const sources=JSON.parse(await readFile(new URL('../docs/production-icon-assets.json',import.meta.url),'utf8')).items;
+ for(let i=0;i<30;i++){
+  const cell=summary['stock_item'+i],contents=children(cell);
+  assert.equal(contents.icon.texture,sources[i].icon);
+  assert.ok(cell.offset[1]>=summary.stock_heading.offset[1]+summary.stock_heading.size[1]);
+  assert.ok(cell.offset[1]+cell.size[1]<=summary.collect.offset[1]);
+  const count=ui['jf_data_stockCount'+i];assert.equal(count.text_alignment,'right');assert.equal(count.shadow,true);
+ }
+ assert.equal(summary.icon1.offset[1]+summary.icon1.size[1]<=summary.output_box.size[1],true);
+ function nextValue(obj){return Object.values(obj)[0];}
+});
