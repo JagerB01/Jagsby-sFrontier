@@ -201,7 +201,7 @@
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
-            235,
+            185,
             12
           ],
           "collection_name": "form_buttons",
@@ -226,7 +226,7 @@
           "type": "label",
           "text": "Village Charter",
           "size": [
-            235,
+            185,
             8
           ],
           "offset": [
@@ -2252,6 +2252,31 @@
           "anchor_to": "top_left",
           "offset": [
             289,
+            35
+          ],
+          "layer": 25
+        }
+      },
+      {
+        "header_survey": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            58,
+            20
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_action_scan": {
+                "collection_index": 21
+              }
+            }
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            225,
             35
           ],
           "layer": 25
@@ -26116,7 +26141,7 @@
     "type": "label",
     "text": "#text",
     "size": [
-      235,
+      185,
       12
     ],
     "offset": [
@@ -51319,6 +51344,248 @@
               "caption": {
                 "type": "label",
                 "text": "Rename",
+                "size": [
+                  58,
+                  11
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.85,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false,
+                "text_alignment": "center"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_action_scan@common.button": {
+    "size": [
+      58,
+      17
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:scan]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:scan]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            58,
+            17
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_58x17_default",
+                "size": [
+                  58,
+                  17
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  56,
+                  15
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Survey",
+                "size": [
+                  58,
+                  11
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.85,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false,
+                "text_alignment": "center"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            58,
+            17
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_58x17_hover",
+                "size": [
+                  58,
+                  17
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  56,
+                  15
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Survey",
+                "size": [
+                  58,
+                  11
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.85,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false,
+                "text_alignment": "center"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            58,
+            17
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_58x17_pressed",
+                "size": [
+                  58,
+                  17
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  56,
+                  15
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Survey",
                 "size": [
                   58,
                   11

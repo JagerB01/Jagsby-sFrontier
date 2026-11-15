@@ -5,7 +5,16 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.55.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.56.mcaddon?raw=true)
+
+Version 0.0.56 adds a header **Survey** button that refreshes both villagers and
+nearby biomes. Opening uses cached results, without the rank-sampling wait or
+terrain scan. New settlements need Survey to record their first RP.
+
+The Village Charter is now [craftable](docs/village-charter-crafting.md) with
+five planks, a center lectern and three cobblestone along the bottom. Its recipe
+unlocks from any ingredient. Use the recipe book's **All** view to see it before
+you have the complete materials.
 
 Version 0.0.55 removes estimate markers from tier and RP displays. My Settlements
 and All Settlements now use compact two-line rows with the uploaded size icons,

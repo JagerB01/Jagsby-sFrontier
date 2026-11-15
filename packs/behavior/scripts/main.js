@@ -20,6 +20,7 @@ import {localContribution,applyLocalContribution,localResearchText} from "./loca
 import {productionView} from "./production-display.js";
 import {canonicalBiome,eligibleBiome,productionAllocations} from "./biome-resources.js";
 const roadTimers=new Map();
+const pendingSurveys=new Map();
 function gameTick(){return world.getAbsoluteTime?.()??0;}
 function accounted(){
  const s=state(),result=accountEconomy(s);
@@ -238,6 +239,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   handlers.set(actions.roadsNext,()=>open(player,vId,'Realm','global',roadView.page+1,'roads'));
   for(const [key,choice]of researchChoices)handlers.set(actions[key],()=>contributeResearchCard(player,vId,key,choice));
   handlers.set(actions.manageRoads,()=>roadMenu(player,vId));
+  handlers.set(actions.scan,()=>surveySettlement(player,vId,{page,researchScope,realmPage,realmScope,productionScope,productionPages}));
   const pages={};
   for(const [slot,choice]of production.choices.entries()){
    if(v.biomeUnlocked&&choice.verified&&!choice.selected)handlers.set(actions['prospectSelect'+slot],()=>selectBiome(player,vId,choice.id,pages,choice.mode));
@@ -282,6 +284,17 @@ async function renameSettlement(player,vId){
     }
     open(player,vId);
   }catch(e){console.warn(`Frontier rename: ${e}`);player.sendMessage('§cSettlement name could not be saved.');}
+}
+async function surveySettlement(player,vid,view={}){
+ let job=pendingSurveys.get(vid);
+ if(!job){
+  job=(async()=>{await refreshVillage(vid);return surveyVillage(vid);})();
+  pendingSurveys.set(vid,job);
+ }
+ try{await job;player.sendMessage('§aSurvey updated.');}
+ catch(e){console.warn(`Frontier survey: ${e}`);player.sendMessage('§cSurvey could not finish. Try Survey again.');}
+ finally{if(pendingSurveys.get(vid)===job)pendingSurveys.delete(vid);}
+ open(player,vid,view.page||'Overview',view.researchScope||'global',view.realmPage||0,view.realmScope||'roads',view.productionScope||'summary',view.productionPages||{});
 }
 function surveyVillage(vid){const s=accounted(),v=s.villages[vid];if(!v)return;
   if(v.dimension!=='minecraft:overworld')return;
@@ -336,7 +349,7 @@ function clearSecondary(player,vid,pages={}){
 function collect(player,vid,pages={}){const s=accounted();const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
  let moved=0;for(const [type,qty] of Object.entries(s.stock)){let remain=Math.floor(qty);const fraction=qty-remain;while(remain>0){const n=Math.min(64,remain);try{const left=inv.addItem(new ItemStack(type,n));const count=n-(left?.amount||0);if(count<=0)break;remain-=count;moved+=count;if(left)break;}catch(e){break;}}s.stock[type]=remain+fraction;if(!s.stock[type])delete s.stock[type];}
  save(s);player.sendMessage(`§aCollected ${moved} items. Remaining stockpile: ${total(s)}/${cap(s)}.`);openProduction(player,vid,'summary',pages);}
-world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=accounted();const v=addVillage(s,ev.block,ev.player);if(!v)return;ev.player.sendMessage('§6Village Charter established. Interact to open the settlement menu.');});
+world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=accounted();const v=addVillage(s,ev.block,ev.player);if(!v)return;ev.player.sendMessage('§6Village Charter established. Open the menu and press Survey to record villagers and nearby biomes.');});
 const pendingCharterInteractions=new Set();
 world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
   if(ev.block.typeId!==BLOCK)return;
@@ -356,8 +369,6 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
       recoverResearch(player);
       let s=accounted(),v=addVillage(s,block,player);
       if(!v)return;
-      await refreshVillage(v.id);
-      surveyVillage(v.id);
       open(player,v.id);
     }catch(e){console.warn(`Frontier charter interaction: ${e}`);player.sendMessage(String(e).includes('catching up')?'Production is catching up. Interact with the charter again to continue.':'§cThe Village Charter could not open. Check the Minecraft content log for Frontier charter errors.');}
     finally{pendingCharterInteractions.delete(pendingKey);}

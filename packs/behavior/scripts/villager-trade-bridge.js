@@ -28,7 +28,7 @@ export async function sampleTradingRanks(villagers, system) {
     }
   }
   if (fresh.length) {
-    // One batch wait per interaction, sharing in-flight samples between players.
+    // One batch wait per survey, sharing in-flight samples between players.
     system.runTimeout(() => {
       for (const job of fresh) {
         const {villager} = job;

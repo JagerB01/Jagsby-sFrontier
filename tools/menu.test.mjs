@@ -424,7 +424,7 @@ test('Stockpile has 30 conditional slots with raw counts; each modifier has an u
  assert.equal(summary.icon1.offset[1]+summary.icon1.size[1]<=summary.output_box.size[1],true);
  function nextValue(obj){return Object.values(obj)[0];}
 });
-test('Prospecting scrolls all discovered choices and has no survey or paging controls',async()=>{
+test('Prospecting scrolls all discovered choices with a shared header Survey and no paging',async()=>{
  const ui=await loadUI(),pane=children(ui.jf_production_biomes_content);
  assert.deepEqual(Object.keys(pane),['choices@common.scrolling_panel','clear']);
  assert.equal(pane['choices@common.scrolling_panel'].$scrolling_content,'jagsby_frontier.jf_prospecting_rows');
@@ -438,7 +438,11 @@ test('Prospecting scrolls all discovered choices and has no survey or paging con
  }
  const source=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
  const {CHARTER_LAYOUT}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
- for(const removed of ['scan','biomePrev','biomeNext'])assert.equal(CHARTER_LAYOUT.actions[removed],undefined);
+ assert.equal(CHARTER_LAYOUT.actions.scan,21);
+ const header=children(ui.jf_dashboard);assert.ok(header.header_survey);
+ assert.ok(header.header_survey.offset[0]>=header.header_name.offset[0]+header.header_name.size[0]);
+ assert.ok(header.header_survey.offset[0]+header.header_survey.size[0]<=header.header_rename.offset[0]);
+ for(const removed of ['biomePrev','biomeNext'])assert.equal(CHARTER_LAYOUT.actions[removed],undefined);
 });
 test('Both settlement directories use compact two-line rows with tier icons and road actions',async()=>{
  const ui=await loadUI();

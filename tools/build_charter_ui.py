@@ -39,7 +39,7 @@ DATA.update({"productionModifier" + str(i): 130 + i for i in range(4)})
 DATA.update({"productionModifierName" + str(i): 135 + i for i in range(4)})
 DATA.update({"prospectInfo" + str(i): 200 + i for i in range(52)})
 ACTIONS.update({"prospectSelect" + str(i): 300 + i for i in range(52)})
-for obsolete in ["scan", "selectBiome"]:
+for obsolete in ["selectBiome"]:
     ACTIONS.pop(obsolete, None)
 DATA.update({"overviewProduction0": 150, "overviewProduction1": 151})
 DATA["productionModifierTotal"] = 154
@@ -406,9 +406,9 @@ def build():
         control("close@common.close_button", {"$close_button_offset": [-7, 7], "layer": 30, "bindings": []}),
     ]
     dashboard = [copy.deepcopy(item) for item in frame if 'title' not in item]
-    dashboard.append(overview_value("header_name", DATA["overview"], [30, 34], [235, 12], scale=1.0))
+    dashboard.append(overview_value("header_name", DATA["overview"], [30, 34], [185, 12], scale=1.0))
     GENERATED_CONTROLS["jf_data_overview"]["color"] = list(WHEAT)
-    dashboard.append(control("subtitle", label("Village Charter", [235, 8], (30, 46), SILVER, 0.65)))
+    dashboard.append(control("subtitle", label("Village Charter", [185, 8], (30, 46), SILVER, 0.65)))
     dashboard += [tab(name, index) for index, name in enumerate(TABS)]
     for name in TABS:
         lower = name.lower()
@@ -612,6 +612,13 @@ def build():
         controls["caption"].update({"offset": [0, 3], "size": [58, 11],
                                     "text_alignment": "center", "font_scale_factor": 0.85})
     dashboard.append(control("header_rename", rename))
+    survey = action("header_survey", ACTIONS["scan"], "Survey", width=58, height=17)["header_survey"]
+    survey.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [225, 35], "layer": 25})
+    for state in GENERATED_CONTROLS["jf_action_scan@common.button"]["controls"]:
+        caption = next(c["caption"] for c in next(iter(state.values()))["controls"] if "caption" in c)
+        caption.update({"offset": [0, 3], "size": [58, 11], "text_alignment": "center", "font_scale_factor": 0.85})
+    dashboard.append(control("header_survey", survey))
+
     portrait = image("frontier/settlements/outpost", [90, 158], layer=8)
     # Retain the decorative stone/oak/gold frame. Trim only its one-pixel outer
     # dark rim; the previous painting-only crop removed the requested frame.

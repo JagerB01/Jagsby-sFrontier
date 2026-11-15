@@ -1,3 +1,8 @@
+> 0.0.56 moves census refresh to the **Survey** button. Menu opens and navigation
+> use cached RP, with no villager-rank wait or biome scan. New settlements need
+> an initial Survey. The radius remains 80 blocks; recipe/crafting instructions
+> are in [Village Charter crafting](village-charter-crafting.md).
+
 > 0.0.55 displays inferred RP and tier names plainly, without ≥ or at-least
 > decorations. The existing unknown-rank fallback calculation is retained.
 

@@ -1,3 +1,20 @@
+# 0.0.56
+
+- Add a Survey button beside Rename, available from every charter tab. Refresh
+  the 80-block villager census and 256-block nearby-biome scan only on request;
+  opening and navigating use cached results without either scan or rank wait.
+- Share concurrent survey requests for the same settlement. Refresh each requesting
+  player's charter after the job completes. Retain offline accounting and cached
+  RP between surveys; new settlements need their first manual Survey.
+- Add the crafting-table recipe PPP / PLP / CCC: five planks, one lectern and
+  three cobblestone produce one Village Charter. Use the vanilla planks tag.
+- Add recipe-book unlock triggers for lectern, cobblestone and all 13 plank item
+  types verified in Bedrock 1.26.40. Keep the result block in Construction with
+  its existing display name. Partial ingredients require recipe-book All view;
+  the vanilla Craftable Only filter still requires the full materials.
+- 197 Node tests and 3 Python tests pass. Native recipe-book presentation and
+  client-side menu rendering require in-game verification.
+
 # 0.0.55
 
 - Remove the ≥/at-least display decorations from inferred tiers and RP. Keep

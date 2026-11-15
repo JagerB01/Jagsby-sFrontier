@@ -176,6 +176,7 @@ export const CHARTER_LAYOUT = {
     "capacity": 18,
     "innovation": 19,
     "storage": 20,
+    "scan": 21,
     "collect": 23,
     "rename": 24,
     "claim": 28,

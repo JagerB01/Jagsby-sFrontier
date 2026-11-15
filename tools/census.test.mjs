@@ -78,13 +78,13 @@ test('empty observations score zero; entity rank read failures remain unknown', 
   assert.equal(census.unknownRanks, 1);
 });
 
-test('interaction refreshes and persists once; intervals and menu navigation never scan', async () => {
+test('opening uses cached data; only the Survey button refreshes villagers and biomes', async () => {
   const handlers = {};
   const queued = [];
   const intervals = [];
   const properties = new Map();
   const dimensions = new Map();
-  let scans = 0, biomeReads = 0, biomeResult = 'minecraft:plains';
+  let scans = 0, biomeReads = 0, rankWaits = 0, biomeResult = 'minecraft:plains';
   let nativeTier = 0;
   let population = 1;
   const nativeVillager = {...villager('a'), triggerEvent() {}, getProperty: name => name.endsWith("ready") ? true : nativeTier};
@@ -125,7 +125,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
       getDynamicProperty: key => properties.get(key),
       setDynamicProperty: (key,value) => properties.set(key,value) },
     system: { run: fn => queued.push(fn), runInterval: fn => intervals.push(fn),
-      runTimeout: fn => {fn();} },
+      runTimeout: fn => {rankWaits++;fn();} },
     Form, RenameForm,
   };
   let main = await readFile(new URL('main.js', scriptBase), 'utf8');
@@ -155,85 +155,52 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(scans, 0);
   assert.equal(handlers.playerInteractWithBlock, undefined, 'Must not depend on successful vanilla interactions');
   const heldEvent = {...event,isFirstEvent:false};
-  handlers.beforeInteract(heldEvent);
-  assert.equal(heldEvent.cancel, true);
-  assert.equal(queued.length, 0);
-  handlers.beforeInteract(event);
-  assert.equal(event.cancel, true);
-  handlers.beforeInteract(event);
-  assert.equal(queued.length, 1);
-  menuResponse = {canceled:false,selection:14}; // Research action; insufficient materials.
-  await queued.shift()();
-  await new Promise(resolve => setImmediate(resolve));
-  assert.equal(scans, 1);
-  let saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
-  assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.villagers, 1);
-  assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
-  assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
-  assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,506);
-  assert.equal(forms[0].records[63],'[JF:data:zone]Heartlands');
-  assert.equal(forms[0].records[64],'Development 0');
-  assert.equal(forms[0].records[66],'[JF:data:innovationLevel]Lv 1');
-  assert.equal(forms[0].records[76],'[JF:data:tradeRoute]None');
-  assert.equal(forms[0].records[60],'+ 0.000');
-  assert.equal(forms[0].records[67],'[JF:data:frontierLevel]Lv 0');
-  assert.equal(forms[0].records[24],'[JF:action:rename]');
-  assert.equal(forms[0].records[25],'Owner: Builder');
-  assert.equal(saved.villages['minecraft:overworld|0,64,0'].owner.id,'p');
-  assert.equal(forms[0].records[0],'[JF:data:overview]Settlement 1');
-  assert.equal(forms[0].records[1],'[JF:data:biomes]Plains');
-  assert.equal(forms[0].records[2],'0.2 RP');
-  assert.equal(forms[0].records[3],'[JF:data:tier]Outpost');
-  assert.equal(forms[0].icons[3],'textures/ui/frontier/settlements/outpost');
-  assert.equal(forms[1].heading,'JF_CHARTER|Dashboard');
-  assert.ok(forms[1].records[4].includes('Contributed: 0 / 250'));
-  assert.ok(forms[1].text.startsWith('[JF:tab:research][JF:research:local][JF:realm:roads][JF:production:summary]'));
-  assert.equal(biomeReads,198,'One registration and one bounded survey; menu navigation does not survey');
-  nativeTier = 4;biomeResult = 'minecraft:forest';
-  handlers.beforeInteract(event);
-  await queued.shift()();
-  saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
-  assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 10,
-    'A fresh controller sample must reflect a promotion from novice to master');
-  handlers.beforeInteract({...event,block:nether.getBlock(location)});
-  await queued.shift()();
-  saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
-  assert.equal(Object.keys(saved.villages).length, 2);
-  assert.equal(scans, 3);
-  assert.equal(biomeReads,396,'Two registrations, two Overworld surveys and no Nether survey');
-  assert.equal(saved.villages['minecraft:overworld|0,64,0'].nativeBiome,'minecraft:plains');
-  assert.ok(saved.villages['minecraft:overworld|0,64,0'].available.includes('minecraft:forest'),'Opening the charter discovers the nearby biome automatically');
-  menuResponse={canceled:false,selection:24};
-  renameResponse={canceled:false,formValues:['Oakfield']};
-  handlers.beforeInteract(event);
-  await queued.shift()();
-  await new Promise(resolve=>setImmediate(resolve));
+  handlers.beforeInteract(heldEvent);assert.equal(heldEvent.cancel,true);assert.equal(queued.length,0);
+  handlers.beforeInteract(event);handlers.beforeInteract(event);assert.equal(queued.length,1);
+  menuResponse={canceled:true};await queued.shift()();await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(scans,0);assert.equal(rankWaits,0);assert.equal(biomeReads,1,'Only native biome registration runs on a first open');
+  assert.equal(forms[0].records[2],'Unavailable');
+  const interact=async(response={canceled:true},block=event.block)=>{
+    menuResponse=response;handlers.beforeInteract({...event,block});await queued.shift()();
+    await new Promise(resolve=>setImmediate(resolve));
+  };
+  await interact({canceled:false,selection:21});
+  assert.equal(scans,1);assert.equal(rankWaits,1);assert.equal(biomeReads,198);
+  let saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
+  const sourceId='minecraft:overworld|0,64,0';
+  assert.equal(saved.villages[sourceId].census.villagers,1);
+  assert.equal(saved.villages[sourceId].census.realmPowerTenths,2);
+  assert.equal(saved.villages[sourceId].nativeBiome,'minecraft:plains');
+  const surveyed=forms.at(-1);assert.equal(surveyed.heading,'JF_CHARTER|Dashboard');
+  assert.equal(surveyed.records.length,506);assert.equal(surveyed.records[2],'0.2 RP');
+  assert.equal(surveyed.records[3],'[JF:data:tier]Outpost');assert.equal(surveyed.records[25],'Owner: Builder');
+  assert.equal(surveyed.records[64],'Development 0');assert.equal(surveyed.records[60],'+ 0.000');
+  assert.equal(surveyed.icons[3],'textures/ui/frontier/settlements/outpost');
+  await interact({canceled:false,selection:14});
+  assert.ok(forms.at(-1).text.startsWith('[JF:tab:research]'));assert.equal(scans,1);assert.equal(biomeReads,198);
+  nativeTier=4;biomeResult='minecraft:forest';
+  await interact();saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
+  assert.equal(saved.villages[sourceId].census.realmPowerTenths,2,'Reopening uses the cached census until Survey is pressed');
+  assert.equal(scans,1);assert.equal(rankWaits,1);assert.equal(biomeReads,198);
+  await interact({canceled:false,selection:21});saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
+  assert.equal(saved.villages[sourceId].census.realmPowerTenths,10);
+  assert.equal(saved.villages[sourceId].nativeBiome,'minecraft:plains');
+  assert.ok(saved.villages[sourceId].available.includes('minecraft:forest'));
+  await interact({canceled:true},nether.getBlock(location));
   saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
-  assert.equal(saved.villages['minecraft:overworld|0,64,0'].name,'Oakfield');
-  assert.equal(saved.stock['minecraft:iron_ingot'],12,'Rename must preserve concurrent stockpile changes');
-  assert.equal(forms.at(-1).records[0],'[JF:data:overview]Oakfield');
-  assert.equal(scans,4,'Only the charter interaction should scan; rename must not rescan');
-  population=20;
-  handlers.beforeInteract(event);
-  await queued.shift()();
-  assert.equal(forms.at(-1).records[3],'[JF:data:tier]City');
-  assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/city');
-  population=5;
-  handlers.beforeInteract(event);
-  await queued.shift()();
-  assert.equal(forms.at(-1).records[3],'[JF:data:tier]Village');
-  assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/village');
-  assert.equal(scans,6);
-  menuResponse={canceled:false,selection:47}; // Road Networks: next page.
-  handlers.beforeInteract(event);
-  await queued.shift()();
-  await new Promise(resolve=>setImmediate(resolve));
-  assert.equal(scans,7,'Road page action must not trigger another villager census');
-  assert.ok(forms.at(-1).text.startsWith('[JF:tab:realm]'));
-  assert.ok(forms.at(-1).text.includes('[JF:realm:roads]'));
-  assert.ok(forms.at(-1).records[33].includes('Road Networks Lv 0'));
-  assert.ok(forms.at(-1).records[34].includes('No connections yet'));
+  assert.equal(Object.keys(saved.villages).length,2);assert.equal(scans,2);assert.equal(biomeReads,396);
+  renameResponse={canceled:false,formValues:['Oakfield']};await interact({canceled:false,selection:24});
+  saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
+  assert.equal(saved.villages[sourceId].name,'Oakfield');assert.equal(saved.stock['minecraft:iron_ingot'],12);
+  assert.equal(forms.at(-1).records[0],'[JF:data:overview]Oakfield');assert.equal(scans,2);
+  population=20;await interact({canceled:false,selection:21});
+  assert.equal(forms.at(-1).records[3],'[JF:data:tier]City');assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/city');
+  population=5;await interact({canceled:false,selection:21});
+  assert.equal(forms.at(-1).records[3],'[JF:data:tier]Village');assert.equal(scans,4);assert.equal(rankWaits,4);
+  const previousBiomeReads=biomeReads;
+  await interact({canceled:false,selection:47});
+  assert.equal(scans,4);assert.equal(biomeReads,previousBiomeReads,'Navigation never surveys');
+  assert.ok(forms.at(-1).text.startsWith('[JF:tab:realm]'));assert.ok(forms.at(-1).text.includes('[JF:realm:roads]'));
   delete globalThis.__frontierTest;
 });
 test('80-block radius includes villagers beyond the old 64-block limit and excludes farther ones',()=>{

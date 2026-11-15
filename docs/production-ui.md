@@ -1,8 +1,8 @@
-# Production panels — 0.0.54
+# Production panels — 0.0.56
 
 Production has exactly two tabs: a fixed **Overview** and a scrollable
-**Resource Prospecting** list. Both use the existing charter frame. Opening the
-charter surveys nearby loaded terrain; local tab switches do not trigger scans.
+**Resource Prospecting** list. Both use the existing charter frame. The header Survey button refreshes villagers and nearby loaded terrain;
+opening and navigating use cached data and do not trigger scans.
 
 ## Overview
 
@@ -59,10 +59,11 @@ unlocked, the native row shows its actual single allocation. Selected rows are
 marked and locked rows cannot be selected. No production changes on hover.
 
 The list supports all 52 eligible choices and scrolls when its contents exceed
-the viewport. Survey, Prev and Next controls and the verbose header are removed.
-Opening the charter performs a bounded survey of loaded surface columns within
+the viewport. The old inline Survey, Prev and Next controls and verbose header
+are removed; the shared Survey button is beside Rename.
+Pressing Survey performs a bounded survey of loaded surface columns within
 256 blocks and caches IDs/sample positions; unloaded columns are skipped, and
-chunks are never forced to load. Menu actions do not survey again. Clear second
+chunks are never forced to load. Other menu actions do not survey again. Clear second
 is retained below the list. Selection applies immediately, rechecking research, revision, radius and the
 actual loaded biome identity before saving. There is no confirmation page.
 
@@ -141,3 +142,12 @@ point now requires 100 earned value, with the existing +0.1% production per poin
 At fixed production and trade value rates, the points/hour estimate is five
 times the former estimate. Saved value is retained. Old offline intervals use
 the old threshold until catch-up completes, then the new threshold takes effect.
+
+## Manual survey (0.0.56)
+
+Survey sits beside Rename and is available from any charter tab. It performs
+the villager-rank refresh and biome survey, then redraws the charter with the
+updated data.
+Opening no longer waits for the rank bridge or terrain queries. RP and biome
+choices remain cached until another Survey; new settlements need an initial
+Survey. Requests from multiple players share one job per settlement.
