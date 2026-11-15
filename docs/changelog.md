@@ -1,3 +1,17 @@
+## 0.0.24 — Innovation and global research
+
+- Rename the foundational technology to Innovation and wire all five global
+  research nodes into the custom charter contribution UI using existing icons.
+- Add fixed material costs, saved partial contributions, Innovation caps,
+  settlement slot checks, sequential zone unlocks and zone-specific Colonization.
+- Replace placeholder output/storage formulas with category production rates,
+  separate Development-eligible base output, and a fixed 792-item storage increment.
+- Preserve legacy settlements/stock/research through schema migration; journal
+  inventory contributions and reject stale or ambiguous recovery operations.
+- Add 20 research/economy/payment tests. MineScape zone integration, absent local
+  Sanctuary mechanics and engine-level restart/UI validation remain pending;
+  see [implementation details](global-research.md).
+
 # 0.0.23
 
 - Replaced flat interior fills with matching detailed leather and shaded aged-silver/wheat trim assets.

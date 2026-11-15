@@ -4329,8 +4329,8 @@
         }
       },
       {
-        "settlement_capacity": {
-          "type": "button",
+        "innovation": {
+          "type": "panel",
           "size": [
             122,
             34
@@ -4341,330 +4341,48 @@
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "layer": 5,
-          "focus_enabled": true,
-          "hover_enabled": true,
-          "button_mappings": [],
-          "default_control": "default",
-          "hover_control": "hover",
-          "pressed_control": "pressed",
           "controls": [
             {
-              "default": {
-                "type": "panel",
+              "innovation_research": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   122,
-                  34
+                  37
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.86,
-                        0.86,
-                        0.86
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/settlement_charters",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Settlement Charters",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "More settlements\nRepeatable",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
+                    "record@jagsby_frontier.jf_action_innovation": {
+                      "collection_index": 19
                     }
                   }
                 ]
               }
             },
             {
-              "hover": {
-                "type": "panel",
+              "progress": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
-                  122,
-                  34
+                  78,
+                  10
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        1,
-                        1,
-                        1
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/settlement_charters",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Settlement Charters",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "More settlements\nRepeatable",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
+                    "record@jagsby_frontier.jf_data_innovation": {
+                      "collection_index": 9
                     }
                   }
-                ]
-              }
-            },
-            {
-              "pressed": {
-                "type": "panel",
-                "size": [
-                  122,
-                  34
                 ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.65,
-                        0.65,
-                        0.65
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/settlement_charters",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Settlement Charters",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "More settlements\nRepeatable",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
-                    }
-                  }
-                ]
+                "offset": [
+                  39,
+                  21
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 9
               }
             }
           ]
@@ -4672,7 +4390,7 @@
       },
       {
         "frontier_expansion": {
-          "type": "button",
+          "type": "panel",
           "size": [
             122,
             34
@@ -4683,338 +4401,56 @@
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "layer": 5,
-          "focus_enabled": true,
-          "hover_enabled": true,
-          "button_mappings": [],
-          "default_control": "default",
-          "hover_control": "hover",
-          "pressed_control": "pressed",
           "controls": [
             {
-              "default": {
-                "type": "panel",
+              "frontier_research": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   122,
-                  34
+                  37
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.86,
-                        0.86,
-                        0.86
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/frontier_mandate",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Frontier Mandate",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Distant settlements\n5 levels",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
+                    "record@jagsby_frontier.jf_action_frontier": {
+                      "collection_index": 17
                     }
                   }
                 ]
               }
             },
             {
-              "hover": {
-                "type": "panel",
+              "progress": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
-                  122,
-                  34
+                  78,
+                  10
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        1,
-                        1,
-                        1
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/frontier_mandate",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Frontier Mandate",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Distant settlements\n5 levels",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
+                    "record@jagsby_frontier.jf_data_frontier": {
+                      "collection_index": 7
                     }
                   }
-                ]
-              }
-            },
-            {
-              "pressed": {
-                "type": "panel",
-                "size": [
-                  122,
-                  34
                 ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.65,
-                        0.65,
-                        0.65
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/frontier_mandate",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Frontier Mandate",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Distant settlements\n5 levels",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
-                    }
-                  }
-                ]
+                "offset": [
+                  39,
+                  21
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 9
               }
             }
           ]
         }
       },
       {
-        "settlement_development": {
-          "type": "button",
+        "settlement_capacity": {
+          "type": "panel",
           "size": [
             122,
             34
@@ -5025,330 +4461,48 @@
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "layer": 5,
-          "focus_enabled": true,
-          "hover_enabled": true,
-          "button_mappings": [],
-          "default_control": "default",
-          "hover_control": "hover",
-          "pressed_control": "pressed",
           "controls": [
             {
-              "default": {
-                "type": "panel",
+              "capacity_research": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   122,
-                  34
+                  37
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.86,
-                        0.86,
-                        0.86
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/stewardship",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Stewardship",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Higher local research\nRepeatable",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
+                    "record@jagsby_frontier.jf_action_capacity": {
+                      "collection_index": 18
                     }
                   }
                 ]
               }
             },
             {
-              "hover": {
-                "type": "panel",
+              "progress": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
-                  122,
-                  34
+                  78,
+                  10
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        1,
-                        1,
-                        1
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/stewardship",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Stewardship",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Higher local research\nRepeatable",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
+                    "record@jagsby_frontier.jf_data_capacity": {
+                      "collection_index": 8
                     }
                   }
-                ]
-              }
-            },
-            {
-              "pressed": {
-                "type": "panel",
-                "size": [
-                  122,
-                  34
                 ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.65,
-                        0.65,
-                        0.65
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/stewardship",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Stewardship",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Higher local research\nRepeatable",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
-                    }
-                  }
-                ]
+                "offset": [
+                  39,
+                  21
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 9
               }
             }
           ]
@@ -5356,7 +4510,7 @@
       },
       {
         "colonization": {
-          "type": "button",
+          "type": "panel",
           "size": [
             122,
             34
@@ -5367,330 +4521,48 @@
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "layer": 5,
-          "focus_enabled": true,
-          "hover_enabled": true,
-          "button_mappings": [],
-          "default_control": "default",
-          "hover_control": "hover",
-          "pressed_control": "pressed",
           "controls": [
             {
-              "default": {
-                "type": "panel",
+              "colonization_research": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   122,
-                  34
+                  37
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.86,
-                        0.86,
-                        0.86
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/reclamation",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Reclamation",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Frontier production\n5 levels proposed",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
+                    "record@jagsby_frontier.jf_action_colonization": {
+                      "collection_index": 34
                     }
                   }
                 ]
               }
             },
             {
-              "hover": {
-                "type": "panel",
+              "progress": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
-                  122,
-                  34
+                  78,
+                  10
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        1,
-                        1,
-                        1
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/reclamation",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Reclamation",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Frontier production\n5 levels proposed",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
+                    "record@jagsby_frontier.jf_data_colonization": {
+                      "collection_index": 33
                     }
                   }
-                ]
-              }
-            },
-            {
-              "pressed": {
-                "type": "panel",
-                "size": [
-                  122,
-                  34
                 ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.65,
-                        0.65,
-                        0.65
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/reclamation",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Reclamation",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Frontier production\n5 levels proposed",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
-                    }
-                  }
-                ]
+                "offset": [
+                  39,
+                  21
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 9
               }
             }
           ]
@@ -5698,7 +4570,7 @@
       },
       {
         "shared_storage": {
-          "type": "button",
+          "type": "panel",
           "size": [
             122,
             34
@@ -5709,330 +4581,48 @@
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "layer": 5,
-          "focus_enabled": true,
-          "hover_enabled": true,
-          "button_mappings": [],
-          "default_control": "default",
-          "hover_control": "hover",
-          "pressed_control": "pressed",
           "controls": [
             {
-              "default": {
-                "type": "panel",
+              "storage_research": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   122,
-                  34
+                  37
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.86,
-                        0.86,
-                        0.86
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/hoards",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Hoards",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Shared storage\nRepeatable",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
+                    "record@jagsby_frontier.jf_action_storage": {
+                      "collection_index": 20
                     }
                   }
                 ]
               }
             },
             {
-              "hover": {
-                "type": "panel",
+              "progress": {
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
-                  122,
-                  34
+                  78,
+                  10
                 ],
+                "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        1,
-                        1,
-                        1
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/hoards",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Hoards",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Shared storage\nRepeatable",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
+                    "record@jagsby_frontier.jf_data_storage": {
+                      "collection_index": 10
                     }
                   }
-                ]
-              }
-            },
-            {
-              "pressed": {
-                "type": "panel",
-                "size": [
-                  122,
-                  34
                 ],
-                "controls": [
-                  {
-                    "face": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/material_button",
-                      "size": [
-                        122,
-                        34
-                      ],
-                      "offset": [
-                        0,
-                        0
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 0,
-                      "color": [
-                        0.65,
-                        0.65,
-                        0.65
-                      ]
-                    }
-                  },
-                  {
-                    "icon": {
-                      "type": "image",
-                      "texture": "textures/ui/frontier/research/hoards",
-                      "size": [
-                        28,
-                        28
-                      ],
-                      "offset": [
-                        4,
-                        3
-                      ],
-                      "keep_ratio": false,
-                      "bilinear": false,
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 6
-                    }
-                  },
-                  {
-                    "name": {
-                      "type": "label",
-                      "text": "Hoards",
-                      "size": [
-                        78,
-                        11
-                      ],
-                      "offset": [
-                        39,
-                        4
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.72,
-                      "color": [
-                        1,
-                        0.94,
-                        0.77
-                      ],
-                      "shadow": false
-                    }
-                  },
-                  {
-                    "note": {
-                      "type": "label",
-                      "text": "Shared storage\nRepeatable",
-                      "size": [
-                        78,
-                        13
-                      ],
-                      "offset": [
-                        39,
-                        18
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.55,
-                      "color": [
-                        0.94,
-                        0.8,
-                        0.61
-                      ],
-                      "shadow": false
-                    }
-                  }
-                ]
+                "offset": [
+                  39,
+                  21
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 9
               }
             }
           ]
@@ -7289,10 +5879,10 @@
       {
         "caption": {
           "type": "label",
-          "text": "Secondary\nBiome",
+          "text": "Charter\nResearch / Biome",
           "size": [
             88,
-            32
+            48
           ],
           "offset": [
             10,
@@ -7323,7 +5913,7 @@
     ],
     "controls": [
       {
-        "heading_CHOOSE_ONE_BIOME": {
+        "heading_CHARTER_DETAILS": {
           "type": "panel",
           "size": [
             254,
@@ -7357,7 +5947,7 @@
             {
               "caption": {
                 "type": "label",
-                "text": "Choose One Biome",
+                "text": "Charter Details",
                 "size": [
                   244,
                   12
@@ -7379,6 +5969,38 @@
                 ],
                 "shadow": false
               }
+            }
+          ]
+        }
+      },
+      {
+        "details": {
+          "type": "label",
+          "text": "#form_text",
+          "size": [
+            244,
+            210
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.75,
+          "color": [
+            1,
+            0.94,
+            0.77
+          ],
+          "shadow": false,
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
             }
           ]
         }
@@ -10022,6 +8644,1791 @@
             }
           ]
         }
+      }
+    ]
+  },
+  "jf_action_innovation@common.button": {
+    "size": [
+      122,
+      34
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:innovation]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:innovation]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.86,
+                  0.86,
+                  0.86
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Innovation",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/stewardship",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Innovation",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/stewardship",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.65,
+                  0.65,
+                  0.65
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Innovation",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/stewardship",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_data_innovation": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      10
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.55,
+    "color": [
+      0.96,
+      0.91,
+      0.79
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:innovation]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:innovation]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_action_frontier@common.button": {
+    "size": [
+      122,
+      34
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:frontier]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:frontier]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.86,
+                  0.86,
+                  0.86
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Frontier Expansion",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/frontier_mandate",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Frontier Expansion",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/frontier_mandate",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.65,
+                  0.65,
+                  0.65
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Frontier Expansion",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/frontier_mandate",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_data_frontier": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      10
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.55,
+    "color": [
+      0.96,
+      0.91,
+      0.79
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:frontier]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:frontier]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_action_capacity@common.button": {
+    "size": [
+      122,
+      34
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:capacity]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:capacity]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.86,
+                  0.86,
+                  0.86
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Settlement Capacity",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/settlement_charters",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Settlement Capacity",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/settlement_charters",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.65,
+                  0.65,
+                  0.65
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Settlement Capacity",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/settlement_charters",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_data_capacity": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      10
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.55,
+    "color": [
+      0.96,
+      0.91,
+      0.79
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:capacity]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:capacity]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_action_colonization@common.button": {
+    "size": [
+      122,
+      34
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:colonization]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:colonization]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.86,
+                  0.86,
+                  0.86
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Colonization",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/reclamation",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Colonization",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/reclamation",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.65,
+                  0.65,
+                  0.65
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Colonization",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/reclamation",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_data_colonization": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      10
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.55,
+    "color": [
+      0.96,
+      0.91,
+      0.79
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:colonization]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:colonization]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_action_storage@common.button": {
+    "size": [
+      122,
+      34
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:storage]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:storage]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.86,
+                  0.86,
+                  0.86
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Shared Storage",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/hoards",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Shared Storage",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/hoards",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            122,
+            34
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/material_button",
+                "size": [
+                  122,
+                  34
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.65,
+                  0.65,
+                  0.65
+                ]
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  32
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Shared Storage",
+                "size": [
+                  78,
+                  13
+                ],
+                "offset": [
+                  39,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.65,
+                "color": [
+                  1,
+                  0.91,
+                  0.65
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/research/hoards",
+                "size": [
+                  28,
+                  28
+                ],
+                "offset": [
+                  4,
+                  3
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 6
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_data_storage": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      10
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.55,
+    "color": [
+      0.96,
+      0.91,
+      0.79
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:storage]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:storage]') = #record_text))",
+        "target_property_name": "#visible"
       }
     ]
   },

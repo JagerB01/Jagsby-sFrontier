@@ -9,15 +9,15 @@ RP = ROOT / "packs/resource"
 DATA = {
     "overview": 0, "biomes": 1, "census": 2, "tier": 3,
     "efficiency": 4, "hearth": 5, "biome": 6, "frontier": 7,
-    "capacity": 8, "development": 9, "storage": 10,
+    "capacity": 8, "innovation": 9, "storage": 10,
     "production": 11, "stockpile": 12, "resources": 13,
-    "owner": 25, "realmMine": 26, "realmAll": 27,
+    "owner": 25, "realmMine": 26, "realmAll": 27, "colonization": 33,
 }
 ACTIONS = {name: i + 14 for i, name in enumerate([
-    "efficiency", "hearth", "biome", "frontier", "capacity", "development",
+    "efficiency", "hearth", "biome", "frontier", "capacity", "innovation",
     "storage", "scan", "selectBiome", "collect", "rename",
 ])}
-ACTIONS.update({"claim": 28, "minePrev": 29, "mineNext": 30, "allPrev": 31, "allNext": 32})
+ACTIONS.update({"claim": 28, "minePrev": 29, "mineNext": 30, "allPrev": 31, "allNext": 32, "colonization": 34})
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 GENERATED_CONTROLS = {}
 
@@ -230,20 +230,18 @@ def info_card(name, title, index, y):
         ]})
 
 
-def research_node(name, title, subtitle, position, sprite):
-    states = []
-    for state in ["default", "hover", "pressed"]:
-        states.append(control(state, {"type": "panel", "size": [122, 34], "controls": [
-            control("face", image("frontier/material_button", [122, 34], color={"default": [0.86, 0.86, 0.86], "hover": [1, 1, 1], "pressed": [0.65, 0.65, 0.65]}[state])),
-            control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
-            control("name", label(title, [78, 11], (39, 4), color=(1, 0.94, 0.77), scale=0.72)),
-            control("note", label(subtitle, [78, 13], (39, 18), color=(0.94, 0.80, 0.61), scale=0.55)),
-        ]}))
-    return control(name, {"type": "button", "size": [122, 34], "offset": position,
-        "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5,
-        "focus_enabled": True, "hover_enabled": True, "button_mappings": [],
-        "default_control": "default", "hover_control": "hover", "pressed_control": "pressed",
-        "controls": states})
+def research_node(name, title, key, position, sprite):
+    purchase = action(key + "_research", ACTIONS[key], title, width=122, height=34)
+    template = GENERATED_CONTROLS["jf_action_" + key + "@common.button"]
+    for entry in template["controls"]:
+        state = next(iter(entry.values()))
+        caption = next(c["caption"] for c in state["controls"] if "caption" in c)
+        caption.update({"size": [78, 13], "offset": [39, 4], "font_scale_factor": 0.65})
+        state["controls"].append(control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)))
+    values = collection_scope(data_template(DATA[key], [78, 10], scale=0.55), [78, 10])
+    values.update({"offset": [39, 21], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 9})
+    return control(name, {"type": "panel", "size": [122, 34], "offset": position,
+        "anchor_from": "top_left", "anchor_to": "top_left", "controls": [purchase, control("progress", values)]})
 
 
 def global_tree():
@@ -255,11 +253,11 @@ def global_tree():
         control("tier_one", label("Tier I", [50, 9], (0, 14), scale=0.555)),
         control("tier_two", label("Tier II", [50, 9], (0, 36), scale=0.555)),
         control("tier_three", label("Tier III", [50, 9], (0, 83), scale=0.555)),
-        research_node("settlement_capacity", "Settlement Charters", "More settlements\nRepeatable", [66, 0], "settlement_charters"),
-        research_node("frontier_expansion", "Frontier Mandate", "Distant settlements\n5 levels", [0, 47], "frontier_mandate"),
-        research_node("settlement_development", "Stewardship", "Higher local research\nRepeatable", [132, 47], "stewardship"),
-        research_node("colonization", "Reclamation", "Frontier production\n5 levels proposed", [0, 94], "reclamation"),
-        research_node("shared_storage", "Hoards", "Shared storage\nRepeatable", [132, 94], "hoards"),
+        research_node("innovation", "Innovation", "innovation", [66, 0], "stewardship"),
+        research_node("frontier_expansion", "Frontier Expansion", "frontier", [0, 47], "frontier_mandate"),
+        research_node("settlement_capacity", "Settlement Capacity", "capacity", [132, 47], "settlement_charters"),
+        research_node("colonization", "Colonization", "colonization", [0, 94], "reclamation"),
+        research_node("shared_storage", "Shared Storage", "storage", [132, 94], "hoards"),
     ]
     return {"type": "panel", "size": [254, 131], "controls": controls}
 
@@ -441,10 +439,12 @@ def build():
         "$scrolling_content": "jagsby_frontier.jf_picker_content", "$scroll_size": [4, "100% - 4px"],
         "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
     }))
-    picker.append(control("caption", label("Secondary\nBiome", [88, 32], (10, 65), (1, 0.91, 0.65))))
+    picker.append(control("caption", label("Charter\nResearch / Biome", [88, 48], (10, 65), (1, 0.91, 0.65))))
     ui["jf_picker"] = {"type": "panel", "size": [380, 240], "controls": picker}
+    details = label("#form_text", [244, 210], color=(1, 0.94, 0.77), scale=0.75)
+    details["bindings"] = [{"binding_name": "#form_text", "binding_type": "none"}]
     ui["jf_picker_content"] = {"type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"],
-        "controls": [heading("CHOOSE ONE BIOME"), control("choices", {
+        "controls": [heading("CHARTER DETAILS"), control("details", details), control("choices", {
             "type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"],
             "collection_name": "form_buttons", "factory": {"name": "buttons",
                 "control_ids": {"button": "jagsby_frontier.jf_choice"}},

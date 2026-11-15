@@ -5,7 +5,7 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.23.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.24.mcaddon?raw=true)
 
 The header shows the village name above a smaller Village Charter subtitle.
 Overview keeps the framed portrait beside compact Owner, Village Tier, Biome
@@ -15,14 +15,17 @@ Power uses explicit text such as 2.0 RP. Rename stays in the header.
 The fourth tab is **Realm**, with paged My Settlements / All Settlements views.
 New charters record their placer as owner; legacy unowned settlements display
 Unclaimed and can be explicitly claimed. Resource collection is under Production.
-Global research is a five-node visual tree with no purchase actions connected;
-Local research remains functional. See [0.0.23 UI details](docs/realm-and-research-ui.md).
+Global research now uses **Innovation** as its foundation, with inventory
+contributions, progression, migration and the shared production economy.
+See [research rules and pending integrations](docs/global-research.md).
+MineScape zone rules are pending: new founding is blocked and Colonization
+bonuses await the authoritative zone adapter. Local research remains functional. See [0.0.23 UI details](docs/realm-and-research-ui.md).
 
 The on-demand server-controller trade-rank bridge is now included. **Disable the
 separate Trade Rank Probe pack** when using this build, because both define
 vanilla villagers. Charter interaction samples normal ranks from Novice (0.2)
 through Master (1.0); unknown reads remain labeled minimum estimates. MineScape
-is not required. In-game name: **Jagsby's Frontier 0.0.23**. The user confirmed
+is not required. In-game name: **Jagsby's Frontier 0.0.24**. The user confirmed
 the probe's Apprentice reading; this production integration and updated visual
 layout still need in-game verification.
 
@@ -68,7 +71,7 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.0.23.mcaddon`. Packaging is
+Build output is `dist/Jagsbys_Frontier_v0.0.24.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.0+ with `@minecraft/server` 2.9.0 and

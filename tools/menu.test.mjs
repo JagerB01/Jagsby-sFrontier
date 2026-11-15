@@ -175,16 +175,15 @@ test('Research subtabs isolate the correct native action factories',async()=>{
     }
     return result;
   }
-  assert.deepEqual(actions(ui.jf_research_global_content),[]);
+  assert.deepEqual(actions(ui.jf_research_global_content),['innovation','frontier','capacity','colonization','storage']);
   assert.equal(JSON.stringify(ui.jf_research_content).includes('scroll'),false);
   const tree=children(ui.jf_research_global_content);
-  for(const name of ['settlement_capacity','frontier_expansion','settlement_development','colonization','shared_storage']) {
-    assert.equal(tree[name].type,'button');
+  for(const name of ['innovation','frontier_expansion','settlement_capacity','colonization','shared_storage']) {
+    assert.equal(tree[name].type,'panel');
     assert.ok(tree[name].offset[0]+tree[name].size[0]<=254);
     assert.ok(tree[name].offset[1]+tree[name].size[1]<=150);
-    assert.deepEqual(tree[name].button_mappings,[]);
-    assert.equal(JSON.stringify(tree[name]).includes('button.form_button_click'),false);
-    assert.equal(tree[name].bindings,undefined);
+    assert.equal(actions(tree[name]).length,1);
+    assert.ok(JSON.stringify(tree[name]).includes('jf_data_'));
   }
   assert.deepEqual(actions(ui.jf_research_local_content),['efficiency','hearth','biome']);
 });

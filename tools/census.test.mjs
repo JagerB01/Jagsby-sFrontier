@@ -20,6 +20,8 @@ const realmSource=(await readFile(new URL('settlement-realm.js',scriptBase),'utf
   .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
   .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl));
 const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toString('base64')}`;
+const researchSource=await readFile(new URL('global-research.js',scriptBase),'utf8');
+const researchModuleUrl=`data:text/javascript;base64,${Buffer.from(researchSource).toString('base64')}`;
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });
 
 test('native trading levels give linear 0.2 to 1.0 contributions', () => {
@@ -129,7 +131,10 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
     .replace('"./villager-trade-bridge.js"', JSON.stringify(bridgeModuleUrl))
     .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl))
     .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
-    .replace('"./settlement-realm.js"',JSON.stringify(realmModuleUrl));
+    .replace('"./settlement-realm.js"',JSON.stringify(realmModuleUrl))
+    .replace('"./global-research.js"',JSON.stringify(researchModuleUrl))
+    // The integration fixture supplies a known zone; production has no invented boundaries.
+    .replace('return null;\n}\nfunction settle','return "Heartlands";\n}\nfunction settle');
   await import(`data:text/javascript;base64,${Buffer.from(main).toString('base64')}`);
   const location = { x:0, y:64, z:0 };
   const player = { id:'p', name:'Builder', sendMessage() {}, getComponent() {} };
@@ -156,7 +161,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,33);
+  assert.equal(forms[0].records.length,35);
   assert.equal(forms[0].records[24],'[JF:action:rename]');
   assert.equal(forms[0].records[25],'[JF:data:owner]Builder');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].owner.id,'p');
