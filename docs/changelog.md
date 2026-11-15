@@ -1,3 +1,16 @@
+# 0.0.63
+
+- Compact later UI transport IDs from a sparse 506-record array to 289 records
+  (43% fewer). Keep generated script/UI mappings synchronized; IDs are transient,
+  not saved. Preserve all existing tabs, icons, actions and gameplay behavior.
+- Poll fresh native villager-rank results in a shared one-tick batch rather than
+  always waiting ten ticks. Ready results finish early; unready results retain
+  the ten-tick deadline and unknown-rank handling. No cached-rank shortcut.
+- Continue the 80-block villager refresh on every opening and leave biome Survey
+  manual. Add content-log timings for villager refresh and form preparation to
+  distinguish server delay from client UI loading. The reported seven-second
+  delay cannot be reproduced or timed without the Minecraft client.
+
 # 0.0.62
 
 - User identified MineScape as the HUD issue; withdraw the speculative HUD

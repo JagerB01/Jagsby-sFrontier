@@ -480,3 +480,16 @@ test('Both settlement directories use compact two-line rows with tier icons and 
   assert.equal(bytes.readUInt32BE(16),64);assert.equal(bytes.readUInt32BE(20),64);
  }
 });
+
+test('form payload packs later records without gaps and preserves contiguous collection ranges',async()=>{
+ const source=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
+ const {CHARTER_LAYOUT:layout}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+ const indices=[...Object.values(layout.data),...Object.values(layout.actions)];
+ assert.equal(new Set(indices).size,indices.length);
+ assert.ok(layout.recordCount<=300,'Avoid the former 506-record sparse payload');
+ const later=indices.filter(index=>index>=98).sort((a,b)=>a-b);
+ assert.deepEqual(later,Array.from({length:later.length},(_,i)=>i+98));
+ for(const [group,prefix,count]of [['data','stockCount',30],['data','prospectInfo',52],['actions','prospectSelect',52],['data','roadConnection',4]]){
+  for(let i=0;i<count;i++)assert.equal(layout[group][prefix+i],layout[group][prefix+'0']+i);
+ }
+});

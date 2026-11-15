@@ -183,6 +183,7 @@ function recoverResearch(player){
 }
 
 function open(player,vId,page='Overview',researchScope='global',realmPage=0,realmScope='roads',productionScope='summary',productionPages={}){
+  const preparedAt=Date.now();
   const s=accounted(),v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
   const {data,actions,recordCount,tabs}=CHARTER_LAYOUT;
   const records=Array(recordCount).fill('');
@@ -265,6 +266,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
    const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:index>=data.roadConnection0&&index<data.roadConnection0+4?roadView.rows[index-data.roadConnection0]?.texture:directoryIcons.get(index);
    form.button(text,texture);
   });
+  console.log(`[Frontier menu] prepare_ms=${Date.now()-preparedAt} records=${records.length}`);
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
 function openProduction(player,vid,scope='summary',pages={}){open(player,vid,'Production','global',0,'roads',scope==='biomes'?'biomes':'summary',pages);}
@@ -370,7 +372,9 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
       recoverResearch(player);
       let s=accounted(),v=addVillage(s,block,player);
       if(!v)return;
+      const refreshAt=Date.now();
       await refreshVillage(v.id);
+      console.log(`[Frontier menu] villager_refresh_ms=${Date.now()-refreshAt}`);
       open(player,v.id);
     }catch(e){console.warn(`Frontier charter interaction: ${e}`);player.sendMessage(String(e).includes('catching up')?'Production is catching up. Interact with the charter again to continue.':'§cThe Village Charter could not open. Check the Minecraft content log for Frontier charter errors.');}
     finally{pendingCharterInteractions.delete(pendingKey);}

@@ -28,23 +28,28 @@ export async function sampleTradingRanks(villagers, system) {
     }
   }
   if (fresh.length) {
-    // One batch wait per charter opening, sharing in-flight samples between players.
-    system.runTimeout(() => {
+    // Poll as one batch. A fresh request must cross at least one server tick;
+    // finish ready entities immediately instead of always stalling ten ticks.
+    // Keep the original ten-tick deadline for slow/incompatible controllers.
+    const poll = elapsed => {
+      let waiting = false;
       for (const job of fresh) {
         const {villager} = job;
         if (pending.get(villager.id) !== job) continue;
-        let tier;
+        let tier, ready = false;
         try {
+          ready = villager.getProperty(PREFIX + "ready") === true;
           const raw = villager.getProperty(PREFIX + "raw_rank");
-          if (villager.getProperty(PREFIX + "ready") === true && Number.isInteger(raw) && raw >= 0 && raw <= 4) tier = raw;
-        } catch { /* Unloaded/removed entity or incompatible overriding pack. */ }
-        finally {
-          try { villager.triggerEvent(PREFIX + "reset"); } catch { /* Entity gone. */ }
-          pending.delete(villager.id);
-          job.resolve([villager.id, tier]);
-        }
+          if (ready && Number.isInteger(raw) && raw >= 0 && raw <= 4) tier = raw;
+        } catch { ready = true; /* Removed entity or incompatible overriding pack. */ }
+        if (!ready && elapsed < 10) { waiting = true; continue; }
+        try { villager.triggerEvent(PREFIX + "reset"); } catch { /* Entity gone. */ }
+        pending.delete(villager.id);
+        job.resolve([villager.id, tier]);
       }
-    }, 10);
+      if (waiting) system.runTimeout(() => poll(elapsed + 1), 1);
+    };
+    system.runTimeout(() => poll(1), 1);
   }
   const tiers = new Map(await Promise.all(jobs));
   return entity => tiers.get(entity.id);

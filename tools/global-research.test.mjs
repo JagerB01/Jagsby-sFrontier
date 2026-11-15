@@ -1,3 +1,4 @@
+import {CHARTER_LAYOUT} from '../packs/behavior/scripts/charter-layout.js';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
@@ -291,21 +292,21 @@ test('Removing the map restores only previously saved movement controls once',as
 
 test('Selecting a verified biome applies immediately without a confirmation form',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Test',biomeUnlocked:true,available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:32,y:64,z:0}}};let clicked=false,reads=0;
- const h=await runtime(s,form=>{if(!clicked){clicked=true;return {canceled:false,selection:301};}return {canceled:true};},{biomeAt:()=>{reads++;return 'minecraft:forest';}});
+ const h=await runtime(s,form=>{if(!clicked){clicked=true;return {canceled:false,selection:CHARTER_LAYOUT.actions.prospectSelect1};}return {canceled:true};},{biomeAt:()=>{reads++;return 'minecraft:forest';}});
  h.api.openProduction(h.player,'a','biomes');await new Promise(resolve=>setImmediate(resolve));
  assert.equal(h.read().villages.a.secondary,'minecraft:forest');assert.equal(reads,1);
  assert.equal(h.forms.length,2);assert.ok(h.forms.every(form=>form.heading==='JF_CHARTER|Dashboard'));
  assert.ok(h.forms[1].text.includes('[JF:production:biomes]'));
- assert.equal(h.forms[1].icons[150],'textures/ui/frontier/production/wheat');
- assert.equal(h.forms[1].icons[151],'textures/ui/frontier/production/oak_log');
- assert.equal(h.forms[1].buttons[150],'+ 1.750/hr');
- assert.equal(h.forms[1].buttons[151],'+ 0.750/hr');
+ assert.equal(h.forms[1].icons[CHARTER_LAYOUT.data.overviewProduction0],'textures/ui/frontier/production/wheat');
+ assert.equal(h.forms[1].icons[CHARTER_LAYOUT.data.overviewProduction1],'textures/ui/frontier/production/oak_log');
+ assert.equal(h.forms[1].buttons[CHARTER_LAYOUT.data.overviewProduction0],'+ 1.750/hr');
+ assert.equal(h.forms[1].buttons[CHARTER_LAYOUT.data.overviewProduction1],'+ 0.750/hr');
  h.api.clearSecondary(h.player,'a');assert.equal(h.read().villages.a.secondary,null);
 });
 test('Unverified/out-of-range biome controls are disabled and selecting unloaded samples never changes the second biome',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Test',biomeUnlocked:true,available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:300,y:64,z:0}}};
  const h=await runtime(s,()=>({canceled:true}),{biomeAt:()=>{throw Error('unloaded');}});
- h.api.openProduction(h.player,'a','biomes');assert.equal(h.forms[0].buttons[301],'[JF:disabled:prospectSelect1]');
+ h.api.openProduction(h.player,'a','biomes');assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.actions.prospectSelect1],'[JF:disabled:prospectSelect1]');
  await h.api.selectBiome(h.player,'a','minecraft:forest');assert.equal(h.read().villages.a.secondary,undefined);
  h.update(s=>s.villages.a.biomeSamples['minecraft:forest'].x=32);
  await assert.throws(()=>h.api.applyProductionSelection(h.player,'a','minecraft:forest','diversify',0),/unloaded/);assert.equal(h.read().villages.a.secondary,undefined);
@@ -351,30 +352,30 @@ test('Production sends item images, aligned bonus percentages and whole stock co
  assert.equal(h.forms[0].icons[96],'textures/ui/frontier/production/wheat');
  assert.equal(h.forms[0].icons[97],undefined);
  assert.ok(h.forms[0].buttons[96].includes('Wheat\n+ 3.850/hour'));
- for(const [i,value]of ['+ 0','+ 0','+ 0','+ 10'].entries())assert.equal(h.forms[0].buttons[130+i],value);
- assert.equal(h.forms[0].buttons[138],'River');assert.equal(h.forms[0].buttons[154],'+ 10');
+ for(const [i,value]of ['+ 0','+ 0','+ 0','+ 10'].entries())assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.productionModifier0+i],value);
+ assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.productionModifierName3],'River');assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.productionModifierTotal],'+ 10');
  assert.equal(h.forms.length,1);assert.ok(h.forms[0].text.includes('[JF:production:summary]'));
  const {STOCK_ITEMS}=await import('../packs/behavior/scripts/production-display.js');
  const stocked=STOCK_ITEMS.filter(item=>s.stock[item.id]>=1);
  for(const [i,item]of stocked.entries()){
-  assert.equal(h.forms[0].buttons[100+i],'10');
-  assert.equal(h.forms[0].icons[100+i],item.texture);
+  assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.stockCount0+i],'10');
+  assert.equal(h.forms[0].icons[CHARTER_LAYOUT.data.stockCount0+i],item.texture);
   assert.ok(h.forms[0].text.includes(`[JF:stock:${i}]`));
  }
- assert.equal(h.forms[0].buttons[100+stocked.length],'');
+ assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.stockCount0+stocked.length],'');
  assert.equal(h.forms[0].text.includes(`[JF:stock:${stocked.length}]`),false);
 
 });
 test('Directory road button starts one Trail and returns to the same settlement list',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',owner:{id:'p',name:'Builder'},roads:1};
  s.villages.b={...village(100),id:'b',name:'Beta',owner:{id:'p',name:'Builder'},developmentValue:250,census:{realmPowerTenths:null,minimumPowerTenths:20}};
- let clicked=false;const h=await runtime(s,()=>{if(!clicked){clicked=true;return {canceled:false,selection:501};}return {canceled:true};});
+ let clicked=false;const h=await runtime(s,()=>{if(!clicked){clicked=true;return {canceled:false,selection:CHARTER_LAYOUT.actions.directoryMineRoad1};}return {canceled:true};});
  h.player.dimension={id:'minecraft:overworld'};h.player.location={x:0,y:64,z:0};
  h.api.open(h.player,'a','Realm','global',0,'mine');await new Promise(resolve=>setImmediate(resolve));
- assert.equal(h.forms[0].buttons[406],'Beta');assert.equal(h.forms[0].buttons[407],'Builder');assert.equal(h.forms[0].buttons[408],'100, 64, 0');assert.equal(h.forms[0].buttons[409],'100 blocks');assert.equal(h.forms[0].buttons[410],'2');
- assert.equal(h.forms[0].icons[406],'textures/ui/frontier/settlement_icons/hamlet');
+ assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.directoryMine1Name],'Beta');assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.directoryMine1Owner],'Builder');assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.directoryMine1Coordinates],'100, 64, 0');assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.directoryMine1Distance],'100 blocks');assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.directoryMine1Development],'2');
+ assert.equal(h.forms[0].icons[CHARTER_LAYOUT.data.directoryMine1Name],'textures/ui/frontier/settlement_icons/hamlet');
  const roads=Object.values(h.read().roads);assert.equal(roads.length,1);assert.equal(roads[0].from,'a');assert.equal(roads[0].to,'b');assert.equal(roads[0].targetLevel,1);
- assert.equal(h.forms.length,2);assert.ok(h.forms[1].text.includes('[JF:realm:mine]'));assert.equal(h.forms[1].buttons[411],'Building');
+ assert.equal(h.forms.length,2);assert.ok(h.forms[1].text.includes('[JF:realm:mine]'));assert.equal(h.forms[1].buttons[CHARTER_LAYOUT.data.directoryMine1RoadStatus],'Building');
  h.api.establishDirectoryRoad(h.player,'a','b',0,'mine');assert.equal(Object.values(h.read().roads).length,1);
  assert.equal(Object.values(h.read().roads)[0].targetLevel,1);
 });

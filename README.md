@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.62.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.63.mcaddon?raw=true)
+
+Version 0.0.63 reduces menu transport from 506 to 289 records and reads fresh
+villager rank results as soon as the server controller is ready (one tick minimum,
+with the existing ten-tick timeout). Every opening still refreshes villagers in
+80 blocks; nearby-biome scans remain manual. Content-log timings separate villager
+refresh from form preparation. Actual client load time needs an in-game check.
 
 Version 0.0.62 restores Frontier's original resource-pack identity and separate
 registered custom charter renderer, undoing the HUD troubleshooting changes in

@@ -10,6 +10,7 @@ const menuSource = await readFile(new URL('menu-display.js', scriptBase), 'utf8'
 const menuModuleUrl = `data:text/javascript;base64,${Buffer.from(menuSource).toString('base64')}`;
 const layoutSource = await readFile(new URL('charter-layout.js', scriptBase), 'utf8');
 const layoutModuleUrl = `data:text/javascript;base64,${Buffer.from(layoutSource).toString('base64')}`;
+const {CHARTER_LAYOUT}=await import(layoutModuleUrl);
 const bridgeSource = await readFile(new URL('villager-trade-bridge.js', scriptBase), 'utf8');
 const bridgeModuleUrl = `data:text/javascript;base64,${Buffer.from(bridgeSource).toString('base64')}`;
 const overviewSource = await readFile(new URL('settlement-overview.js',scriptBase),'utf8');
@@ -172,7 +173,7 @@ test('opening refreshes villagers; only the Survey button refreshes nearby biome
   assert.equal(saved.villages[sourceId].census.realmPowerTenths,2);
   assert.equal(saved.villages[sourceId].nativeBiome,'minecraft:plains');
   const surveyed=forms.at(-1);assert.equal(surveyed.heading,'JF_CHARTER|Dashboard');
-  assert.equal(surveyed.records.length,506);assert.equal(surveyed.records[2],'0.2 RP');
+  assert.equal(surveyed.records.length,CHARTER_LAYOUT.recordCount);assert.equal(surveyed.records[2],'0.2 RP');
   assert.equal(surveyed.records[3],'[JF:data:tier]Outpost');assert.equal(surveyed.records[25],'Owner: Builder');
   assert.equal(surveyed.records[64],'Development 0');assert.equal(surveyed.records[60],'+ 0.000');
   assert.equal(surveyed.icons[3],'textures/ui/frontier/settlements/outpost');

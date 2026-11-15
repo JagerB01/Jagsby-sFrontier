@@ -5,11 +5,11 @@ import test from 'node:test';
 const source=await readFile(new URL('../packs/behavior/scripts/villager-trade-bridge.js',import.meta.url),'utf8');
 const {sampleTradingRanks}=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
 
-test('fresh controller results read actual ranks after one batch wait',async()=>{
+test('fresh controller results read actual ranks after one tick',async()=>{
   let raw=1,requests=0;
   const entity={id:'rank-change',triggerEvent(name){if(name.endsWith('request'))requests++;},
     getProperty(name){return name.endsWith('ready')?true:raw;}};
-  const system={runTimeout(resolve,ticks){assert.equal(ticks,10);resolve();}};
+  const system={runTimeout(resolve,ticks){assert.equal(ticks,1);resolve();}};
   assert.equal((await sampleTradingRanks([entity],system))(entity),1);
   raw=4;
   assert.equal((await sampleTradingRanks([entity],system))(entity),4);
@@ -51,4 +51,23 @@ test('rank queries stay in controller transitions, while native property events 
   const states=controller.animation_controllers['controller.animation.jagsby_frontier.trade_rank'].states;
   assert.equal(states.requested.transitions.length,6);
   assert.equal(JSON.stringify(states.default).includes('query.trade_tier'),false);
+});
+
+test('rank polling finishes ready villagers early and waits only for unfinished results',async()=>{
+ const queue=[];let slowReady=false,slowReads=0;
+ const fast={id:'poll-fast',triggerEvent(){},getProperty:key=>key.endsWith('ready')?true:4};
+ const slow={id:'poll-slow',triggerEvent(){},getProperty(key){slowReads++;return key.endsWith('ready')?slowReady:2;}};
+ const system={runTimeout(fn,ticks){assert.equal(ticks,1);queue.push(fn);}};
+ const result=sampleTradingRanks([fast,slow],system);
+ assert.equal(queue.length,1);queue.shift()();assert.equal(queue.length,1);
+ slowReady=true;queue.shift()();
+ const read=await result;assert.equal(read(fast),4);assert.equal(read(slow),2);
+ assert.equal(queue.length,0);assert.equal(slowReads,4);
+});
+test('unready rank requests stop at the original ten-tick deadline',async()=>{
+ const queue=[];let ticks=0,resets=0;
+ const entity={id:'poll-timeout',triggerEvent(event){if(event.endsWith('reset'))resets++;},getProperty:key=>key.endsWith('ready')?false:4};
+ const result=sampleTradingRanks([entity],{runTimeout(fn,delay){ticks+=delay;queue.push(fn);}});
+ while(queue.length)queue.shift()();
+ assert.equal((await result)(entity),undefined);assert.equal(ticks,10);assert.equal(resets,1);
 });

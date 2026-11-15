@@ -49,6 +49,12 @@ for scope_index, scope in enumerate(["mine", "all"]):
     for slot in range(3):
         DATA.update({"directory" + scope.title() + str(slot) + field: 400 + scope_index * 18 + slot * 6 + i for i, field in enumerate(DIRECTORY_FIELDS)})
         ACTIONS["directory" + scope.title() + "Road" + str(slot)] = 500 + scope_index * 3 + slot
+# Preserve the original low transport IDs; pack later additions contiguously.
+# These IDs are form-local, never saved. Avoid transmitting hundreds of holes.
+late = sorted([(index, mapping, key) for mapping in [DATA, ACTIONS]
+               for key, index in mapping.items() if index >= 98], key=lambda entry: entry[0])
+for index, (_, mapping, key) in enumerate(late, start=98):
+    mapping[key] = index
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
