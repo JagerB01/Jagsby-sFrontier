@@ -43,7 +43,7 @@ export function migrateLocalResearch(v,s=null){
  return v;
 }
 export function categoryMaterials(category){
- const mapped=Object.values(C.resources).flat().filter(r=>r.category===category).map(r=>r.id);
+ const mapped=category==='crop'?C.researchMaterials.crop:Object.values(C.resources).flat().filter(r=>r.category===category).map(r=>r.id);
  return [...new Set(category==='building'?[...mapped,...BUILDING]:mapped)];
 }
 export function localResearchCost(v,key){
@@ -85,14 +85,14 @@ export function localResearchText(v,key,s=null){
  const healing='Grants players Regeneration I while within the settlement. Persists for 3 minutes after leaving.';
  const current={
   hearth:level>0?healing+(level>=2?' Villagers recover 2 health points once per Minecraft day.':''):'',
-  biome:level?'Allows one surveyed secondary biome to produce resources alongside the primary biome.':'',
+  biome:level?'Unlocks the second 50% allocation. Choose Native Specialization or a surveyed surface biome within 256 blocks in Production > Biomes.':'',
   sanctuary:level?`Reduces hostile-mob damage by ${Math.min(99.9999,(1-0.95**level)*100).toFixed(2)}%. Persists for 3 minutes after leaving.`:'',
   efficiency:level?`Settlement resource production: +${level*5}%.`:'',
   roads:level?'Enables trade connections and travel by spending food.':'',
  };
  const next={
   hearth:level===0?healing:level===1?'Villagers within the settlement recover 2 health points once per Minecraft day.':'',
-  biome:level?'':'Allows one surveyed secondary biome within 256 blocks to produce resources alongside the primary biome.',
+  biome:level?'':'Unlocks the second 50% allocation. Choose Native Specialization or a surveyed surface biome within 256 blocks in Production > Biomes.',
   sanctuary:`Reduces hostile-mob damage by ${Math.min(99.9999,(1-0.95**(level+1))*100).toFixed(2)}%. Persists for 3 minutes after leaving.`,
   efficiency:`Settlement resource production: +${(level+1)*5}%.`,
   roads:level===0?'Enables trade connections and travel by spending food.':level<3?'Raises Road Networks research to Lv '+(level+1)+'. Connections are built and upgraded separately.':'',

@@ -1,7 +1,7 @@
-# Fixed Production panels — 0.0.39
+# Fixed Production panels — 0.0.43
 
 Production has four local subtabs within the existing charter frame. All use
-fixed-size panels; there is no scrolling Production page or biome-picker menu.
+fixed-size panels; there is no scrolling Production page. Allocation previews are fixed panels.
 Switching subtabs does not submit a form or trigger a census. Lists use explicit
 Previous/Next controls and retain their selected subtab after an action.
 
@@ -11,11 +11,11 @@ Previous/Next controls and retain their selected subtab after an action.
   without scanning villagers or terrain.
 - **Resources:** three resources per page, each with current items/hour,
   potential base/zone components and the primary/secondary biome source.
-  Shared resources such as stone are listed once. When stock is full, actual
+  Matching resource output is added together and listed once. When stock is full, actual
   output is shown as paused while potential rates remain visible.
 - **Biomes:** primary and selected secondary biome, Resource Prospecting unlock
-  or saved paper progress, three surveyed options per page, and inline Use
-  buttons. Each option identifies additional resources or shared primary output.
+  or saved paper progress, three allocation options per page, including Native Specialization, and inline Use
+  buttons. Each option identifies its resource and 50% allocation. Use opens a fixed preview before confirmation.
   Survey runs the existing loaded-sample lattice within 256 blocks. No survey
   runs automatically on tab switching. Use rechecks research, recorded sample,
   distance, supported resource mapping and loaded biome identity. Stale or
@@ -26,10 +26,9 @@ Previous/Next controls and retain their selected subtab after an action.
   all whole items that fit inventory, retaining fractions and uncollected items;
   it is not restricted to the visible page. Pages clamp after collection.
 
-This reorganizes existing economy information and controls without changing
-production rates, biome eligibility, Development, Colonization or capacity.
-The existing resource table remains authoritative: unmapped biomes receive an
-explicit no-production message instead of invented outputs. Offline production
+The [0.0.43 biome production rules](biome-production.md) define rates, eligibility,
+allocation choices and River bonuses. Unmapped biomes receive an explicit
+no-production message instead of invented outputs. Offline production
 continues using cached Realm Power and saved biome/research records.
 
 ## Other readability corrections in this release
@@ -59,10 +58,10 @@ existing 2-health-point villager heal once per Minecraft day.
 
 ## Validation
 
-110 Node tests and 3 Python tests pass. Static packaging validates 146 pack
-files. Coverage includes rate components, full-stock paused output, source
-resource deduplication, bounded pages/empty states, research and sample gating,
-inline verified selection, unloaded rejection, clearing, whole-item collection
+177 Node tests and 3 Python tests pass. Static packaging validates 148 pack
+files. Coverage includes rate components, full-stock paused output, combined
+allocation output, bounded pages/empty states, research and sample gating,
+previewed verified selection, unloaded rejection, clearing, whole-item collection
 with fractional preservation, panel bounds, compact rate formatting, shorter
 hover frames and Hearthstone's three-minute effect duration. Native font/text
 wrapping and controls still require an in-game check on Bedrock 1.26.0+.

@@ -1,18 +1,15 @@
+import {BIOME_RESOURCES} from './biome-resources.js';
 // Finalized local research costs. Road timing and travel food values remain trial balance.
 export const ECONOMY_CONFIG = {
   baseCapacity:128, developmentThreshold:500, developmentBonus:0.001,
   prosperityBonus:0.05, boundaryRadius:32,
-  categories:{crop:{rate:0.35,value:1},building:{rate:0.15,value:2},uncommon:{rate:0.05,value:5},valuable:{rate:0.01,value:10}},
+  categories:{common:{rate:0.35,value:1},building:{rate:0.15,value:2},uncommon:{rate:0.05,value:5},valuable:{rate:0.01,value:10}},
   // Fixed basket from the nine distinct original resource mappings; no modifiers.
   storageReferenceBasket:['minecraft:wheat','minecraft:stone','minecraft:oak_log','minecraft:spruce_log','minecraft:mud','minecraft:clay_ball','minecraft:sand','minecraft:cocoa_beans','minecraft:jungle_log'],
-  resources:{
-    'minecraft:plains':[{id:'minecraft:wheat',name:'Wheat',category:'crop'},{id:'minecraft:stone',name:'Stone',category:'building'}],
-    'minecraft:forest':[{id:'minecraft:oak_log',name:'Oak Logs',category:'building'},{id:'minecraft:stone',name:'Stone',category:'building'}],
-    'minecraft:taiga':[{id:'minecraft:spruce_log',name:'Spruce Logs',category:'building'},{id:'minecraft:stone',name:'Stone',category:'building'}],
-    'minecraft:swamp':[{id:'minecraft:mud',name:'Mud',category:'building'},{id:'minecraft:clay_ball',name:'Clay',category:'uncommon'}],
-    'minecraft:desert':[{id:'minecraft:sand',name:'Sand',category:'building'},{id:'minecraft:stone',name:'Stone',category:'building'}],
-    'minecraft:jungle':[{id:'minecraft:cocoa_beans',name:'Cocoa Beans',category:'crop'},{id:'minecraft:jungle_log',name:'Jungle Logs',category:'building'}],
-  },
+  resources:BIOME_RESOURCES,
+  // Preserve the established 792-item storage increment independently of new assignments.
+  storageReferenceRatePerRP:1.65,
+  researchMaterials:{crop:['minecraft:wheat','minecraft:potato','minecraft:carrot','minecraft:cocoa_beans','minecraft:bamboo']},
   research:{
     hearth:{name:'Hearthstone',max:2,cost:[64,128],material:'minecraft:bread',label:'Bread'},
     biome:{name:'Resource Prospecting',max:1,cost:64,material:'minecraft:paper',label:'Paper'},

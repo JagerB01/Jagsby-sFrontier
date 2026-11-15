@@ -353,3 +353,16 @@ test('Research hover heights flow from the rendered label with only fixed edge p
   assert.equal(content.top_padding.size[1],6);assert.equal(content.bottom_padding.size[1],6);
  }
 });
+test('Allocation preview routes to a fixed panel and preserves native Confirm/Back indices',async()=>{
+ const ui=await loadUI(),routes=children(ui.jf_router),preview=ui.jf_production_preview;
+ assert.ok(JSON.stringify(routes['preview@jagsby_frontier.jf_production_preview']).includes('Production Preview'));
+ assert.ok(JSON.stringify(routes['picker@jagsby_frontier.jf_picker']).includes('not (#title_text = \'JF_CHARTER|Production Preview\')'));
+ assert.equal(JSON.stringify(preview).includes('scroll'),false);
+ const controls=children(preview);assert.equal(controls.details.text,'#form_text');
+ for(let index=0;index<2;index++){
+  const scope=controls['choice_'+index];assert.equal(scope.collection_name,'form_buttons');
+  assert.equal(children(scope)['record@jagsby_frontier.jf_choice'].collection_index,index);
+  assert.ok(scope.offset[1]>=controls.details.offset[1]+controls.details.size[1]);
+  assert.ok(scope.offset[1]+scope.size[1]<=240);
+ }
+});

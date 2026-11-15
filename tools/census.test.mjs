@@ -17,14 +17,14 @@ const overviewModuleUrl = `data:text/javascript;base64,${Buffer.from(overviewSou
 const tiersSource = await readFile(new URL('settlement-tiers.js',scriptBase),'utf8');
 const tiersModuleUrl = `data:text/javascript;base64,${Buffer.from(tiersSource).toString('base64')}`;
 const realmSource=(await readFile(new URL('settlement-realm.js',scriptBase),'utf8'))
-  .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
+  .replace('"./biome-resources.js"',JSON.stringify(new URL('biome-resources.js',scriptBase).href)).replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
   .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl));
 const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toString('base64')}`;
-const configSource=await readFile(new URL('economy-config.js',scriptBase),'utf8');
+const configSource=(await readFile(new URL('economy-config.js',scriptBase),'utf8')).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',scriptBase).href));
 const configUrl=`data:text/javascript;base64,${Buffer.from(configSource).toString('base64')}`;
 const extraUrls={};
 for(const name of ['settlement-economy','settlement-effects']) {
- const code=(await readFile(new URL(name+'.js',scriptBase),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',scriptBase).href)).replace("'./local-research.js'",JSON.stringify(new URL('local-research.js',scriptBase).href));
+ const code=(await readFile(new URL(name+'.js',scriptBase),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',scriptBase).href)).replace("'./local-research.js'",JSON.stringify(new URL('local-research.js',scriptBase).href)).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',scriptBase).href)).replace("'./legacy-production.js'",JSON.stringify(new URL('legacy-production.js',scriptBase).href));
  extraUrls[name]=`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
 }
 
@@ -82,13 +82,13 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   const intervals = [];
   const properties = new Map();
   const dimensions = new Map();
-  let scans = 0, biomeReads = 0;
+  let scans = 0, biomeReads = 0, biomeResult = 'minecraft:plains';
   let nativeTier = 0;
   let population = 1;
   const nativeVillager = {...villager('a'), triggerEvent() {}, getProperty: name => name.endsWith("ready") ? true : nativeTier};
   const makeDimension = id => {
     const dim = { id, getEntities() { scans++; return Array.from({length:population},(_,i)=>({...nativeVillager,id:'v'+i})); },
-      getBiome() { biomeReads++; return {id:'minecraft:plains'}; },
+      getBiome() { biomeReads++; return {id:biomeResult}; },
       getBlock: location => ({ typeId:'jagsby_frontier:village_charter', location, dimension:dim }) };
     dimensions.set(id, dim);
     return dim;
@@ -136,7 +136,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
     .replace('"./charter-layout.js"', JSON.stringify(layoutModuleUrl))
     .replace('"./villager-trade-bridge.js"', JSON.stringify(bridgeModuleUrl))
     .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl))
-    .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
+    .replace('"./biome-resources.js"',JSON.stringify(new URL('biome-resources.js',scriptBase).href)).replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
     .replace('"./settlement-realm.js"',JSON.stringify(realmModuleUrl))
     .replace('"./economy-config.js"',JSON.stringify(configUrl))
     .replace('"./global-research.js"',JSON.stringify(new URL('global-research.js',scriptBase).href))
@@ -187,7 +187,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[1].heading,'JF_CHARTER|Dashboard');
   assert.ok(forms[1].records[4].includes('Contributed: 0 / 250'));
   assert.equal(forms[1].text,'[JF:tab:research][JF:research:local][JF:realm:roads][JF:production:summary]');
-  nativeTier = 4;
+  nativeTier = 4;biomeResult = 'minecraft:forest';
   handlers.beforeInteract(event);
   await queued.shift()();
   saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
@@ -198,7 +198,8 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
   assert.equal(Object.keys(saved.villages).length, 2);
   assert.equal(scans, 3);
-  assert.ok(biomeReads >= 2);
+  assert.equal(biomeReads,2,'Only initial registration reads the native biome');
+  assert.equal(saved.villages['minecraft:overworld|0,64,0'].nativeBiome,'minecraft:plains');
   menuResponse={canceled:false,selection:24};
   renameResponse={canceled:false,formValues:['Oakfield']};
   handlers.beforeInteract(event);

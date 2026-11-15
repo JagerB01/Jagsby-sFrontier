@@ -73,6 +73,7 @@ export function referenceBasket(){
  return C.storageReferenceBasket??[...resources.keys()];
 }
 export function storageIncrement(){
+ if(C.storageReferenceRatePerRP!==undefined)return Math.floor(C.storageReferenceRatePerRP*10*48+1e-8);
  const resources=new Map(Object.values(C.resources).flat().map(r=>[r.id,r]));
  return Math.floor(referenceBasket().reduce((sum,id)=>sum+(C.categories[resources.get(id)?.category]?.rate??0),0)*10*48+1e-8);
 }

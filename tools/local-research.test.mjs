@@ -23,7 +23,7 @@ test('Prospecting requires exactly 64 paper after Hearthstone I',()=>{
 });
 test('Sanctuary uses mapped crops, mixes eligible items and costs a fixed 250 at every level',()=>{
  const v=village();v.hearth=1;
- assert.deepEqual(categoryMaterials('crop').sort(),['minecraft:cocoa_beans','minecraft:wheat']);
+ assert.deepEqual(categoryMaterials('crop').sort(),['minecraft:bamboo','minecraft:carrot','minecraft:cocoa_beans','minecraft:potato','minecraft:wheat']);
  for(let level=1;level<=8;level++){
   assert.equal(localResearchCost(v,'sanctuary').amount,250);
   assert.equal(give(v,'sanctuary','minecraft:wheat',125),125);

@@ -48,6 +48,26 @@
         }
       },
       {
+        "preview@jagsby_frontier.jf_production_preview": {
+          "bindings": [
+            {
+              "binding_name": "#title_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(#title_text = 'JF_CHARTER|Production Preview')",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(#title_text = 'JF_CHARTER|Production Preview')",
+              "target_property_name": "#enabled"
+            }
+          ]
+        }
+      },
+      {
         "picker@jagsby_frontier.jf_picker": {
           "bindings": [
             {
@@ -56,12 +76,12 @@
             },
             {
               "binding_type": "view",
-              "source_property_name": "((not ((#title_text - 'JF_CHARTER|') = #title_text)) and (not (#title_text = 'JF_CHARTER|Dashboard')))",
+              "source_property_name": "((not ((#title_text - 'JF_CHARTER|') = #title_text)) and (not (#title_text = 'JF_CHARTER|Dashboard')) and (not (#title_text = 'JF_CHARTER|Production Preview')))",
               "target_property_name": "#visible"
             },
             {
               "binding_type": "view",
-              "source_property_name": "((not ((#title_text - 'JF_CHARTER|') = #title_text)) and (not (#title_text = 'JF_CHARTER|Dashboard')))",
+              "source_property_name": "((not ((#title_text - 'JF_CHARTER|') = #title_text)) and (not (#title_text = 'JF_CHARTER|Dashboard')) and (not (#title_text = 'JF_CHARTER|Production Preview')))",
               "target_property_name": "#enabled"
             }
           ]
@@ -8335,6 +8355,267 @@
                     "binding_collection_name": "form_buttons"
                   }
                 ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_production_preview": {
+    "type": "panel",
+    "size": [
+      380,
+      240
+    ],
+    "controls": [
+      {
+        "frame": {
+          "type": "image",
+          "texture": "textures/ui/frontier/charter_frame",
+          "size": [
+            380,
+            240
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 1
+        }
+      },
+      {
+        "leather": {
+          "type": "image",
+          "texture": "textures/ui/frontier/palette_leather",
+          "size": [
+            344,
+            197
+          ],
+          "offset": [
+            18,
+            30
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 2,
+          "color": [
+            0.58,
+            0.58,
+            0.58
+          ]
+        }
+      },
+      {
+        "banner": {
+          "type": "image",
+          "texture": "textures/ui/frontier/palette_leather",
+          "size": [
+            344,
+            25
+          ],
+          "offset": [
+            18,
+            31
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 3,
+          "color": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "banner_rule": {
+          "type": "image",
+          "texture": "textures/ui/frontier/solid",
+          "size": [
+            344,
+            1
+          ],
+          "offset": [
+            18,
+            55
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "color": [
+            0.82,
+            0.7,
+            0.44
+          ]
+        }
+      },
+      {
+        "ornament": {
+          "type": "image",
+          "texture": "textures/ui/frontier/harvest_border",
+          "size": [
+            380,
+            240
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 20
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "Village Charter",
+          "size": [
+            236,
+            17
+          ],
+          "offset": [
+            30,
+            34
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 1.0,
+          "color": [
+            0.82,
+            0.7,
+            0.44
+          ],
+          "shadow": false
+        }
+      },
+      {
+        "close@common.close_button": {
+          "$close_button_offset": [
+            -7,
+            7
+          ],
+          "layer": 30,
+          "bindings": []
+        }
+      },
+      {
+        "details": {
+          "type": "label",
+          "text": "#form_text",
+          "size": [
+            248,
+            112
+          ],
+          "offset": [
+            104,
+            62
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.7,
+          "color": [
+            0.94,
+            0.92,
+            0.85
+          ],
+          "shadow": false,
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            }
+          ]
+        }
+      },
+      {
+        "caption": {
+          "type": "label",
+          "text": "Production\nPreview",
+          "size": [
+            88,
+            32
+          ],
+          "offset": [
+            10,
+            65
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.8,
+          "color": [
+            0.82,
+            0.7,
+            0.44
+          ],
+          "shadow": false
+        }
+      },
+      {
+        "choice_0": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            254,
+            21
+          ],
+          "offset": [
+            104,
+            178
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_choice": {
+                "collection_index": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "choice_1": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            254,
+            21
+          ],
+          "offset": [
+            104,
+            204
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_choice": {
+                "collection_index": 1
               }
             }
           ]

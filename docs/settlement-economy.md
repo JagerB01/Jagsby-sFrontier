@@ -1,3 +1,8 @@
+> 0.0.43 supersedes the placeholder mappings and full-per-biome rates below with
+> the [finalized biome production rules](biome-production.md): one resource per
+> biome, 50% allocations, specialization/diversification and River crop bonuses.
+> The timestamp-based Development, shared-storage and road integration remains.
+
 > 0.0.39 adds the [fixed Production panels](production-ui.md): Overview,
 > Resources, inline secondary Biomes and shared Stockpile with paged lists.
 > Development/Hr is right-aligned and compact. Tech hover descriptions cover only

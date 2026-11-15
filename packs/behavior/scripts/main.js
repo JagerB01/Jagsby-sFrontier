@@ -18,7 +18,7 @@ import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCos
 import {refreshProtection,protectDamage,within,healVillager} from "./settlement-effects.js";
 import {localContribution,applyLocalContribution,localResearchText} from "./local-research.js";
 import {productionView} from "./production-display.js";
-const RESOURCE_TABLE=ECONOMY_CONFIG.resources;
+import {canonicalBiome,eligibleBiome,productionAllocations} from "./biome-resources.js";
 const roadTimers=new Map();
 function gameTick(){return world.getAbsoluteTime?.()??0;}
 function accounted(){
@@ -52,7 +52,6 @@ function getBiome(dim,loc){try{return dim.getBiome(loc).id;}catch(e){return "unk
 async function refreshVillage(vId){
   const initial=state().villages[vId];if(!initial)return;
   const dim=world.getDimension(initial.dimension);
-  const biome=getBiome(dim,initial.location);
   let census;
   try{
     const villagers=nearbyVillagers(dim,initial.location);
@@ -62,7 +61,6 @@ async function refreshVillage(vId){
   // Re-read after awaiting native properties so another player's research or
   // collection cannot be overwritten by a stale survey state.
   const latest=accounted(),v=latest.villages[vId];if(!v)return;
-  if(biome!=='unknown')v.biome=biome;
   if(!census.error){v.productionPower=(Number.isFinite(census.realmPowerTenths)?census.realmPowerTenths:census.minimumPowerTenths)/10;v.productionPowerIsMinimum=census.realmPowerTenths===null;}
   v.census=census;save(latest);
   if(!census.error)console.log(`[Frontier census] villagers=${census.villagers} power_tenths=${census.realmPowerTenths} unknown_ranks=${census.unknownRanks}`);
@@ -72,7 +70,8 @@ if(!s.villages[k]&&s.villages[legacy]?.dimension===block.dimension.id){s.village
 if(!s.villages[k]){
   const reason=foundingReason(s,zoneAt(block.location));
   if(reason){creator?.sendMessage('§e'+reason);return null;}
-  s.villages[k]={id:k,location:{...block.location},dimension:block.dimension.id,name:`Settlement ${Object.keys(s.villages).length+1}`,owner:creator?ownerRecord(creator):null,biome:getBiome(block.dimension,block.location),secondary:null,available:[],efficiency:0,hearth:0,biomeUnlocked:false};save(s);
+  const native=canonicalBiome(getBiome(block.dimension,block.location));
+  s.villages[k]={nativeBiome:native,productionMode:'unassigned',id:k,location:{...block.location},dimension:block.dimension.id,name:`Settlement ${Object.keys(s.villages).length+1}`,owner:creator?ownerRecord(creator):null,biome:native,secondary:null,available:[],efficiency:0,hearth:0,biomeUnlocked:false};save(s);
 }return s.villages[k];}
 function cap(s){return capacity(s);}
 function total(s){return stockTotal(s);}
@@ -236,9 +235,9 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   handlers.set(actions.scan,()=>scan(player,vId));
   for(const [slot,key]of ['selectBiome','chooseBiome1','chooseBiome2'].entries()){
    const choice=production.choices[slot];
-   if(v.biomeUnlocked&&choice?.verified&&!choice.selected)handlers.set(actions[key],()=>selectBiome(player,vId,choice.id,pages));
+   if(v.biomeUnlocked&&choice?.verified&&!choice.selected)handlers.set(actions[key],()=>selectBiome(player,vId,choice.id,pages,choice.mode));
   }
-  if(v.biomeUnlocked&&v.secondary)handlers.set(actions.clearSecondary,()=>clearSecondary(player,vId,pages));
+  if(v.biomeUnlocked&&(v.secondary||v.productionMode==='specialize'))handlers.set(actions.clearSecondary,()=>clearSecondary(player,vId,pages));
   handlers.set(actions.refreshProduction,()=>openProduction(player,vId,'summary',pages));
   handlers.set(actions.collect,()=>collect(player,vId,pages));
   handlers.set(actions.rename,()=>renameSettlement(player,vId));
@@ -277,27 +276,62 @@ async function renameSettlement(player,vId){
   }catch(e){console.warn(`Frontier rename: ${e}`);player.sendMessage('§cSettlement name could not be saved.');}
 }
 function scan(player,vid){const s=accounted(),v=s.villages[vid];if(!v)return;
+  if(v.dimension!=='minecraft:overworld'){player.sendMessage('Only Overworld surface biomes are eligible for production.');return openProduction(player,vid,'biomes');}
   const dim=world.getDimension(v.dimension), seen=new Set(v.available||[]);
   // Scan only loaded positions in a lattice. Unloaded positions are not treated as nonexistent.
   let successful=0;v.biomeSamples??={};
-  for(let dx=-256;dx<=256;dx+=32)for(let dz=-256;dz<=256;dz+=32){if(dx*dx+dz*dz>256*256)continue;try{const b=dim.getBiome({x:v.location.x+dx,y:v.location.y,z:v.location.z+dz});seen.add(b.id);v.biomeSamples[b.id]={x:v.location.x+dx,y:v.location.y,z:v.location.z+dz};successful++;}catch(e){}}
+  for(let dx=-256;dx<=256;dx+=32)for(let dz=-256;dz<=256;dz+=32){
+    if(dx*dx+dz*dz>256*256)continue;
+    try{
+      const x=v.location.x+dx,z=v.location.z+dz,top=dim.getTopmostBlock?.({x,z});
+      const sample={x,y:top?Math.min(319,top.location.y+1):v.location.y,z};
+      const biome=canonicalBiome(dim.getBiome(sample).id);
+      if(!eligibleBiome(biome))continue;
+      seen.add(biome);v.biomeSamples[biome]=sample;successful++;
+    }catch(e){} // Unloaded columns stay undiscovered; never force a chunk load.
+  }
   v.available=[...seen].filter(x=>x!==v.biome).sort();save(s);
   player.sendMessage(`§aSurveyed ${successful} loaded samples; found ${v.available.length} additional biomes. Survey again after exploring the surrounding chunks.`);
   openProduction(player,vid,'biomes');
 }
-function selectBiome(player,vid,choice,pages={}){
- const s=accounted(),v=s.villages[vid];if(!v)return;
- if(!v.biomeUnlocked){player.sendMessage('Research Resource Prospecting first.');return openProduction(player,vid,'biomes',pages);}
- const sample=v.biomeSamples?.[choice];
- if(!RESOURCE_TABLE[choice]||!v.available?.includes(choice)||choice===v.biome||!sample||Math.hypot(sample.x-v.location.x,sample.z-v.location.z)>256){player.sendMessage('Survey again to verify that secondary biome.');return openProduction(player,vid,'biomes',pages);}
+function productionSelection(v,choice,mode){
+ if(!['specialize','diversify'].includes(mode))throw Error('Choose specialization or diversification.');
+ const native=canonicalBiome(v.nativeBiome??v.biome);
+ if(!v.biomeUnlocked||v.dimension!=='minecraft:overworld'||!eligibleBiome(choice))throw Error('Unlock Resource Prospecting in an eligible Overworld settlement first.');
+ if(mode==='specialize'){
+  if(choice!==native||!eligibleBiome(native))throw Error('Native specialization is unavailable for this biome.');
+ }else{
+  const sample=v.biomeSamples?.[choice];
+  if(choice===native||!v.available?.includes(choice)||!sample||Math.hypot(sample.x-v.location.x,sample.z-v.location.z)>256)throw Error('Survey again to verify that nearby surface biome.');
+ }
+ return {...v,productionMode:mode,secondary:mode==='specialize'?null:choice};
+}
+async function selectBiome(player,vid,choice,pages={},mode='diversify'){
  try{
-  if(world.getDimension(v.dimension).getBiome(sample).id!==choice)throw Error('Biome changed');
-  v.secondary=choice;save(s);
- }catch(e){player.sendMessage('That biome sample must be loaded and verified. Explore nearby, then survey again.');}
+  const s=accounted(),v=s.villages[vid];if(!v)return;
+  const proposed=productionSelection(v,choice,mode),current=resourceRates(v,s),next=resourceRates(proposed,s);
+  const bonus=1+colonizationBonus(s,zoneAt(v.location)),sum=r=>r.reduce((n,item)=>n+item.rate*bonus,0);
+  const allocations=productionAllocations(proposed);
+  const body=`${mode==='specialize'?'Native Specialization':'Biome Diversification'}\n${allocations.map(a=>`Slot ${a.slot}: ${biomeName(a.biome)} -> ${a.name} (50%)`).join('\n')}\nRiver: ${allocations.some(a=>a.biome==='minecraft:river')?'+10% to crops only':'No crop bonus'}\nCurrent: ${sum(current).toFixed(4)} items/hour\nAfter: ${sum(next).toFixed(4)} items/hour\n${next.map(r=>`${r.name}: ${(r.rate*bonus).toFixed(4)}/hour`).join('\n')}\nConfirm to change the second allocation.`;
+  const revision=v.productionSelectionRevision||0;
+  const form=new ActionFormData().title(pageTitle('Production Preview')).body(body).button('Confirm allocation').button('Back to Biomes');
+  const response=await displayMenu(player,form,system);
+  if(!response.canceled&&response.selection===0)confirmProductionSelection(player,vid,choice,mode,revision);
+ }catch(e){player.sendMessage(String(e.message||e));}
  openProduction(player,vid,'biomes',pages);
 }
+function confirmProductionSelection(player,vid,choice,mode,revision){
+ const s=accounted(),v=s.villages[vid];if(!v)return;
+ if((v.productionSelectionRevision||0)!==revision)throw Error('Production selection changed. Review a fresh preview.');
+ const proposed=productionSelection(v,choice,mode);
+ if(mode==='diversify'){
+  const actual=canonicalBiome(world.getDimension(v.dimension).getBiome(v.biomeSamples[choice]).id);
+  if(actual!==choice)throw Error('That sample must be loaded and still match the selected biome.');
+ }
+ v.secondary=proposed.secondary;v.productionMode=mode;v.productionSelectionRevision=revision+1;save(s);
+}
 function clearSecondary(player,vid,pages={}){
- const s=accounted(),v=s.villages[vid];if(!v)return;v.secondary=null;save(s);openProduction(player,vid,'biomes',pages);
+ const s=accounted(),v=s.villages[vid];if(!v)return;v.secondary=null;v.productionMode='unassigned';v.productionSelectionRevision=(v.productionSelectionRevision||0)+1;save(s);openProduction(player,vid,'biomes',pages);
 }
 function collect(player,vid,pages={}){const s=accounted();const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
  let moved=0;for(const [type,qty] of Object.entries(s.stock)){let remain=Math.floor(qty);const fraction=qty-remain;while(remain>0){const n=Math.min(64,remain);try{const left=inv.addItem(new ItemStack(type,n));const count=n-(left?.amount||0);if(count<=0)break;remain-=count;moved+=count;if(left)break;}catch(e){break;}}s.stock[type]=remain+fraction;if(!s.stock[type])delete s.stock[type];}

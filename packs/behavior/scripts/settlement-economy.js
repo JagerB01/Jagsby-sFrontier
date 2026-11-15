@@ -1,6 +1,8 @@
 import {ECONOMY_CONFIG as C} from './economy-config.js';
 import {migrateResearch,storageCapacity,localLevel,colonizationBonus,zoneAt} from './global-research.js';
 import {migrateLocalResearch,localResearchLevel,localResearchCost,localResearchRequirement} from './local-research.js';
+import {productionAllocations,riverCropBonus,migrateProduction} from './biome-resources.js';
+import {LEGACY_RESOURCES} from './legacy-production.js';
 const HOUR=3600000,DAY=86400000,EPS=1e-8;
 export function development(v){return Math.floor(Math.max(0,v.developmentValue||0)/C.developmentThreshold+1e-10);}
 export function capacity(s,legacy=false){return legacy?C.baseCapacity*2**Math.max(0,s.global?.storage||0):storageCapacity(s);}
@@ -14,10 +16,11 @@ export function migrateEconomy(s,now=Date.now()){
  }
  return s;
 }
-export function resourcesFor(v){
+export function resourcesFor(v){return [...new Map(productionAllocations(v).map(a=>[a.id,a])).values()];}
+function legacyResources(v){
  const result=new Map();
  for(const biome of [v.biome,...(v.biomeUnlocked&&v.secondary?[v.secondary]:[])])
-  for(const r of C.resources[biome]||[])result.set(r.id,r);
+  for(const r of LEGACY_RESOURCES[biome]||[])result.set(r.id,r);
  return [...result.values()];
 }
 export function recordedPower(v){
@@ -27,10 +30,19 @@ export function recordedPower(v){
  const n=Number.isFinite(c.realmPowerTenths)?c.realmPowerTenths:c.minimumPowerTenths;
  return Math.max(0,Number.isFinite(n)?n/10:0);
 }
-export function resourceRates(v,s=null,legacy=false){
+export function resourceRates(v,s=null,legacy=false,oldProduction=false){
  const prosperity=!legacy&&s?localLevel(s,v,'efficiency'):(v.efficiency||0);
  const factor=recordedPower(v)*(1+C.prosperityBonus*prosperity)*(1+C.developmentBonus*development(v));
- return resourcesFor(v).map(r=>({...r,rate:C.categories[r.category].rate*factor}));
+ if(oldProduction)return legacyResources(v).map(r=>({...r,rate:C.categories[r.category].rate*factor}));
+ const result=new Map(),river=riverCropBonus(v);
+ for(const allocation of productionAllocations(v)){
+  const raw=C.categories[allocation.category].rate*0.5*factor;
+  const rate=raw*(allocation.crop?1+river:1);
+  const entry=result.get(allocation.id)||{...allocation,rate:0,riverBonus:0,allocations:[]};
+  entry.rate+=rate;entry.riverBonus+=rate-raw;
+  entry.allocations.push({...allocation,rate});result.set(allocation.id,entry);
+ }
+ return [...result.values()];
 }
 export function routeRates(s){
  const result=Object.fromEntries(Object.keys(s.villages).map(k=>[k,0]));
@@ -53,18 +65,19 @@ export function developmentHourlyRate(s,v){
 // Exact piecewise-constant integration: stop at every Development threshold
 // and shared-capacity boundary, then recompute all rates simultaneously.
 export function accountEconomy(s,now=Date.now(),maxEvents=10000){
+ if(s.productionVersion>2)throw Error('Production save is newer than this addon');
  if(s.researchVersion>3)throw Error('Research save version is newer than this addon');
  migrateEconomy(s,now);let t=s.economyAt,events=0;
  // Finish the prior economy under its prior effects before switching schemas.
- const legacy=s.researchVersion!==3;
- if(now<=t){migrateResearch(s);for(const v of Object.values(s.villages))migrateLocalResearch(v,s);return {complete:true,events};}
+ const legacy=s.researchVersion!==3,oldProduction=s.productionVersion!==2;
+ if(now<=t){migrateResearch(s);for(const v of Object.values(s.villages))migrateLocalResearch(v,s);migrateProduction(s);return {complete:true,events};}
  const entries=Object.entries(s.villages).sort(([a],[b])=>a.localeCompare(b));
  while(t<now&&events++<maxEvents){
   const free=Math.max(0,capacity(s,legacy)-stockTotal(s)),producing=free>EPS;
   const routes=routeRates(s),rates={},devRates={};let totalRate=0;
   for(const [id,v]of entries){
    const bonus=legacy?0:colonizationBonus(s,zoneAt(v.location));
-   rates[id]=producing?resourceRates(v,s,legacy).map(r=>({...r,basePerMs:r.rate/HOUR,perMs:r.rate*(1+bonus)/HOUR})):[];
+   rates[id]=producing?resourceRates(v,s,legacy,oldProduction).map(r=>({...r,basePerMs:r.rate/HOUR,perMs:r.rate*(1+bonus)/HOUR})):[];
    devRates[id]=routes[id]||0;
    for(const r of rates[id]){totalRate+=r.perMs;devRates[id]+=r.basePerMs*C.categories[r.category].value;}
   }
@@ -91,7 +104,7 @@ export function accountEconomy(s,now=Date.now(),maxEvents=10000){
   if(now-t<0.001)t=now;
  }
  s.economyAt=t;
- if(t>=now){migrateResearch(s);for(const v of Object.values(s.villages))migrateLocalResearch(v,s);}
+ if(t>=now){migrateResearch(s);for(const v of Object.values(s.villages))migrateLocalResearch(v,s);migrateProduction(s);}
  return {complete:t>=now,events};
 }
 export const researchLevel=localResearchLevel;

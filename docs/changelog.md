@@ -1,3 +1,18 @@
+# 0.0.43
+
+- Replace placeholder biome outputs with 51 validated single-resource surface
+  assignments. Document Dappled Forest/Poplar as unavailable in Bedrock 1.26.0.
+- Use two 50% allocations. Prospecting unlocks an explicit choice between Native
+  Specialization and a verified nearby biome. Add matching-item output together.
+- Add a fixed, non-scrolling allocation preview and revalidate before confirming.
+  Freeze native biomes after registration and cache on-demand surface surveys.
+- Apply River's +10% crop bonus once across both slots. Keep crop contributions
+  distinct from Common production and accept the new Building resources.
+- Preserve offline backlog at old rates until migration, fractions, shared stock,
+  research progress, Development/Colonization separation and storage capacity.
+- 177 Node tests and 3 Python tests pass. In-game UI/multiplayer validation remains
+  necessary. See [mechanics and compatibility](biome-production.md).
+
 # 0.0.42
 
 - Replace fixed per-tech hover heights with native text-driven sizing: intrinsic

@@ -5,7 +5,14 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.42.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.43.mcaddon?raw=true)
+
+Version 0.0.43 implements the finalized [biome production economy](docs/biome-production.md):
+one resource per biome, two 50% allocations, explicit Native Specialization or
+nearby diversification, a fixed confirmation preview, and River's +10% crop
+bonus. All 52 assignments are accounted for; Dappled Forest/Poplar are unsupported
+in the target Bedrock 1.26.0 registry. Existing saved backlog is paid under its
+previous rates before migration.
 
 Version 0.0.42 replaces fixed research-popup heights with native content sizing:
 the wrapped text determines the height, with small edge padding. The frame

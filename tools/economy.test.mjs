@@ -3,28 +3,28 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 const base=new URL('../packs/behavior/scripts/',import.meta.url);
-const configText=await readFile(new URL('economy-config.js',base),'utf8');
+const configText=(await readFile(new URL('economy-config.js',base),'utf8')).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',base).href));
 const configUrl='data:text/javascript;base64,'+Buffer.from(configText).toString('base64');
-async function module(name){const source=(await readFile(new URL(name+'.js',base),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',base).href)).replace("'./local-research.js'",JSON.stringify(new URL('local-research.js',base).href));return import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));}
+async function module(name){const source=(await readFile(new URL(name+'.js',base),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',base).href)).replace("'./local-research.js'",JSON.stringify(new URL('local-research.js',base).href)).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',base).href)).replace("'./legacy-production.js'",JSON.stringify(new URL('legacy-production.js',base).href));return import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));}
 const E=await module('settlement-economy'),F=await module('settlement-effects');
 const {ECONOMY_CONFIG:C}=await import(configUrl);
 const hour=3600000,day=24*hour;
 function village(id='a',extra={}){return {id,dimension:'minecraft:overworld',location:{x:0,y:64,z:0},biome:'minecraft:plains',census:{realmPowerTenths:100},efficiency:0,hearth:1,biomeUnlocked:false,...extra};}
-function state(v=village()){return migrateResearch({villages:{[v.id]:v},global:{storage:20},stock:{},economyAt:0,roads:{}});}
+function state(v=village()){return migrateResearch({productionVersion:2,villages:{[v.id]:v},global:{storage:20},stock:{},economyAt:0,roads:{}});}
 function close(a,b,tolerance=1e-6){assert.ok(Math.abs(a-b)<tolerance,`${a} differs from ${b}`);}
 test('specified hourly formula, fractional catch-up and shutdown/restart accounting',()=>{
  const s=state(village('a',{efficiency:5,developmentValue:50000}));
  E.accountEconomy(s,hour);
- close(s.stock['minecraft:wheat'],4.8125);
+ close(s.stock['minecraft:wheat'],2.40625);
  const loaded=JSON.parse(JSON.stringify(s));E.accountEconomy(loaded,2*hour);
- close(loaded.stock['minecraft:wheat'],9.625);
- E.accountEconomy(loaded,2*hour);close(loaded.stock['minecraft:wheat'],9.625);
+ close(loaded.stock['minecraft:wheat'],4.8125);
+ E.accountEconomy(loaded,2*hour);close(loaded.stock['minecraft:wheat'],4.8125);
  assert.equal(E.development(loaded.villages.a),100);
- const small=state();E.accountEconomy(small,hour/10);close(small.stock['minecraft:wheat'],0.35);
+ const small=state();E.accountEconomy(small,hour/10);close(small.stock['minecraft:wheat'],0.175);
 });
 test('RP changes apply only after accounting the old census; no loaded-world API is needed',()=>{
  const s=state();E.accountEconomy(s,hour);s.villages.a.census.realmPowerTenths=200;
- E.accountEconomy(s,2*hour);close(s.stock['minecraft:wheat'],10.5);
+ E.accountEconomy(s,2*hour);close(s.stock['minecraft:wheat'],5.25);
 });
 test('Development threshold integration is independent of access frequency',()=>{
  const initial=state(village('a',{developmentValue:499.9,efficiency:20}));
@@ -45,21 +45,21 @@ test('full shared stock neither banks blocked output nor awards its Development'
  const value=s.villages.a.developmentValue;
  E.accountEconomy(s,2*day);close(s.villages.a.developmentValue,value);
  s.stock={};E.accountEconomy(s,2*day);assert.deepEqual(s.stock,{});
- E.accountEconomy(s,2*day+hour);close(s.stock['minecraft:wheat'],3.5);
+ E.accountEconomy(s,2*day+hour);close(s.stock['minecraft:wheat'],1.75);
  assert.ok(s.villages.a.developmentValue>value);
 });
-test('resources deduplicate across primary and exactly one secondary biome',()=>{
+test('two allocations expose exactly their own resource and sum identical items',()=>{
  const v=village('a',{biomeUnlocked:true,secondary:'minecraft:forest'});
- const rates=E.resourceRates(v);assert.equal(rates.filter(r=>r.id==='minecraft:stone').length,1);
- close(rates.find(r=>r.id==='minecraft:stone').rate,1.5);
- assert.ok(rates.some(r=>r.id==='minecraft:oak_log'));
- v.biomeUnlocked=false;assert.equal(E.resourcesFor(v).length,2);
+ const rates=E.resourceRates(v);assert.equal(rates.length,2);
+ close(rates.find(r=>r.id==='minecraft:oak_log').rate,0.75);
+ v.secondary='minecraft:sunflower_plains';close(E.resourceRates(v)[0].rate,3.5);
+ v.biomeUnlocked=false;assert.equal(E.resourcesFor(v).length,1);
 });
 test('resource category values, permanent lifetime totals, and save migration',()=>{
  assert.deepEqual(Object.values(C.categories).map(c=>[c.rate,c.value]),[[0.35,1],[0.15,2],[0.05,5],[0.01,10]]);
  const s=state();E.accountEconomy(s,hour);
- close(s.villages.a.developmentValue,3.5+1.5*2);
- close(s.villages.a.lifetimeProduced['minecraft:wheat'],3.5);
+ close(s.villages.a.developmentValue,1.75);
+ close(s.villages.a.lifetimeProduced['minecraft:wheat'],1.75);
  const value=s.villages.a.developmentValue;s.stock={};E.accountEconomy(s,hour);close(s.villages.a.developmentValue,value);
  const legacy={villages:{a:village('a',{efficiency:4})},global:{storage:0},stock:{'minecraft:wheat':7},lastTick:0};
  E.accountEconomy(legacy,100*day);assert.equal(legacy.stock['minecraft:wheat'],7);assert.equal(legacy.villages.a.efficiency,4);
@@ -139,10 +139,10 @@ test('route feedback and production remain consistent when a catch-up crosses pa
 
 test('Overview hourly Development estimate includes base category value and trade income, excluding Colonization bonus',()=>{
  const s=state(),v=s.villages.a;
- close(E.developmentHourlyRate(s,v),0.013);
- s.global.colonization=5;v.location.x=28000;close(E.developmentHourlyRate(s,v),0.013);
+ close(E.developmentHourlyRate(s,v),0.0035);
+ s.global.colonization=5;v.location.x=28000;close(E.developmentHourlyRate(s,v),0.0035);
  s.villages.b=village('b',{developmentValue:10000});s.roads.ab={from:'a',to:'b',level:1};
- close(E.developmentHourlyRate(s,v),0.014);
+ close(E.developmentHourlyRate(s,v),0.0045);
  const before=JSON.stringify(s);E.developmentHourlyRate(s,v);assert.equal(JSON.stringify(s),before);
 });
 test('Overview hourly Development estimate blocks full-storage production while preserving active route income',()=>{
