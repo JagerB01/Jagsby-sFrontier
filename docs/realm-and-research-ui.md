@@ -1,3 +1,29 @@
+# Settlement directory update — 0.0.55
+
+My Settlements and All Settlements now display three compact rows per page.
+Each row has two text baselines: settlement name above owner; coordinates above
+horizontal block distance from the current charter; and Dev above its value.
+The uploaded 64×64 size icon spans both lines on the left. A two-line Establish
+Road button occupies the right column for eligible targets.
+
+The current settlement shows Here. Existing routes show Connected or Building.
+Missing Road Networks research shows Requires Roads I; other dimensions cannot
+be connected. Clicking Establish Road starts a Trail using the current road
+system and returns to the same directory/page, without a road-management menu.
+Server-side checks revalidate the source, target, research, distance-to-source,
+dimension and duplicate state. Nothing changes ownership or research costs.
+
+Only numeric power and plain inferred tier names are displayed, without ≥ or
+at-least markers. Existing conservative unknown-rank fallback calculations are
+retained. No RP total or last-survey paragraph is shown in the new directory.
+
+The five uploaded icons are preserved byte-for-byte; see
+[icon provenance](settlement-directory-icons.json). Existing 96×168 framed
+portraits remain unchanged. All previous directory paragraph formatting below
+is superseded by this update.
+
+---
+
 # Header, Overview cards, Realm and Global tree (0.0.15)
 
 ## Header and Overview

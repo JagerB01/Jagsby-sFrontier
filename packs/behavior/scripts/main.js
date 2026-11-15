@@ -5,7 +5,7 @@ import { sampleTradingRanks } from "./villager-trade-bridge.js";
 import { CHARTER_LAYOUT } from "./charter-layout.js";
 import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRateText } from "./settlement-overview.js";
 import { settlementTier } from "./settlement-tiers.js";
-import { ownerName, ownerRecord, claimSettlement, settlementDirectory } from "./settlement-realm.js";
+import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
 
 
@@ -190,10 +190,19 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   const power=powerValue(v.census);
   records[data.census]=power==='Unavailable'?power:`${power} RP`;
   records[data.owner]=`Owner: ${ownerName(v)}`;
-  const mine=settlementDirectory(s.villages,player,realmPage,true);
-  const all=settlementDirectory(s.villages,player,realmPage,false);
-  records[data.realmMine]=mine.text;
-  records[data.realmAll]=all.text;
+  const mine=settlementDirectory(s.villages,player,realmPage,true,v,s.roads);
+  const all=settlementDirectory(s.villages,player,realmPage,false,v,s.roads);
+  records[data.realmMine]=mine.footer;
+  records[data.realmAll]=all.footer;
+  const directoryIcons=new Map();
+  for(const [scope,directory]of [['mine',mine],['all',all]])directory.rows.forEach((row,slot)=>{
+   const prefix='directory'+scope[0].toUpperCase()+scope.slice(1)+slot;
+   for(const field of ['name','owner','coordinates','distance','development','roadStatus']){
+    const value=field==='distance'?row.distanceText:row[field];
+    records[data[prefix+field[0].toUpperCase()+field.slice(1)]]=String(value);
+   }
+   directoryIcons.set(data[prefix+'Name'],row.icon);
+  });
   const tier=settlementTier(v.census);
   records[data.tier]=tier.label;
   const researchChoices=new Map();
@@ -238,18 +247,19 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   handlers.set(actions.rename,()=>renameSettlement(player,vId));
   handlers.set(actions.claim,()=>{const latest=state();if(claimSettlement(latest,vId,player))save(latest);open(player,vId);});
   for(const [scope,directory]of [['mine',mine],['all',all]]){
+    directory.rows.forEach((row,slot)=>{if(row.canEstablishRoad)handlers.set(actions['directory'+scope[0].toUpperCase()+scope.slice(1)+'Road'+slot],()=>establishDirectoryRoad(player,vId,row.id,directory.page,scope));});
     handlers.set(actions[scope+'Prev'],()=>open(player,vId,'Realm','global',directory.page-1,scope));
     handlers.set(actions[scope+'Next'],()=>open(player,vId,'Realm','global',directory.page+1,scope));
   }
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
-  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly','owner'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction'))records[index]=`[JF:data:${key}]${records[index]}`;
-  for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i)])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
+  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction')&&!key.startsWith('directory'))records[index]=`[JF:data:${key}]${records[index]}`;
+  for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i),...['Mine','All'].flatMap(scope=>Array.from({length:3},(_,i)=>'directory'+scope+'Road'+i))])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}`);
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?directory.rows.map((_,slot)=>`[JF:directory:${scope}:${slot}]`).join(''):`[JF:directory:${scope}:empty]`).join('')}`);
   records.forEach((text,index)=>{
-   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:undefined;
+   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:directoryIcons.get(index);
    form.button(text,texture);
   });
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
@@ -422,6 +432,18 @@ async function roadMenu(player,vid){
   if(!response.canceled)options[response.selection]?.run();
   else open(player,vid,'Realm','global',0,'roads');
  }catch(e){player.sendMessage(String(e));}
+}
+function establishDirectoryRoad(player,vid,targetId,page,scope){
+ try{
+  const s=accounted(),source=s.villages[vid],target=s.villages[targetId];
+  if(!source||!target)throw Error('That settlement is no longer available.');
+  if(!within(player,source))throw Error('Stand inside the source settlement to establish a road.');
+  const status=directoryRoadState(source,target,s.roads);
+  if(!status.canEstablish)throw Error(status.status.replace('\n',' '));
+  startRoad(s,vid,targetId,gameTick());save(s);
+  player.sendMessage(`Trail construction to ${target.name} started.`);
+ }catch(e){player.sendMessage(String(e.message||e));}
+ open(player,vid,'Realm','global',page,scope);
 }
 function buildRoad(player,vid,target){
  try{const s=accounted(),v=s.villages[vid];if(!v||!within(player,v))throw Error('Stand inside the source settlement to manage roads.');

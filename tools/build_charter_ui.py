@@ -43,6 +43,11 @@ for obsolete in ["scan", "selectBiome"]:
     ACTIONS.pop(obsolete, None)
 DATA.update({"overviewProduction0": 150, "overviewProduction1": 151})
 DATA["productionModifierTotal"] = 154
+DIRECTORY_FIELDS = ["Name", "Owner", "Coordinates", "Distance", "Development", "RoadStatus"]
+for scope_index, scope in enumerate(["mine", "all"]):
+    for slot in range(3):
+        DATA.update({"directory" + scope.title() + str(slot) + field: 400 + scope_index * 18 + slot * 6 + i for i, field in enumerate(DIRECTORY_FIELDS)})
+        ACTIONS["directory" + scope.title() + "Road" + str(slot)] = 500 + scope_index * 3 + slot
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -132,7 +137,7 @@ def data_template(index, size, scale=0.8):
         view(f"(#record_text - '{marker}')", "#text"),
         view(f"(not ((#record_text - '{marker}') = #record_text))"),
     ]
-    if key in ["census", "developmentValue", "developmentHourly", "owner"] or key.startswith(("stockCount", "productionModifier", "overviewProduction")):
+    if key in ["census", "developmentValue", "developmentHourly", "owner", "realmMine", "realmAll"] or key.startswith(("stockCount", "productionModifier", "overviewProduction", "directory")):
         text["text"] = "#form_button_text"
         text["property_bag"] = {"#form_button_text": "Unavailable"}
         text["bindings"] = [
@@ -716,7 +721,49 @@ def build():
         "bindings": [view("#toggle_state", target, "jf_realm_tab_roads") for target in ["#visible", "#enabled"]],
     }))
     for scope, data_key in [("mine", "realmMine"), ("all", "realmAll")]:
-        content = [record("directory", DATA[data_key], 103)]
+        content = []
+        for slot in range(3):
+            prefix = "directory" + scope.title() + str(slot)
+            y = slot * 32
+            icon_name = "jf_directory_icon_" + scope + str(slot)
+            icon = image("frontier/settlement_icons/outpost", [28, 28], layer=8)
+            icon["keep_ratio"] = True
+            icon["bindings"] = [
+                {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+                {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+                {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+            ]
+            ui[icon_name] = icon
+            picture = control("icon", {"type": "stack_panel", "orientation": "vertical", "size": [28, 28],
+                "anchor_from": "top_left", "anchor_to": "top_left", "offset": [1, 1], "collection_name": "form_buttons",
+                "controls": [control("record@jagsby_frontier." + icon_name, {"collection_index": DATA[prefix + "Name"]})]})
+            fields = [control("surface", image("frontier/palette_panel", [254, 31], color=[0.82, 0.82, 0.82])),picture]
+            for field, offset, size, scale in [
+                ("Name", [33, 2], [76, 12], 0.75), ("Owner", [33, 15], [76, 12], 0.65),
+                ("Coordinates", [112, 2], [62, 12], 0.65), ("Distance", [112, 15], [62, 12], 0.65),
+                ("Development", [177, 15], [26, 12], 0.65), ("RoadStatus", [207, 4], [47, 24], 0.65),
+            ]:
+                fields.append(overview_value(field.lower(), DATA[prefix + field], offset, size, scale=scale))
+            GENERATED_CONTROLS["jf_data_" + prefix + "Name"]["color"] = list(WHEAT)
+            GENERATED_CONTROLS["jf_data_" + prefix + "Owner"]["color"] = list(SILVER)
+            GENERATED_CONTROLS["jf_data_" + prefix + "RoadStatus"]["text_alignment"] = "center"
+            fields.append(control("dev_label", label("Dev", [26, 12], (177, 2), SILVER, 0.65)))
+            key = "directory" + scope.title() + "Road" + str(slot)
+            button = action("establish", ACTIONS[key], "Establish\nRoad", width=47, height=24)["establish"]
+            button.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [207, 4], "size": [47, 24]})
+            for state in GENERATED_CONTROLS["jf_action_" + key + "@common.button"]["controls"]:
+                caption = next(c["caption"] for c in next(iter(state.values()))["controls"] if "caption" in c)
+                caption.update({"text_alignment": "center", "offset": [0, 2], "size": [47, 20], "font_scale_factor": 0.65})
+            fields.append(control("establish", button))
+            content.append(control("row" + str(slot), {"type": "panel", "size": [254, 31], "offset": [0, y],
+                "anchor_from": "top_left", "anchor_to": "top_left", "controls": fields,
+                "bindings": condition("(not ((#form_text - '[JF:directory:" + scope + ":" + str(slot) + "]') = #form_text))", "#form_text")}))
+        footer = overview_value("footer", DATA[data_key], [3, 97], [248, 9], scale=0.6)
+        GENERATED_CONTROLS["jf_data_" + data_key]["text_alignment"] = "center"
+        content.append(footer)
+        empty = label("You do not own any settlements yet." if scope == "mine" else "No settlements registered.", [240, 24], (7, 8), IVORY, 0.75)
+        empty["bindings"] = condition("(not ((#form_text - '[JF:directory:" + scope + ":empty]') = #form_text))", "#form_text")
+        content.append(control("empty", empty))
         for suffix, caption, x in [("Prev", "Previous", 0), ("Next", "Next", 129)]:
             button = action(scope + suffix, ACTIONS[scope + suffix], caption, width=122)[scope + suffix]
             button.update({"offset": [x, 106], "anchor_from": "top_left", "anchor_to": "top_left"})

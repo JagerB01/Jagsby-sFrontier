@@ -17,6 +17,7 @@ const overviewModuleUrl = `data:text/javascript;base64,${Buffer.from(overviewSou
 const tiersSource = await readFile(new URL('settlement-tiers.js',scriptBase),'utf8');
 const tiersModuleUrl = `data:text/javascript;base64,${Buffer.from(tiersSource).toString('base64')}`;
 const realmSource=(await readFile(new URL('settlement-realm.js',scriptBase),'utf8'))
+  .replace('"./settlement-economy.js"',JSON.stringify(new URL('settlement-economy.js',scriptBase).href))
   .replace('"./biome-resources.js"',JSON.stringify(new URL('biome-resources.js',scriptBase).href)).replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
   .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl));
 const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toString('base64')}`;
@@ -62,12 +63,13 @@ test('duplicates and non-villagers do not inflate the score', () => {
   assert.equal(census.realmPowerTenths, 10);
 });
 
-test('missing trade data is a minimum estimate, never a false exact score', () => {
+test('missing trade data retains the fallback calculation without estimate markers', () => {
   const census = takeCensus({ getEntities: () => [villager('a'), villager('b')] }, {});
   assert.equal(census.unknownRanks, 2);
   assert.equal(census.minimumPowerTenths, 4);
   assert.equal(census.realmPowerTenths, null);
-  assert.match(censusText(census), /at least 0.4/);
+  assert.match(censusText(census), /Power:§r 0.4/);
+  assert.equal(censusText(census).includes('at least'),false);
 });
 
 test('empty observations score zero; entity rank read failures remain unknown', () => {
@@ -169,7 +171,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,352);
+  assert.equal(forms[0].records.length,506);
   assert.equal(forms[0].records[63],'[JF:data:zone]Heartlands');
   assert.equal(forms[0].records[64],'Development 0');
   assert.equal(forms[0].records[66],'[JF:data:innovationLevel]Lv 1');

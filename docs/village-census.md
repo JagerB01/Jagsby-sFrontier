@@ -1,3 +1,6 @@
+> 0.0.55 displays inferred RP and tier names plainly, without ≥ or at-least
+> decorations. The existing unknown-rank fallback calculation is retained.
+
 # Village census (0.0.12)
 
 Charter interaction queries loaded vanilla villagers once in a 80-block sphere,

@@ -137,3 +137,10 @@ block items are rendered as shaded isometric cubes from vanilla face textures.
 [Per-item sources and SHA256](production-icon-assets.json) are recorded.
 `tools/build_production_icons.py` regenerates these assets; normal addon builds
 use the committed PNGs. These textures remain Mojang property.
+
+## Settlement directory size icons (0.0.55)
+
+The user supplied `Frontier_Settlement_Icons_TOP_Option_64x64.zip`. Its five PNGs
+are copied unchanged to `textures/ui/frontier/settlement_icons/`. They are used
+for directory size icons only; framed settlement portraits are retained.
+[Per-icon SHA256 values](settlement-directory-icons.json) identify the originals.

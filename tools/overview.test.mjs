@@ -12,7 +12,7 @@ test('compact overview uses a readable biome and a single power value',()=>{
   assert.equal(biomeName('minecraft:flower_forest'),'Flower Forest');
   assert.equal(biomeName('unknown'),'Unknown');
   assert.equal(powerValue({realmPowerTenths:12}),'1.2');
-  assert.equal(powerValue({realmPowerTenths:null,minimumPowerTenths:4}),'≥ 0.4');
+  assert.equal(powerValue({realmPowerTenths:null,minimumPowerTenths:4}),'0.4');
   assert.equal(powerValue({error:true}),'Unavailable');
 });
 

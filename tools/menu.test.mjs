@@ -89,7 +89,7 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   for(const key of Object.keys(layout.data).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
-    if(['census','developmentValue','developmentHourly','owner'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')||key.startsWith('overviewProduction')) {
+    if(['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')||key.startsWith('overviewProduction')||key.startsWith('directory')) {
       assert.equal(label.text,'#form_button_text');
       assert.equal(label.property_bag['#form_button_text'],'Unavailable');
       assert.equal(label.bindings.some(b=>b.target_property_name==='#visible'),false);
@@ -439,4 +439,23 @@ test('Prospecting scrolls all discovered choices and has no survey or paging con
  const source=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
  const {CHARTER_LAYOUT}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
  for(const removed of ['scan','biomePrev','biomeNext'])assert.equal(CHARTER_LAYOUT.actions[removed],undefined);
+});
+test('Both settlement directories use compact two-line rows with tier icons and road actions',async()=>{
+ const ui=await loadUI();
+ for(const scope of ['mine','all']){
+  const pane=children(ui['jf_realm_'+scope+'_content']);assert.equal(pane.directory,undefined);
+  for(let i=0;i<3;i++){
+   const row=pane['row'+i],fields=children(row);assert.deepEqual(row.size,[254,31]);
+   assert.ok(fields.icon);assert.ok(fields.name);assert.ok(fields.owner);assert.ok(fields.coordinates);assert.ok(fields.distance);assert.ok(fields.development);assert.ok(fields.establish);
+   assert.equal(fields.name.offset[1],fields.coordinates.offset[1]);assert.equal(fields.owner.offset[1],fields.distance.offset[1]);
+   assert.equal(fields.development.offset[1],fields.owner.offset[1]);
+   for(const field of Object.values(fields)){
+    assert.ok(field.offset[0]+field.size[0]<=254);assert.ok(field.offset[1]+field.size[1]<=31);
+   }
+  }
+ }
+ for(const tier of ['outpost','hamlet','village','town','city']){
+  const png=await readFile(new URL('../packs/resource/textures/ui/frontier/settlement_icons/'+tier+'.png',import.meta.url));
+  assert.equal(png.readUInt32BE(16),64);assert.equal(png.readUInt32BE(20),64);
+ }
 });

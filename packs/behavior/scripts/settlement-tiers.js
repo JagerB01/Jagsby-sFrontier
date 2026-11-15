@@ -18,6 +18,7 @@ export function settlementTier(census, tiers = SETTLEMENT_TIERS) {
   return {
     ...chosen,
     texture: `textures/ui/frontier/settlements/${chosen.id}`,
-    label: exact ? chosen.name : minimum ? `≥ ${chosen.name}` : "Tier unavailable",
+    iconTexture: `textures/ui/frontier/settlement_icons/${chosen.id}`,
+    label: exact || minimum ? chosen.name : "Tier unavailable",
   };
 }

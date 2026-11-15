@@ -1,3 +1,21 @@
+# 0.0.55
+
+- Remove the ≥/at-least display decorations from inferred tiers and RP. Keep
+  existing fallback calculations and unavailable-state handling internally.
+- Rebuild My Settlements and All Settlements as three compact two-line rows per
+  page: size icon; name with owner below; coordinates with distance below; Dev
+  label/value; Establish Road button or connection/research status.
+- Use the user's five original 64×64 settlement icons unchanged. Keep existing
+  framed settlement portraits separately. Record hashes in the icon provenance.
+- Measure distance horizontally from the currently opened settlement, matching
+  road distances. Other dimensions have no numeric distance or road action.
+- Start Trail construction directly from a row and return to that list/page.
+  Recheck local Road Networks research, current location, destination dimension,
+  existing connection/construction and current settlement records before saving.
+- Retain filtering, paging, ownership, research progress and existing roads.
+- 193 Node tests and 3 Python tests pass. Native UI rendering still needs an
+  in-game check.
+
 # 0.0.54
 
 - Increase interaction-triggered villager detection from a 64-block to an

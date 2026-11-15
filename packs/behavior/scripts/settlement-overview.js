@@ -17,7 +17,7 @@ export function biomeName(biome) {
 
 export function powerValue(census) {
   if (!census || census.error) return "Unavailable";
-  if (census.realmPowerTenths === null) return `≥ ${(census.minimumPowerTenths / 10).toFixed(1)}`;
+  if (census.realmPowerTenths === null) return (census.minimumPowerTenths / 10).toFixed(1);
   return (census.realmPowerTenths / 10).toFixed(1);
 }
 

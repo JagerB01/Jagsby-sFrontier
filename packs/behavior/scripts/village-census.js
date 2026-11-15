@@ -54,7 +54,7 @@ export function censusText(census) {
   if (!census) return "§8Villagers / Realm Power:§r Not surveyed; interact with the charter again.";
   if (census.error) return "§8Village survey:§r Unavailable; interact again to retry.";
   const power = census.realmPowerTenths === null
-    ? `at least ${(census.minimumPowerTenths / 10).toFixed(1)} (trading ranks unavailable)`
+    ? (census.minimumPowerTenths / 10).toFixed(1)
     : (census.realmPowerTenths / 10).toFixed(1);
   return `§8Nearby loaded villagers (${census.radius} blocks):§r ${census.villagers}\n` +
     `§8Settlement Realm Power:§r ${power}\n` +

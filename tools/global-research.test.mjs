@@ -140,10 +140,10 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
  const messages=[],player={id:'p',selectedSlotIndex:0,sendMessage(text){messages.push(text);},getComponent(){return {container:inventory};}};
  const forms=[];
  class Form{constructor(){this.buttons=[];this.icons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}button(text,icon){this.buttons.push(text);this.icons.push(icon);return this;}show(){return Promise.resolve(respond(this));}}
- globalThis.__researchRuntime={world:{getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'})};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{runInterval(){},run(){}},Form};
+ globalThis.__researchRuntime={world:{getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'})};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{runInterval(){},run(){},runTimeout(){return 1;},clearRun(){}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
- source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect};\n//'+Math.random();
+ source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad};\n//'+Math.random();
  const api=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
  return {api,player,slots,forms,messages,received,read:()=>JSON.parse(stored),update(fn){const s=JSON.parse(stored);fn(s);stored=JSON.stringify(s);},failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
 }
@@ -360,4 +360,24 @@ test('Production sends item images, aligned bonus percentages and whole stock co
  assert.equal(h.forms[0].buttons[100+stocked.length],'');
  assert.equal(h.forms[0].text.includes(`[JF:stock:${stocked.length}]`),false);
 
+});
+test('Directory road button starts one Trail and returns to the same settlement list',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',owner:{id:'p',name:'Builder'},roads:1};
+ s.villages.b={...village(100),id:'b',name:'Beta',owner:{id:'p',name:'Builder'},developmentValue:250,census:{realmPowerTenths:null,minimumPowerTenths:20}};
+ let clicked=false;const h=await runtime(s,()=>{if(!clicked){clicked=true;return {canceled:false,selection:501};}return {canceled:true};});
+ h.player.dimension={id:'minecraft:overworld'};h.player.location={x:0,y:64,z:0};
+ h.api.open(h.player,'a','Realm','global',0,'mine');await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.forms[0].buttons[406],'Beta');assert.equal(h.forms[0].buttons[407],'Builder');assert.equal(h.forms[0].buttons[408],'100, 64, 0');assert.equal(h.forms[0].buttons[409],'100 blocks');assert.equal(h.forms[0].buttons[410],'2');
+ assert.equal(h.forms[0].icons[406],'textures/ui/frontier/settlement_icons/hamlet');
+ const roads=Object.values(h.read().roads);assert.equal(roads.length,1);assert.equal(roads[0].from,'a');assert.equal(roads[0].to,'b');assert.equal(roads[0].targetLevel,1);
+ assert.equal(h.forms.length,2);assert.ok(h.forms[1].text.includes('[JF:realm:mine]'));assert.equal(h.forms[1].buttons[411],'Building');
+ h.api.establishDirectoryRoad(h.player,'a','b',0,'mine');assert.equal(Object.values(h.read().roads).length,1);
+ assert.equal(Object.values(h.read().roads)[0].targetLevel,1);
+});
+test('Directory road creation cannot bypass research, dimension or source-location checks',async()=>{
+ for(const scenario of ['research','dimension','distance']){
+  const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',roads:scenario==='research'?0:1};s.villages.b={...village(100),id:'b',name:'Beta',dimension:scenario==='dimension'?'minecraft:nether':'minecraft:overworld'};
+  const h=await runtime(s);h.player.dimension={id:'minecraft:overworld'};h.player.location={x:scenario==='distance'?1000:0,y:64,z:0};
+  h.api.establishDirectoryRoad(h.player,'a','b',0,'all');assert.equal(Object.keys(h.read().roads).length,0);
+ }
 });

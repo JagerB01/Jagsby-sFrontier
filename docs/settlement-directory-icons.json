@@ -1,0 +1,31 @@
+{
+  "source": "User upload: Frontier_Settlement_Icons_TOP_Option_64x64.zip",
+  "note": "Original PNG bytes copied unchanged for settlement directory rows; existing framed portrait art is retained.",
+  "icons": [
+    {
+      "tier": "outpost",
+      "path": "packs/resource/textures/ui/frontier/settlement_icons/outpost.png",
+      "sha256": "6b771d3f343600a3a719541d5199ace8dbf3305cdc3b3c81fe673f701d026180"
+    },
+    {
+      "tier": "hamlet",
+      "path": "packs/resource/textures/ui/frontier/settlement_icons/hamlet.png",
+      "sha256": "47d13e95b1db6cd5955aea37f6c49ab38fe6c80e2e591d6aace057bc454625b8"
+    },
+    {
+      "tier": "village",
+      "path": "packs/resource/textures/ui/frontier/settlement_icons/village.png",
+      "sha256": "0bd9cd110a04e6e6592d8b9a22fe62665bd05557c764da3632fbc3e4ca3ab5ee"
+    },
+    {
+      "tier": "town",
+      "path": "packs/resource/textures/ui/frontier/settlement_icons/town.png",
+      "sha256": "934ff1a9f76f2efa07ad0fbd04b1949781f1dd849ae2f9aa82288b0401a05976"
+    },
+    {
+      "tier": "city",
+      "path": "packs/resource/textures/ui/frontier/settlement_icons/city.png",
+      "sha256": "8d77e93c1d8c5261ddc9cf3ac84dfaceab11b5cb7cc4915a92008afe0bce1730"
+    }
+  ]
+}

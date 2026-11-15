@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.54.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.55.mcaddon?raw=true)
+
+Version 0.0.55 removes estimate markers from tier and RP displays. My Settlements
+and All Settlements now use compact two-line rows with the uploaded size icons,
+name/owner, coordinates/distance, Development and an Establish Road action.
+Road construction starts directly and returns to the same list.
 
 Version 0.0.54 increases villager detection to an **80-block radius** and awards
 one Development point per **100 earned value**, down from 500. Existing value

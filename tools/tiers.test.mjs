@@ -13,10 +13,10 @@ test('agreed provisional tier boundaries use realm power 2, 5, 10 and 20',()=>{
     assert.equal(tier.texture,'textures/ui/frontier/settlements/'+name.toLowerCase());
   }
 });
-test('partial rank observations use a labeled conservative tier and errors are not called exact tiers',()=>{
+test('partial rank observations use a plain inferred tier and errors are not called exact tiers',()=>{
   const minimum=settlementTier({realmPowerTenths:null,minimumPowerTenths:60});
   assert.equal(minimum.id,'village');
-  assert.equal(minimum.label,'≥ Village');
+  assert.equal(minimum.label,'Village');
   for(const census of [undefined,{error:true},{realmPowerTenths:-1}]) {
     assert.equal(settlementTier(census).label,'Tier unavailable');
   }
