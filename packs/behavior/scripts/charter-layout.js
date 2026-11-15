@@ -129,7 +129,9 @@ export const CHARTER_LAYOUT = {
     "prospectInfo48": 248,
     "prospectInfo49": 249,
     "prospectInfo50": 250,
-    "prospectInfo51": 251
+    "prospectInfo51": 251,
+    "overviewProduction0": 150,
+    "overviewProduction1": 151
   },
   "actions": {
     "efficiency": 14,

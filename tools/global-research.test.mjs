@@ -292,6 +292,10 @@ test('Production previews a verified second allocation before confirmation',asyn
  assert.equal(h.read().villages.a.secondary,'minecraft:forest');assert.equal(reads,1);
  assert.equal(h.forms.length,3);assert.equal(h.forms[1].heading,'JF_CHARTER|Production Preview');assert.ok(h.forms[1].text.includes('50%'));
  assert.ok(h.forms[2].text.includes('[JF:production:biomes]'));
+ assert.equal(h.forms[2].icons[150],'textures/ui/frontier/production/wheat');
+ assert.equal(h.forms[2].icons[151],'textures/ui/frontier/production/oak_log');
+ assert.equal(h.forms[2].buttons[150],'[JF:data:overviewProduction0]+ 1.750/hour');
+ assert.equal(h.forms[2].buttons[151],'[JF:data:overviewProduction1]+ 0.750/hour');
  h.api.clearSecondary(h.player,'a');assert.equal(h.read().villages.a.secondary,null);
 });
 test('Unverified/out-of-range biome controls are disabled and selecting unloaded samples never changes the second biome',async()=>{

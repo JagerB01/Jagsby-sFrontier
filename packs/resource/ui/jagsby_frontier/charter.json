@@ -2806,7 +2806,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  31,
+                  27,
                   12
                 ],
                 "collection_name": "form_buttons",
@@ -2820,7 +2820,7 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  34,
+                  38,
                   20
                 ],
                 "clips_children": true
@@ -2857,8 +2857,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  31,
-                  18
+                  27,
+                  21
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -2871,7 +2871,7 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  34,
+                  38,
                   33
                 ],
                 "clips_children": true
@@ -2942,6 +2942,104 @@
                   0.44
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "icon0": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  14,
+                  14
+                ],
+                "offset": [
+                  5,
+                  17
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_overview_production_icon0": {
+                      "collection_index": 150
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "rate0": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  43,
+                  12
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_overviewProduction0": {
+                      "collection_index": 150
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  23,
+                  20
+                ],
+                "clips_children": true
+              }
+            },
+            {
+              "icon1": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  14,
+                  14
+                ],
+                "offset": [
+                  5,
+                  36
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_overview_production_icon1": {
+                      "collection_index": 151
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "rate1": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  43,
+                  12
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_overviewProduction1": {
+                      "collection_index": 151
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  23,
+                  39
+                ],
+                "clips_children": true
               }
             }
           ]
@@ -21540,6 +21638,86 @@
       {
         "binding_type": "view",
         "source_property_name": "(not ((#record_text - '[JF:data:tier]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_overview_production_icon0": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not (#texture = ''))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_overview_production_icon1": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not (#texture = ''))",
         "target_property_name": "#visible"
       }
     ]
@@ -50130,7 +50308,7 @@
     "type": "label",
     "text": "#form_button_text",
     "size": [
-      31,
+      27,
       12
     ],
     "offset": [
@@ -50169,8 +50347,8 @@
     "type": "label",
     "text": "#text",
     "size": [
-      31,
-      18
+      27,
+      21
     ],
     "offset": [
       0,
@@ -50211,6 +50389,98 @@
       }
     ],
     "text_alignment": "left"
+  },
+  "jf_data_overviewProduction0": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      43,
+      12
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.65,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:overviewProduction0]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:overviewProduction0]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_data_overviewProduction1": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      43,
+      12
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.65,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:overviewProduction1]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:overviewProduction1]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
   },
   "jf_data_roadSummary": {
     "type": "label",

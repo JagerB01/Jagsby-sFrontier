@@ -214,7 +214,11 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   records[data.productionOutput]=production.status;
   records[data.stockpile]=production.stockHeading;
   production.stock.forEach((item,slot)=>records[data['stockCount'+slot]]=String(item.count));
-  for(let slot=0;slot<2;slot++)records[data['productionItem'+slot]]=production.items[slot]?.text||'';
+  for(let slot=0;slot<2;slot++){
+   const item=production.items[slot];
+   records[data['productionItem'+slot]]=item?.text||'';
+   records[data['overviewProduction'+slot]]=item?`+ ${item.actual.toFixed(3)}/hour`:slot===0?'None':'';
+  }
   production.choices.forEach((choice,slot)=>records[data['prospectInfo'+slot]]=choice.text);
   const roadView=roadNetworkOverview(s,v,realmPage);
   records[data.roadSummary]=roadView.summary;
@@ -244,7 +248,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   // controls. Local toggle tabs do not submit forms or rerun the village census.
   const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}`);
   records.forEach((text,index)=>{
-   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:undefined;
+   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:undefined;
    form.button(text,texture);
   });
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});

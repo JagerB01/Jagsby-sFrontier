@@ -1,4 +1,4 @@
-# Production panels — 0.0.50
+# Production panels — 0.0.51
 
 Production has exactly two tabs: a fixed **Overview** and a scrollable
 **Resource Prospecting** list. Both use the existing charter frame. Opening the
@@ -111,3 +111,14 @@ previewed verified selection, unloaded rejection, clearing, whole-item collectio
 with fractional preservation, panel bounds, compact rate formatting, shorter
 hover frames and Hearthstone's three-minute effect duration. Native font/text
 wrapping and controls still require an in-game check on Bedrock 1.26.40+.
+
+## Settlement Overview summary (0.0.51)
+
+The main Overview's compact Production box shows the current produced item
+icons and their + X.XXX/hour rates, with two rows available for distinct items.
+Matching resources remain combined, and full storage shows zero actual rates.
+An unassigned settlement shows None. This uses separate summary label controls
+so it cannot change the detailed Production tab's text dimensions.
+
+Dev/Hr and Route values remain left-aligned in a shared column, shifted four
+UI units right. Both box sizes and the gold Development heading are retained.

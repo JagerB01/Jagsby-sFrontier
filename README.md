@@ -5,7 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.50.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.51.mcaddon?raw=true)
+
+Version 0.0.51 shifts the Development values slightly right and fills the main
+Overview's Production box with up to two item icons and their current hourly
+rates. Both overview boxes retain their compact dimensions.
 
 Version 0.0.50 adds aligned Total and conditional River bonuses, with explicit
 percent glyphs in the UI. Resource Prospecting is a scrolling biome/icon/rate

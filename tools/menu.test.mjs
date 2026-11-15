@@ -136,7 +136,13 @@ test('Compact village identity fits without scrolling and Rename remains in the 
   assert.equal(fields.development.size[1],56);
 
   assert.equal(children(fields.production).title.text,'Production');
-  assert.deepEqual(Object.keys(children(fields.production)),['surface','title']);
+  assert.deepEqual(Object.keys(children(fields.production)),['surface','title','icon0','rate0','icon1','rate1']);
+  assert.equal(developmentFields.developmentHourly.offset[0],38);
+  for(const key of ['icon0','rate0','icon1','rate1']){
+   const item=children(fields.production)[key];
+   assert.ok(item.offset[0]+item.size[0]<=fields.production.size[0]);
+   assert.ok(item.offset[1]+item.size[1]<=fields.production.size[1]);
+  }
   const header=children(ui.jf_dashboard);
   assert.ok(header.header_rename.offset[1]+header.header_rename.size[1]<=56);
   assert.deepEqual(header.header_name.controls,[{'record@jagsby_frontier.jf_data_overview':{collection_index:0}}]);

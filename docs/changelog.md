@@ -1,3 +1,13 @@
+# 0.0.51
+
+- Move Dev/Hr and Route values four UI units right while retaining their common
+  left alignment, the gold Development heading and existing panel dimensions.
+- Fill the settlement Overview's Production box with up to two produced item
+  icons and their actual + X.XXX/hour rates. Share the detailed Production tab's
+  rate calculation, including all modifiers and full-stock pausing.
+- Show None for a settlement with no assigned resource. Keep both summary boxes
+  side by side at their existing sizes; allow wrapped route names more height.
+
 # 0.0.50
 
 - Add an aligned Total production increase. Combine Prosperity, Development and

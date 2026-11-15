@@ -41,6 +41,7 @@ DATA.update({"prospectInfo" + str(i): 200 + i for i in range(52)})
 ACTIONS.update({"prospectSelect" + str(i): 300 + i for i in range(52)})
 for obsolete in ["scan", "selectBiome"]:
     ACTIONS.pop(obsolete, None)
+DATA.update({"overviewProduction0": 150, "overviewProduction1": 151})
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -640,9 +641,9 @@ def build():
     development_rows = [
         overview_value("developmentValue", DATA["developmentValue"], [6, 5], [59, 12], scale=0.65),
         control("developmentHourly_label", label("Dev/Hr", [25, 12], (6, 20), SILVER, 0.65)),
-        overview_value("developmentHourly", DATA["developmentHourly"], [34, 20], [31, 12], scale=0.65),
+        overview_value("developmentHourly", DATA["developmentHourly"], [38, 20], [27, 12], scale=0.65),
         control("tradeRoute_label", label("Route", [25, 12], (6, 33), SILVER, 0.65)),
-        overview_value("tradeRoute", DATA["tradeRoute"], [34, 33], [31, 18], scale=0.65),
+        overview_value("tradeRoute", DATA["tradeRoute"], [38, 33], [27, 21], scale=0.65),
     ]
     GENERATED_CONTROLS["jf_data_developmentValue"]["color"] = list(WHEAT)
     GENERATED_CONTROLS["jf_data_developmentHourly"]["text_alignment"] = "left"
@@ -652,11 +653,29 @@ def build():
             control("surface", image("frontier/palette_panel", [71, 56], color=[0.82, 0.82, 0.82])),
             *development_rows,
         ]})
+    overview_production = [
+        control("surface", image("frontier/palette_panel", [72, 56], color=[0.82, 0.82, 0.82])),
+        control("title", label("Production", [60, 10], (6, 4), WHEAT, 0.65)),
+    ]
+    for slot, y in enumerate([17, 36]):
+        key, template = "overviewProduction" + str(slot), "jf_overview_production_icon" + str(slot)
+        icon = image("frontier/production/wheat", [14, 14], layer=8)
+        icon["keep_ratio"] = True
+        icon["bindings"] = [
+            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+            view("(not (#texture = ''))"),
+        ]
+        ui[template] = icon
+        overview_production.append(control("icon" + str(slot), {
+            "type": "stack_panel", "orientation": "vertical", "size": [14, 14], "offset": [5, y],
+            "anchor_from": "top_left", "anchor_to": "top_left", "collection_name": "form_buttons", "controls": [
+                control("record@jagsby_frontier." + template, {"collection_index": DATA[key]})],
+        }))
+        overview_production.append(overview_value("rate" + str(slot), DATA[key], [23, y + 3], [43, 12], scale=0.65))
     production_box = control("production", {"type": "panel", "size": [72, 56], "offset": [75, 86],
-        "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("surface", image("frontier/palette_panel", [72, 56], color=[0.82, 0.82, 0.82])),
-            control("title", label("Production", [60, 10], (6, 4), WHEAT, 0.65)),
-        ]})
+        "anchor_from": "top_left", "anchor_to": "top_left", "controls": overview_production})
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 158], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [90, 158]),
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [167, 0]}),
