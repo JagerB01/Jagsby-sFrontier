@@ -1,13 +1,13 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Jagsby's Frontier 0.0.61",
+    "name": "Jagsby's Frontier 0.0.62",
     "description": "Village Charter prototype and settlement management",
     "uuid": "3cc6a938-a48b-41fe-9bca-64d6003abd40",
     "version": [
       0,
       0,
-      61
+      62
     ],
     "min_engine_version": [
       1,
@@ -22,7 +22,7 @@
       "version": [
         0,
         0,
-        61
+        62
       ]
     },
     {
@@ -33,17 +33,17 @@
       "version": [
         0,
         0,
-        61
+        62
       ]
     }
   ],
   "dependencies": [
     {
-      "uuid": "51ed2f17-f55a-4d71-8108-06180469748b",
+      "uuid": "d3c24899-08b6-4399-a037-e6d4b6e46cba",
       "version": [
         0,
         0,
-        61
+        62
       ]
     },
     {

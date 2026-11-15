@@ -5,24 +5,16 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.61.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.62.mcaddon?raw=true)
 
-Version 0.0.61 uses a fresh resource-pack identity to isolate obsolete UI files
-from earlier Frontier installations. Older releases included a map HUD override;
-its persistence on an updated client is a possible cause, not a confirmed diagnosis.
-The behavior-pack identity, saved-data key, gameplay and charter controls remain
-unchanged. Vibrant Visuals support is retained.
+Version 0.0.62 restores Frontier's original resource-pack identity and separate
+registered custom charter renderer, undoing the HUD troubleshooting changes in
+0.0.60–0.0.61. The user traced the HUD issue to MineScape. Gameplay, existing
+settlement data and the Vibrant Visuals declaration are unchanged.
 
-**Updating to 0.0.61:** fully exit the world, disable every older Frontier resource
-pack in the world's Resource Packs (and Global Resources, if enabled there), then
-activate Frontier 0.0.61 and restart Minecraft. Keep the world's saved data.
-The old resource pack and the new one have different identities, so both can
-otherwise remain enabled. HUD recovery still requires an in-game check.
-
-Version 0.0.60 removes Frontier’s global UI registration override. The charter
-controls now live in the existing server-form file, leaving HUD registration
-to Minecraft and other packs. The Vibrant Visuals declaration is retained.
-HUD recovery and the charter still require verification in the Minecraft client.
+**Updating:** use Frontier 0.0.62 for both Behavior Packs and Resource Packs.
+Disable the separate 0.0.61 resource pack if you activated it. Fully restart
+Minecraft after importing so the custom menu definitions reload.
 
 Version 0.0.59 declares the resource pack’s **pbr** capability for Vibrant Visuals
 compatibility. Enable Vibrant Visuals in Minecraft on a supported device;

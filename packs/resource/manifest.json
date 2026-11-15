@@ -1,13 +1,13 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Jagsby's Frontier 0.0.61",
+    "name": "Jagsby's Frontier 0.0.62",
     "description": "Village Charter block, pack icon and JSON UI styling",
-    "uuid": "51ed2f17-f55a-4d71-8108-06180469748b",
+    "uuid": "d3c24899-08b6-4399-a037-e6d4b6e46cba",
     "version": [
       0,
       0,
-      61
+      62
     ],
     "min_engine_version": [
       1,
@@ -18,11 +18,11 @@
   "modules": [
     {
       "type": "resources",
-      "uuid": "4981fca6-5539-48dd-8e0d-b1ad07c339e6",
+      "uuid": "79b04ad9-0ae8-460e-886b-847fbc3f944a",
       "version": [
         0,
         0,
-        61
+        62
       ]
     }
   ],

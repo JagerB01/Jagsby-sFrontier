@@ -1,3 +1,14 @@
+# 0.0.62
+
+- User identified MineScape as the HUD issue; withdraw the speculative HUD
+  workaround and restore the original resource pack/header module UUIDs.
+- Restore the separate jagsby_frontier namespace, explicit custom UI registration
+  and minimal vanilla form factory hook from 0.0.59. The reported screenshot
+  displayed the raw transport form rather than the custom charter renderer.
+- Keep the pbr capability, behavior identity, saved-state key and all gameplay
+  scripts unchanged. Both active packs must be 0.0.62; disable the separate
+  0.0.61 resource pack if previously activated. Client rendering needs verification.
+
 # 0.0.61
 
 - Give only the resource pack/header module a fresh identity and update the

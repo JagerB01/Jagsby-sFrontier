@@ -55,12 +55,15 @@ def validate():
                 assert (base / module["entry"]).is_file(), "Missing script entry"
     assert "pbr" in manifests["resource"].get("capabilities", []), "Resource pack must declare Vibrant Visuals compatibility"
     resource_ui = PACKS / "resource/ui"
-    assert not (resource_ui / "_ui_defs.json").exists(), "Do not override global UI registration; use the registered server_form file"
     assert not (resource_ui / "hud_screen.json").exists(), "Frontier must not override the gameplay HUD"
+    registration = json.loads((resource_ui / "_ui_defs.json").read_text())
+    assert registration["ui_defs"] == ["ui/jagsby_frontier/charter.json"], "Register Frontier's custom renderer"
+    charter_ui = json.loads((resource_ui / "jagsby_frontier/charter.json").read_text())
+    assert charter_ui["namespace"] == "jagsby_frontier"
     form_ui = json.loads((resource_ui / "server_form.json").read_text())
-    assert form_ui["namespace"] == "server_form"
-    assert all(key in {"namespace", "main_screen_content/server_form_factory"} or key.startswith("jf_")
-               for key in form_ui), "Only Frontier-prefixed controls and the form factory hook may extend server_form"
+    assert form_ui == {"namespace": "server_form", "main_screen_content/server_form_factory": {
+        "control_ids": {"long_form": "@jagsby_frontier.jf_router", "custom_form": "@jagsby_frontier.jf_modal_router"}
+    }}, "Keep the native entry hook paired with the registered Frontier renderer"
     resource = manifests["resource"]["header"]
     assert any(d.get("uuid") == resource["uuid"] and
                d.get("version") == resource["version"]
