@@ -1,3 +1,19 @@
+# 0.0.47
+
+- Replace four Production tabs with Overview and Resource Prospecting.
+- Show produced item images, names and + X.XXX/hour in a compact output box.
+  Rates include all active bonuses, combine matching resources and show zero
+  when the stockpile is full. Package icons for all 30 distinct mapped items.
+- Put Realm Power, Prosperity, Development, Colonization and River crop bonuses
+  in a separate modifiers box beside output.
+- Put the shared stockpile below both boxes, with six item types per page in
+  two columns and a Collect stockpile button. Collection retains fractions and
+  collects all available whole items, including items on other pages.
+- Keep stock navigation and collection on Overview. Keep native specialization,
+  surveyed secondary selection and the confirmation preview on the second tab.
+- 180 Node tests and 3 Python tests pass; static validation checks 181 pack files.
+  Native rendering and multiplayer behavior require an in-game check.
+
 # 0.0.46
 
 - Put every research tooltip's live text collection inside a full-width body row

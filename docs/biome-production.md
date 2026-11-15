@@ -39,7 +39,7 @@ An allocation's hourly output is its rate × recorded RP × (1 + 0.05 × Prosper
 producing the same item add their rates; the stockpile lists that item once.
 
 Resource Prospecting still costs 64 Paper. Research unlocks selection without
-automatically assigning or doubling output. In Production > Biomes, choose:
+automatically assigning or doubling output. In Production > Resource Prospecting, choose:
 
 - **Native Specialization:** both slots use the native biome. Available without
   a terrain survey, including when nearby chunks are unloaded.

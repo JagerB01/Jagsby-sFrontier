@@ -1,35 +1,48 @@
-# Fixed Production panels — 0.0.46
+# Production panels — 0.0.47
 
-Production has four local subtabs within the existing charter frame. All use
-fixed-size panels; there is no scrolling Production page. Allocation previews are fixed panels.
-Switching subtabs does not submit a form or trigger a census. Lists use explicit
-Previous/Next controls and retain their selected subtab after an action.
+Production has exactly two fixed, non-scrolling tabs: **Overview** and
+**Resource Prospecting**. Both use the existing charter frame. Local tab
+switches do not trigger terrain or villager scans.
 
-- **Overview:** total items per real-world hour, base output and zone bonus,
-  recorded Realm Power, Prosperity, permanent Development, Colonization and
-  producing/paused/waiting status. Refresh rates accounts existing elapsed output
-  without scanning villagers or terrain.
-- **Resources:** three resources per page, each with current items/hour,
-  potential base/zone components and the primary/secondary biome source.
-  Matching resource output is added together and listed once. When stock is full, actual
-  output is shown as paused while potential rates remain visible.
-- **Biomes:** primary and selected secondary biome, Resource Prospecting unlock
-  or saved paper progress, three allocation options per page, including Native Specialization, and inline Use
-  buttons. Each option identifies its resource and 50% allocation. Use opens a fixed preview before confirmation.
-  Survey runs the existing loaded-sample lattice within 256 blocks. No survey
-  runs automatically on tab switching. Use rechecks research, recorded sample,
-  distance, supported resource mapping and loaded biome identity. Stale or
-  unavailable samples cannot replace the active second biome. Clear second
-  removes only the secondary selection, leaving research and primary production.
-- **Stockpile:** civilization-wide usage/free space, five item types per page,
-  fractional amounts stored and whole items collectable. Collect all transfers
-  all whole items that fit inventory, retaining fractions and uncollected items;
-  it is not restricted to the visible page. Pages clamp after collection.
+## Overview
 
-The [0.0.43 biome production rules](biome-production.md) define rates, eligibility,
-allocation choices and River bonuses. Unmapped biomes receive an explicit
-no-production message instead of invented outputs. Offline production
-continues using cached Realm Power and saved biome/research records.
+The upper section has two compact boxes side by side:
+
+- **Output:** an item image, name and **+ X.XXX/hour** for each produced resource.
+  At most two different items are possible; allocations producing the same item
+  combine. Rates include Prosperity, Development, Colonization and any applicable
+  River crop bonus. Full shared storage shows a paused status and zero actual
+  output. Missing power and unsupported biomes have explicit status text.
+- **Modifiers:** recorded Realm Power and the Prosperity, Development,
+  Colonization and River crop percentages. A minimum RP estimate is marked.
+
+The **stockpile** sits below both boxes. Its heading shows shared usage/capacity.
+Six item types appear per page in two columns of three rows, with fractional
+balances retained. Prev/Next changes only the stock page and stays in Overview.
+**Collect stockpile** collects all whole items that fit the player's inventory,
+including items on other pages, preserving fractions and anything that did not
+fit. Collection returns to Overview and clamps the page if stock has changed.
+There are no separate Resources or Stockpile tabs.
+
+All 30 distinct producible resources have packaged icons. Flat item images use
+Mojang's vanilla textures, and block items use compact isometric cubes generated
+from their top/side textures. [Source provenance](production-icon-assets.json)
+records the pinned Bedrock samples commit and each texture's SHA256. The optional
+`tools/build_production_icons.py` regenerates icons with network access and
+Pillow; ordinary addon builds use the checked-in PNGs without downloads.
+
+## Resource Prospecting
+
+The second tab retains the native biome/resource, allocation status, paper
+progress, Native Specialization and surveyed nearby choices. Up to three choices
+are shown per page, with Survey and Clear second controls. Selecting an option
+opens a fixed confirmation preview. Confirmation rechecks research, selection
+revision, radius, sample and loaded world identity before changing production.
+Survey runs only on demand; navigating stock or tabs does not scan terrain.
+
+The [biome production rules](biome-production.md) define rates, eligibility,
+River bonuses, offline accounting and migration. This release changes display
+and navigation without changing those production formulas or saved resources.
 
 ## Other readability corrections in this release
 
@@ -66,7 +79,7 @@ existing 2-health-point villager heal once per Minecraft day.
 
 ## Validation
 
-178 Node tests and 3 Python tests pass. Static packaging validates 148 pack
+180 Node tests and 3 Python tests pass. Static packaging validates 181 pack
 files. Coverage includes rate components, full-stock paused output, combined
 allocation output, bounded pages/empty states, research and sample gating,
 previewed verified selection, unloaded rejection, clearing, whole-item collection

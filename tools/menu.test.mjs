@@ -174,7 +174,7 @@ test('Realm filters have paginated directories and stockpile collection stays un
     const directory=children(ui['jf_realm_'+scope+'_content']);
     assert.ok(directory.prev);assert.ok(directory.next);
   }
-  assert.ok(JSON.stringify(ui.jf_production_stock_content).includes('jf_action_collect'));
+  assert.ok(JSON.stringify(ui.jf_production_summary_content).includes('jf_action_collect'));
   assert.equal(children(ui.jf_dashboard).jf_tab_stockpile,undefined);
 });
 
@@ -333,10 +333,12 @@ test('Realm replaces the map with Road Networks and keeps both settlement direct
  assert.equal(JSON.stringify(ui).includes('interactive map'),false);
 });
 
-test('Production uses four fixed non-scrolling panels with bounded navigation and inline biome controls',async()=>{
+test('Production uses exactly two fixed tabs with output, modifiers and stockpile together',async()=>{
  const ui=await loadUI(),root=children(ui.jf_production_content);
+ assert.deepEqual(Object.keys(root).filter(k=>k.startsWith('jf_production_tab_')),['jf_production_tab_summary','jf_production_tab_biomes']);
+ assert.equal(ui.jf_production_stock_content,undefined);assert.equal(ui.jf_production_output_content,undefined);
  assert.ok(children(ui.jf_dashboard)['production@jagsby_frontier.jf_production_content']);
- for(const scope of ['summary','output','biomes','stock']){
+ for(const scope of ['summary','biomes']){
   assert.equal(root['jf_production_tab_'+scope].toggle_name,'jagsby_frontier_production_tabs');
   const pane=ui['jf_production_'+scope+'_content'];assert.equal(pane.type,'panel');
   assert.equal(JSON.stringify(pane).includes('scroll'),false);
@@ -345,7 +347,14 @@ test('Production uses four fixed non-scrolling panels with bounded navigation an
   }
  }
  for(const name of ['use0','use1','use2','survey','clear','previous','next'])assert.ok(children(ui.jf_production_biomes_content)[name]);
- assert.ok(children(ui.jf_production_stock_content).collect);
+ const summary=children(ui.jf_production_summary_content);
+ assert.ok(summary.collect);assert.ok(summary.modifiers_box);assert.ok(summary.stock_box);
+ assert.ok(summary.stock_box.offset[1]>=summary.output_box.size[1]);
+ for(let slot=0;slot<2;slot++){
+  assert.ok(summary['icon'+slot]);assert.ok(summary['item'+slot]);
+  assert.ok(ui['jf_production_icon'+slot].bindings.some(b=>b.binding_name==='#form_button_texture'));
+ }
+
 });
 test('Research hover heights flow from the rendered label with only fixed edge padding',async()=>{
  const ui=await loadUI();

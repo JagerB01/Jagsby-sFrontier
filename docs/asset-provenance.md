@@ -128,3 +128,12 @@ regeneration, recoloring or extraction from the layout screenshot was used.
 It contains fourteen equal-advance glyphs: eleven biome/fog colors and three
 settlement/player symbols. No glyphs from Advanced Minimap were copied. The
 biome map uses twelve text rows instead of hundreds of native image controls.
+
+## Production item images (0.0.47)
+
+The 30 icons use vanilla textures from Mojang's `bedrock-samples` commit
+`15701fa9c13923f12662984c32c124327e40e3d3`. Flat items retain their textures;
+block items are rendered as shaded isometric cubes from vanilla face textures.
+[Per-item sources and SHA256](production-icon-assets.json) are recorded.
+`tools/build_production_icons.py` regenerates these assets; normal addon builds
+use the committed PNGs. These textures remain Mojang property.

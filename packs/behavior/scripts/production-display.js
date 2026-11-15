@@ -1,4 +1,3 @@
-import {ECONOMY_CONFIG as C} from './economy-config.js';
 import {resourceRates,recordedPower,development,capacity,stockTotal} from './settlement-economy.js';
 import {localLevel,colonizationBonus,zoneAt} from './global-research.js';
 import {productionAllocations,biomeResource,canonicalBiome,riverCropBonus} from './biome-resources.js';
@@ -14,14 +13,12 @@ export function productionView(s,v,requested={}){
  const rates=resourceRates(v,s),used=stockTotal(s),cap=capacity(s),full=cap-used<=1e-8;
  const allocations=productionAllocations(v),river=riverCropBonus(v),native=canonicalBiome(v.nativeBiome??v.biome),nativeResource=biomeResource(native);
  const bonus=colonizationBonus(s,zoneAt(v.location));
- const base=rates.reduce((sum,r)=>sum+r.rate,0),extra=base*bonus;
- const status=full?'Paused: shared stockpile is full':!recordedPower(v)?'Waiting for recorded Realm Power':!rates.length?'No production resources mapped for this biome':'Producing';
  const outputRows=rates.map(r=>{
   const sources=[...new Set((r.allocations||[]).map(a=>biomeName(a.biome)))];
-  return {id:r.id,name:r.name,base:r.rate,bonus:r.rate*bonus,actual:full?0:r.rate*(1+bonus),sources};
+  return {id:r.id,name:r.name,base:r.rate,bonus:r.rate*bonus,actual:full?0:r.rate*(1+bonus),sources,texture:`textures/ui/frontier/production/${r.id.replace('minecraft:','')}`};
  });
  const output=paginate(outputRows,requested.output,3);
- const stock=paginate(Object.entries(s.stock).filter(([,n])=>n>0).sort(([a],[b])=>a.localeCompare(b)),requested.stock,5);
+ const stock=paginate(Object.entries(s.stock).filter(([,n])=>n>0).sort(([a],[b])=>a.localeCompare(b)),requested.stock,6);
  const available=[...new Set((v.available||[]).map(canonicalBiome))].filter(b=>b!==native&&biomeResource(b)).sort();
  const options=[...(nativeResource&&v.dimension==='minecraft:overworld'?[{id:native,mode:'specialize'}]:[]),...available.map(id=>({id,mode:'diversify'}))];
  const biomes=paginate(options,requested.biomes,3);
@@ -33,14 +30,15 @@ export function productionView(s,v,requested={}){
  });
  const progress=v.localResearch?.progress?.biome||0;
  return {
-  summary:`${status}\nTotal output: ${amount(full?0:base+extra)} items / hour\nBase: ${amount(base)} | Zone bonus: ${amount(extra)} / hour\nRecorded Realm Power: ${recordedPower(v).toFixed(1)}${v.productionPowerIsMinimum?' (minimum estimate)':''}\nProsperity Lv ${localLevel(s,v,'efficiency')}: +${localLevel(s,v,'efficiency')*5}%\nDevelopment ${development(v)}: +${(development(v)*0.1).toFixed(1)}%\n${zoneAt(v.location)}: +${bonus*100}% Colonization\nAllocations: ${allocations.length} / 2 | River crops: +${river*100}%`,
-  outputText:output.rows.map(r=>`${r.name}: ${amount(r.actual)} / hour${full?' (paused)':''}\nPotential: ${amount(r.base)} base + ${amount(r.bonus)} zone / hour\nFrom: ${r.sources.join(' + ')}`).join('\n')||'No eligible Overworld surface resource is assigned. Choose a validated second allocation after Prospecting.',
-  outputFooter:`Resources: ${output.count} | Page ${output.page+1} / ${output.pages}`,
+  status:full?'Stockpile full - paused':!recordedPower(v)?'Waiting for Realm Power':!rates.length?'No resource assigned':'Producing',
+  items:output.rows.map(r=>({...r,text:`${r.name}\n+ ${r.actual.toFixed(3)}/hour`})),
+  modifiers:`Realm Power: ${recordedPower(v).toFixed(1)}${v.productionPowerIsMinimum?' (min)':''}\nProsperity: + ${localLevel(s,v,'efficiency')*5}%\nDevelopment: + ${(development(v)*0.1).toFixed(1)}%\nColonization: + ${Math.round(bonus*100)}%\nRiver crops: + ${Math.round(river*100)}%`,
   biomeText:`Native: ${biomeName(native)} - ${nativeResource?.name||'Unsupported biome'}\nSlots: ${allocations.map(a=>a.slot+': '+a.name).join(' | ')||'No eligible allocation'}\n${v.biomeUnlocked?'Preview specialization or a nearby biome below.':`Paper: ${progress} / 64. Contribute in Research > Local.`}`,
   biomeFooter:`Allocation choices: ${biomes.count} | Page ${biomes.page+1} / ${biomes.pages}`,
-  stockSummary:`Shared stock: ${amount(used,3)} / ${cap} items\nFree space: ${amount(Math.max(0,cap-used),3)} | All settlements share this stock.`,
-  stockText:stock.rows.map(([id,n])=>`${itemName(id)}: ${amount(n,3)} stored | ${Math.floor(n)} collectable`).join('\n')||'No produced resources stored yet.',
-  stockFooter:`Items: ${stock.count} types | Page ${stock.page+1} / ${stock.pages}`,
+  stockHeading:`Stockpile  ${amount(used,3)} / ${cap}`,
+  stockLeft:stock.rows.slice(0,3).map(([id,n])=>`${itemName(id)}  ${amount(n,3)}`).join('\n')||'Stockpile empty',
+  stockRight:stock.rows.slice(3,6).map(([id,n])=>`${itemName(id)}  ${amount(n,3)}`).join('\n'),
+  stockFooter:`Page ${stock.page+1} / ${stock.pages}`,
   choices,output,stock,biomes,allocations,river,
  };
 }

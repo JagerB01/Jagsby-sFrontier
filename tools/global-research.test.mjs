@@ -139,7 +139,7 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
  const inventory={addItem(item){received.push(item);return undefined;},size:slots.length,getItem(i){return slots[i]?{...slots[i]}:undefined;},setItem(i,item){if(i===failSlot){failSlot=-1;throw Error('interrupted inventory write');}slots[i]=item?{...item}:undefined;}};
  const messages=[],player={id:'p',selectedSlotIndex:0,sendMessage(text){messages.push(text);},getComponent(){return {container:inventory};}};
  const forms=[];
- class Form{constructor(){this.buttons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}button(text){this.buttons.push(text);return this;}show(){return Promise.resolve(respond(this));}}
+ class Form{constructor(){this.buttons=[];this.icons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}button(text,icon){this.buttons.push(text);this.icons.push(icon);return this;}show(){return Promise.resolve(respond(this));}}
  globalThis.__researchRuntime={world:{getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'})};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{runInterval(){},run(){}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
@@ -307,7 +307,7 @@ test('The non-scrolling stockpile Collect all action transfers whole items and p
  const h=await runtime(s);h.api.collect(h.player,'none');
  assert.equal(h.received.reduce((sum,item)=>sum+item.amount,0),5);
  assert.equal(h.read().stock['minecraft:wheat'],0.75);assert.equal(h.read().stock['minecraft:stone'],0.125);
- assert.ok(h.forms.at(-1).text.includes('[JF:production:stock]'));
+ assert.ok(h.forms.at(-1).text.includes('[JF:production:summary]'));
 });
 test('Native Specialization previews then confirms without any biome world reads',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),biomeUnlocked:true,available:[]};
@@ -335,4 +335,19 @@ test('Selecting a secondary allocation cannot bypass research, eligibility, diff
  assert.equal(h.api.productionSelection(v,'minecraft:forest','diversify').secondary,'minecraft:forest');
  for(const candidate of [{...v,biomeUnlocked:false},{...v,dimension:'minecraft:nether'},{...v,biomeSamples:{'minecraft:forest':{x:257,z:0}}}])assert.throws(()=>h.api.productionSelection(candidate,'minecraft:forest','diversify'));
  for(const id of ['minecraft:plains','minecraft:lush_caves'])assert.throws(()=>h.api.productionSelection(v,id,'diversify'));
+});
+test('Production sends item images and stockpile pages stay on the Overview',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),biome:'minecraft:river',biomeUnlocked:true,productionMode:'specialize'};
+ for(const id of ['bamboo','coal','iron_ingot','potato','sand','stone','wheat'])s.stock['minecraft:'+id]=10.25;
+ let clicked=false;const h=await runtime(s,()=>{if(!clicked){clicked=true;return {canceled:false,selection:86};}return {canceled:true};});
+ h.api.openProduction(h.player,'a');await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.forms[0].icons[96],'textures/ui/frontier/production/wheat');
+ assert.equal(h.forms[0].icons[97],undefined);
+ assert.ok(h.forms[0].buttons[96].includes('Wheat\n+ 3.850/hour'));
+ assert.ok(h.forms[0].buttons[11].includes('River crops: + 10%'));
+ assert.equal(h.forms.length,2);
+ assert.ok(h.forms[1].text.includes('[JF:production:summary]'));
+ assert.ok(h.forms[1].buttons[81].includes('Page 2 / 2'));
+ assert.ok(h.forms[1].buttons[13].includes('Wheat'));
+ assert.equal(h.forms[1].buttons[98],'[JF:data:stockRight]');
 });

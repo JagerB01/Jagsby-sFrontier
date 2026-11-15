@@ -30,11 +30,12 @@ TECHS = ["innovation", "frontier", "capacity", "colonization", "storage",
 DATA.update({key + "Level": 66 + i for i, key in enumerate(TECHS)})
 DATA["tradeRoute"] = 76
 ACTIONS["manageRoads"] = 77
-DATA.update({"productionOutput": 78, "productionBiomes": 79, "outputPage": 80, "stockPage": 81, "biomePage": 82,
+DATA.update({"productionOutput": 78, "productionBiomes": 79, "stockPage": 81, "biomePage": 82,
              "biomeOption0": 93, "biomeOption1": 94, "biomeOption2": 95})
-ACTIONS.update({"outputPrev": 83, "outputNext": 84, "stockPrev": 85, "stockNext": 86,
+ACTIONS.update({"stockPrev": 85, "stockNext": 86,
                 "biomePrev": 87, "biomeNext": 88, "chooseBiome1": 89, "chooseBiome2": 90,
-                "clearSecondary": 91, "refreshProduction": 92})
+                "clearSecondary": 91})
+DATA.update({"productionItem0": 96, "productionItem1": 97, "stockRight": 98})
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -231,8 +232,8 @@ def overview_value(name, index, offset, size, scale=0.9):
 
 
 def research_tab(scope, index, section="research", caption_text=None):
-    width, spacing = (61, 65) if section == "production" else (82, 86) if section == "realm" else (124, 129)
-    order = ["summary", "output", "biomes", "stock"] if section == "production" else ["roads", "mine", "all"] if section == "realm" else ["local", "global"]
+    width, spacing = (124, 129) if section == "production" else (82, 86) if section == "realm" else (124, 129)
+    order = ["summary", "biomes"] if section == "production" else ["roads", "mine", "all"] if section == "realm" else ["local", "global"]
     toggle = tab("Research", index)["jf_tab_research"]
     toggle.update({"size": [width, 23], "offset": [index * spacing, 0],
         "toggle_name": "jagsby_frontier_" + section + "_tabs", "tts_name": caption_text or scope.title(),
@@ -452,7 +453,7 @@ def build():
                          for target in ["#visible", "#enabled"]],
         }))
     ui["jf_research_content"] = {"type": "panel", "size": [257, 158], "controls": research_controls}
-    # Four fixed production panels: only explicit Previous/Next changes a page.
+    # Two production tabs: output/modifiers above the shared stockpile.
     def production_value(name, key, y, height, scale=0.75, x=7, width=240):
         return overview_value(name, DATA[key], [x, y], [width, height], scale=scale)
     def production_button(name, key, caption, x, y=107, width=60, height=21):
@@ -463,19 +464,44 @@ def build():
             caption_control = next(c["caption"] for c in panel["controls"] if "caption" in c)
             caption_control.update({"offset": [3, 3], "size": [width - 6, 12], "font_scale_factor": 0.65})
         return control(name, button)
+    def production_surface(name, size, offset):
+        return control(name, image("frontier/palette_panel", size, offset, color=[0.82, 0.82, 0.82]))
+    summary_controls = [
+        production_surface("output_box", [131, 65], [0, 0]),
+        production_surface("modifiers_box", [118, 65], [136, 0]),
+        production_surface("stock_box", [254, 61], [0, 70]),
+        production_value("status", "productionOutput", 5, 10, scale=0.65, width=119),
+        control("modifiers_title", label("Modifiers", [104, 10], (143, 5), WHEAT, 0.7)),
+        production_value("modifiers", "production", 19, 41, scale=0.6, x=143, width=104),
+        production_value("stock_heading", "stockpile", 75, 10, scale=0.65, width=163),
+        production_value("stock_page", "stockPage", 76, 8, scale=0.55, x=177, width=70),
+        production_value("stock_left", "resources", 88, 22, scale=0.6, width=117),
+        production_value("stock_right", "stockRight", 88, 22, scale=0.6, x=132, width=115),
+        production_button("previous", "stockPrev", "Prev", 0, 112, 43, 18),
+        production_button("collect", "collect", "Collect stockpile", 48, 112, 158, 18),
+        production_button("next", "stockNext", "Next", 211, 112, 43, 18),
+    ]
+    for slot, y in enumerate([18, 41]):
+        key = "productionItem" + str(slot)
+        summary_controls.append(production_value("item" + str(slot), key, y, 21, scale=0.6, x=32, width=92))
+        icon = image("frontier/production/wheat", [20, 20], layer=8)
+        icon["keep_ratio"] = True
+        icon["bindings"] = [
+            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+            view("(not (#texture = ''))"),
+        ]
+        template = "jf_production_icon" + str(slot)
+        ui[template] = icon
+        summary_controls.append(control("icon" + str(slot), {
+            "type": "stack_panel", "orientation": "vertical", "size": [20, 20],
+            "offset": [7, y], "anchor_from": "top_left", "anchor_to": "top_left",
+            "collection_name": "form_buttons", "controls": [
+                control("record@jagsby_frontier." + template, {"collection_index": DATA[key]})],
+        }))
     production_panels = {
-        "summary": [production_value("summary", "production", 4, 95),
-                    production_button("refresh", "refreshProduction", "Refresh rates", 0, width=254)],
-        "output": [production_value("output", "productionOutput", 3, 86, scale=0.7),
-                   production_value("page", "outputPage", 92, 11, scale=0.65),
-                   production_button("previous", "outputPrev", "Previous", 0, width=122),
-                   production_button("next", "outputNext", "Next", 129, width=122)],
-        "stock": [production_value("summary", "stockpile", 3, 27, scale=0.65),
-                  production_value("items", "resources", 35, 56, scale=0.7),
-                  production_value("page", "stockPage", 93, 10, scale=0.6),
-                  production_button("previous", "stockPrev", "Previous", 0),
-                  production_button("collect", "collect", "Collect all", 64, width=122),
-                  production_button("next", "stockNext", "Next", 190)],
+        "summary": summary_controls,
         "biomes": [production_value("details", "productionBiomes", 1, 37, scale=0.65),
                    production_value("page", "biomePage", 103, 8, scale=0.55),
                    production_button("previous", "biomePrev", "Prev", 0, 112, 48, 18),
@@ -487,7 +513,7 @@ def build():
         production_panels["biomes"] += [production_value("option" + str(slot), "biomeOption" + str(slot), 41 + slot * 20, 18, scale=0.6, width=193),
                                         production_button("use" + str(slot), key, "Use", 205, 41 + slot * 20, 43, 18)]
     production_controls = [research_tab(scope, index, "production", caption) for index, (scope, caption) in enumerate([
-        ("summary", "Overview"), ("output", "Resources"), ("biomes", "Biomes"), ("stock", "Stockpile")])]
+        ("summary", "Overview"), ("biomes", "Resource Prospecting")])]
     for scope, children in production_panels.items():
         ui["jf_production_" + scope + "_content"] = {"type": "panel", "size": [257, 131], "controls": children}
         production_controls.append(control(scope + "@jagsby_frontier.jf_production_" + scope + "_content", {

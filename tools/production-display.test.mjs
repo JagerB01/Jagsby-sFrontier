@@ -11,12 +11,12 @@ test('Production displays precise per-resource base and zone rates without mutat
  const {s,v}=fixture();v.location.x=28000;s.global.colonization=5;
  const before=JSON.stringify(s),view=productionView(s,v);
  assert.equal(view.output.count,1);assert.equal(view.output.rows[0].base,1.75);assert.equal(view.output.rows[0].bonus,0.875);assert.equal(view.output.rows[0].actual,2.625);
- assert.ok(view.summary.includes('Total output: 2.625'));assert.ok(view.outputText.includes('From: Plains'));assert.equal(JSON.stringify(s),before);
+ assert.equal(view.items[0].text,'Wheat\n+ 2.625/hour');assert.ok(view.modifiers.includes('Colonization: + 50%'));assert.equal(JSON.stringify(s),before);
 });
 test('A full stockpile shows paused actual output while preserving potential rates',()=>{
  const {s,v}=fixture();s.stock['minecraft:wheat']=792;const view=productionView(s,v);
- assert.ok(view.summary.includes('Paused: shared stockpile is full'));assert.equal(view.output.rows[0].actual,0);
- assert.equal(view.output.rows[0].base,1.75);assert.ok(view.outputText.includes('Potential: 1.75'));
+ assert.equal(view.status,'Stockpile full - paused');assert.equal(view.output.rows[0].actual,0);
+ assert.equal(view.output.rows[0].base,1.75);assert.equal(view.items[0].text,'Wheat\n+ 0.000/hour');
 });
 test('Unlocked secondary biomes add resources while each allocation retains its source',()=>{
  const {s,v}=fixture();v.biomeUnlocked=true;v.secondary='minecraft:forest';
@@ -29,8 +29,8 @@ test('Output and stock pagination clamps safely and never emits an unbounded lis
  for(let i=0;i<13;i++)s.stock['minecraft:example_'+i]=i+0.25;
  const first=productionView(s,v,{output:0,stock:0}),last=productionView(s,v,{output:999,stock:999});
  assert.equal(first.output.rows.length,2);assert.equal(last.output.rows.length,2);assert.equal(last.output.page,0);
- assert.equal(first.stock.rows.length,5);assert.equal(last.stock.rows.length,3);assert.equal(last.stock.page,2);
- assert.ok(first.stockText.includes('0 collectable'));assert.ok(last.stockFooter.includes('Page 3 / 3'));
+ assert.equal(first.stock.rows.length,6);assert.equal(last.stock.rows.length,1);assert.equal(last.stock.page,2);
+ assert.ok(first.stockLeft.includes('Example 0  0.25'));assert.equal(first.stockLeft.split('\n').length,3);assert.equal(first.stockRight.split('\n').length,3);assert.ok(last.stockFooter.includes('Page 3 / 3'));
 });
 test('Biome panel explains research progress and separates verified choices from stale/out-of-range samples',()=>{
  const {s,v}=fixture();v.localResearch.progress.biome=20;
@@ -44,6 +44,18 @@ test('Unknown/empty production and oversized requests have useful bounded empty 
  const {s,v}=fixture();v.biome='minecraft:unmapped';v.productionPower=0;
  const view=productionView(s,v,{output:-4,stock:100,biomes:100});
  assert.equal(view.output.page,0);assert.equal(view.stock.page,0);assert.equal(view.biomes.page,0);
- assert.ok(view.outputText.includes('No eligible Overworld surface resource'));assert.ok(view.stockText.includes('No produced resources'));
- assert.ok(view.summary.includes('Waiting for recorded Realm Power'));
+ assert.deepEqual(view.items,[]);assert.equal(view.stockLeft,'Stockpile empty');assert.equal(view.stockRight,'');
+ assert.ok(view.status.includes('Waiting for Realm Power'));
+});
+test('All produced resources have a packaged item image and compact actual hourly rate',async()=>{
+ const {BIOME_ASSIGNMENTS}=await import('../packs/behavior/scripts/biome-resources.js');
+ const {readFile}=await import('node:fs/promises');
+ for(const assignment of BIOME_ASSIGNMENTS){
+  const {s,v}=fixture();v.biome=assignment.biome;
+  const view=productionView(s,v),item=view.items[0];
+  assert.equal(item.id,assignment.item);assert.equal(item.texture,'textures/ui/frontier/production/'+assignment.item.replace('minecraft:',''));
+  assert.match(item.text,/\n\+ \d+\.\d{3}\/hour$/);
+  const png=await readFile(new URL('../packs/resource/'+item.texture+'.png',import.meta.url));
+  assert.deepEqual([...png.subarray(0,8)],[137,80,78,71,13,10,26,10]);
+ }
 });

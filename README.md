@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.46.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.47.mcaddon?raw=true)
+
+Version 0.0.47 rebuilds Production with just **Overview** and **Resource
+Prospecting**. Overview shows item images and **+ X.XXX/hour**, a separate
+modifiers box, and the shared stockpile below with **Collect stockpile**.
+Stock pages stay in Overview; there are no separate Resources or Stockpile tabs.
 
 Version 0.0.46 keeps research tooltip text inside the frame using a full-width
 body row with the same inset as the title. Tooltip height still follows content.

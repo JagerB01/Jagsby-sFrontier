@@ -169,7 +169,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,96);
+  assert.equal(forms[0].records.length,99);
   assert.equal(forms[0].records[63],'[JF:data:zone]Heartlands');
   assert.equal(forms[0].records[64],'Development 0');
   assert.equal(forms[0].records[66],'[JF:data:innovationLevel]Lv 1');

@@ -1,0 +1,347 @@
+{
+  "source": "https://github.com/Mojang/bedrock-samples",
+  "revision": "15701fa9c13923f12662984c32c124327e40e3d3",
+  "note": "Vanilla item textures; blocks rendered as compact isometric cubes with nearest-neighbor sampling. Mojang assets remain Mojang property.",
+  "items": [
+    {
+      "item": "minecraft:acacia_log",
+      "icon": "textures/ui/frontier/production/acacia_log",
+      "sources": [
+        {
+          "path": "textures/blocks/log_acacia.png",
+          "sha256": "c582521b6814db08b4172d6f76ad8433e001d9a1f3dab0e665d653c339549a38"
+        },
+        {
+          "path": "textures/blocks/log_acacia_top.png",
+          "sha256": "54698a5c45abec571c31dd4742060e00288ff3fa45afd83a32a0706ed743f97e"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:bamboo",
+      "icon": "textures/ui/frontier/production/bamboo",
+      "sources": [
+        {
+          "path": "textures/items/bamboo.png",
+          "sha256": "da9f5d0d67c23dcb80ca2c2c147a597f55f981b53d84f3e82fe9bec469f9cbcf"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:birch_log",
+      "icon": "textures/ui/frontier/production/birch_log",
+      "sources": [
+        {
+          "path": "textures/blocks/log_birch.png",
+          "sha256": "2816dce43547f6bcb20e2c09373c979068d2cdc4ce201565d5530e9a52cc9d56"
+        },
+        {
+          "path": "textures/blocks/log_birch_top.png",
+          "sha256": "94d70914ae656fc038acb0eedf72dcd8952097fc6289e3e600a61d35ba32bf47"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:cherry_log",
+      "icon": "textures/ui/frontier/production/cherry_log",
+      "sources": [
+        {
+          "path": "textures/blocks/cherry_log_side.png",
+          "sha256": "9d50e50863a8e71f84d51a510c5a1af6dd36d2bc3ceec2bd49874d4fc8630584"
+        },
+        {
+          "path": "textures/blocks/cherry_log_top.png",
+          "sha256": "6626fdea79ec7304886d81323d5af292c206607322a62ebdb97d2556395e01cd"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:coal",
+      "icon": "textures/ui/frontier/production/coal",
+      "sources": [
+        {
+          "path": "textures/items/coal.png",
+          "sha256": "8d1dbe941a70e3c13d8c5c312c61df8b7888ba68f2905854f676d462cd3a1d6f"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:cocoa_beans",
+      "icon": "textures/ui/frontier/production/cocoa_beans",
+      "sources": [
+        {
+          "path": "textures/items/dye_powder_brown.png",
+          "sha256": "97a16a1dd6302ad5d8e6702579606a0f580fcebfaee69725840081447fc603a1"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:cod",
+      "icon": "textures/ui/frontier/production/cod",
+      "sources": [
+        {
+          "path": "textures/items/fish_raw.png",
+          "sha256": "198201071e622eb118322884fe9d82385c77f917a1652aed232759bf50c16b9d"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:dark_oak_log",
+      "icon": "textures/ui/frontier/production/dark_oak_log",
+      "sources": [
+        {
+          "path": "textures/blocks/log_big_oak.png",
+          "sha256": "f4e9e505874943d6f8a32c6c6d096c08c46d0d1016287a5f199c7b9288c33157"
+        },
+        {
+          "path": "textures/blocks/log_big_oak_top.png",
+          "sha256": "53eaa6b6f592699eff3995d4bf1e342021e1bf1728036e241c1f15bd3d4b2fae"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:gravel",
+      "icon": "textures/ui/frontier/production/gravel",
+      "sources": [
+        {
+          "path": "textures/blocks/gravel.png",
+          "sha256": "3966b0ed4e27b71bdc6a3c7e0692d264c056c559e0c6dc1efc62625600d616ce"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:hardened_clay",
+      "icon": "textures/ui/frontier/production/hardened_clay",
+      "sources": [
+        {
+          "path": "textures/blocks/hardened_clay.png",
+          "sha256": "ba19cc57732682301101616ca5a2a0eeda87ab6c9303c3990a13e293ba4f173c"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:honeycomb",
+      "icon": "textures/ui/frontier/production/honeycomb",
+      "sources": [
+        {
+          "path": "textures/items/honeycomb.png",
+          "sha256": "84473431f1d1cdc70a766ddf6ae5c719ed1b76d39b67ad2042765e3189a912d5"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "icon": "textures/ui/frontier/production/iron_ingot",
+      "sources": [
+        {
+          "path": "textures/items/iron_ingot.png",
+          "sha256": "247f59e08365383582ca519c378cf2d7d966a021bd929a686f62f7cc622cd6d0"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:jungle_log",
+      "icon": "textures/ui/frontier/production/jungle_log",
+      "sources": [
+        {
+          "path": "textures/blocks/log_jungle.png",
+          "sha256": "abf41cd295a557e7d75cb58188f2e3927a8912ec6aa758083b006cd75d0c807a"
+        },
+        {
+          "path": "textures/blocks/log_jungle_top.png",
+          "sha256": "2864af7be8ce59f806adfd744805149d37817dfff677ff9773608bb312d45a81"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:mangrove_log",
+      "icon": "textures/ui/frontier/production/mangrove_log",
+      "sources": [
+        {
+          "path": "textures/blocks/mangrove_log_side.png",
+          "sha256": "68f4924c864d740bda168c632efd8459abe7f19e651c65032a18b3e44df7a418"
+        },
+        {
+          "path": "textures/blocks/mangrove_log_top.png",
+          "sha256": "9343b34d6437861d7db8f6aa502a8ddc5b253031ca4f9fc5459322a3762b3a16"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:mud",
+      "icon": "textures/ui/frontier/production/mud",
+      "sources": [
+        {
+          "path": "textures/blocks/mud.png",
+          "sha256": "c462f202f1241b3de792e91934e850fdc80542a138e82ca6db9b332cbfdeee4e"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:oak_log",
+      "icon": "textures/ui/frontier/production/oak_log",
+      "sources": [
+        {
+          "path": "textures/blocks/log_oak.png",
+          "sha256": "7abc3068a65c71784b14562ba254e3420c6d6301c8eb33d29fd25084f7e95c86"
+        },
+        {
+          "path": "textures/blocks/log_oak_top.png",
+          "sha256": "b955d6f267fc9a5b34aaa6ebae0db54b0bad45b4d46c2dbc80b904e79e3347d4"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:packed_ice",
+      "icon": "textures/ui/frontier/production/packed_ice",
+      "sources": [
+        {
+          "path": "textures/blocks/ice_packed.png",
+          "sha256": "0174c61b6fa182b2ee787864bb61aaed7ad1ffc8483c2865865559c767e1752f"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:pale_oak_log",
+      "icon": "textures/ui/frontier/production/pale_oak_log",
+      "sources": [
+        {
+          "path": "textures/blocks/pale_oak_log_side.png",
+          "sha256": "a2d1792105c3f4f507ddc7418483f61f2b476c364c6add7638536232835f4b88"
+        },
+        {
+          "path": "textures/blocks/pale_oak_log_top.png",
+          "sha256": "df00563b6378b0459e6719d66ce64f549035cdb8fce63a1e8cbee1049b2648ad"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:poplar_log",
+      "icon": "textures/ui/frontier/production/poplar_log",
+      "sources": [
+        {
+          "path": "textures/blocks/poplar_log_side.png",
+          "sha256": "9c054113425a9ccd11219c78386806ce369143f4ca6f8c41c05cd9bf457d6438"
+        },
+        {
+          "path": "textures/blocks/poplar_log_top.png",
+          "sha256": "14a1218535cfa6c3dba18575628a13da10be958bfc547e9ea08a664083a60ffb"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:potato",
+      "icon": "textures/ui/frontier/production/potato",
+      "sources": [
+        {
+          "path": "textures/items/potato.png",
+          "sha256": "9ca09d70f2f27339cc80c8f7eae8c715aaf819e67faf32e31a9e877b9dcbf832"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:prismarine_crystals",
+      "icon": "textures/ui/frontier/production/prismarine_crystals",
+      "sources": [
+        {
+          "path": "textures/items/prismarine_crystals.png",
+          "sha256": "156281faceecf4efad2e9825799a74592765e24cf279cb85de10d5dda7b59aa6"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:prismarine_shard",
+      "icon": "textures/ui/frontier/production/prismarine_shard",
+      "sources": [
+        {
+          "path": "textures/items/prismarine_shard.png",
+          "sha256": "6037e8ca0d1bcf356f6f0aed433b932be1658adc68f205c4c56c456bddf0a991"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:red_mushroom",
+      "icon": "textures/ui/frontier/production/red_mushroom",
+      "sources": [
+        {
+          "path": "textures/blocks/mushroom_red.png",
+          "sha256": "7118fe38a670fe6e7b3085f3135fba2945dcba9f7524186057776c9eb0a19605"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:red_sand",
+      "icon": "textures/ui/frontier/production/red_sand",
+      "sources": [
+        {
+          "path": "textures/blocks/red_sand.png",
+          "sha256": "e44d460fec59bdf259656209869ebf1ca784604e42390fd4748dd62c3d1db62e"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:salmon",
+      "icon": "textures/ui/frontier/production/salmon",
+      "sources": [
+        {
+          "path": "textures/items/fish_salmon_raw.png",
+          "sha256": "831b54805c771142aab485524d9468b244b5b01fa7c0c69b4f5b0e75aec98281"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:sand",
+      "icon": "textures/ui/frontier/production/sand",
+      "sources": [
+        {
+          "path": "textures/blocks/sand.png",
+          "sha256": "2161047aaf5ab95819bc2419aeb08064e4c6208e2d0cdc026561ea72e97d3527"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:sea_pickle",
+      "icon": "textures/ui/frontier/production/sea_pickle",
+      "sources": [
+        {
+          "path": "textures/items/sea_pickle.png",
+          "sha256": "f4c3192411901c1a678744f83bf7c80912e5756aaad22e93e6c16ab2d34b53d2"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:spruce_log",
+      "icon": "textures/ui/frontier/production/spruce_log",
+      "sources": [
+        {
+          "path": "textures/blocks/log_spruce.png",
+          "sha256": "ed1bbe8c5c5f201e60a9a3746063560edffc48cd4663b45d9c9fd7c7afc1e7ab"
+        },
+        {
+          "path": "textures/blocks/log_spruce_top.png",
+          "sha256": "91ff1e20dfc00ca03a70370f408c3c06de347be2cdd4c15f397d41f56fdfe849"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:stone",
+      "icon": "textures/ui/frontier/production/stone",
+      "sources": [
+        {
+          "path": "textures/blocks/stone.png",
+          "sha256": "12f1c99206df13e951a68b9e5e294c5e0e15c252c3bb141632c8c969a909d1a8"
+        }
+      ]
+    },
+    {
+      "item": "minecraft:wheat",
+      "icon": "textures/ui/frontier/production/wheat",
+      "sources": [
+        {
+          "path": "textures/items/wheat.png",
+          "sha256": "21c2b0bfeae4934a7a5b606c98c1fe3c9f595514700d4191f2646d85aacaaf0a"
+        }
+      ]
+    }
+  ]
+}
