@@ -62,7 +62,7 @@ test('five local sidebar toggles control custom pages without submitting form bu
     if(name==='information')assert.equal(tab.focus_change_up,'jf_tab_focus_realm');
     assert.equal(tab.radio_toggle_group,true);
     assert.equal(JSON.stringify(tab).includes('button.form_button_click'),false);
-    const key=['overview','research','realm','information'].includes(name)?name+'@jagsby_frontier.jf_'+name+'_content':name+'@common.scrolling_panel';
+    const key=name+'@jagsby_frontier.jf_'+name+'_content';
     const page=ui.jf_dashboard.controls.find(c=>c[key])[key];
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#visible'));
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#enabled'));
@@ -161,7 +161,7 @@ test('Realm filters have paginated directories and stockpile collection stays un
     const directory=children(ui['jf_realm_'+scope+'_content']);
     assert.ok(directory.prev);assert.ok(directory.next);
   }
-  assert.ok(JSON.stringify(ui.jf_production_content).includes('jf_action_collect'));
+  assert.ok(JSON.stringify(ui.jf_production_stock_content).includes('jf_action_collect'));
   assert.equal(children(ui.jf_dashboard).jf_tab_stockpile,undefined);
 });
 
@@ -307,4 +307,26 @@ test('Realm replaces the map with Road Networks and keeps both settlement direct
  for(const key of ['summary','connections'])assert.ok(roads[key]);
  assert.equal(JSON.stringify(ui).includes('jf_data_map'),false);
  assert.equal(JSON.stringify(ui).includes('interactive map'),false);
+});
+
+test('Production uses four fixed non-scrolling panels with bounded navigation and inline biome controls',async()=>{
+ const ui=await loadUI(),root=children(ui.jf_production_content);
+ assert.ok(children(ui.jf_dashboard)['production@jagsby_frontier.jf_production_content']);
+ for(const scope of ['summary','output','biomes','stock']){
+  assert.equal(root['jf_production_tab_'+scope].toggle_name,'jagsby_frontier_production_tabs');
+  const pane=ui['jf_production_'+scope+'_content'];assert.equal(pane.type,'panel');
+  assert.equal(JSON.stringify(pane).includes('scroll'),false);
+  for(const child of Object.values(children(pane))){
+   assert.ok(child.offset[0]+child.size[0]<=257);assert.ok(child.offset[1]+child.size[1]<=131);
+  }
+ }
+ for(const name of ['use0','use1','use2','survey','clear','previous','next'])assert.ok(children(ui.jf_production_biomes_content)[name]);
+ assert.ok(children(ui.jf_production_stock_content).collect);
+});
+test('Research hover panels fit their shorter current/next descriptions rather than a uniform oversized box',async()=>{
+ const ui=await loadUI();
+ for(const key of ['innovation','frontier','capacity','colonization','storage','hearth','biome','sanctuary','efficiency','roads']){
+  const tip=children(children(children(ui['jf_action_'+key+'@common.button']).hover).research_tooltip);
+  assert.ok(tip.live_details.size[1]<=88);
+ }
 });

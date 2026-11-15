@@ -1,3 +1,19 @@
+# 0.0.39
+
+- Rebuild Production as four fixed non-scrolling subtabs: Overview, Resources,
+  Biomes and Stockpile. Show hourly base/zone output, source biomes, modifiers,
+  offline/paused status and paged shared stock with whole-item collection.
+- Replace the secondary-biome picker with paged inline options, Prospecting
+  status/progress, explicit Survey/Use/Clear controls and loaded-sample rechecks.
+  Preserve economy formulas, existing mappings, shared stock and saved selections.
+- Align Development values across from labels, rename Development/Hr, remove
+  six-place decimals and preserve tiny positive rates as <0.01.
+- Shrink tech hover frames and describe only literal current/next effects,
+  omitting empty current benefits at Lv 0. Hearthstone now refreshes Regeneration I
+  for three minutes so its actual duration matches the clarified description.
+- 110 Node tests and 3 Python tests pass; static build validates 148 pack files.
+  Native rendering/controls still need in-game verification.
+
 # 0.0.38
 
 - Remove the complete map feature: scripts, terrain discovery, navigation/HUD,

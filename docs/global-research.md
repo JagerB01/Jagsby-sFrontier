@@ -1,4 +1,4 @@
-# Global research — 0.0.38
+# Global research — 0.0.39
 
 This release retains the local five-node tree, Sanctuary, road construction/travel
 and exact offline economy. The map feature was removed in 0.0.38; Realm now
@@ -47,7 +47,7 @@ Shared Storage additionally accepts the explicit plank, stone, brick and sandsto
 allowlist in `global-research.js`. No items are withdrawn from shared stock.
 
 The existing five 64×64 global icons, palette, tree layout and hover styling are
-retained. All ten technologies use expanded plain-language hover panels showing
+retained. All ten technologies use compact hover panels describing only current and next effects, showing
 what changes, who benefits, current/next benefits, next cost, saved progress,
 remaining amount and prerequisites. Global panels show full effects and prices
 rather than an abbreviated placeholder. Cards show only name and Lv X.
@@ -180,7 +180,7 @@ python -m unittest discover -s tools -p 'test_*.py' -v
 python tools/addon.py build
 ```
 
-Build regenerates tracked UI/bridge assets. The suite covers research, economy, geographic rules and inventory recovery. The current total is 96 Node tests, including direct card payments and map-removal checks.
+Build regenerates tracked UI/bridge assets. The suite covers research, economy, geographic rules and inventory recovery. The current total is 110 Node tests, including direct card payments, fixed Production panels and map-removal checks.
 Static tests cannot render JSON UI or execute Minecraft engine persistence.
 In a backed-up disposable world, check all five global nodes, partial payments,
 two-client stale menus, save/restart recovery, each zone boundary, full-storage

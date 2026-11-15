@@ -130,21 +130,22 @@ test('Partial contributions persist; excessive, fractional and invalid-resource 
  assert.equal(grant(s,'capacity','minecraft:oak_log',64),0);assert.equal(s.researchProgress.capacity,17);
 });
 
-async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true})){
+async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),options={}){
  initial.villages.none??={...village(),id:'none',name:'Test',biome:'unknown',census:{realmPowerTenths:0},available:[]};
  E.accountEconomy(initial,initial.economyAt??Date.now());
  const slots=[{typeId:'minecraft:copper_ingot',amount:64},{typeId:'minecraft:copper_ingot',amount:64},{typeId:'minecraft:copper_ingot',amount:64}];
  let stored=JSON.stringify(initial),failWrite=0,write=0,failSlot=-1;
- const inventory={size:slots.length,getItem(i){return slots[i]?{...slots[i]}:undefined;},setItem(i,item){if(i===failSlot){failSlot=-1;throw Error('interrupted inventory write');}slots[i]=item?{...item}:undefined;}};
+ const received=[];
+ const inventory={addItem(item){received.push(item);return undefined;},size:slots.length,getItem(i){return slots[i]?{...slots[i]}:undefined;},setItem(i,item){if(i===failSlot){failSlot=-1;throw Error('interrupted inventory write');}slots[i]=item?{...item}:undefined;}};
  const messages=[],player={id:'p',selectedSlotIndex:0,sendMessage(text){messages.push(text);},getComponent(){return {container:inventory};}};
  const forms=[];
  class Form{constructor(){this.buttons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}button(text){this.buttons.push(text);return this;}show(){return Promise.resolve(respond(this));}}
- globalThis.__researchRuntime={world:{getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{runInterval(){},run(){}},Form};
+ globalThis.__researchRuntime={world:{getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'})};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{runInterval(){},run(){}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
- source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
- source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls};\n//'+Math.random();
+ source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
+ source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openProduction,selectBiome,clearSecondary,collect};\n//'+Math.random();
  const api=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
- return {api,player,slots,forms,messages,read:()=>JSON.parse(stored),update(fn){const s=JSON.parse(stored);fn(s);stored=JSON.stringify(s);},failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
+ return {api,player,slots,forms,messages,received,read:()=>JSON.parse(stored),update(fn){const s=JSON.parse(stored);fn(s);stored=JSON.stringify(s);},failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
 }
 function choice(h,key,vid='none',player=h.player){const s=h.read();return h.api.cardContribution(player,s,s.villages[vid],key);}
 function click(h,key,vid='none',shown=choice(h,key,vid),player=h.player){h.api.contributeResearchCard(player,vid,key,shown);}
@@ -177,7 +178,7 @@ test('Capped global cards do not debit inventory or erase partial progress',asyn
 test('Global hover record exposes effect, next cost, progress, remaining amount, prerequisite and click action',async()=>{
  const s=fresh();const h=await runtime(s);h.api.open(h.player,'none','Research','global');
  const text=h.forms[0].buttons[10];
- for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Requires: Settlement Charters Lv 1','Stored: 0.000 of 792','792 more items'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Requires: Settlement Charters Lv 1','Stored: 0.000 / 792','792 shared item spaces'])assert.ok(text.includes(value),value);
 });
 test('Save migration refuses a future version instead of overwriting it',()=>{
  assert.throws(()=>R.migrateResearch({researchVersion:4}),/newer/);
@@ -259,10 +260,10 @@ test('All ten research hover records describe effects, next cost, progress, prer
   assert.ok(text.includes('Click:')||text.includes('Carry')||text.includes('Requires higher')||text.includes('Requires Hearthstone')||text.includes('Requires Resource')||text.includes('Requires Sanctuary')||text.includes('Requires Frontier')||text.includes('Requires Settlement'));
   assert.equal(text.includes('Select for materials'),false);
  }
- assert.ok(records[5].includes('players within 32 blocks'));
+ assert.ok(records[5].includes('Grants players Regeneration I while within the settlement'));
  assert.ok(records[55].includes('3 minutes after leaving'));
- assert.ok(records[9].includes('Permanent settlement Development is unaffected'));
- assert.ok(records[61].includes('extra items earn no Development'));
+ assert.ok(records[9].includes('Permanent settlement Development is not capped'));
+ assert.ok(records[61].includes('Extra resources do not earn Development'));
 });
 test('Road Networks lists connections in bounded pages and distinguishes construction from travel',async()=>{
  const h=await runtime();const s=h.read(),v=s.villages.none;
@@ -281,4 +282,29 @@ test('Removing the map restores only previously saved movement controls once',as
  const player={getDynamicProperty:()=>raw,setDynamicProperty:(key,value)=>raw=value,inputPermissions:{setPermissionCategory:(key,value)=>restored.push([key,value])},onScreenDisplay:{setTitle:value=>titles.push(value)}};
  h.api.restoreLegacyControls(player);assert.deepEqual(restored,[[4,true],[6,false]]);assert.equal(raw,undefined);assert.deepEqual(titles,['']);
  h.api.restoreLegacyControls(player);assert.equal(restored.length,2);
+});
+
+test('Production opens inline biome choices and selects a verified second biome without a picker menu',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),name:'Test',biomeUnlocked:true,available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:32,y:64,z:0}}};let clicked=false,reads=0;
+ const h=await runtime(s,()=>{if(!clicked){clicked=true;return {canceled:false,selection:22};}return {canceled:true};},{biomeAt:()=>{reads++;return 'minecraft:forest';}});
+ h.api.openProduction(h.player,'a','biomes');await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.read().villages.a.secondary,'minecraft:forest');assert.equal(reads,1);
+ assert.equal(h.forms.length,2);assert.ok(h.forms.every(form=>form.heading==='JF_CHARTER|Dashboard'));
+ assert.ok(h.forms[1].text.includes('[JF:production:biomes]'));
+ h.api.clearSecondary(h.player,'a');assert.equal(h.read().villages.a.secondary,null);
+});
+test('Unverified/out-of-range biome controls are disabled and selecting unloaded samples never changes the second biome',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),name:'Test',biomeUnlocked:true,available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:300,y:64,z:0}}};
+ const h=await runtime(s,()=>({canceled:true}),{biomeAt:()=>{throw Error('unloaded');}});
+ h.api.openProduction(h.player,'a','biomes');assert.equal(h.forms[0].buttons[22],'[JF:disabled:selectBiome]');
+ h.api.selectBiome(h.player,'a','minecraft:forest');assert.equal(h.read().villages.a.secondary,undefined);
+ h.update(s=>s.villages.a.biomeSamples['minecraft:forest'].x=32);
+ h.api.selectBiome(h.player,'a','minecraft:forest');assert.equal(h.read().villages.a.secondary,undefined);
+});
+test('The non-scrolling stockpile Collect all action transfers whole items and preserves fractions',async()=>{
+ const s=fresh(Date.now());s.stock={'minecraft:wheat':2.75,'minecraft:stone':3.125};
+ const h=await runtime(s);h.api.collect(h.player,'none');
+ assert.equal(h.received.reduce((sum,item)=>sum+item.amount,0),5);
+ assert.equal(h.read().stock['minecraft:wheat'],0.75);assert.equal(h.read().stock['minecraft:stone'],0.125);
+ assert.ok(h.forms.at(-1).text.includes('[JF:production:stock]'));
 });

@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.38.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.39.mcaddon?raw=true)
+
+Version 0.0.39 replaces the scrolling Production page with fixed **Overview,
+Resources, Biomes and Stockpile** panels. Resource and stock lists are paged;
+secondary biome selection is inline with research/survey status. Development/Hr
+is compact and right-aligned, and research hover boxes show literal current/next
+effects in smaller frames. [Production details](docs/production-ui.md).
 
 Version 0.0.38 removes the map feature and replaces Realm’s first subtab with
 **Road Networks**, alongside My Settlements and All Settlements. Road connections
@@ -41,7 +47,7 @@ The on-demand server-controller trade-rank bridge is now included. **Disable the
 separate Trade Rank Probe pack** when using this build, because both define
 vanilla villagers. Charter interaction samples normal ranks from Novice (0.2)
 through Master (1.0); unknown reads remain labeled minimum estimates. MineScape
-is not required. In-game name: **Jagsby's Frontier 0.0.38**. The user confirmed
+is not required. In-game name: **Jagsby's Frontier 0.0.39**. The user confirmed
 the probe's Apprentice reading; this production integration and updated visual
 layout still need in-game verification.
 
@@ -87,7 +93,7 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.0.38.mcaddon`. Packaging is
+Build output is `dist/Jagsbys_Frontier_v0.0.39.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.0+ with `@minecraft/server` 2.9.0 and

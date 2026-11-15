@@ -32,3 +32,13 @@ export function tradeRouteSummary(s,v){
  const short=[...name].length>limit?[...name].slice(0,limit-1).join('')+'…':name;
  return `${short} (${status})${more}`;
 }
+
+export function developmentRateText(rate){
+ if(!(rate>0))return '0';
+ if(rate<0.01)return '<0.01';
+ if(rate<99.995)return rate.toFixed(2);
+ if(rate<1000)return String(Math.round(rate));
+ for(const [size,label]of [[1e12,'T'],[1e9,'B'],[1e6,'M'],[1e3,'k']])if(rate>=size){
+  const value=rate/size;return (value<10?value.toFixed(1):String(Math.round(value)))+label;
+ }
+}

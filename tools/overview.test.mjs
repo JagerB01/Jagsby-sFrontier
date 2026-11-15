@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 const source=await readFile(new URL('../packs/behavior/scripts/settlement-overview.js',import.meta.url),'utf8');
-const {settlementName,biomeName,powerValue,tradeRouteSummary}=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
+const {settlementName,biomeName,powerValue,tradeRouteSummary,developmentRateText}=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
 
 test('rename accepts short names and rejects empty, oversized or formatted names',()=>{
   assert.equal(settlementName(' Oakfield '),'Oakfield');
@@ -26,4 +26,10 @@ test('Overview route summary identifies the route, construction, multiple routes
  const text=tradeRouteSummary(s,a);assert.ok(text.includes('(Trail) +1'));assert.ok(text.length<=24);
  s.roads.orphan={from:'a',to:'missing',level:3};assert.equal(tradeRouteSummary(s,a),text);
  delete s.roads.ab;delete s.roads.ac;assert.equal(tradeRouteSummary(s,a),'None');
+});
+
+test('Development/Hr uses short values without hiding small positive progress',()=>{
+ assert.equal(developmentRateText(0),'0');assert.equal(developmentRateText(0.00156),'<0.01');
+ assert.equal(developmentRateText(0.013),'0.01');assert.equal(developmentRateText(1.236),'1.24');
+ assert.equal(developmentRateText(1200),'1.2k');assert.equal(developmentRateText(1500000),'1.5M');
 });

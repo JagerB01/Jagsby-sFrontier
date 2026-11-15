@@ -11,7 +11,7 @@ export function refreshProtection(player,villages,now=Date.now(),cap=Infinity){
  const nearby=Object.values(villages).filter(v=>within(player,v));
  const best=nearby.filter(v=>v.sanctuary>0).sort((a,b)=>b.sanctuary-a.sanctuary)[0];
  if(best)player.setDynamicProperty('jagsby_frontier:sanctuary',JSON.stringify({source:best.id,level:Math.min(best.sanctuary,cap),expires:now+180000}));
- if(nearby.some(v=>v.hearth>=1))player.addEffect('regeneration',120,{amplifier:0,showParticles:false});
+ if(nearby.some(v=>v.hearth>=1))player.addEffect('regeneration',3600,{amplifier:0,showParticles:false});
  return nearby;
 }
 export function protectDamage(event,now=Date.now()){

@@ -152,3 +152,9 @@ test('Overview hourly Development estimate blocks full-storage production while 
  close(E.developmentHourlyRate(s,v),0.001);
  s.roads.ab.targetLevel=2;close(E.developmentHourlyRate(s,v),0);
 });
+test('Hearthstone refreshes Regeneration I for three minutes inside and stops refreshing after leaving',()=>{
+ const grants=[],p={dimension:{id:'minecraft:overworld'},location:{x:0,z:0},addEffect:(...args)=>grants.push(args)};
+ const v=village('a',{hearth:1,sanctuary:0});F.refreshProtection(p,{a:v});
+ assert.deepEqual(grants,[['regeneration',3600,{amplifier:0,showParticles:false}]]);
+ p.location.x=100;F.refreshProtection(p,{a:v});assert.equal(grants.length,1);
+});

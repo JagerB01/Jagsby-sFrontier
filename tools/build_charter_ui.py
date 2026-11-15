@@ -30,6 +30,11 @@ TECHS = ["innovation", "frontier", "capacity", "colonization", "storage",
 DATA.update({key + "Level": 66 + i for i, key in enumerate(TECHS)})
 DATA["tradeRoute"] = 76
 ACTIONS["manageRoads"] = 77
+DATA.update({"productionOutput": 78, "productionBiomes": 79, "outputPage": 80, "stockPage": 81, "biomePage": 82,
+             "biomeOption0": 93, "biomeOption1": 94, "biomeOption2": 95})
+ACTIONS.update({"outputPrev": 83, "outputNext": 84, "stockPrev": 85, "stockNext": 86,
+                "biomePrev": 87, "biomeNext": 88, "chooseBiome1": 89, "chooseBiome2": 90,
+                "clearSecondary": 91, "refreshProduction": 92})
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -226,8 +231,8 @@ def overview_value(name, index, offset, size, scale=0.9):
 
 
 def research_tab(scope, index, section="research", caption_text=None):
-    width, spacing = (82, 86) if section == "realm" else (124, 129)
-    order = ["roads", "mine", "all"] if section == "realm" else ["local", "global"]
+    width, spacing = (61, 65) if section == "production" else (82, 86) if section == "realm" else (124, 129)
+    order = ["summary", "output", "biomes", "stock"] if section == "production" else ["roads", "mine", "all"] if section == "realm" else ["local", "global"]
     toggle = tab("Research", index)["jf_tab_research"]
     toggle.update({"size": [width, 23], "offset": [index * spacing, 0],
         "toggle_name": "jagsby_frontier_" + section + "_tabs", "tts_name": caption_text or scope.title(),
@@ -246,7 +251,7 @@ def research_tab(scope, index, section="research", caption_text=None):
         panel["controls"][0]["face"] = image(button_texture(width, 23, state_name), [width, 23], layer=1)
         panel["controls"] = [entry for entry in panel["controls"] if "icon" not in entry]
         caption = next(entry["caption"] for entry in panel["controls"] if "caption" in entry)
-        caption.update({"text": caption_text or scope.title(), "size": [width, 13], "offset": [0, 6], "text_alignment": "center"})
+        caption.update({"text": caption_text or scope.title(), "size": [width, 13], "offset": [0, 6], "text_alignment": "center", "font_scale_factor": 0.7 if section == "production" else 0.85})
     return control("jf_" + section + "_tab_" + scope, toggle)
 
 
@@ -262,10 +267,11 @@ def info_card(name, title, index, y):
 
 def research_tooltip(key, offset, live=False):
     title, description = RESEARCH_HELP[key]
-    height = 188 if live else 70
+    height = {"hearth": 112, "biome": 112, "sanctuary": 124, "efficiency": 112, "roads": 116,
+              "innovation": 112, "frontier": 112, "capacity": 112, "colonization": 124, "storage": 112}[key] if live else 70
     if live:
-        template = data_template(DATA[key], [222, 148], scale=0.75)
-        details = collection_scope(template, [222, 148])
+        template = data_template(DATA[key], [222, height - 36], scale=0.75)
+        details = collection_scope(template, [222, height - 36])
         details.update({"offset": [9, 28], "anchor_from": "top_left", "anchor_to": "top_left"})
         body = [control("live_details", details)]
     else:
@@ -371,7 +377,7 @@ def build():
     dashboard += [tab(name, index) for index, name in enumerate(TABS)]
     for name in TABS:
         lower = name.lower()
-        if lower in ["overview", "research", "realm", "information"]:
+        if lower in ["overview", "research", "production", "realm", "information"]:
             dashboard.append(control(lower + "@jagsby_frontier.jf_" + lower + "_content", {
                 "anchor_from": "top_left", "anchor_to": "top_left", "offset": [104, 62],
                 "size": [257, 158], "layer": 5,
@@ -392,11 +398,7 @@ def build():
     pages = {
         "overview": [],
         "research": [],
-        "production": [heading("PRODUCTION MANAGEMENT"), record("production", 11, None),
-            action("survey", ACTIONS["scan"], "Survey nearby biomes"),
-            action("choose", ACTIONS["selectBiome"], "Choose secondary biome"),
-            heading("Shared Stockpile"), record("capacity", 12, 50),
-            record("resources", 13, None), action("collect", ACTIONS["collect"], "Collect produced resources")],
+        "production": [],
     }
     for scope, group, names in [("local", "LOCAL SETTLEMENT RESEARCH", ["efficiency", "hearth", "biome"]),
                          ("global", "CIVILIZATION RESEARCH", [])]:
@@ -426,6 +428,49 @@ def build():
                          for target in ["#visible", "#enabled"]],
         }))
     ui["jf_research_content"] = {"type": "panel", "size": [257, 158], "controls": research_controls}
+    # Four fixed production panels: only explicit Previous/Next changes a page.
+    def production_value(name, key, y, height, scale=0.75, x=7, width=240):
+        return overview_value(name, DATA[key], [x, y], [width, height], scale=scale)
+    def production_button(name, key, caption, x, y=107, width=60, height=21):
+        button = action(name, ACTIONS[key], caption, width=width, height=height)[name]
+        button.update({"offset": [x, y], "size": [width, height], "anchor_from": "top_left", "anchor_to": "top_left"})
+        for state in GENERATED_CONTROLS["jf_action_" + key + "@common.button"]["controls"]:
+            panel = next(iter(state.values()))
+            caption_control = next(c["caption"] for c in panel["controls"] if "caption" in c)
+            caption_control.update({"offset": [3, 3], "size": [width - 6, 12], "font_scale_factor": 0.65})
+        return control(name, button)
+    production_panels = {
+        "summary": [production_value("summary", "production", 4, 95),
+                    production_button("refresh", "refreshProduction", "Refresh rates", 0, width=254)],
+        "output": [production_value("output", "productionOutput", 3, 86, scale=0.7),
+                   production_value("page", "outputPage", 92, 11, scale=0.65),
+                   production_button("previous", "outputPrev", "Previous", 0, width=122),
+                   production_button("next", "outputNext", "Next", 129, width=122)],
+        "stock": [production_value("summary", "stockpile", 3, 27, scale=0.65),
+                  production_value("items", "resources", 35, 56, scale=0.7),
+                  production_value("page", "stockPage", 93, 10, scale=0.6),
+                  production_button("previous", "stockPrev", "Previous", 0),
+                  production_button("collect", "collect", "Collect all", 64, width=122),
+                  production_button("next", "stockNext", "Next", 190)],
+        "biomes": [production_value("details", "productionBiomes", 1, 37, scale=0.65),
+                   production_value("page", "biomePage", 103, 8, scale=0.55),
+                   production_button("previous", "biomePrev", "Prev", 0, 112, 48, 18),
+                   production_button("next", "biomeNext", "Next", 52, 112, 48, 18),
+                   production_button("survey", "scan", "Survey", 104, 112, 70, 18),
+                   production_button("clear", "clearSecondary", "Clear second", 178, 112, 70, 18)],
+    }
+    for slot, key in enumerate(["selectBiome", "chooseBiome1", "chooseBiome2"]):
+        production_panels["biomes"] += [production_value("option" + str(slot), "biomeOption" + str(slot), 41 + slot * 20, 18, scale=0.6, width=193),
+                                        production_button("use" + str(slot), key, "Use", 205, 41 + slot * 20, 43, 18)]
+    production_controls = [research_tab(scope, index, "production", caption) for index, (scope, caption) in enumerate([
+        ("summary", "Overview"), ("output", "Resources"), ("biomes", "Biomes"), ("stock", "Stockpile")])]
+    for scope, children in production_panels.items():
+        ui["jf_production_" + scope + "_content"] = {"type": "panel", "size": [257, 131], "controls": children}
+        production_controls.append(control(scope + "@jagsby_frontier.jf_production_" + scope + "_content", {
+            "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "size": [257, 131],
+            "bindings": [view("#toggle_state", target, "jf_production_tab_" + scope) for target in ["#visible", "#enabled"]],
+        }))
+    ui["jf_production_content"] = {"type": "panel", "size": [257, 158], "controls": production_controls}
     rename = action("header_rename", ACTIONS["rename"], "Rename", width=58, height=17)["header_rename"]
     rename.update({"anchor_from": "top_left", "anchor_to": "top_left",
                    "offset": [289, 35], "layer": 25})
@@ -478,12 +523,16 @@ def build():
             control("owner_label", label("Owner", [40, 8], (99, 4), SILVER, 0.55)),
             owner, *rows, control("claim", claim),
         ]})
-    development_rows = []
-    for key, title, y in [("developmentValue", "Current", 16),
-                          ("developmentHourly", "Hourly est.", 34),
-                          ("tradeRoute", "Route", 52)]:
-        development_rows += [control(key + "_label", label(title, [59, 8], (6, y), SILVER, 0.6)),
-                             overview_value(key, DATA[key], [6, y + 8], [59, 10], scale=0.55)]
+    development_rows = [
+        control("developmentValue_label", label("Current", [26, 12], (6, 19), SILVER, 0.6)),
+        overview_value("developmentValue", DATA["developmentValue"], [34, 19], [31, 12], scale=0.6),
+        control("developmentHourly_label", label("Development/Hr", [42, 12], (6, 35), SILVER, 0.53)),
+        overview_value("developmentHourly", DATA["developmentHourly"], [50, 35], [15, 12], scale=0.5),
+        control("tradeRoute_label", label("Route", [20, 12], (6, 51), SILVER, 0.6)),
+        overview_value("tradeRoute", DATA["tradeRoute"], [29, 51], [36, 18], scale=0.55),
+    ]
+    GENERATED_CONTROLS["jf_data_developmentValue"]["text_alignment"] = "right"
+    GENERATED_CONTROLS["jf_data_developmentHourly"]["text_alignment"] = "right"
     development_box = control("development", {"type": "panel", "size": [71, 72], "offset": [0, 86],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
             control("surface", image("frontier/palette_panel", [71, 72], color=[0.82, 0.82, 0.82])),

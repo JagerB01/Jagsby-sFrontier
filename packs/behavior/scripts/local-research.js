@@ -82,12 +82,21 @@ export function localResearchText(v,key,s=null){
  const progress=v.localResearch?.progress?.[key]??0,requirement=localResearchRequirement(v,key,s);
  const prerequisite=key==='hearth'?'None':['biome','sanctuary'].includes(key)?'Hearthstone Lv 1':key==='efficiency'?'Resource Prospecting Lv 1':'Sanctuary Lv 1';
  const ceiling=!d.max?`; Stewardship Lv ${stored+1}`:'';
- const benefits={
-  hearth:`Helps people recover health inside this settlement.\nCurrent: ${level===0?'No healing benefit':level===1?'Nearby players recover health over time (Regeneration I)':'Regeneration I for nearby players; villagers also heal 2 health points once per Minecraft day'}.\n${level===0?'Next: players within '+C.boundaryRadius+' blocks gain Regeneration I.':level===1?'Next: nearby villagers also recover 2 health points once per Minecraft day.':''}`,
-  biome:`Lets this settlement produce resources from one additional biome while keeping its primary biome.\n${level?'Unlocked: choose a surveyed secondary biome in Production.':'Next: survey within 256 blocks, then choose one verified secondary biome in Production.'}`,
-  sanctuary:`Reduces damage from hostile mobs while you are inside this settlement and for 3 minutes after leaving. Does not protect against players or environmental damage.\nCurrent reduction: ${Math.min(99.9999,(1-0.95**level)*100).toFixed(2)}%. Next: ${Math.min(99.9999,(1-0.95**(level+1))*100).toFixed(2)}%.`,
-  efficiency:`Increases this settlement's resource output. Each level adds 5% to its production multiplier.\nCurrent bonus: +${level*5}%. Next: +${(level+1)*5}%.\nWorks for offline production too; permanent Development remains separate.`,
-  roads:`Unlocks management of trade connections from this settlement. Connections give trade Development and allow travel by spending food.\nResearch: Lv ${level} of 3. Each connection is built and upgraded separately to Trail, Road, then Highway. Manage connections from Realm > Road Networks.`,
+ const healing='Grants players Regeneration I while within the settlement. Persists for 3 minutes after leaving.';
+ const current={
+  hearth:level>0?healing+(level>=2?' Villagers recover 2 health points once per Minecraft day.':''):'',
+  biome:level?'Allows one surveyed secondary biome to produce resources alongside the primary biome.':'',
+  sanctuary:level?`Reduces hostile-mob damage by ${Math.min(99.9999,(1-0.95**level)*100).toFixed(2)}%. Persists for 3 minutes after leaving.`:'',
+  efficiency:level?`Settlement resource production: +${level*5}%.`:'',
+  roads:level?'Enables trade connections and travel by spending food.':'',
  };
- return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefits[key]}\n${cost?`Next cost: ${cost.amount} ${cost.label}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining\nRequires: ${prerequisite}${ceiling}\nStatus: ${requirement||'Available'}`:'Fully upgraded'}`;
+ const next={
+  hearth:level===0?healing:level===1?'Villagers within the settlement recover 2 health points once per Minecraft day.':'',
+  biome:level?'':'Allows one surveyed secondary biome within 256 blocks to produce resources alongside the primary biome.',
+  sanctuary:`Reduces hostile-mob damage by ${Math.min(99.9999,(1-0.95**(level+1))*100).toFixed(2)}%. Persists for 3 minutes after leaving.`,
+  efficiency:`Settlement resource production: +${(level+1)*5}%.`,
+  roads:level===0?'Enables trade connections and travel by spending food.':level<3?'Raises Road Networks research to Lv '+(level+1)+'. Connections are built and upgraded separately.':'',
+ };
+ const benefit=[current[key]?'Current: '+current[key]:'',cost&&next[key]?'Next: '+next[key]:''].filter(Boolean).join('\n');
+ return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining\nRequires: ${prerequisite}${ceiling}\nStatus: ${requirement||'Available'}`:'Fully upgraded'}`;
 }

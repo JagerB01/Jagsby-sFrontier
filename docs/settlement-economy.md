@@ -1,3 +1,9 @@
+> 0.0.39 adds the [fixed Production panels](production-ui.md): Overview,
+> Resources, inline secondary Biomes and shared Stockpile with paged lists.
+> Development/Hr is right-aligned and compact. Tech hover descriptions cover only
+> current/next effects; Hearthstone Regeneration I persists for three minutes.
+> Economy rates and Development formulas are unchanged.
+
 > 0.0.37 Overview: a separate Development panel shows permanent points, a
 > snapshot estimate in **points per real-world hour**, and a named connected
 > route. The estimate converts current base-production category value plus

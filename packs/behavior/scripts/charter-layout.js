@@ -36,7 +36,15 @@ export const CHARTER_LAYOUT = {
     "sanctuaryLevel": 73,
     "efficiencyLevel": 74,
     "roadsLevel": 75,
-    "tradeRoute": 76
+    "tradeRoute": 76,
+    "productionOutput": 78,
+    "productionBiomes": 79,
+    "outputPage": 80,
+    "stockPage": 81,
+    "biomePage": 82,
+    "biomeOption0": 93,
+    "biomeOption1": 94,
+    "biomeOption2": 95
   },
   "actions": {
     "efficiency": 14,
@@ -60,9 +68,19 @@ export const CHARTER_LAYOUT = {
     "sanctuary": 57,
     "roads": 58,
     "colonization": 62,
-    "manageRoads": 77
+    "manageRoads": 77,
+    "outputPrev": 83,
+    "outputNext": 84,
+    "stockPrev": 85,
+    "stockNext": 86,
+    "biomePrev": 87,
+    "biomeNext": 88,
+    "chooseBiome1": 89,
+    "chooseBiome2": 90,
+    "clearSecondary": 91,
+    "refreshProduction": 92
   },
-  "recordCount": 78,
+  "recordCount": 96,
   "tabs": [
     "Overview",
     "Research",

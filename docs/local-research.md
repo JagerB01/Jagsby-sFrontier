@@ -1,7 +1,7 @@
-# Finalized local research — 0.0.38
+# Finalized local research — 0.0.39
 
 Local research uses the existing five-node tree and custom charter renderer.
-Hovering a technology explains its effect in plain language and shows its current
+Hovering a technology states its literal current and next effect (Current is omitted at Lv 0) and shows its current
 level, next-level cost, contributed amount, remainder, prerequisite and status.
 Cards retain only their name and Lv X for readability. Clicking the card directly
 contributes the quoted inventory items; no research detail/selection menu opens.
@@ -58,7 +58,7 @@ unchanged. Research level I continues to unlock connection management.
 
 ## Perks, production and persistence
 
-Existing Hearthstone regeneration/daily villager healing, Prospecting's one
+Hearthstone grants Regeneration I inside the settlement with a three-minute retention after leaving; existing daily villager healing, Prospecting's one
 secondary biome, Sanctuary's percentage-based hostile protection and three-minute
 retention, and Prosperity's additive `1 + 0.05 × level` multiplier remain.
 Production, permanent Development and road reward formulas are unchanged.
@@ -102,7 +102,7 @@ python -m unittest discover -s tools -p 'test_*.py' -v
 python tools/addon.py build
 ```
 
-96 Node tests and 3 Python tests pass; static validation checks 132 pack files. The map feature and its obsolete tests/assets are removed.
+110 Node tests and 3 Python tests pass; static validation checks 148 pack files. The map feature and its obsolete tests/assets are removed.
 New coverage checks exact prices/limits, mixed categories, invalid items, partial
 reloads, independent settlements, legacy aliases/surplus, two contributors, stale
 revisions, clipped spending, intent/final save failures, interrupted multi-slot

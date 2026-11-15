@@ -93,7 +93,7 @@ test('Local UI lists current level, category, exact quantity, saved progress and
  const v=village();v.hearth=1;v.biomeUnlocked=true;v.efficiency=5;
  v.localResearch.progress.efficiency=125;
  const text=localResearchText(v,'efficiency',state(10));
- for(const value of ['Lv 5','Next cost: 250 Building Materials','Contributed: 125 / 250','125 remaining','Current bonus: +25%. Next: +30%.','Increases this settlement','Available'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 5','Next cost: 250 Building Materials','Contributed: 125 / 250','125 remaining','Current: Settlement resource production: +25%.','Next: Settlement resource production: +30%.','Available'])assert.ok(text.includes(value),value);
  v.hearth=2;assert.ok(localResearchText(v,'hearth',state(1)).includes('Fully upgraded'));
 });
 test('Paid legacy surplus survives a Stewardship ceiling and resumes when the ceiling rises',()=>{
@@ -102,4 +102,12 @@ test('Paid legacy surplus survives a Stewardship ceiling and resumes when the ce
  migrateLocalResearch(v,state(2));assert.equal(v.efficiency,2);assert.equal(v.localResearch.progress.efficiency,375);
  migrateLocalResearch(v,state(4));assert.equal(v.efficiency,3);assert.equal(v.localResearch.progress.efficiency,125);
  const before=JSON.stringify(v);migrateLocalResearch(v,state(4));assert.equal(JSON.stringify(v),before);
+});
+test('Hearthstone explains only the current and next effect, with no empty Lv 0 benefit or future-level list',()=>{
+ const v=village();let text=localResearchText(v,'hearth',state(1));
+ assert.equal(text.includes('Current:'),false);assert.ok(text.includes('Grants players Regeneration I while within the settlement.'));
+ assert.ok(text.includes('Persists for 3 minutes after leaving.'));assert.equal(text.includes('Villagers'),false);
+ v.hearth=1;text=localResearchText(v,'hearth',state(1));
+ assert.ok(text.includes('Current: Grants players Regeneration I'));assert.ok(text.includes('Next: Villagers within the settlement recover 2 health points once per Minecraft day.'));
+ v.hearth=2;text=localResearchText(v,'hearth',state(1));assert.equal(text.includes('Next:'),false);assert.ok(text.includes('Fully upgraded'));
 });
