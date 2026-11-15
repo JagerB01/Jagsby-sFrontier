@@ -1,3 +1,8 @@
+> Local costs and progression are superseded by the finalized
+> [0.0.36 local research rules](local-research.md): partial contributions,
+> fixed per-level recipes, Road Networks research I–III, and Stewardship caps.
+> Production, Development, perks and individual road mechanics below are retained.
+
 > For 0.0.33, see [global research](global-research.md): Stewardship now caps
 > Sanctuary/Prosperity; Colonization adds zone output without Development credit;
 > Shared Storage uses a fixed linear item capacity. The document below describes

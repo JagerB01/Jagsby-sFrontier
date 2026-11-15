@@ -5,7 +5,7 @@ import test from 'node:test';
 const base=new URL('../packs/behavior/scripts/',import.meta.url);
 const configText=await readFile(new URL('economy-config.js',base),'utf8');
 const configUrl='data:text/javascript;base64,'+Buffer.from(configText).toString('base64');
-async function module(name){const source=(await readFile(new URL(name+'.js',base),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',base).href));return import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));}
+async function module(name){const source=(await readFile(new URL(name+'.js',base),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',base).href)).replace("'./local-research.js'",JSON.stringify(new URL('local-research.js',base).href));return import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));}
 const E=await module('settlement-economy'),F=await module('settlement-effects');
 const {ECONOMY_CONFIG:C}=await import(configUrl);
 const hour=3600000,day=24*hour;

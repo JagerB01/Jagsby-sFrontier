@@ -1,5 +1,6 @@
 import {ECONOMY_CONFIG as C} from './economy-config.js';
 import {migrateResearch,storageCapacity,localLevel,colonizationBonus,zoneAt} from './global-research.js';
+import {migrateLocalResearch,localResearchLevel,localResearchCost,localResearchRequirement} from './local-research.js';
 const HOUR=3600000,DAY=86400000,EPS=1e-8;
 export function development(v){return Math.floor(Math.max(0,v.developmentValue||0)/C.developmentThreshold+1e-10);}
 export function capacity(s,legacy=false){return legacy?C.baseCapacity*2**Math.max(0,s.global?.storage||0):storageCapacity(s);}
@@ -48,7 +49,7 @@ export function accountEconomy(s,now=Date.now(),maxEvents=10000){
  migrateEconomy(s,now);let t=s.economyAt,events=0;
  // Finish the prior economy under its prior effects before switching schemas.
  const legacy=s.researchVersion!==3;
- if(now<=t){migrateResearch(s);return {complete:true,events};}
+ if(now<=t){migrateResearch(s);for(const v of Object.values(s.villages))migrateLocalResearch(v,s);return {complete:true,events};}
  const entries=Object.entries(s.villages).sort(([a],[b])=>a.localeCompare(b));
  while(t<now&&events++<maxEvents){
   const free=Math.max(0,capacity(s,legacy)-stockTotal(s)),producing=free>EPS;
@@ -82,23 +83,12 @@ export function accountEconomy(s,now=Date.now(),maxEvents=10000){
   if(now-t<0.001)t=now;
  }
  s.economyAt=t;
- if(t>=now)migrateResearch(s);
+ if(t>=now){migrateResearch(s);for(const v of Object.values(s.villages))migrateLocalResearch(v,s);}
  return {complete:t>=now,events};
 }
-export function researchLevel(v,key){return key==='biome'?Number(v.biomeUnlocked):v[key]||0;}
-export function researchCost(v,key){
- const def=C.research[key],level=researchLevel(v,key);
- if(Array.isArray(def))return def[level]??null;
- if(!def)return null;
- return Object.fromEntries(Object.entries(def.base).map(([id,n])=>[id,Math.ceil(n*(1+level*def.growth))]));
-}
-export function researchRequirement(v,key,s=null){
- if(s&&['efficiency','sanctuary'].includes(key)&&researchLevel(v,key)>=s.global.innovation)return 'Requires higher Stewardship';
- if(['biome','sanctuary'].includes(key)&&v.hearth<1)return 'Requires Hearthstone I';
- if(key==='efficiency'&&!v.biomeUnlocked)return 'Requires Resource Prospecting';
- if(key==='roads'&&v.sanctuary<1)return 'Requires Sanctuary I';
- return null;
-}
+export const researchLevel=localResearchLevel;
+export const researchCost=localResearchCost;
+export const researchRequirement=localResearchRequirement;
 export function connectionKey(a,b){return JSON.stringify([a,b].sort());}
 export function startRoad(s,from,to,gameTick){
  const a=s.villages[from],b=s.villages[to];

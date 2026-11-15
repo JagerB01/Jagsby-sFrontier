@@ -19,6 +19,7 @@ import {ECONOMY_CONFIG} from "./economy-config.js";
 import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower} from "./settlement-economy.js";
 import {refreshProtection,protectDamage,within,healVillager} from "./settlement-effects.js";
 import {createMapNavigation} from "./map-navigation.js";
+import {localContribution,applyLocalContribution,localResearchText} from "./local-research.js";
 const RESOURCE_TABLE=ECONOMY_CONFIG.resources;
 const roadTimers=new Map();
 const mapNavigation=createMapNavigation(world,system,sharedMap,state,(player,vid)=>open(player,vid,'Realm','local',0,'map'));
@@ -76,27 +77,10 @@ if(!s.villages[k]){
   if(reason){creator?.sendMessage('§e'+reason);return null;}
   s.villages[k]={id:k,location:{...block.location},dimension:block.dimension.id,name:`Settlement ${Object.keys(s.villages).length+1}`,owner:creator?ownerRecord(creator):null,biome:getBiome(block.dimension,block.location),secondary:null,available:[],efficiency:0,hearth:0,biomeUnlocked:false};save(s);
 }return s.villages[k];}
-function canPay(player,cost){const inv=player.getComponent("minecraft:inventory")?.container;if(!inv)return false;
-  for(const [item,num] of Object.entries(cost)) {let count=0;for(let i=0;i<inv.size;i++){const it=inv.getItem(i);if(it?.typeId===item)count+=it.amount;}if(count<num)return false;}return true;}
-function pay(player,cost){if(!canPay(player,cost))return false;const inv=player.getComponent("minecraft:inventory").container;
-  for(const [item,num] of Object.entries(cost)){let left=num;for(let i=0;i<inv.size&&left>0;i++){const it=inv.getItem(i);if(it?.typeId!==item)continue;const take=Math.min(left,it.amount);left-=take;if(take===it.amount)inv.setItem(i,undefined);else{it.amount-=take;inv.setItem(i,it);}}}return true;}
-function costText(c){return Object.entries(c||{}).map(([k,v])=>`${v} ${k.replace('minecraft:','').replaceAll('_',' ')}`).join(' + ')||'Maxed';}
 function cap(s){return capacity(s);}
 function total(s){return stockTotal(s);}
 function pageTitle(page){return `JF_CHARTER|${page}`;}
-function researchText(s,v,key,player){
- const names={efficiency:'Prosperity',hearth:'Hearthstone',biome:'Resource Prospecting',sanctuary:'Sanctuary',roads:'Road Networks',frontier:'Frontier Expansion',capacity:'Settlement Charters',innovation:'Stewardship',colonization:'Colonization',storage:'Shared Storage'};
- const local=['efficiency','hearth','biome','sanctuary','roads'].includes(key);
- if(!local)return globalResearchText(s,key);
- const current=['efficiency','sanctuary'].includes(key)?localLevel(s,v,key):researchLevel(v,key);
- const cost=researchCost(v,key);
- const max=Array.isArray(ECONOMY_CONFIG.research[key])?ECONOMY_CONFIG.research[key].length:s.global.innovation;
- const benefits={efficiency:`Production: +${current*5}%. Next: +${(current+1)*5}%.`,hearth:'I: Regeneration I. II: villagers heal 2 HP/day.',biome:'One additional verified biome within 256 blocks.',sanctuary:`Hostile damage reduced by ${Math.min(99.9999,(1-0.95**current)*100).toFixed(4)}%. Persists 3 min.`,roads:'Manage Trail / Road / Highway connections.',frontier:'Unlock frontier establishment.',capacity:'Increase civilization settlement limit.',development:'Global research, separate from permanent local Development.',storage:`Shared capacity: ${cap(s)} items.`};
- let status=local?researchRequirement(v,key,s):null;
- if(!status)status=cost?(canPay(player,cost)?'Affordable':'Materials needed'):'Complete';
- if(key==='roads')status='Select for research / connections';
- return `§6${names[key]}§r ${current}/${max}\n${benefits[key]}\n${cost?'Trial cost: '+costText(cost):'No further research cost'}\n${status}`;
-}
+function researchText(s,v,key,player){return key in DEFINITIONS?globalResearchText(s,key):localResearchText(v,key,s);}
 function productionText(s,v){
  const rates=resourceRates(v,s),points=development(v),bonus=colonizationBonus(s,zoneAt(v.location));
  const lifetime=Object.values(v.lifetimeProduced||{}).reduce((a,n)=>a+n,0);
@@ -117,10 +101,10 @@ function globalResearchText(s,key){
   return `${d.name} | Level ${level}${Number.isFinite(maximum)?' / '+maximum:' (endless)'}\n${benefits[key]}\n${cost===undefined?'Maximum level':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]}/${cost}`}\n${locked||'Unlocked'}\nPrerequisite: ${key==='innovation'?'Free foundation':d.prerequisite?DEFINITIONS[d.prerequisite].name+' I':'Stewardship I (free)'}`;
 }
 const researchSessions=new Map();
-function inventoryMaterials(player,s,key){
+function inventoryMaterials(player,s,key,materials=acceptedMaterials(s,key)){
   const inv=player.getComponent('minecraft:inventory')?.container;
   const counts=new Map();
-  if(inv)for(let i=0;i<inv.size;i++){const item=inv.getItem(i);if(item&&acceptedMaterials(s,key).includes(item.typeId))counts.set(item.typeId,(counts.get(item.typeId)||0)+item.amount);}
+  if(inv)for(let i=0;i<inv.size;i++){const item=inv.getItem(i);if(item&&materials.includes(item.typeId))counts.set(item.typeId,(counts.get(item.typeId)||0)+item.amount);}
   return [...counts];
 }
 async function researchDetails(player,vid,key){
@@ -164,6 +148,12 @@ async function researchDetails(player,vid,key){
 function recoverResearch(player){
   const s=state(),tx=s.pendingResearch;
   if(!tx||tx.playerId!==player.id)return;
+  const result=accountEconomy(s);
+  if(!result.complete){save(s);throw Error('Offline accounting is catching up; reopen the charter to continue.');}
+  const target=tx.scope==='local'?s.villages[tx.vid]:null;
+  if(tx.scope==='local'&&(!target||(tx.level!==undefined&&researchLevel(target,tx.key)!==tx.level)||(tx.revision!==undefined&&target.localResearch.revision!==tx.revision)))throw Error('Saved local payment requires manual recovery; research changed');
+  const eligible=tx.scope==='local'?target&&localContribution(target,tx.key,tx.material,tx.amount,s):contribution(s,tx.key,tx.material,tx.amount);
+  if(eligible!==tx.amount)throw Error('Saved payment does not match current research; nothing further removed');
   const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
   // Refuse ambiguous recovery rather than consuming different items or crediting twice.
   for(const entry of tx.slots){
@@ -178,11 +168,10 @@ function recoverResearch(player){
       else{item.amount=entry.after;inv.setItem(entry.slot,item);}
     }
   }
-  const result=accountEconomy(s);
-  if(!result.complete){save(s);throw Error('Offline accounting is catching up; reopen the charter to continue.');}
-  if(applyContribution(s,tx.key,tx.material,tx.amount)!==tx.amount)throw Error('Saved payment is inconsistent with research progress');
+  const accepted=tx.scope==='local'?applyLocalContribution(target,tx.key,tx.material,tx.amount,s):applyContribution(s,tx.key,tx.material,tx.amount);
+  if(accepted!==tx.amount)throw Error('Saved payment is inconsistent with research progress');
   delete s.pendingResearch;save(s);
-  player.sendMessage(`§aContributed ${tx.amount} toward ${DEFINITIONS[tx.key].name}.`);
+  player.sendMessage(`§aContributed ${tx.amount} toward ${tx.scope==='local'?ECONOMY_CONFIG.research[tx.key].name:DEFINITIONS[tx.key].name}.`);
 }
 
 function open(player,vId,page='Overview',researchScope='global',realmPage=0,realmScope='map'){
@@ -272,13 +261,14 @@ async function localResearchDetails(player,vid,key){
  const session={};localResearchSessions.set(player.id,session);
  try{
   const s=accounted(),v=s.villages[vid];if(!v){localResearchSessions.delete(player.id);return;}
-  const level=researchLevel(v,key),cost=researchCost(v,key),requirement=researchRequirement(v,key,s);
-  const options=[];
-  if(cost&&!requirement)options.push({caption:'Research next level: '+costText(cost),run:()=>upgrade(player,vid,key,level)});
+  if(s.pendingResearch){localResearchSessions.delete(player.id);player.sendMessage('A saved research payment needs recovery by its original contributor. Reopen their charter.');return;}
+  const level=researchLevel(v,key),revision=v.localResearch.revision,cost=researchCost(v,key);
+  const choices=cost&&!researchRequirement(v,key,s)?inventoryMaterials(player,s,key,cost.materials):[];
+  const options=choices.map(([material,available])=>({caption:`Contribute ${localContribution(v,key,material,available,s)} ${material.replace('minecraft:','').replaceAll('_',' ')}`,run:()=>contributeLocal(player,vid,key,material,available,level,revision)}));
   if(key==='roads')options.push({caption:'Manage connections / travel',run:()=>roadMenu(player,vid)});
   options.push({caption:'Back to Local Research',run:()=>open(player,vid,'Research','local')});
   const form=new ActionFormData().title(pageTitle('Local Research'))
-   .body(researchText(s,v,key,player)+'\nPayment: player inventory. Prices are provisional.');
+   .body(localResearchText(v,key,s)+'\nPayment: player inventory. Select one material to contribute.');
   options.forEach(option=>form.button(option.caption));
   const response=await displayMenu(player,form,system);
   if(localResearchSessions.get(player.id)!==session)return;
@@ -287,17 +277,22 @@ async function localResearchDetails(player,vid,key){
   else open(player,vid,'Research','local');
  }catch(e){
   if(localResearchSessions.get(player.id)===session)localResearchSessions.delete(player.id);
-  console.warn(`Frontier local research: ${e}`);player.sendMessage('Local research could not open. Reopen the charter to retry.');
+  console.warn(`Frontier local research: ${e}`);player.sendMessage('Local research payment paused. Reopen the charter to retry or recover; keep payment items in place.');
  }
 }
-function upgrade(player,vid,key,expectedLevel){
- const s=accounted(),v=s.villages[vid];if(!v)return;
- if(expectedLevel!==undefined&&researchLevel(v,key)!==expectedLevel){player.sendMessage('Research changed. Review the refreshed cost.');return localResearchDetails(player,vid,key);}
- const requirement=researchRequirement(v,key,s),cost=researchCost(v,key);
- if(requirement)player.sendMessage(requirement);
- else if(!cost)player.sendMessage('Already at maximum level.');
- else if(!pay(player,cost))player.sendMessage('Insufficient materials: '+costText(cost));
- else{if(key==='biome')v.biomeUnlocked=true;else v[key]=(v[key]||0)+1;save(s);player.sendMessage('Research complete.');}
+function contributeLocal(player,vid,key,material,available,level,revision){
+ const s=accounted(),v=s.villages[vid];if(!v||s.pendingResearch)return;
+ if(researchLevel(v,key)!==level||v.localResearch.revision!==revision){player.sendMessage('Research changed. Review the refreshed contribution.');return localResearchDetails(player,vid,key);}
+ const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
+ const amount=localContribution(v,key,material,available,s);if(!amount)return localResearchDetails(player,vid,key);
+ let left=amount;const slots=[];
+ for(let slot=0;slot<inv.size&&left;slot++){
+  const item=inv.getItem(slot);if(item?.typeId!==material)continue;
+  const take=Math.min(left,item.amount);slots.push({slot,before:item.amount,after:item.amount-take});left-=take;
+ }
+ if(left){player.sendMessage('Inventory changed. Review the refreshed contribution.');return localResearchDetails(player,vid,key);}
+ s.pendingResearch={scope:'local',vid,playerId:player.id,key,material,amount,slots,level,revision};save(s);
+ recoverResearch(player);
  open(player,vid,'Research','local');
 }
 
@@ -345,7 +340,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
     finally{pendingCharterInteractions.delete(pendingKey);}
   });
 });
-world.afterEvents.playerBreakBlock.subscribe(ev=>{if(ev.brokenBlockPermutation.type.id!==BLOCK)return;const s=accounted(),legacy=id(ev.block.location);delete s.villages[`${ev.block.dimension.id}|${legacy}`];if(s.villages[legacy]?.dimension===ev.block.dimension.id)delete s.villages[legacy];for(const [key,road]of Object.entries(s.roads||{}))if(!s.villages[road.from]||!s.villages[road.to])delete s.roads[key];save(s);});
+world.afterEvents.playerBreakBlock.subscribe(ev=>{if(ev.brokenBlockPermutation.type.id!==BLOCK)return;const s=accounted(),legacy=id(ev.block.location);if(s.pendingResearch?.scope==='local'&&[legacy,`${ev.block.dimension.id}|${legacy}`].includes(s.pendingResearch.vid)){ev.player.sendMessage('Research payment recovery is pending. Replace this charter and reopen it before removing the settlement.');return;}delete s.villages[`${ev.block.dimension.id}|${legacy}`];if(s.villages[legacy]?.dimension===ev.block.dimension.id)delete s.villages[legacy];for(const [key,road]of Object.entries(s.roads||{}))if(!s.villages[road.from]||!s.villages[road.to])delete s.roads[key];save(s);});
 // Player-only buffs are refreshed every four seconds. Villagers are queried
 // at most once per in-game day, only around an occupied loaded settlement.
 system.runInterval(()=>{
@@ -376,7 +371,7 @@ async function roadMenu(player,vid){
   const s=accounted(),v=s.villages[vid];if(!v)return;
   const options=[];
   const add=(caption,run)=>options.push({caption,run});
-  if(!v.roads)add('Research Road Networks: '+costText(researchCost(v,'roads')),()=>localResearchDetails(player,vid,'roads'));
+  if(v.roads<3)add('Research Road Networks',()=>localResearchDetails(player,vid,'roads'));
   for(const target of Object.values(s.villages).sort((a,b)=>a.id.localeCompare(b.id))){
    if(target.id===vid||target.dimension!==v.dimension)continue;
    const road=Object.values(s.roads).find(r=>(r.from===vid&&r.to===target.id)||(r.to===vid&&r.from===target.id));

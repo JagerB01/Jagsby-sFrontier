@@ -5,11 +5,10 @@ five-node tree, Sanctuary, road construction/travel and exact offline economy.
 The global foundation is **Stewardship**, distinct from permanent settlement
 Development. No MineScape installation is required at runtime.
 
-Local cards now open a custom charter details screen showing the existing
-provisional local prices, benefits and requirements before purchase. An explicit
-purchase button spends the full recipe. Closing the screen spends nothing;
-stale confirmations refresh rather than charging for a different level.
-Road Networks also offers connection management from its details screen.
+As of 0.0.36, local research uses finalized costs and saved partial contributions.
+See [local research](local-research.md) for the authoritative current recipes,
+per-settlement progress, material categories and recovery behavior. Stewardship
+continues to set the ceiling for Sanctuary and Prosperity.
 
 Every global/local research card shows its current level without hovering.
 The Overview identity panel includes permanent Development, its production
@@ -38,7 +37,7 @@ The existing internal save key for the foundation is retained for compatibility.
 Prerequisite decision: Colonization requires Frontier I; Shared Storage requires
 Capacity I. Additional levels do not need matching levels of those prerequisites.
 Stewardship does not limit the two fixed-length technologies. Global costs never
-use emeralds. Local prices and local prerequisites retain their 0.0.32 rules.
+use emeralds. Local prices/progress now follow [the finalized local rules](local-research.md); existing local prerequisites are retained.
 
 Payments continue to use **player inventory**, matching existing research.
 Partial contributions persist; each transaction uses one selected material and
@@ -174,7 +173,7 @@ python tools/addon.py build
 ```
 
 Build regenerates tracked UI/bridge assets. The original 53 tests remain, with
-26 additional research, economy, geographic and inventory recovery tests.
+additional research, economy, geographic and inventory recovery tests. The current total is 95 Node tests.
 Static tests cannot render JSON UI or execute Minecraft engine persistence.
 In a backed-up disposable world, check all five global nodes, partial payments,
 two-client stale menus, save/restart recovery, each zone boundary, full-storage

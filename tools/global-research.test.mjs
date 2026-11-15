@@ -81,19 +81,16 @@ test('The first v0.0.32 backlog is paid under legacy effects before activating n
  s.stock={};const before=s.villages.a.developmentValue;E.accountEconomy(s,101*hour);
  close(E.stockTotal(s),7.5);close(s.villages.a.developmentValue-before,6.5);
 });
-test('Both local endless technologies stop at Stewardship without consuming capped progress',()=>{
+test('Stewardship caps endless local levels without capping permanent Development',()=>{
  const s=fresh(),v=village();v.biomeUnlocked=true;v.efficiency=1;v.sanctuary=1;v.developmentValue=500000;
  s.villages.a=v;assert.match(E.researchRequirement(v,'efficiency',s),/Stewardship/);assert.match(E.researchRequirement(v,'sanctuary',s),/Stewardship/);
  assert.equal(E.development(v),1000);assert.equal(R.localLevel(s,v,'efficiency'),1);
  grant(s,'innovation','minecraft:copper_ingot',192);assert.equal(E.researchRequirement(v,'efficiency',s),null);
- assert.equal(E.researchRequirement(v,'sanctuary',s),null);assert.equal(E.researchRequirement(v,'hearth',s),null);
-});
-test('Sanctuary protection and Prosperity rates use the global cap while retaining stored levels',()=>{
- const s=fresh(),v=village();v.sanctuary=5;v.efficiency=5;s.villages.a=v;
- close(E.resourceRates(v,s).find(r=>r.id==='minecraft:wheat').rate,3.675);
+ assert.equal(E.researchRequirement(v,'sanctuary',s),null);
+ v.sanctuary=5;
  const props=new Map(),player={location:{x:0,z:0},dimension:{id:v.dimension},setDynamicProperty:(k,val)=>props.set(k,val),addEffect(){}};
  refreshProtection(player,s.villages,0,s.global.innovation);
- assert.equal(JSON.parse(props.get('jagsby_frontier:sanctuary')).level,1);assert.equal(v.sanctuary,5);
+ assert.equal(JSON.parse(props.get('jagsby_frontier:sanctuary')).level,2);
 });
 test('Founding enforces both research and capacity without rejecting existing settlements on migration',()=>{
  const s=fresh();s.villages.a=village();s.villages.b={...village(),id:'b'};
@@ -143,7 +140,7 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:false,se
  globalThis.__researchRuntime={world:{getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{runInterval(){},run(){}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
- source+='\nexport { researchDetails, recoverResearch, localResearchDetails, state };\n//'+Math.random();
+ source+='\nexport { researchDetails, recoverResearch, localResearchDetails, contributeLocal, state };\n//'+Math.random();
  const api=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
  return {api,player,slots,forms,read:()=>JSON.parse(stored),update(fn){const s=JSON.parse(stored);fn(s);stored=JSON.stringify(s);},failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
 }
@@ -188,18 +185,18 @@ test('Save migration refuses a future version instead of overwriting it',()=>{
 test('Local cost details do not charge on opening or closing',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};
  const h=await runtime(s,()=>({canceled:true}));
- h.slots[0]={typeId:'minecraft:gold_ingot',amount:8};h.slots[1]={typeId:'minecraft:emerald',amount:8};
+ h.slots[0]={typeId:'minecraft:bread',amount:64};h.slots[1]={typeId:'minecraft:stone',amount:8};
  await h.api.localResearchDetails(h.player,'a','hearth');
- assert.ok(h.forms[0].text.includes('8 gold ingot + 8 emerald'));
- assert.ok(h.forms[0].buttons[0].startsWith('Research next level:'));
- assert.equal(h.slots[0].amount,8);assert.equal(h.slots[1].amount,8);assert.equal(h.read().villages.a.hearth,0);
+ assert.ok(h.forms[0].text.includes('Bread: 0 / 64'));
+ assert.ok(h.forms[0].buttons[0].startsWith('Contribute 64 bread'));
+ assert.equal(h.slots[0].amount,64);assert.equal(h.slots[1].amount,8);assert.equal(h.read().villages.a.hearth,0);
 });
 test('Local cost details charge the displayed recipe only after selecting purchase',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};
  const h=await runtime(s,form=>form.heading==='JF_CHARTER|Local Research'?{canceled:false,selection:0}:{canceled:true});
- h.slots[0]={typeId:'minecraft:gold_ingot',amount:8};h.slots[1]={typeId:'minecraft:emerald',amount:8};
+ h.slots[0]={typeId:'minecraft:bread',amount:64};h.slots[1]={typeId:'minecraft:stone',amount:8};
  await h.api.localResearchDetails(h.player,'a','hearth');
- assert.equal(h.slots[0],undefined);assert.equal(h.slots[1],undefined);assert.equal(h.read().villages.a.hearth,1);
+ assert.equal(h.slots[0],undefined);assert.equal(h.slots[1].amount,8);assert.equal(h.read().villages.a.hearth,1);
 });
 test('Stale local confirmations refresh the cost without spending for a different level',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};let reviews=0;
@@ -207,8 +204,60 @@ test('Stale local confirmations refresh the cost without spending for a differen
   if(form.heading==='JF_CHARTER|Local Research'&&reviews++===0){h.update(s=>s.villages.a.hearth=1);return {canceled:false,selection:0};}
   return {canceled:true};
  });
- h.slots[0]={typeId:'minecraft:gold_ingot',amount:8};h.slots[1]={typeId:'minecraft:emerald',amount:8};
+ h.slots[0]={typeId:'minecraft:bread',amount:64};h.slots[1]={typeId:'minecraft:stone',amount:8};
  await h.api.localResearchDetails(h.player,'a','hearth');
- assert.equal(h.slots[0].amount,8);assert.equal(h.slots[1].amount,8);assert.equal(h.read().villages.a.hearth,1);
- assert.ok(h.forms[1].text.includes('16 gold ingot + 16 emerald'));
+ assert.equal(h.slots[0].amount,64);assert.equal(h.slots[1].amount,8);assert.equal(h.read().villages.a.hearth,1);
+ assert.ok(h.forms[1].text.includes('Bread: 0 / 128'));
+});
+test('Two players accumulate local progress; stale level/revision cannot double-debit inventory',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};
+ const h=await runtime(s,()=>({canceled:true}));h.slots[0]={typeId:'minecraft:bread',amount:20};
+ await h.api.localResearchDetails(h.player,'a','hearth');
+ h.api.contributeLocal(h.player,'a','hearth','minecraft:bread',20,0,0);
+ assert.equal(h.read().villages.a.localResearch.progress.hearth,20);assert.equal(h.slots[0],undefined);
+ let bread={typeId:'minecraft:bread',amount:50};
+ const other={id:'other',sendMessage(){},getComponent(){return {container:{size:1,getItem(){return bread?{...bread}:undefined;},setItem(slot,item){bread=item?{...item}:undefined;}}};}};
+ h.api.contributeLocal(other,'a','hearth','minecraft:bread',50,0,0);
+ assert.equal(bread.amount,50);assert.equal(h.read().villages.a.localResearch.progress.hearth,20);
+ h.api.contributeLocal(other,'a','hearth','minecraft:bread',50,0,1);
+ assert.equal(bread.amount,6);assert.equal(h.read().villages.a.hearth,1);
+ h.api.contributeLocal(other,'a','hearth','minecraft:bread',50,0,1);
+ assert.equal(bread.amount,6);assert.equal(h.read().villages.a.hearth,1);
+});
+test('Local journal recovers a failed final world save without charging or crediting twice',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};
+ const h=await runtime(s,()=>({canceled:true}));h.slots[0]={typeId:'minecraft:bread',amount:64};h.failWorld(3);
+ assert.throws(()=>h.api.contributeLocal(h.player,'a','hearth','minecraft:bread',64,0,0),/world write/);
+ assert.equal(h.read().pendingResearch.scope,'local');assert.equal(h.slots[0],undefined);assert.equal(h.read().villages.a.hearth,0);
+ h.api.recoverResearch(h.player);assert.equal(h.read().villages.a.hearth,1);assert.equal(h.read().pendingResearch,undefined);
+ h.api.recoverResearch(h.player);assert.equal(h.read().villages.a.hearth,1);
+});
+test('Local journal recovers an interrupted multi-slot payment and preserves metadata on remaining items',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),hearth:1,name:'Test',available:[]};
+ const h=await runtime(s,()=>({canceled:true}));h.slots[0]={typeId:'minecraft:bread',amount:64};h.slots[1]={typeId:'minecraft:bread',amount:64,nameTag:'Contribution'};
+ h.failInventory(1);
+ assert.throws(()=>h.api.contributeLocal(h.player,'a','hearth','minecraft:bread',128,1,0),/inventory write/);
+ assert.equal(h.slots[0],undefined);assert.equal(h.slots[1].amount,64);assert.equal(h.read().villages.a.hearth,1);
+ h.api.recoverResearch(h.player);assert.equal(h.read().villages.a.hearth,2);assert.equal(h.slots[1],undefined);
+});
+test('A local journal intent-save failure leaves items and progress untouched',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};
+ const h=await runtime(s,()=>({canceled:true}));h.slots[0]={typeId:'minecraft:bread',amount:20};h.failWorld(2);
+ assert.throws(()=>h.api.contributeLocal(h.player,'a','hearth','minecraft:bread',20,0,0),/world write/);
+ assert.equal(h.slots[0].amount,20);assert.equal(h.read().pendingResearch,undefined);assert.equal(h.read().villages.a.localResearch.progress.hearth,0);
+});
+test('Capped local contribution UI keeps saved progress and never removes inventory',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),sanctuary:1,name:'Test',available:[],localResearch:{version:1,progress:{sanctuary:125},revision:0}};
+ const h=await runtime(s,()=>({canceled:true}));h.slots[0]={typeId:'minecraft:wheat',amount:64};
+ await h.api.localResearchDetails(h.player,'a','sanctuary');
+ assert.ok(h.forms[0].text.includes('Crops: 125 / 250'));
+ assert.ok(h.forms[0].text.includes('Requires higher Stewardship'));
+ assert.equal(h.forms[0].buttons.some(x=>x.startsWith('Contribute')),false);
+ assert.equal(h.slots[0].amount,64);assert.equal(h.read().villages.a.localResearch.progress.sanctuary,125);
+ h.update(s=>s.global.innovation=2);
+ h.api.contributeLocal(h.player,'a','sanctuary','minecraft:wheat',64,1,0);
+ assert.equal(h.slots[0],undefined);assert.equal(h.read().villages.a.localResearch.progress.sanctuary,189);
+ h.slots[0]={typeId:'minecraft:wheat',amount:64};
+ h.api.contributeLocal(h.player,'a','sanctuary','minecraft:wheat',64,1,1);
+ assert.equal(h.slots[0].amount,3);assert.equal(h.read().villages.a.sanctuary,2);
 });

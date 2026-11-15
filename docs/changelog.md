@@ -1,3 +1,18 @@
+# 0.0.36
+
+- Replace all provisional local prices with finalized recipes: Hearthstone 64/128
+  bread, Prospecting 64 paper, Sanctuary 250 crops, Prosperity 250 building
+  materials, Road Networks 32 copper / iron / gold for research levels I–III.
+- Add persistent partial contribution progress per settlement, mixed eligible
+  materials, clipped payments, remaining-cost/status UI, and shared inventory
+  journal recovery with stale level/revision protection.
+- Preserve existing research and legacy aliases/progress, perks, production,
+  permanent Development and road construction/trade formulas. Stewardship still
+  caps Sanctuary/Prosperity; fixed 250-item costs do not grow with level.
+- All 95 Node tests and 3 Python tests pass; static build validates 143 pack files.
+  Native Bedrock UI/persistence behavior still needs in-game verification.
+  See [finalized local research](local-research.md).
+
 # 0.0.35
 
 - Local research cards now open the custom charter cost/details picker before

@@ -26,7 +26,7 @@ const configSource=await readFile(new URL('economy-config.js',scriptBase),'utf8'
 const configUrl=`data:text/javascript;base64,${Buffer.from(configSource).toString('base64')}`;
 const extraUrls={};
 for(const name of ['settlement-economy','settlement-effects','map-navigation']) {
- const code=(await readFile(new URL(name+'.js',scriptBase),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',scriptBase).href));
+ const code=(await readFile(new URL(name+'.js',scriptBase),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',scriptBase).href)).replace("'./local-research.js'",JSON.stringify(new URL('local-research.js',scriptBase).href));
  extraUrls[name]=`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
 }
 
@@ -142,7 +142,8 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
     .replace('"./settlement-realm.js"',JSON.stringify(realmModuleUrl))
     .replace('"./realm-map.js"',JSON.stringify(mapModuleUrl))
     .replace('"./economy-config.js"',JSON.stringify(configUrl))
-    .replace('"./global-research.js"',JSON.stringify(new URL('global-research.js',scriptBase).href));
+    .replace('"./global-research.js"',JSON.stringify(new URL('global-research.js',scriptBase).href))
+    .replace('"./local-research.js"',JSON.stringify(new URL('local-research.js',scriptBase).href));
   for(const [name,url] of Object.entries(extraUrls))main=main.replace(JSON.stringify('./'+name+'.js'),JSON.stringify(url));
   await import(`data:text/javascript;base64,${Buffer.from(main).toString('base64')}`);
   const location = { x:0, y:64, z:0 };
@@ -184,7 +185,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[0].records[3],'[JF:data:tier]Outpost');
   assert.equal(forms[0].icons[3],'textures/ui/frontier/settlements/outpost');
   assert.equal(forms[1].heading,'JF_CHARTER|Local Research');
-  assert.ok(forms[1].text.includes('16 iron ingot + 4 emerald'));
+  assert.ok(forms[1].text.includes('Building Materials: 0 / 250'));
   assert.equal(forms[2].text,'[JF:tab:research][JF:research:local][JF:realm:map]');
   nativeTier = 4;
   handlers.beforeInteract(event);
