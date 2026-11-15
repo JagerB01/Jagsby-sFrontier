@@ -287,7 +287,7 @@ test('Removing the map restores only previously saved movement controls once',as
 
 test('Production previews a verified second allocation before confirmation',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Test',biomeUnlocked:true,available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:32,y:64,z:0}}};let clicked=false,reads=0;
- const h=await runtime(s,form=>{if(!clicked){clicked=true;return {canceled:false,selection:89};}if(form.heading==='JF_CHARTER|Production Preview')return {canceled:false,selection:0};return {canceled:true};},{biomeAt:()=>{reads++;return 'minecraft:forest';}});
+ const h=await runtime(s,form=>{if(!clicked){clicked=true;return {canceled:false,selection:301};}if(form.heading==='JF_CHARTER|Production Preview')return {canceled:false,selection:0};return {canceled:true};},{biomeAt:()=>{reads++;return 'minecraft:forest';}});
  h.api.openProduction(h.player,'a','biomes');await new Promise(resolve=>setImmediate(resolve));
  assert.equal(h.read().villages.a.secondary,'minecraft:forest');assert.equal(reads,1);
  assert.equal(h.forms.length,3);assert.equal(h.forms[1].heading,'JF_CHARTER|Production Preview');assert.ok(h.forms[1].text.includes('50%'));
@@ -297,7 +297,7 @@ test('Production previews a verified second allocation before confirmation',asyn
 test('Unverified/out-of-range biome controls are disabled and selecting unloaded samples never changes the second biome',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Test',biomeUnlocked:true,available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:300,y:64,z:0}}};
  const h=await runtime(s,()=>({canceled:true}),{biomeAt:()=>{throw Error('unloaded');}});
- h.api.openProduction(h.player,'a','biomes');assert.equal(h.forms[0].buttons[89],'[JF:disabled:chooseBiome1]');
+ h.api.openProduction(h.player,'a','biomes');assert.equal(h.forms[0].buttons[301],'[JF:disabled:prospectSelect1]');
  await h.api.selectBiome(h.player,'a','minecraft:forest');assert.equal(h.read().villages.a.secondary,undefined);
  h.update(s=>s.villages.a.biomeSamples['minecraft:forest'].x=32);
  await assert.throws(()=>h.api.confirmProductionSelection(h.player,'a','minecraft:forest','diversify',0),/unloaded/);assert.equal(h.read().villages.a.secondary,undefined);
@@ -343,7 +343,8 @@ test('Production sends item images, aligned bonus percentages and whole stock co
  assert.equal(h.forms[0].icons[96],'textures/ui/frontier/production/wheat');
  assert.equal(h.forms[0].icons[97],undefined);
  assert.ok(h.forms[0].buttons[96].includes('Wheat\n+ 3.850/hour'));
- for(const [i,value]of ['+ 0%','+ 0%','+ 0%','+ 10%'].entries())assert.deepEqual(h.forms[0].buttons[130+i],{rawtext:[{text:value}]});
+ for(const [i,value]of ['+ 0','+ 0','+ 0','+ 10','+ 10'].entries())assert.equal(h.forms[0].buttons[130+i],value);
+ assert.equal(h.forms[0].buttons[138],'River');assert.equal(h.forms[0].buttons[139],'Total');
  assert.equal(h.forms.length,1);assert.ok(h.forms[0].text.includes('[JF:production:summary]'));
  const {STOCK_ITEMS}=await import('../packs/behavior/scripts/production-display.js');
  const stocked=STOCK_ITEMS.filter(item=>s.stock[item.id]>=1);

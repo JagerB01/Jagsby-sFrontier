@@ -30,14 +30,17 @@ TECHS = ["innovation", "frontier", "capacity", "colonization", "storage",
 DATA.update({key + "Level": 66 + i for i, key in enumerate(TECHS)})
 DATA["tradeRoute"] = 76
 ACTIONS["manageRoads"] = 77
-DATA.update({"productionOutput": 78, "productionBiomes": 79, "biomePage": 82,
-             "biomeOption0": 93, "biomeOption1": 94, "biomeOption2": 95})
-ACTIONS.update({"biomePrev": 87, "biomeNext": 88, "chooseBiome1": 89, "chooseBiome2": 90,
-                "clearSecondary": 91})
+DATA.update({"productionOutput": 78})
+ACTIONS.update({"clearSecondary": 91})
 DATA.update({"productionItem0": 96, "productionItem1": 97})
 STOCK_ITEMS = json.loads((ROOT / "docs/production-icon-assets.json").read_text())["items"]
 DATA.update({"stockCount" + str(i): 100 + i for i in range(len(STOCK_ITEMS))})
-DATA.update({"productionModifier" + str(i): 130 + i for i in range(4)})
+DATA.update({"productionModifier" + str(i): 130 + i for i in range(5)})
+DATA.update({"productionModifierName" + str(i): 135 + i for i in range(5)})
+DATA.update({"prospectInfo" + str(i): 200 + i for i in range(52)})
+ACTIONS.update({"prospectSelect" + str(i): 300 + i for i in range(52)})
+for obsolete in ["scan", "selectBiome"]:
+    ACTIONS.pop(obsolete, None)
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -469,28 +472,34 @@ def build():
     def production_surface(name, size, offset):
         return control(name, image("frontier/palette_panel", size, offset, color=[0.82, 0.82, 0.82]))
     summary_controls = [
-        production_surface("output_box", [131, 60], [0, 0]),
-        production_surface("modifiers_box", [118, 60], [136, 0]),
-        production_surface("stock_box", [254, 67], [0, 64]),
+        production_surface("output_box", [131, 70], [0, 0]),
+        production_surface("modifiers_box", [118, 70], [136, 0]),
+        production_surface("stock_box", [254, 57], [0, 74]),
         production_value("status", "productionOutput", 5, 10, scale=0.8, width=119),
         control("modifiers_title", label("Modifiers", [104, 10], (143, 5), WHEAT, 0.8)),
-        production_value("stock_heading", "stockpile", 67, 10, scale=0.75, width=240),
+        production_value("stock_heading", "stockpile", 76, 10, scale=0.75, width=240),
         production_button("collect", "collect", "Collect stockpile", 48, 115, 158, 15),
     ]
     GENERATED_CONTROLS["jf_data_productionOutput"]["color"] = list(WHEAT)
-    for row, caption in enumerate(["Prosperity", "Development", "Colonization", "River crops"]):
-        y = 17 + row * 10
-        summary_controls.append(control("modifier_label" + str(row), label(caption, [68, 12], (143, y), IVORY, 0.75)))
-        summary_controls.append(production_value("modifier_value" + str(row), "productionModifier" + str(row), y, 12, scale=0.75, x=213, width=34))
+    for row in range(5):
+        name = overview_value("name", DATA["productionModifierName" + str(row)], [0, 0], [62, 12], scale=0.75)
+        value = overview_value("value", DATA["productionModifier" + str(row)], [64, 0], [32, 12], scale=0.75)
+        percent = image("frontier/percent", [5, 7], (97, 2), layer=8, color=IVORY)
+        summary_controls.append(control("modifier_row" + str(row), {
+            "type": "panel", "size": [104, 12], "offset": [143, 17 + row * 10],
+            "anchor_from": "top_left", "anchor_to": "top_left",
+            "bindings": condition("(not ((#form_text - '[JF:modifier:" + str(row) + "]') = #form_text))", "#form_text"),
+            "controls": [name, value, control("percent", percent)],
+        }))
     for state in GENERATED_CONTROLS["jf_action_collect@common.button"]["controls"]:
         caption = next(c["caption"] for c in next(iter(state.values()))["controls"] if "caption" in c)
         caption.update({"text_alignment": "center", "offset": [0, 2], "size": [158, 11], "font_scale_factor": 0.75})
     for slot in range(len(STOCK_ITEMS)):
         key = "stockCount" + str(slot)
-        count = overview_value("count", DATA[key], [0, 8], [16, 8], scale=0.6)
+        count = overview_value("count", DATA[key], [0, 6], [16, 8], scale=0.6)
         GENERATED_CONTROLS["jf_data_" + key].update({"text_alignment": "right", "shadow": True, "layer": 12})
         template = "jf_stock_icon" + str(slot)
-        icon = image("frontier/production/wheat", [14, 14], layer=8)
+        icon = image("frontier/production/wheat", [12, 12], layer=8)
         icon["keep_ratio"] = True
         icon["bindings"] = [
             {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
@@ -499,13 +508,13 @@ def build():
         ]
         ui[template] = icon
         picture = control("icon", {
-            "type": "stack_panel", "orientation": "vertical", "size": [14, 14],
+            "type": "stack_panel", "orientation": "vertical", "size": [12, 12],
             "offset": [1, 0], "anchor_from": "top_left", "anchor_to": "top_left",
             "collection_name": "form_buttons", "controls": [
                 control("record@jagsby_frontier." + template, {"collection_index": DATA[key]})],
         })
         summary_controls.append(control("stock_item" + str(slot), {
-            "type": "panel", "size": [16, 16], "offset": [7 + (slot % 15) * 16, 78 + (slot // 15) * 16],
+            "type": "panel", "size": [16, 14], "offset": [7 + (slot % 15) * 16, 86 + (slot // 15) * 14],
             "anchor_from": "top_left", "anchor_to": "top_left",
             "bindings": condition("(not ((#form_text - '[JF:stock:" + str(slot) + "]') = #form_text))", "#form_text"),
             "controls": [picture, count],
@@ -529,18 +538,44 @@ def build():
             "collection_name": "form_buttons", "controls": [
                 control("record@jagsby_frontier." + template, {"collection_index": DATA[key]})],
         }))
+    prospect_rows = []
+    for slot in range(52):
+        info_key, select_key = "prospectInfo" + str(slot), "prospectSelect" + str(slot)
+        icon_name = "jf_prospect_icon" + str(slot)
+        icon = image("frontier/production/wheat", [22, 22], layer=8)
+        icon["keep_ratio"] = True
+        icon["bindings"] = [
+            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        ]
+        ui[icon_name] = icon
+        picture = control("icon", {
+            "type": "stack_panel", "orientation": "vertical", "size": [22, 22],
+            "offset": [3, 4], "anchor_from": "top_left", "anchor_to": "top_left",
+            "collection_name": "form_buttons", "controls": [control("record@jagsby_frontier." + icon_name, {"collection_index": DATA[info_key]})],
+        })
+        details = overview_value("details", DATA[info_key], [30, 2], [171, 28], scale=0.7)
+        button = production_button("choose", select_key, "Select", 207, 6, 42, 20)
+        selected = label("Selected", [44, 12], (207, 10), WHEAT, 0.6)
+        selected["bindings"] = condition("(not ((#form_text - '[JF:prospectSelected:" + str(slot) + "]') = #form_text))", "#form_text")
+        locked = label("Locked", [44, 12], (207, 10), SILVER, 0.6)
+        locked["bindings"] = condition("(not ((#form_text - '[JF:prospectLocked]') = #form_text))", "#form_text")
+        visible = condition("(not ((#form_text - '[JF:prospect:" + str(slot) + "]') = #form_text))", "#form_text")
+        prospect_rows.append(control("biome" + str(slot), {
+            "type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"], "bindings": visible,
+            "controls": [control("row", {"type": "panel", "size": [254, 32], "controls": [picture, details, button, control("selected", selected), control("locked", locked)]})],
+        }))
+    ui["jf_prospecting_rows"] = {"type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"], "controls": prospect_rows}
     production_panels = {
         "summary": summary_controls,
-        "biomes": [production_value("details", "productionBiomes", 1, 37, scale=0.65),
-                   production_value("page", "biomePage", 103, 8, scale=0.55),
-                   production_button("previous", "biomePrev", "Prev", 0, 112, 48, 18),
-                   production_button("next", "biomeNext", "Next", 52, 112, 48, 18),
-                   production_button("survey", "scan", "Survey", 104, 112, 70, 18),
-                   production_button("clear", "clearSecondary", "Clear second", 178, 112, 70, 18)],
+        "biomes": [control("choices@common.scrolling_panel", {
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0],
+            "size": [257, 109], "$show_background": False,
+            "$scrolling_content": "jagsby_frontier.jf_prospecting_rows", "$scroll_size": [4, "100% - 4px"],
+            "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
+        }), production_button("clear", "clearSecondary", "Clear second", 65, 112, 124, 18)],
     }
-    for slot, key in enumerate(["selectBiome", "chooseBiome1", "chooseBiome2"]):
-        production_panels["biomes"] += [production_value("option" + str(slot), "biomeOption" + str(slot), 41 + slot * 20, 18, scale=0.6, width=193),
-                                        production_button("use" + str(slot), key, "Use", 205, 41 + slot * 20, 43, 18)]
     production_controls = [research_tab(scope, index, "production", caption) for index, (scope, caption) in enumerate([
         ("summary", "Overview"), ("biomes", "Resource Prospecting")])]
     for scope, children in production_panels.items():
@@ -708,7 +743,7 @@ def build():
         control("vanilla@server_form.custom_form", {"bindings": condition("(not (#title_text = 'JF_CHARTER|Rename'))")}),
         control("rename@jagsby_frontier.jf_rename", {"bindings": condition("(#title_text = 'JF_CHARTER|Rename')")}),
     ]}
-    submit = copy.deepcopy(GENERATED_CONTROLS["jf_action_scan@common.button"])
+    submit = copy.deepcopy(GENERATED_CONTROLS["jf_action_prospectSelect0@common.button"])
     for state in submit["controls"]:
         panel = next(iter(state.values()))
         panel["controls"] = [entry for entry in panel["controls"] if "research_tooltip" not in entry]

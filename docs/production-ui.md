@@ -1,8 +1,8 @@
-# Production panels — 0.0.49
+# Production panels — 0.0.50
 
-Production has exactly two fixed, non-scrolling tabs: **Overview** and
-**Resource Prospecting**. Both use the existing charter frame. Local tab
-switches do not trigger terrain or villager scans.
+Production has exactly two tabs: a fixed **Overview** and a scrollable
+**Resource Prospecting** list. Both use the existing charter frame. Opening the
+charter surveys nearby loaded terrain; local tab switches do not trigger scans.
 
 ## Overview
 
@@ -12,11 +12,15 @@ The upper section has two compact boxes side by side:
   Two rows fit both possible resources; matching items combine into one row.
   Text is larger and Producing uses the same orange/gold as Modifiers. Rates
   include all active bonuses; full stock shows a paused status and zero output.
-- **Modifiers:** Prosperity, Development, Colonization and River crop increases
-  only, in percent. Each modifier has its own label and value row with 12 units of text height
-  and aligned columns. Percent values use direct native bindings and literal
-  RawMessages to preserve the percent sign. All rows share a consistent text size. Realm Power is a production input, not a percentage
-  modifier, so it is omitted here. Missing power still has explicit status text.
+- **Modifiers:** Prosperity, Development and Colonization increases, conditional
+  River, and Total. Every value has an explicit percent glyph drawn in the UI,
+  so Script API localization cannot remove the sign. Rows and values align in
+  columns; River is absent unless an active allocation uses River.
+  Total combines boosts multiplicatively and weights River's crop-only effect
+  by the allocations' unmodified category rates. At 20% Prosperity, 10%
+  Development and 50% Colonization, River specialization totals +117.8%;
+  River + Forest totals +111.86%, because logs receive no agricultural bonus.
+  Total does not include RP, allocation count or full-storage pausing.
 
 The **stockpile** sits below both boxes on a single page. Only items with at least one whole unit appear, packed consecutively in a
 15-column grid with room for all 30 producible types in two rows. Empty slots
@@ -42,12 +46,24 @@ Pillow; ordinary addon builds use the checked-in PNGs without downloads.
 
 ## Resource Prospecting
 
-The second tab retains the native biome/resource, allocation status, paper
-progress, Native Specialization and surveyed nearby choices. Up to three choices
-are shown per page, with Survey and Clear second controls. Selecting an option
-opens a fixed confirmation preview. Confirmation rechecks research, selection
-revision, radius, sample and loaded world identity before changing production.
-Survey runs only on demand; navigating stock or tabs does not scan terrain.
+The second tab lists the native biome first, followed by every discovered
+eligible nearby biome. Each row has the biome name, item image and projected
+**+ X.XXX Resource/hour**. Native uses its name, such as River, instead of
+Native Specialization. Selecting that row still specializes both allocations.
+
+A row's rate is that item's output after the proposed selection, including all
+current bonuses. Matching items include their combined output; other rows show
+the new item's output while retaining the native slot. Before Prospecting is
+unlocked, the native row shows its actual single allocation. Selected rows are
+marked and locked rows cannot be selected. No production changes on hover.
+
+The list supports all 52 eligible choices and scrolls when its contents exceed
+the viewport. Survey, Prev and Next controls and the verbose header are removed.
+Opening the charter performs a bounded survey of loaded surface columns within
+256 blocks and caches IDs/sample positions; unloaded columns are skipped, and
+chunks are never forced to load. Menu actions do not survey again. Clear second
+is retained below the list. Selection opens the fixed confirmation preview and
+rechecks research, revision, radius and actual loaded biome identity on confirm.
 
 The [biome production rules](biome-production.md) define rates, eligibility,
 River bonuses, offline accounting and migration. This release changes display
@@ -88,7 +104,7 @@ existing 2-health-point villager heal once per Minecraft day.
 
 ## Validation
 
-181 Node tests and 3 Python tests pass. Static packaging validates 184 pack
+184 Node tests and 3 Python tests pass. Static packaging validates 191 pack
 files. Coverage includes rate components, full-stock paused output, combined
 allocation output, bounded pages/empty states, research and sample gating,
 previewed verified selection, unloaded rejection, clearing, whole-item collection

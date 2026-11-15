@@ -1,3 +1,21 @@
+# 0.0.50
+
+- Add an aligned Total production increase. Combine Prosperity, Development and
+  Colonization multiplicatively; weight River's crop-only increase across the
+  current allocations. Total remains independent of temporary storage pauses.
+- Label the agricultural modifier River and show it only when River is active.
+  Draw explicit percent glyphs beside every value, bypassing Script API text
+  formatting that removed percent signs from previous versions.
+- Replace the Prospecting header and paged choices with a scrolling list of biome
+  names, item icons and projected hourly output. Native uses its biome name.
+  Show the item's post-selection production; confirmation still previews both
+  allocations and validates the real loaded sample before changing anything.
+- Survey loaded surface columns within 256 blocks on charter activation. Remove
+  Survey, Prev and Next controls. Keep native specialization, selection status,
+  research gating, caching, Clear second and the fixed confirmation preview.
+- 184 Node tests and 3 Python tests pass; static validation checks 191 pack files.
+  Native scrolling, font rendering and multiplayer require in-game validation.
+
 # 0.0.49
 
 - Show only producible items with at least one whole unit in stock, packed into

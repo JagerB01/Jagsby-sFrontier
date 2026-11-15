@@ -11,7 +11,7 @@ test('Production displays precise per-resource base and zone rates without mutat
  const {s,v}=fixture();v.location.x=28000;s.global.colonization=5;
  const before=JSON.stringify(s),view=productionView(s,v);
  assert.equal(view.output.count,1);assert.equal(view.output.rows[0].base,1.75);assert.equal(view.output.rows[0].bonus,0.875);assert.equal(view.output.rows[0].actual,2.625);
- assert.equal(view.items[0].text,'Wheat\n+ 2.625/hour');assert.equal(view.modifiers[2],'+ 50%');assert.equal(JSON.stringify(s),before);
+ assert.equal(view.items[0].text,'Wheat\n+ 2.625/hour');assert.equal(view.modifierRows[2].value,'+ 50');assert.equal(JSON.stringify(s),before);
 });
 test('A full stockpile shows paused actual output while preserving potential rates',()=>{
  const {s,v}=fixture();s.stock['minecraft:wheat']=792;const view=productionView(s,v);
@@ -41,14 +41,14 @@ test('Biome panel explains research progress and separates verified choices from
  const {s,v}=fixture();v.localResearch.progress.biome=20;
  v.available=['minecraft:forest','minecraft:taiga','minecraft:forest','minecraft:plains','unknown'];
  v.biomeSamples={'minecraft:forest':{x:32,y:64,z:0},'minecraft:taiga':{x:300,y:64,z:0}};
- const view=productionView(s,v);assert.ok(view.biomeText.includes('Research > Local'));assert.ok(view.biomeText.includes('Paper: 20 / 64'));
+ const view=productionView(s,v);assert.equal(view.choices[0].text,'Plains\n+ 1.750 Wheat/hour');
  assert.equal(view.biomes.count,3);assert.equal(view.choices[0].verified,true);assert.equal(view.choices[2].verified,false);
  v.biomeUnlocked=true;v.secondary='minecraft:forest';assert.equal(productionView(s,v).choices[1].selected,true);
 });
 test('Unknown/empty production and oversized requests have useful bounded empty states',()=>{
  const {s,v}=fixture();v.biome='minecraft:unmapped';v.productionPower=0;
  const view=productionView(s,v,{output:-4,stock:100,biomes:100});
- assert.equal(view.output.page,0);assert.equal(view.biomes.page,0);
+ assert.equal(view.output.page,0);assert.equal(view.biomes.count,0);
  assert.deepEqual(view.items,[]);assert.equal(view.stock.length,0);assert.ok(view.stock.every(i=>i.count===0));
  assert.ok(view.status.includes('Waiting for Realm Power'));
 });
@@ -63,4 +63,30 @@ test('All produced resources have a packaged item image and compact actual hourl
   const png=await readFile(new URL('../packs/resource/'+item.texture+'.png',import.meta.url));
   assert.deepEqual([...png.subarray(0,8)],[137,80,78,71,13,10,26,10]);
  }
+});
+test('River is conditional and Total reflects multiplicative, crop-aware production boosts',()=>{
+ const {s,v}=fixture();v.biome='minecraft:river';v.biomeUnlocked=true;v.productionMode='specialize';
+ v.efficiency=4;v.developmentValue=50000;v.location.x=28000;s.global.innovation=4;s.global.colonization=5;
+ let view=productionView(s,v);
+ assert.deepEqual(view.modifierRows.map(r=>r.label),['Prosperity','Development','Colonization','River','Total']);
+ assert.equal(view.modifierRows[3].value,'+ 10');assert.equal(view.modifierRows[4].value,'+ 117.8');
+ v.productionMode='diversify';v.secondary='minecraft:forest';view=productionView(s,v);
+ assert.equal(view.modifierRows.at(-1).value,'+ 111.86');
+ v.biome='minecraft:plains';v.available=['minecraft:river'];view=productionView(s,v);
+ assert.equal(view.modifierRows.some(r=>r.label==='River'),false);
+ assert.equal(view.modifierRows.at(-1).value,'+ 98');
+});
+test('Prospecting lists every surveyed biome with its icon and post-selection resource rate',async()=>{
+ const {BIOME_ASSIGNMENTS}=await import('../packs/behavior/scripts/biome-resources.js');
+ const {s,v}=fixture();v.biome='minecraft:river';v.biomeUnlocked=true;v.productionMode='specialize';
+ v.available=BIOME_ASSIGNMENTS.filter(b=>b.biome!==v.biome).map(b=>b.biome);
+ v.biomeSamples=Object.fromEntries(v.available.map(id=>[id,{x:32,y:70,z:0}]));
+ const before=JSON.stringify(s),view=productionView(s,v);
+ assert.equal(view.choices.length,52);assert.equal(view.biomes.rows.length,52);
+ assert.equal(view.choices[0].text,'River\n+ 3.850 Wheat/hour');
+ const forest=view.choices.find(c=>c.id==='minecraft:forest');
+ assert.equal(forest.text,'Forest\n+ 0.750 Oak Logs/hour');assert.equal(forest.texture,'textures/ui/frontier/production/oak_log');
+ const plains=view.choices.find(c=>c.id==='minecraft:plains');assert.equal(plains.hourly,view.choices[0].hourly);
+ assert.equal(JSON.stringify(s),before);
+ v.biomeUnlocked=false;assert.equal(productionView(s,v).choices[0].text,'River\n+ 1.925 Wheat/hour');
 });

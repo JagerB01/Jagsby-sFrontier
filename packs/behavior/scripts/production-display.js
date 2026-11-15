@@ -1,3 +1,4 @@
+import {ECONOMY_CONFIG as C} from './economy-config.js';
 import {resourceRates,recordedPower,development,capacity,stockTotal} from './settlement-economy.js';
 import {localLevel,colonizationBonus,zoneAt} from './global-research.js';
 import {productionAllocations,biomeResource,canonicalBiome,riverCropBonus,BIOME_ASSIGNMENTS} from './biome-resources.js';
@@ -21,20 +22,30 @@ export function productionView(s,v,requested={}){
  const storedWhole=Object.values(s.stock).reduce((sum,n)=>sum+Math.max(0,Math.floor(n)),0);
  const available=[...new Set((v.available||[]).map(canonicalBiome))].filter(b=>b!==native&&biomeResource(b)).sort();
  const options=[...(nativeResource&&v.dimension==='minecraft:overworld'?[{id:native,mode:'specialize'}]:[]),...available.map(id=>({id,mode:'diversify'}))];
- const biomes=paginate(options,requested.biomes,3);
- const choices=biomes.rows.map(({id,mode})=>{
-  const sample=v.biomeSamples?.[id];
+ const choices=options.map(({id,mode})=>{
+  const sample=v.biomeSamples?.[id],resource=biomeResource(id);
   const verified=mode==='specialize'||!!sample&&Math.hypot(sample.x-v.location.x,sample.z-v.location.z)<=256;
-  const resource=biomeResource(id);
-  return {id,mode,verified,selected:v.biomeUnlocked&&(mode==='specialize'?v.productionMode==='specialize':v.productionMode!=='specialize'&&v.secondary===id),text:`${mode==='specialize'?'Native Specialization':biomeName(id)}${v.biomeUnlocked&&(mode==='specialize'?v.productionMode==='specialize':v.secondary===id)?' (selected)':''}\n${!verified?'Survey again to verify':resource.name+' - 50% allocation'}`};
+  const selected=v.biomeUnlocked&&(mode==='specialize'?v.productionMode==='specialize':v.productionMode!=='specialize'&&v.productionMode!=='unassigned'&&v.secondary===id);
+  const proposed={...v,biomeUnlocked:true,productionMode:mode,secondary:mode==='specialize'?null:id};
+  const projected=mode==='specialize'&&!v.biomeUnlocked?rates:resourceRates(proposed,s);
+  const hourly=(projected.find(r=>r.id===resource.id)?.rate||0)*(1+bonus);
+  return {id,mode,verified,selected,texture:`textures/ui/frontier/production/${resource.id.replace('minecraft:','')}`,
+   hourly,item:resource.id,text:`${biomeName(id)}\n+ ${hourly.toFixed(3)} ${resource.name}/hour`};
  });
- const progress=v.localResearch?.progress?.biome||0;
+ const biomes={rows:choices,count:choices.length};
+ const prosperity=localLevel(s,v,'efficiency')*0.05,dev=development(v)*0.001;
+ const allocationWeight=allocations.reduce((n,a)=>n+C.categories[a.category].rate*0.5,0);
+ const cropWeight=allocations.reduce((n,a)=>n+(a.crop?C.categories[a.category].rate*0.5:0),0);
+ // River boosts crops only: weight its contribution across current output.
+ const riverMultiplier=allocationWeight?1+river*cropWeight/allocationWeight:1;
+ const total=((1+prosperity)*(1+dev)*(1+bonus)*riverMultiplier-1)*100;
+ const modifierRows=[{label:'Prosperity',percent:prosperity*100},{label:'Development',percent:dev*100},{label:'Colonization',percent:bonus*100},
+  ...(river?[{label:'River',percent:river*100}]:[]),{label:'Total',percent:total}]
+  .map(row=>({...row,value:`+ ${Number(row.percent.toFixed(2))}`}));
  return {
   status:full?'Stockpile full - paused':!recordedPower(v)?'Waiting for Realm Power':!rates.length?'No resource assigned':'Producing',
   items:output.rows.map(r=>({...r,text:`${r.name}\n+ ${r.actual.toFixed(3)}/hour`})),
-  modifiers:[localLevel(s,v,'efficiency')*5,Number((development(v)*0.1).toFixed(1)),Math.round(bonus*100),Math.round(river*100)].map(value=>`+ ${value}%`),
-  biomeText:`Native: ${biomeName(native)} - ${nativeResource?.name||'Unsupported biome'}\nSlots: ${allocations.map(a=>a.slot+': '+a.name).join(' | ')||'No eligible allocation'}\n${v.biomeUnlocked?'Preview specialization or a nearby biome below.':`Paper: ${progress} / 64. Contribute in Research > Local.`}`,
-  biomeFooter:`Allocation choices: ${biomes.count} | Page ${biomes.page+1} / ${biomes.pages}`,
+  modifierRows,
   stockHeading:`Stockpile  ${storedWhole} / ${cap}`,
   choices,output,stock,biomes,allocations,river,
  };

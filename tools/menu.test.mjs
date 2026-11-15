@@ -341,12 +341,13 @@ test('Production uses exactly two fixed tabs with output, modifiers and stockpil
  for(const scope of ['summary','biomes']){
   assert.equal(root['jf_production_tab_'+scope].toggle_name,'jagsby_frontier_production_tabs');
   const pane=ui['jf_production_'+scope+'_content'];assert.equal(pane.type,'panel');
-  assert.equal(JSON.stringify(pane).includes('scroll'),false);
+  assert.equal(JSON.stringify(pane).includes('scroll'),scope==='biomes');
   for(const child of Object.values(children(pane))){
    assert.ok(child.offset[0]+child.size[0]<=257);assert.ok(child.offset[1]+child.size[1]<=131);
   }
  }
- for(const name of ['use0','use1','use2','survey','clear','previous','next'])assert.ok(children(ui.jf_production_biomes_content)[name]);
+ const prospecting=children(ui.jf_production_biomes_content);assert.ok(prospecting['choices@common.scrolling_panel']);assert.ok(prospecting.clear);
+ for(const removed of ['previous','next','survey'])assert.equal(prospecting[removed],undefined);
  const summary=children(ui.jf_production_summary_content);
  assert.ok(summary.collect);assert.ok(summary.modifiers_box);assert.ok(summary.stock_box);
  assert.ok(summary.stock_box.offset[1]>=summary.output_box.size[1]);
@@ -391,11 +392,12 @@ test('Stockpile has 30 conditional slots with raw counts; each modifier has an u
  assert.equal(summary.previous,undefined);assert.equal(summary.next,undefined);assert.equal(summary.stock_page,undefined);
  assert.deepEqual(ui.jf_data_productionOutput.color,summary.modifiers_title.color);
  assert.equal(ui.jf_data_productionOutput.font_scale_factor,0.8);
- for(let row=0;row<4;row++){
-  const label=summary['modifier_label'+row],value=summary['modifier_value'+row];
-  assert.equal(label.offset[1],value.offset[1]);assert.equal(value.size[1],12);
-  assert.equal(value.offset[1]+value.size[1]<=summary.modifiers_box.size[1],true);
-  assert.equal(value.offset[0],213);assert.equal(label.offset[0],143);
+ for(let row=0;row<5;row++){
+  const panel=summary['modifier_row'+row],contents=children(panel);
+  assert.equal(contents.name.offset[1],contents.value.offset[1]);assert.equal(panel.size[1],12);
+  assert.ok(panel.offset[1]+panel.size[1]<=summary.modifiers_box.size[1]);
+  assert.equal(contents.value.offset[0],64);assert.equal(contents.name.offset[0],0);
+  assert.equal(contents.percent.texture,'textures/ui/frontier/percent');assert.deepEqual(contents.percent.size,[5,7]);
   assert.equal(ui['jf_data_productionModifier'+row].text,'#form_button_text');
  }
  for(const state of ui['jf_action_collect@common.button'].controls){
@@ -412,4 +414,20 @@ test('Stockpile has 30 conditional slots with raw counts; each modifier has an u
  }
  assert.equal(summary.icon1.offset[1]+summary.icon1.size[1]<=summary.output_box.size[1],true);
  function nextValue(obj){return Object.values(obj)[0];}
+});
+test('Prospecting scrolls all discovered choices and has no survey or paging controls',async()=>{
+ const ui=await loadUI(),pane=children(ui.jf_production_biomes_content);
+ assert.deepEqual(Object.keys(pane),['choices@common.scrolling_panel','clear']);
+ assert.equal(pane['choices@common.scrolling_panel'].$scrolling_content,'jagsby_frontier.jf_prospecting_rows');
+ const content=ui.jf_prospecting_rows;assert.equal(content.orientation,'vertical');
+ assert.equal(content.size[1],'100%c');assert.equal(content.controls.length,52);
+ for(let slot=0;slot<52;slot++){
+  const wrapper=children(content)['biome'+slot],row=children(wrapper).row;
+  assert.ok(JSON.stringify(wrapper.bindings).includes('[JF:prospect:'+slot+']'));
+  const fields=children(row);assert.ok(fields.icon);assert.ok(fields.details);assert.ok(fields.choose);
+  assert.equal(ui['jf_prospect_icon'+slot].bindings.some(b=>b.binding_name==='#form_button_texture'),true);
+ }
+ const source=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
+ const {CHARTER_LAYOUT}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+ for(const removed of ['scan','biomePrev','biomeNext'])assert.equal(CHARTER_LAYOUT.actions[removed],undefined);
 });

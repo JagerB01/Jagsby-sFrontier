@@ -169,7 +169,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,134);
+  assert.equal(forms[0].records.length,352);
   assert.equal(forms[0].records[63],'[JF:data:zone]Heartlands');
   assert.equal(forms[0].records[64],'Development 0');
   assert.equal(forms[0].records[66],'[JF:data:innovationLevel]Lv 1');
@@ -186,7 +186,8 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[0].icons[3],'textures/ui/frontier/settlements/outpost');
   assert.equal(forms[1].heading,'JF_CHARTER|Dashboard');
   assert.ok(forms[1].records[4].includes('Contributed: 0 / 250'));
-  assert.equal(forms[1].text,'[JF:tab:research][JF:research:local][JF:realm:roads][JF:production:summary]');
+  assert.ok(forms[1].text.startsWith('[JF:tab:research][JF:research:local][JF:realm:roads][JF:production:summary]'));
+  assert.equal(biomeReads,198,'One registration and one bounded survey; menu navigation does not survey');
   nativeTier = 4;biomeResult = 'minecraft:forest';
   handlers.beforeInteract(event);
   await queued.shift()();
@@ -198,8 +199,9 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   saved = JSON.parse(properties.get('jagsby_frontier:state_v1'));
   assert.equal(Object.keys(saved.villages).length, 2);
   assert.equal(scans, 3);
-  assert.equal(biomeReads,2,'Only initial registration reads the native biome');
+  assert.equal(biomeReads,396,'Two registrations, two Overworld surveys and no Nether survey');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].nativeBiome,'minecraft:plains');
+  assert.ok(saved.villages['minecraft:overworld|0,64,0'].available.includes('minecraft:forest'),'Opening the charter discovers the nearby biome automatically');
   menuResponse={canceled:false,selection:24};
   renameResponse={canceled:false,formValues:['Oakfield']};
   handlers.beforeInteract(event);

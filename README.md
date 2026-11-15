@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.49.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.50.mcaddon?raw=true)
+
+Version 0.0.50 adds aligned Total and conditional River bonuses, with explicit
+percent glyphs in the UI. Resource Prospecting is a scrolling biome/icon/rate
+list; opening the charter automatically surveys nearby loaded terrain. Manual
+Survey and biome paging buttons are removed.
 
 Version 0.0.49 shows only stocked whole items, packed into the grid without gaps.
 Each modifier now has its own label/value row with enough height; percentages

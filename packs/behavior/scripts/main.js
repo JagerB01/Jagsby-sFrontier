@@ -210,14 +210,12 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     records[data[key+'Level']]=`Lv ${level}`;
   }
   const production=productionView(s,v,productionPages);
-  production.modifiers.forEach((value,slot)=>records[data['productionModifier'+slot]]=value);
+  production.modifierRows.forEach((row,slot)=>{records[data['productionModifier'+slot]]=row.value;records[data['productionModifierName'+slot]]=row.label;});
   records[data.productionOutput]=production.status;
-  records[data.productionBiomes]=production.biomeText;
   records[data.stockpile]=production.stockHeading;
   production.stock.forEach((item,slot)=>records[data['stockCount'+slot]]=String(item.count));
   for(let slot=0;slot<2;slot++)records[data['productionItem'+slot]]=production.items[slot]?.text||'';
-  records[data.biomePage]=production.biomeFooter;
-  for(let slot=0;slot<3;slot++)records[data['biomeOption'+slot]]=production.choices[slot]?.text||(slot===0?'Survey nearby loaded biomes to find options.':'');
+  production.choices.forEach((choice,slot)=>records[data['prospectInfo'+slot]]=choice.text);
   const roadView=roadNetworkOverview(s,v,realmPage);
   records[data.roadSummary]=roadView.summary;
   records[data.roadDetails]=roadView.details;
@@ -226,15 +224,9 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   handlers.set(actions.roadsNext,()=>open(player,vId,'Realm','global',roadView.page+1,'roads'));
   for(const [key,choice]of researchChoices)handlers.set(actions[key],()=>contributeResearchCard(player,vId,key,choice));
   handlers.set(actions.manageRoads,()=>roadMenu(player,vId));
-  const pages={output:production.output.page,biomes:production.biomes.page};
-  for(const [scope,previous,next]of [['biomes','biomePrev','biomeNext']]){
-   handlers.set(actions[previous],()=>openProduction(player,vId,scope==='biomes'?'biomes':'summary',{...pages,[scope]:pages[scope]-1}));
-   handlers.set(actions[next],()=>openProduction(player,vId,scope==='biomes'?'biomes':'summary',{...pages,[scope]:pages[scope]+1}));
-  }
-  handlers.set(actions.scan,()=>scan(player,vId));
-  for(const [slot,key]of ['selectBiome','chooseBiome1','chooseBiome2'].entries()){
-   const choice=production.choices[slot];
-   if(v.biomeUnlocked&&choice?.verified&&!choice.selected)handlers.set(actions[key],()=>selectBiome(player,vId,choice.id,pages,choice.mode));
+  const pages={};
+  for(const [slot,choice]of production.choices.entries()){
+   if(v.biomeUnlocked&&choice.verified&&!choice.selected)handlers.set(actions['prospectSelect'+slot],()=>selectBiome(player,vId,choice.id,pages,choice.mode));
   }
   if(v.biomeUnlocked&&(v.secondary||v.productionMode==='specialize'))handlers.set(actions.clearSecondary,()=>clearSecondary(player,vId,pages));
   handlers.set(actions.collect,()=>collect(player,vId,pages));
@@ -246,16 +238,14 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   }
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
   for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier'))records[index]=`[JF:data:${key}]${records[index]}`;
-  for(const key of ['selectBiome','chooseBiome1','chooseBiome2','clearSecondary'])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
+  for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i)])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}`);
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}`);
   records.forEach((text,index)=>{
-   const modifier=index>=data.productionModifier0&&index<=data.productionModifier3;
-   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:undefined;
-   // Literal RawMessage keeps percent signs out of localization/format parsing.
-   form.button(modifier?{rawtext:[{text}]}:text,texture);
+   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:undefined;
+   form.button(text,texture);
   });
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
@@ -278,8 +268,8 @@ async function renameSettlement(player,vId){
     open(player,vId);
   }catch(e){console.warn(`Frontier rename: ${e}`);player.sendMessage('§cSettlement name could not be saved.');}
 }
-function scan(player,vid){const s=accounted(),v=s.villages[vid];if(!v)return;
-  if(v.dimension!=='minecraft:overworld'){player.sendMessage('Only Overworld surface biomes are eligible for production.');return openProduction(player,vid,'biomes');}
+function surveyVillage(vid){const s=accounted(),v=s.villages[vid];if(!v)return;
+  if(v.dimension!=='minecraft:overworld')return;
   const dim=world.getDimension(v.dimension), seen=new Set(v.available||[]);
   // Scan only loaded positions in a lattice. Unloaded positions are not treated as nonexistent.
   let successful=0;v.biomeSamples??={};
@@ -294,8 +284,7 @@ function scan(player,vid){const s=accounted(),v=s.villages[vid];if(!v)return;
     }catch(e){} // Unloaded columns stay undiscovered; never force a chunk load.
   }
   v.available=[...seen].filter(x=>x!==v.biome).sort();save(s);
-  player.sendMessage(`§aSurveyed ${successful} loaded samples; found ${v.available.length} additional biomes. Survey again after exploring the surrounding chunks.`);
-  openProduction(player,vid,'biomes');
+  return {successful,biomes:v.available.length};
 }
 function productionSelection(v,choice,mode){
  if(!['specialize','diversify'].includes(mode))throw Error('Choose specialization or diversification.');
@@ -305,7 +294,7 @@ function productionSelection(v,choice,mode){
   if(choice!==native||!eligibleBiome(native))throw Error('Native specialization is unavailable for this biome.');
  }else{
   const sample=v.biomeSamples?.[choice];
-  if(choice===native||!v.available?.includes(choice)||!sample||Math.hypot(sample.x-v.location.x,sample.z-v.location.z)>256)throw Error('Survey again to verify that nearby surface biome.');
+  if(choice===native||!v.available?.includes(choice)||!sample||Math.hypot(sample.x-v.location.x,sample.z-v.location.z)>256)throw Error('Explore nearby and reopen the charter to verify that surface biome.');
  }
  return {...v,productionMode:mode,secondary:mode==='specialize'?null:choice};
 }
@@ -360,6 +349,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
       let s=accounted(),v=addVillage(s,block,player);
       if(!v)return;
       await refreshVillage(v.id);
+      surveyVillage(v.id);
       open(player,v.id);
     }catch(e){console.warn(`Frontier charter interaction: ${e}`);player.sendMessage(String(e).includes('catching up')?'Production is catching up. Interact with the charter again to continue.':'§cThe Village Charter could not open. Check the Minecraft content log for Frontier charter errors.');}
     finally{pendingCharterInteractions.delete(pendingKey);}
