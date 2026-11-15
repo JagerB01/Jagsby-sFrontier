@@ -175,16 +175,14 @@ test('Research subtabs isolate the correct native action factories',async()=>{
     }
     return result;
   }
-  assert.deepEqual(actions(ui.jf_research_global_content),[]);
+  assert.deepEqual(actions(ui.jf_research_global_content),['innovation','frontier','capacity','colonization','storage']);
   assert.equal(JSON.stringify(ui.jf_research_content).includes('scroll'),false);
   const tree=children(ui.jf_research_global_content);
-  for(const name of ['settlement_capacity','frontier_expansion','settlement_development','colonization','shared_storage']) {
-    assert.equal(tree[name].type,'button');
+  for(const name of ['innovation','frontier','capacity','colonization','storage']) {
+    assert.equal(tree[name].type,'panel');
     assert.ok(tree[name].offset[0]+tree[name].size[0]<=254);
     assert.ok(tree[name].offset[1]+tree[name].size[1]<=150);
-    assert.deepEqual(tree[name].button_mappings,[]);
-    assert.equal(JSON.stringify(tree[name]).includes('button.form_button_click'),false);
-    assert.equal(tree[name].bindings,undefined);
+    assert.equal(actions(tree[name]).length,1);
   }
   assert.deepEqual(actions(ui.jf_research_local_content).sort(),['biome','efficiency','hearth','roads','sanctuary']);
 });
@@ -241,11 +239,12 @@ test('research explanations appear only in hover/pressed states and stay inside 
       assert.equal(JSON.stringify(tip).includes('button.form_button_click'),false);
     }
   }
-  for(const node of Object.values(children(ui.jf_research_global_content))) {
-    if(node.type!=='button')continue;
-    check(node,104+node.offset[0],89+node.offset[1]);
-    assert.ok(children(children(node).hover).research_tooltip.controls.some(
-      entry=>entry.description?.text.includes('not yet available')));
+  for(const key of ['innovation','frontier','capacity','colonization','storage']) {
+    const node=children(ui.jf_research_global_content)[key];
+    const purchase=ui['jf_action_'+key+'@common.button'];
+    assert.equal(purchase.$pressed_button_name,'button.form_button_click');
+    check(purchase,104+node.offset[0],89+node.offset[1]);
+    assert.ok(children(children(children(purchase).hover).research_tooltip).live_details);
   }
   const local=children(ui.jf_research_local_content);
   for(const [key,index] of [['efficiency',14],['hearth',15],['biome',16],['sanctuary',57],['roads',58]]) {

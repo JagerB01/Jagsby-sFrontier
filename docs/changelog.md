@@ -1,3 +1,19 @@
+# 0.0.33
+
+- Built on 0.0.32, preserving its interactive Realm map, local research, offline
+  Development economy, Sanctuary, road construction and food-powered travel.
+- Added Innovation, saved partial inventory contributions, exact global prices,
+  prerequisites and endless research caps in the existing custom charter UI.
+- Integrated MineScape 1.5.119 square zone rings (2,400 / 6,000 / 11,200 / 18,400 /
+  28,000), sequential founding unlocks, and `2 + Capacity` settlement limits.
+- Added zone-specific Colonization output without bonus Development credit,
+  proportional capacity admission, and fixed 792-item Shared Storage increments.
+- Added backward-compatible schema migration after prior offline output is
+  settled; journaled global payments recover unambiguous interrupted debits.
+- All 76 JavaScript tests and 3 Python tests pass. Static validation covers 142
+  pack files. Native JSON UI and Realm restart behavior require in-game testing.
+  See [global research details](global-research.md).
+
 # 0.0.32
 
 - Added a selectable interactive Realm map overlay. Joystick/WASD and mouse-look pan, Jump cycles zoom, and Sneak/Back returns to Realm. Previous movement permissions are restored on exit, damage, reconnect and world reload. Button controls remain available; mouse dragging is not implemented.

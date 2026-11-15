@@ -1,15 +1,16 @@
+import {migrateResearch} from '../packs/behavior/scripts/global-research.js';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 const base=new URL('../packs/behavior/scripts/',import.meta.url);
 const configText=await readFile(new URL('economy-config.js',base),'utf8');
 const configUrl='data:text/javascript;base64,'+Buffer.from(configText).toString('base64');
-async function module(name){const source=(await readFile(new URL(name+'.js',base),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl));return import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));}
+async function module(name){const source=(await readFile(new URL(name+'.js',base),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',base).href));return import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));}
 const E=await module('settlement-economy'),F=await module('settlement-effects');
 const {ECONOMY_CONFIG:C}=await import(configUrl);
 const hour=3600000,day=24*hour;
 function village(id='a',extra={}){return {id,dimension:'minecraft:overworld',location:{x:0,y:64,z:0},biome:'minecraft:plains',census:{realmPowerTenths:100},efficiency:0,hearth:1,biomeUnlocked:false,...extra};}
-function state(v=village()){return {villages:{[v.id]:v},global:{storage:20},stock:{},economyAt:0,roads:{}};}
+function state(v=village()){return migrateResearch({villages:{[v.id]:v},global:{storage:20},stock:{},economyAt:0,roads:{}});}
 function close(a,b,tolerance=1e-6){assert.ok(Math.abs(a-b)<tolerance,`${a} differs from ${b}`);}
 test('specified hourly formula, fractional catch-up and shutdown/restart accounting',()=>{
  const s=state(village('a',{efficiency:5,developmentValue:50000}));
@@ -39,8 +40,8 @@ test('Development threshold integration is independent of access frequency',()=>
  close(resumed.stock['minecraft:wheat'],one.stock['minecraft:wheat'],1e-5);
 });
 test('full shared stock neither banks blocked output nor awards its Development',()=>{
- const s=state();s.global.storage=0;s.stock['minecraft:wheat']=127;
- E.accountEconomy(s,day);close(E.stockTotal(s),128);
+ const s=state();s.global.storage=0;s.stock['minecraft:wheat']=791;
+ E.accountEconomy(s,day);close(E.stockTotal(s),792);
  const value=s.villages.a.developmentValue;
  E.accountEconomy(s,2*day);close(s.villages.a.developmentValue,value);
  s.stock={};E.accountEconomy(s,2*day);assert.deepEqual(s.stock,{});

@@ -10,7 +10,7 @@ export const CHARTER_LAYOUT = {
     "biome": 6,
     "frontier": 7,
     "capacity": 8,
-    "development": 9,
+    "innovation": 9,
     "storage": 10,
     "production": 11,
     "stockpile": 12,
@@ -33,7 +33,8 @@ export const CHARTER_LAYOUT = {
     "mapRow11": 45,
     "sanctuary": 55,
     "roads": 56,
-    "developmentStats": 60
+    "developmentStats": 60,
+    "colonization": 61
   },
   "actions": {
     "efficiency": 14,
@@ -41,7 +42,7 @@ export const CHARTER_LAYOUT = {
     "biome": 16,
     "frontier": 17,
     "capacity": 18,
-    "development": 19,
+    "innovation": 19,
     "storage": 20,
     "scan": 21,
     "selectBiome": 22,
@@ -63,7 +64,8 @@ export const CHARTER_LAYOUT = {
     "mapRefresh": 54,
     "sanctuary": 57,
     "roads": 58,
-    "mapInteractive": 59
+    "mapInteractive": 59,
+    "colonization": 62
   },
   "recordCount": 61,
   "tabs": [

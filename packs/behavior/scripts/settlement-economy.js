@@ -1,7 +1,8 @@
 import {ECONOMY_CONFIG as C} from './economy-config.js';
+import {migrateResearch,storageCapacity,localLevel,colonizationBonus,zoneAt} from './global-research.js';
 const HOUR=3600000,DAY=86400000,EPS=1e-8;
 export function development(v){return Math.floor(Math.max(0,v.developmentValue||0)/C.developmentThreshold+1e-10);}
-export function capacity(s){return C.baseCapacity*2**Math.max(0,s.global?.storage||0);}
+export function capacity(s,legacy=false){return legacy?C.baseCapacity*2**Math.max(0,s.global?.storage||0):storageCapacity(s);}
 export function stockTotal(s){return Object.values(s.stock||{}).reduce((a,n)=>a+n,0);}
 export function migrateEconomy(s,now=Date.now()){
  s.stock??={};s.roads??={};s.global??={};s.villages??={};
@@ -25,8 +26,9 @@ export function recordedPower(v){
  const n=Number.isFinite(c.realmPowerTenths)?c.realmPowerTenths:c.minimumPowerTenths;
  return Math.max(0,Number.isFinite(n)?n/10:0);
 }
-export function resourceRates(v){
- const factor=recordedPower(v)*(1+C.prosperityBonus*(v.efficiency||0))*(1+C.developmentBonus*development(v));
+export function resourceRates(v,s=null,legacy=false){
+ const prosperity=!legacy&&s?localLevel(s,v,'efficiency'):(v.efficiency||0);
+ const factor=recordedPower(v)*(1+C.prosperityBonus*prosperity)*(1+C.developmentBonus*development(v));
  return resourcesFor(v).map(r=>({...r,rate:C.categories[r.category].rate*factor}));
 }
 export function routeRates(s){
@@ -42,16 +44,20 @@ export function routeRates(s){
 // Exact piecewise-constant integration: stop at every Development threshold
 // and shared-capacity boundary, then recompute all rates simultaneously.
 export function accountEconomy(s,now=Date.now(),maxEvents=10000){
+ if(s.researchVersion>3)throw Error('Research save version is newer than this addon');
  migrateEconomy(s,now);let t=s.economyAt,events=0;
- if(now<=t)return {complete:true,events};
+ // Finish the prior economy under its prior effects before switching schemas.
+ const legacy=s.researchVersion!==3;
+ if(now<=t){migrateResearch(s);return {complete:true,events};}
  const entries=Object.entries(s.villages).sort(([a],[b])=>a.localeCompare(b));
  while(t<now&&events++<maxEvents){
-  const free=Math.max(0,capacity(s)-stockTotal(s)),producing=free>EPS;
+  const free=Math.max(0,capacity(s,legacy)-stockTotal(s)),producing=free>EPS;
   const routes=routeRates(s),rates={},devRates={};let totalRate=0;
   for(const [id,v]of entries){
-   rates[id]=producing?resourceRates(v).map(r=>({...r,perMs:r.rate/HOUR})):[];
+   const bonus=legacy?0:colonizationBonus(s,zoneAt(v.location));
+   rates[id]=producing?resourceRates(v,s,legacy).map(r=>({...r,basePerMs:r.rate/HOUR,perMs:r.rate*(1+bonus)/HOUR})):[];
    devRates[id]=routes[id]||0;
-   for(const r of rates[id]){totalRate+=r.perMs;devRates[id]+=r.perMs*C.categories[r.category].value;}
+   for(const r of rates[id]){totalRate+=r.perMs;devRates[id]+=r.basePerMs*C.categories[r.category].value;}
   }
   let dt=now-t;
   if(totalRate>0)dt=Math.min(dt,free/totalRate);
@@ -63,7 +69,11 @@ export function accountEconomy(s,now=Date.now(),maxEvents=10000){
   for(const [id,v]of entries){
    for(const r of rates[id]){
     const amount=r.perMs*dt;s.stock[r.id]=(s.stock[r.id]||0)+amount;
+    const base=r.basePerMs*dt,bonus=amount-base;
     v.lifetimeProduced[r.id]=(v.lifetimeProduced[r.id]||0)+amount;
+    v.lifetimeBaseProduced??={};v.lifetimeBonusProduced??={};
+    v.lifetimeBaseProduced[r.id]=(v.lifetimeBaseProduced[r.id]||0)+base;
+    v.lifetimeBonusProduced[r.id]=(v.lifetimeBonusProduced[r.id]||0)+bonus;
    }
    v.developmentValue+=devRates[id]*dt;
   }
@@ -72,6 +82,7 @@ export function accountEconomy(s,now=Date.now(),maxEvents=10000){
   if(now-t<0.001)t=now;
  }
  s.economyAt=t;
+ if(t>=now)migrateResearch(s);
  return {complete:t>=now,events};
 }
 export function researchLevel(v,key){return key==='biome'?Number(v.biomeUnlocked):v[key]||0;}
@@ -81,7 +92,8 @@ export function researchCost(v,key){
  if(!def)return null;
  return Object.fromEntries(Object.entries(def.base).map(([id,n])=>[id,Math.ceil(n*(1+level*def.growth))]));
 }
-export function researchRequirement(v,key){
+export function researchRequirement(v,key,s=null){
+ if(s&&['efficiency','sanctuary'].includes(key)&&researchLevel(v,key)>=s.global.innovation)return 'Requires higher Innovation';
  if(['biome','sanctuary'].includes(key)&&v.hearth<1)return 'Requires Hearthstone I';
  if(key==='efficiency'&&!v.biomeUnlocked)return 'Requires Resource Prospecting';
  if(key==='roads'&&v.sanctuary<1)return 'Requires Sanctuary I';

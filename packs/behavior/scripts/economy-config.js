@@ -3,6 +3,8 @@ export const ECONOMY_CONFIG = {
   baseCapacity:128, developmentThreshold:500, developmentBonus:0.001,
   prosperityBonus:0.05, boundaryRadius:32,
   categories:{crop:{rate:0.35,value:1},building:{rate:0.15,value:2},uncommon:{rate:0.05,value:5},valuable:{rate:0.01,value:10}},
+  // Fixed basket from the nine distinct original resource mappings; no modifiers.
+  storageReferenceBasket:['minecraft:wheat','minecraft:stone','minecraft:oak_log','minecraft:spruce_log','minecraft:mud','minecraft:clay_ball','minecraft:sand','minecraft:cocoa_beans','minecraft:jungle_log'],
   resources:{
     'minecraft:plains':[{id:'minecraft:wheat',name:'Wheat',category:'crop'},{id:'minecraft:stone',name:'Stone',category:'building'}],
     'minecraft:forest':[{id:'minecraft:oak_log',name:'Oak Logs',category:'building'},{id:'minecraft:stone',name:'Stone',category:'building'}],

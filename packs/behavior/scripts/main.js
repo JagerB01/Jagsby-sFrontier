@@ -14,7 +14,7 @@ const sharedMap=createSharedMap(world);
 const BLOCK = "jagsby_frontier:village_charter";
 const KEY = "jagsby_frontier:state_v1";
 const BIOME_RADIUS = 256;
-const ZONES = ["Heartlands", "Borderlands", "Wildlands", "Dreadlands", "Blightlands", "Blackreach"];
+import {DEFINITIONS,ZONES,zoneAt,maxLevel,nextCost,acceptedMaterials,lockReason,contribution,applyContribution,settlementLimit,foundingReason,storageIncrement,localLevel,colonizationBonus} from "./global-research.js";
 import {ECONOMY_CONFIG} from "./economy-config.js";
 import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower} from "./settlement-economy.js";
 import {refreshProtection,protectDamage,within,healVillager} from "./settlement-effects.js";
@@ -43,18 +43,13 @@ function scheduleRoads(s){
  }
 }
 
-const COSTS = {
-  frontier: [{"minecraft:emerald":16},{"minecraft:emerald":32},{"minecraft:emerald":64},{"minecraft:emerald":96},{"minecraft:emerald":128}],
-  capacity: [{"minecraft:iron_ingot":24},{"minecraft:iron_ingot":48},{"minecraft:iron_ingot":96},{"minecraft:iron_ingot":128}],
-  development: [{"minecraft:gold_ingot":16},{"minecraft:gold_ingot":32},{"minecraft:gold_ingot":64}],
-  storage: [{"minecraft:iron_ingot":16},{"minecraft:iron_ingot":32},{"minecraft:iron_ingot":64},{"minecraft:iron_ingot":128}]
-};
-function state(){ try {const raw=world.getDynamicProperty(KEY);if(raw) return JSON.parse(raw);}catch(e){console.warn(String(e));}return {villages:{},global:{frontier:0,capacity:0,development:0,storage:0},stock:{},lastTick:Date.now()};}
+function state(){
+ const raw=world.getDynamicProperty(KEY);
+ // Never overwrite corrupt data with a new empty world.
+ return raw?JSON.parse(raw):{villages:{},global:{},stock:{},lastTick:Date.now()};
+}
 function save(s){world.setDynamicProperty(KEY,JSON.stringify(s));scheduleRoads(s);}
 function id(loc){return `${Math.floor(loc.x)},${Math.floor(loc.y)},${Math.floor(loc.z)}`;}
-function zoneAt(loc){ // MUST BE REPLACED with MineScape's EXISTING exact zone calculation. No duplicate guessed thresholds.
-  return "Pending MineScape zone integration";
-}
 function getBiome(dim,loc){try{return dim.getBiome(loc).id;}catch(e){return "unknown";}}
 async function refreshVillage(vId){
   const initial=state().villages[vId];if(!initial)return;
@@ -77,6 +72,8 @@ async function refreshVillage(vId){
 function addVillage(s,block,creator){const legacy=id(block.location),k=`${block.dimension.id}|${legacy}`;
 if(!s.villages[k]&&s.villages[legacy]?.dimension===block.dimension.id){s.villages[k]=s.villages[legacy];s.villages[k].id=k;delete s.villages[legacy];save(s);}
 if(!s.villages[k]){
+  const reason=foundingReason(s,zoneAt(block.location));
+  if(reason){creator?.sendMessage('§e'+reason);return null;}
   s.villages[k]={id:k,location:{...block.location},dimension:block.dimension.id,name:`Settlement ${Object.keys(s.villages).length+1}`,owner:creator?ownerRecord(creator):null,biome:getBiome(block.dimension,block.location),secondary:null,available:[],efficiency:0,hearth:0,biomeUnlocked:false};save(s);
 }return s.villages[k];}
 function canPay(player,cost){const inv=player.getComponent("minecraft:inventory")?.container;if(!inv)return false;
@@ -88,22 +85,104 @@ function cap(s){return capacity(s);}
 function total(s){return stockTotal(s);}
 function pageTitle(page){return `JF_CHARTER|${page}`;}
 function researchText(s,v,key,player){
- const names={efficiency:'Prosperity',hearth:'Hearthstone',biome:'Resource Prospecting',sanctuary:'Sanctuary',roads:'Road Networks',frontier:'Frontier Expansion',capacity:'Settlement Capacity',development:'Settlement Development',storage:'Shared Storage'};
+ const names={efficiency:'Prosperity',hearth:'Hearthstone',biome:'Resource Prospecting',sanctuary:'Sanctuary',roads:'Road Networks',frontier:'Frontier Expansion',capacity:'Settlement Capacity',innovation:'Innovation',colonization:'Colonization',storage:'Shared Storage'};
  const local=['efficiency','hearth','biome','sanctuary','roads'].includes(key);
- const current=local?researchLevel(v,key):s.global[key]||0;
- const cost=local?researchCost(v,key):COSTS[key]?.[current];
- const max=local?(Array.isArray(ECONOMY_CONFIG.research[key])?ECONOMY_CONFIG.research[key].length:'repeatable'):COSTS[key]?.length;
+ if(!local)return globalResearchText(s,key);
+ const current=['efficiency','sanctuary'].includes(key)?localLevel(s,v,key):researchLevel(v,key);
+ const cost=researchCost(v,key);
+ const max=Array.isArray(ECONOMY_CONFIG.research[key])?ECONOMY_CONFIG.research[key].length:s.global.innovation;
  const benefits={efficiency:`Production: +${current*5}%. Next: +${(current+1)*5}%.`,hearth:'I: Regeneration I. II: villagers heal 2 HP/day.',biome:'One additional verified biome within 256 blocks.',sanctuary:`Hostile damage reduced by ${Math.min(99.9999,(1-0.95**current)*100).toFixed(4)}%. Persists 3 min.`,roads:'Manage Trail / Road / Highway connections.',frontier:'Unlock frontier establishment.',capacity:'Increase civilization settlement limit.',development:'Global research, separate from permanent local Development.',storage:`Shared capacity: ${cap(s)} items.`};
- let status=local?researchRequirement(v,key):null;
+ let status=local?researchRequirement(v,key,s):null;
  if(!status)status=cost?(canPay(player,cost)?'Affordable':'Materials needed'):'Complete';
  if(key==='roads')status='Select for research / connections';
- if(key==='frontier'||key==='capacity')status='Awaiting integration; nothing charged';
  return `§6${names[key]}§r ${current}/${max}\n${benefits[key]}\n${cost?'Trial cost: '+costText(cost):'No further research cost'}\n${status}`;
 }
 function productionText(s,v){
- const rates=resourceRates(v),points=development(v);
+ const rates=resourceRates(v,s),points=development(v),bonus=colonizationBonus(s,zoneAt(v.location));
  const lifetime=Object.values(v.lifetimeProduced||{}).reduce((a,n)=>a+n,0);
- return `Primary: ${v.biome}\nSecondary: ${v.secondary||'None'}\nProduction RP: ${recordedPower(v).toFixed(1)}${v.productionPowerIsMinimum?' (minimum)':''}\nProsperity: +${(v.efficiency||0)*5}%\nDevelopment: ${points} (+${(points*0.1).toFixed(1)}%)\nProgress: ${((v.developmentValue||0)%500).toFixed(2)}/500\nLifetime produced: ${lifetime.toFixed(3)}\nResources / real-world hour:\n${rates.map(r=>`${r.name}: ${r.rate.toFixed(4)}`).join('\n')||'No mapped biome resources'}\nRoad Development value/day: ${((routeRates(s)[v.id]||0)*86400000).toFixed(3)}\nRoads: ${Object.values(s.roads||{}).filter(r=>r.from===v.id||r.to===v.id).length} (manage in Local research)`;
+ return `Primary: ${v.biome}\nSecondary: ${v.secondary||'None'}\nProduction RP: ${recordedPower(v).toFixed(1)}${v.productionPowerIsMinimum?' (minimum)':''}\nProsperity: +${localLevel(s,v,'efficiency')*5}%\nZone: ${zoneAt(v.location)}\nColonization: +${bonus*100}%\nDevelopment: ${points} (+${(points*0.1).toFixed(1)}%)\nProgress: ${((v.developmentValue||0)%500).toFixed(2)}/500\nLifetime produced: ${lifetime.toFixed(3)}\nResources / real-world hour:\n${rates.map(r=>`${r.name}: ${(r.rate*(1+bonus)).toFixed(4)}`).join('\n')||'No mapped biome resources'}\nRoad Development value/day: ${((routeRates(s)[v.id]||0)*86400000).toFixed(3)}\nRoads: ${Object.values(s.roads||{}).filter(r=>r.from===v.id||r.to===v.id).length} (manage in Local research)`;
+}
+
+function globalResearchText(s,key){
+  const d=DEFINITIONS[key],level=s.global[key],cost=nextCost(s,key);
+  const maximum=maxLevel(s,key),locked=lockReason(s,key);
+  const benefits={
+    innovation:`Maximum endless research level: ${level}. Next: ${level+1}.`,
+    capacity:`Settlements: ${Object.keys(s.villages).length}/${settlementLimit(s)}. Next: ${settlementLimit(s)+1} slots.`,
+    frontier:`Next zone: ${ZONES[level+2]||'All zones unlocked'}. Founding only; travel is unrestricted.`,
+    colonization:ZONES.map((z,i)=>`${z}: ${i===0?0:i*10}%${i>level?' (locked)':''}`).join('\n'),
+    storage:`Stockpile: ${total(s)}/${cap(s)} items. Next: +${storageIncrement()} items.`,
+  };
+  const resource=key==='capacity'?'Vanilla logs':key==='storage'?'Building materials':acceptedMaterials(s,key).map(x=>x.replace('minecraft:','').replaceAll('_',' ')).join(', ');
+  return `${d.name} | Level ${level}${Number.isFinite(maximum)?' / '+maximum:' (endless)'}\n${benefits[key]}\n${cost===undefined?'Maximum level':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]}/${cost}`}\n${locked||'Unlocked'}\nPrerequisite: ${key==='innovation'?'Free foundation':d.prerequisite?DEFINITIONS[d.prerequisite].name+' I':'Innovation I (free)'}`;
+}
+const researchSessions=new Map();
+function inventoryMaterials(player,s,key){
+  const inv=player.getComponent('minecraft:inventory')?.container;
+  const counts=new Map();
+  if(inv)for(let i=0;i<inv.size;i++){const item=inv.getItem(i);if(item&&acceptedMaterials(s,key).includes(item.typeId))counts.set(item.typeId,(counts.get(item.typeId)||0)+item.amount);}
+  return [...counts];
+}
+async function researchDetails(player,vid,key){
+  const session={};researchSessions.set(player.id,session);
+  const s=state();
+  if(s.pendingResearch){researchSessions.delete(player.id);player.sendMessage('§eA saved research payment needs recovery by its original contributor. Reopen their charter.');return;}
+  const revision=s.researchRevision,choices=lockReason(s,key)?[]:inventoryMaterials(player,s,key);
+  const form=new ActionFormData().title(pageTitle('Research')).body(globalResearchText(s,key));
+  choices.forEach(([material,count])=>form.button(`Contribute ${contribution(s,key,material,count)} ${material.replace('minecraft:','').replaceAll('_',' ')}`));
+  form.button('Back to global research');
+  try{
+    const response=await displayMenu(player,form,system);
+    if(researchSessions.get(player.id)!==session)return;
+    researchSessions.delete(player.id);
+    if(!response.canceled&&choices[response.selection]){
+      const latest=state();
+      if(latest.researchRevision!==revision){player.sendMessage('§eResearch changed. Review the refreshed contribution.');return researchDetails(player,vid,key);}
+      if(latest.pendingResearch)return;
+      const material=choices[response.selection][0];
+      const inv=player.getComponent('minecraft:inventory')?.container;
+      if(!inv)return;
+      let available=0;
+      for(let slot=0;slot<inv.size;slot++){const item=inv.getItem(slot);if(item?.typeId===material)available+=item.amount;}
+      let left=contribution(latest,key,material,Math.min(available,choices[response.selection][1]));
+      if(!left)return researchDetails(player,vid,key);
+      // Account old effects completely before recording a payment intent.
+      const result=accountEconomy(latest);
+      if(!result.complete){save(latest);throw Error('Offline accounting is catching up; reopen the charter to continue.');}
+      const slots=[];const amount=left;
+      for(let slot=0;slot<inv.size&&left;slot++){
+        const item=inv.getItem(slot);if(item?.typeId!==material)continue;
+        const take=Math.min(left,item.amount);slots.push({slot,before:item.amount,after:item.amount-take});left-=take;
+      }
+      // Persist intent BEFORE touching inventory. One pending world transaction.
+      latest.pendingResearch={playerId:player.id,key,material,amount,slots};save(latest);
+      recoverResearch(player);
+    }
+    open(player,vid,'Research','global');
+  }catch(e){if(researchSessions.get(player.id)===session)researchSessions.delete(player.id);console.warn(`Frontier contribution: ${e}`);player.sendMessage('§cResearch payment paused. Reopen the charter to recover; do not move the payment items.');}
+}
+function recoverResearch(player){
+  const s=state(),tx=s.pendingResearch;
+  if(!tx||tx.playerId!==player.id)return;
+  const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
+  // Refuse ambiguous recovery rather than consuming different items or crediting twice.
+  for(const entry of tx.slots){
+    const item=inv.getItem(entry.slot);
+    const count=item?.typeId===tx.material?item.amount:item?NaN:0;
+    if(count!==entry.before&&count!==entry.after)throw Error('Payment inventory changed; manual recovery required');
+  }
+  for(const entry of tx.slots){
+    const item=inv.getItem(entry.slot);
+    if(item?.amount===entry.before){
+      if(entry.after===0)inv.setItem(entry.slot,undefined);
+      else{item.amount=entry.after;inv.setItem(entry.slot,item);}
+    }
+  }
+  const result=accountEconomy(s);
+  if(!result.complete){save(s);throw Error('Offline accounting is catching up; reopen the charter to continue.');}
+  if(applyContribution(s,tx.key,tx.material,tx.amount)!==tx.amount)throw Error('Saved payment is inconsistent with research progress');
+  delete s.pendingResearch;save(s);
+  player.sendMessage(`§aContributed ${tx.amount} toward ${DEFINITIONS[tx.key].name}.`);
 }
 
 function open(player,vId,page='Overview',researchScope='global',realmPage=0,realmScope='map'){
@@ -121,10 +200,10 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   records[data.realmAll]=all.text;
   const tier=settlementTier(v.census);
   records[data.tier]=tier.label;
-  for(const key of ['efficiency','hearth','biome','sanctuary','roads','frontier','capacity','development','storage'])records[data[key]]=researchText(s,v,key,player);
+  for(const key of ['efficiency','hearth','biome','sanctuary','roads','frontier','capacity','innovation','colonization','storage'])records[data[key]]=key in DEFINITIONS?`${DEFINITIONS[key].name}: ${s.global[key]} / ${Number.isFinite(maxLevel(s,key))?maxLevel(s,key):'Endless'}\nNext cost: ${nextCost(s,key)??'Complete'}\nContributed: ${s.researchProgress[key]}\n${lockReason(s,key)||'Unlocked'}\nSelect for materials and benefits.`:researchText(s,v,key,player);
   records[data.production]=productionText(s,v);
   records[data.developmentStats]=`Development: ${development(v)} (+${(development(v)*0.1).toFixed(1)}%)\n${((v.developmentValue||0)%500).toFixed(1)} / 500 to next point`;
-  records[data.stockpile]=`Stored: ${total(s).toFixed(3)} / ${cap(s)}\nRemaining capacity: ${cap(s)-total(s)}\nProduced resources only; shared by every settlement.`;
+  records[data.stockpile]=`Stored: ${total(s).toFixed(3)} / ${cap(s)}\nRemaining capacity: ${Math.max(0,cap(s)-total(s)).toFixed(3)}\nProduced resources only; shared by every settlement.`;
   records[data.resources]=Object.entries(s.stock).map(([r,n])=>`${r.replace('minecraft:','').replaceAll('_',' ')}: ${n.toFixed(3)}`).join('\n')||'No produced resources yet.';
   // Initial charter opening carries no map rasterization or hundreds of tiles.
   let mapFrame={rows:Array(12).fill(''),info:'Press Refresh to load the shared biome map.'};
@@ -144,7 +223,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     });
   }
   handlers.set(actions.mapInteractive,()=>mapNavigation.open(player,vId));
-  // Global tree nodes remain informational.
+  for(const key of Object.keys(DEFINITIONS))handlers.set(actions[key],()=>researchDetails(player,vId,key));
   for(const key of ['efficiency','hearth','biome','sanctuary','roads'])handlers.set(actions[key],()=>key==='roads'?roadMenu(player,vId):upgrade(player,vId,key));
   handlers.set(actions.scan,()=>scan(player,vId));
   handlers.set(actions.selectBiome,()=>selectBiome(player,vId));
@@ -184,7 +263,7 @@ async function renameSettlement(player,vId){
 }
 function upgrade(player,vid,key){
  const s=accounted(),v=s.villages[vid];if(!v)return;
- const requirement=researchRequirement(v,key),cost=researchCost(v,key);
+ const requirement=researchRequirement(v,key,s),cost=researchCost(v,key);
  if(requirement)player.sendMessage(requirement);
  else if(!cost)player.sendMessage('Already at maximum level.');
  else if(!pay(player,cost))player.sendMessage('Insufficient materials: '+costText(cost));
@@ -210,7 +289,7 @@ current.secondary=choice;save(st);}open(player,vid,'Production');}).catch(e=>con
 function collect(player,vid){const s=accounted();const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
  let moved=0;for(const [type,qty] of Object.entries(s.stock)){let remain=Math.floor(qty);const fraction=qty-remain;while(remain>0){const n=Math.min(64,remain);try{const left=inv.addItem(new ItemStack(type,n));const count=n-(left?.amount||0);if(count<=0)break;remain-=count;moved+=count;if(left)break;}catch(e){break;}}s.stock[type]=remain+fraction;if(!s.stock[type])delete s.stock[type];}
  save(s);player.sendMessage(`§aCollected ${moved} items. Remaining stockpile: ${total(s)}/${cap(s)}.`);open(player,vid,'Production');}
-world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=accounted();addVillage(s,ev.block,ev.player);ev.player.sendMessage('§6Village Charter established. Interact to open the settlement menu.');});
+world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=accounted();const v=addVillage(s,ev.block,ev.player);if(!v)return;ev.player.sendMessage('§6Village Charter established. Interact to open the settlement menu.');});
 const pendingCharterInteractions=new Set();
 world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
   if(ev.block.typeId!==BLOCK)return;
@@ -227,7 +306,9 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
     try{
       const block=dim.getBlock(location);
       if(block?.typeId!==BLOCK)return;
-      let s=state(),v=addVillage(s,block);
+      recoverResearch(player);
+      let s=accounted(),v=addVillage(s,block,player);
+      if(!v)return;
       await refreshVillage(v.id);
       open(player,v.id);
     }catch(e){console.warn(`Frontier charter interaction: ${e}`);player.sendMessage(String(e).includes('catching up')?'Production is catching up. Interact with the charter again to continue.':'§cThe Village Charter could not open. Check the Minecraft content log for Frontier charter errors.');}
@@ -241,7 +322,7 @@ system.runInterval(()=>{
  const s=state(),day=Math.floor(gameTick()/24000);let changed=false;
  const healing=new Map();
  for(const player of world.getPlayers())try{
-  for(const v of refreshProtection(player,s.villages))if(v.hearth>=2&&v.lastHealDay!==day)healing.set(v.id,v);
+  for(const v of refreshProtection(player,s.villages,Date.now(),s.global?.innovation??Infinity))if(v.hearth>=2&&v.lastHealDay!==day)healing.set(v.id,v);
  }catch(e){console.warn(`Frontier protection: ${e}`);}
  for(const v of healing.values())try{
   const dim=world.getDimension(v.dimension);

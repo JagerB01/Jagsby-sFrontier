@@ -10,12 +10,12 @@ RP = ROOT / "packs/resource"
 DATA = {
     "overview": 0, "biomes": 1, "census": 2, "tier": 3,
     "efficiency": 4, "hearth": 5, "biome": 6, "frontier": 7,
-    "capacity": 8, "development": 9, "storage": 10,
+    "capacity": 8, "innovation": 9, "storage": 10,
     "production": 11, "stockpile": 12, "resources": 13,
     "owner": 25, "realmMine": 26, "realmAll": 27,
 }
 ACTIONS = {name: i + 14 for i, name in enumerate([
-    "efficiency", "hearth", "biome", "frontier", "capacity", "development",
+    "efficiency", "hearth", "biome", "frontier", "capacity", "innovation",
     "storage", "scan", "selectBiome", "collect", "rename",
 ])}
 ACTIONS.update({"claim": 28, "minePrev": 29, "mineNext": 30, "allPrev": 31, "allNext": 32})
@@ -25,6 +25,8 @@ ACTIONS.update({"map" + key: 46 + i for i, key in enumerate([
     "North", "South", "West", "East", "ZoomIn", "ZoomOut", "Center", "Dimension", "Refresh"])})
 DATA.update({"sanctuary": 55, "roads": 56, "developmentStats": 60})
 ACTIONS.update({"sanctuary": 57, "roads": 58, "mapInteractive": 59})
+DATA["colonization"] = 61
+ACTIONS["colonization"] = 62
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -37,11 +39,11 @@ RESEARCH_HELP = {
     "biome": ("Resource Prospecting", "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks."),
     "sanctuary": ("Sanctuary", "Repeatable hostile-mob protection.\nEach level removes 5% of remaining damage.\nLasts three minutes after leaving."),
     "roads": ("Road Networks", "Establish and upgrade food-powered travel\nroutes. Connections progress from Trail\nto Road to Highway."),
-    "settlement_capacity": ("Settlement Charters", "Planned: increase the number of settlements\nyour civilization can establish. Repeatable.\nGlobal purchases are not yet available."),
-    "frontier_expansion": ("Frontier Mandate", "Planned: establish settlements in more\ndistant frontier zones. Five levels.\nGlobal purchases are not yet available."),
-    "settlement_development": ("Stewardship", "Planned: unlock higher levels of local\nProduction Efficiency. Repeatable.\nGlobal purchases are not yet available."),
-    "colonization": ("Reclamation", "Planned: enable production in frontier\nsettlements. Five levels are proposed.\nGlobal purchases are not yet available."),
-    "shared_storage": ("Hoards", "Planned: expand shared storage for produced\nresources. Repeatable.\nGlobal purchases are not yet available."),
+    "capacity": ("Settlement Capacity", "64 logs per additional settlement slot."),
+    "frontier": ("Frontier Expansion", "Unlocks settlement founding in four frontier zones."),
+    "innovation": ("Innovation", "192 copper per level. Caps endless research."),
+    "colonization": ("Colonization", "Zone-specific production bonuses, up to Blackreach."),
+    "storage": ("Shared Storage", "512 building materials per fixed storage increment."),
 }
 GENERATED_CONTROLS = {}
 
@@ -280,6 +282,7 @@ def research_tooltip(key, offset, live=False):
 
 
 def research_node(name, title, subtitle, position, sprite, local=False):
+    active = local or name in ["innovation", "capacity", "frontier", "colonization", "storage"]
     states = []
     for state in ["default", "hover", "pressed"]:
         states.append(control(state, {"type": "panel", "size": [122, 34], "controls": [
@@ -287,10 +290,10 @@ def research_node(name, title, subtitle, position, sprite, local=False):
             control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
             control("name", label(title, [78, 11], (39, 4), color=IVORY, scale=0.62 if len(title) > 18 else 0.72)),
             control("note", label(subtitle, [78, 13], (39, 18), color=SILVER, scale=0.55)),
-            *([research_tooltip(name, [7 - position[0], 38 if position[1] == 0 else (-100 if local else -74)], live=local)]
+            *([research_tooltip(name, [7 - position[0], 38 if position[1] == 0 else (-100 if active else -74)], live=active)]
               if state in ["hover", "pressed"] else []),
         ]}))
-    if local:
+    if active:
         purchase = action(name + "_buy", ACTIONS[name], title, width=122, height=34)
         GENERATED_CONTROLS["jf_action_" + name + "@common.button"]["controls"] = states
         return control(name, {"type": "panel", "size": [122, 34], "offset": position,
@@ -312,11 +315,11 @@ def global_tree():
         control("tier_one", label("Tier I", [50, 9], (0, 14), scale=0.555)),
         control("tier_two", label("Tier II", [50, 9], (0, 36), scale=0.555)),
         control("tier_three", label("Tier III", [50, 9], (0, 83), scale=0.555)),
-        research_node("settlement_capacity", "Settlement Charters", "More settlements\nRepeatable", [66, 0], "settlement_charters"),
-        research_node("frontier_expansion", "Frontier Mandate", "Distant settlements\n5 levels", [0, 47], "frontier_mandate"),
-        research_node("settlement_development", "Stewardship", "Higher local research\nRepeatable", [132, 47], "stewardship"),
-        research_node("colonization", "Reclamation", "Frontier production\n5 levels proposed", [0, 94], "reclamation"),
-        research_node("shared_storage", "Hoards", "Shared storage\nRepeatable", [132, 94], "hoards"),
+        research_node("innovation", "Innovation", "Endless research cap\nStarts at Level I", [66, 0], "stewardship"),
+        research_node("frontier", "Frontier Expansion", "Founding zones\nFour levels", [0, 47], "frontier_mandate"),
+        research_node("capacity", "Settlement Capacity", "More settlements\nEndless", [132, 47], "settlement_charters"),
+        research_node("colonization", "Colonization", "Zone production\nFive levels", [0, 94], "reclamation"),
+        research_node("storage", "Shared Storage", "Shared item capacity\nEndless", [132, 94], "hoards"),
     ]
     return {"type": "panel", "size": [254, 131], "controls": controls}
 
@@ -541,8 +544,10 @@ def build():
     }))
     picker.append(control("caption", label("Select", [88, 32], (10, 65), WHEAT)))
     ui["jf_picker"] = {"type": "panel", "size": [380, 240], "controls": picker}
+    details = label("#form_text", [244, 185], color=IVORY, scale=0.75)
+    details["bindings"] = [{"binding_name": "#form_text", "binding_type": "none"}]
     ui["jf_picker_content"] = {"type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"],
-        "controls": [heading("CHOOSE AN OPTION"), control("choices", {
+        "controls": [heading("CHARTER DETAILS"), control("details", details), control("choices", {
             "type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"],
             "collection_name": "form_buttons", "factory": {"name": "buttons",
                 "control_ids": {"button": "jagsby_frontier.jf_choice"}},

@@ -1,3 +1,8 @@
+> For 0.0.33, see [global research](global-research.md): Innovation now caps
+> Sanctuary/Prosperity; Colonization adds zone output without Development credit;
+> Shared Storage uses a fixed linear item capacity. The document below describes
+> the 0.0.32 baseline and its retained local/road mechanics.
+
 # Settlement economy, Development and Local research — 0.0.32
 
 This implements the readable feature requirements in the supplied implementation
