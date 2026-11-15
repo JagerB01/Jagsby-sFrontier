@@ -2,7 +2,7 @@
 
 The supplied project brief is the implementation request. Source imported from
 the supplied v0.1 mcaddon is the starting point. Its art is retained. The current
-changes add an interaction-only 64-block villager census, minimum power estimates,
+changes add an interaction-only 80-block villager census, minimum power estimates,
 standalone custom charter dashboard and dimension-qualified settlement IDs.
 MineScape 1.5.119 was supplied as a reference only; its UI is not bundled or
 required. Diplomacy remains unavailable.

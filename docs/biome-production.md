@@ -82,7 +82,7 @@ Building resources plus the established building-material allowlist.
 ## Persistence and offline accounting
 
 The existing timestamp/event integration, shared stockpile, fractions, lifetime
-production and route engine are retained. Each 500 successfully generated
+production and route engine are retained. Each 100 successfully generated
 category-weighted value grants one Development point to the producing settlement.
 Colonization extra items remain separate and earn no Development. Full stock
 blocks new output and its Development without banking rejected production.

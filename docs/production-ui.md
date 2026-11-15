@@ -1,4 +1,4 @@
-# Production panels — 0.0.53
+# Production panels — 0.0.54
 
 Production has exactly two tabs: a fixed **Overview** and a scrollable
 **Resource Prospecting** list. Both use the existing charter frame. Opening the
@@ -81,7 +81,7 @@ keeps its existing neutral colors and uniform font size.
 **Dev/Hr** displays three decimal places: **+ 0.002**, **+ 1.236**, or **0.000**.
 Large rates retain compact suffixes with three decimals, such as **+ 1.200k**.
 The estimate still uses Development value rates divided by the existing
-500-value-per-point threshold.
+100-value-per-point threshold.
 
 Research hover boxes now measure the rendered wrapped label instead of using a
 fixed pixel height or reserving text rows. The collection scope and vertical
@@ -105,7 +105,7 @@ existing 2-health-point villager heal once per Minecraft day.
 
 ## Validation
 
-184 Node tests and 3 Python tests pass. Static packaging validates 191 pack
+188 Node tests and 3 Python tests pass. Static packaging validates 191 pack
 files. Coverage includes rate components, full-stock paused output, combined
 allocation output, bounded pages/empty states, research and sample gating,
 immediate verified selection, unloaded rejection, clearing, whole-item collection
@@ -133,3 +133,11 @@ text. The two rates remain beside their item icons and include the /hr unit.
 The identity header places the settlement name on one line and Owner: Name on
 a full-width byline below it, without a tiny separate Owner label. Both fit
 above the existing divider; the card dimensions do not change.
+
+## Development and census balance (0.0.54)
+
+An 80-block-radius loaded-villager census supplies recorded RP. One Development
+point now requires 100 earned value, with the existing +0.1% production per point.
+At fixed production and trade value rates, the points/hour estimate is five
+times the former estimate. Saved value is retained. Old offline intervals use
+the old threshold until catch-up completes, then the new threshold takes effect.

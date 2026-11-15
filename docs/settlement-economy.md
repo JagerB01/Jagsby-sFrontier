@@ -1,3 +1,9 @@
+> 0.0.54 reduces the Development threshold to **100 value per point** and expands
+> the loaded-villager census to an **80-block radius**. Existing earned value is
+> retained. Pre-update offline intervals settle at the former 500-value threshold
+> before switching; interrupted catch-up retains that threshold until complete.
+> Development/Hr divides current earned value/hour by 100 after migration.
+
 > 0.0.43 supersedes the placeholder mappings and full-per-biome rates below with
 > the [finalized biome production rules](biome-production.md): one resource per
 > biome, 50% allocations, specialization/diversification and River crop bonuses.

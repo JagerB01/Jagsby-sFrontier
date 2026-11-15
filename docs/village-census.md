@@ -1,6 +1,6 @@
 # Village census (0.0.12)
 
-Charter interaction queries loaded vanilla villagers once in a 64-block sphere,
+Charter interaction queries loaded vanilla villagers once in a 80-block sphere,
 in the charter's dimension. Placement, menu navigation, Rename and busy-menu
 retries do not rerun that query. Counts are saved with the settlement.
 

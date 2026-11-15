@@ -4,13 +4,20 @@ import {migrateLocalResearch,localResearchLevel,localResearchCost,localResearchR
 import {productionAllocations,riverCropBonus,migrateProduction} from './biome-resources.js';
 import {LEGACY_RESOURCES} from './legacy-production.js';
 const HOUR=3600000,DAY=86400000,EPS=1e-8;
-export function development(v){return Math.floor(Math.max(0,v.developmentValue||0)/C.developmentThreshold+1e-10);}
+export function developmentThreshold(v){return v.developmentThreshold??C.developmentThreshold;}
+export function development(v){return Math.floor(Math.max(0,v.developmentValue||0)/developmentThreshold(v)+1e-10);}
+export function migrateDevelopment(s){
+ for(const v of Object.values(s.villages))v.developmentThreshold=C.developmentThreshold;
+ s.developmentVersion=2;
+ return s;
+}
 export function capacity(s,legacy=false){return legacy?C.baseCapacity*2**Math.max(0,s.global?.storage||0):storageCapacity(s);}
 export function stockTotal(s){return Object.values(s.stock||{}).reduce((a,n)=>a+n,0);}
 export function migrateEconomy(s,now=Date.now()){
  s.stock??={};s.roads??={};s.global??={};s.villages??={};
  if(!Number.isFinite(s.economyAt)){s.economyAt=now;s.economyVersion=1;}
  for(const v of Object.values(s.villages)){
+  v.developmentThreshold??=s.developmentVersion===2?C.developmentThreshold:500;
   v.developmentValue=Math.max(0,v.developmentValue||0);v.lifetimeProduced??={};
   v.sanctuary??=0;v.roads??=0;v.efficiency??=0;v.hearth??=0;
  }
@@ -60,17 +67,18 @@ export function developmentHourlyRate(s,v){
  const baseValue=capacity(s)-stockTotal(s)>EPS
   ?resourceRates(v,s).reduce((sum,r)=>sum+r.rate*C.categories[r.category].value,0):0;
  const tradeValue=(routeRates(s)[v.id]||0)*HOUR;
- return (baseValue+tradeValue)/C.developmentThreshold;
+ return (baseValue+tradeValue)/developmentThreshold(v);
 }
 // Exact piecewise-constant integration: stop at every Development threshold
 // and shared-capacity boundary, then recompute all rates simultaneously.
 export function accountEconomy(s,now=Date.now(),maxEvents=10000){
+ if(s.developmentVersion>2)throw Error('Development save is newer than this addon');
  if(s.productionVersion>2)throw Error('Production save is newer than this addon');
  if(s.researchVersion>3)throw Error('Research save version is newer than this addon');
  migrateEconomy(s,now);let t=s.economyAt,events=0;
  // Finish the prior economy under its prior effects before switching schemas.
  const legacy=s.researchVersion!==3,oldProduction=s.productionVersion!==2;
- if(now<=t){migrateResearch(s);for(const v of Object.values(s.villages))migrateLocalResearch(v,s);migrateProduction(s);return {complete:true,events};}
+ if(now<=t){migrateResearch(s);for(const v of Object.values(s.villages))migrateLocalResearch(v,s);migrateProduction(s);migrateDevelopment(s);return {complete:true,events};}
  const entries=Object.entries(s.villages).sort(([a],[b])=>a.localeCompare(b));
  while(t<now&&events++<maxEvents){
   const free=Math.max(0,capacity(s,legacy)-stockTotal(s)),producing=free>EPS;
@@ -84,7 +92,7 @@ export function accountEconomy(s,now=Date.now(),maxEvents=10000){
   let dt=now-t;
   if(totalRate>0)dt=Math.min(dt,free/totalRate);
   for(const [id,v]of entries)if(devRates[id]>0){
-   const remaining=(development(v)+1)*C.developmentThreshold-v.developmentValue;
+   const remaining=(development(v)+1)*developmentThreshold(v)-v.developmentValue;
    dt=Math.min(dt,Math.max(remaining,EPS)/devRates[id]);
   }
   if(!(dt>0)||!Number.isFinite(dt))throw Error('Invalid economy accounting interval');
@@ -104,7 +112,7 @@ export function accountEconomy(s,now=Date.now(),maxEvents=10000){
   if(now-t<0.001)t=now;
  }
  s.economyAt=t;
- if(t>=now){migrateResearch(s);for(const v of Object.values(s.villages))migrateLocalResearch(v,s);migrateProduction(s);}
+ if(t>=now){migrateResearch(s);for(const v of Object.values(s.villages))migrateLocalResearch(v,s);migrateProduction(s);migrateDevelopment(s);}
  return {complete:t>=now,events};
 }
 export const researchLevel=localResearchLevel;

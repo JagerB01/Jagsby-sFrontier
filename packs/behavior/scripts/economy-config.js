@@ -1,7 +1,7 @@
 import {BIOME_RESOURCES} from './biome-resources.js';
 // Finalized local research costs. Road timing and travel food values remain trial balance.
 export const ECONOMY_CONFIG = {
-  baseCapacity:128, developmentThreshold:500, developmentBonus:0.001,
+  baseCapacity:128, developmentThreshold:100, developmentBonus:0.001,
   prosperityBonus:0.05, boundaryRadius:32,
   categories:{common:{rate:0.35,value:1},building:{rate:0.15,value:2},uncommon:{rate:0.05,value:5},valuable:{rate:0.01,value:10}},
   // Fixed basket from the nine distinct original resource mappings; no modifiers.

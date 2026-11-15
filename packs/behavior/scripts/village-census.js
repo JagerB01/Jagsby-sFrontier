@@ -1,5 +1,5 @@
 // On-demand observations only. No entity polling or background census.
-export const CENSUS_RADIUS = 64;
+export const CENSUS_RADIUS = 80;
 export const POWER_TENTHS_BY_TIER = Object.freeze([2, 4, 6, 8, 10]);
 const VILLAGERS = new Set(["minecraft:villager", "minecraft:villager_v2"]);
 

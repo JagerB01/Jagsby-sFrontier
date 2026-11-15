@@ -80,7 +80,7 @@ The fixed tree dimensions and unbound button mappings are preserved.
 ## 0.0.16 compact village identity
 
 Overview now groups the village name, tier and size into one 147×64 identity
-box. Size means the number of villagers recorded by the existing 64-block
+box. Size means the number of villagers recorded by the existing 80-block
 interaction census, not land area. Owner, biome and Realm Power are compact
 unboxed text groups underneath. The portrait keeps its decorative frame.
 Population is an appended form record at index 33, preserving all previous

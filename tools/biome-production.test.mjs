@@ -9,7 +9,7 @@ const reference=JSON.parse(await readFile(new URL('reference/biome-production-1.
 const hour=3600000,day=24*hour;
 const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} differs from ${b}`);
 function village(extra={}){return {id:'a',dimension:'minecraft:overworld',location:{x:0,y:64,z:0},biome:'minecraft:plains',productionPower:10,hearth:1,efficiency:0,developmentValue:0,...extra};}
-function state(v=village()){return migrateProduction(migrateResearch({villages:{a:v},global:{storage:20},stock:{},roads:{},economyAt:0}));}
+function state(v=village()){return migrateProduction(migrateResearch({developmentVersion:2,villages:{a:v},global:{storage:20},stock:{},roads:{},economyAt:0}));}
 for(const assignment of reference.assignments){
  test(`${assignment.name}: target-version assignment`,()=>{
   const actual=BIOME_ASSIGNMENTS.find(row=>row.name===assignment.name);
@@ -48,7 +48,7 @@ test('River specialization and Plains plus River each produce exactly 92.4 wheat
  }
 });
 test('River multiplies both crop slots once, with RP, Prosperity and Development',()=>{
- const v=village({biome:'minecraft:ice_plains',biomeUnlocked:true,productionMode:'diversify',secondary:'minecraft:river',productionPower:12,efficiency:4,developmentValue:50000});
+ const v=village({biome:'minecraft:ice_plains',biomeUnlocked:true,productionMode:'diversify',secondary:'minecraft:river',productionPower:12,efficiency:4,developmentValue:10000});
  const rates=resourceRates(v);for(const r of rates)close(r.rate,0.175*12*1.2*1.1*1.1);
  for(const biome of ['minecraft:ocean','minecraft:forest','minecraft:stony_peaks','minecraft:mushroom_island']){
   const mixed=village({biome,biomeUnlocked:true,productionMode:'diversify',secondary:'minecraft:river'});
@@ -71,7 +71,7 @@ test('all four category rates and weighted Development values account only succe
  const saved=JSON.stringify(s);accountEconomy(s,day);assert.equal(JSON.stringify(s),saved);
 });
 test('fractional offline catch-up and Development threshold integration are independent of access frequency',()=>{
- const initial=state(village({biome:'minecraft:river',biomeUnlocked:true,productionMode:'specialize',developmentValue:499.9}));
+ const initial=state(village({biome:'minecraft:river',biomeUnlocked:true,productionMode:'specialize',developmentValue:99.9}));
  const once=structuredClone(initial),many=structuredClone(initial);accountEconomy(once,30*day);
  for(let time=hour;time<=30*day;time+=hour)accountEconomy(many,time);
  close(stockTotal(once),stockTotal(many));close(once.villages.a.developmentValue,many.villages.a.developmentValue);assert.ok(development(once.villages.a)>1);

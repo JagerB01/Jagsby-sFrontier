@@ -113,7 +113,7 @@ Final output multiplies this by `1 + unlocked zone bonus`. Base and bonus output
 are tracked separately in `lifetimeBaseProduced` / `lifetimeBonusProduced`;
 `lifetimeProduced` remains total output. Only the base output actually admitted
 into the shared stockpile earns existing category-weighted Development value
-(1/2/5/10 for crop/building/uncommon/valuable). Every 500 value still grants one
+(1/2/5/10 for crop/building/uncommon/valuable). Every 100 value now grants one
 permanent Development point. Colonization bonus earns none. Road Development
 and its sender/receiver rules remain unchanged.
 

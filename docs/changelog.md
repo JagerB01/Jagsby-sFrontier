@@ -1,3 +1,18 @@
+# 0.0.54
+
+- Increase interaction-triggered villager detection from a 64-block to an
+  80-block radius (160 blocks across), in the charter's dimension. Keep loaded
+  entities only and the existing single-query census; perk ranges are unchanged.
+- Reduce the Development threshold from 500 to 100 earned value per point.
+  Update Development/Hr conversion and exact milestone integration accordingly.
+- Retain existing earned value. Settle pre-update offline production and trade
+  at the old 500-value threshold before applying the new 100-value threshold.
+  Persist the old threshold through interrupted catch-up and migrate once only.
+  Existing value is then counted under the new threshold, including its effects
+  on production and route partner bonuses. No resources or progress are reset.
+- 188 Node tests and 3 Python tests pass, including radius boundaries, exact
+  100-value milestones, old-backlog integration and interrupted migration.
+
 # 0.0.53
 
 - Restore direct native form-text bindings for all modifier values and the

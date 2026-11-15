@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.53.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.54.mcaddon?raw=true)
+
+Version 0.0.54 increases villager detection to an **80-block radius** and awards
+one Development point per **100 earned value**, down from 500. Existing value
+is retained; saved offline production settles under its previous threshold
+before the new threshold activates. Dev/Hr and production bonuses use the new
+point count automatically.
 
 Version 0.0.53 restores direct native bindings for modifier values and Overview
 hourly production. A normal font percent sign follows the measured number

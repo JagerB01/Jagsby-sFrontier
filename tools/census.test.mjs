@@ -37,12 +37,12 @@ test('native trading levels give linear 0.2 to 1.0 contributions', () => {
   }
 });
 
-test('census queries the charter position once with a 64-block range', () => {
+test('census queries the charter position once with a 80-block range', () => {
   const location = { x: 10, y: 70, z: -90 };
   let calls = 0;
   const dimension = { getEntities(query) {
     calls++;
-    assert.deepEqual(query, { location, maxDistance: 64, families: ['villager'] });
+    assert.deepEqual(query, { location, maxDistance: 80, families: ['villager'] });
     return [0,1,2,3,4].map(tier => villager(String(tier), tier));
   }};
   const census = takeCensus(dimension, location, e => e.tier, 123);
@@ -233,4 +233,14 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.ok(forms.at(-1).records[33].includes('Road Networks Lv 0'));
   assert.ok(forms.at(-1).records[34].includes('No connections yet'));
   delete globalThis.__frontierTest;
+});
+test('80-block radius includes villagers beyond the old 64-block limit and excludes farther ones',()=>{
+ const location={x:100,y:64,z:100};
+ const entities=[64,65,80,80.01].map((distance,i)=>({...villager('edge'+i,4),location:{x:location.x+distance,y:64,z:100}}));
+ let reads=0;
+ const result=takeCensus({getEntities(query){
+  reads++;assert.equal(query.maxDistance,80);
+  return entities.filter(e=>Math.hypot(e.location.x-query.location.x,e.location.y-query.location.y,e.location.z-query.location.z)<=query.maxDistance);
+ }},location,e=>e.tier);
+ assert.equal(reads,1);assert.equal(result.radius,80);assert.equal(result.villagers,3);assert.equal(result.realmPowerTenths,30);
 });

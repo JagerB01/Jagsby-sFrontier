@@ -10,10 +10,10 @@ const E=await module('settlement-economy'),F=await module('settlement-effects');
 const {ECONOMY_CONFIG:C}=await import(configUrl);
 const hour=3600000,day=24*hour;
 function village(id='a',extra={}){return {id,dimension:'minecraft:overworld',location:{x:0,y:64,z:0},biome:'minecraft:plains',census:{realmPowerTenths:100},efficiency:0,hearth:1,biomeUnlocked:false,...extra};}
-function state(v=village()){return migrateResearch({productionVersion:2,villages:{[v.id]:v},global:{storage:20},stock:{},economyAt:0,roads:{}});}
+function state(v=village()){return migrateResearch({productionVersion:2,developmentVersion:2,villages:{[v.id]:v},global:{storage:20},stock:{},economyAt:0,roads:{}});}
 function close(a,b,tolerance=1e-6){assert.ok(Math.abs(a-b)<tolerance,`${a} differs from ${b}`);}
 test('specified hourly formula, fractional catch-up and shutdown/restart accounting',()=>{
- const s=state(village('a',{efficiency:5,developmentValue:50000}));
+ const s=state(village('a',{efficiency:5,developmentValue:10000}));
  E.accountEconomy(s,hour);
  close(s.stock['minecraft:wheat'],2.40625);
  const loaded=JSON.parse(JSON.stringify(s));E.accountEconomy(loaded,2*hour);
@@ -27,7 +27,7 @@ test('RP changes apply only after accounting the old census; no loaded-world API
  E.accountEconomy(s,2*hour);close(s.stock['minecraft:wheat'],5.25);
 });
 test('Development threshold integration is independent of access frequency',()=>{
- const initial=state(village('a',{developmentValue:499.9,efficiency:20}));
+ const initial=state(village('a',{developmentValue:99.9,efficiency:20}));
  const one=structuredClone(initial),many=structuredClone(initial);
  E.accountEconomy(one,30*day);
  for(let t=hour;t<=30*day;t+=hour)E.accountEconomy(many,t);
@@ -65,7 +65,7 @@ test('resource category values, permanent lifetime totals, and save migration',(
  E.accountEconomy(legacy,100*day);assert.equal(legacy.stock['minecraft:wheat'],7);assert.equal(legacy.villages.a.efficiency,4);
 });
 test('roads preserve initiator, reject duplicates, cap upgrades, and reward both endpoints independently',()=>{
- const s=state(village('a',{roads:1,developmentValue:10000}));s.villages.b=village('b',{location:{x:1000,y:64,z:0},developmentValue:100000});
+ const s=state(village('a',{roads:1,developmentValue:2000}));s.villages.b=village('b',{location:{x:1000,y:64,z:0},developmentValue:20000});
  E.migrateEconomy(s,0);let r=E.startRoad(s,'a','b',0);
  assert.throws(()=>E.startRoad(s,'b','a',0));
  let rates=E.routeRates(s);close(rates.a,0);close(rates.b,0);
@@ -77,9 +77,9 @@ test('roads preserve initiator, reject duplicates, cap upgrades, and reward both
  assert.throws(()=>E.startRoad(s,'a','b',r.finishTick),/Highway/);
 });
 test('trade Development accrues offline, without producing or consuming physical resources',()=>{
- const s=state(village('a',{biome:'unknown',developmentValue:10000}));s.villages.b=village('b',{biome:'unknown',developmentValue:100000});
+ const s=state(village('a',{biome:'unknown',developmentValue:2000}));s.villages.b=village('b',{biome:'unknown',developmentValue:20000});
  s.roads.r={from:'a',to:'b',level:1};E.accountEconomy(s,day);
- close(s.villages.a.developmentValue,10030);close(s.villages.b.developmentValue,100002.4);assert.deepEqual(s.stock,{});
+ close(s.villages.a.developmentValue,2030);close(s.villages.b.developmentValue,20002.4);assert.deepEqual(s.stock,{});
 });
 test('local research prerequisites, repeatable costs and Hearthstone II cap',()=>{
  const v=village('a',{hearth:0});assert.ok(E.researchRequirement(v,'biome'));assert.ok(E.researchRequirement(v,'sanctuary'));
@@ -130,7 +130,7 @@ test('Sanctuary retains its source strength for three minutes outside the settle
  assert.ok(F.sanctuaryDamage(20,100000)>0);
 });
 test('route feedback and production remain consistent when a catch-up crosses partner Development thresholds',()=>{
- const s=state(village('a',{developmentValue:499.5}));s.villages.b=village('b',{developmentValue:999.5});s.roads.r={from:'a',to:'b',level:3};
+ const s=state(village('a',{developmentValue:99.5}));s.villages.b=village('b',{developmentValue:199.5});s.roads.r={from:'a',to:'b',level:3};
  const once=structuredClone(s),frequent=structuredClone(s);E.accountEconomy(once,10*day);
  for(let t=hour;t<=10*day;t+=hour)E.accountEconomy(frequent,t);
  for(const id of ['a','b'])close(once.villages[id].developmentValue,frequent.villages[id].developmentValue,1e-5);
@@ -139,17 +139,17 @@ test('route feedback and production remain consistent when a catch-up crosses pa
 
 test('Overview hourly Development estimate includes base category value and trade income, excluding Colonization bonus',()=>{
  const s=state(),v=s.villages.a;
- close(E.developmentHourlyRate(s,v),0.0035);
- s.global.colonization=5;v.location.x=28000;close(E.developmentHourlyRate(s,v),0.0035);
- s.villages.b=village('b',{developmentValue:10000});s.roads.ab={from:'a',to:'b',level:1};
- close(E.developmentHourlyRate(s,v),0.0045);
+ close(E.developmentHourlyRate(s,v),0.0175);
+ s.global.colonization=5;v.location.x=28000;close(E.developmentHourlyRate(s,v),0.0175);
+ s.villages.b=village('b',{developmentValue:2000});s.roads.ab={from:'a',to:'b',level:1};
+ close(E.developmentHourlyRate(s,v),0.0225);
  const before=JSON.stringify(s);E.developmentHourlyRate(s,v);assert.equal(JSON.stringify(s),before);
 });
 test('Overview hourly Development estimate blocks full-storage production while preserving active route income',()=>{
  const s=state(),v=s.villages.a;s.stock['minecraft:wheat']=E.capacity(s);
  close(E.developmentHourlyRate(s,v),0);
- s.villages.b=village('b',{developmentValue:10000});s.roads.ab={from:'a',to:'b',level:1};
- close(E.developmentHourlyRate(s,v),0.001);
+ s.villages.b=village('b',{developmentValue:2000});s.roads.ab={from:'a',to:'b',level:1};
+ close(E.developmentHourlyRate(s,v),0.005);
  s.roads.ab.targetLevel=2;close(E.developmentHourlyRate(s,v),0);
 });
 test('Hearthstone refreshes Regeneration I for three minutes inside and stops refreshing after leaving',()=>{
@@ -157,4 +157,30 @@ test('Hearthstone refreshes Regeneration I for three minutes inside and stops re
  const v=village('a',{hearth:1,sanctuary:0});F.refreshProtection(p,{a:v});
  assert.deepEqual(grants,[['regeneration',3600,{amplifier:0,showParticles:false}]]);
  p.location.x=100;F.refreshProtection(p,{a:v});assert.equal(grants.length,1);
+});
+test('Development now awards a point every 100 value and converts hourly production at that threshold',()=>{
+ assert.equal(C.developmentThreshold,100);
+ for(const [value,points]of [[0,0],[99.99,0],[100,1],[199.99,1],[200,2],[750.125,7]])assert.equal(E.development(village('a',{developmentValue:value})),points);
+ const s=state();close(E.developmentHourlyRate(s,s.villages.a),1.75/100);
+});
+test('Upgrade settles old 500-value backlog before adopting 100, including interrupted catch-up',()=>{
+ const make=()=>migrateResearch({productionVersion:2,villages:{a:village('a',{developmentValue:499.9})},global:{storage:20},stock:{'minecraft:diamond':0.125},roads:{},economyAt:0,custom:'retained'});
+ const once=make(),partial=make();E.accountEconomy(once,hour);
+ let result=E.accountEconomy(partial,hour,1);
+ assert.equal(result.complete,false);assert.equal(partial.developmentVersion,undefined);
+ assert.equal(partial.villages.a.developmentThreshold,500);close(partial.villages.a.developmentValue,500);
+ const reloaded=JSON.parse(JSON.stringify(partial));
+ while(!result.complete)result=E.accountEconomy(reloaded,hour,1);
+ for(const s of [once,reloaded]){
+  close(s.stock['minecraft:wheat'],1.75165);close(s.villages.a.developmentValue,501.65165);
+  assert.equal(s.developmentVersion,2);assert.equal(s.villages.a.developmentThreshold,100);assert.equal(E.development(s.villages.a),5);
+  assert.equal(s.stock['minecraft:diamond'],0.125);assert.equal(s.custom,'retained');
+ }
+ close(once.stock['minecraft:wheat'],reloaded.stock['minecraft:wheat']);
+ const saved=JSON.stringify(once);E.accountEconomy(once,hour);assert.equal(JSON.stringify(once),saved);
+ E.accountEconomy(once,2*hour);close(once.stock['minecraft:wheat'],3.5104);close(once.villages.a.developmentValue,503.4104);
+});
+test('Unknown newer Development schemas are rejected without changing the save',()=>{
+ const s=state();s.developmentVersion=3;const saved=JSON.stringify(s);
+ assert.throws(()=>E.accountEconomy(s,hour),/Development save is newer/);assert.equal(JSON.stringify(s),saved);
 });

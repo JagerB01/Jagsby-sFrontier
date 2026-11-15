@@ -5,7 +5,7 @@ import * as R from '../packs/behavior/scripts/global-research.js';
 import * as E from '../packs/behavior/scripts/settlement-economy.js';
 import {refreshProtection} from '../packs/behavior/scripts/settlement-effects.js';
 const hour=3600000;
-const fresh=(now=0)=>R.migrateResearch({productionVersion:2,villages:{},global:{},stock:{},roads:{},economyAt:now});
+const fresh=(now=0)=>R.migrateResearch({productionVersion:2,developmentVersion:2,villages:{},global:{},stock:{},roads:{},economyAt:now});
 const reload=s=>R.migrateResearch(JSON.parse(JSON.stringify(s)));
 const grant=(s,key,material,n)=>R.applyContribution(s,key,material,n);
 const village=(x=0)=>({id:'a',location:{x,y:64,z:0},dimension:'minecraft:overworld',biome:'minecraft:plains',efficiency:0,hearth:1,developmentValue:0,lifetimeProduced:{},census:{realmPowerTenths:100}});
@@ -79,10 +79,10 @@ test('The first v0.0.32 backlog is paid under legacy effects before activating n
  const s={villages:{a:village(28000)},stock:{},global:{storage:0,colonization:5},roads:{},economyAt:0};
  E.accountEconomy(s,100*hour);close(E.stockTotal(s),128);assert.equal(s.researchVersion,3);assert.equal(E.capacity(s),792);
  s.stock={};const before=s.villages.a.developmentValue;E.accountEconomy(s,101*hour);
- close(E.stockTotal(s),2.625);close(s.villages.a.developmentValue-before,1.75);
+ assert.equal(E.development(s.villages.a),1);close(E.stockTotal(s),2.627625);close(s.villages.a.developmentValue-before,1.75175);
 });
 test('Stewardship caps endless local levels without capping permanent Development',()=>{
- const s=fresh(),v=village();v.biomeUnlocked=true;v.efficiency=1;v.sanctuary=1;v.developmentValue=500000;
+ const s=fresh(),v=village();v.biomeUnlocked=true;v.efficiency=1;v.sanctuary=1;v.developmentValue=100000;
  s.villages.a=v;assert.match(E.researchRequirement(v,'efficiency',s),/Stewardship/);assert.match(E.researchRequirement(v,'sanctuary',s),/Stewardship/);
  assert.equal(E.development(v),1000);assert.equal(R.localLevel(s,v,'efficiency'),1);
  grant(s,'innovation','minecraft:copper_ingot',192);assert.equal(E.researchRequirement(v,'efficiency',s),null);
@@ -116,7 +116,7 @@ test('Research changes do not reprice earlier offline production',()=>{
  s.global.colonization=5;s=reload(s);E.accountEconomy(s,40*hour);close(E.stockTotal(s),87.5);close(s.villages.a.developmentValue,70);
 });
 test('Colonization catch-up remains independent of access frequency across Development thresholds',()=>{
- const s=fresh();s.global.colonization=5;s.global.storage=10;s.global.innovation=10;s.villages.a={...village(28000),developmentValue:499.9};
+ const s=fresh();s.global.colonization=5;s.global.storage=10;s.global.innovation=10;s.villages.a={...village(28000),developmentValue:99.9};
  const once=structuredClone(s),many=structuredClone(s);E.accountEconomy(once,100*hour);
  for(let t=hour;t<=100*hour;t+=hour)E.accountEconomy(many,t);
  close(E.stockTotal(once),E.stockTotal(many));close(once.villages.a.developmentValue,many.villages.a.developmentValue);

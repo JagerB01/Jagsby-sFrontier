@@ -66,7 +66,7 @@ test('All produced resources have a packaged item image and compact actual hourl
 });
 test('River is conditional and Total reflects multiplicative, crop-aware production boosts',()=>{
  const {s,v}=fixture();v.biome='minecraft:river';v.biomeUnlocked=true;v.productionMode='specialize';
- v.efficiency=4;v.developmentValue=50000;v.location.x=28000;s.global.innovation=4;s.global.colonization=5;
+ v.efficiency=4;v.developmentValue=10000;v.location.x=28000;s.global.innovation=4;s.global.colonization=5;
  let view=productionView(s,v);
  assert.deepEqual(view.modifierRows.map(r=>r.label),['Prosperity','Development','Colonization','River']);
  assert.equal(view.modifierRows[3].value,'+ 10');assert.equal(view.modifierTotal,'+ 117.8');
