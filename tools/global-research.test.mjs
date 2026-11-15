@@ -343,9 +343,16 @@ test('Production sends item images, aligned bonus percentages and whole stock co
  assert.equal(h.forms[0].icons[96],'textures/ui/frontier/production/wheat');
  assert.equal(h.forms[0].icons[97],undefined);
  assert.ok(h.forms[0].buttons[96].includes('Wheat\n+ 3.850/hour'));
- assert.equal(h.forms[0].buttons[11],'[JF:data:production]Prosperity\nDevelopment\nColonization\nRiver crops');
- assert.equal(h.forms[0].buttons[98],'[JF:data:modifierValues]+ 0%\n+ 0%\n+ 0%\n+ 10%');
+ for(const [i,value]of ['+ 0%','+ 0%','+ 0%','+ 10%'].entries())assert.deepEqual(h.forms[0].buttons[130+i],{rawtext:[{text:value}]});
  assert.equal(h.forms.length,1);assert.ok(h.forms[0].text.includes('[JF:production:summary]'));
  const {STOCK_ITEMS}=await import('../packs/behavior/scripts/production-display.js');
- for(const [i,item]of STOCK_ITEMS.entries())assert.equal(h.forms[0].buttons[100+i],`[JF:data:stockCount${i}]${s.stock[item.id]?10:0}`);
+ const stocked=STOCK_ITEMS.filter(item=>s.stock[item.id]>=1);
+ for(const [i,item]of stocked.entries()){
+  assert.equal(h.forms[0].buttons[100+i],'10');
+  assert.equal(h.forms[0].icons[100+i],item.texture);
+  assert.ok(h.forms[0].text.includes(`[JF:stock:${i}]`));
+ }
+ assert.equal(h.forms[0].buttons[100+stocked.length],'');
+ assert.equal(h.forms[0].text.includes(`[JF:stock:${stocked.length}]`),false);
+
 });

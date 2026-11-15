@@ -12,7 +12,6 @@ export const CHARTER_LAYOUT = {
     "capacity": 8,
     "innovation": 9,
     "storage": 10,
-    "production": 11,
     "stockpile": 12,
     "owner": 25,
     "realmMine": 26,
@@ -44,7 +43,6 @@ export const CHARTER_LAYOUT = {
     "biomeOption2": 95,
     "productionItem0": 96,
     "productionItem1": 97,
-    "modifierValues": 98,
     "stockCount0": 100,
     "stockCount1": 101,
     "stockCount2": 102,
@@ -74,7 +72,11 @@ export const CHARTER_LAYOUT = {
     "stockCount26": 126,
     "stockCount27": 127,
     "stockCount28": 128,
-    "stockCount29": 129
+    "stockCount29": 129,
+    "productionModifier0": 130,
+    "productionModifier1": 131,
+    "productionModifier2": 132,
+    "productionModifier3": 133
   },
   "actions": {
     "efficiency": 14,
@@ -105,7 +107,7 @@ export const CHARTER_LAYOUT = {
     "chooseBiome2": 90,
     "clearSecondary": 91
   },
-  "recordCount": 130,
+  "recordCount": 134,
   "tabs": [
     "Overview",
     "Research",

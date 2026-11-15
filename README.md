@@ -5,7 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.48.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.49.mcaddon?raw=true)
+
+Version 0.0.49 shows only stocked whole items, packed into the grid without gaps.
+Each modifier now has its own label/value row with enough height; percentages
+use native literal text bindings rather than a clipped multi-line field.
 
 Version 0.0.48 puts all 30 stockpile item icons on one page, with whole-item
 counts in the bottom-right corner and no stock paging. Collect stockpile is

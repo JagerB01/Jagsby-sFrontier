@@ -1,3 +1,18 @@
+# 0.0.49
+
+- Show only producible items with at least one whole unit in stock, packed into
+  consecutive icon slots. Hide unused slots. Retain room for all 30 item types
+  on one page; preserve hidden fractional balances internally.
+- Bind stock icons to the actual item in each slot and bind whole counts directly
+  to native form text, so displayed numbers match the dynamic item ordering.
+- Replace clipped modifier paragraphs with four independent label/value rows.
+  Give each row 12 units of text height and align all value fields to one column.
+  Send percentages as literal RawMessages and use direct native text bindings.
+- Adjust top/bottom panel proportions within the existing overall dimensions,
+  retaining two output rows and the centered Collect stockpile button.
+- 181 Node tests and 3 Python tests pass; static pack validation passes. Native
+  rendering requires an in-game check.
+
 # 0.0.48
 
 - Replace paged stock text with a single 10-column, 3-row grid showing every

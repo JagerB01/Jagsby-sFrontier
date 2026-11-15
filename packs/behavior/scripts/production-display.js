@@ -17,7 +17,7 @@ export function productionView(s,v,requested={}){
   return {id:r.id,name:r.name,base:r.rate,bonus:r.rate*bonus,actual:full?0:r.rate*(1+bonus),sources,texture:`textures/ui/frontier/production/${r.id.replace('minecraft:','')}`};
  });
  const output=paginate(outputRows,requested.output,3);
- const stock=STOCK_ITEMS.map(item=>({...item,count:Math.max(0,Math.floor(s.stock[item.id]||0))}));
+ const stock=STOCK_ITEMS.map(item=>({...item,count:Math.max(0,Math.floor(s.stock[item.id]||0))})).filter(item=>item.count>0);
  const storedWhole=Object.values(s.stock).reduce((sum,n)=>sum+Math.max(0,Math.floor(n)),0);
  const available=[...new Set((v.available||[]).map(canonicalBiome))].filter(b=>b!==native&&biomeResource(b)).sort();
  const options=[...(nativeResource&&v.dimension==='minecraft:overworld'?[{id:native,mode:'specialize'}]:[]),...available.map(id=>({id,mode:'diversify'}))];
@@ -32,8 +32,7 @@ export function productionView(s,v,requested={}){
  return {
   status:full?'Stockpile full - paused':!recordedPower(v)?'Waiting for Realm Power':!rates.length?'No resource assigned':'Producing',
   items:output.rows.map(r=>({...r,text:`${r.name}\n+ ${r.actual.toFixed(3)}/hour`})),
-  modifierLabels:'Prosperity\nDevelopment\nColonization\nRiver crops',
-  modifierValues:`+ ${localLevel(s,v,'efficiency')*5}%\n+ ${Number((development(v)*0.1).toFixed(1))}%\n+ ${Math.round(bonus*100)}%\n+ ${Math.round(river*100)}%`,
+  modifiers:[localLevel(s,v,'efficiency')*5,Number((development(v)*0.1).toFixed(1)),Math.round(bonus*100),Math.round(river*100)].map(value=>`+ ${value}%`),
   biomeText:`Native: ${biomeName(native)} - ${nativeResource?.name||'Unsupported biome'}\nSlots: ${allocations.map(a=>a.slot+': '+a.name).join(' | ')||'No eligible allocation'}\n${v.biomeUnlocked?'Preview specialization or a nearby biome below.':`Paper: ${progress} / 64. Contribute in Research > Local.`}`,
   biomeFooter:`Allocation choices: ${biomes.count} | Page ${biomes.page+1} / ${biomes.pages}`,
   stockHeading:`Stockpile  ${storedWhole} / ${cap}`,

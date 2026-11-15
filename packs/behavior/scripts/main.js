@@ -210,8 +210,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     records[data[key+'Level']]=`Lv ${level}`;
   }
   const production=productionView(s,v,productionPages);
-  records[data.production]=production.modifierLabels;
-  records[data.modifierValues]=production.modifierValues;
+  production.modifiers.forEach((value,slot)=>records[data['productionModifier'+slot]]=value);
   records[data.productionOutput]=production.status;
   records[data.productionBiomes]=production.biomeText;
   records[data.stockpile]=production.stockHeading;
@@ -246,13 +245,18 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     handlers.set(actions[scope+'Next'],()=>open(player,vId,'Realm','global',directory.page+1,scope));
   }
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
-  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly'].includes(key))records[index]=`[JF:data:${key}]${records[index]}`;
+  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier'))records[index]=`[JF:data:${key}]${records[index]}`;
   for(const key of ['selectBiome','chooseBiome1','chooseBiome2','clearSecondary'])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${v.owner?'':'[JF:unclaimed]'}`);
-  records.forEach((text,index)=>form.button(text,index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:undefined));
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}`);
+  records.forEach((text,index)=>{
+   const modifier=index>=data.productionModifier0&&index<=data.productionModifier3;
+   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:undefined;
+   // Literal RawMessage keeps percent signs out of localization/format parsing.
+   form.button(modifier?{rawtext:[{text}]}:text,texture);
+  });
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
 function openProduction(player,vid,scope='summary',pages={}){open(player,vid,'Production','global',0,'roads',scope==='biomes'?'biomes':'summary',pages);}

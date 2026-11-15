@@ -1,4 +1,4 @@
-# Production panels — 0.0.48
+# Production panels — 0.0.49
 
 Production has exactly two fixed, non-scrolling tabs: **Overview** and
 **Resource Prospecting**. Both use the existing charter frame. Local tab
@@ -13,12 +13,14 @@ The upper section has two compact boxes side by side:
   Text is larger and Producing uses the same orange/gold as Modifiers. Rates
   include all active bonuses; full stock shows a paused status and zero output.
 - **Modifiers:** Prosperity, Development, Colonization and River crop increases
-  only, in percent. Labels and values occupy separate, aligned columns with a
-  consistent text size. Realm Power is a production input, not a percentage
+  only, in percent. Each modifier has its own label and value row with 12 units of text height
+  and aligned columns. Percent values use direct native bindings and literal
+  RawMessages to preserve the percent sign. All rows share a consistent text size. Realm Power is a production input, not a percentage
   modifier, so it is omitted here. Missing power still has explicit status text.
 
-The **stockpile** sits below both boxes on a single page. All 30 producible item
-icons appear in a fixed 10-column, 3-row grid, including zero balances. Every
+The **stockpile** sits below both boxes on a single page. Only items with at least one whole unit appear, packed consecutively in a
+15-column grid with room for all 30 producible types in two rows. Empty slots
+are hidden; fractional-only balances wait until a whole item is available. Every
 icon has its whole stored quantity in the bottom-right corner with a shadow for
 contrast. There are no stock Prev/Next buttons or page indicator. The heading
 shows the sum of whole stored items against the existing shared capacity.

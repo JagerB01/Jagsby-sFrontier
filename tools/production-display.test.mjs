@@ -11,7 +11,7 @@ test('Production displays precise per-resource base and zone rates without mutat
  const {s,v}=fixture();v.location.x=28000;s.global.colonization=5;
  const before=JSON.stringify(s),view=productionView(s,v);
  assert.equal(view.output.count,1);assert.equal(view.output.rows[0].base,1.75);assert.equal(view.output.rows[0].bonus,0.875);assert.equal(view.output.rows[0].actual,2.625);
- assert.equal(view.items[0].text,'Wheat\n+ 2.625/hour');assert.equal(view.modifierValues.split('\n')[2],'+ 50%');assert.equal(JSON.stringify(s),before);
+ assert.equal(view.items[0].text,'Wheat\n+ 2.625/hour');assert.equal(view.modifiers[2],'+ 50%');assert.equal(JSON.stringify(s),before);
 });
 test('A full stockpile shows paused actual output while preserving potential rates',()=>{
  const {s,v}=fixture();s.stock['minecraft:wheat']=792;const view=productionView(s,v);
@@ -24,14 +24,14 @@ test('Unlocked secondary biomes add resources while each allocation retains its 
  const oak=view.output.rows.find(r=>r.id==='minecraft:oak_log');assert.deepEqual(oak.sources,['Forest']);assert.equal(oak.base,0.75);
  v.biomeUnlocked=false;assert.equal(productionView(s,v).output.count,1);
 });
-test('Stockpile includes all producible items on one page with only whole counts',()=>{
+test('Stockpile packs only stocked whole items on one page',()=>{
  const {s,v}=fixture();v.biomeUnlocked=true;v.secondary='minecraft:jungle';
  s.stock={'minecraft:wheat':12.99,'minecraft:potato':0.999,'minecraft:oak_log':250,'minecraft:poplar_log':3.7};
  const before=JSON.stringify(s),first=productionView(s,v,{stock:0}),last=productionView(s,v,{stock:999});
- assert.equal(first.output.rows.length,2);assert.equal(first.stock.length,30);
- assert.deepEqual(last.stock,first.stock);assert.equal(new Set(first.stock.map(i=>i.id)).size,30);
+ assert.equal(first.output.rows.length,2);assert.equal(first.stock.length,3);
+ assert.deepEqual(last.stock,first.stock);assert.equal(new Set(first.stock.map(i=>i.id)).size,3);
  assert.equal(first.stock.find(i=>i.id==='minecraft:wheat').count,12);
- assert.equal(first.stock.find(i=>i.id==='minecraft:potato').count,0);
+ assert.equal(first.stock.find(i=>i.id==='minecraft:potato'),undefined);
  assert.equal(first.stock.find(i=>i.id==='minecraft:oak_log').count,250);
  assert.ok(first.stock.every(i=>Number.isInteger(i.count)&&i.count>=0));
  assert.equal(first.stockHeading,'Stockpile  265 / 792');
@@ -49,7 +49,7 @@ test('Unknown/empty production and oversized requests have useful bounded empty 
  const {s,v}=fixture();v.biome='minecraft:unmapped';v.productionPower=0;
  const view=productionView(s,v,{output:-4,stock:100,biomes:100});
  assert.equal(view.output.page,0);assert.equal(view.biomes.page,0);
- assert.deepEqual(view.items,[]);assert.equal(view.stock.length,30);assert.ok(view.stock.every(i=>i.count===0));
+ assert.deepEqual(view.items,[]);assert.equal(view.stock.length,0);assert.ok(view.stock.every(i=>i.count===0));
  assert.ok(view.status.includes('Waiting for Realm Power'));
 });
 test('All produced resources have a packaged item image and compact actual hourly rate',async()=>{

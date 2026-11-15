@@ -5007,6 +5007,1056 @@
       }
     ]
   },
+  "jf_stock_icon0": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon1": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon2": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon3": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon4": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon5": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon6": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon7": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon8": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon9": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon10": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon11": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon12": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon13": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon14": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon15": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon16": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon17": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon18": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon19": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon20": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon21": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon22": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon23": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon24": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon25": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon26": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon27": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon28": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_stock_icon29": {
+    "type": "image",
+    "texture": "textures/ui/frontier/production/wheat",
+    "size": [
+      14,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
   "jf_production_icon0": {
     "type": "image",
     "texture": "textures/ui/frontier/production/wheat",
@@ -5100,7 +6150,7 @@
           "texture": "textures/ui/frontier/palette_panel",
           "size": [
             131,
-            49
+            60
           ],
           "offset": [
             0,
@@ -5124,7 +6174,7 @@
           "texture": "textures/ui/frontier/palette_panel",
           "size": [
             118,
-            49
+            60
           ],
           "offset": [
             136,
@@ -5148,11 +6198,11 @@
           "texture": "textures/ui/frontier/palette_panel",
           "size": [
             254,
-            78
+            67
           ],
           "offset": [
             0,
-            53
+            64
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -5218,62 +6268,12 @@
         }
       },
       {
-        "modifier_labels": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            70,
-            28
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_production": {
-                "collection_index": 11
-              }
-            }
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "offset": [
-            143,
-            17
-          ],
-          "clips_children": true
-        }
-      },
-      {
-        "modifier_values": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            32,
-            28
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_modifierValues": {
-                "collection_index": 98
-              }
-            }
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "offset": [
-            215,
-            17
-          ],
-          "clips_children": true
-        }
-      },
-      {
         "stock_heading": {
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
             240,
-            9
+            10
           ],
           "collection_name": "form_buttons",
           "controls": [
@@ -5287,7 +6287,7 @@
           "anchor_to": "top_left",
           "offset": [
             7,
-            56
+            67
           ],
           "clips_children": true
         }
@@ -5317,36 +6317,261 @@
         }
       },
       {
+        "modifier_label0": {
+          "type": "label",
+          "text": "Prosperity",
+          "size": [
+            68,
+            12
+          ],
+          "offset": [
+            143,
+            17
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.75,
+          "color": [
+            0.94,
+            0.92,
+            0.85
+          ],
+          "shadow": false
+        }
+      },
+      {
+        "modifier_value0": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            34,
+            12
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_data_productionModifier0": {
+                "collection_index": 130
+              }
+            }
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            213,
+            17
+          ],
+          "clips_children": true
+        }
+      },
+      {
+        "modifier_label1": {
+          "type": "label",
+          "text": "Development",
+          "size": [
+            68,
+            12
+          ],
+          "offset": [
+            143,
+            27
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.75,
+          "color": [
+            0.94,
+            0.92,
+            0.85
+          ],
+          "shadow": false
+        }
+      },
+      {
+        "modifier_value1": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            34,
+            12
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_data_productionModifier1": {
+                "collection_index": 131
+              }
+            }
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            213,
+            27
+          ],
+          "clips_children": true
+        }
+      },
+      {
+        "modifier_label2": {
+          "type": "label",
+          "text": "Colonization",
+          "size": [
+            68,
+            12
+          ],
+          "offset": [
+            143,
+            37
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.75,
+          "color": [
+            0.94,
+            0.92,
+            0.85
+          ],
+          "shadow": false
+        }
+      },
+      {
+        "modifier_value2": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            34,
+            12
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_data_productionModifier2": {
+                "collection_index": 132
+              }
+            }
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            213,
+            37
+          ],
+          "clips_children": true
+        }
+      },
+      {
+        "modifier_label3": {
+          "type": "label",
+          "text": "River crops",
+          "size": [
+            68,
+            12
+          ],
+          "offset": [
+            143,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.75,
+          "color": [
+            0.94,
+            0.92,
+            0.85
+          ],
+          "shadow": false
+        }
+      },
+      {
+        "modifier_value3": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            34,
+            12
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_data_productionModifier3": {
+                "collection_index": 133
+              }
+            }
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "offset": [
+            213,
+            47
+          ],
+          "clips_children": true
+        }
+      },
+      {
         "stock_item0": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
             7,
-            66
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:0]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:0]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/acacia_log",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon0": {
+                      "collection_index": 100
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5354,7 +6579,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5381,33 +6606,54 @@
         "stock_item1": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            31,
-            66
+            23,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:1]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:1]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/bamboo",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon1": {
+                      "collection_index": 101
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5415,7 +6661,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5442,33 +6688,54 @@
         "stock_item2": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            55,
-            66
+            39,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:2]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:2]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/birch_log",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon2": {
+                      "collection_index": 102
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5476,7 +6743,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5503,33 +6770,54 @@
         "stock_item3": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            79,
-            66
+            55,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:3]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:3]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/cherry_log",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon3": {
+                      "collection_index": 103
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5537,7 +6825,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5564,33 +6852,54 @@
         "stock_item4": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            103,
-            66
+            71,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:4]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:4]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/coal",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon4": {
+                      "collection_index": 104
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5598,7 +6907,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5625,33 +6934,54 @@
         "stock_item5": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            127,
-            66
+            87,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:5]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:5]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/cocoa_beans",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon5": {
+                      "collection_index": 105
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5659,7 +6989,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5686,33 +7016,54 @@
         "stock_item6": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            151,
-            66
+            103,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:6]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:6]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/cod",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon6": {
+                      "collection_index": 106
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5720,7 +7071,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5747,33 +7098,54 @@
         "stock_item7": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            175,
-            66
+            119,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:7]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:7]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/dark_oak_log",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon7": {
+                      "collection_index": 107
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5781,7 +7153,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5808,33 +7180,54 @@
         "stock_item8": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            199,
-            66
+            135,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:8]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:8]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/gravel",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon8": {
+                      "collection_index": 108
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5842,7 +7235,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5869,33 +7262,54 @@
         "stock_item9": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            223,
-            66
+            151,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:9]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:9]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/hardened_clay",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon9": {
+                      "collection_index": 109
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5903,7 +7317,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5930,33 +7344,54 @@
         "stock_item10": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            7,
-            82
+            167,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:10]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:10]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/honeycomb",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon10": {
+                      "collection_index": 110
+                    }
+                  }
+                ]
               }
             },
             {
@@ -5964,7 +7399,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -5991,33 +7426,54 @@
         "stock_item11": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            31,
-            82
+            183,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:11]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:11]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/iron_ingot",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon11": {
+                      "collection_index": 111
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6025,7 +7481,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6052,33 +7508,54 @@
         "stock_item12": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            55,
-            82
+            199,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:12]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:12]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/jungle_log",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon12": {
+                      "collection_index": 112
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6086,7 +7563,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6113,33 +7590,54 @@
         "stock_item13": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            79,
-            82
+            215,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:13]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:13]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/mangrove_log",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon13": {
+                      "collection_index": 113
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6147,7 +7645,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6174,33 +7672,54 @@
         "stock_item14": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            103,
-            82
+            231,
+            78
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:14]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:14]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/mud",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon14": {
+                      "collection_index": 114
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6208,7 +7727,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6235,33 +7754,54 @@
         "stock_item15": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            127,
-            82
+            7,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:15]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:15]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/oak_log",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon15": {
+                      "collection_index": 115
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6269,7 +7809,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6296,33 +7836,54 @@
         "stock_item16": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            151,
-            82
+            23,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:16]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:16]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/packed_ice",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon16": {
+                      "collection_index": 116
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6330,7 +7891,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6357,33 +7918,54 @@
         "stock_item17": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            175,
-            82
+            39,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:17]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:17]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/pale_oak_log",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon17": {
+                      "collection_index": 117
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6391,7 +7973,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6418,33 +8000,54 @@
         "stock_item18": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            199,
-            82
+            55,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:18]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:18]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/poplar_log",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon18": {
+                      "collection_index": 118
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6452,7 +8055,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6479,33 +8082,54 @@
         "stock_item19": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            223,
-            82
+            71,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:19]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:19]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/potato",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon19": {
+                      "collection_index": 119
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6513,7 +8137,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6540,33 +8164,54 @@
         "stock_item20": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            7,
-            98
+            87,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:20]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:20]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/prismarine_crystals",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon20": {
+                      "collection_index": 120
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6574,7 +8219,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6601,33 +8246,54 @@
         "stock_item21": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            31,
-            98
+            103,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:21]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:21]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/prismarine_shard",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon21": {
+                      "collection_index": 121
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6635,7 +8301,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6662,33 +8328,54 @@
         "stock_item22": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            55,
-            98
+            119,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:22]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:22]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/red_mushroom",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon22": {
+                      "collection_index": 122
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6696,7 +8383,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6723,33 +8410,54 @@
         "stock_item23": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            79,
-            98
+            135,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:23]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:23]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/red_sand",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon23": {
+                      "collection_index": 123
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6757,7 +8465,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6784,33 +8492,54 @@
         "stock_item24": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            103,
-            98
+            151,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:24]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:24]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/salmon",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon24": {
+                      "collection_index": 124
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6818,7 +8547,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6845,33 +8574,54 @@
         "stock_item25": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            127,
-            98
+            167,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:25]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:25]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/sand",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon25": {
+                      "collection_index": 125
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6879,7 +8629,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6906,33 +8656,54 @@
         "stock_item26": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            151,
-            98
+            183,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:26]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:26]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/sea_pickle",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon26": {
+                      "collection_index": 126
+                    }
+                  }
+                ]
               }
             },
             {
@@ -6940,7 +8711,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -6967,33 +8738,54 @@
         "stock_item27": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            175,
-            98
+            199,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:27]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:27]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/spruce_log",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon27": {
+                      "collection_index": 127
+                    }
+                  }
+                ]
               }
             },
             {
@@ -7001,7 +8793,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -7028,33 +8820,54 @@
         "stock_item28": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            199,
-            98
+            215,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:28]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:28]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/stone",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon28": {
+                      "collection_index": 128
+                    }
+                  }
+                ]
               }
             },
             {
@@ -7062,7 +8875,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -7089,33 +8902,54 @@
         "stock_item29": {
           "type": "panel",
           "size": [
-            24,
+            16,
             16
           ],
           "offset": [
-            223,
-            98
+            231,
+            94
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:29]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:stock:29]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ],
           "controls": [
             {
               "icon": {
-                "type": "image",
-                "texture": "textures/ui/frontier/production/wheat",
+                "type": "stack_panel",
+                "orientation": "vertical",
                 "size": [
                   14,
                   14
                 ],
                 "offset": [
-                  3,
+                  1,
                   0
                 ],
-                "keep_ratio": true,
-                "bilinear": false,
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_stock_icon29": {
+                      "collection_index": 129
+                    }
+                  }
+                ]
               }
             },
             {
@@ -7123,7 +8957,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  23,
+                  16,
                   8
                 ],
                 "collection_name": "form_buttons",
@@ -7152,7 +8986,7 @@
           "orientation": "vertical",
           "size": [
             92,
-            15
+            18
           ],
           "collection_name": "form_buttons",
           "controls": [
@@ -7201,7 +9035,7 @@
           "orientation": "vertical",
           "size": [
             92,
-            15
+            18
           ],
           "collection_name": "form_buttons",
           "controls": [
@@ -7215,7 +9049,7 @@
           "anchor_to": "top_left",
           "offset": [
             28,
-            33
+            38
           ],
           "clips_children": true
         }
@@ -7230,7 +9064,7 @@
           ],
           "offset": [
             7,
-            33
+            38
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -18407,107 +20241,12 @@
       }
     ]
   },
-  "jf_data_production": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      70,
-      28
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_type": "unicode",
-    "font_size": "normal",
-    "font_scale_factor": 0.75,
-    "color": [
-      0.94,
-      0.92,
-      0.85
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:production]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:production]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ],
-    "text_alignment": "left"
-  },
-  "jf_data_modifierValues": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      32,
-      28
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_type": "unicode",
-    "font_size": "normal",
-    "font_scale_factor": 0.75,
-    "color": [
-      0.94,
-      0.92,
-      0.85
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:modifierValues]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:modifierValues]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ],
-    "localize": false,
-    "text_alignment": "left"
-  },
   "jf_data_stockpile": {
     "type": "label",
     "text": "#text",
     "size": [
       240,
-      9
+      10
     ],
     "offset": [
       0,
@@ -18790,11 +20529,163 @@
       }
     ]
   },
+  "jf_data_productionModifier0": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      34,
+      12
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.75,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
+  },
+  "jf_data_productionModifier1": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      34,
+      12
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.75,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
+  },
+  "jf_data_productionModifier2": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      34,
+      12
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.75,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
+  },
+  "jf_data_productionModifier3": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      34,
+      12
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.75,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
+  },
   "jf_data_stockCount0": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -18806,7 +20697,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -18820,28 +20711,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount0]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount0]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount1": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -18853,7 +20736,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -18867,28 +20750,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount1]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount1]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount2": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -18900,7 +20775,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -18914,28 +20789,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount2]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount2]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount3": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -18947,7 +20814,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -18961,28 +20828,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount3]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount3]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount4": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -18994,7 +20853,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19008,28 +20867,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount4]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount4]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount5": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19041,7 +20892,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19055,28 +20906,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount5]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount5]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount6": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19088,7 +20931,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19102,28 +20945,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount6]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount6]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount7": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19135,7 +20970,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19149,28 +20984,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount7]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount7]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount8": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19182,7 +21009,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19196,28 +21023,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount8]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount8]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount9": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19229,7 +21048,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19243,28 +21062,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount9]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount9]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount10": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19276,7 +21087,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19290,28 +21101,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount10]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount10]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount11": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19323,7 +21126,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19337,28 +21140,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount11]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount11]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount12": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19370,7 +21165,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19384,28 +21179,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount12]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount12]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount13": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19417,7 +21204,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19431,28 +21218,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount13]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount13]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount14": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19464,7 +21243,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19478,28 +21257,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount14]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount14]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount15": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19511,7 +21282,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19525,28 +21296,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount15]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount15]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount16": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19558,7 +21321,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19572,28 +21335,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount16]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount16]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount17": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19605,7 +21360,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19619,28 +21374,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount17]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount17]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount18": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19652,7 +21399,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19666,28 +21413,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount18]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount18]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount19": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19699,7 +21438,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19713,28 +21452,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount19]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount19]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount20": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19746,7 +21477,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19760,28 +21491,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount20]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount20]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount21": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19793,7 +21516,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19807,28 +21530,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount21]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount21]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount22": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19840,7 +21555,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19854,28 +21569,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount22]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount22]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount23": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19887,7 +21594,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19901,28 +21608,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount23]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount23]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount24": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19934,7 +21633,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19948,28 +21647,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount24]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount24]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount25": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -19981,7 +21672,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -19995,28 +21686,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount25]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount25]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount26": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -20028,7 +21711,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -20042,28 +21725,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount26]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount26]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount27": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -20075,7 +21750,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -20089,28 +21764,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount27]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount27]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount28": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -20122,7 +21789,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -20136,28 +21803,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount28]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount28]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_stockCount29": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      23,
+      16,
       8
     ],
     "offset": [
@@ -20169,7 +21828,7 @@
     "layer": 12,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -20183,21 +21842,13 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:stockCount29]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:stockCount29]') = #record_text))",
-        "target_property_name": "#visible"
       }
     ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    },
     "text_alignment": "right"
   },
   "jf_data_productionItem0": {
@@ -20205,7 +21856,7 @@
     "text": "#text",
     "size": [
       92,
-      15
+      18
     ],
     "offset": [
       0,
@@ -20251,7 +21902,7 @@
     "text": "#text",
     "size": [
       92,
-      15
+      18
     ],
     "offset": [
       0,

@@ -10,7 +10,7 @@ DATA = {
     "overview": 0, "biomes": 1, "census": 2, "tier": 3,
     "efficiency": 4, "hearth": 5, "biome": 6, "frontier": 7,
     "capacity": 8, "innovation": 9, "storage": 10,
-    "production": 11, "stockpile": 12,
+    "stockpile": 12,
     "owner": 25, "realmMine": 26, "realmAll": 27,
 }
 ACTIONS = {name: i + 14 for i, name in enumerate([
@@ -34,9 +34,10 @@ DATA.update({"productionOutput": 78, "productionBiomes": 79, "biomePage": 82,
              "biomeOption0": 93, "biomeOption1": 94, "biomeOption2": 95})
 ACTIONS.update({"biomePrev": 87, "biomeNext": 88, "chooseBiome1": 89, "chooseBiome2": 90,
                 "clearSecondary": 91})
-DATA.update({"productionItem0": 96, "productionItem1": 97, "modifierValues": 98})
+DATA.update({"productionItem0": 96, "productionItem1": 97})
 STOCK_ITEMS = json.loads((ROOT / "docs/production-icon-assets.json").read_text())["items"]
 DATA.update({"stockCount" + str(i): 100 + i for i in range(len(STOCK_ITEMS))})
+DATA.update({"productionModifier" + str(i): 130 + i for i in range(4)})
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -126,7 +127,7 @@ def data_template(index, size, scale=0.8):
         view(f"(#record_text - '{marker}')", "#text"),
         view(f"(not ((#record_text - '{marker}') = #record_text))"),
     ]
-    if key in ["census", "developmentValue", "developmentHourly"]:
+    if key in ["census", "developmentValue", "developmentHourly"] or key.startswith(("stockCount", "productionModifier")):
         text["text"] = "#form_button_text"
         text["property_bag"] = {"#form_button_text": "Unavailable"}
         text["bindings"] = [
@@ -468,36 +469,50 @@ def build():
     def production_surface(name, size, offset):
         return control(name, image("frontier/palette_panel", size, offset, color=[0.82, 0.82, 0.82]))
     summary_controls = [
-        production_surface("output_box", [131, 49], [0, 0]),
-        production_surface("modifiers_box", [118, 49], [136, 0]),
-        production_surface("stock_box", [254, 78], [0, 53]),
+        production_surface("output_box", [131, 60], [0, 0]),
+        production_surface("modifiers_box", [118, 60], [136, 0]),
+        production_surface("stock_box", [254, 67], [0, 64]),
         production_value("status", "productionOutput", 5, 10, scale=0.8, width=119),
         control("modifiers_title", label("Modifiers", [104, 10], (143, 5), WHEAT, 0.8)),
-        production_value("modifier_labels", "production", 17, 28, scale=0.75, x=143, width=70),
-        production_value("modifier_values", "modifierValues", 17, 28, scale=0.75, x=215, width=32),
-        production_value("stock_heading", "stockpile", 56, 9, scale=0.75, width=240),
+        production_value("stock_heading", "stockpile", 67, 10, scale=0.75, width=240),
         production_button("collect", "collect", "Collect stockpile", 48, 115, 158, 15),
     ]
     GENERATED_CONTROLS["jf_data_productionOutput"]["color"] = list(WHEAT)
-    GENERATED_CONTROLS["jf_data_modifierValues"]["localize"] = False
-    for key in ["production", "modifierValues"]:
-        GENERATED_CONTROLS["jf_data_" + key]["text_alignment"] = "left"
+    for row, caption in enumerate(["Prosperity", "Development", "Colonization", "River crops"]):
+        y = 17 + row * 10
+        summary_controls.append(control("modifier_label" + str(row), label(caption, [68, 12], (143, y), IVORY, 0.75)))
+        summary_controls.append(production_value("modifier_value" + str(row), "productionModifier" + str(row), y, 12, scale=0.75, x=213, width=34))
     for state in GENERATED_CONTROLS["jf_action_collect@common.button"]["controls"]:
         caption = next(c["caption"] for c in next(iter(state.values()))["controls"] if "caption" in c)
         caption.update({"text_alignment": "center", "offset": [0, 2], "size": [158, 11], "font_scale_factor": 0.75})
-    for slot, item in enumerate(STOCK_ITEMS):
+    for slot in range(len(STOCK_ITEMS)):
         key = "stockCount" + str(slot)
-        count = overview_value("count", DATA[key], [0, 8], [23, 8], scale=0.65)
+        count = overview_value("count", DATA[key], [0, 8], [16, 8], scale=0.6)
         GENERATED_CONTROLS["jf_data_" + key].update({"text_alignment": "right", "shadow": True, "layer": 12})
-        icon = image(item["icon"].removeprefix("textures/ui/"), [14, 14], (3, 0), layer=8)
+        template = "jf_stock_icon" + str(slot)
+        icon = image("frontier/production/wheat", [14, 14], layer=8)
         icon["keep_ratio"] = True
+        icon["bindings"] = [
+            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        ]
+        ui[template] = icon
+        picture = control("icon", {
+            "type": "stack_panel", "orientation": "vertical", "size": [14, 14],
+            "offset": [1, 0], "anchor_from": "top_left", "anchor_to": "top_left",
+            "collection_name": "form_buttons", "controls": [
+                control("record@jagsby_frontier." + template, {"collection_index": DATA[key]})],
+        })
         summary_controls.append(control("stock_item" + str(slot), {
-            "type": "panel", "size": [24, 16], "offset": [7 + (slot % 10) * 24, 66 + (slot // 10) * 16],
-            "anchor_from": "top_left", "anchor_to": "top_left", "controls": [control("icon", icon), count],
+            "type": "panel", "size": [16, 16], "offset": [7 + (slot % 15) * 16, 78 + (slot // 15) * 16],
+            "anchor_from": "top_left", "anchor_to": "top_left",
+            "bindings": condition("(not ((#form_text - '[JF:stock:" + str(slot) + "]') = #form_text))", "#form_text"),
+            "controls": [picture, count],
         }))
-    for slot, y in enumerate([17, 33]):
+    for slot, y in enumerate([17, 38]):
         key = "productionItem" + str(slot)
-        summary_controls.append(production_value("item" + str(slot), key, y, 15, scale=0.75, x=28, width=92))
+        summary_controls.append(production_value("item" + str(slot), key, y, 18, scale=0.75, x=28, width=92))
         icon = image("frontier/production/wheat", [14, 14], layer=8)
         icon["keep_ratio"] = True
         icon["bindings"] = [
