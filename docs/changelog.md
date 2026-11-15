@@ -1,3 +1,16 @@
+# 0.0.61
+
+- Give only the resource pack/header module a fresh identity and update the
+  behavior pack dependency. Retain behavior-pack/module UUIDs and the state key
+  so existing settlement data and gameplay are unchanged.
+- Older map-era releases contained `ui/hud_screen.json` under the original
+  resource UUID. A clean resource identity rules out obsolete files in that
+  installation; whether stale files caused the reported issue is unconfirmed.
+- Old Frontier resource packs must be disabled in world/global pack stacks;
+  a different identity does not automatically deactivate them.
+- Retain v0.0.60 menu controls, no global UI/HUD overrides, and pbr compatibility.
+  This is a clean-install isolation build, not an in-game-verified HUD fix.
+
 # 0.0.60
 
 - Remove Frontier's `_ui_defs.json` global registration override in response to

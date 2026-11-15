@@ -5,7 +5,19 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.60.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.61.mcaddon?raw=true)
+
+Version 0.0.61 uses a fresh resource-pack identity to isolate obsolete UI files
+from earlier Frontier installations. Older releases included a map HUD override;
+its persistence on an updated client is a possible cause, not a confirmed diagnosis.
+The behavior-pack identity, saved-data key, gameplay and charter controls remain
+unchanged. Vibrant Visuals support is retained.
+
+**Updating to 0.0.61:** fully exit the world, disable every older Frontier resource
+pack in the world's Resource Packs (and Global Resources, if enabled there), then
+activate Frontier 0.0.61 and restart Minecraft. Keep the world's saved data.
+The old resource pack and the new one have different identities, so both can
+otherwise remain enabled. HUD recovery still requires an in-game check.
 
 Version 0.0.60 removes Frontier’s global UI registration override. The charter
 controls now live in the existing server-form file, leaving HUD registration
