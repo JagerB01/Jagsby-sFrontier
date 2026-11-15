@@ -2717,7 +2717,7 @@
           "type": "panel",
           "size": [
             71,
-            72
+            56
           ],
           "offset": [
             0,
@@ -2732,7 +2732,7 @@
                 "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   71,
-                  72
+                  56
                 ],
                 "offset": [
                   0,
@@ -2785,7 +2785,7 @@
                 ],
                 "offset": [
                   6,
-                  27
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2821,7 +2821,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   34,
-                  27
+                  20
                 ],
                 "clips_children": true
               }
@@ -2836,7 +2836,7 @@
                 ],
                 "offset": [
                   6,
-                  45
+                  33
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2858,7 +2858,7 @@
                 "orientation": "vertical",
                 "size": [
                   31,
-                  24
+                  18
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -2872,7 +2872,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   34,
-                  45
+                  33
                 ],
                 "clips_children": true
               }
@@ -2885,7 +2885,7 @@
           "type": "panel",
           "size": [
             72,
-            72
+            56
           ],
           "offset": [
             75,
@@ -2900,7 +2900,7 @@
                 "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   72,
-                  72
+                  56
                 ],
                 "offset": [
                   0,
@@ -21299,14 +21299,14 @@
     "property_bag": {
       "#form_button_text": "Unavailable"
     },
-    "text_alignment": "right"
+    "text_alignment": "left"
   },
   "jf_data_tradeRoute": {
     "type": "label",
     "text": "#text",
     "size": [
       31,
-      24
+      18
     ],
     "offset": [
       0,
@@ -21345,7 +21345,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:tradeRoute]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_data_roadSummary": {
     "type": "label",

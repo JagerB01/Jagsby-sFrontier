@@ -5,7 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.44.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.45.mcaddon?raw=true)
+
+Version 0.0.45 aligns Development values to one left-aligned column, reduces
+the panel height, keeps the gold Development heading, and shows Dev/Hr to
+three decimal places with a normal plus sign, such as **+ 0.002**.
 
 Version 0.0.44 adds Dappled Forest → Poplar Logs using verified Bedrock IDs,
 including production, biome selection and Building research contributions.

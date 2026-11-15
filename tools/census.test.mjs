@@ -174,7 +174,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[0].records[64],'Development 0');
   assert.equal(forms[0].records[66],'[JF:data:innovationLevel]Lv 1');
   assert.equal(forms[0].records[76],'[JF:data:tradeRoute]None');
-  assert.equal(forms[0].records[60],'+<0.01');
+  assert.equal(forms[0].records[60],'+ 0.000');
   assert.equal(forms[0].records[67],'[JF:data:frontierLevel]Lv 0');
   assert.equal(forms[0].records[24],'[JF:action:rename]');
   assert.equal(forms[0].records[25],'[JF:data:owner]Builder');

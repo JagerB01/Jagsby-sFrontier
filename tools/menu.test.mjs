@@ -130,6 +130,11 @@ test('Compact village identity fits without scrolling and Rename remains in the 
   assert.equal(developmentFields.developmentHourly_label.text,'Dev/Hr');
   assert.equal(developmentFields.developmentHourly_label.font_scale_factor,0.65);
   assert.equal(developmentFields.tradeRoute_label.font_scale_factor,0.65);
+  assert.equal(developmentFields.developmentHourly.offset[0],developmentFields.tradeRoute.offset[0]);
+  for(const key of ['developmentHourly','tradeRoute'])assert.equal(ui['jf_data_'+key].text_alignment,'left');
+  assert.deepEqual(ui.jf_data_developmentValue.color,[0.82,0.70,0.44]);
+  assert.equal(fields.development.size[1],56);
+
   assert.equal(children(fields.production).title.text,'Production');
   assert.deepEqual(Object.keys(children(fields.production)),['surface','title']);
   const header=children(ui.jf_dashboard);

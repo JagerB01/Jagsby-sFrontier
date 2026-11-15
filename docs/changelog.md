@@ -1,3 +1,12 @@
+# 0.0.45
+
+- Left-align Dev/Hr and Route values to a shared column. Keep the gold
+  Development heading and uniform text size.
+- Reduce Development and adjacent Production panel heights from 72 to 56 UI
+  units, tighten row spacing and retain existing widths.
+- Show hourly Development to three decimal places with a spaced plus sign;
+  replace +<0.01 with values such as + 0.002. Zero displays 0.000.
+
 # 0.0.44
 
 - Correct the outdated compatibility check that excluded Dappled Forest/Poplar.

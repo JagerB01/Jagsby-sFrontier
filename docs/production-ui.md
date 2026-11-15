@@ -1,4 +1,4 @@
-# Fixed Production panels — 0.0.44
+# Fixed Production panels — 0.0.45
 
 Production has four local subtabs within the existing charter frame. All use
 fixed-size panels; there is no scrolling Production page. Allocation previews are fixed panels.
@@ -33,11 +33,16 @@ continues using cached Realm Power and saved biome/research records.
 
 ## Other readability corrections in this release
 
-Development's labels and values share rows, with values aligned to the right.
-**Dev/Hr** is the rate label. The current value appears beside Development in the heading, with no Current row; all text in this box uses the same size. Values use at most two decimal places;
-a small positive rate is shown as **+<0.01**, rather than zero. All positive rates have a + prefix. Large rates use
-compact suffixes. This changes formatting only; the estimate still uses existing
-Development value rates divided by the 500-value-per-point threshold.
+Development's labels and values share rows, with the hourly rate and route
+values left-aligned to the same column. The panel is 56 UI units high instead
+of 72, with tighter row spacing and unchanged width; the adjacent Production
+placeholder matches its height. **Development N** stays gold; the other text
+keeps its existing neutral colors and uniform font size.
+
+**Dev/Hr** displays three decimal places: **+ 0.002**, **+ 1.236**, or **0.000**.
+Large rates retain compact suffixes with three decimals, such as **+ 1.200k**.
+The estimate still uses Development value rates divided by the existing
+500-value-per-point threshold.
 
 Research hover boxes now measure the rendered wrapped label instead of using a
 fixed pixel height or reserving text rows. The collection scope and vertical
