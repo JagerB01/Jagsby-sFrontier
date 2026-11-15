@@ -230,7 +230,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   }
   handlers.set(actions.mapInteractive,()=>mapNavigation.open(player,vId));
   for(const key of Object.keys(DEFINITIONS))handlers.set(actions[key],()=>researchDetails(player,vId,key));
-  for(const key of ['efficiency','hearth','biome','sanctuary','roads'])handlers.set(actions[key],()=>key==='roads'?roadMenu(player,vId):upgrade(player,vId,key));
+  for(const key of ['efficiency','hearth','biome','sanctuary','roads'])handlers.set(actions[key],()=>localResearchDetails(player,vId,key));
   handlers.set(actions.scan,()=>scan(player,vId));
   handlers.set(actions.selectBiome,()=>selectBiome(player,vId));
   handlers.set(actions.collect,()=>collect(player,vId));
@@ -267,8 +267,32 @@ async function renameSettlement(player,vId){
     open(player,vId);
   }catch(e){console.warn(`Frontier rename: ${e}`);player.sendMessage('§cSettlement name could not be saved.');}
 }
-function upgrade(player,vid,key){
+const localResearchSessions=new Map();
+async function localResearchDetails(player,vid,key){
+ const session={};localResearchSessions.set(player.id,session);
+ try{
+  const s=accounted(),v=s.villages[vid];if(!v){localResearchSessions.delete(player.id);return;}
+  const level=researchLevel(v,key),cost=researchCost(v,key),requirement=researchRequirement(v,key,s);
+  const options=[];
+  if(cost&&!requirement)options.push({caption:'Research next level: '+costText(cost),run:()=>upgrade(player,vid,key,level)});
+  if(key==='roads')options.push({caption:'Manage connections / travel',run:()=>roadMenu(player,vid)});
+  options.push({caption:'Back to Local Research',run:()=>open(player,vid,'Research','local')});
+  const form=new ActionFormData().title(pageTitle('Local Research'))
+   .body(researchText(s,v,key,player)+'\nPayment: player inventory. Prices are provisional.');
+  options.forEach(option=>form.button(option.caption));
+  const response=await displayMenu(player,form,system);
+  if(localResearchSessions.get(player.id)!==session)return;
+  localResearchSessions.delete(player.id);
+  if(!response.canceled)options[response.selection]?.run();
+  else open(player,vid,'Research','local');
+ }catch(e){
+  if(localResearchSessions.get(player.id)===session)localResearchSessions.delete(player.id);
+  console.warn(`Frontier local research: ${e}`);player.sendMessage('Local research could not open. Reopen the charter to retry.');
+ }
+}
+function upgrade(player,vid,key,expectedLevel){
  const s=accounted(),v=s.villages[vid];if(!v)return;
+ if(expectedLevel!==undefined&&researchLevel(v,key)!==expectedLevel){player.sendMessage('Research changed. Review the refreshed cost.');return localResearchDetails(player,vid,key);}
  const requirement=researchRequirement(v,key,s),cost=researchCost(v,key);
  if(requirement)player.sendMessage(requirement);
  else if(!cost)player.sendMessage('Already at maximum level.');
@@ -352,7 +376,7 @@ async function roadMenu(player,vid){
   const s=accounted(),v=s.villages[vid];if(!v)return;
   const options=[];
   const add=(caption,run)=>options.push({caption,run});
-  if(!v.roads)add('Research Road Networks: '+costText(researchCost(v,'roads')),()=>upgrade(player,vid,'roads'));
+  if(!v.roads)add('Research Road Networks: '+costText(researchCost(v,'roads')),()=>localResearchDetails(player,vid,'roads'));
   for(const target of Object.values(s.villages).sort((a,b)=>a.id.localeCompare(b.id))){
    if(target.id===vid||target.dimension!==v.dimension)continue;
    const road=Object.values(s.roads).find(r=>(r.from===vid&&r.to===target.id)||(r.to===vid&&r.from===target.id));

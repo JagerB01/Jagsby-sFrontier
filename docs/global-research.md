@@ -1,9 +1,15 @@
-# Global research — 0.0.34
+# Global research — 0.0.35
 
 This release extends **0.0.32**, retaining its interactive Realm map, local
 five-node tree, Sanctuary, road construction/travel and exact offline economy.
 The global foundation is **Stewardship**, distinct from permanent settlement
 Development. No MineScape installation is required at runtime.
+
+Local cards now open a custom charter details screen showing the existing
+provisional local prices, benefits and requirements before purchase. An explicit
+purchase button spends the full recipe. Closing the screen spends nothing;
+stale confirmations refresh rather than charging for a different level.
+Road Networks also offers connection management from its details screen.
 
 Every global/local research card shows its current level without hovering.
 The Overview identity panel includes permanent Development, its production
@@ -168,7 +174,7 @@ python tools/addon.py build
 ```
 
 Build regenerates tracked UI/bridge assets. The original 53 tests remain, with
-23 additional research, economy, geographic and inventory recovery tests.
+26 additional research, economy, geographic and inventory recovery tests.
 Static tests cannot render JSON UI or execute Minecraft engine persistence.
 In a backed-up disposable world, check all five global nodes, partial payments,
 two-client stale menus, save/restart recovery, each zone boundary, full-storage

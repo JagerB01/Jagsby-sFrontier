@@ -1,3 +1,14 @@
+# 0.0.35
+
+- Local research cards now open the custom charter cost/details picker before
+  purchase, displaying level, price, benefits and prerequisites. Existing local
+  prices remain provisional and unchanged.
+- Add an explicit purchase button and reject stale confirmations when another
+  player upgrades that local technology. Road Networks exposes its connection
+  menu from the same details screen. Closing a screen spends nothing.
+- All 79 JavaScript tests and 3 Python tests pass. Static validation checks 142
+  pack files; native in-game rendering remains unverified.
+
 # 0.0.34
 
 - Use Stewardship for the foundational global technology and Settlement Charters

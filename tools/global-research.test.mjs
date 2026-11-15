@@ -133,19 +133,19 @@ test('Partial contributions persist; excessive, fractional and invalid-resource 
  assert.equal(grant(s,'capacity','minecraft:oak_log',64),0);assert.equal(s.researchProgress.capacity,17);
 });
 
-async function runtime(initial=fresh(Date.now())){
+async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:false,selection:0})){
  const slots=[{typeId:'minecraft:copper_ingot',amount:64},{typeId:'minecraft:copper_ingot',amount:64},{typeId:'minecraft:copper_ingot',amount:64}];
  let stored=JSON.stringify(initial),failWrite=0,write=0,failSlot=-1;
  const inventory={size:slots.length,getItem(i){return slots[i]?{...slots[i]}:undefined;},setItem(i,item){if(i===failSlot){failSlot=-1;throw Error('interrupted inventory write');}slots[i]=item?{...item}:undefined;}};
  const player={id:'p',sendMessage(){},getComponent(){return {container:inventory};}};
  const forms=[];
- class Form{constructor(){this.buttons=[];forms.push(this);}title(){return this;}body(text){this.text=text;return this;}button(text){this.buttons.push(text);return this;}show(){return Promise.resolve({canceled:false,selection:0});}}
+ class Form{constructor(){this.buttons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}button(text){this.buttons.push(text);return this;}show(){return Promise.resolve(respond(this));}}
  globalThis.__researchRuntime={world:{getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{runInterval(){},run(){}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
- source+='\nexport { researchDetails, recoverResearch, state };\n//'+Math.random();
+ source+='\nexport { researchDetails, recoverResearch, localResearchDetails, state };\n//'+Math.random();
  const api=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
- return {api,player,slots,forms,read:()=>JSON.parse(stored),failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
+ return {api,player,slots,forms,read:()=>JSON.parse(stored),update(fn){const s=JSON.parse(stored);fn(s);stored=JSON.stringify(s);},failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
 }
 test('Inventory contribution is clipped, journaled and cannot be credited again on recovery',async()=>{
  const s=fresh();s.researchProgress.innovation=190;
@@ -184,4 +184,31 @@ test('Global detail renderer exposes name, next costs, progress, prerequisites a
 });
 test('Save migration refuses a future version instead of overwriting it',()=>{
  assert.throws(()=>R.migrateResearch({researchVersion:4}),/newer/);
+});
+test('Local cost details do not charge on opening or closing',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};
+ const h=await runtime(s,()=>({canceled:true}));
+ h.slots[0]={typeId:'minecraft:gold_ingot',amount:8};h.slots[1]={typeId:'minecraft:emerald',amount:8};
+ await h.api.localResearchDetails(h.player,'a','hearth');
+ assert.ok(h.forms[0].text.includes('8 gold ingot + 8 emerald'));
+ assert.ok(h.forms[0].buttons[0].startsWith('Research next level:'));
+ assert.equal(h.slots[0].amount,8);assert.equal(h.slots[1].amount,8);assert.equal(h.read().villages.a.hearth,0);
+});
+test('Local cost details charge the displayed recipe only after selecting purchase',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};
+ const h=await runtime(s,form=>form.heading==='JF_CHARTER|Local Research'?{canceled:false,selection:0}:{canceled:true});
+ h.slots[0]={typeId:'minecraft:gold_ingot',amount:8};h.slots[1]={typeId:'minecraft:emerald',amount:8};
+ await h.api.localResearchDetails(h.player,'a','hearth');
+ assert.equal(h.slots[0],undefined);assert.equal(h.slots[1],undefined);assert.equal(h.read().villages.a.hearth,1);
+});
+test('Stale local confirmations refresh the cost without spending for a different level',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};let reviews=0;
+ const h=await runtime(s,form=>{
+  if(form.heading==='JF_CHARTER|Local Research'&&reviews++===0){h.update(s=>s.villages.a.hearth=1);return {canceled:false,selection:0};}
+  return {canceled:true};
+ });
+ h.slots[0]={typeId:'minecraft:gold_ingot',amount:8};h.slots[1]={typeId:'minecraft:emerald',amount:8};
+ await h.api.localResearchDetails(h.player,'a','hearth');
+ assert.equal(h.slots[0].amount,8);assert.equal(h.slots[1].amount,8);assert.equal(h.read().villages.a.hearth,1);
+ assert.ok(h.forms[1].text.includes('16 gold ingot + 16 emerald'));
 });

@@ -183,7 +183,9 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[0].records[2],'0.2 RP');
   assert.equal(forms[0].records[3],'[JF:data:tier]Outpost');
   assert.equal(forms[0].icons[3],'textures/ui/frontier/settlements/outpost');
-  assert.equal(forms[1].text,'[JF:tab:research][JF:research:local][JF:realm:map]');
+  assert.equal(forms[1].heading,'JF_CHARTER|Local Research');
+  assert.ok(forms[1].text.includes('16 iron ingot + 4 emerald'));
+  assert.equal(forms[2].text,'[JF:tab:research][JF:research:local][JF:realm:map]');
   nativeTier = 4;
   handlers.beforeInteract(event);
   await queued.shift()();
