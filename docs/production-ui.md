@@ -1,4 +1,4 @@
-# Production panels — 0.0.51
+# Production panels — 0.0.52
 
 Production has exactly two tabs: a fixed **Overview** and a scrollable
 **Resource Prospecting** list. Both use the existing charter frame. Opening the
@@ -12,15 +12,15 @@ The upper section has two compact boxes side by side:
   Two rows fit both possible resources; matching items combine into one row.
   Text is larger and Producing uses the same orange/gold as Modifiers. Rates
   include all active bonuses; full stock shows a paused status and zero output.
-- **Modifiers:** Prosperity, Development and Colonization increases, conditional
-  River, and Total. Every value has an explicit percent glyph drawn in the UI,
-  so Script API localization cannot remove the sign. Rows and values align in
-  columns; River is absent unless an active allocation uses River.
-  Total combines boosts multiplicatively and weights River's crop-only effect
-  by the allocations' unmodified category rates. At 20% Prosperity, 10%
-  Development and 50% Colonization, River specialization totals +117.8%;
-  River + Forest totals +111.86%, because logs receive no agricultural bonus.
-  Total does not include RP, allocation count or full-storage pausing.
+- **Modifiers:** the combined increase sits beside the Modifiers heading,
+  aligned with the same value column used by Prosperity, Development,
+  Colonization and conditional River below. There is no bottom Total row.
+  Values use a normal percent character directly after the number. Native UI
+  string concatenation appends the character after Script API form processing;
+  percent signs are not drawn as images or in a separate column.
+  The combined increase still multiplies the production boosts and weights
+  River across crop output. At 20% Prosperity, 10% Development and 50%
+  Colonization, River specialization totals +117.8%; River + Forest +111.86%.
 
 The **stockpile** sits below both boxes on a single page. Only items with at least one whole unit appear, packed consecutively in a
 15-column grid with room for all 30 producible types in two rows. Empty slots
@@ -62,8 +62,8 @@ the viewport. Survey, Prev and Next controls and the verbose header are removed.
 Opening the charter performs a bounded survey of loaded surface columns within
 256 blocks and caches IDs/sample positions; unloaded columns are skipped, and
 chunks are never forced to load. Menu actions do not survey again. Clear second
-is retained below the list. Selection opens the fixed confirmation preview and
-rechecks research, revision, radius and actual loaded biome identity on confirm.
+is retained below the list. Selection applies immediately, rechecking research, revision, radius and the
+actual loaded biome identity before saving. There is no confirmation page.
 
 The [biome production rules](biome-production.md) define rates, eligibility,
 River bonuses, offline accounting and migration. This release changes display
@@ -107,7 +107,7 @@ existing 2-health-point villager heal once per Minecraft day.
 184 Node tests and 3 Python tests pass. Static packaging validates 191 pack
 files. Coverage includes rate components, full-stock paused output, combined
 allocation output, bounded pages/empty states, research and sample gating,
-previewed verified selection, unloaded rejection, clearing, whole-item collection
+immediate verified selection, unloaded rejection, clearing, whole-item collection
 with fractional preservation, panel bounds, compact rate formatting, shorter
 hover frames and Hearthstone's three-minute effect duration. Native font/text
 wrapping and controls still require an in-game check on Bedrock 1.26.40+.
@@ -115,7 +115,7 @@ wrapping and controls still require an in-game check on Bedrock 1.26.40+.
 ## Settlement Overview summary (0.0.51)
 
 The main Overview's compact Production box shows the current produced item
-icons and their + X.XXX/hour rates, with two rows available for distinct items.
+icons and their + X.XXX/hr rates, with two rows available for distinct items.
 Matching resources remain combined, and full storage shows zero actual rates.
 An unassigned settlement shows None. This uses separate summary label controls
 so it cannot change the detailed Production tab's text dimensions.

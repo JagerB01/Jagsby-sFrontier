@@ -143,7 +143,7 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
  globalThis.__researchRuntime={world:{getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'})};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{runInterval(){},run(){}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
- source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openProduction,selectBiome,confirmProductionSelection,productionSelection,clearSecondary,collect};\n//'+Math.random();
+ source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect};\n//'+Math.random();
  const api=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
  return {api,player,slots,forms,messages,received,read:()=>JSON.parse(stored),update(fn){const s=JSON.parse(stored);fn(s);stored=JSON.stringify(s);},failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
 }
@@ -285,17 +285,17 @@ test('Removing the map restores only previously saved movement controls once',as
  h.api.restoreLegacyControls(player);assert.equal(restored.length,2);
 });
 
-test('Production previews a verified second allocation before confirmation',async()=>{
+test('Selecting a verified biome applies immediately without a confirmation form',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Test',biomeUnlocked:true,available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:32,y:64,z:0}}};let clicked=false,reads=0;
- const h=await runtime(s,form=>{if(!clicked){clicked=true;return {canceled:false,selection:301};}if(form.heading==='JF_CHARTER|Production Preview')return {canceled:false,selection:0};return {canceled:true};},{biomeAt:()=>{reads++;return 'minecraft:forest';}});
+ const h=await runtime(s,form=>{if(!clicked){clicked=true;return {canceled:false,selection:301};}return {canceled:true};},{biomeAt:()=>{reads++;return 'minecraft:forest';}});
  h.api.openProduction(h.player,'a','biomes');await new Promise(resolve=>setImmediate(resolve));
  assert.equal(h.read().villages.a.secondary,'minecraft:forest');assert.equal(reads,1);
- assert.equal(h.forms.length,3);assert.equal(h.forms[1].heading,'JF_CHARTER|Production Preview');assert.ok(h.forms[1].text.includes('50%'));
- assert.ok(h.forms[2].text.includes('[JF:production:biomes]'));
- assert.equal(h.forms[2].icons[150],'textures/ui/frontier/production/wheat');
- assert.equal(h.forms[2].icons[151],'textures/ui/frontier/production/oak_log');
- assert.equal(h.forms[2].buttons[150],'[JF:data:overviewProduction0]+ 1.750/hour');
- assert.equal(h.forms[2].buttons[151],'[JF:data:overviewProduction1]+ 0.750/hour');
+ assert.equal(h.forms.length,2);assert.ok(h.forms.every(form=>form.heading==='JF_CHARTER|Dashboard'));
+ assert.ok(h.forms[1].text.includes('[JF:production:biomes]'));
+ assert.equal(h.forms[1].icons[150],'textures/ui/frontier/production/wheat');
+ assert.equal(h.forms[1].icons[151],'textures/ui/frontier/production/oak_log');
+ assert.equal(h.forms[1].buttons[150],'[JF:data:overviewProduction0]+ 1.750/hr');
+ assert.equal(h.forms[1].buttons[151],'[JF:data:overviewProduction1]+ 0.750/hr');
  h.api.clearSecondary(h.player,'a');assert.equal(h.read().villages.a.secondary,null);
 });
 test('Unverified/out-of-range biome controls are disabled and selecting unloaded samples never changes the second biome',async()=>{
@@ -304,7 +304,7 @@ test('Unverified/out-of-range biome controls are disabled and selecting unloaded
  h.api.openProduction(h.player,'a','biomes');assert.equal(h.forms[0].buttons[301],'[JF:disabled:prospectSelect1]');
  await h.api.selectBiome(h.player,'a','minecraft:forest');assert.equal(h.read().villages.a.secondary,undefined);
  h.update(s=>s.villages.a.biomeSamples['minecraft:forest'].x=32);
- await assert.throws(()=>h.api.confirmProductionSelection(h.player,'a','minecraft:forest','diversify',0),/unloaded/);assert.equal(h.read().villages.a.secondary,undefined);
+ await assert.throws(()=>h.api.applyProductionSelection(h.player,'a','minecraft:forest','diversify',0),/unloaded/);assert.equal(h.read().villages.a.secondary,undefined);
 });
 test('The non-scrolling stockpile Collect all action transfers whole items and preserves fractions',async()=>{
  const s=fresh(Date.now());s.stock={'minecraft:wheat':2.75,'minecraft:stone':3.125};
@@ -313,25 +313,25 @@ test('The non-scrolling stockpile Collect all action transfers whole items and p
  assert.equal(h.read().stock['minecraft:wheat'],0.75);assert.equal(h.read().stock['minecraft:stone'],0.125);
  assert.ok(h.forms.at(-1).text.includes('[JF:production:summary]'));
 });
-test('Native Specialization previews then confirms without any biome world reads',async()=>{
+test('Native Specialization applies immediately without any biome world reads',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),biomeUnlocked:true,available:[]};
- const h=await runtime(s,()=>({canceled:false,selection:0}),{biomeAt:()=>{throw Error('Must not survey for specialization');}});
+ const h=await runtime(s,()=>({canceled:true}),{biomeAt:()=>{throw Error('Must not survey for specialization');}});
  await h.api.selectBiome(h.player,'a','minecraft:plains',{},'specialize');
  const v=h.read().villages.a;assert.equal(v.productionMode,'specialize');assert.equal(v.secondary,null);
  assert.equal(E.resourceRates(v).length,1);close(E.resourceRates(v)[0].rate,3.5);
- assert.ok(h.forms[0].text.includes('Current: 1.7500'));assert.ok(h.forms[0].text.includes('After: 3.5000'));
+ assert.equal(h.forms.length,1);assert.equal(h.forms[0].heading,'JF_CHARTER|Dashboard');
 });
-test('Canceling a production preview preserves the existing allocation',async()=>{
+test('Closing the returned list does not undo an immediate selection',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),biomeUnlocked:true};
  const h=await runtime(s);await h.api.selectBiome(h.player,'a','minecraft:plains',{},'specialize');
- assert.equal(h.read().villages.a.productionMode,'unassigned');assert.equal(h.read().villages.a.secondary,undefined);
+ assert.equal(h.read().villages.a.productionMode,'specialize');assert.equal(h.read().villages.a.secondary,null);
 });
-test('Production confirmation rejects stale previews and changed or unloaded world samples',async()=>{
+test('Immediate selection rejects stale revisions and changed or unloaded world samples',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),biomeUnlocked:true,available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:32,y:70,z:0}}};
  const h=await runtime(s,()=>({canceled:true}),{biomeAt:()=> 'minecraft:river'});
- assert.throws(()=>h.api.confirmProductionSelection(h.player,'a','minecraft:forest','diversify',0),/must be loaded/);
+ assert.throws(()=>h.api.applyProductionSelection(h.player,'a','minecraft:forest','diversify',0),/must be loaded/);
  h.update(s=>s.villages.a.productionSelectionRevision=1);
- assert.throws(()=>h.api.confirmProductionSelection(h.player,'a','minecraft:plains','specialize',0),/changed/);
+ assert.throws(()=>h.api.applyProductionSelection(h.player,'a','minecraft:plains','specialize',0),/changed/);
  assert.equal(h.read().villages.a.productionMode,'unassigned');
 });
 test('Selecting a secondary allocation cannot bypass research, eligibility, different-biome or 256-block checks',async()=>{
@@ -347,8 +347,8 @@ test('Production sends item images, aligned bonus percentages and whole stock co
  assert.equal(h.forms[0].icons[96],'textures/ui/frontier/production/wheat');
  assert.equal(h.forms[0].icons[97],undefined);
  assert.ok(h.forms[0].buttons[96].includes('Wheat\n+ 3.850/hour'));
- for(const [i,value]of ['+ 0','+ 0','+ 0','+ 10','+ 10'].entries())assert.equal(h.forms[0].buttons[130+i],value);
- assert.equal(h.forms[0].buttons[138],'River');assert.equal(h.forms[0].buttons[139],'Total');
+ for(const [i,value]of ['+ 0','+ 0','+ 0','+ 10'].entries())assert.equal(h.forms[0].buttons[130+i],value);
+ assert.equal(h.forms[0].buttons[138],'River');assert.equal(h.forms[0].buttons[154],'+ 10');
  assert.equal(h.forms.length,1);assert.ok(h.forms[0].text.includes('[JF:production:summary]'));
  const {STOCK_ITEMS}=await import('../packs/behavior/scripts/production-display.js');
  const stocked=STOCK_ITEMS.filter(item=>s.stock[item.id]>=1);

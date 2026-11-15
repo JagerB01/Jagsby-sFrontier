@@ -68,13 +68,13 @@ test('River is conditional and Total reflects multiplicative, crop-aware product
  const {s,v}=fixture();v.biome='minecraft:river';v.biomeUnlocked=true;v.productionMode='specialize';
  v.efficiency=4;v.developmentValue=50000;v.location.x=28000;s.global.innovation=4;s.global.colonization=5;
  let view=productionView(s,v);
- assert.deepEqual(view.modifierRows.map(r=>r.label),['Prosperity','Development','Colonization','River','Total']);
- assert.equal(view.modifierRows[3].value,'+ 10');assert.equal(view.modifierRows[4].value,'+ 117.8');
+ assert.deepEqual(view.modifierRows.map(r=>r.label),['Prosperity','Development','Colonization','River']);
+ assert.equal(view.modifierRows[3].value,'+ 10');assert.equal(view.modifierTotal,'+ 117.8');
  v.productionMode='diversify';v.secondary='minecraft:forest';view=productionView(s,v);
- assert.equal(view.modifierRows.at(-1).value,'+ 111.86');
+ assert.equal(view.modifierTotal,'+ 111.86');
  v.biome='minecraft:plains';v.available=['minecraft:river'];view=productionView(s,v);
  assert.equal(view.modifierRows.some(r=>r.label==='River'),false);
- assert.equal(view.modifierRows.at(-1).value,'+ 98');
+ assert.equal(view.modifierTotal,'+ 98');
 });
 test('Prospecting lists every surveyed biome with its icon and post-selection resource rate',async()=>{
  const {BIOME_ASSIGNMENTS}=await import('../packs/behavior/scripts/biome-resources.js');

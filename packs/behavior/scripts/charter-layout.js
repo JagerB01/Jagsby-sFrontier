@@ -72,12 +72,10 @@ export const CHARTER_LAYOUT = {
     "productionModifier1": 131,
     "productionModifier2": 132,
     "productionModifier3": 133,
-    "productionModifier4": 134,
     "productionModifierName0": 135,
     "productionModifierName1": 136,
     "productionModifierName2": 137,
     "productionModifierName3": 138,
-    "productionModifierName4": 139,
     "prospectInfo0": 200,
     "prospectInfo1": 201,
     "prospectInfo2": 202,
@@ -131,7 +129,8 @@ export const CHARTER_LAYOUT = {
     "prospectInfo50": 250,
     "prospectInfo51": 251,
     "overviewProduction0": 150,
-    "overviewProduction1": 151
+    "overviewProduction1": 151,
+    "productionModifierTotal": 154
   },
   "actions": {
     "efficiency": 14,

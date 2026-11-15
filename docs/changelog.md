@@ -1,3 +1,16 @@
+# 0.0.52
+
+- Replace the percent bitmap/separate glyph column with a normal percent
+  character concatenated to the numeric text inside the native UI binding.
+  Append after Script API form processing so the literal sign is preserved.
+- Move the combined increase to the Modifiers heading, aligned with the body
+  value column. Remove the bottom Total row; retain conditional River.
+- Show compact Overview rates as + X.XXX/hr, with room for both item images.
+- Apply biome changes immediately on selection and return to the list. Remove
+  the confirmation form and its UI router. Retain research, radius, loaded-world
+  sample, revision and offline-accounting checks before applying a change.
+- 184 Node tests and 3 Python tests pass; native rendering needs in-game testing.
+
 # 0.0.51
 
 - Move Dev/Hr and Route values four UI units right while retaining their common

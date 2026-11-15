@@ -46,12 +46,12 @@ automatically assigning or doubling output. In Production > Resource Prospecting
 - **Biome Diversification:** the second slot uses a different eligible surface
   biome within 256 horizontal blocks of the charter.
 
-Selections open a fixed, non-scrolling preview showing both allocations, River
-bonus, current/after totals and per-resource hourly output. Confirm applies the
-selection; Back/cancel leaves it unchanged. Confirmation accounts elapsed output
-first and rechecks the saved selection revision, research and sample. A changed
-or unloaded sample cannot be selected. Clear second disables the second slot
-while retaining research and native production.
+The list shows projected output before selection. As of 0.0.52, selecting an
+option applies it immediately and returns to the Prospecting list, with no
+confirmation page. The change first accounts elapsed output, then rechecks
+revision, research, radius, cached sample and actual loaded biome identity.
+A changed or unloaded sample cannot be selected. Clear second disables the
+second slot while retaining research and native production.
 
 Survey is an explicit bounded lattice of at most 197 columns within 256 blocks,
 using the loaded column's top block when available. It caches supported biome

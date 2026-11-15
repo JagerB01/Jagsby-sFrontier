@@ -97,13 +97,6 @@ def button_texture(width, height, state):
 def build():
     DEST.mkdir(parents=True, exist_ok=True)
     Canvas(1, 1, (255, 255, 255)).save("solid.png")
-    # Explicit percent glyph: Script API form formatting can drop percent signs.
-    percent = Canvas(5, 7, (0, 0, 0, 0))
-    for y, row in enumerate(["11001", "11010", "00010", "00100", "01000", "01011", "10011"]):
-        for x, pixel in enumerate(row):
-            if pixel == "1":
-                percent.rect(x, y, 1, 1, (255, 255, 255, 255))
-    percent.save("percent.png")
     # Palette materials are generated at their native UI sizes so all screens
     # share neutral charcoal surfaces, aged silver trim and wheat highlights.
     for name, width, height, framed in [

@@ -211,13 +211,14 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   }
   const production=productionView(s,v,productionPages);
   production.modifierRows.forEach((row,slot)=>{records[data['productionModifier'+slot]]=row.value;records[data['productionModifierName'+slot]]=row.label;});
+  records[data.productionModifierTotal]=production.modifierTotal;
   records[data.productionOutput]=production.status;
   records[data.stockpile]=production.stockHeading;
   production.stock.forEach((item,slot)=>records[data['stockCount'+slot]]=String(item.count));
   for(let slot=0;slot<2;slot++){
    const item=production.items[slot];
    records[data['productionItem'+slot]]=item?.text||'';
-   records[data['overviewProduction'+slot]]=item?`+ ${item.actual.toFixed(3)}/hour`:slot===0?'None':'';
+   records[data['overviewProduction'+slot]]=item?`+ ${item.actual.toFixed(3)}/hr`:slot===0?'None':'';
   }
   production.choices.forEach((choice,slot)=>records[data['prospectInfo'+slot]]=choice.text);
   const roadView=roadNetworkOverview(s,v,realmPage);
@@ -302,23 +303,16 @@ function productionSelection(v,choice,mode){
  }
  return {...v,productionMode:mode,secondary:mode==='specialize'?null:choice};
 }
-async function selectBiome(player,vid,choice,pages={},mode='diversify'){
+function selectBiome(player,vid,choice,pages={},mode='diversify'){
  try{
-  const s=accounted(),v=s.villages[vid];if(!v)return;
-  const proposed=productionSelection(v,choice,mode),current=resourceRates(v,s),next=resourceRates(proposed,s);
-  const bonus=1+colonizationBonus(s,zoneAt(v.location)),sum=r=>r.reduce((n,item)=>n+item.rate*bonus,0);
-  const allocations=productionAllocations(proposed);
-  const body=`${mode==='specialize'?'Native Specialization':'Biome Diversification'}\n${allocations.map(a=>`Slot ${a.slot}: ${biomeName(a.biome)} -> ${a.name} (50%)`).join('\n')}\nRiver: ${allocations.some(a=>a.biome==='minecraft:river')?'+10% to crops only':'No crop bonus'}\nCurrent: ${sum(current).toFixed(4)} items/hour\nAfter: ${sum(next).toFixed(4)} items/hour\n${next.map(r=>`${r.name}: ${(r.rate*bonus).toFixed(4)}/hour`).join('\n')}\nConfirm to change the second allocation.`;
-  const revision=v.productionSelectionRevision||0;
-  const form=new ActionFormData().title(pageTitle('Production Preview')).body(body).button('Confirm allocation').button('Back to Prospecting');
-  const response=await displayMenu(player,form,system);
-  if(!response.canceled&&response.selection===0)confirmProductionSelection(player,vid,choice,mode,revision);
+  const v=state().villages[vid];if(!v)return;
+  applyProductionSelection(player,vid,choice,mode,v.productionSelectionRevision||0);
  }catch(e){player.sendMessage(String(e.message||e));}
  openProduction(player,vid,'biomes',pages);
 }
-function confirmProductionSelection(player,vid,choice,mode,revision){
+function applyProductionSelection(player,vid,choice,mode,revision){
  const s=accounted(),v=s.villages[vid];if(!v)return;
- if((v.productionSelectionRevision||0)!==revision)throw Error('Production selection changed. Review a fresh preview.');
+ if((v.productionSelectionRevision||0)!==revision)throw Error('Production selection changed. Reopen the charter.');
  const proposed=productionSelection(v,choice,mode);
  if(mode==='diversify'){
   const actual=canonicalBiome(world.getDimension(v.dimension).getBiome(v.biomeSamples[choice]).id);

@@ -40,12 +40,12 @@ export function productionView(s,v,requested={}){
  const riverMultiplier=allocationWeight?1+river*cropWeight/allocationWeight:1;
  const total=((1+prosperity)*(1+dev)*(1+bonus)*riverMultiplier-1)*100;
  const modifierRows=[{label:'Prosperity',percent:prosperity*100},{label:'Development',percent:dev*100},{label:'Colonization',percent:bonus*100},
-  ...(river?[{label:'River',percent:river*100}]:[]),{label:'Total',percent:total}]
+  ...(river?[{label:'River',percent:river*100}]:[])]
   .map(row=>({...row,value:`+ ${Number(row.percent.toFixed(2))}`}));
  return {
   status:full?'Stockpile full - paused':!recordedPower(v)?'Waiting for Realm Power':!rates.length?'No resource assigned':'Producing',
   items:output.rows.map(r=>({...r,text:`${r.name}\n+ ${r.actual.toFixed(3)}/hour`})),
-  modifierRows,
+  modifierRows,modifierTotal:`+ ${Number(total.toFixed(2))}`,
   stockHeading:`Stockpile  ${storedWhole} / ${cap}`,
   choices,output,stock,biomes,allocations,river,
  };

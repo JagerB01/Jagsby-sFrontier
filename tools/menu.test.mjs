@@ -90,7 +90,7 @@ test('record bindings use collection-capable stack panels and explicitly indexed
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
     if(['census','developmentValue','developmentHourly'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')) {
-      assert.equal(label.text,'#form_button_text');
+      assert.equal(label.text,/^productionModifier(?:[0-3]|Total)$/.test(key)?'#text':'#form_button_text');
       assert.equal(label.property_bag['#form_button_text'],'Unavailable');
       assert.equal(label.bindings.some(b=>b.target_property_name==='#visible'),false);
       assert.ok(label.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_name_override===undefined));
@@ -380,31 +380,27 @@ test('Research hover heights flow from the rendered label with only fixed edge p
   assert.equal(content.top_padding.size[1],6);assert.equal(content.bottom_padding.size[1],6);
  }
 });
-test('Allocation preview routes to a fixed panel and preserves native Confirm/Back indices',async()=>{
- const ui=await loadUI(),routes=children(ui.jf_router),preview=ui.jf_production_preview;
- assert.ok(JSON.stringify(routes['preview@jagsby_frontier.jf_production_preview']).includes('Production Preview'));
- assert.ok(JSON.stringify(routes['picker@jagsby_frontier.jf_picker']).includes('not (#title_text = \'JF_CHARTER|Production Preview\')'));
- assert.equal(JSON.stringify(preview).includes('scroll'),false);
- const controls=children(preview);assert.equal(controls.details.text,'#form_text');
- for(let index=0;index<2;index++){
-  const scope=controls['choice_'+index];assert.equal(scope.collection_name,'form_buttons');
-  assert.equal(children(scope)['record@jagsby_frontier.jf_choice'].collection_index,index);
-  assert.ok(scope.offset[1]>=controls.details.offset[1]+controls.details.size[1]);
-  assert.ok(scope.offset[1]+scope.size[1]<=240);
- }
+test('Prospecting has no confirmation form or preview router',async()=>{
+ const ui=await loadUI();assert.equal(ui.jf_production_preview,undefined);
+ assert.equal(JSON.stringify(ui.jf_router).includes('Production Preview'),false);
 });
 test('Stockpile has 30 conditional slots with raw counts; each modifier has an unclipped native value row',async()=>{
  const ui=await loadUI(),summary=children(ui.jf_production_summary_content);
  assert.equal(summary.previous,undefined);assert.equal(summary.next,undefined);assert.equal(summary.stock_page,undefined);
  assert.deepEqual(ui.jf_data_productionOutput.color,summary.modifiers_title.color);
  assert.equal(ui.jf_data_productionOutput.font_scale_factor,0.8);
- for(let row=0;row<5;row++){
+ assert.equal(summary.modifier_total.offset[1],summary.modifiers_title.offset[1]);
+ assert.equal(summary.modifier_total.offset[0],207);
+ assert.equal(summary.modifier_row4,undefined);
+ assert.ok(ui.jf_data_productionModifierTotal.bindings.some(b=>b.source_property_name==="(#form_button_text + '%')"));
+ for(let row=0;row<4;row++){
   const panel=summary['modifier_row'+row],contents=children(panel);
   assert.equal(contents.name.offset[1],contents.value.offset[1]);assert.equal(panel.size[1],12);
   assert.ok(panel.offset[1]+panel.size[1]<=summary.modifiers_box.size[1]);
   assert.equal(contents.value.offset[0],64);assert.equal(contents.name.offset[0],0);
-  assert.equal(contents.percent.texture,'textures/ui/frontier/percent');assert.deepEqual(contents.percent.size,[5,7]);
-  assert.equal(ui['jf_data_productionModifier'+row].text,'#form_button_text');
+  assert.equal(contents.percent,undefined);
+  assert.ok(ui['jf_data_productionModifier'+row].bindings.some(b=>b.source_property_name==="(#form_button_text + '%')"));
+  assert.equal(ui['jf_data_productionModifier'+row].text,'#text');
  }
  for(const state of ui['jf_action_collect@common.button'].controls){
   const caption=children(nextValue(state)).caption;

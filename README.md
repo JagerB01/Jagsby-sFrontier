@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.51.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.52.mcaddon?raw=true)
+
+Version 0.0.52 puts the combined percentage beside **Modifiers**, aligned with
+the values below, and uses real percent text immediately after each number.
+Biome selections apply immediately with no confirmation page. The Overview's
+compact production rates use **+ X.XXX/hr** so the hourly unit fits clearly.
 
 Version 0.0.51 shifts the Development values slightly right and fills the main
 Overview's Production box with up to two item icons and their current hourly

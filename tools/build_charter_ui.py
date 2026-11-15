@@ -35,13 +35,14 @@ ACTIONS.update({"clearSecondary": 91})
 DATA.update({"productionItem0": 96, "productionItem1": 97})
 STOCK_ITEMS = json.loads((ROOT / "docs/production-icon-assets.json").read_text())["items"]
 DATA.update({"stockCount" + str(i): 100 + i for i in range(len(STOCK_ITEMS))})
-DATA.update({"productionModifier" + str(i): 130 + i for i in range(5)})
-DATA.update({"productionModifierName" + str(i): 135 + i for i in range(5)})
+DATA.update({"productionModifier" + str(i): 130 + i for i in range(4)})
+DATA.update({"productionModifierName" + str(i): 135 + i for i in range(4)})
 DATA.update({"prospectInfo" + str(i): 200 + i for i in range(52)})
 ACTIONS.update({"prospectSelect" + str(i): 300 + i for i in range(52)})
 for obsolete in ["scan", "selectBiome"]:
     ACTIONS.pop(obsolete, None)
 DATA.update({"overviewProduction0": 150, "overviewProduction1": 151})
+DATA["productionModifierTotal"] = 154
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -385,12 +386,10 @@ def build():
     ui = {"namespace": "jagsby_frontier"}
     is_charter = "(not ((#title_text - 'JF_CHARTER|') = #title_text))"
     is_dashboard = "(#title_text = 'JF_CHARTER|Dashboard')"
-    is_preview = "(#title_text = 'JF_CHARTER|Production Preview')"
     ui["jf_router"] = {"type": "panel", "size": [380, 240], "controls": [
         control("vanilla@server_form.long_form", {"bindings": condition(f"(not {is_charter})")}),
         control("charter@jagsby_frontier.jf_dashboard", {"bindings": condition(is_dashboard)}),
-        control("preview@jagsby_frontier.jf_production_preview", {"bindings": condition(is_preview)}),
-        control("picker@jagsby_frontier.jf_picker", {"bindings": condition(f"({is_charter} and (not {is_dashboard}) and (not {is_preview}))")}),
+        control("picker@jagsby_frontier.jf_picker", {"bindings": condition(f"({is_charter} and (not {is_dashboard}))")}),
     ]}
     frame = [
         control("frame", image("frontier/charter_frame", [380, 240], layer=1)),
@@ -477,21 +476,27 @@ def build():
         production_surface("modifiers_box", [118, 70], [136, 0]),
         production_surface("stock_box", [254, 57], [0, 74]),
         production_value("status", "productionOutput", 5, 10, scale=0.8, width=119),
-        control("modifiers_title", label("Modifiers", [104, 10], (143, 5), WHEAT, 0.8)),
+        control("modifiers_title", label("Modifiers", [62, 12], (143, 5), WHEAT, 0.8)),
         production_value("stock_heading", "stockpile", 76, 10, scale=0.75, width=240),
         production_button("collect", "collect", "Collect stockpile", 48, 115, 158, 15),
     ]
     GENERATED_CONTROLS["jf_data_productionOutput"]["color"] = list(WHEAT)
-    for row in range(5):
+    summary_controls.append(production_value("modifier_total", "productionModifierTotal", 5, 12, scale=0.75, x=207, width=40))
+    for row in range(4):
         name = overview_value("name", DATA["productionModifierName" + str(row)], [0, 0], [62, 12], scale=0.75)
-        value = overview_value("value", DATA["productionModifier" + str(row)], [64, 0], [32, 12], scale=0.75)
-        percent = image("frontier/percent", [5, 7], (97, 2), layer=8, color=IVORY)
+        value = overview_value("value", DATA["productionModifier" + str(row)], [64, 0], [40, 12], scale=0.75)
         summary_controls.append(control("modifier_row" + str(row), {
             "type": "panel", "size": [104, 12], "offset": [143, 17 + row * 10],
             "anchor_from": "top_left", "anchor_to": "top_left",
             "bindings": condition("(not ((#form_text - '[JF:modifier:" + str(row) + "]') = #form_text))", "#form_text"),
-            "controls": [name, value, control("percent", percent)],
+            "controls": [name, value],
         }))
+    for key in ["productionModifierTotal", *["productionModifier" + str(i) for i in range(4)]]:
+        text = GENERATED_CONTROLS["jf_data_" + key]
+        text["text"] = "#text"
+        text["localize"] = False
+        text["bindings"].append(view("(#form_button_text + '%')", "#text"))
+    GENERATED_CONTROLS["jf_data_productionModifierTotal"]["color"] = list(WHEAT)
     for state in GENERATED_CONTROLS["jf_action_collect@common.button"]["controls"]:
         caption = next(c["caption"] for c in next(iter(state.values()))["controls"] if "caption" in c)
         caption.update({"text_alignment": "center", "offset": [0, 2], "size": [158, 11], "font_scale_factor": 0.75})
@@ -744,20 +749,6 @@ def build():
         panel["controls"][1]["wood"]["size"] = [252, 19]
         panel["controls"][2]["caption"].update({"text": "#text", "size": [242, 12], "bindings": collection_bindings()})
     ui["jf_choice@common.button"] = picker_template
-    preview = copy.deepcopy(frame)
-    preview_details = label("#form_text", [248, 112], (104, 62), IVORY, 0.7)
-    preview_details["bindings"] = [{"binding_name": "#form_text", "binding_type": "none"}]
-    preview.append(control("details", preview_details))
-    preview.append(control("caption", label("Production\nPreview", [88, 32], (10, 65), WHEAT)))
-    for index, y in enumerate([178, 204]):
-        preview.append(control("choice_" + str(index), {
-            "type": "stack_panel", "orientation": "vertical", "size": [254, 21],
-            "offset": [104, y], "anchor_from": "top_left", "anchor_to": "top_left",
-            "collection_name": "form_buttons", "controls": [
-                control("record@jagsby_frontier.jf_choice", {"collection_index": index})],
-        }))
-    ui["jf_production_preview"] = {"type": "panel", "size": [380, 240], "controls": preview}
-
     ui["jf_modal_router"] = {"type": "panel", "size": [380, 240], "controls": [
         control("vanilla@server_form.custom_form", {"bindings": condition("(not (#title_text = 'JF_CHARTER|Rename'))")}),
         control("rename@jagsby_frontier.jf_rename", {"bindings": condition("(#title_text = 'JF_CHARTER|Rename')")}),
