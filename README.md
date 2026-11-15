@@ -5,7 +5,10 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.45.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.46.mcaddon?raw=true)
+
+Version 0.0.46 keeps research tooltip text inside the frame using a full-width
+body row with the same inset as the title. Tooltip height still follows content.
 
 Version 0.0.45 aligns Development values to one left-aligned column, reduces
 the panel height, keeps the gold Development heading, and shows Dev/Hr to

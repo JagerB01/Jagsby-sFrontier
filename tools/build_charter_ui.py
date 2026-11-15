@@ -273,9 +273,19 @@ def research_tooltip(key, position, live=False):
         template = data_template(DATA[key], [222, "default"], scale=0.75)
         details = collection_scope(template, [222, "100%c"])
         details.update({"offset": [9, 0], "anchor_from": "top_left", "anchor_to": "top_left"})
-        body = control("live_details", details)
+        # Offset a collection inside a full-width panel, not directly inside
+        # the vertical stack: native stack layout can displace the narrower
+        # collection's left edge even when it has an explicit offset.
+        GENERATED_CONTROLS[template]["text_alignment"] = "left"
+        body = control("live_details", {
+            "type": "panel", "size": [240, "100%cm"],
+            "controls": [control("inset", details)],
+        })
     else:
-        body = control("description", label(description, [222, "default"], (9, 0), IVORY, 0.75))
+        body = control("description", {
+            "type": "panel", "size": [240, "100%cm"], "controls": [
+                control("inset", label(description, [222, "default"], (9, 0), IVORY, 0.75))],
+        })
     title_row = control("title_row", {"type": "panel", "size": [240, 12], "controls": [
         control("title", label(title, [222, 12], (9, 0), WHEAT, 0.8)),
     ]})

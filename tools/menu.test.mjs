@@ -279,7 +279,7 @@ test('research popups size to text and anchor outside the hovered tech card',asy
       assert.ok(tip,'Missing research explanation');
       const outer=children(tip),content=children(outer.content);
       assert.ok(children(content.title_row).title.text.length>0);
-      assert.ok(content.description?.text.length>0 || content.live_details);
+      assert.ok(content.description || content.live_details);
       assert.ok(x+tip.offset[0]>=18&&x+tip.offset[0]+tip.size[0]<=362);
       assert.deepEqual(tip.size,[240,'100%cm']);
       assert.equal(outer.frame.size[1],'100%sm');
@@ -309,7 +309,7 @@ test('research popups size to text and anchor outside the hovered tech card',asy
     assert.equal(purchase.$pressed_button_name,'button.form_button_click');
     check(purchase,104+node.offset[0],89+node.offset[1]);
     const details=children(children(children(children(purchase).hover).research_tooltip).content).live_details;
-    assert.ok(details.controls[0]['record@jagsby_frontier.jf_data_'+key]);
+    assert.ok(children(details).inset.controls[0]['record@jagsby_frontier.jf_data_'+key]);
   }
   assert.ok(local.hearth.offset[1]<local.biome.offset[1]);
   assert.ok(local.biome.offset[1]<local.efficiency.offset[1]);
@@ -353,7 +353,13 @@ test('Research hover heights flow from the rendered label with only fixed edge p
   const tip=children(children(children(ui['jf_action_'+key+'@common.button']).hover).research_tooltip);
   const content=children(tip.content);
   assert.deepEqual(tip.content.size,[240,'100%c']);
-  assert.deepEqual(content.live_details.size,[222,'100%c']);
+  assert.deepEqual(content.live_details.size,[240,'100%cm']);
+  const inset=children(content.live_details).inset;
+  assert.deepEqual(inset.size,[222,'100%c']);
+  assert.deepEqual(inset.offset,[9,0]);
+  assert.equal(inset.offset[0],children(content.title_row).title.offset[0]);
+  assert.equal(inset.offset[0]+inset.size[0],231);
+  assert.equal(ui['jf_data_'+key].text_alignment,'left');
   assert.deepEqual(ui['jf_data_'+key].size,[222,'default']);
   assert.equal(content.top_padding.size[1],6);assert.equal(content.bottom_padding.size[1],6);
  }

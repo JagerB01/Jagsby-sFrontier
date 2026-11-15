@@ -9185,7 +9185,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:efficiency]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_action_efficiency@common.button": {
     "size": [
@@ -9557,26 +9558,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_efficiency": {
-                                  "collection_index": 4
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_efficiency": {
+                                        "collection_index": 4
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -9824,26 +9836,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_efficiency": {
-                                  "collection_index": 4
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_efficiency": {
+                                        "collection_index": 4
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -9910,7 +9933,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:hearth]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_action_hearth@common.button": {
     "size": [
@@ -10282,26 +10306,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_hearth": {
-                                  "collection_index": 5
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_hearth": {
+                                        "collection_index": 5
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -10549,26 +10584,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_hearth": {
-                                  "collection_index": 5
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_hearth": {
+                                        "collection_index": 5
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -10635,7 +10681,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:biome]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_action_biome@common.button": {
     "size": [
@@ -11007,26 +11054,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_biome": {
-                                  "collection_index": 6
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_biome": {
+                                        "collection_index": 6
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -11274,26 +11332,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_biome": {
-                                  "collection_index": 6
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_biome": {
+                                        "collection_index": 6
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -11407,7 +11476,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:innovation]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_action_innovation@common.button": {
     "size": [
@@ -11779,26 +11849,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_innovation": {
-                                  "collection_index": 9
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_innovation": {
+                                        "collection_index": 9
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -12046,26 +12127,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_innovation": {
-                                  "collection_index": 9
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_innovation": {
+                                        "collection_index": 9
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -12179,7 +12271,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:frontier]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_action_frontier@common.button": {
     "size": [
@@ -12551,26 +12644,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_frontier": {
-                                  "collection_index": 7
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_frontier": {
+                                        "collection_index": 7
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -12818,26 +12922,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_frontier": {
-                                  "collection_index": 7
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_frontier": {
+                                        "collection_index": 7
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -12951,7 +13066,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:capacity]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_action_capacity@common.button": {
     "size": [
@@ -13323,26 +13439,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_capacity": {
-                                  "collection_index": 8
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_capacity": {
+                                        "collection_index": 8
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -13590,26 +13717,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_capacity": {
-                                  "collection_index": 8
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_capacity": {
+                                        "collection_index": 8
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -13723,7 +13861,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:colonization]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_action_colonization@common.button": {
     "size": [
@@ -14095,26 +14234,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_colonization": {
-                                  "collection_index": 61
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_colonization": {
+                                        "collection_index": 61
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -14362,26 +14512,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_colonization": {
-                                  "collection_index": 61
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_colonization": {
+                                        "collection_index": 61
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -14495,7 +14656,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:storage]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_action_storage@common.button": {
     "size": [
@@ -14867,26 +15029,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_storage": {
-                                  "collection_index": 10
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_storage": {
+                                        "collection_index": 10
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -15134,26 +15307,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_storage": {
-                                  "collection_index": 10
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_storage": {
+                                        "collection_index": 10
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -15361,7 +15545,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:sanctuary]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_action_sanctuary@common.button": {
     "size": [
@@ -15733,26 +15918,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_sanctuary": {
-                                  "collection_index": 55
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_sanctuary": {
+                                        "collection_index": 55
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -16000,26 +16196,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_sanctuary": {
-                                  "collection_index": 55
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_sanctuary": {
+                                        "collection_index": 55
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -16180,7 +16387,8 @@
         "source_property_name": "(not ((#record_text - '[JF:data:roads]') = #record_text))",
         "target_property_name": "#visible"
       }
-    ]
+    ],
+    "text_alignment": "left"
   },
   "jf_action_roads@common.button": {
     "size": [
@@ -16552,26 +16760,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_roads": {
-                                  "collection_index": 56
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_roads": {
+                                        "collection_index": 56
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {
@@ -16819,26 +17038,37 @@
                         },
                         {
                           "live_details": {
-                            "type": "stack_panel",
-                            "orientation": "vertical",
+                            "type": "panel",
                             "size": [
-                              222,
-                              "100%c"
+                              240,
+                              "100%cm"
                             ],
-                            "collection_name": "form_buttons",
                             "controls": [
                               {
-                                "record@jagsby_frontier.jf_data_roads": {
-                                  "collection_index": 56
+                                "inset": {
+                                  "type": "stack_panel",
+                                  "orientation": "vertical",
+                                  "size": [
+                                    222,
+                                    "100%c"
+                                  ],
+                                  "collection_name": "form_buttons",
+                                  "controls": [
+                                    {
+                                      "record@jagsby_frontier.jf_data_roads": {
+                                        "collection_index": 56
+                                      }
+                                    }
+                                  ],
+                                  "offset": [
+                                    9,
+                                    0
+                                  ],
+                                  "anchor_from": "top_left",
+                                  "anchor_to": "top_left"
                                 }
                               }
-                            ],
-                            "offset": [
-                              9,
-                              0
-                            ],
-                            "anchor_from": "top_left",
-                            "anchor_to": "top_left"
+                            ]
                           }
                         },
                         {

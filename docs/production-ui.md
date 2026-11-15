@@ -1,4 +1,4 @@
-# Fixed Production panels — 0.0.45
+# Fixed Production panels — 0.0.46
 
 Production has four local subtabs within the existing charter frame. All use
 fixed-size panels; there is no scrolling Production page. Allocation previews are fixed panels.
@@ -48,7 +48,10 @@ Research hover boxes now measure the rendered wrapped label instead of using a
 fixed pixel height or reserving text rows. The collection scope and vertical
 content stack derive their height from the label; the outside panel uses the
 largest child's height and its nine-slice frame follows the sibling content.
-Fixed padding is six pixels above/below the title/body stack. The popup's top is
+The live collection sits inside a full-width body panel, with a nine-unit
+inset matching the title and divider. This avoids native stack positioning
+shifting the narrower collection outside the frame. Fixed padding is six
+pixels above/below the title/body stack. The popup's top is
 anchored four pixels below a top-tier card, or its bottom four pixels above other
 cards, so changing height cannot move it over the hovered card. This uses native
 JSON UI layout sizing (`default`, `100%c`, `100%cm`, `100%sm`), not estimates of

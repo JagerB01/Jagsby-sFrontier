@@ -1,3 +1,14 @@
+# 0.0.46
+
+- Put every research tooltip's live text collection inside a full-width body row
+  with a nine-unit inset on both sides, matching the title and divider.
+- Avoid positioning a narrow collection directly in the vertical stack, which
+  let native layout shift the text beyond the frame. Explicitly left-align text.
+- Retain native content-driven height, edge padding, outside-card placement,
+  direct contributions and all current/next effect text.
+- 178 Node tests and static pack validation pass; native rendering still requires
+  an in-game check.
+
 # 0.0.45
 
 - Left-align Dev/Hr and Route values to a shared column. Keep the gold
