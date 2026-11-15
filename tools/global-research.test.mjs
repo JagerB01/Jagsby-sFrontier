@@ -22,7 +22,7 @@ test('MineScape square rings use exact thresholds on both signed axes',()=>{
  assert.equal(R.zoneAt({x:-6000,z:6000}),'Wildlands');
  assert.equal(R.zoneAt({x:28000,z:0}),'Blackreach');assert.equal(R.zoneAt({x:NaN,z:0}),null);
 });
-test('Innovation is free at I and each further level costs exactly 192 copper',()=>{
+test('Stewardship is free at I and each further level costs exactly 192 copper',()=>{
  const s=fresh();assert.equal(s.global.innovation,1);
  for(let level=2;level<25;level++){
   assert.equal(grant(s,'innovation','minecraft:copper_ingot',191),191);assert.equal(s.global.innovation,level-1);
@@ -30,7 +30,7 @@ test('Innovation is free at I and each further level costs exactly 192 copper',(
  }
  assert.equal(grant(s,'innovation','minecraft:emerald',192),0);
 });
-test('Capacity gives one slot per 64 mixed logs, saves partial progress and obeys Innovation',()=>{
+test('Capacity gives one slot per 64 mixed logs, saves partial progress and obeys Stewardship',()=>{
  let s=fresh();assert.equal(R.settlementLimit(s),2);
  grant(s,'capacity','minecraft:oak_log',40);s=reload(s);assert.equal(R.settlementLimit(s),2);
  assert.equal(s.researchProgress.capacity,40);assert.equal(grant(s,'capacity','minecraft:cherry_log',64),24);
@@ -38,7 +38,7 @@ test('Capacity gives one slot per 64 mixed logs, saves partial progress and obey
  grant(s,'innovation','minecraft:copper_ingot',192);assert.equal(grant(s,'capacity','minecraft:warped_stem',64),64);
  assert.equal(R.settlementLimit(s),4);assert.equal(Object.keys(s.villages).length,0);
 });
-test('Frontier unlocks only founding in sequence at fixed iron/gold costs independent of Innovation',()=>{
+test('Frontier unlocks only founding in sequence at fixed iron/gold costs independent of Stewardship',()=>{
  const s=fresh();assert.equal(R.foundingReason(s,'Heartlands'),'');assert.equal(R.foundingReason(s,'Borderlands'),'');
  for(const [i,cost]of [32,48,32,48].entries()){
   assert.match(R.foundingReason(s,R.ZONES[i+2]),/Frontier/);
@@ -81,9 +81,9 @@ test('The first v0.0.32 backlog is paid under legacy effects before activating n
  s.stock={};const before=s.villages.a.developmentValue;E.accountEconomy(s,101*hour);
  close(E.stockTotal(s),7.5);close(s.villages.a.developmentValue-before,6.5);
 });
-test('Both local endless technologies stop at Innovation without consuming capped progress',()=>{
+test('Both local endless technologies stop at Stewardship without consuming capped progress',()=>{
  const s=fresh(),v=village();v.biomeUnlocked=true;v.efficiency=1;v.sanctuary=1;v.developmentValue=500000;
- s.villages.a=v;assert.match(E.researchRequirement(v,'efficiency',s),/Innovation/);assert.match(E.researchRequirement(v,'sanctuary',s),/Innovation/);
+ s.villages.a=v;assert.match(E.researchRequirement(v,'efficiency',s),/Stewardship/);assert.match(E.researchRequirement(v,'sanctuary',s),/Stewardship/);
  assert.equal(E.development(v),1000);assert.equal(R.localLevel(s,v,'efficiency'),1);
  grant(s,'innovation','minecraft:copper_ingot',192);assert.equal(E.researchRequirement(v,'efficiency',s),null);
  assert.equal(E.researchRequirement(v,'sanctuary',s),null);assert.equal(E.researchRequirement(v,'hearth',s),null);
@@ -172,7 +172,7 @@ test('Journal-intent save failure leaves inventory and research untouched',async
  assert.equal(h.read().global.innovation,1);assert.equal(h.read().pendingResearch,undefined);
  assert.deepEqual(h.slots.map(x=>x.amount),[64,64,64]);
 });
-test('Research at its Innovation cap does not debit inventory or erase partial progress',async()=>{
+test('Research at its Stewardship cap does not debit inventory or erase partial progress',async()=>{
  const s=fresh();s.global.capacity=1;s.researchProgress.capacity=17;
  const h=await runtime(s);h.slots[0]={typeId:'minecraft:oak_log',amount:64};
  await h.api.researchDetails(h.player,'none','capacity');
@@ -180,7 +180,7 @@ test('Research at its Innovation cap does not debit inventory or erase partial p
 });
 test('Global detail renderer exposes name, next costs, progress, prerequisites and benefits',async()=>{
  const s=fresh();const h=await runtime(s);await h.api.researchDetails(h.player,'none','storage');
- for(const text of ['Shared Storage','Level 0','512 Building materials','Contributed: 0/512','Requires Settlement Capacity I','Stockpile: 0/792','+792 items'])assert.ok(h.forms[0].text.includes(text),text);
+ for(const text of ['Shared Storage','Level 0','512 Building materials','Contributed: 0/512','Requires Settlement Charters I','Stockpile: 0/792','+792 items'])assert.ok(h.forms[0].text.includes(text),text);
 });
 test('Save migration refuses a future version instead of overwriting it',()=>{
  assert.throws(()=>R.migrateResearch({researchVersion:4}),/newer/);

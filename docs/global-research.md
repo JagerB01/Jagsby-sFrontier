@@ -1,31 +1,37 @@
-# Global research — 0.0.33
+# Global research — 0.0.34
 
 This release extends **0.0.32**, retaining its interactive Realm map, local
 five-node tree, Sanctuary, road construction/travel and exact offline economy.
-The global foundation is **Innovation**, distinct from permanent settlement
+The global foundation is **Stewardship**, distinct from permanent settlement
 Development. No MineScape installation is required at runtime.
+
+Every global/local research card shows its current level without hovering.
+The Overview identity panel includes permanent Development, its production
+bonus, next-point progress and the current MineScape zone. Stewardship is the
+top global technology; Settlement Charters is the middle-right technology.
+The existing internal save key for the foundation is retained for compatibility.
 
 ## Tree and prices
 
 ```text
-                       Innovation
+                       Stewardship
                       /          \
-          Frontier Expansion    Settlement Capacity
+          Frontier Expansion    Settlement Charters
                   |                    |
              Colonization         Shared Storage
 ```
 
 | Technology | Starting level | Next-level cost | Limit |
 | --- | --- | --- | --- |
-| Innovation | I, free | 192 copper ingots | Endless |
-| Settlement Capacity | 0, two settlement slots | 64 logs | Innovation level |
+| Stewardship | I, free | 192 copper ingots | Endless |
+| Settlement Charters | 0, two settlement slots | 64 logs | Stewardship level |
 | Frontier Expansion | 0, Heartlands + Borderlands | 32 iron, 48 iron, 32 gold, 48 gold | IV |
 | Colonization | 0 | 4, 8, 12, 16, 20 diamonds | V |
-| Shared Storage | 0, 792 items | 512 building materials | Innovation level |
+| Shared Storage | 0, 792 items | 512 building materials | Stewardship level |
 
 Prerequisite decision: Colonization requires Frontier I; Shared Storage requires
 Capacity I. Additional levels do not need matching levels of those prerequisites.
-Innovation does not limit the two fixed-length technologies. Global costs never
+Stewardship does not limit the two fixed-length technologies. Global costs never
 use emeralds. Local prices and local prerequisites retain their 0.0.32 rules.
 
 Payments continue to use **player inventory**, matching existing research.
@@ -113,7 +119,7 @@ Colonization and all actual civilization/settlement RP. Only a completed storage
 level changes capacity. `baseCapacity:128` is retained solely for old-save backlog
 migration, not as the new storage formula.
 
-Sanctuary and Prosperity upgrades stop at Innovation before spending materials.
+Sanctuary and Prosperity upgrades stop at Stewardship before spending materials.
 Their displayed/effective levels also obey that ceiling. Existing partial or
 legacy progression is retained. Permanent Development remains uncapped.
 Hearthstone, Resource Prospecting, Road Networks and individual roads retain
@@ -131,7 +137,7 @@ research changes likewise settle old effects before applying new levels.
 Village identities, names, owners, census, local levels, permanent Development,
 stock and road records are retained. Unknown fields remain intact. Prior global
 fields are retained and archived in `researchLegacy`. Old zero-based global
-`development` maps to Innovation `development + 1`; Innovation is raised further
+`development` maps to Stewardship `development + 1`; Stewardship is raised further
 as needed to preserve existing Capacity/Storage/Sanctuary/Prosperity levels.
 Existing stock above recalculated capacity is retained; further physical
 production waits for room. Corrupt JSON or newer schemas fail instead of silently

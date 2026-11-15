@@ -23,10 +23,14 @@ DATA["mapInfo"] = 33
 DATA.update({"mapRow" + str(i): 34 + i for i in range(12)})
 ACTIONS.update({"map" + key: 46 + i for i, key in enumerate([
     "North", "South", "West", "East", "ZoomIn", "ZoomOut", "Center", "Dimension", "Refresh"])})
-DATA.update({"sanctuary": 55, "roads": 56, "developmentStats": 60})
+DATA.update({"sanctuary": 55, "roads": 56})
 ACTIONS.update({"sanctuary": 57, "roads": 58, "mapInteractive": 59})
 DATA["colonization"] = 61
 ACTIONS["colonization"] = 62
+DATA.update({"zone": 63, "developmentValue": 64, "developmentProgress": 60})
+TECHS = ["innovation", "frontier", "capacity", "colonization", "storage",
+         "hearth", "biome", "sanctuary", "efficiency", "roads"]
+DATA.update({key + "Level": 66 + i for i, key in enumerate(TECHS)})
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -39,9 +43,9 @@ RESEARCH_HELP = {
     "biome": ("Resource Prospecting", "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks."),
     "sanctuary": ("Sanctuary", "Repeatable hostile-mob protection.\nEach level removes 5% of remaining damage.\nLasts three minutes after leaving."),
     "roads": ("Road Networks", "Establish and upgrade food-powered travel\nroutes. Connections progress from Trail\nto Road to Highway."),
-    "capacity": ("Settlement Capacity", "64 logs per additional settlement slot."),
+    "capacity": ("Settlement Charters", "64 logs per additional settlement slot."),
     "frontier": ("Frontier Expansion", "Unlocks settlement founding in four frontier zones."),
-    "innovation": ("Innovation", "192 copper per level. Caps endless research."),
+    "innovation": ("Stewardship", "192 copper per level. Caps endless research."),
     "colonization": ("Colonization", "Zone-specific production bonuses, up to Blackreach."),
     "storage": ("Shared Storage", "512 building materials per fixed storage increment."),
 }
@@ -283,13 +287,16 @@ def research_tooltip(key, offset, live=False):
 
 def research_node(name, title, subtitle, position, sprite, local=False):
     active = local or name in ["innovation", "capacity", "frontier", "colonization", "storage"]
+    level = collection_scope(data_template(DATA[name + "Level"], [78, 9], scale=0.6), [78, 9])
+    level.update({"offset": [39, 24], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8})
     states = []
     for state in ["default", "hover", "pressed"]:
         states.append(control(state, {"type": "panel", "size": [122, 34], "controls": [
             control("face", image(button_texture(122, 34, state), [122, 34])),
             control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
             control("name", label(title, [78, 11], (39, 4), color=IVORY, scale=0.62 if len(title) > 18 else 0.72)),
-            control("note", label(subtitle, [78, 13], (39, 18), color=SILVER, scale=0.55)),
+            control("note", label(subtitle.split("\n")[0], [78, 8], (39, 15), color=SILVER, scale=0.5)),
+            control("level", copy.deepcopy(level)),
             *([research_tooltip(name, [7 - position[0], 38 if position[1] == 0 else (-100 if active else -74)], live=active)]
               if state in ["hover", "pressed"] else []),
         ]}))
@@ -315,9 +322,9 @@ def global_tree():
         control("tier_one", label("Tier I", [50, 9], (0, 14), scale=0.555)),
         control("tier_two", label("Tier II", [50, 9], (0, 36), scale=0.555)),
         control("tier_three", label("Tier III", [50, 9], (0, 83), scale=0.555)),
-        research_node("innovation", "Innovation", "Endless research cap\nStarts at Level I", [66, 0], "stewardship"),
+        research_node("innovation", "Stewardship", "Endless research cap\nStarts at Level I", [66, 0], "stewardship"),
         research_node("frontier", "Frontier Expansion", "Founding zones\nFour levels", [0, 47], "frontier_mandate"),
-        research_node("capacity", "Settlement Capacity", "More settlements\nEndless", [132, 47], "settlement_charters"),
+        research_node("capacity", "Settlement Charters", "More settlements\nEndless", [132, 47], "settlement_charters"),
         research_node("colonization", "Colonization", "Zone production\nFive levels", [0, 94], "reclamation"),
         research_node("storage", "Shared Storage", "Shared item capacity\nEndless", [132, 94], "hoards"),
     ]
@@ -457,28 +464,29 @@ def build():
     GENERATED_CONTROLS["jf_data_overview"] = header_name
     name["name"]["controls"] = [control("record@jagsby_frontier.jf_identity_name", {"collection_index": DATA["overview"]})]
     rows = []
-    for key, title, y in [("tier", "Tier", 34), ("owner", "Owner", 51),
-                          ("biomes", "Biome", 68), ("census", "Realm Power", 85)]:
+    for key, title, y in [("tier", "Tier", 32), ("owner", "Owner", 48),
+                          ("biomes", "Biome", 64), ("zone", "Zone", 80),
+                          ("census", "Realm Power", 96), ("developmentValue", "Development", 112)]:
         rows += [control(key + "_label", label(title, [56, 11], (8, y), color=SILVER, scale=0.75)),
                  overview_value(key, DATA[key], [70, y], [69, 12], scale=0.8)]
     # In unclaimed villages the Claim control occupies the Owner value slot.
     next(row["owner"] for row in rows if "owner" in row)["bindings"] = condition(
         "((#form_text - '[JF:unclaimed]') = #form_text)", "#form_text")
     claim = action("claim", ACTIONS["claim"], "Claim", width=69, height=16)["claim"]
-    claim.update({"offset": [70, 48], "anchor_from": "top_left", "anchor_to": "top_left",
+    claim.update({"offset": [70, 45], "anchor_from": "top_left", "anchor_to": "top_left",
                   "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
-    identity = control("identity", {"type": "panel", "size": [147, 105], "offset": [0, 4],
+    identity = control("identity", {"type": "panel", "size": [147, 154], "offset": [0, 4],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("surface", image("frontier/palette_panel", [147, 105], color=[0.82, 0.82, 0.82])),
+            control("surface", image("frontier/palette_panel", [147, 154], color=[0.82, 0.82, 0.82])),
             name,
             control("divider", image("frontier/solid", [131, 1], (8, 25), 2, list(WHEAT))),
             *rows, control("claim", claim),
+            overview_value("developmentProgress", DATA["developmentProgress"], [8, 132], [131, 12], scale=0.65),
         ]})
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 158], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [90, 158]),
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [167, 0]}),
         identity,
-        overview_value("development", DATA["developmentStats"], [0, 114], [157, 40], scale=0.65),
     ]}
     GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left"})
     ui["jf_information_content"] = {"type": "panel", "size": [257, 158], "controls": [
@@ -603,7 +611,7 @@ def build():
         "namespace": "server_form", "main_screen_content/server_form_factory": {
             "control_ids": {"long_form": "@jagsby_frontier.jf_router",
                             "custom_form": "@jagsby_frontier.jf_modal_router"}}}, indent=2) + "\n")
-    layout = {"data": DATA, "actions": ACTIONS, "recordCount": 61, "tabs": TABS}
+    layout = {"data": DATA, "actions": ACTIONS, "recordCount": max([*DATA.values(), *ACTIONS.values()]) + 1, "tabs": TABS}
     (ROOT / "packs/behavior/scripts/charter-layout.js").write_text(
         "// Generated by tools/build_charter_ui.py; indices match the JSON UI.\n"
         "export const CHARTER_LAYOUT = " + json.dumps(layout, indent=2) + ";\n")

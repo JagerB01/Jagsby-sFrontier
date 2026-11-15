@@ -107,15 +107,15 @@ test('record bindings use collection-capable stack panels and explicitly indexed
 test('Compact village identity fits without scrolling and Rename remains in the header',async()=>{
   const ui=await loadUI();
   const fields=children(ui.jf_overview_content);
-  assert.deepEqual(Object.keys(fields),['portrait','identity','development']);
+  assert.deepEqual(Object.keys(fields),['portrait','identity']);
   assert.ok(fields.portrait.offset[0]>fields.identity.offset[0]);
   assert.equal(Object.keys(fields).some(key=>key.endsWith('_card')),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=158);
-  assert.deepEqual(fields.identity.size,[147,105]);
+  assert.deepEqual(fields.identity.size,[147,154]);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('Size'),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('population'),false);
-  for(const key of ['name','tier','owner','biomes','census'])assert.ok(children(fields.identity)[key]);
+  for(const key of ['name','tier','owner','biomes','zone','census','developmentValue','developmentProgress'])assert.ok(children(fields.identity)[key]);
   const header=children(ui.jf_dashboard);
   assert.ok(header.header_rename.offset[1]+header.header_rename.size[1]<=56);
   assert.deepEqual(header.header_name.controls,[{'record@jagsby_frontier.jf_data_overview':{collection_index:0}}]);
@@ -183,6 +183,23 @@ test('Research subtabs isolate the correct native action factories',async()=>{
     assert.ok(tree[name].offset[0]+tree[name].size[0]<=254);
     assert.ok(tree[name].offset[1]+tree[name].size[1]<=150);
     assert.equal(actions(tree[name]).length,1);
+  }
+  assert.deepEqual(tree.innovation.offset,[66,0]);
+  assert.deepEqual(tree.capacity.offset,[132,47]);
+  const foundation=children(children(ui['jf_action_innovation@common.button']).default);
+  const charters=children(children(ui['jf_action_capacity@common.button']).default);
+  assert.equal(foundation.name.text,'Stewardship');
+  assert.equal(charters.name.text,'Settlement Charters');
+  assert.equal(foundation.icon.texture,'textures/ui/frontier/research/stewardship');
+  assert.equal(charters.icon.texture,'textures/ui/frontier/research/settlement_charters');
+  for(const key of ['innovation','frontier','capacity','colonization','storage','hearth','biome','sanctuary','efficiency','roads']){
+    const button=ui['jf_action_'+key+'@common.button'];
+    for(const state of ['default','hover','pressed']){
+      const level=children(children(button)[state]).level;
+      assert.equal(level.type,'stack_panel');
+      assert.ok(level.controls[0]['record@jagsby_frontier.jf_data_'+key+'Level']);
+      assert.ok(level.offset[1]+level.size[1]<=34);
+    }
   }
   assert.deepEqual(actions(ui.jf_research_local_content).sort(),['biome','efficiency','hearth','roads','sanctuary']);
 });

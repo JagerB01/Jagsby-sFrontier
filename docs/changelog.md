@@ -1,3 +1,16 @@
+# 0.0.34
+
+- Use Stewardship for the foundational global technology and Settlement Charters
+  for settlement capacity. Stewardship occupies the top position and Settlement
+  Charters the middle-right, with matching sprites. Existing save keys remain
+  compatible; no research progression or costs change.
+- Show each technology's live current level on its card in default, hover and
+  pressed states, across both global and local trees.
+- Move permanent Development into the Overview identity panel with its production
+  bonus and next-point progress, and add the settlement's MineScape zone.
+- All 76 JavaScript tests and 3 Python tests pass; build/static validation checks
+  142 pack files. In-game rendering still requires verification.
+
 # 0.0.33
 
 - Built on 0.0.32, preserving its interactive Realm map, local research, offline

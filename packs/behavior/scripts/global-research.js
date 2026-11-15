@@ -5,9 +5,9 @@ const WOODS = ['oak','spruce','birch','jungle','acacia','dark_oak','mangrove','c
 export const LOGS = [...WOODS.flatMap(w=>[`minecraft:${w}_log`,`minecraft:${w}_wood`,`minecraft:stripped_${w}_log`,`minecraft:stripped_${w}_wood`]),... ['crimson','warped'].flatMap(w=>[`minecraft:${w}_stem`,`minecraft:stripped_${w}_stem`,`minecraft:${w}_hyphae`,`minecraft:stripped_${w}_hyphae`])];
 export const BUILDING = [...LOGS,...WOODS.map(w=>`minecraft:${w}_planks`),...['crimson_stem','warped_stem','crimson_hyphae','warped_hyphae','crimson_planks','warped_planks','stone','cobblestone','deepslate','cobbled_deepslate','stone_bricks','bricks','sandstone','red_sandstone'].map(w=>`minecraft:${w}`)];
 export const DEFINITIONS = {
-  innovation:{name:'Innovation',cost:192,materials:['minecraft:copper_ingot']},
+  innovation:{name:'Stewardship',cost:192,materials:['minecraft:copper_ingot']},
   frontier:{name:'Frontier Expansion',max:4,cost:[32,48,32,48],materials:['minecraft:iron_ingot','minecraft:iron_ingot','minecraft:gold_ingot','minecraft:gold_ingot']},
-  capacity:{name:'Settlement Capacity',cost:64,materials:LOGS},
+  capacity:{name:'Settlement Charters',cost:64,materials:LOGS},
   colonization:{name:'Colonization',max:5,cost:[4,8,12,16,20],materials:['minecraft:diamond'],prerequisite:'frontier'},
   storage:{name:'Shared Storage',cost:512,materials:BUILDING,prerequisite:'capacity'},
 };
@@ -43,7 +43,7 @@ export function nextCost(s,key) {const d=DEFINITIONS[key]; return Array.isArray(
 export function acceptedMaterials(s,key) {const d=DEFINITIONS[key]; return key==='frontier'?[d.materials[s.global[key]]].filter(Boolean):d.materials;}
 export function lockReason(s,key) {
   const d=DEFINITIONS[key];
-  if(s.global[key]>=maxLevel(s,key)) return d.max?'Maximum level':'Raise Innovation';
+  if(s.global[key]>=maxLevel(s,key)) return d.max?'Maximum level':'Raise Stewardship';
   if(d.prerequisite && s.global[d.prerequisite]<1) return `Requires ${DEFINITIONS[d.prerequisite].name} I`;
   return '';
 }

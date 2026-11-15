@@ -2313,7 +2313,7 @@
           "type": "panel",
           "size": [
             147,
-            105
+            154
           ],
           "offset": [
             0,
@@ -2328,7 +2328,7 @@
                 "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   147,
-                  105
+                  154
                 ],
                 "offset": [
                   0,
@@ -2405,7 +2405,7 @@
                 ],
                 "offset": [
                   8,
-                  34
+                  32
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2441,7 +2441,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  34
+                  32
                 ],
                 "clips_children": true
               }
@@ -2456,7 +2456,7 @@
                 ],
                 "offset": [
                   8,
-                  51
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2492,7 +2492,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  51
+                  48
                 ],
                 "clips_children": true,
                 "bindings": [
@@ -2523,7 +2523,7 @@
                 ],
                 "offset": [
                   8,
-                  68
+                  64
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2559,7 +2559,58 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  68
+                  64
+                ],
+                "clips_children": true
+              }
+            },
+            {
+              "zone_label": {
+                "type": "label",
+                "text": "Zone",
+                "size": [
+                  56,
+                  11
+                ],
+                "offset": [
+                  8,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.75,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "zone": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  69,
+                  12
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_zone": {
+                      "collection_index": 63
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  70,
+                  80
                 ],
                 "clips_children": true
               }
@@ -2574,7 +2625,7 @@
                 ],
                 "offset": [
                   8,
-                  85
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2610,7 +2661,58 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  85
+                  96
+                ],
+                "clips_children": true
+              }
+            },
+            {
+              "developmentValue_label": {
+                "type": "label",
+                "text": "Development",
+                "size": [
+                  56,
+                  11
+                ],
+                "offset": [
+                  8,
+                  112
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.75,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "developmentValue": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  69,
+                  12
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_developmentValue": {
+                      "collection_index": 64
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  70,
+                  112
                 ],
                 "clips_children": true
               }
@@ -2633,7 +2735,7 @@
                 ],
                 "offset": [
                   70,
-                  48
+                  45
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2655,33 +2757,33 @@
                   }
                 ]
               }
-            }
-          ]
-        }
-      },
-      {
-        "development": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            157,
-            40
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
+            },
             {
-              "record@jagsby_frontier.jf_data_developmentStats": {
-                "collection_index": 60
+              "developmentProgress": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  131,
+                  12
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_developmentProgress": {
+                      "collection_index": 60
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  8,
+                  132
+                ],
+                "clips_children": true
               }
             }
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "offset": [
-            0,
-            114
-          ],
-          "clips_children": true
+          ]
         }
       }
     ]
@@ -8540,27 +8642,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "+5% production\nper level",
+                "text": "+5% production",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_efficiencyLevel": {
+                      "collection_index": 74
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             }
           ]
@@ -8641,27 +8768,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "+5% production\nper level",
+                "text": "+5% production",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_efficiencyLevel": {
+                      "collection_index": 74
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -8879,27 +9031,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "+5% production\nper level",
+                "text": "+5% production",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_efficiencyLevel": {
+                      "collection_index": 74
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -9207,27 +9384,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Regeneration / healing\nTwo levels",
+                "text": "Regeneration / healing",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_hearthLevel": {
+                      "collection_index": 71
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             }
           ]
@@ -9308,27 +9510,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Regeneration / healing\nTwo levels",
+                "text": "Regeneration / healing",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_hearthLevel": {
+                      "collection_index": 71
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -9546,27 +9773,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Regeneration / healing\nTwo levels",
+                "text": "Regeneration / healing",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_hearthLevel": {
+                      "collection_index": 71
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -9874,27 +10126,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Additional biome\nProduction",
+                "text": "Additional biome",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_biomeLevel": {
+                      "collection_index": 72
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             }
           ]
@@ -9975,27 +10252,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Additional biome\nProduction",
+                "text": "Additional biome",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_biomeLevel": {
+                      "collection_index": 72
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -10213,27 +10515,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Additional biome\nProduction",
+                "text": "Additional biome",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_biomeLevel": {
+                      "collection_index": 72
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -10375,6 +10702,52 @@
             }
           ]
         }
+      }
+    ]
+  },
+  "jf_data_innovationLevel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:innovationLevel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:innovationLevel]') = #record_text))",
+        "target_property_name": "#visible"
       }
     ]
   },
@@ -10515,7 +10888,7 @@
             {
               "name": {
                 "type": "label",
-                "text": "Innovation",
+                "text": "Stewardship",
                 "size": [
                   78,
                   11
@@ -10541,27 +10914,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Endless research cap\nStarts at Level I",
+                "text": "Endless research cap",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_innovationLevel": {
+                      "collection_index": 66
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             }
           ]
@@ -10616,7 +11014,7 @@
             {
               "name": {
                 "type": "label",
-                "text": "Innovation",
+                "text": "Stewardship",
                 "size": [
                   78,
                   11
@@ -10642,27 +11040,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Endless research cap\nStarts at Level I",
+                "text": "Endless research cap",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_innovationLevel": {
+                      "collection_index": 66
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -10702,7 +11125,7 @@
                   {
                     "title": {
                       "type": "label",
-                      "text": "Innovation",
+                      "text": "Stewardship",
                       "size": [
                         222,
                         12
@@ -10854,7 +11277,7 @@
             {
               "name": {
                 "type": "label",
-                "text": "Innovation",
+                "text": "Stewardship",
                 "size": [
                   78,
                   11
@@ -10880,27 +11303,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Endless research cap\nStarts at Level I",
+                "text": "Endless research cap",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_innovationLevel": {
+                      "collection_index": 66
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -10940,7 +11388,7 @@
                   {
                     "title": {
                       "type": "label",
-                      "text": "Innovation",
+                      "text": "Stewardship",
                       "size": [
                         222,
                         12
@@ -11042,6 +11490,52 @@
             }
           ]
         }
+      }
+    ]
+  },
+  "jf_data_frontierLevel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:frontierLevel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:frontierLevel]') = #record_text))",
+        "target_property_name": "#visible"
       }
     ]
   },
@@ -11208,27 +11702,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Founding zones\nFour levels",
+                "text": "Founding zones",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_frontierLevel": {
+                      "collection_index": 67
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             }
           ]
@@ -11309,27 +11828,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Founding zones\nFour levels",
+                "text": "Founding zones",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_frontierLevel": {
+                      "collection_index": 67
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -11547,27 +12091,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Founding zones\nFour levels",
+                "text": "Founding zones",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_frontierLevel": {
+                      "collection_index": 67
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -11709,6 +12278,52 @@
             }
           ]
         }
+      }
+    ]
+  },
+  "jf_data_capacityLevel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:capacityLevel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:capacityLevel]') = #record_text))",
+        "target_property_name": "#visible"
       }
     ]
   },
@@ -11849,7 +12464,7 @@
             {
               "name": {
                 "type": "label",
-                "text": "Settlement Capacity",
+                "text": "Settlement Charters",
                 "size": [
                   78,
                   11
@@ -11875,27 +12490,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "More settlements\nEndless",
+                "text": "More settlements",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_capacityLevel": {
+                      "collection_index": 68
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             }
           ]
@@ -11950,7 +12590,7 @@
             {
               "name": {
                 "type": "label",
-                "text": "Settlement Capacity",
+                "text": "Settlement Charters",
                 "size": [
                   78,
                   11
@@ -11976,27 +12616,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "More settlements\nEndless",
+                "text": "More settlements",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_capacityLevel": {
+                      "collection_index": 68
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -12036,7 +12701,7 @@
                   {
                     "title": {
                       "type": "label",
-                      "text": "Settlement Capacity",
+                      "text": "Settlement Charters",
                       "size": [
                         222,
                         12
@@ -12188,7 +12853,7 @@
             {
               "name": {
                 "type": "label",
-                "text": "Settlement Capacity",
+                "text": "Settlement Charters",
                 "size": [
                   78,
                   11
@@ -12214,27 +12879,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "More settlements\nEndless",
+                "text": "More settlements",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_capacityLevel": {
+                      "collection_index": 68
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -12274,7 +12964,7 @@
                   {
                     "title": {
                       "type": "label",
-                      "text": "Settlement Capacity",
+                      "text": "Settlement Charters",
                       "size": [
                         222,
                         12
@@ -12376,6 +13066,52 @@
             }
           ]
         }
+      }
+    ]
+  },
+  "jf_data_colonizationLevel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:colonizationLevel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:colonizationLevel]') = #record_text))",
+        "target_property_name": "#visible"
       }
     ]
   },
@@ -12542,27 +13278,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Zone production\nFive levels",
+                "text": "Zone production",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_colonizationLevel": {
+                      "collection_index": 69
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             }
           ]
@@ -12643,27 +13404,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Zone production\nFive levels",
+                "text": "Zone production",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_colonizationLevel": {
+                      "collection_index": 69
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -12881,27 +13667,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Zone production\nFive levels",
+                "text": "Zone production",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_colonizationLevel": {
+                      "collection_index": 69
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -13043,6 +13854,52 @@
             }
           ]
         }
+      }
+    ]
+  },
+  "jf_data_storageLevel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:storageLevel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:storageLevel]') = #record_text))",
+        "target_property_name": "#visible"
       }
     ]
   },
@@ -13209,27 +14066,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Shared item capacity\nEndless",
+                "text": "Shared item capacity",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_storageLevel": {
+                      "collection_index": 70
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             }
           ]
@@ -13310,27 +14192,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Shared item capacity\nEndless",
+                "text": "Shared item capacity",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_storageLevel": {
+                      "collection_index": 70
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -13548,27 +14455,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Shared item capacity\nEndless",
+                "text": "Shared item capacity",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_storageLevel": {
+                      "collection_index": 70
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -13710,6 +14642,144 @@
             }
           ]
         }
+      }
+    ]
+  },
+  "jf_data_hearthLevel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:hearthLevel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:hearthLevel]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_data_biomeLevel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:biomeLevel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:biomeLevel]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_data_sanctuaryLevel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:sanctuaryLevel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:sanctuaryLevel]') = #record_text))",
+        "target_property_name": "#visible"
       }
     ]
   },
@@ -13876,27 +14946,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Hostile protection\nRepeatable",
+                "text": "Hostile protection",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_sanctuaryLevel": {
+                      "collection_index": 73
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             }
           ]
@@ -13977,27 +15072,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Hostile protection\nRepeatable",
+                "text": "Hostile protection",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_sanctuaryLevel": {
+                      "collection_index": 73
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -14215,27 +15335,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Hostile protection\nRepeatable",
+                "text": "Hostile protection",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_sanctuaryLevel": {
+                      "collection_index": 73
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -14377,6 +15522,98 @@
             }
           ]
         }
+      }
+    ]
+  },
+  "jf_data_efficiencyLevel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:efficiencyLevel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:efficiencyLevel]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_data_roadsLevel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      78,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:roadsLevel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:roadsLevel]') = #record_text))",
+        "target_property_name": "#visible"
       }
     ]
   },
@@ -14543,27 +15780,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Food-powered travel\nManage connections",
+                "text": "Food-powered travel",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_roadsLevel": {
+                      "collection_index": 75
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             }
           ]
@@ -14644,27 +15906,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Food-powered travel\nManage connections",
+                "text": "Food-powered travel",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_roadsLevel": {
+                      "collection_index": 75
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -14882,27 +16169,52 @@
             {
               "note": {
                 "type": "label",
-                "text": "Food-powered travel\nManage connections",
+                "text": "Food-powered travel",
                 "size": [
                   78,
-                  13
+                  8
                 ],
                 "offset": [
                   39,
-                  18
+                  15
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.55,
+                "font_scale_factor": 0.5,
                 "color": [
                   0.73,
                   0.73,
                   0.68
                 ],
                 "shadow": false
+              }
+            },
+            {
+              "level": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  78,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_roadsLevel": {
+                      "collection_index": 75
+                    }
+                  }
+                ],
+                "offset": [
+                  39,
+                  24
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8
               }
             },
             {
@@ -15474,6 +16786,52 @@
       }
     ]
   },
+  "jf_data_zone": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      69,
+      12
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.8,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:zone]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:zone]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
   "jf_data_census": {
     "type": "label",
     "text": "#form_button_text",
@@ -15511,6 +16869,52 @@
     "property_bag": {
       "#form_button_text": "Unavailable"
     }
+  },
+  "jf_data_developmentValue": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      69,
+      12
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.8,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:developmentValue]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:developmentValue]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
   },
   "jf_action_claim@common.button": {
     "size": [
@@ -15751,12 +17155,12 @@
       }
     ]
   },
-  "jf_data_developmentStats": {
+  "jf_data_developmentProgress": {
     "type": "label",
     "text": "#text",
     "size": [
-      157,
-      40
+      131,
+      12
     ],
     "offset": [
       0,
@@ -15787,12 +17191,12 @@
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:developmentStats]')",
+        "source_property_name": "(#record_text - '[JF:data:developmentProgress]')",
         "target_property_name": "#text"
       },
       {
         "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:developmentStats]') = #record_text))",
+        "source_property_name": "(not ((#record_text - '[JF:data:developmentProgress]') = #record_text))",
         "target_property_name": "#visible"
       }
     ]

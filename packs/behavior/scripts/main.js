@@ -85,7 +85,7 @@ function cap(s){return capacity(s);}
 function total(s){return stockTotal(s);}
 function pageTitle(page){return `JF_CHARTER|${page}`;}
 function researchText(s,v,key,player){
- const names={efficiency:'Prosperity',hearth:'Hearthstone',biome:'Resource Prospecting',sanctuary:'Sanctuary',roads:'Road Networks',frontier:'Frontier Expansion',capacity:'Settlement Capacity',innovation:'Innovation',colonization:'Colonization',storage:'Shared Storage'};
+ const names={efficiency:'Prosperity',hearth:'Hearthstone',biome:'Resource Prospecting',sanctuary:'Sanctuary',roads:'Road Networks',frontier:'Frontier Expansion',capacity:'Settlement Charters',innovation:'Stewardship',colonization:'Colonization',storage:'Shared Storage'};
  const local=['efficiency','hearth','biome','sanctuary','roads'].includes(key);
  if(!local)return globalResearchText(s,key);
  const current=['efficiency','sanctuary'].includes(key)?localLevel(s,v,key):researchLevel(v,key);
@@ -114,7 +114,7 @@ function globalResearchText(s,key){
     storage:`Stockpile: ${total(s)}/${cap(s)} items. Next: +${storageIncrement()} items.`,
   };
   const resource=key==='capacity'?'Vanilla logs':key==='storage'?'Building materials':acceptedMaterials(s,key).map(x=>x.replace('minecraft:','').replaceAll('_',' ')).join(', ');
-  return `${d.name} | Level ${level}${Number.isFinite(maximum)?' / '+maximum:' (endless)'}\n${benefits[key]}\n${cost===undefined?'Maximum level':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]}/${cost}`}\n${locked||'Unlocked'}\nPrerequisite: ${key==='innovation'?'Free foundation':d.prerequisite?DEFINITIONS[d.prerequisite].name+' I':'Innovation I (free)'}`;
+  return `${d.name} | Level ${level}${Number.isFinite(maximum)?' / '+maximum:' (endless)'}\n${benefits[key]}\n${cost===undefined?'Maximum level':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]}/${cost}`}\n${locked||'Unlocked'}\nPrerequisite: ${key==='innovation'?'Free foundation':d.prerequisite?DEFINITIONS[d.prerequisite].name+' I':'Stewardship I (free)'}`;
 }
 const researchSessions=new Map();
 function inventoryMaterials(player,s,key){
@@ -201,8 +201,14 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   const tier=settlementTier(v.census);
   records[data.tier]=tier.label;
   for(const key of ['efficiency','hearth','biome','sanctuary','roads','frontier','capacity','innovation','colonization','storage'])records[data[key]]=key in DEFINITIONS?`${DEFINITIONS[key].name}: ${s.global[key]} / ${Number.isFinite(maxLevel(s,key))?maxLevel(s,key):'Endless'}\nNext cost: ${nextCost(s,key)??'Complete'}\nContributed: ${s.researchProgress[key]}\n${lockReason(s,key)||'Unlocked'}\nSelect for materials and benefits.`:researchText(s,v,key,player);
+  records[data.zone]=zoneAt(v.location)||'Unknown';
+  records[data.developmentValue]=`${development(v)} (+${(development(v)*0.1).toFixed(1)}%)`;
+  records[data.developmentProgress]=`${((v.developmentValue||0)%500).toFixed(1)} / 500 to next point`;
+  for(const key of ['innovation','frontier','capacity','colonization','storage','hearth','biome','sanctuary','efficiency','roads']){
+    const level=key in DEFINITIONS?s.global[key]:['efficiency','sanctuary'].includes(key)?localLevel(s,v,key):researchLevel(v,key);
+    records[data[key+'Level']]=`Level ${level}`;
+  }
   records[data.production]=productionText(s,v);
-  records[data.developmentStats]=`Development: ${development(v)} (+${(development(v)*0.1).toFixed(1)}%)\n${((v.developmentValue||0)%500).toFixed(1)} / 500 to next point`;
   records[data.stockpile]=`Stored: ${total(s).toFixed(3)} / ${cap(s)}\nRemaining capacity: ${Math.max(0,cap(s)-total(s)).toFixed(3)}\nProduced resources only; shared by every settlement.`;
   records[data.resources]=Object.entries(s.stock).map(([r,n])=>`${r.replace('minecraft:','').replaceAll('_',' ')}: ${n.toFixed(3)}`).join('\n')||'No produced resources yet.';
   // Initial charter opening carries no map rasterization or hundreds of tiles.

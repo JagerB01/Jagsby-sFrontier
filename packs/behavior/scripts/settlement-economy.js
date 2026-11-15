@@ -93,7 +93,7 @@ export function researchCost(v,key){
  return Object.fromEntries(Object.entries(def.base).map(([id,n])=>[id,Math.ceil(n*(1+level*def.growth))]));
 }
 export function researchRequirement(v,key,s=null){
- if(s&&['efficiency','sanctuary'].includes(key)&&researchLevel(v,key)>=s.global.innovation)return 'Requires higher Innovation';
+ if(s&&['efficiency','sanctuary'].includes(key)&&researchLevel(v,key)>=s.global.innovation)return 'Requires higher Stewardship';
  if(['biome','sanctuary'].includes(key)&&v.hearth<1)return 'Requires Hearthstone I';
  if(key==='efficiency'&&!v.biomeUnlocked)return 'Requires Resource Prospecting';
  if(key==='roads'&&v.sanctuary<1)return 'Requires Sanctuary I';
