@@ -267,26 +267,35 @@ def info_card(name, title, index, y):
 
 def research_tooltip(key, position, live=False):
     title, description = RESEARCH_HELP[key]
-    height = {"hearth": 112, "biome": 112, "sanctuary": 124, "efficiency": 112, "roads": 116,
-              "innovation": 112, "frontier": 112, "capacity": 112, "colonization": 124, "storage": 112}[key] if live else 70
-    # Tier I opens below; other tiers open above, leaving the hovered card clear.
-    offset = [7 - position[0], 38 if position[1] == 0 else -height - 4]
     if live:
-        template = data_template(DATA[key], [222, height - 36], scale=0.75)
-        details = collection_scope(template, [222, height - 36])
-        details.update({"offset": [9, 28], "anchor_from": "top_left", "anchor_to": "top_left"})
-        body = [control("live_details", details)]
+        # A native label's default height follows its rendered, wrapped text.
+        # The collection stack then measures that label instead of reserving rows.
+        template = data_template(DATA[key], [222, "default"], scale=0.75)
+        details = collection_scope(template, [222, "100%c"])
+        details.update({"offset": [9, 0], "anchor_from": "top_left", "anchor_to": "top_left"})
+        body = control("live_details", details)
     else:
-        body = [control("description", label(description, [222, 39], (9, 28), IVORY, 0.65))]
+        body = control("description", label(description, [222, "default"], (9, 0), IVORY, 0.75))
+    title_row = control("title_row", {"type": "panel", "size": [240, 12], "controls": [
+        control("title", label(title, [222, 12], (9, 0), WHEAT, 0.8)),
+    ]})
+    rule_row = control("rule_row", {"type": "panel", "size": [240, 5], "controls": [
+        control("rule", image("frontier/solid", [222, 1], (9, 2), 2, list(SILVER))),
+    ]})
+    content = {"type": "stack_panel", "orientation": "vertical", "size": [240, "100%c"],
+        "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
+            control("top_padding", {"type": "panel", "size": [240, 6]}),
+            title_row, rule_row, body,
+            control("bottom_padding", {"type": "panel", "size": [240, 6]}),
+        ]}
+    frame = image(button_texture(240, 112, "default"), [240, "100%sm"])
+    frame["nineslice_size"] = 6
+    below = position[1] == 0
     return control("research_tooltip", {
-        "type": "panel", "size": [240, height], "offset": offset,
-        "anchor_from": "top_left", "anchor_to": "top_left", "layer": 100,
-        "controls": [
-            control("frame", image(button_texture(240, height, "default"), [240, height])),
-            control("title", label(title, [222, 12], (9, 7), WHEAT, 0.8)),
-            control("rule", image("frontier/solid", [222, 1], (9, 23), 2, list(SILVER))),
-            *body,
-        ],
+        "type": "panel", "size": [240, "100%cm"], "offset": [7 - position[0], 4 if below else -4],
+        "anchor_from": "bottom_left" if below else "top_left",
+        "anchor_to": "top_left" if below else "bottom_left", "layer": 100,
+        "controls": [control("frame", frame), control("content", content)],
     })
 
 

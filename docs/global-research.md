@@ -1,4 +1,4 @@
-# Global research — 0.0.40
+# Global research — 0.0.42
 
 This release retains the local five-node tree, Sanctuary, road construction/travel
 and exact offline economy. The map feature was removed in 0.0.38; Realm now
@@ -53,7 +53,7 @@ remaining amount and prerequisites. Global panels show full effects and prices
 rather than an abbreviated placeholder. Cards center the larger name above smaller Lv X text beside the icon. Popups appear below top-tier cards and above other tiers, leaving the hovered card unobstructed.
 
 Clicking a tech card contributes directly and redraws the research dashboard.
-The hover prompt is Click to contribute. An eligible held item
+The hover prompt is Click to contribute. Native text-driven layout sizes the popup to its wrapped content, with a four-pixel anchor gap above/below the card. An eligible held item
 type takes priority; otherwise the first eligible inventory type is selected.
 Only that type is spent, up to its displayed-inventory snapshot amount and next-level remainder.
 If progress or material selection changes, the old quote is rejected without

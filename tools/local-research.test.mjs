@@ -80,7 +80,7 @@ test('Stewardship caps both endless upgrades and preserves partial progress at t
   assert.equal(give(v,key,id,250,state(1)),0);assert.equal(v.localResearch.progress[key],125);
   assert.equal(give(v,key,id,250,state(2)),125);assert.equal(v[key],2);
  }
- assert.ok(localResearchText(v,'sanctuary',state(2)).includes('Requires higher Stewardship'));
+ assert.ok(localResearchText(v,'sanctuary',state(2)).includes('Status: Locked'));
 });
 test('Legacy aliases preserve purchased levels and paid partial contributions idempotently',()=>{
  const v={hearth:1,research:{prosperity:{level:4,progress:125},roadNetworks:{level:2,progress:12}},researchProgress:{sanctuary:80},custom:'keep'};

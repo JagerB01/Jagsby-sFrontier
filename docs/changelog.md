@@ -1,3 +1,16 @@
+# 0.0.42
+
+- Replace fixed per-tech hover heights with native text-driven sizing: intrinsic
+  label height, child-measured collection/content stacks, a largest-child-sized
+  outer panel and sibling-sized nine-slice frame. Keep only six-pixel edge pads.
+- Anchor the popup's top below the top-tier card or its bottom above other cards,
+  keeping a four-pixel gap regardless of changing text height.
+- Replace repeated Status: Requires ... text with Status: Locked; keep the
+  prerequisite line and Click to contribute footer.
+- Remove obsolete fixed-height frame assets. 110 Node tests and 3 Python tests
+  pass; static validation checks 146 pack files. Native content reflow still
+  requires an in-game check.
+
 # 0.0.41
 
 - Use one consistent text size throughout the Development box. Show Development

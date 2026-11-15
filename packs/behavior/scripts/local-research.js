@@ -98,5 +98,5 @@ export function localResearchText(v,key,s=null){
   roads:level===0?'Enables trade connections and travel by spending food.':level<3?'Raises Road Networks research to Lv '+(level+1)+'. Connections are built and upgraded separately.':'',
  };
  const benefit=[current[key]?'Current: '+current[key]:'',cost&&next[key]?'Next: '+next[key]:''].filter(Boolean).join('\n');
- return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining\nRequires: ${prerequisite}${ceiling}\nStatus: ${requirement||'Available'}`:'Fully upgraded'}`;
+ return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining\nRequires: ${prerequisite}${ceiling}\nStatus: ${requirement?'Locked':'Available'}`:'Fully upgraded'}`;
 }

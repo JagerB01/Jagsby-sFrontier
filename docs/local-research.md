@@ -1,4 +1,4 @@
-# Finalized local research — 0.0.40
+# Finalized local research — 0.0.42
 
 Local research uses the existing five-node tree and custom charter renderer.
 Hovering a technology states its literal current and next effect (Current is omitted at Lv 0) and shows its current
@@ -102,7 +102,7 @@ python -m unittest discover -s tools -p 'test_*.py' -v
 python tools/addon.py build
 ```
 
-110 Node tests and 3 Python tests pass; static validation checks 148 pack files. The map feature and its obsolete tests/assets are removed.
+110 Node tests and 3 Python tests pass; static validation checks 146 pack files. The map feature and its obsolete tests/assets are removed.
 New coverage checks exact prices/limits, mixed categories, invalid items, partial
 reloads, independent settlements, legacy aliases/surplus, two contributors, stale
 revisions, clipped spending, intent/final save failures, interrupted multi-slot

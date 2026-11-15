@@ -40,10 +40,18 @@ a small positive rate is shown as **+<0.01**, rather than zero. All positive rat
 compact suffixes. This changes formatting only; the estimate still uses existing
 Development value rates divided by the 500-value-per-point threshold.
 
-Research hover boxes use smaller per-technology frames instead of the former
-uniform oversized frame. Effects describe only the current and next level.
-At Lv 0 the Current paragraph is omitted. Direct contribution, exact next-level
-cost, progress, remainder, prerequisite and Stewardship ceilings remain.
+Research hover boxes now measure the rendered wrapped label instead of using a
+fixed pixel height or reserving text rows. The collection scope and vertical
+content stack derive their height from the label; the outside panel uses the
+largest child's height and its nine-slice frame follows the sibling content.
+Fixed padding is six pixels above/below the title/body stack. The popup's top is
+anchored four pixels below a top-tier card, or its bottom four pixels above other
+cards, so changing height cannot move it over the hovered card. This uses native
+JSON UI layout sizing (`default`, `100%c`, `100%cm`, `100%sm`), not estimates of
+character counts. See [layout reference](https://wiki.bedrock.dev/json-ui/json-ui-documentation#layout).
+Current effects are omitted at Lv 0; only current/next effects are described.
+The prerequisite is shown once and status is Available, Locked or Fully upgraded.
+Direct contribution, costs, saved progress and Stewardship caps are unchanged.
 Hearthstone explicitly grants Regeneration I within the settlement and retains
 it for three minutes after leaving; the native effect is refreshed to 3,600
 game ticks while inside. Hearthstone II's next/current paragraph adds the
@@ -51,7 +59,7 @@ existing 2-health-point villager heal once per Minecraft day.
 
 ## Validation
 
-110 Node tests and 3 Python tests pass. Static packaging validates 148 pack
+110 Node tests and 3 Python tests pass. Static packaging validates 146 pack
 files. Coverage includes rate components, full-stock paused output, source
 resource deduplication, bounded pages/empty states, research and sample gating,
 inline verified selection, unloaded rejection, clearing, whole-item collection

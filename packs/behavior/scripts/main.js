@@ -105,7 +105,7 @@ function globalResearchText(s,key){
  const resource=key==='capacity'?'Logs':key==='storage'?'Building materials':acceptedMaterials(s,key).map(id=>id.replace('minecraft:','').replaceAll('_',' ')).join(', ');
  const prerequisite=key==='innovation'?'None (Lv 1 is free)':d.prerequisite?DEFINITIONS[d.prerequisite].name+' Lv 1':'Stewardship Lv 1';
  const ceiling=['capacity','storage'].includes(key)?`; Stewardship Lv ${level+1}`:'';
- return `Lv ${level}${Number.isFinite(maximum)?' / '+maximum:' (endless)'}\n${description}\n${cost===undefined?'Fully upgraded':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]} / ${cost}; ${Math.max(0,cost-s.researchProgress[key])} remaining`}\nRequires: ${prerequisite}${ceiling}\nStatus: ${locked||'Available'}`;
+ return `Lv ${level}${Number.isFinite(maximum)?' / '+maximum:' (endless)'}\n${description}\n${cost===undefined?'Fully upgraded':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]} / ${cost}; ${Math.max(0,cost-s.researchProgress[key])} remaining\nRequires: ${prerequisite}${ceiling}\nStatus: ${locked?'Locked':'Available'}`}`;
 }
 function inventoryMaterials(player,s,key,materials=acceptedMaterials(s,key)){
  const inv=player.getComponent('minecraft:inventory')?.container,counts=new Map();

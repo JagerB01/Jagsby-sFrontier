@@ -264,7 +264,7 @@ test('standalone UI references resolve to Frontier files and definitions',async(
   }
 });
 
-test('research popups stay inside the charter and never overlap the hovered tech card',async()=>{
+test('research popups size to text and anchor outside the hovered tech card',async()=>{
   const ui=await loadUI();
   function check(button,x,y) {
     const states=children(button);
@@ -272,13 +272,16 @@ test('research popups stay inside the charter and never overlap the hovered tech
     for(const state of ['hover','pressed']) {
       const tip=children(states[state]).research_tooltip;
       assert.ok(tip,'Missing research explanation');
-      const content=children(tip);
-      assert.ok(content.title.text.length>0);
+      const outer=children(tip),content=children(outer.content);
+      assert.ok(children(content.title_row).title.text.length>0);
       assert.ok(content.description?.text.length>0 || content.live_details);
       assert.ok(x+tip.offset[0]>=18&&x+tip.offset[0]+tip.size[0]<=362);
-      assert.ok(y+tip.offset[1]>=0&&y+tip.offset[1]+tip.size[1]<=240);
-      const top=y+tip.offset[1],bottom=top+tip.size[1];
-      assert.ok(bottom<=y-4||top>=y+34+4,'Popup overlaps the hovered tech card');
+      assert.deepEqual(tip.size,[240,'100%cm']);
+      assert.equal(outer.frame.size[1],'100%sm');
+      assert.equal(outer.frame.nineslice_size,6);
+      assert.equal(tip.anchor_from,y===89?'bottom_left':'top_left');
+      assert.equal(tip.anchor_to,y===89?'top_left':'bottom_left');
+      assert.equal(tip.offset[1],y===89?4:-4);
       assert.equal(JSON.stringify(tip).includes('button.form_button_click'),false);
     }
   }
@@ -287,7 +290,7 @@ test('research popups stay inside the charter and never overlap the hovered tech
     const purchase=ui['jf_action_'+key+'@common.button'];
     assert.equal(purchase.$pressed_button_name,'button.form_button_click');
     check(purchase,104+node.offset[0],89+node.offset[1]);
-    assert.ok(children(children(children(purchase).hover).research_tooltip).live_details);
+    assert.ok(children(children(children(children(purchase).hover).research_tooltip).content).live_details);
   }
   const local=children(ui.jf_research_local_content);
   for(const [key,index] of [['efficiency',14],['hearth',15],['biome',16],['sanctuary',57],['roads',58]]) {
@@ -300,7 +303,7 @@ test('research popups stay inside the charter and never overlap the hovered tech
     const purchase=ui['jf_action_'+key+'@common.button'];
     assert.equal(purchase.$pressed_button_name,'button.form_button_click');
     check(purchase,104+node.offset[0],89+node.offset[1]);
-    const details=children(children(children(purchase).hover).research_tooltip).live_details;
+    const details=children(children(children(children(purchase).hover).research_tooltip).content).live_details;
     assert.ok(details.controls[0]['record@jagsby_frontier.jf_data_'+key]);
   }
   assert.ok(local.hearth.offset[1]<local.biome.offset[1]);
@@ -339,10 +342,14 @@ test('Production uses four fixed non-scrolling panels with bounded navigation an
  for(const name of ['use0','use1','use2','survey','clear','previous','next'])assert.ok(children(ui.jf_production_biomes_content)[name]);
  assert.ok(children(ui.jf_production_stock_content).collect);
 });
-test('Research hover panels fit their shorter current/next descriptions rather than a uniform oversized box',async()=>{
+test('Research hover heights flow from the rendered label with only fixed edge padding',async()=>{
  const ui=await loadUI();
  for(const key of ['innovation','frontier','capacity','colonization','storage','hearth','biome','sanctuary','efficiency','roads']){
   const tip=children(children(children(ui['jf_action_'+key+'@common.button']).hover).research_tooltip);
-  assert.ok(tip.live_details.size[1]<=88);
+  const content=children(tip.content);
+  assert.deepEqual(tip.content.size,[240,'100%c']);
+  assert.deepEqual(content.live_details.size,[222,'100%c']);
+  assert.deepEqual(ui['jf_data_'+key].size,[222,'default']);
+  assert.equal(content.top_padding.size[1],6);assert.equal(content.bottom_padding.size[1],6);
  }
 });
