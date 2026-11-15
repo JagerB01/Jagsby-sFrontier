@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.59.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.60.mcaddon?raw=true)
+
+Version 0.0.60 removes Frontier’s global UI registration override. The charter
+controls now live in the existing server-form file, leaving HUD registration
+to Minecraft and other packs. The Vibrant Visuals declaration is retained.
+HUD recovery and the charter still require verification in the Minecraft client.
 
 Version 0.0.59 declares the resource pack’s **pbr** capability for Vibrant Visuals
 compatibility. Enable Vibrant Visuals in Minecraft on a supported device;

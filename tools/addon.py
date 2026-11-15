@@ -54,6 +54,13 @@ def validate():
             if module["type"] == "script":
                 assert (base / module["entry"]).is_file(), "Missing script entry"
     assert "pbr" in manifests["resource"].get("capabilities", []), "Resource pack must declare Vibrant Visuals compatibility"
+    resource_ui = PACKS / "resource/ui"
+    assert not (resource_ui / "_ui_defs.json").exists(), "Do not override global UI registration; use the registered server_form file"
+    assert not (resource_ui / "hud_screen.json").exists(), "Frontier must not override the gameplay HUD"
+    form_ui = json.loads((resource_ui / "server_form.json").read_text())
+    assert form_ui["namespace"] == "server_form"
+    assert all(key in {"namespace", "main_screen_content/server_form_factory"} or key.startswith("jf_")
+               for key in form_ui), "Only Frontier-prefixed controls and the form factory hook may extend server_form"
     resource = manifests["resource"]["header"]
     assert any(d.get("uuid") == resource["uuid"] and
                d.get("version") == resource["version"]

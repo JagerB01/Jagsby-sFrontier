@@ -1,3 +1,14 @@
+# 0.0.60
+
+- Remove Frontier's `_ui_defs.json` global registration override in response to
+  the missing-HUD report. Define Frontier-prefixed menu controls inside the
+  already-registered `ui/server_form.json`; keep native form fallbacks and avoid
+  overriding HUD definitions or global UI variables. Retain the pbr capability.
+- Delete obsolete generated UI files on every build. Packaging guards reject
+  global registration/HUD overrides and non-Frontier form-template replacements.
+- Minecraft HUD recovery, charter rendering and coexistence with the user's
+  enabled packs remain subject to in-game verification.
+
 # 0.0.59
 
 - Declare `pbr` on the resource pack so it is marked compatible with Vibrant
