@@ -35,10 +35,10 @@ export function tradeRouteSummary(s,v){
 
 export function developmentRateText(rate){
  if(!(rate>0))return '0';
- if(rate<0.01)return '<0.01';
- if(rate<99.995)return rate.toFixed(2);
- if(rate<1000)return String(Math.round(rate));
+ if(rate<0.01)return '+<0.01';
+ if(rate<99.995)return '+'+rate.toFixed(2);
+ if(rate<1000)return '+'+Math.round(rate);
  for(const [size,label]of [[1e12,'T'],[1e9,'B'],[1e6,'M'],[1e3,'k']])if(rate>=size){
-  const value=rate/size;return (value<10?value.toFixed(1):String(Math.round(value)))+label;
+  const value=rate/size;return '+'+(value<10?value.toFixed(1):String(Math.round(value)))+label;
  }
 }

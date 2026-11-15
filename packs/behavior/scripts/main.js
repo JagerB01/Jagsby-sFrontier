@@ -203,7 +203,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
    records[data[key]]=researchText(s,v,key,player)+'\nClick to contribute';
   }
   records[data.zone]=zoneAt(v.location)||'Unknown';
-  records[data.developmentValue]=`${development(v)} points`;
+  records[data.developmentValue]=`Development ${development(v)}`;
   records[data.developmentHourly]=developmentRateText(developmentHourlyRate(s,v));
   records[data.tradeRoute]=tradeRouteSummary(s,v);
   for(const key of ['innovation','frontier','capacity','colonization','storage','hearth','biome','sanctuary','efficiency','roads']){

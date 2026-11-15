@@ -171,10 +171,10 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
   assert.equal(forms[0].records.length,96);
   assert.equal(forms[0].records[63],'[JF:data:zone]Heartlands');
-  assert.equal(forms[0].records[64],'0 points');
+  assert.equal(forms[0].records[64],'Development 0');
   assert.equal(forms[0].records[66],'[JF:data:innovationLevel]Lv 1');
   assert.equal(forms[0].records[76],'[JF:data:tradeRoute]None');
-  assert.equal(forms[0].records[60],'<0.01');
+  assert.equal(forms[0].records[60],'+<0.01');
   assert.equal(forms[0].records[67],'[JF:data:frontierLevel]Lv 0');
   assert.equal(forms[0].records[24],'[JF:action:rename]');
   assert.equal(forms[0].records[25],'[JF:data:owner]Builder');

@@ -1,3 +1,12 @@
+# 0.0.41
+
+- Use one consistent text size throughout the Development box. Show Development
+  and its value together in the heading; remove the Current label/row.
+- Rename the rate label to Dev/Hr, retain aligned values, and prefix positive
+  rates with +. Small positives display +<0.01; zero remains 0.
+- 110 Node tests and 3 Python tests pass; static validation checks 148 pack files.
+  Native rendering remains unverified.
+
 # 0.0.40
 
 - Place top-tier tech hover popups below their cards and other tier popups above

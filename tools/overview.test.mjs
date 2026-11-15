@@ -29,7 +29,7 @@ test('Overview route summary identifies the route, construction, multiple routes
 });
 
 test('Development/Hr uses short values without hiding small positive progress',()=>{
- assert.equal(developmentRateText(0),'0');assert.equal(developmentRateText(0.00156),'<0.01');
- assert.equal(developmentRateText(0.013),'0.01');assert.equal(developmentRateText(1.236),'1.24');
- assert.equal(developmentRateText(1200),'1.2k');assert.equal(developmentRateText(1500000),'1.5M');
+ assert.equal(developmentRateText(0),'0');assert.equal(developmentRateText(0.00156),'+<0.01');
+ assert.equal(developmentRateText(0.013),'+0.01');assert.equal(developmentRateText(1.236),'+1.24');
+ assert.equal(developmentRateText(1200),'+1.2k');assert.equal(developmentRateText(1500000),'+1.5M');
 });

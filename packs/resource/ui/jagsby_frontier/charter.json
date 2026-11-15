@@ -2731,63 +2731,11 @@
               }
             },
             {
-              "title": {
-                "type": "label",
-                "text": "Development",
-                "size": [
-                  59,
-                  10
-                ],
-                "offset": [
-                  6,
-                  4
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.7,
-                "color": [
-                  0.82,
-                  0.7,
-                  0.44
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "developmentValue_label": {
-                "type": "label",
-                "text": "Current",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  6,
-                  19
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.6,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
-                ],
-                "shadow": false
-              }
-            },
-            {
               "developmentValue": {
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  31,
+                  59,
                   12
                 ],
                 "collection_name": "form_buttons",
@@ -2801,8 +2749,8 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  34,
-                  19
+                  6,
+                  5
                 ],
                 "clips_children": true
               }
@@ -2810,21 +2758,21 @@
             {
               "developmentHourly_label": {
                 "type": "label",
-                "text": "Development/Hr",
+                "text": "Dev/Hr",
                 "size": [
-                  42,
+                  25,
                   12
                 ],
                 "offset": [
                   6,
-                  35
+                  27
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.53,
+                "font_scale_factor": 0.65,
                 "color": [
                   0.73,
                   0.73,
@@ -2838,7 +2786,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  15,
+                  31,
                   12
                 ],
                 "collection_name": "form_buttons",
@@ -2852,8 +2800,8 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  50,
-                  35
+                  34,
+                  27
                 ],
                 "clips_children": true
               }
@@ -2863,19 +2811,19 @@
                 "type": "label",
                 "text": "Route",
                 "size": [
-                  20,
+                  25,
                   12
                 ],
                 "offset": [
                   6,
-                  51
+                  45
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.6,
+                "font_scale_factor": 0.65,
                 "color": [
                   0.73,
                   0.73,
@@ -2889,8 +2837,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  36,
-                  18
+                  31,
+                  24
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -2903,8 +2851,8 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  29,
-                  51
+                  34,
+                  45
                 ],
                 "clips_children": true
               }
@@ -2967,7 +2915,7 @@
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.7,
+                "font_scale_factor": 0.65,
                 "color": [
                   0.82,
                   0.7,
@@ -19899,7 +19847,7 @@
     "type": "label",
     "text": "#form_button_text",
     "size": [
-      31,
+      59,
       12
     ],
     "offset": [
@@ -19911,11 +19859,11 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.65,
     "color": [
-      0.94,
-      0.92,
-      0.85
+      0.82,
+      0.7,
+      0.44
     ],
     "shadow": false,
     "bindings": [
@@ -19931,14 +19879,13 @@
     ],
     "property_bag": {
       "#form_button_text": "Unavailable"
-    },
-    "text_alignment": "right"
+    }
   },
   "jf_data_developmentHourly": {
     "type": "label",
     "text": "#form_button_text",
     "size": [
-      15,
+      31,
       12
     ],
     "offset": [
@@ -19950,7 +19897,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.5,
+    "font_scale_factor": 0.65,
     "color": [
       0.94,
       0.92,
@@ -19977,8 +19924,8 @@
     "type": "label",
     "text": "#text",
     "size": [
-      36,
-      18
+      31,
+      24
     ],
     "offset": [
       0,
@@ -19989,7 +19936,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.55,
+    "font_scale_factor": 0.65,
     "color": [
       0.94,
       0.92,

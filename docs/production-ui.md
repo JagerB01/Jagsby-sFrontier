@@ -35,8 +35,8 @@ continues using cached Realm Power and saved biome/research records.
 ## Other readability corrections in this release
 
 Development's labels and values share rows, with values aligned to the right.
-**Development/Hr** replaces Hourly est. Values use at most two decimal places;
-a small positive rate is shown as **<0.01**, rather than zero. Large rates use
+**Dev/Hr** is the rate label. The current value appears beside Development in the heading, with no Current row; all text in this box uses the same size. Values use at most two decimal places;
+a small positive rate is shown as **+<0.01**, rather than zero. All positive rates have a + prefix. Large rates use
 compact suffixes. This changes formatting only; the estimate still uses existing
 Development value rates divided by the 500-value-per-point threshold.
 

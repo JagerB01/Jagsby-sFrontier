@@ -527,25 +527,23 @@ def build():
             owner, *rows, control("claim", claim),
         ]})
     development_rows = [
-        control("developmentValue_label", label("Current", [26, 12], (6, 19), SILVER, 0.6)),
-        overview_value("developmentValue", DATA["developmentValue"], [34, 19], [31, 12], scale=0.6),
-        control("developmentHourly_label", label("Development/Hr", [42, 12], (6, 35), SILVER, 0.53)),
-        overview_value("developmentHourly", DATA["developmentHourly"], [50, 35], [15, 12], scale=0.5),
-        control("tradeRoute_label", label("Route", [20, 12], (6, 51), SILVER, 0.6)),
-        overview_value("tradeRoute", DATA["tradeRoute"], [29, 51], [36, 18], scale=0.55),
+        overview_value("developmentValue", DATA["developmentValue"], [6, 5], [59, 12], scale=0.65),
+        control("developmentHourly_label", label("Dev/Hr", [25, 12], (6, 27), SILVER, 0.65)),
+        overview_value("developmentHourly", DATA["developmentHourly"], [34, 27], [31, 12], scale=0.65),
+        control("tradeRoute_label", label("Route", [25, 12], (6, 45), SILVER, 0.65)),
+        overview_value("tradeRoute", DATA["tradeRoute"], [34, 45], [31, 24], scale=0.65),
     ]
-    GENERATED_CONTROLS["jf_data_developmentValue"]["text_alignment"] = "right"
+    GENERATED_CONTROLS["jf_data_developmentValue"]["color"] = list(WHEAT)
     GENERATED_CONTROLS["jf_data_developmentHourly"]["text_alignment"] = "right"
     development_box = control("development", {"type": "panel", "size": [71, 72], "offset": [0, 86],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
             control("surface", image("frontier/palette_panel", [71, 72], color=[0.82, 0.82, 0.82])),
-            control("title", label("Development", [59, 10], (6, 4), WHEAT, 0.7)),
             *development_rows,
         ]})
     production_box = control("production", {"type": "panel", "size": [72, 72], "offset": [75, 86],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
             control("surface", image("frontier/palette_panel", [72, 72], color=[0.82, 0.82, 0.82])),
-            control("title", label("Production", [60, 10], (6, 4), WHEAT, 0.7)),
+            control("title", label("Production", [60, 10], (6, 4), WHEAT, 0.65)),
         ]})
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 158], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [90, 158]),
