@@ -3,7 +3,6 @@ import copy
 import json
 from pathlib import Path
 from build_ui_art import build as build_ui_art, button_texture
-from build_map_hud import build as build_map_hud
 
 ROOT = Path(__file__).resolve().parents[1]
 RP = ROOT / "packs/resource"
@@ -19,12 +18,10 @@ ACTIONS = {name: i + 14 for i, name in enumerate([
     "storage", "scan", "selectBiome", "collect", "rename",
 ])}
 ACTIONS.update({"claim": 28, "minePrev": 29, "mineNext": 30, "allPrev": 31, "allNext": 32})
-DATA["mapInfo"] = 33
-DATA.update({"mapRow" + str(i): 34 + i for i in range(12)})
-ACTIONS.update({"map" + key: 46 + i for i, key in enumerate([
-    "North", "South", "West", "East", "ZoomIn", "ZoomOut", "Center", "Dimension", "Refresh"])})
+DATA.update({"roadSummary": 33, "roadDetails": 34})
+ACTIONS.update({"roadsPrev": 46, "roadsNext": 47})
 DATA.update({"sanctuary": 55, "roads": 56})
-ACTIONS.update({"sanctuary": 57, "roads": 58, "mapInteractive": 59})
+ACTIONS.update({"sanctuary": 57, "roads": 58})
 DATA["colonization"] = 61
 ACTIONS["colonization"] = 62
 DATA.update({"zone": 63, "developmentValue": 64, "developmentHourly": 60})
@@ -32,6 +29,7 @@ TECHS = ["innovation", "frontier", "capacity", "colonization", "storage",
          "hearth", "biome", "sanctuary", "efficiency", "roads"]
 DATA.update({key + "Level": 66 + i for i, key in enumerate(TECHS)})
 DATA["tradeRoute"] = 76
+ACTIONS["manageRoads"] = 77
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -121,7 +119,7 @@ def data_template(index, size, scale=0.8):
         view(f"(#record_text - '{marker}')", "#text"),
         view(f"(not ((#record_text - '{marker}') = #record_text))"),
     ]
-    if key == "census":
+    if key in ["census", "developmentValue", "developmentHourly"]:
         text["text"] = "#form_button_text"
         text["property_bag"] = {"#form_button_text": "Unavailable"}
         text["bindings"] = [
@@ -229,7 +227,7 @@ def overview_value(name, index, offset, size, scale=0.9):
 
 def research_tab(scope, index, section="research", caption_text=None):
     width, spacing = (82, 86) if section == "realm" else (124, 129)
-    order = ["map", "mine", "all"] if section == "realm" else ["local", "global"]
+    order = ["roads", "mine", "all"] if section == "realm" else ["local", "global"]
     toggle = tab("Research", index)["jf_tab_research"]
     toggle.update({"size": [width, 23], "offset": [index * spacing, 0],
         "toggle_name": "jagsby_frontier_" + section + "_tabs", "tts_name": caption_text or scope.title(),
@@ -264,14 +262,12 @@ def info_card(name, title, index, y):
 
 def research_tooltip(key, offset, live=False):
     title, description = RESEARCH_HELP[key]
-    height = 96 if live else 70
+    height = 188 if live else 70
     if live:
-        template = data_template(DATA[key], [222, 54], scale=0.65)
-        details = collection_scope(template, [222, 54])
+        template = data_template(DATA[key], [222, 148], scale=0.75)
+        details = collection_scope(template, [222, 148])
         details.update({"offset": [9, 28], "anchor_from": "top_left", "anchor_to": "top_left"})
-        body = [control("live_details", details),
-                control("hint", label("Select to manage connections." if key == "roads" else "Select this tech to research.",
-                                      [222, 9], (9, 83), SILVER, 0.6))]
+        body = [control("live_details", details)]
     else:
         body = [control("description", label(description, [222, 39], (9, 28), IVORY, 0.65))]
     return control("research_tooltip", {
@@ -297,7 +293,7 @@ def research_node(name, title, position, sprite, local=False):
             control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
             control("name", label(title, [78, 12], (39, 5), color=IVORY, scale=0.65 if len(title) > 18 else 0.75)),
             control("level", copy.deepcopy(level)),
-            *([research_tooltip(name, [7 - position[0], 38 if position[1] == 0 else (-100 if active else -74)], live=active)]
+            *([research_tooltip(name, [7 - position[0], 36 - 89 - position[1]], live=active)]
               if state in ["hover", "pressed"] else []),
         ]}))
     if active:
@@ -350,7 +346,6 @@ def local_tree():
 
 def build():
     build_ui_art()
-    build_map_hud()
     GENERATED_CONTROLS.clear()
     ui = {"namespace": "jagsby_frontier"}
     is_charter = "(not ((#title_text - 'JF_CHARTER|') = #title_text))"
@@ -458,46 +453,47 @@ def build():
     ui["jf_tier_portrait"] = portrait
     # Separate name template keeps the header's dimensions and color independent.
     header_name = copy.deepcopy(GENERATED_CONTROLS["jf_data_overview"])
-    name = overview_value("name", DATA["overview"], [8, 7], [131, 14], scale=0.95)
+    name = overview_value("name", DATA["overview"], [8, 8], [83, 14], scale=0.85)
     GENERATED_CONTROLS["jf_identity_name"] = GENERATED_CONTROLS["jf_data_overview"]
     GENERATED_CONTROLS["jf_identity_name"]["color"] = list(WHEAT)
     GENERATED_CONTROLS["jf_data_overview"] = header_name
     name["name"]["controls"] = [control("record@jagsby_frontier.jf_identity_name", {"collection_index": DATA["overview"]})]
     rows = []
-    for key, title, y in [("tier", "Tier", 28), ("owner", "Owner", 38),
-                          ("biomes", "Biome", 48), ("zone", "Zone", 58),
-                          ("census", "Realm Power", 68)]:
+    for key, title, y in [("tier", "Tier", 34), ("biomes", "Biome", 44),
+                          ("zone", "Zone", 54), ("census", "Realm Power", 64)]:
         rows += [control(key + "_label", label(title, [56, 11], (8, y), color=SILVER, scale=0.75)),
                  overview_value(key, DATA[key], [70, y], [69, 12], scale=0.8)]
     # In unclaimed villages the Claim control occupies the Owner value slot.
-    next(row["owner"] for row in rows if "owner" in row)["bindings"] = condition(
+    owner = overview_value("owner", DATA["owner"], [95, 14], [44, 12], scale=0.6)
+    owner["owner"]["bindings"] = condition(
         "((#form_text - '[JF:unclaimed]') = #form_text)", "#form_text")
-    claim = action("claim", ACTIONS["claim"], "Claim", width=69, height=16)["claim"]
-    claim.update({"offset": [70, 35], "anchor_from": "top_left", "anchor_to": "top_left",
+    claim = action("claim", ACTIONS["claim"], "Claim", width=44, height=14)["claim"]
+    claim.update({"offset": [95, 12], "anchor_from": "top_left", "anchor_to": "top_left",
                   "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
-    identity = control("identity", {"type": "panel", "size": [147, 80], "offset": [0, 4],
+    identity = control("identity", {"type": "panel", "size": [147, 78], "offset": [0, 4],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("surface", image("frontier/palette_panel", [147, 80], color=[0.82, 0.82, 0.82])),
+            control("surface", image("frontier/palette_panel", [147, 78], color=[0.82, 0.82, 0.82])),
             name,
-            control("divider", image("frontier/solid", [131, 1], (8, 25), 2, list(WHEAT))),
-            *rows, control("claim", claim),
+            control("divider", image("frontier/solid", [131, 1], (8, 29), 2, list(WHEAT))),
+            control("owner_label", label("Owner", [40, 8], (99, 4), SILVER, 0.55)),
+            owner, *rows, control("claim", claim),
         ]})
     development_rows = []
-    for key, title, y in [("developmentValue", "Current", 17),
-                          ("developmentHourly", "Hourly est.", 26),
-                          ("tradeRoute", "Route", 35)]:
-        development_rows += [control(key + "_label", label(title, [42, 9], (8, y), SILVER, 0.6)),
-                             overview_value(key, DATA[key], [50, y], [89, 9], scale=0.6)]
-    development_box = control("development", {"type": "panel", "size": [147, 48], "offset": [0, 88],
+    for key, title, y in [("developmentValue", "Current", 16),
+                          ("developmentHourly", "Hourly est.", 34),
+                          ("tradeRoute", "Route", 52)]:
+        development_rows += [control(key + "_label", label(title, [59, 8], (6, y), SILVER, 0.6)),
+                             overview_value(key, DATA[key], [6, y + 8], [59, 10], scale=0.55)]
+    development_box = control("development", {"type": "panel", "size": [71, 72], "offset": [0, 86],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("surface", image("frontier/palette_panel", [147, 48], color=[0.82, 0.82, 0.82])),
-            control("title", label("Development", [131, 10], (8, 4), WHEAT, 0.75)),
+            control("surface", image("frontier/palette_panel", [71, 72], color=[0.82, 0.82, 0.82])),
+            control("title", label("Development", [59, 10], (6, 4), WHEAT, 0.7)),
             *development_rows,
         ]})
-    production_box = control("production", {"type": "panel", "size": [147, 18], "offset": [0, 140],
+    production_box = control("production", {"type": "panel", "size": [72, 72], "offset": [75, 86],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("surface", image("frontier/palette_panel", [147, 18], color=[0.82, 0.82, 0.82])),
-            control("title", label("Production", [131, 10], (8, 4), WHEAT, 0.75)),
+            control("surface", image("frontier/palette_panel", [72, 72], color=[0.82, 0.82, 0.82])),
+            control("title", label("Production", [60, 10], (6, 4), WHEAT, 0.7)),
         ]})
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 158], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [90, 158]),
@@ -508,42 +504,21 @@ def build():
     ui["jf_information_content"] = {"type": "panel", "size": [257, 158], "controls": [
         control("heading", label("Information", [233, 14], (8, 8), WHEAT, 0.95)),
         control("rule", image("frontier/solid", [233, 1], (8, 29), 2, list(WHEAT))),
-        control("placeholder", label("Realm Map\nGold house: current settlement\nIvory house: other settlement\nWhite cross: your position\nDark areas: not yet explored\nRefresh loads the shared biome map.", [233, 96], (8, 40), scale=0.75)),
+        control("placeholder", label("Road Networks\nOpen Realm > Road Networks to view connections.\nManage construction, upgrades and food-powered travel there.\nContribute research directly from the tech cards.", [233, 96], (8, 40), scale=0.75)),
     ]}
-    realm_controls = [research_tab("map", 0, "realm", "Map"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
-    map_controls = []
-    map_controls.append(control("background", image("frontier/solid", [224, 84], (15, 0), color=[0.10, 0.11, 0.13])))
-    for i in range(12):
-        key = "mapRow" + str(i)
-        template = data_template(DATA[key], [240, 12], scale=0.875)
-        GENERATED_CONTROLS[template].pop("font_type", None)
-        GENERATED_CONTROLS[template].update({"font_size": "small", "color": [1, 1, 1]})
-        row = collection_scope(template, [240, 12])
-        row.update({"offset": [15, i * 7], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 5})
-        map_controls.append(control("row_" + str(i), row))
-    interactive = action("map_interactive", ACTIONS["mapInteractive"], "Open interactive map", width=224, height=84)["map_interactive"]
-    for state in GENERATED_CONTROLS["jf_action_mapInteractive@common.button"]["controls"]:
-        panel = next(iter(state.values()))
-        panel["controls"] = [control("hint", label("Select to open interactive map", [220, 10], (2, 73), WHEAT, 0.6))] if next(iter(state)) != "default" else []
-    interactive.update({"offset": [15, 0], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 15})
-    map_controls.append(control("interactive", interactive))
-    map_controls.append(overview_value("map_status", DATA["mapInfo"], [0, 86], [254, 10], scale=0.55))
-    for row, entries in enumerate([
-        [("West", "West"), ("North", "North"), ("South", "South"), ("East", "East")],
-        [("ZoomIn", "Zoom +"), ("ZoomOut", "Zoom -"), ("Center", "Centre"), ("Dimension", "Dim"), ("Refresh", "Refresh")],
-    ]):
-        width = 48 if row else 60
-        for i, (key, caption) in enumerate(entries):
-            button = action("map_" + key, ACTIONS["map" + key], caption, width=width, height=15)["map_" + key]
-            button.update({"offset": [i * (width + 3), 98 + row * 17], "anchor_from": "top_left", "anchor_to": "top_left"})
-            for state in GENERATED_CONTROLS["jf_action_map" + key + "@common.button"]["controls"]:
-                caption_control = next(iter(state.values()))["controls"][2]["caption"]
-                caption_control.update({"offset": [3, 2], "size": [width - 6, 10], "font_scale_factor": 0.65})
-            map_controls.append(control("map_" + key, button))
-    ui["jf_realm_map_content"] = {"type": "panel", "size": [257, 131], "controls": map_controls}
-    realm_controls.append(control("map@jagsby_frontier.jf_realm_map_content", {
+    realm_controls = [research_tab("roads", 0, "realm", "Road Networks"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
+    road_controls = [
+        overview_value("summary", DATA["roadSummary"], [7, 2], [240, 25], scale=0.7),
+        overview_value("connections", DATA["roadDetails"], [7, 30], [240, 70], scale=0.7),
+    ]
+    for key, caption, x, width in [("roadsPrev", "Previous", 0, 60), ("manageRoads", "Manage / travel", 64, 122), ("roadsNext", "Next", 190, 60)]:
+        button = action(key, ACTIONS[key], caption, width=width)[key]
+        button.update({"offset": [x, 107], "anchor_from": "top_left", "anchor_to": "top_left"})
+        road_controls.append(control(key, button))
+    ui["jf_realm_roads_content"] = {"type": "panel", "size": [257, 131], "controls": road_controls}
+    realm_controls.append(control("roads@jagsby_frontier.jf_realm_roads_content", {
         "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "size": [257, 131],
-        "bindings": [view("#toggle_state", target, "jf_realm_tab_map") for target in ["#visible", "#enabled"]],
+        "bindings": [view("#toggle_state", target, "jf_realm_tab_roads") for target in ["#visible", "#enabled"]],
     }))
     for scope, data_key in [("mine", "realmMine"), ("all", "realmAll")]:
         content = [record("directory", DATA[data_key], 103)]

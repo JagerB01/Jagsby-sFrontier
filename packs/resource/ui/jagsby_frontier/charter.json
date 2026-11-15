@@ -2313,7 +2313,7 @@
           "type": "panel",
           "size": [
             147,
-            80
+            78
           ],
           "offset": [
             0,
@@ -2328,7 +2328,7 @@
                 "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   147,
-                  80
+                  78
                 ],
                 "offset": [
                   0,
@@ -2351,7 +2351,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  131,
+                  83,
                   14
                 ],
                 "collection_name": "form_buttons",
@@ -2366,7 +2366,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   8,
-                  7
+                  8
                 ],
                 "clips_children": true
               }
@@ -2381,7 +2381,7 @@
                 ],
                 "offset": [
                   8,
-                  25
+                  29
                 ],
                 "keep_ratio": false,
                 "bilinear": false,
@@ -2396,6 +2396,73 @@
               }
             },
             {
+              "owner_label": {
+                "type": "label",
+                "text": "Owner",
+                "size": [
+                  40,
+                  8
+                ],
+                "offset": [
+                  99,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.55,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "owner": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  44,
+                  12
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_owner": {
+                      "collection_index": 25
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  95,
+                  14
+                ],
+                "clips_children": true,
+                "bindings": [
+                  {
+                    "binding_name": "#form_text",
+                    "binding_type": "none"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "((#form_text - '[JF:unclaimed]') = #form_text)",
+                    "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "((#form_text - '[JF:unclaimed]') = #form_text)",
+                    "target_property_name": "#enabled"
+                  }
+                ]
+              }
+            },
+            {
               "tier_label": {
                 "type": "label",
                 "text": "Tier",
@@ -2405,7 +2472,7 @@
                 ],
                 "offset": [
                   8,
-                  28
+                  34
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2441,76 +2508,9 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  28
+                  34
                 ],
                 "clips_children": true
-              }
-            },
-            {
-              "owner_label": {
-                "type": "label",
-                "text": "Owner",
-                "size": [
-                  56,
-                  11
-                ],
-                "offset": [
-                  8,
-                  38
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.75,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "owner": {
-                "type": "stack_panel",
-                "orientation": "vertical",
-                "size": [
-                  69,
-                  12
-                ],
-                "collection_name": "form_buttons",
-                "controls": [
-                  {
-                    "record@jagsby_frontier.jf_data_owner": {
-                      "collection_index": 25
-                    }
-                  }
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  70,
-                  38
-                ],
-                "clips_children": true,
-                "bindings": [
-                  {
-                    "binding_name": "#form_text",
-                    "binding_type": "none"
-                  },
-                  {
-                    "binding_type": "view",
-                    "source_property_name": "((#form_text - '[JF:unclaimed]') = #form_text)",
-                    "target_property_name": "#visible"
-                  },
-                  {
-                    "binding_type": "view",
-                    "source_property_name": "((#form_text - '[JF:unclaimed]') = #form_text)",
-                    "target_property_name": "#enabled"
-                  }
-                ]
               }
             },
             {
@@ -2523,7 +2523,7 @@
                 ],
                 "offset": [
                   8,
-                  48
+                  44
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2559,7 +2559,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  48
+                  44
                 ],
                 "clips_children": true
               }
@@ -2574,7 +2574,7 @@
                 ],
                 "offset": [
                   8,
-                  58
+                  54
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2610,7 +2610,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  58
+                  54
                 ],
                 "clips_children": true
               }
@@ -2625,7 +2625,7 @@
                 ],
                 "offset": [
                   8,
-                  68
+                  64
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2661,7 +2661,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  68
+                  64
                 ],
                 "clips_children": true
               }
@@ -2671,8 +2671,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  69,
-                  19
+                  44,
+                  17
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -2683,8 +2683,8 @@
                   }
                 ],
                 "offset": [
-                  70,
-                  35
+                  95,
+                  12
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2714,12 +2714,12 @@
         "development": {
           "type": "panel",
           "size": [
-            147,
-            48
+            71,
+            72
           ],
           "offset": [
             0,
-            88
+            86
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -2729,8 +2729,8 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/palette_panel",
                 "size": [
-                  147,
-                  48
+                  71,
+                  72
                 ],
                 "offset": [
                   0,
@@ -2753,11 +2753,11 @@
                 "type": "label",
                 "text": "Development",
                 "size": [
-                  131,
+                  59,
                   10
                 ],
                 "offset": [
-                  8,
+                  6,
                   4
                 ],
                 "anchor_from": "top_left",
@@ -2765,7 +2765,7 @@
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.75,
+                "font_scale_factor": 0.7,
                 "color": [
                   0.82,
                   0.7,
@@ -2779,12 +2779,12 @@
                 "type": "label",
                 "text": "Current",
                 "size": [
-                  42,
-                  9
+                  59,
+                  8
                 ],
                 "offset": [
-                  8,
-                  17
+                  6,
+                  16
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2805,8 +2805,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  89,
-                  9
+                  59,
+                  10
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -2819,8 +2819,8 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  50,
-                  17
+                  6,
+                  24
                 ],
                 "clips_children": true
               }
@@ -2830,12 +2830,12 @@
                 "type": "label",
                 "text": "Hourly est.",
                 "size": [
-                  42,
-                  9
+                  59,
+                  8
                 ],
                 "offset": [
-                  8,
-                  26
+                  6,
+                  34
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2856,8 +2856,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  89,
-                  9
+                  59,
+                  10
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -2870,8 +2870,8 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  50,
-                  26
+                  6,
+                  42
                 ],
                 "clips_children": true
               }
@@ -2881,12 +2881,12 @@
                 "type": "label",
                 "text": "Route",
                 "size": [
-                  42,
-                  9
+                  59,
+                  8
                 ],
                 "offset": [
-                  8,
-                  35
+                  6,
+                  52
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2907,8 +2907,8 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  89,
-                  9
+                  59,
+                  10
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -2921,8 +2921,8 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  50,
-                  35
+                  6,
+                  60
                 ],
                 "clips_children": true
               }
@@ -2934,12 +2934,12 @@
         "production": {
           "type": "panel",
           "size": [
-            147,
-            18
+            72,
+            72
           ],
           "offset": [
-            0,
-            140
+            75,
+            86
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -2949,8 +2949,8 @@
                 "type": "image",
                 "texture": "textures/ui/frontier/palette_panel",
                 "size": [
-                  147,
-                  18
+                  72,
+                  72
                 ],
                 "offset": [
                   0,
@@ -2973,11 +2973,11 @@
                 "type": "label",
                 "text": "Production",
                 "size": [
-                  131,
+                  60,
                   10
                 ],
                 "offset": [
-                  8,
+                  6,
                   4
                 ],
                 "anchor_from": "top_left",
@@ -2985,7 +2985,7 @@
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.75,
+                "font_scale_factor": 0.7,
                 "color": [
                   0.82,
                   0.7,
@@ -4879,7 +4879,7 @@
       {
         "placeholder": {
           "type": "label",
-          "text": "Realm Map\nGold house: current settlement\nIvory house: other settlement\nWhite cross: your position\nDark areas: not yet explored\nRefresh loads the shared biome map.",
+          "text": "Road Networks\nOpen Realm > Road Networks to view connections.\nManage construction, upgrades and food-powered travel there.\nContribute research directly from the tech cards.",
           "size": [
             233,
             96
@@ -4904,7 +4904,7 @@
       }
     ]
   },
-  "jf_realm_map_content": {
+  "jf_realm_roads_content": {
     "type": "panel",
     "size": [
       257,
@@ -4912,366 +4912,17 @@
     ],
     "controls": [
       {
-        "background": {
-          "type": "image",
-          "texture": "textures/ui/frontier/solid",
-          "size": [
-            224,
-            84
-          ],
-          "offset": [
-            15,
-            0
-          ],
-          "keep_ratio": false,
-          "bilinear": false,
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 0,
-          "color": [
-            0.1,
-            0.11,
-            0.13
-          ]
-        }
-      },
-      {
-        "row_0": {
+        "summary": {
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
             240,
-            12
+            25
           ],
           "collection_name": "form_buttons",
           "controls": [
             {
-              "record@jagsby_frontier.jf_data_mapRow0": {
-                "collection_index": 34
-              }
-            }
-          ],
-          "offset": [
-            15,
-            0
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_1": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow1": {
-                "collection_index": 35
-              }
-            }
-          ],
-          "offset": [
-            15,
-            7
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_2": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow2": {
-                "collection_index": 36
-              }
-            }
-          ],
-          "offset": [
-            15,
-            14
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_3": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow3": {
-                "collection_index": 37
-              }
-            }
-          ],
-          "offset": [
-            15,
-            21
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_4": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow4": {
-                "collection_index": 38
-              }
-            }
-          ],
-          "offset": [
-            15,
-            28
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_5": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow5": {
-                "collection_index": 39
-              }
-            }
-          ],
-          "offset": [
-            15,
-            35
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_6": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow6": {
-                "collection_index": 40
-              }
-            }
-          ],
-          "offset": [
-            15,
-            42
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_7": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow7": {
-                "collection_index": 41
-              }
-            }
-          ],
-          "offset": [
-            15,
-            49
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_8": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow8": {
-                "collection_index": 42
-              }
-            }
-          ],
-          "offset": [
-            15,
-            56
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_9": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow9": {
-                "collection_index": 43
-              }
-            }
-          ],
-          "offset": [
-            15,
-            63
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_10": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow10": {
-                "collection_index": 44
-              }
-            }
-          ],
-          "offset": [
-            15,
-            70
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "row_11": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            240,
-            12
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapRow11": {
-                "collection_index": 45
-              }
-            }
-          ],
-          "offset": [
-            15,
-            77
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 5
-        }
-      },
-      {
-        "interactive": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            224,
-            87
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_action_mapInteractive": {
-                "collection_index": 59
-              }
-            }
-          ],
-          "offset": [
-            15,
-            0
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left",
-          "layer": 15
-        }
-      },
-      {
-        "map_status": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            254,
-            10
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_data_mapInfo": {
+              "record@jagsby_frontier.jf_data_roadSummary": {
                 "collection_index": 33
               }
             }
@@ -5279,223 +4930,104 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
-            0,
-            86
+            7,
+            2
           ],
           "clips_children": true
         }
       },
       {
-        "map_West": {
+        "connections": {
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
-            60,
-            18
+            240,
+            70
           ],
           "collection_name": "form_buttons",
           "controls": [
             {
-              "record@jagsby_frontier.jf_action_mapWest": {
-                "collection_index": 48
+              "record@jagsby_frontier.jf_data_roadDetails": {
+                "collection_index": 34
               }
             }
           ],
-          "offset": [
-            0,
-            98
-          ],
           "anchor_from": "top_left",
-          "anchor_to": "top_left"
+          "anchor_to": "top_left",
+          "offset": [
+            7,
+            30
+          ],
+          "clips_children": true
         }
       },
       {
-        "map_North": {
+        "roadsPrev": {
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
             60,
-            18
+            24
           ],
           "collection_name": "form_buttons",
           "controls": [
             {
-              "record@jagsby_frontier.jf_action_mapNorth": {
+              "record@jagsby_frontier.jf_action_roadsPrev": {
                 "collection_index": 46
               }
             }
           ],
           "offset": [
-            63,
-            98
+            0,
+            107
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left"
         }
       },
       {
-        "map_South": {
+        "manageRoads": {
           "type": "stack_panel",
           "orientation": "vertical",
           "size": [
-            60,
-            18
+            122,
+            24
           ],
           "collection_name": "form_buttons",
           "controls": [
             {
-              "record@jagsby_frontier.jf_action_mapSouth": {
+              "record@jagsby_frontier.jf_action_manageRoads": {
+                "collection_index": 77
+              }
+            }
+          ],
+          "offset": [
+            64,
+            107
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left"
+        }
+      },
+      {
+        "roadsNext": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            60,
+            24
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_action_roadsNext": {
                 "collection_index": 47
               }
             }
           ],
           "offset": [
-            126,
-            98
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left"
-        }
-      },
-      {
-        "map_East": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            60,
-            18
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_action_mapEast": {
-                "collection_index": 49
-              }
-            }
-          ],
-          "offset": [
-            189,
-            98
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left"
-        }
-      },
-      {
-        "map_ZoomIn": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            48,
-            18
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_action_mapZoomIn": {
-                "collection_index": 50
-              }
-            }
-          ],
-          "offset": [
-            0,
-            115
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left"
-        }
-      },
-      {
-        "map_ZoomOut": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            48,
-            18
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_action_mapZoomOut": {
-                "collection_index": 51
-              }
-            }
-          ],
-          "offset": [
-            51,
-            115
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left"
-        }
-      },
-      {
-        "map_Center": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            48,
-            18
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_action_mapCenter": {
-                "collection_index": 52
-              }
-            }
-          ],
-          "offset": [
-            102,
-            115
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left"
-        }
-      },
-      {
-        "map_Dimension": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            48,
-            18
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_action_mapDimension": {
-                "collection_index": 53
-              }
-            }
-          ],
-          "offset": [
-            153,
-            115
-          ],
-          "anchor_from": "top_left",
-          "anchor_to": "top_left"
-        }
-      },
-      {
-        "map_Refresh": {
-          "type": "stack_panel",
-          "orientation": "vertical",
-          "size": [
-            48,
-            18
-          ],
-          "collection_name": "form_buttons",
-          "controls": [
-            {
-              "record@jagsby_frontier.jf_action_mapRefresh": {
-                "collection_index": 54
-              }
-            }
-          ],
-          "offset": [
-            204,
-            115
+            190,
+            107
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left"
@@ -5743,7 +5275,7 @@
     ],
     "controls": [
       {
-        "jf_realm_tab_map": {
+        "jf_realm_tab_roads": {
           "type": "toggle",
           "size": [
             82,
@@ -5764,7 +5296,7 @@
           "reset_on_focus_lost": false,
           "focus_enabled": true,
           "hover_enabled": true,
-          "focus_identifier": "jf_realm_focus_map",
+          "focus_identifier": "jf_realm_focus_roads",
           "toggle_on_button": "toggle.toggle_on",
           "toggle_off_button": "toggle.toggle_off",
           "property_bag": {
@@ -5781,7 +5313,7 @@
               "binding_type": "none"
             },
             {
-              "binding_name": "(not ((#form_text - '[JF:realm:map]') = #form_text))",
+              "binding_name": "(not ((#form_text - '[JF:realm:roads]') = #form_text))",
               "binding_name_override": "#toggle_state",
               "binding_type": "none",
               "binding_condition": "once"
@@ -5803,7 +5335,7 @@
           "checked_control": "checked",
           "unchecked_hover_control": "unchecked_hover",
           "checked_hover_control": "checked_hover",
-          "tts_name": "Map",
+          "tts_name": "Road Networks",
           "controls": [
             {
               "unchecked": {
@@ -5835,7 +5367,7 @@
                   {
                     "caption": {
                       "type": "label",
-                      "text": "Map",
+                      "text": "Road Networks",
                       "size": [
                         82,
                         13
@@ -5892,7 +5424,7 @@
                   {
                     "caption": {
                       "type": "label",
-                      "text": "Map",
+                      "text": "Road Networks",
                       "size": [
                         82,
                         13
@@ -5949,7 +5481,7 @@
                   {
                     "caption": {
                       "type": "label",
-                      "text": "Map",
+                      "text": "Road Networks",
                       "size": [
                         82,
                         13
@@ -6006,7 +5538,7 @@
                   {
                     "caption": {
                       "type": "label",
-                      "text": "Map",
+                      "text": "Road Networks",
                       "size": [
                         82,
                         13
@@ -6034,7 +5566,7 @@
               }
             }
           ],
-          "focus_change_left": "jf_realm_focus_map",
+          "focus_change_left": "jf_realm_focus_roads",
           "focus_change_right": "jf_realm_focus_mine"
         }
       },
@@ -6330,7 +5862,7 @@
               }
             }
           ],
-          "focus_change_left": "jf_realm_focus_map",
+          "focus_change_left": "jf_realm_focus_roads",
           "focus_change_right": "jf_realm_focus_all"
         }
       },
@@ -6631,7 +6163,7 @@
         }
       },
       {
-        "map@jagsby_frontier.jf_realm_map_content": {
+        "roads@jagsby_frontier.jf_realm_roads_content": {
           "offset": [
             0,
             27
@@ -6647,13 +6179,13 @@
               "binding_type": "view",
               "source_property_name": "#toggle_state",
               "target_property_name": "#visible",
-              "source_control_name": "jf_realm_tab_map"
+              "source_control_name": "jf_realm_tab_roads"
             },
             {
               "binding_type": "view",
               "source_property_name": "#toggle_state",
               "target_property_name": "#enabled",
-              "source_control_name": "jf_realm_tab_map"
+              "source_control_name": "jf_realm_tab_roads"
             }
           ]
         }
@@ -8695,7 +8227,7 @@
     "text": "#text",
     "size": [
       222,
-      54
+      148
     ],
     "offset": [
       0,
@@ -8706,7 +8238,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.75,
     "color": [
       0.94,
       0.92,
@@ -8980,11 +8512,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   7,
-                  -100
+                  -147
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -8993,10 +8525,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -9065,7 +8597,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -9081,32 +8613,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -9217,11 +8723,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   7,
-                  -100
+                  -147
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -9230,10 +8736,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -9302,7 +8808,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -9319,32 +8825,6 @@
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
                     }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
-                    }
                   }
                 ]
               }
@@ -9359,7 +8839,7 @@
     "text": "#text",
     "size": [
       222,
-      54
+      148
     ],
     "offset": [
       0,
@@ -9370,7 +8850,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.75,
     "color": [
       0.94,
       0.92,
@@ -9644,11 +9124,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -59,
-                  38
+                  -53
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -9657,10 +9137,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -9729,7 +9209,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -9745,32 +9225,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -9881,11 +9335,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -59,
-                  38
+                  -53
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -9894,10 +9348,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -9966,7 +9420,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -9983,32 +9437,6 @@
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
                     }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
-                    }
                   }
                 ]
               }
@@ -10023,7 +9451,7 @@
     "text": "#text",
     "size": [
       222,
-      54
+      148
     ],
     "offset": [
       0,
@@ -10034,7 +9462,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.75,
     "color": [
       0.94,
       0.92,
@@ -10308,7 +9736,7 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   7,
@@ -10321,10 +9749,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -10393,7 +9821,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -10409,32 +9837,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -10545,7 +9947,7 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   7,
@@ -10558,10 +9960,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -10630,7 +10032,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -10646,32 +10048,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -10733,7 +10109,7 @@
     "text": "#text",
     "size": [
       222,
-      54
+      148
     ],
     "offset": [
       0,
@@ -10744,7 +10120,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.75,
     "color": [
       0.94,
       0.92,
@@ -11018,11 +10394,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -59,
-                  38
+                  -53
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -11031,10 +10407,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -11103,7 +10479,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -11119,32 +10495,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -11255,11 +10605,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -59,
-                  38
+                  -53
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -11268,10 +10618,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -11340,7 +10690,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -11356,32 +10706,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -11443,7 +10767,7 @@
     "text": "#text",
     "size": [
       222,
-      54
+      148
     ],
     "offset": [
       0,
@@ -11454,7 +10778,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.75,
     "color": [
       0.94,
       0.92,
@@ -11728,7 +11052,7 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   7,
@@ -11741,10 +11065,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -11813,7 +11137,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -11829,32 +11153,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -11965,7 +11263,7 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   7,
@@ -11978,10 +11276,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -12050,7 +11348,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -12066,32 +11364,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -12153,7 +11425,7 @@
     "text": "#text",
     "size": [
       222,
-      54
+      148
     ],
     "offset": [
       0,
@@ -12164,7 +11436,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.75,
     "color": [
       0.94,
       0.92,
@@ -12438,7 +11710,7 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -125,
@@ -12451,10 +11723,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -12523,7 +11795,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -12539,32 +11811,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -12675,7 +11921,7 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -125,
@@ -12688,10 +11934,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -12760,7 +12006,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -12776,32 +12022,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -12863,7 +12083,7 @@
     "text": "#text",
     "size": [
       222,
-      54
+      148
     ],
     "offset": [
       0,
@@ -12874,7 +12094,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.75,
     "color": [
       0.94,
       0.92,
@@ -13148,11 +12368,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   7,
-                  -100
+                  -147
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -13161,10 +12381,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -13233,7 +12453,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -13249,32 +12469,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -13385,11 +12579,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   7,
-                  -100
+                  -147
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -13398,10 +12592,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -13470,7 +12664,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -13486,32 +12680,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -13573,7 +12741,7 @@
     "text": "#text",
     "size": [
       222,
-      54
+      148
     ],
     "offset": [
       0,
@@ -13584,7 +12752,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.75,
     "color": [
       0.94,
       0.92,
@@ -13858,11 +13026,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -125,
-                  -100
+                  -147
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -13871,10 +13039,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -13943,7 +13111,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -13959,32 +13127,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -14095,11 +13237,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -125,
-                  -100
+                  -147
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -14108,10 +13250,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -14180,7 +13322,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -14196,32 +13338,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -14375,7 +13491,7 @@
     "text": "#text",
     "size": [
       222,
-      54
+      148
     ],
     "offset": [
       0,
@@ -14386,7 +13502,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.75,
     "color": [
       0.94,
       0.92,
@@ -14660,7 +13776,7 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -125,
@@ -14673,10 +13789,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -14745,7 +13861,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -14761,32 +13877,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -14897,7 +13987,7 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -125,
@@ -14910,10 +14000,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -14982,7 +14072,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -14998,32 +14088,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select this tech to research.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -15131,7 +14195,7 @@
     "text": "#text",
     "size": [
       222,
-      54
+      148
     ],
     "offset": [
       0,
@@ -15142,7 +14206,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.75,
     "color": [
       0.94,
       0.92,
@@ -15416,11 +14480,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -125,
-                  -100
+                  -147
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -15429,10 +14493,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -15501,7 +14565,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -15517,32 +14581,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select to manage connections.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -15653,11 +14691,11 @@
                 "type": "panel",
                 "size": [
                   240,
-                  96
+                  188
                 ],
                 "offset": [
                   -125,
-                  -100
+                  -147
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -15666,10 +14704,10 @@
                   {
                     "frame": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/button_240x96_default",
+                      "texture": "textures/ui/frontier/button_240x188_default",
                       "size": [
                         240,
-                        96
+                        188
                       ],
                       "offset": [
                         0,
@@ -15738,7 +14776,7 @@
                       "orientation": "vertical",
                       "size": [
                         222,
-                        54
+                        148
                       ],
                       "collection_name": "form_buttons",
                       "controls": [
@@ -15754,32 +14792,6 @@
                       ],
                       "anchor_from": "top_left",
                       "anchor_to": "top_left"
-                    }
-                  },
-                  {
-                    "hint": {
-                      "type": "label",
-                      "text": "Select to manage connections.",
-                      "size": [
-                        222,
-                        9
-                      ],
-                      "offset": [
-                        9,
-                        83
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.6,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
                     }
                   }
                 ]
@@ -16036,7 +15048,7 @@
     "type": "label",
     "text": "#text",
     "size": [
-      131,
+      83,
       14
     ],
     "offset": [
@@ -16048,7 +15060,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.95,
+    "font_scale_factor": 0.85,
     "color": [
       0.82,
       0.7,
@@ -16124,52 +15136,6 @@
       }
     ],
     "text_alignment": "left"
-  },
-  "jf_data_owner": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      69,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_type": "unicode",
-    "font_size": "normal",
-    "font_scale_factor": 0.8,
-    "color": [
-      0.94,
-      0.92,
-      0.85
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:owner]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:owner]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
   },
   "jf_data_biomes": {
     "type": "label",
@@ -16301,10 +15267,56 @@
       "#form_button_text": "Unavailable"
     }
   },
+  "jf_data_owner": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      44,
+      12
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:owner]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:owner]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
   "jf_action_claim@common.button": {
     "size": [
-      69,
-      16
+      44,
+      14
     ],
     "$pressed_button_name": "button.form_button_click",
     "focus_enabled": true,
@@ -16347,17 +15359,17 @@
         "default": {
           "type": "panel",
           "size": [
-            69,
-            16
+            44,
+            14
           ],
           "controls": [
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/button_69x16_default",
+                "texture": "textures/ui/frontier/button_44x14_default",
                 "size": [
-                  69,
-                  16
+                  44,
+                  14
                 ],
                 "offset": [
                   0,
@@ -16374,8 +15386,8 @@
               "wood": {
                 "type": "panel",
                 "size": [
-                  67,
-                  14
+                  42,
+                  12
                 ]
               }
             },
@@ -16384,7 +15396,7 @@
                 "type": "label",
                 "text": "Claim",
                 "size": [
-                  57,
+                  32,
                   12
                 ],
                 "offset": [
@@ -16412,17 +15424,17 @@
         "hover": {
           "type": "panel",
           "size": [
-            69,
-            16
+            44,
+            14
           ],
           "controls": [
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/button_69x16_hover",
+                "texture": "textures/ui/frontier/button_44x14_hover",
                 "size": [
-                  69,
-                  16
+                  44,
+                  14
                 ],
                 "offset": [
                   0,
@@ -16439,8 +15451,8 @@
               "wood": {
                 "type": "panel",
                 "size": [
-                  67,
-                  14
+                  42,
+                  12
                 ]
               }
             },
@@ -16449,7 +15461,7 @@
                 "type": "label",
                 "text": "Claim",
                 "size": [
-                  57,
+                  32,
                   12
                 ],
                 "offset": [
@@ -16477,17 +15489,17 @@
         "pressed": {
           "type": "panel",
           "size": [
-            69,
-            16
+            44,
+            14
           ],
           "controls": [
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/button_69x16_pressed",
+                "texture": "textures/ui/frontier/button_44x14_pressed",
                 "size": [
-                  69,
-                  16
+                  44,
+                  14
                 ],
                 "offset": [
                   0,
@@ -16504,8 +15516,8 @@
               "wood": {
                 "type": "panel",
                 "size": [
-                  67,
-                  14
+                  42,
+                  12
                 ]
               }
             },
@@ -16514,7 +15526,7 @@
                 "type": "label",
                 "text": "Claim",
                 "size": [
-                  57,
+                  32,
                   12
                 ],
                 "offset": [
@@ -16542,10 +15554,10 @@
   },
   "jf_data_developmentValue": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      89,
-      9
+      59,
+      10
     ],
     "offset": [
       0,
@@ -16556,7 +15568,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.55,
     "color": [
       0.94,
       0.92,
@@ -16570,28 +15582,20 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:developmentValue]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:developmentValue]') = #record_text))",
-        "target_property_name": "#visible"
       }
-    ]
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
   },
   "jf_data_developmentHourly": {
     "type": "label",
-    "text": "#text",
+    "text": "#form_button_text",
     "size": [
-      89,
-      9
+      59,
+      10
     ],
     "offset": [
       0,
@@ -16602,7 +15606,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.55,
     "color": [
       0.94,
       0.92,
@@ -16616,741 +15620,19 @@
       },
       {
         "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
         "binding_type": "collection",
         "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:developmentHourly]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:developmentHourly]') = #record_text))",
-        "target_property_name": "#visible"
       }
-    ]
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
   },
   "jf_data_tradeRoute": {
     "type": "label",
     "text": "#text",
     "size": [
-      89,
-      9
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_type": "unicode",
-    "font_size": "normal",
-    "font_scale_factor": 0.6,
-    "color": [
-      0.94,
-      0.92,
-      0.85
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:tradeRoute]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:tradeRoute]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow0": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow0]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow0]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow1": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow1]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow1]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow2": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow2]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow2]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow3": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow3]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow3]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow4": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow4]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow4]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow5": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow5]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow5]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow6": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow6]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow6]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow7": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow7]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow7]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow8": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow8]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow8]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow9": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow9]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow9]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow10": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow10]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow10]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_data_mapRow11": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      240,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_size": "small",
-    "font_scale_factor": 0.875,
-    "color": [
-      1,
-      1,
-      1
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapRow11]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapRow11]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
-  "jf_action_mapInteractive@common.button": {
-    "size": [
-      224,
-      84
-    ],
-    "$pressed_button_name": "button.form_button_click",
-    "focus_enabled": true,
-    "hover_enabled": true,
-    "button_mappings": [
-      {
-        "from_button_id": "button.menu_select",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "pressed"
-      },
-      {
-        "from_button_id": "button.menu_ok",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "focused"
-      }
-    ],
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapInteractive]')",
-        "target_property_name": "#visible"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapInteractive]')",
-        "target_property_name": "#enabled"
-      }
-    ],
-    "controls": [
-      {
-        "default": {
-          "type": "panel",
-          "size": [
-            224,
-            84
-          ],
-          "controls": []
-        }
-      },
-      {
-        "hover": {
-          "type": "panel",
-          "size": [
-            224,
-            84
-          ],
-          "controls": [
-            {
-              "hint": {
-                "type": "label",
-                "text": "Select to open interactive map",
-                "size": [
-                  220,
-                  10
-                ],
-                "offset": [
-                  2,
-                  73
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.6,
-                "color": [
-                  0.82,
-                  0.7,
-                  0.44
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "pressed": {
-          "type": "panel",
-          "size": [
-            224,
-            84
-          ],
-          "controls": [
-            {
-              "hint": {
-                "type": "label",
-                "text": "Select to open interactive map",
-                "size": [
-                  220,
-                  10
-                ],
-                "offset": [
-                  2,
-                  73
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.6,
-                "color": [
-                  0.82,
-                  0.7,
-                  0.44
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "jf_data_mapInfo": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      254,
+      59,
       10
     ],
     "offset": [
@@ -17382,20 +15664,112 @@
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:mapInfo]')",
+        "source_property_name": "(#record_text - '[JF:data:tradeRoute]')",
         "target_property_name": "#text"
       },
       {
         "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:mapInfo]') = #record_text))",
+        "source_property_name": "(not ((#record_text - '[JF:data:tradeRoute]') = #record_text))",
         "target_property_name": "#visible"
       }
     ]
   },
-  "jf_action_mapWest@common.button": {
+  "jf_data_roadSummary": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      240,
+      25
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.7,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:roadSummary]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:roadSummary]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_data_roadDetails": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      240,
+      70
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.7,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:roadDetails]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:roadDetails]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_action_roadsPrev@common.button": {
     "size": [
       60,
-      15
+      21
     ],
     "$pressed_button_name": "button.form_button_click",
     "focus_enabled": true,
@@ -17424,12 +15798,12 @@
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapWest]')",
+        "source_property_name": "(#form_button_text = '[JF:action:roadsPrev]')",
         "target_property_name": "#visible"
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapWest]')",
+        "source_property_name": "(#form_button_text = '[JF:action:roadsPrev]')",
         "target_property_name": "#enabled"
       }
     ],
@@ -17439,16 +15813,16 @@
           "type": "panel",
           "size": [
             60,
-            15
+            21
           ],
           "controls": [
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_default",
+                "texture": "textures/ui/frontier/button_60x21_default",
                 "size": [
                   60,
-                  15
+                  21
                 ],
                 "offset": [
                   0,
@@ -17466,28 +15840,28 @@
                 "type": "panel",
                 "size": [
                   58,
-                  13
+                  19
                 ]
               }
             },
             {
               "caption": {
                 "type": "label",
-                "text": "West",
+                "text": "Previous",
                 "size": [
-                  54,
-                  10
+                  48,
+                  12
                 ],
                 "offset": [
-                  3,
-                  2
+                  6,
+                  4
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.65,
+                "font_scale_factor": 0.8,
                 "color": [
                   0.94,
                   0.92,
@@ -17504,16 +15878,16 @@
           "type": "panel",
           "size": [
             60,
-            15
+            21
           ],
           "controls": [
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_hover",
+                "texture": "textures/ui/frontier/button_60x21_hover",
                 "size": [
                   60,
-                  15
+                  21
                 ],
                 "offset": [
                   0,
@@ -17531,28 +15905,28 @@
                 "type": "panel",
                 "size": [
                   58,
-                  13
+                  19
                 ]
               }
             },
             {
               "caption": {
                 "type": "label",
-                "text": "West",
+                "text": "Previous",
                 "size": [
-                  54,
-                  10
+                  48,
+                  12
                 ],
                 "offset": [
-                  3,
-                  2
+                  6,
+                  4
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.65,
+                "font_scale_factor": 0.8,
                 "color": [
                   0.94,
                   0.92,
@@ -17569,16 +15943,16 @@
           "type": "panel",
           "size": [
             60,
-            15
+            21
           ],
           "controls": [
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_pressed",
+                "texture": "textures/ui/frontier/button_60x21_pressed",
                 "size": [
                   60,
-                  15
+                  21
                 ],
                 "offset": [
                   0,
@@ -17596,28 +15970,28 @@
                 "type": "panel",
                 "size": [
                   58,
-                  13
+                  19
                 ]
               }
             },
             {
               "caption": {
                 "type": "label",
-                "text": "West",
+                "text": "Previous",
                 "size": [
-                  54,
-                  10
+                  48,
+                  12
                 ],
                 "offset": [
-                  3,
-                  2
+                  6,
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.65,
+                "font_scale_factor": 0.8,
                 "color": [
                   0.94,
                   0.92,
@@ -17631,10 +16005,249 @@
       }
     ]
   },
-  "jf_action_mapNorth@common.button": {
+  "jf_action_manageRoads@common.button": {
+    "size": [
+      122,
+      21
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:manageRoads]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:manageRoads]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            122,
+            21
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_122x21_default",
+                "size": [
+                  122,
+                  21
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  19
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Manage / travel",
+                "size": [
+                  110,
+                  12
+                ],
+                "offset": [
+                  6,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.8,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            122,
+            21
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_122x21_hover",
+                "size": [
+                  122,
+                  21
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  19
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Manage / travel",
+                "size": [
+                  110,
+                  12
+                ],
+                "offset": [
+                  6,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.8,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            122,
+            21
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_122x21_pressed",
+                "size": [
+                  122,
+                  21
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  120,
+                  19
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Manage / travel",
+                "size": [
+                  110,
+                  12
+                ],
+                "offset": [
+                  6,
+                  5
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.8,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_action_roadsNext@common.button": {
     "size": [
       60,
-      15
+      21
     ],
     "$pressed_button_name": "button.form_button_click",
     "focus_enabled": true,
@@ -17663,12 +16276,12 @@
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapNorth]')",
+        "source_property_name": "(#form_button_text = '[JF:action:roadsNext]')",
         "target_property_name": "#visible"
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapNorth]')",
+        "source_property_name": "(#form_button_text = '[JF:action:roadsNext]')",
         "target_property_name": "#enabled"
       }
     ],
@@ -17678,16 +16291,16 @@
           "type": "panel",
           "size": [
             60,
-            15
+            21
           ],
           "controls": [
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_default",
+                "texture": "textures/ui/frontier/button_60x21_default",
                 "size": [
                   60,
-                  15
+                  21
                 ],
                 "offset": [
                   0,
@@ -17705,28 +16318,28 @@
                 "type": "panel",
                 "size": [
                   58,
-                  13
+                  19
                 ]
               }
             },
             {
               "caption": {
                 "type": "label",
-                "text": "North",
+                "text": "Next",
                 "size": [
-                  54,
-                  10
+                  48,
+                  12
                 ],
                 "offset": [
-                  3,
-                  2
+                  6,
+                  4
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.65,
+                "font_scale_factor": 0.8,
                 "color": [
                   0.94,
                   0.92,
@@ -17743,16 +16356,16 @@
           "type": "panel",
           "size": [
             60,
-            15
+            21
           ],
           "controls": [
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_hover",
+                "texture": "textures/ui/frontier/button_60x21_hover",
                 "size": [
                   60,
-                  15
+                  21
                 ],
                 "offset": [
                   0,
@@ -17770,28 +16383,28 @@
                 "type": "panel",
                 "size": [
                   58,
-                  13
+                  19
                 ]
               }
             },
             {
               "caption": {
                 "type": "label",
-                "text": "North",
+                "text": "Next",
                 "size": [
-                  54,
-                  10
+                  48,
+                  12
                 ],
                 "offset": [
-                  3,
-                  2
+                  6,
+                  4
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.65,
+                "font_scale_factor": 0.8,
                 "color": [
                   0.94,
                   0.92,
@@ -17808,16 +16421,16 @@
           "type": "panel",
           "size": [
             60,
-            15
+            21
           ],
           "controls": [
             {
               "gold": {
                 "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_pressed",
+                "texture": "textures/ui/frontier/button_60x21_pressed",
                 "size": [
                   60,
-                  15
+                  21
                 ],
                 "offset": [
                   0,
@@ -17835,1701 +16448,28 @@
                 "type": "panel",
                 "size": [
                   58,
-                  13
+                  19
                 ]
               }
             },
             {
               "caption": {
                 "type": "label",
-                "text": "North",
-                "size": [
-                  54,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "jf_action_mapSouth@common.button": {
-    "size": [
-      60,
-      15
-    ],
-    "$pressed_button_name": "button.form_button_click",
-    "focus_enabled": true,
-    "hover_enabled": true,
-    "button_mappings": [
-      {
-        "from_button_id": "button.menu_select",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "pressed"
-      },
-      {
-        "from_button_id": "button.menu_ok",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "focused"
-      }
-    ],
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapSouth]')",
-        "target_property_name": "#visible"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapSouth]')",
-        "target_property_name": "#enabled"
-      }
-    ],
-    "controls": [
-      {
-        "default": {
-          "type": "panel",
-          "size": [
-            60,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_default",
-                "size": [
-                  60,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  58,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "South",
-                "size": [
-                  54,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "hover": {
-          "type": "panel",
-          "size": [
-            60,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_hover",
-                "size": [
-                  60,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  58,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "South",
-                "size": [
-                  54,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "pressed": {
-          "type": "panel",
-          "size": [
-            60,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_pressed",
-                "size": [
-                  60,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  58,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "South",
-                "size": [
-                  54,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "jf_action_mapEast@common.button": {
-    "size": [
-      60,
-      15
-    ],
-    "$pressed_button_name": "button.form_button_click",
-    "focus_enabled": true,
-    "hover_enabled": true,
-    "button_mappings": [
-      {
-        "from_button_id": "button.menu_select",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "pressed"
-      },
-      {
-        "from_button_id": "button.menu_ok",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "focused"
-      }
-    ],
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapEast]')",
-        "target_property_name": "#visible"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapEast]')",
-        "target_property_name": "#enabled"
-      }
-    ],
-    "controls": [
-      {
-        "default": {
-          "type": "panel",
-          "size": [
-            60,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_default",
-                "size": [
-                  60,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  58,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "East",
-                "size": [
-                  54,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "hover": {
-          "type": "panel",
-          "size": [
-            60,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_hover",
-                "size": [
-                  60,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  58,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "East",
-                "size": [
-                  54,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "pressed": {
-          "type": "panel",
-          "size": [
-            60,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_60x15_pressed",
-                "size": [
-                  60,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  58,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "East",
-                "size": [
-                  54,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "jf_action_mapZoomIn@common.button": {
-    "size": [
-      48,
-      15
-    ],
-    "$pressed_button_name": "button.form_button_click",
-    "focus_enabled": true,
-    "hover_enabled": true,
-    "button_mappings": [
-      {
-        "from_button_id": "button.menu_select",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "pressed"
-      },
-      {
-        "from_button_id": "button.menu_ok",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "focused"
-      }
-    ],
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapZoomIn]')",
-        "target_property_name": "#visible"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapZoomIn]')",
-        "target_property_name": "#enabled"
-      }
-    ],
-    "controls": [
-      {
-        "default": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_default",
+                "text": "Next",
                 "size": [
                   48,
-                  15
+                  12
                 ],
                 "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Zoom +",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
+                  6,
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "hover": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_hover",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Zoom +",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "pressed": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_pressed",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Zoom +",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "jf_action_mapZoomOut@common.button": {
-    "size": [
-      48,
-      15
-    ],
-    "$pressed_button_name": "button.form_button_click",
-    "focus_enabled": true,
-    "hover_enabled": true,
-    "button_mappings": [
-      {
-        "from_button_id": "button.menu_select",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "pressed"
-      },
-      {
-        "from_button_id": "button.menu_ok",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "focused"
-      }
-    ],
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapZoomOut]')",
-        "target_property_name": "#visible"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapZoomOut]')",
-        "target_property_name": "#enabled"
-      }
-    ],
-    "controls": [
-      {
-        "default": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_default",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Zoom -",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "hover": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_hover",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Zoom -",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "pressed": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_pressed",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Zoom -",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "jf_action_mapCenter@common.button": {
-    "size": [
-      48,
-      15
-    ],
-    "$pressed_button_name": "button.form_button_click",
-    "focus_enabled": true,
-    "hover_enabled": true,
-    "button_mappings": [
-      {
-        "from_button_id": "button.menu_select",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "pressed"
-      },
-      {
-        "from_button_id": "button.menu_ok",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "focused"
-      }
-    ],
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapCenter]')",
-        "target_property_name": "#visible"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapCenter]')",
-        "target_property_name": "#enabled"
-      }
-    ],
-    "controls": [
-      {
-        "default": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_default",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Centre",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "hover": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_hover",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Centre",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "pressed": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_pressed",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Centre",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "jf_action_mapDimension@common.button": {
-    "size": [
-      48,
-      15
-    ],
-    "$pressed_button_name": "button.form_button_click",
-    "focus_enabled": true,
-    "hover_enabled": true,
-    "button_mappings": [
-      {
-        "from_button_id": "button.menu_select",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "pressed"
-      },
-      {
-        "from_button_id": "button.menu_ok",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "focused"
-      }
-    ],
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapDimension]')",
-        "target_property_name": "#visible"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapDimension]')",
-        "target_property_name": "#enabled"
-      }
-    ],
-    "controls": [
-      {
-        "default": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_default",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Dim",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "hover": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_hover",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Dim",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "pressed": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_pressed",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Dim",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  "jf_action_mapRefresh@common.button": {
-    "size": [
-      48,
-      15
-    ],
-    "$pressed_button_name": "button.form_button_click",
-    "focus_enabled": true,
-    "hover_enabled": true,
-    "button_mappings": [
-      {
-        "from_button_id": "button.menu_select",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "pressed"
-      },
-      {
-        "from_button_id": "button.menu_ok",
-        "to_button_id": "button.form_button_click",
-        "mapping_type": "focused"
-      }
-    ],
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapRefresh]')",
-        "target_property_name": "#visible"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:mapRefresh]')",
-        "target_property_name": "#enabled"
-      }
-    ],
-    "controls": [
-      {
-        "default": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_default",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Refresh",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "hover": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_hover",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Refresh",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
-                "color": [
-                  0.94,
-                  0.92,
-                  0.85
-                ],
-                "shadow": false
-              }
-            }
-          ]
-        }
-      },
-      {
-        "pressed": {
-          "type": "panel",
-          "size": [
-            48,
-            15
-          ],
-          "controls": [
-            {
-              "gold": {
-                "type": "image",
-                "texture": "textures/ui/frontier/button_48x15_pressed",
-                "size": [
-                  48,
-                  15
-                ],
-                "offset": [
-                  0,
-                  0
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 0
-              }
-            },
-            {
-              "wood": {
-                "type": "panel",
-                "size": [
-                  46,
-                  13
-                ]
-              }
-            },
-            {
-              "caption": {
-                "type": "label",
-                "text": "Refresh",
-                "size": [
-                  42,
-                  10
-                ],
-                "offset": [
-                  3,
-                  2
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.65,
+                "font_scale_factor": 0.8,
                 "color": [
                   0.94,
                   0.92,

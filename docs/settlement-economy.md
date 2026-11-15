@@ -51,8 +51,7 @@ preserved, but now grant the specified 5%, rather than the previous 10%, per
 level. Global Settlement Development research is not permanent local Development.
 Existing global stockpile capacity / Shared Storage level remains authoritative.
 
-State still uses the existing `jagsby_frontier:state_v1` world property; map data
-remains separate. This preserves the existing storage architecture, including its
+State still uses the existing `jagsby_frontier:state_v1` world property. This preserves the existing storage architecture, including its
 native per-property size limit; it is not a sharded unlimited-settlement store.
 
 ## Production and permanent Development
@@ -171,40 +170,43 @@ stand within the source settlement. Arrival is one block above the target
 charter; test landing clearance in a disposable world. No persistent forced
 chunk loading is created.
 
-## UI and verification
+## UI and verification — current 0.0.38 behavior
 
-Overview shows permanent Development, bonus and next-point progress. Production
-shows cached production RP, per-resource hourly rates, bonuses, lifetime output,
-shared fractional stock and road income/count. Local cards show live levels,
-costs and prerequisites. Road Networks opens the themed destination/upgrade/
-construction/travel picker. Realm's map rectangle opens joystick/WASD and
-mouse-look navigation; Jump cycles zoom and Sneak/Back returns. Actual dragging
-was deferred with the user's agreement.
+The Overview retains the portrait. Its owner appears beside the settlement name,
+and separate Development and Production boxes sit side by side beneath the main
+details. Development shows permanent points, a snapshot estimate of points per
+real-world hour and a named connection. Numerical fields use direct native
+form-text binding, as used by the Realm Power readout, rather than string
+subtraction. Native rendering of those fields still needs an in-game check.
+The Production Overview box remains a titled placeholder pending its design;
+the existing Production page and economy calculations remain functional.
 
-53 JavaScript tests and 3 Python tests pass. Tests cover the specified production
-example, fractional/restart accounting, unloaded record processing, RP boundaries,
-threshold/access-frequency equivalence, full-capacity discard/resume, mapping
-deduplication, migration, permanent lifetime value, repeatable prerequisites,
-road direction/duplicates/levels/construction, route feedback, food values and
-refunds, Sanctuary source/expiry, daily HP caps and interactive-map cleanup.
-Static build validates 141 pack files; native APIs and rendering are not run.
+Research cards show name and Lv X. Hover panels explain each local/global
+technology and show its benefit, price, progress, remainder and prerequisites.
+Clicking contributes the quoted eligible inventory type directly. Road Networks
+research contributes ingots like the other cards; it does not open management.
 
-Before use on the Realm, trial a copy of the world:
+Realm > Road Networks replaces Map. It shows four connections per page, their
+Trail/Road/Highway grade, construction percentage or travel food cost, with
+Previous/Next and Manage / travel controls. Management handles construction,
+upgrades and travel in the existing themed picker. My Settlements and All
+Settlements remain. The map scripts, HUD, glyphs, textures, discovery timer,
+input/navigation callbacks and build tooling are removed. Existing saved map
+properties are not read or rewritten. A one-time compatibility helper restores
+only movement permissions recorded by an older map session.
 
-1. Import both 0.0.32 packs and verify prior names, owners, upgrades and stock.
-2. Open/select the map with controller and mouse; pan/zoom/exit, reconnect and
-   take damage. Confirm normal movement returns and HUD glyphs align.
-3. Record stock/rates, close/restart after a measured interval and compare lazy
-   production. Repeat with unloaded settlements and a full stockpile. Collection
-   must not release output from the full-storage interval.
-4. Buy both Hearthstone levels, damage a villager, verify a maximum-2-HP heal
-   and no second heal that game day. Check maximum HP and overlapping charters.
-5. Research Sanctuary, compare hostile damage inside and after leaving, then
-   verify expiry, PvP and environmental exclusions.
-6. Survey/choose a secondary biome; verify the primary continues and shared
-   items are not duplicated. Buy Prosperity and compare exactly 5% increments.
-7. Connect two charters, wait for trial game-tick construction, try both travel
-   directions/foods, upgrade to III, and verify sender/receiver daily value.
-   Restart during construction and verify no duplicate/relog rewards.
-8. Check live text wrapping, destination landing, persistence, content logs and
-   opening latency with the other Realm packs before publishing to players.
+96 Node tests and 3 Python tests pass. Map-only tests were removed with that
+feature; replacement coverage checks Road Networks pages, no map UI, legacy
+movement restoration, all ten populated hover panels and direct contributions
+without research submenus. Existing economy/perk/road tests still pass.
+Static validation checks 132 pack files. Before Realm use, test a copied world:
+
+1. Confirm side-by-side boxes, owner placement and visible numeric Development.
+2. Read each global/local hover explanation and verify a card click contributes
+   the quoted amount without opening a separate research menu.
+3. Verify partial progress, Stewardship ceilings, stale two-player clicks and
+   interrupted payment recovery across restart.
+4. Open Realm > Road Networks, page connections, construct/upgrade and travel;
+   verify food spending and retained road Development.
+5. Check health protection/healing, full-storage/offline production and content
+   logs. A prior map session must not leave movement/jump disabled after reload.

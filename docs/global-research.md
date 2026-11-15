@@ -1,7 +1,8 @@
-# Global research — 0.0.35
+# Global research — 0.0.38
 
-This release extends **0.0.32**, retaining its interactive Realm map, local
-five-node tree, Sanctuary, road construction/travel and exact offline economy.
+This release retains the local five-node tree, Sanctuary, road construction/travel
+and exact offline economy. The map feature was removed in 0.0.38; Realm now
+has Road Networks, My Settlements and All Settlements.
 The global foundation is **Stewardship**, distinct from permanent settlement
 Development. No MineScape installation is required at runtime.
 
@@ -45,12 +46,20 @@ vanilla Overworld log/wood types, stripped variants and Nether stems/hyphae.
 Shared Storage additionally accepts the explicit plank, stone, brick and sandstone
 allowlist in `global-research.js`. No items are withdrawn from shared stock.
 
-The existing five 64×64 global icons, palette, tree layout and hover tooltips are
-retained. Selecting a node opens the custom charter details/picker with levels,
-cost, accepted category, progress, prerequisites and upgrade benefits. It uses
-Frontier's own JSON UI renderer. Colony bonuses are listed by zone; Storage
-shows actual item usage/capacity and the next increment; Capacity shows settlement
-count/limit. Global records are appended without moving map/local record indices.
+The existing five 64×64 global icons, palette, tree layout and hover styling are
+retained. All ten technologies use expanded plain-language hover panels showing
+what changes, who benefits, current/next benefits, next cost, saved progress,
+remaining amount and prerequisites. Global panels show full effects and prices
+rather than an abbreviated placeholder. Cards show only name and Lv X.
+
+Clicking a tech card contributes directly and redraws the research dashboard.
+The hover panel quotes the amount/item before the click. An eligible held item
+type takes priority; otherwise the first eligible inventory type is selected.
+Only that type is spent, up to the quoted amount and next-level remainder.
+If progress or material selection changes, the old quote is rejected without
+payment. Locked, capped and completed cards never spend items. Inventory journal
+recovery is retained. Road management lives in Realm > Road Networks and never
+replaces a research card's contribution action.
 
 ## Authoritative MineScape zones
 
@@ -132,7 +141,7 @@ existing fixed limits/semantics; no new local prices or road mechanics are added
 ## Persistence and migration
 
 The existing `jagsby_frontier:state_v1` world property remains the save location;
-map storage is untouched. Before migrating, the exact prior 0.0.32 economy settles
+unused legacy map properties are not accessed. Before migrating, the exact prior 0.0.32 economy settles
 its outstanding backlog at old capacity/rates with no new Colonization bonuses.
 If the work budget is exceeded, partial accounting is saved and further access
 continues it. Only after completion does research schema 3 activate. Subsequent
@@ -171,9 +180,8 @@ python -m unittest discover -s tools -p 'test_*.py' -v
 python tools/addon.py build
 ```
 
-Build regenerates tracked UI/bridge assets. The original 53 tests remain, with
-additional research, economy, geographic and inventory recovery tests. The current total is 95 Node tests.
+Build regenerates tracked UI/bridge assets. The suite covers research, economy, geographic rules and inventory recovery. The current total is 96 Node tests, including direct card payments and map-removal checks.
 Static tests cannot render JSON UI or execute Minecraft engine persistence.
 In a backed-up disposable world, check all five global nodes, partial payments,
 two-client stale menus, save/restart recovery, each zone boundary, full-storage
-production, local caps and the retained map/road controls before Realm use.
+production, local caps and the Road Networks controls before Realm use.

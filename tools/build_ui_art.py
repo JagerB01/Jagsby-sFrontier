@@ -96,41 +96,6 @@ def button_texture(width, height, state):
 
 def build():
     DEST.mkdir(parents=True, exist_ok=True)
-    # A compact original font page replaces hundreds of native image controls.
-    # Fourteen-pixel glyph width gives a uniform advance; unused cells are clear.
-    font = Canvas(256, 256, (0, 0, 0, 0))
-    biome_colors = [(27, 29, 34), (116, 145, 77), (48, 94, 57), (61, 112, 170),
-                    (209, 182, 115), (132, 135, 128), (224, 233, 231), (167, 159, 70),
-                    (75, 102, 90), (151, 67, 61), (148, 127, 163),
-                    (218, 184, 104), (210, 210, 193), (248, 248, 239)]
-    for i, color in enumerate(biome_colors):
-        x = i * 16
-        font.rect(x, 0, 14, 16, color)
-        if i >= 11:
-            font.rect(x, 0, 14, 16, (27, 29, 34))
-            if i == 13:
-                font.rect(x + 6, 3, 2, 10, color); font.rect(x + 2, 7, 10, 2, color)
-            else:
-                font.rect(x + 3, 7, 8, 6, color); font.rect(x + 5, 4, 4, 3, color)
-    (DEST.parents[2] / "font").mkdir(exist_ok=True)
-    font.save("../../../font/glyph_E1.png")
-    map_colors = {
-        "unknown": (27, 29, 34), "grass": (98, 126, 68), "leaves": (53, 85, 49),
-        "water": (62, 108, 151), "sand": (193, 171, 114), "stone": (118, 120, 115),
-        "snow": (218, 225, 220), "wood": (117, 88, 58), "earth": (117, 101, 76),
-        "lava": (200, 86, 38), "built": (166, 151, 129),
-        "current": (218, 184, 104), "settlement": (210, 210, 193), "player": (248, 248, 239),
-    }
-    (DEST / "map").mkdir(exist_ok=True)
-    for name, color in map_colors.items():
-        c = Canvas(7, 7, color)
-        if name in ["current", "settlement", "player"]:
-            c.rect(1, 1, 5, 5, (29, 32, 34))
-            if name == "player":
-                c.rect(3, 2, 1, 3, color); c.rect(2, 3, 3, 1, color)
-            else:
-                c.rect(2, 3, 3, 2, color); c.rect(3, 2, 1, 1, color)
-        c.save("map/" + name + ".png")
     Canvas(1, 1, (255, 255, 255)).save("solid.png")
     # Palette materials are generated at their native UI sizes so all screens
     # share neutral charcoal surfaces, aged silver trim and wheat highlights.

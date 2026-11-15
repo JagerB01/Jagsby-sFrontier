@@ -1,3 +1,22 @@
+# 0.0.38
+
+- Remove the complete map feature: scripts, terrain discovery, navigation/HUD,
+  glyphs/textures, generator, obsolete tests and guide. Realm's first subtab is
+  now Road Networks with paged connections and management/travel controls;
+  settlement directory tabs remain. Restore legacy movement permissions once.
+- Put Development and Production boxes side by side and move Owner alongside
+  the settlement name. Switch numeric Development fields to native form-text
+  binding rather than marker subtraction. Production remains a placeholder.
+- Expand all ten local/global hover panels with plain-language effects, affected
+  players/settlements, next benefits, costs, contribution progress, remainder
+  and requirements. Cards retain name and Lv X only.
+- Clicking a card now contributes directly. The popup quotes the exact item and
+  amount: prefer eligible held material, otherwise the first eligible inventory
+  type, clipped to the quote/remainder. Reject stale quotes without spending;
+  retain both local/global payment recovery and Stewardship caps.
+- 96 Node tests and 3 Python tests pass; static validation checks 132 pack files.
+  In-game layout, direct clicks and restart behavior still need native testing.
+
 # 0.0.37
 
 - Split Overview into settlement details, a separate Development box and a titled

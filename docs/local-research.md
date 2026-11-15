@@ -1,11 +1,14 @@
-# Finalized local research — 0.0.36
+# Finalized local research — 0.0.38
 
 Local research uses the existing five-node tree and custom charter renderer.
-Selecting a technology shows its name, current level, next level, required
-material/category, total cost, saved contribution, amount remaining, benefit
-and availability. Each contribution button identifies one eligible inventory
-material and the exact amount it will contribute. Road Networks also links to
-its existing connection/construction/travel menu.
+Hovering a technology explains its effect in plain language and shows its current
+level, next-level cost, contributed amount, remainder, prerequisite and status.
+Cards retain only their name and Lv X for readability. Clicking the card directly
+contributes the quoted inventory items; no research detail/selection menu opens.
+The selected hotbar slot's eligible item type is preferred, falling back to the
+first eligible inventory type. One type is used per click, limited by the quote
+and remaining cost. A stale quote refreshes without spending. Road connection
+management is separate, under Realm > Road Networks.
 
 | Technology | Levels | Cost per additional level |
 | --- | --- | --- |
@@ -39,7 +42,7 @@ are eligible without adding separate local recipes. The current biome/resource
 mapping remains the existing prototype mapping; no new production outputs are
 introduced by these research costs.
 
-Different eligible items and different players may contribute to the same
+Different eligible item types and different players may contribute to the same
 requirement over multiple transactions. Each transaction selects one item type,
 clips payment to the remaining next-level cost, and unlocks exactly one level
 when its requirement completes. For example, Hearthstone I at 20/64 accepts
@@ -99,13 +102,13 @@ python -m unittest discover -s tools -p 'test_*.py' -v
 python tools/addon.py build
 ```
 
-95 Node tests and 3 Python tests pass; static validation checks 143 pack files.
+96 Node tests and 3 Python tests pass; static validation checks 132 pack files. The map feature and its obsolete tests/assets are removed.
 New coverage checks exact prices/limits, mixed categories, invalid items, partial
 reloads, independent settlements, legacy aliases/surplus, two contributors, stale
 revisions, clipped spending, intent/final save failures, interrupted multi-slot
 payments, repeat recovery and Stewardship ceiling preservation. The existing
-production, Development, map, road, healing and Sanctuary tests continue to pass.
+production, Development, road, healing and Sanctuary tests continue to pass.
 
-In a copied Bedrock 1.26.0+ world, verify the local contribution screen, a partial
+In a copied Bedrock 1.26.0+ world, verify direct card contributions, a partial
 bread payment across restart, two clients contributing, all three Road Networks
 research levels, full/capped stock production, and preserved saved settlements.

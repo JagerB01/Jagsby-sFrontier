@@ -20,12 +20,10 @@ const realmSource=(await readFile(new URL('settlement-realm.js',scriptBase),'utf
   .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
   .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl));
 const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toString('base64')}`;
-const mapSource=await readFile(new URL('realm-map.js',scriptBase),'utf8');
-const mapModuleUrl=`data:text/javascript;base64,${Buffer.from(mapSource).toString('base64')}`;
 const configSource=await readFile(new URL('economy-config.js',scriptBase),'utf8');
 const configUrl=`data:text/javascript;base64,${Buffer.from(configSource).toString('base64')}`;
 const extraUrls={};
-for(const name of ['settlement-economy','settlement-effects','map-navigation']) {
+for(const name of ['settlement-economy','settlement-effects']) {
  const code=(await readFile(new URL(name+'.js',scriptBase),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',scriptBase).href)).replace("'./local-research.js'",JSON.stringify(new URL('local-research.js',scriptBase).href));
  extraUrls[name]=`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
 }
@@ -140,7 +138,6 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
     .replace('"./settlement-overview.js"',JSON.stringify(overviewModuleUrl))
     .replace('"./settlement-tiers.js"',JSON.stringify(tiersModuleUrl))
     .replace('"./settlement-realm.js"',JSON.stringify(realmModuleUrl))
-    .replace('"./realm-map.js"',JSON.stringify(mapModuleUrl))
     .replace('"./economy-config.js"',JSON.stringify(configUrl))
     .replace('"./global-research.js"',JSON.stringify(new URL('global-research.js',scriptBase).href))
     .replace('"./local-research.js"',JSON.stringify(new URL('local-research.js',scriptBase).href));
@@ -171,12 +168,12 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,77);
+  assert.equal(forms[0].records.length,78);
   assert.equal(forms[0].records[63],'[JF:data:zone]Heartlands');
-  assert.equal(forms[0].records[64],'[JF:data:developmentValue]0 points');
+  assert.equal(forms[0].records[64],'0 points');
   assert.equal(forms[0].records[66],'[JF:data:innovationLevel]Lv 1');
   assert.equal(forms[0].records[76],'[JF:data:tradeRoute]None');
-  assert.match(forms[0].records[60],/^\[JF:data:developmentHourly\]\+\d+\.\d{6} pts$/);
+  assert.match(forms[0].records[60],/^\+\d+\.\d{6} pts$/);
   assert.equal(forms[0].records[67],'[JF:data:frontierLevel]Lv 0');
   assert.equal(forms[0].records[24],'[JF:action:rename]');
   assert.equal(forms[0].records[25],'[JF:data:owner]Builder');
@@ -186,9 +183,9 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[0].records[2],'0.2 RP');
   assert.equal(forms[0].records[3],'[JF:data:tier]Outpost');
   assert.equal(forms[0].icons[3],'textures/ui/frontier/settlements/outpost');
-  assert.equal(forms[1].heading,'JF_CHARTER|Local Research');
-  assert.ok(forms[1].text.includes('Building Materials: 0 / 250'));
-  assert.equal(forms[2].text,'[JF:tab:research][JF:research:local][JF:realm:map]');
+  assert.equal(forms[1].heading,'JF_CHARTER|Dashboard');
+  assert.ok(forms[1].records[4].includes('Contributed: 0 / 250'));
+  assert.equal(forms[1].text,'[JF:tab:research][JF:research:local][JF:realm:roads]');
   nativeTier = 4;
   handlers.beforeInteract(event);
   await queued.shift()();
@@ -222,15 +219,14 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms.at(-1).records[3],'[JF:data:tier]Village');
   assert.equal(forms.at(-1).icons[3],'textures/ui/frontier/settlements/village');
   assert.equal(scans,6);
-  menuResponse={canceled:false,selection:49}; // Realm map East.
+  menuResponse={canceled:false,selection:47}; // Road Networks: next page.
   handlers.beforeInteract(event);
   await queued.shift()();
   await new Promise(resolve=>setImmediate(resolve));
-  assert.equal(scans,7,'Map action must not trigger another villager census');
+  assert.equal(scans,7,'Road page action must not trigger another villager census');
   assert.ok(forms.at(-1).text.startsWith('[JF:tab:realm]'));
-  assert.ok(forms.at(-1).text.includes('[JF:realm:map]'));
-  assert.ok(forms.at(-1).records[33].includes('64, 0'));
-  assert.ok(forms.at(-1).records.slice(34,46).every(text=>text.includes('\ue100')));
-  assert.ok(forms[0].records.slice(34,46).every(text=>!text.includes('\ue100')));
+  assert.ok(forms.at(-1).text.includes('[JF:realm:roads]'));
+  assert.ok(forms.at(-1).records[33].includes('Road Networks Lv 0'));
+  assert.ok(forms.at(-1).records[34].includes('No connections yet'));
   delete globalThis.__frontierTest;
 });

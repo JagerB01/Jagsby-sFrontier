@@ -93,7 +93,7 @@ test('Local UI lists current level, category, exact quantity, saved progress and
  const v=village();v.hearth=1;v.biomeUnlocked=true;v.efficiency=5;
  v.localResearch.progress.efficiency=125;
  const text=localResearchText(v,'efficiency',state(10));
- for(const value of ['Prosperity','Level 5','Next Level: 6','Building Materials: 125 / 250','125 remaining','Production Bonus: +25%','Next Level: +30%','Available'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 5','Next cost: 250 Building Materials','Contributed: 125 / 250','125 remaining','Current bonus: +25%. Next: +30%.','Increases this settlement','Available'])assert.ok(text.includes(value),value);
  v.hearth=2;assert.ok(localResearchText(v,'hearth',state(1)).includes('Fully upgraded'));
 });
 test('Paid legacy surplus survives a Stewardship ceiling and resumes when the ceiling rises',()=>{

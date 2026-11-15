@@ -89,7 +89,7 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   for(const key of Object.keys(layout.data).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
-    if(key==='census') {
+    if(['census','developmentValue','developmentHourly'].includes(key)) {
       assert.equal(label.text,'#form_button_text');
       assert.equal(label.property_bag['#form_button_text'],'Unavailable');
       assert.equal(label.bindings.some(b=>b.target_property_name==='#visible'),false);
@@ -112,12 +112,15 @@ test('Compact village identity fits without scrolling and Rename remains in the 
   assert.equal(Object.keys(fields).some(key=>key.endsWith('_card')),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=158);
-  assert.deepEqual(fields.identity.size,[147,80]);
+  assert.deepEqual(fields.identity.size,[147,78]);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('Size'),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('population'),false);
   for(const key of ['name','tier','owner','biomes','zone','census'])assert.ok(children(fields.identity)[key]);
   assert.ok(fields.identity.offset[1]+fields.identity.size[1]<fields.development.offset[1]);
-  assert.ok(fields.development.offset[1]+fields.development.size[1]<fields.production.offset[1]);
+  assert.equal(fields.development.offset[1],fields.production.offset[1]);
+  assert.equal(fields.development.size[1],fields.production.size[1]);
+  assert.ok(fields.development.offset[0]+fields.development.size[0]<fields.production.offset[0]);
+  assert.ok(children(fields.identity).owner.offset[1]<children(fields.identity).tier.offset[1]);
   for(const key of ['developmentValue','developmentHourly','tradeRoute'])assert.ok(children(fields.development)[key]);
   assert.equal(children(fields.production).title.text,'Production');
   assert.deepEqual(Object.keys(children(fields.production)),['surface','title']);
@@ -293,22 +296,15 @@ test('research explanations appear only in hover/pressed states and stay inside 
   assert.equal(JSON.stringify(ui['jf_choice@common.button']).includes('research_tooltip'),false);
 });
 
-test('Realm biome map uses twelve text rows instead of hundreds of tile records',async()=>{
-  const ui=await loadUI(),realm=children(ui.jf_realm_content),map=children(ui.jf_realm_map_content);
-  const tabs=['map','mine','all'].map(k=>realm['jf_realm_tab_'+k]);
-  assert.deepEqual(tabs.map(t=>t.offset[0]),[0,86,172]);
-  assert.equal(tabs[0].toggle_default_state,true);
-  assert.ok(realm['map@jagsby_frontier.jf_realm_map_content'].bindings.some(b=>b.source_control_name==='jf_realm_tab_map'));
-  assert.equal(Object.keys(map).some(k=>k.startsWith('cell_')),false);
-  for(let i=0;i<12;i++){
-    const row=map['row_'+i];
-    assert.equal(row.controls[0]['record@jagsby_frontier.jf_data_mapRow'+i].collection_index,34+i);
-    assert.equal(ui['jf_data_mapRow'+i].font_size,'small');
-    assert.deepEqual(ui['jf_data_mapRow'+i].color,[1,1,1]);
-  }
-  for(const key of ['West','North','South','East','ZoomIn','ZoomOut','Center','Dimension','Refresh']){
-    assert.ok(map['map_'+key]);
-    const button=template(ui,'jf_action_map'+key);
-    assert.equal(button.$pressed_button_name,'button.form_button_click');
-  }
+test('Realm replaces the map with Road Networks and keeps both settlement directories',async()=>{
+ const ui=await loadUI(),realm=children(ui.jf_realm_content),roads=children(ui.jf_realm_roads_content);
+ const tabs=['roads','mine','all'].map(k=>realm['jf_realm_tab_'+k]);
+ assert.deepEqual(tabs.map(t=>t.offset[0]),[0,86,172]);assert.equal(tabs[0].toggle_default_state,true);
+ assert.equal(tabs[0].tts_name,'Road Networks');
+ assert.ok(realm['roads@jagsby_frontier.jf_realm_roads_content'].bindings.some(b=>b.source_control_name==='jf_realm_tab_roads'));
+ assert.equal(ui.jf_realm_map_content,undefined);
+ for(const key of ['roadsPrev','roadsNext','manageRoads'])assert.ok(roads[key]);
+ for(const key of ['summary','connections'])assert.ok(roads[key]);
+ assert.equal(JSON.stringify(ui).includes('jf_data_map'),false);
+ assert.equal(JSON.stringify(ui).includes('interactive map'),false);
 });
