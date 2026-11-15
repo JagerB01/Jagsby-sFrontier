@@ -1,3 +1,17 @@
+# 0.0.59
+
+- Declare `pbr` on the resource pack so it is marked compatible with Vibrant
+  Visuals. Keep the existing textures, UI and world lighting defaults.
+- Validate the capability during addon packaging to prevent its removal.
+- Device support, graphics selection and compatibility with other enabled
+  packs still require verification in Minecraft.
+
+# 0.0.58
+
+- Add user-supplied Trail, Road and Highway icons to compact Road Networks
+  connection rows. Show the target tier while construction is underway.
+- 198 Node tests pass; static validation and packaged download verified.
+
 # 0.0.57
 
 - Restore the 80-block villager census and RP update on each charter activation.

@@ -53,6 +53,7 @@ def validate():
         for module in manifest["modules"]:
             if module["type"] == "script":
                 assert (base / module["entry"]).is_file(), "Missing script entry"
+    assert "pbr" in manifests["resource"].get("capabilities", []), "Resource pack must declare Vibrant Visuals compatibility"
     resource = manifests["resource"]["header"]
     assert any(d.get("uuid") == resource["uuid"] and
                d.get("version") == resource["version"]

@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.58.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.59.mcaddon?raw=true)
+
+Version 0.0.59 declares the resource pack’s **pbr** capability for Vibrant Visuals
+compatibility. Enable Vibrant Visuals in Minecraft on a supported device;
+Frontier keeps its existing textures and does not replace world lighting settings.
+Compatibility still requires an in-game check with your active pack stack.
 
 Version 0.0.58 adds the supplied Trail, Road and Highway icons to connection
 rows in Road Networks. Construction shows the tier being built; completed
