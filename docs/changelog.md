@@ -1,3 +1,13 @@
+# 0.0.44
+
+- Correct the outdated compatibility check that excluded Dappled Forest/Poplar.
+  Verify all 52 assignments against the official Bedrock 1.26.40 registry and
+  raise the pack minimum engine version to 1.26.40.
+- Add Dappled Forest → Poplar Logs as Building production, including native
+  specialization, nearby diversification, friendly display and research materials.
+- Retain saved settlement identities, research progress and production mechanics.
+- 178 Node tests and 3 Python tests pass; static pack validation passes.
+
 # 0.0.43
 
 - Replace placeholder biome outputs with 51 validated single-resource surface

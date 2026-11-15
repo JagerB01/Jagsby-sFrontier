@@ -1,17 +1,20 @@
-# Biome production — 0.0.43
+# Biome production — 0.0.44
 
 Each eligible Overworld surface biome produces exactly one resource. The
 [assignment table](../packs/behavior/scripts/biome-resources.js) contains all 52
-requested names: 51 supported assignments and one documented incompatibility.
+requested names, all supported, including Dappled Forest → Poplar Logs.
 Biome and item IDs were checked against Microsoft's
-[`@minecraft/vanilla-data@1.26.0`](https://www.npmjs.com/package/@minecraft/vanilla-data/v/1.26.0),
+[`@minecraft/vanilla-data@1.26.40`](https://www.npmjs.com/package/@minecraft/vanilla-data/v/1.26.40),
 matching the pack's minimum engine version. The
-[versioned reference](../tools/reference/biome-production-1.26.0.json) records the
+[versioned reference](../tools/reference/biome-production-1.26.40.json) records the
 registry IDs, assignments and package integrity used by the tests.
 
-**Dappled Forest and Poplar Logs are absent from Bedrock 1.26.0.** No identifier,
-substitute resource or production assignment is fabricated for them. These need
-an explicit supported-version update before they can produce resources. Cave,
+**Dappled Forest and Poplar Logs are supported.** Version 0.0.43 incorrectly
+used the older 1.26.0 registry to exclude this assignment. The corrected baseline
+is Bedrock 1.26.40, whose official registry includes `minecraft:dappled_forest`
+and `minecraft:poplar_log`. The pack minimum engine version now matches that
+verified baseline. Poplar Logs use the Building rate and contribution category.
+Cave,
 Nether and End biomes are excluded. Other biome variants outside the requested
 list remain unmapped. Friendly saved names are normalized to real Bedrock IDs;
 for example Snowy Plains is `ice_plains`, Snowy Taiga is `cold_taiga`, Swamp is

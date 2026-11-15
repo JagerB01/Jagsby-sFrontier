@@ -1,4 +1,4 @@
-# Fixed Production panels — 0.0.43
+# Fixed Production panels — 0.0.44
 
 Production has four local subtabs within the existing charter frame. All use
 fixed-size panels; there is no scrolling Production page. Allocation previews are fixed panels.
@@ -58,10 +58,10 @@ existing 2-health-point villager heal once per Minecraft day.
 
 ## Validation
 
-177 Node tests and 3 Python tests pass. Static packaging validates 148 pack
+178 Node tests and 3 Python tests pass. Static packaging validates 148 pack
 files. Coverage includes rate components, full-stock paused output, combined
 allocation output, bounded pages/empty states, research and sample gating,
 previewed verified selection, unloaded rejection, clearing, whole-item collection
 with fractional preservation, panel bounds, compact rate formatting, shorter
 hover frames and Hearthstone's three-minute effect duration. Native font/text
-wrapping and controls still require an in-game check on Bedrock 1.26.0+.
+wrapping and controls still require an in-game check on Bedrock 1.26.40+.

@@ -5,7 +5,7 @@ import {BIOME_ASSIGNMENTS,BIOME_RESOURCES,biomeResource,productionAllocations,ri
 import {resourceRates,accountEconomy,stockTotal,development,capacity} from '../packs/behavior/scripts/settlement-economy.js';
 import {migrateResearch} from '../packs/behavior/scripts/global-research.js';
 import {categoryMaterials} from '../packs/behavior/scripts/local-research.js';
-const reference=JSON.parse(await readFile(new URL('reference/biome-production-1.26.0.json',import.meta.url),'utf8'));
+const reference=JSON.parse(await readFile(new URL('reference/biome-production-1.26.40.json',import.meta.url),'utf8'));
 const hour=3600000,day=24*hour;
 const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} differs from ${b}`);
 function village(extra={}){return {id:'a',dimension:'minecraft:overworld',location:{x:0,y:64,z:0},biome:'minecraft:plains',productionPower:10,hearth:1,efficiency:0,developmentValue:0,...extra};}
@@ -21,10 +21,10 @@ for(const assignment of reference.assignments){
   assert.equal(allocations.length,1);assert.equal(allocations[0].id,actual.item);
  });
 }
-test('all 52 requested biomes are accounted for without fabricated unsupported identifiers',()=>{
- assert.equal(BIOME_ASSIGNMENTS.length,52);assert.equal(Object.keys(BIOME_RESOURCES).length,51);
- assert.equal(BIOME_ASSIGNMENTS.filter(b=>!b.supported)[0].name,'Dappled Forest');
- for(const id of ['minecraft:deep_dark','minecraft:lush_caves','minecraft:dripstone_caves','minecraft:hell','minecraft:the_end','minecraft:dappled_forest'])assert.equal(biomeResource(id),null);
+test('all 52 requested biomes are accounted for have valid supported identifiers',()=>{
+ assert.equal(BIOME_ASSIGNMENTS.length,52);assert.equal(Object.keys(BIOME_RESOURCES).length,52);
+ assert.ok(BIOME_ASSIGNMENTS.every(b=>b.supported));
+ for(const id of ['minecraft:deep_dark','minecraft:lush_caves','minecraft:dripstone_caves','minecraft:hell','minecraft:the_end'])assert.equal(biomeResource(id),null);
  for(const dimension of ['minecraft:nether','minecraft:the_end'])assert.deepEqual(productionAllocations(village({dimension,biomeUnlocked:true,secondary:'minecraft:river'})),[]);
  const rejected=['ice','clay_ball','slime_ball','snowball'];
  assert.ok(Object.values(BIOME_RESOURCES).flat().every(r=>!rejected.includes(r.id.replace('minecraft:',''))));
@@ -91,4 +91,13 @@ test('migration pays saved backlog at original full placeholder rates then switc
 test('native biome is frozen once migrated even if the legacy biome field changes',()=>{
  const s=state();s.villages.a.biome='minecraft:forest';migrateProduction(s);
  assert.equal(productionAllocations(s.villages.a)[0].biome,'minecraft:plains');
+});
+test('Dappled Forest produces Poplar Logs in either allocation and accepts them as Building materials',()=>{
+ const native=village({biome:'minecraft:dappled_forest'});close(resourceRates(native)[0].rate,0.75);
+ native.biomeUnlocked=true;native.productionMode='specialize';close(resourceRates(native)[0].rate,1.5);
+ const diversified=village({biome:'minecraft:river',biomeUnlocked:true,productionMode:'diversify',secondary:'minecraft:dappled_forest'});
+ const poplar=resourceRates(diversified).find(r=>r.id==='minecraft:poplar_log');close(poplar.rate,0.75);close(poplar.riverBonus,0);
+ assert.ok(categoryMaterials('building').includes('minecraft:poplar_log'));
+ assert.ok(!categoryMaterials('crop').includes('minecraft:poplar_log'));
+ const s=state(native);accountEconomy(s,hour);close(s.stock['minecraft:poplar_log'],1.5);close(native.developmentValue,3);
 });

@@ -5,13 +5,17 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.43.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.44.mcaddon?raw=true)
+
+Version 0.0.44 adds Dappled Forest → Poplar Logs using verified Bedrock IDs,
+including production, biome selection and Building research contributions.
+The minimum Bedrock version is now 1.26.40.
 
 Version 0.0.43 implements the finalized [biome production economy](docs/biome-production.md):
 one resource per biome, two 50% allocations, explicit Native Specialization or
 nearby diversification, a fixed confirmation preview, and River's +10% crop
-bonus. All 52 assignments are accounted for; Dappled Forest/Poplar are unsupported
-in the target Bedrock 1.26.0 registry. Existing saved backlog is paid under its
+bonus. Version 0.0.44 corrects the outdated compatibility baseline and supports
+all 52 assignments, including Dappled Forest producing Poplar Logs. Existing saved backlog is paid under its
 previous rates before migration.
 
 Version 0.0.42 replaces fixed research-popup heights with native content sizing:
@@ -115,7 +119,7 @@ python tools/addon.py build
 Build output is `dist/Jagsbys_Frontier_v0.0.42.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
-The pack targets Bedrock 1.26.0+ with `@minecraft/server` 2.9.0 and
+The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and
 `@minecraft/server-ui` 2.1.0.
 
 Static checks do not execute the Minecraft APIs or render JSON UI. Import both

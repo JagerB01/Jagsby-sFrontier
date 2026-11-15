@@ -334,5 +334,5 @@ test('Selecting a secondary allocation cannot bypass research, eligibility, diff
  const h=await runtime(),v={...village(),biomeUnlocked:true,available:['minecraft:forest','minecraft:plains'],biomeSamples:{'minecraft:forest':{x:256,y:70,z:0},'minecraft:plains':{x:1,y:70,z:0}}};
  assert.equal(h.api.productionSelection(v,'minecraft:forest','diversify').secondary,'minecraft:forest');
  for(const candidate of [{...v,biomeUnlocked:false},{...v,dimension:'minecraft:nether'},{...v,biomeSamples:{'minecraft:forest':{x:257,z:0}}}])assert.throws(()=>h.api.productionSelection(candidate,'minecraft:forest','diversify'));
- for(const id of ['minecraft:plains','minecraft:lush_caves','minecraft:dappled_forest'])assert.throws(()=>h.api.productionSelection(v,id,'diversify'));
+ for(const id of ['minecraft:plains','minecraft:lush_caves'])assert.throws(()=>h.api.productionSelection(v,id,'diversify'));
 });

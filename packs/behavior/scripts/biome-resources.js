@@ -1,4 +1,4 @@
-// Canonical Bedrock 1.26.0 IDs verified against @minecraft/vanilla-data@1.26.0.
+// Canonical Bedrock 1.26.40 IDs verified against @minecraft/vanilla-data@1.26.40.
 export const BIOME_ASSIGNMENTS = [
   {
     "name": "Plains",
@@ -92,10 +92,12 @@ export const BIOME_ASSIGNMENTS = [
   },
   {
     "name": "Dappled Forest",
+    "biome": "minecraft:dappled_forest",
     "resource": "Poplar Logs",
+    "item": "minecraft:poplar_log",
     "category": "building",
-    "supported": false,
-    "reason": "Dappled Forest and Poplar Logs are not present in the 1.26.0 vanilla registry."
+    "crop": false,
+    "supported": true
   },
   {
     "name": "Taiga",
