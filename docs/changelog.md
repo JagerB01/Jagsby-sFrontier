@@ -1,3 +1,17 @@
+# 0.0.53
+
+- Restore direct native form-text bindings for all modifier values and the
+  Overview's hourly production amounts; remove computed numeric text expressions.
+- Put a real font percent label immediately after each measured number in a
+  horizontal stack. Keep the total beside Modifiers and align the number column.
+  No percent image or distant fixed percent column is used.
+- Replace the stacked Owner/name with one Owner: Name byline under the settlement
+  name, using the full header width and normal readable text. Keep Claim in the
+  byline area for unclaimed settlements with a correctly sized caption.
+- Retain the existing card sizes, gold headings, two production slots and rates.
+- 184 Node tests and 3 Python tests pass; static validation checks 193 pack files.
+  These checks do not verify Minecraft's native rendering.
+
 # 0.0.52
 
 - Replace the percent bitmap/separate glyph column with a normal percent

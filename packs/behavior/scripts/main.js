@@ -189,7 +189,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   records[data.biomes]=biomeName(v.biome);
   const power=powerValue(v.census);
   records[data.census]=power==='Unavailable'?power:`${power} RP`;
-  records[data.owner]=ownerName(v);
+  records[data.owner]=`Owner: ${ownerName(v)}`;
   const mine=settlementDirectory(s.villages,player,realmPage,true);
   const all=settlementDirectory(s.villages,player,realmPage,false);
   records[data.realmMine]=mine.text;
@@ -242,7 +242,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     handlers.set(actions[scope+'Next'],()=>open(player,vId,'Realm','global',directory.page+1,scope));
   }
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
-  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier'))records[index]=`[JF:data:${key}]${records[index]}`;
+  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly','owner'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction'))records[index]=`[JF:data:${key}]${records[index]}`;
   for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i)])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI

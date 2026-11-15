@@ -132,7 +132,7 @@ def data_template(index, size, scale=0.8):
         view(f"(#record_text - '{marker}')", "#text"),
         view(f"(not ((#record_text - '{marker}') = #record_text))"),
     ]
-    if key in ["census", "developmentValue", "developmentHourly"] or key.startswith(("stockCount", "productionModifier")):
+    if key in ["census", "developmentValue", "developmentHourly", "owner"] or key.startswith(("stockCount", "productionModifier", "overviewProduction")):
         text["text"] = "#form_button_text"
         text["property_bag"] = {"#form_button_text": "Unavailable"}
         text["bindings"] = [
@@ -471,6 +471,18 @@ def build():
         return control(name, button)
     def production_surface(name, size, offset):
         return control(name, image("frontier/palette_panel", size, offset, color=[0.82, 0.82, 0.82]))
+    def percentage_value(name, key, offset, color=IVORY):
+        # Measure the native number label and place a real font percent sign
+        # immediately after it; no expression concatenation or bitmap glyph.
+        template = data_template(DATA[key], ["default", 12], scale=0.75)
+        GENERATED_CONTROLS[template]["color"] = list(color)
+        number = collection_scope(template, ["100%c", 12])
+        number.update({"anchor_from": "top_left", "anchor_to": "top_left"})
+        percent = label("%", [6, 12], color=color, scale=0.75)
+        percent["localize"] = False
+        return control(name, {"type": "stack_panel", "orientation": "horizontal", "size": [40, 12],
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": offset,
+            "controls": [control("number", number), control("percent", percent)]})
     summary_controls = [
         production_surface("output_box", [131, 70], [0, 0]),
         production_surface("modifiers_box", [118, 70], [136, 0]),
@@ -481,22 +493,16 @@ def build():
         production_button("collect", "collect", "Collect stockpile", 48, 115, 158, 15),
     ]
     GENERATED_CONTROLS["jf_data_productionOutput"]["color"] = list(WHEAT)
-    summary_controls.append(production_value("modifier_total", "productionModifierTotal", 5, 12, scale=0.75, x=207, width=40))
+    summary_controls.append(percentage_value("modifier_total", "productionModifierTotal", [207, 5], WHEAT))
     for row in range(4):
         name = overview_value("name", DATA["productionModifierName" + str(row)], [0, 0], [62, 12], scale=0.75)
-        value = overview_value("value", DATA["productionModifier" + str(row)], [64, 0], [40, 12], scale=0.75)
+        value = percentage_value("value", "productionModifier" + str(row), [64, 0])
         summary_controls.append(control("modifier_row" + str(row), {
             "type": "panel", "size": [104, 12], "offset": [143, 17 + row * 10],
             "anchor_from": "top_left", "anchor_to": "top_left",
             "bindings": condition("(not ((#form_text - '[JF:modifier:" + str(row) + "]') = #form_text))", "#form_text"),
             "controls": [name, value],
         }))
-    for key in ["productionModifierTotal", *["productionModifier" + str(i) for i in range(4)]]:
-        text = GENERATED_CONTROLS["jf_data_" + key]
-        text["text"] = "#text"
-        text["localize"] = False
-        text["bindings"].append(view("(#form_button_text + '%')", "#text"))
-    GENERATED_CONTROLS["jf_data_productionModifierTotal"]["color"] = list(WHEAT)
     for state in GENERATED_CONTROLS["jf_action_collect@common.button"]["controls"]:
         caption = next(c["caption"] for c in next(iter(state.values()))["controls"] if "caption" in c)
         caption.update({"text_alignment": "center", "offset": [0, 2], "size": [158, 11], "font_scale_factor": 0.75})
@@ -618,7 +624,7 @@ def build():
     ui["jf_tier_portrait"] = portrait
     # Separate name template keeps the header's dimensions and color independent.
     header_name = copy.deepcopy(GENERATED_CONTROLS["jf_data_overview"])
-    name = overview_value("name", DATA["overview"], [8, 8], [83, 14], scale=0.85)
+    name = overview_value("name", DATA["overview"], [8, 5], [131, 12], scale=0.85)
     GENERATED_CONTROLS["jf_identity_name"] = GENERATED_CONTROLS["jf_data_overview"]
     GENERATED_CONTROLS["jf_identity_name"]["color"] = list(WHEAT)
     GENERATED_CONTROLS["jf_data_overview"] = header_name
@@ -629,18 +635,21 @@ def build():
         rows += [control(key + "_label", label(title, [56, 11], (8, y), color=SILVER, scale=0.75)),
                  overview_value(key, DATA[key], [70, y], [69, 12], scale=0.8)]
     # In unclaimed villages the Claim control occupies the Owner value slot.
-    owner = overview_value("owner", DATA["owner"], [95, 14], [44, 12], scale=0.6)
+    owner = overview_value("owner", DATA["owner"], [8, 18], [131, 10], scale=0.65)
+    GENERATED_CONTROLS["jf_data_owner"]["color"] = list(SILVER)
     owner["owner"]["bindings"] = condition(
         "((#form_text - '[JF:unclaimed]') = #form_text)", "#form_text")
-    claim = action("claim", ACTIONS["claim"], "Claim", width=44, height=14)["claim"]
-    claim.update({"offset": [95, 12], "anchor_from": "top_left", "anchor_to": "top_left",
+    claim = action("claim", ACTIONS["claim"], "Claim", width=44, height=12)["claim"]
+    claim.update({"offset": [8, 16], "anchor_from": "top_left", "anchor_to": "top_left",
                   "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
+    for state in GENERATED_CONTROLS["jf_action_claim@common.button"]["controls"]:
+        caption = next(c["caption"] for c in next(iter(state.values()))["controls"] if "caption" in c)
+        caption.update({"offset": [0, 1], "size": [44, 10], "font_scale_factor": 0.65, "text_alignment": "center"})
     identity = control("identity", {"type": "panel", "size": [147, 78], "offset": [0, 4],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
             control("surface", image("frontier/palette_panel", [147, 78], color=[0.82, 0.82, 0.82])),
             name,
             control("divider", image("frontier/solid", [131, 1], (8, 29), 2, list(WHEAT))),
-            control("owner_label", label("Owner", [40, 8], (99, 4), SILVER, 0.55)),
             owner, *rows, control("claim", claim),
         ]})
     development_rows = [

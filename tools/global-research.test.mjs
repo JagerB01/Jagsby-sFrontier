@@ -294,8 +294,8 @@ test('Selecting a verified biome applies immediately without a confirmation form
  assert.ok(h.forms[1].text.includes('[JF:production:biomes]'));
  assert.equal(h.forms[1].icons[150],'textures/ui/frontier/production/wheat');
  assert.equal(h.forms[1].icons[151],'textures/ui/frontier/production/oak_log');
- assert.equal(h.forms[1].buttons[150],'[JF:data:overviewProduction0]+ 1.750/hr');
- assert.equal(h.forms[1].buttons[151],'[JF:data:overviewProduction1]+ 0.750/hr');
+ assert.equal(h.forms[1].buttons[150],'+ 1.750/hr');
+ assert.equal(h.forms[1].buttons[151],'+ 0.750/hr');
  h.api.clearSecondary(h.player,'a');assert.equal(h.read().villages.a.secondary,null);
 });
 test('Unverified/out-of-range biome controls are disabled and selecting unloaded samples never changes the second biome',async()=>{

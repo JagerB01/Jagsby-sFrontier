@@ -177,7 +177,7 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(forms[0].records[60],'+ 0.000');
   assert.equal(forms[0].records[67],'[JF:data:frontierLevel]Lv 0');
   assert.equal(forms[0].records[24],'[JF:action:rename]');
-  assert.equal(forms[0].records[25],'[JF:data:owner]Builder');
+  assert.equal(forms[0].records[25],'Owner: Builder');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].owner.id,'p');
   assert.equal(forms[0].records[0],'[JF:data:overview]Settlement 1');
   assert.equal(forms[0].records[1],'[JF:data:biomes]Plains');

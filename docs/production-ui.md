@@ -1,4 +1,4 @@
-# Production panels — 0.0.52
+# Production panels — 0.0.53
 
 Production has exactly two tabs: a fixed **Overview** and a scrollable
 **Resource Prospecting** list. Both use the existing charter frame. Opening the
@@ -15,9 +15,10 @@ The upper section has two compact boxes side by side:
 - **Modifiers:** the combined increase sits beside the Modifiers heading,
   aligned with the same value column used by Prosperity, Development,
   Colonization and conditional River below. There is no bottom Total row.
-  Values use a normal percent character directly after the number. Native UI
-  string concatenation appends the character after Script API form processing;
-  percent signs are not drawn as images or in a separate column.
+  Values bind directly to native form text. A horizontal stack places a normal
+  font percent label immediately after the measured numeric label. No numeric
+  string concatenation, percent images or separate fixed percent columns are
+  used. This restores the values hidden by the 0.0.52 computed bindings.
   The combined increase still multiplies the production boosts and weights
   River across crop output. At 20% Prosperity, 10% Development and 50%
   Colonization, River specialization totals +117.8%; River + Forest +111.86%.
@@ -122,3 +123,13 @@ so it cannot change the detailed Production tab's text dimensions.
 
 Dev/Hr and Route values remain left-aligned in a shared column, shifted four
 UI units right. Both box sizes and the gold Development heading are retained.
+
+## Binding and ownership correction (0.0.53)
+
+Overview production rate records are now raw native form text, using the same
+binding path as the working Dev/Hr field. They bypass marker-stripping computed
+text. The two rates remain beside their item icons and include the /hr unit.
+
+The identity header places the settlement name on one line and Owner: Name on
+a full-width byline below it, without a tiny separate Owner label. Both fit
+above the existing divider; the card dimensions do not change.

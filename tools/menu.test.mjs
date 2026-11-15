@@ -89,8 +89,8 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   for(const key of Object.keys(layout.data).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
-    if(['census','developmentValue','developmentHourly'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')) {
-      assert.equal(label.text,/^productionModifier(?:[0-3]|Total)$/.test(key)?'#text':'#form_button_text');
+    if(['census','developmentValue','developmentHourly','owner'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')||key.startsWith('overviewProduction')) {
+      assert.equal(label.text,'#form_button_text');
       assert.equal(label.property_bag['#form_button_text'],'Unavailable');
       assert.equal(label.bindings.some(b=>b.target_property_name==='#visible'),false);
       assert.ok(label.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_name_override===undefined));
@@ -135,6 +135,9 @@ test('Compact village identity fits without scrolling and Rename remains in the 
   assert.deepEqual(ui.jf_data_developmentValue.color,[0.82,0.70,0.44]);
   assert.equal(fields.development.size[1],56);
 
+  assert.equal(children(fields.identity).owner_label,undefined);
+  assert.deepEqual(children(fields.identity).owner.offset,[8,18]);
+  assert.equal(children(fields.identity).name.offset[1]+children(fields.identity).name.size[1]<=children(fields.identity).owner.offset[1],true);
   assert.equal(children(fields.production).title.text,'Production');
   assert.deepEqual(Object.keys(children(fields.production)),['surface','title','icon0','rate0','icon1','rate1']);
   assert.equal(developmentFields.developmentHourly.offset[0],38);
@@ -392,15 +395,19 @@ test('Stockpile has 30 conditional slots with raw counts; each modifier has an u
  assert.equal(summary.modifier_total.offset[1],summary.modifiers_title.offset[1]);
  assert.equal(summary.modifier_total.offset[0],207);
  assert.equal(summary.modifier_row4,undefined);
- assert.ok(ui.jf_data_productionModifierTotal.bindings.some(b=>b.source_property_name==="(#form_button_text + '%')"));
+ const total=children(summary.modifier_total);assert.equal(total.percent.text,'%');assert.equal(total.percent.localize,false);
+ assert.equal(summary.modifier_total.orientation,'horizontal');assert.equal(total.number.size[0],'100%c');
  for(let row=0;row<4;row++){
   const panel=summary['modifier_row'+row],contents=children(panel);
   assert.equal(contents.name.offset[1],contents.value.offset[1]);assert.equal(panel.size[1],12);
   assert.ok(panel.offset[1]+panel.size[1]<=summary.modifiers_box.size[1]);
   assert.equal(contents.value.offset[0],64);assert.equal(contents.name.offset[0],0);
   assert.equal(contents.percent,undefined);
-  assert.ok(ui['jf_data_productionModifier'+row].bindings.some(b=>b.source_property_name==="(#form_button_text + '%')"));
-  assert.equal(ui['jf_data_productionModifier'+row].text,'#text');
+  const value=children(contents.value);assert.equal(contents.value.orientation,'horizontal');
+  assert.equal(value.percent.text,'%');assert.equal(value.percent.localize,false);
+  assert.equal(value.number.size[0],'100%c');
+  const text=ui['jf_data_productionModifier'+row];assert.equal(text.text,'#form_button_text');
+  assert.deepEqual(text.size,['default',12]);assert.ok(text.bindings.every(b=>b.binding_type!=='view'));
  }
  for(const state of ui['jf_action_collect@common.button'].controls){
   const caption=children(nextValue(state)).caption;

@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.52.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.53.mcaddon?raw=true)
+
+Version 0.0.53 restores direct native bindings for modifier values and Overview
+hourly production. A normal font percent sign follows the measured number
+without string-expression conversion. Ownership is one readable **Owner: Name**
+line beneath the settlement name, replacing the stacked label/name.
 
 Version 0.0.52 puts the combined percentage beside **Modifiers**, aligned with
 the values below, and uses real percent text immediately after each number.
