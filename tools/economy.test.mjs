@@ -136,3 +136,19 @@ test('route feedback and production remain consistent when a catch-up crosses pa
  for(const id of ['a','b'])close(once.villages[id].developmentValue,frequent.villages[id].developmentValue,1e-5);
  for(const id of Object.keys(once.stock))close(once.stock[id],frequent.stock[id],1e-5);
 });
+
+test('Overview hourly Development estimate includes base category value and trade income, excluding Colonization bonus',()=>{
+ const s=state(),v=s.villages.a;
+ close(E.developmentHourlyRate(s,v),0.013);
+ s.global.colonization=5;v.location.x=28000;close(E.developmentHourlyRate(s,v),0.013);
+ s.villages.b=village('b',{developmentValue:10000});s.roads.ab={from:'a',to:'b',level:1};
+ close(E.developmentHourlyRate(s,v),0.014);
+ const before=JSON.stringify(s);E.developmentHourlyRate(s,v);assert.equal(JSON.stringify(s),before);
+});
+test('Overview hourly Development estimate blocks full-storage production while preserving active route income',()=>{
+ const s=state(),v=s.villages.a;s.stock['minecraft:wheat']=E.capacity(s);
+ close(E.developmentHourlyRate(s,v),0);
+ s.villages.b=village('b',{developmentValue:10000});s.roads.ab={from:'a',to:'b',level:1};
+ close(E.developmentHourlyRate(s,v),0.001);
+ s.roads.ab.targetLevel=2;close(E.developmentHourlyRate(s,v),0);
+});

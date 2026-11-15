@@ -1,3 +1,18 @@
+# 0.0.37
+
+- Split Overview into settlement details, a separate Development box and a titled
+  Production placeholder. Keep the portrait beside the panels, with no scrolling.
+- Show current Development points, an estimated points/hour increase and a named
+  connected route with Trail/Road/Highway or building status. Additional routes
+  are indicated by +N; missing connections show None.
+- Derive the hourly estimate from existing base-production Development value
+  plus active trade income, excluding Colonization bonus output. Full storage
+  suppresses production income while active trade income remains.
+- Simplify all ten research cards to their name and larger Lv X. Remove on-card
+  descriptions; retain hover explanations, costs and contribution screens.
+- All 98 Node tests and 3 Python tests pass. Static validation checks 143 pack
+  files. Native rendering still needs an in-game check.
+
 # 0.0.36
 
 - Replace all provisional local prices with finalized recipes: Hearthstone 64/128

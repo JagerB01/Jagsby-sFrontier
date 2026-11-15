@@ -2313,7 +2313,7 @@
           "type": "panel",
           "size": [
             147,
-            154
+            80
           ],
           "offset": [
             0,
@@ -2328,7 +2328,7 @@
                 "texture": "textures/ui/frontier/palette_panel",
                 "size": [
                   147,
-                  154
+                  80
                 ],
                 "offset": [
                   0,
@@ -2405,7 +2405,7 @@
                 ],
                 "offset": [
                   8,
-                  32
+                  28
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2441,7 +2441,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  32
+                  28
                 ],
                 "clips_children": true
               }
@@ -2456,7 +2456,7 @@
                 ],
                 "offset": [
                   8,
-                  48
+                  38
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2492,7 +2492,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  48
+                  38
                 ],
                 "clips_children": true,
                 "bindings": [
@@ -2523,7 +2523,7 @@
                 ],
                 "offset": [
                   8,
-                  64
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2559,7 +2559,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  64
+                  48
                 ],
                 "clips_children": true
               }
@@ -2574,7 +2574,7 @@
                 ],
                 "offset": [
                   8,
-                  80
+                  58
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2610,7 +2610,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  80
+                  58
                 ],
                 "clips_children": true
               }
@@ -2625,7 +2625,7 @@
                 ],
                 "offset": [
                   8,
-                  96
+                  68
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2661,58 +2661,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   70,
-                  96
-                ],
-                "clips_children": true
-              }
-            },
-            {
-              "developmentValue_label": {
-                "type": "label",
-                "text": "Development",
-                "size": [
-                  56,
-                  11
-                ],
-                "offset": [
-                  8,
-                  112
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.75,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "developmentValue": {
-                "type": "stack_panel",
-                "orientation": "vertical",
-                "size": [
-                  69,
-                  12
-                ],
-                "collection_name": "form_buttons",
-                "controls": [
-                  {
-                    "record@jagsby_frontier.jf_data_developmentValue": {
-                      "collection_index": 64
-                    }
-                  }
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "offset": [
-                  70,
-                  112
+                  68
                 ],
                 "clips_children": true
               }
@@ -2735,7 +2684,7 @@
                 ],
                 "offset": [
                   70,
-                  45
+                  35
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -2757,19 +2706,163 @@
                   }
                 ]
               }
+            }
+          ]
+        }
+      },
+      {
+        "development": {
+          "type": "panel",
+          "size": [
+            147,
+            48
+          ],
+          "offset": [
+            0,
+            88
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "surface": {
+                "type": "image",
+                "texture": "textures/ui/frontier/palette_panel",
+                "size": [
+                  147,
+                  48
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.82,
+                  0.82,
+                  0.82
+                ]
+              }
             },
             {
-              "developmentProgress": {
+              "title": {
+                "type": "label",
+                "text": "Development",
+                "size": [
+                  131,
+                  10
+                ],
+                "offset": [
+                  8,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.75,
+                "color": [
+                  0.82,
+                  0.7,
+                  0.44
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "developmentValue_label": {
+                "type": "label",
+                "text": "Current",
+                "size": [
+                  42,
+                  9
+                ],
+                "offset": [
+                  8,
+                  17
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.6,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "developmentValue": {
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  131,
-                  12
+                  89,
+                  9
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
                   {
-                    "record@jagsby_frontier.jf_data_developmentProgress": {
+                    "record@jagsby_frontier.jf_data_developmentValue": {
+                      "collection_index": 64
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  50,
+                  17
+                ],
+                "clips_children": true
+              }
+            },
+            {
+              "developmentHourly_label": {
+                "type": "label",
+                "text": "Hourly est.",
+                "size": [
+                  42,
+                  9
+                ],
+                "offset": [
+                  8,
+                  26
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.6,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "developmentHourly": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  89,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_developmentHourly": {
                       "collection_index": 60
                     }
                   }
@@ -2777,10 +2870,128 @@
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "offset": [
-                  8,
-                  132
+                  50,
+                  26
                 ],
                 "clips_children": true
+              }
+            },
+            {
+              "tradeRoute_label": {
+                "type": "label",
+                "text": "Route",
+                "size": [
+                  42,
+                  9
+                ],
+                "offset": [
+                  8,
+                  35
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.6,
+                "color": [
+                  0.73,
+                  0.73,
+                  0.68
+                ],
+                "shadow": false
+              }
+            },
+            {
+              "tradeRoute": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  89,
+                  9
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_tradeRoute": {
+                      "collection_index": 76
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  50,
+                  35
+                ],
+                "clips_children": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "production": {
+          "type": "panel",
+          "size": [
+            147,
+            18
+          ],
+          "offset": [
+            0,
+            140
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "surface": {
+                "type": "image",
+                "texture": "textures/ui/frontier/palette_panel",
+                "size": [
+                  147,
+                  18
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0,
+                "color": [
+                  0.82,
+                  0.82,
+                  0.82
+                ]
+              }
+            },
+            {
+              "title": {
+                "type": "label",
+                "text": "Production",
+                "size": [
+                  131,
+                  10
+                ],
+                "offset": [
+                  8,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.75,
+                "color": [
+                  0.82,
+                  0.7,
+                  0.44
+                ],
+                "shadow": false
               }
             }
           ]
@@ -8619,48 +8830,22 @@
                 "text": "Prosperity",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "+5% production",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -8671,7 +8856,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -8683,7 +8868,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -8745,48 +8930,22 @@
                 "text": "Prosperity",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "+5% production",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -8797,7 +8956,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -8809,7 +8968,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -9008,48 +9167,22 @@
                 "text": "Prosperity",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "+5% production",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -9060,7 +9193,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -9072,7 +9205,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -9361,48 +9494,22 @@
                 "text": "Hearthstone",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Regeneration / healing",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -9413,7 +9520,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -9425,7 +9532,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -9487,48 +9594,22 @@
                 "text": "Hearthstone",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Regeneration / healing",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -9539,7 +9620,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -9551,7 +9632,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -9750,48 +9831,22 @@
                 "text": "Hearthstone",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Regeneration / healing",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -9802,7 +9857,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -9814,7 +9869,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -10103,48 +10158,22 @@
                 "text": "Resource Prospecting",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.62,
+                "font_scale_factor": 0.65,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Additional biome",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -10155,7 +10184,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -10167,7 +10196,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -10229,48 +10258,22 @@
                 "text": "Resource Prospecting",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.62,
+                "font_scale_factor": 0.65,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Additional biome",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -10281,7 +10284,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -10293,7 +10296,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -10492,48 +10495,22 @@
                 "text": "Resource Prospecting",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.62,
+                "font_scale_factor": 0.65,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Additional biome",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -10544,7 +10521,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -10556,7 +10533,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -10710,7 +10687,7 @@
     "text": "#text",
     "size": [
       78,
-      9
+      12
     ],
     "offset": [
       0,
@@ -10721,7 +10698,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.8,
     "color": [
       0.94,
       0.92,
@@ -10891,48 +10868,22 @@
                 "text": "Stewardship",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Endless research cap",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -10943,7 +10894,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -10955,7 +10906,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -11017,48 +10968,22 @@
                 "text": "Stewardship",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Endless research cap",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -11069,7 +10994,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -11081,7 +11006,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -11280,48 +11205,22 @@
                 "text": "Stewardship",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Endless research cap",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -11332,7 +11231,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -11344,7 +11243,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -11498,7 +11397,7 @@
     "text": "#text",
     "size": [
       78,
-      9
+      12
     ],
     "offset": [
       0,
@@ -11509,7 +11408,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.8,
     "color": [
       0.94,
       0.92,
@@ -11679,48 +11578,22 @@
                 "text": "Frontier Expansion",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Founding zones",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -11731,7 +11604,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -11743,7 +11616,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -11805,48 +11678,22 @@
                 "text": "Frontier Expansion",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Founding zones",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -11857,7 +11704,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -11869,7 +11716,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -12068,48 +11915,22 @@
                 "text": "Frontier Expansion",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Founding zones",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -12120,7 +11941,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -12132,7 +11953,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -12286,7 +12107,7 @@
     "text": "#text",
     "size": [
       78,
-      9
+      12
     ],
     "offset": [
       0,
@@ -12297,7 +12118,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.8,
     "color": [
       0.94,
       0.92,
@@ -12467,48 +12288,22 @@
                 "text": "Settlement Charters",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.62,
+                "font_scale_factor": 0.65,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "More settlements",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -12519,7 +12314,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -12531,7 +12326,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -12593,48 +12388,22 @@
                 "text": "Settlement Charters",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.62,
+                "font_scale_factor": 0.65,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "More settlements",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -12645,7 +12414,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -12657,7 +12426,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -12856,48 +12625,22 @@
                 "text": "Settlement Charters",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.62,
+                "font_scale_factor": 0.65,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "More settlements",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -12908,7 +12651,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -12920,7 +12663,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -13074,7 +12817,7 @@
     "text": "#text",
     "size": [
       78,
-      9
+      12
     ],
     "offset": [
       0,
@@ -13085,7 +12828,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.8,
     "color": [
       0.94,
       0.92,
@@ -13255,48 +12998,22 @@
                 "text": "Colonization",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Zone production",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -13307,7 +13024,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -13319,7 +13036,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -13381,48 +13098,22 @@
                 "text": "Colonization",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Zone production",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -13433,7 +13124,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -13445,7 +13136,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -13644,48 +13335,22 @@
                 "text": "Colonization",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Zone production",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -13696,7 +13361,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -13708,7 +13373,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -13862,7 +13527,7 @@
     "text": "#text",
     "size": [
       78,
-      9
+      12
     ],
     "offset": [
       0,
@@ -13873,7 +13538,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.8,
     "color": [
       0.94,
       0.92,
@@ -14043,48 +13708,22 @@
                 "text": "Shared Storage",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Shared item capacity",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -14095,7 +13734,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -14107,7 +13746,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -14169,48 +13808,22 @@
                 "text": "Shared Storage",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Shared item capacity",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -14221,7 +13834,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -14233,7 +13846,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -14432,48 +14045,22 @@
                 "text": "Shared Storage",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Shared item capacity",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -14484,7 +14071,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -14496,7 +14083,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -14650,7 +14237,7 @@
     "text": "#text",
     "size": [
       78,
-      9
+      12
     ],
     "offset": [
       0,
@@ -14661,7 +14248,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.8,
     "color": [
       0.94,
       0.92,
@@ -14696,7 +14283,7 @@
     "text": "#text",
     "size": [
       78,
-      9
+      12
     ],
     "offset": [
       0,
@@ -14707,7 +14294,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.8,
     "color": [
       0.94,
       0.92,
@@ -14742,7 +14329,7 @@
     "text": "#text",
     "size": [
       78,
-      9
+      12
     ],
     "offset": [
       0,
@@ -14753,7 +14340,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.8,
     "color": [
       0.94,
       0.92,
@@ -14923,48 +14510,22 @@
                 "text": "Sanctuary",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Hostile protection",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -14975,7 +14536,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -14987,7 +14548,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -15049,48 +14610,22 @@
                 "text": "Sanctuary",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Hostile protection",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -15101,7 +14636,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -15113,7 +14648,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -15312,48 +14847,22 @@
                 "text": "Sanctuary",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Hostile protection",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -15364,7 +14873,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -15376,7 +14885,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -15530,7 +15039,7 @@
     "text": "#text",
     "size": [
       78,
-      9
+      12
     ],
     "offset": [
       0,
@@ -15541,7 +15050,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.8,
     "color": [
       0.94,
       0.92,
@@ -15576,7 +15085,7 @@
     "text": "#text",
     "size": [
       78,
-      9
+      12
     ],
     "offset": [
       0,
@@ -15587,7 +15096,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.6,
+    "font_scale_factor": 0.8,
     "color": [
       0.94,
       0.92,
@@ -15757,48 +15266,22 @@
                 "text": "Road Networks",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Food-powered travel",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -15809,7 +15292,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -15821,7 +15304,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -15883,48 +15366,22 @@
                 "text": "Road Networks",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Food-powered travel",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -15935,7 +15392,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -15947,7 +15404,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -16146,48 +15603,22 @@
                 "text": "Road Networks",
                 "size": [
                   78,
-                  11
+                  12
                 ],
                 "offset": [
                   39,
-                  4
+                  5
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
-                "font_scale_factor": 0.72,
+                "font_scale_factor": 0.75,
                 "color": [
                   0.94,
                   0.92,
                   0.85
-                ],
-                "shadow": false
-              }
-            },
-            {
-              "note": {
-                "type": "label",
-                "text": "Food-powered travel",
-                "size": [
-                  78,
-                  8
-                ],
-                "offset": [
-                  39,
-                  15
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "layer": 8,
-                "font_type": "unicode",
-                "font_size": "normal",
-                "font_scale_factor": 0.5,
-                "color": [
-                  0.73,
-                  0.73,
-                  0.68
                 ],
                 "shadow": false
               }
@@ -16198,7 +15629,7 @@
                 "orientation": "vertical",
                 "size": [
                   78,
-                  9
+                  12
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -16210,7 +15641,7 @@
                 ],
                 "offset": [
                   39,
-                  24
+                  20
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -16870,52 +16301,6 @@
       "#form_button_text": "Unavailable"
     }
   },
-  "jf_data_developmentValue": {
-    "type": "label",
-    "text": "#text",
-    "size": [
-      69,
-      12
-    ],
-    "offset": [
-      0,
-      0
-    ],
-    "anchor_from": "top_left",
-    "anchor_to": "top_left",
-    "layer": 8,
-    "font_type": "unicode",
-    "font_size": "normal",
-    "font_scale_factor": 0.8,
-    "color": [
-      0.94,
-      0.92,
-      0.85
-    ],
-    "shadow": false,
-    "bindings": [
-      {
-        "binding_type": "collection_details",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#record_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:developmentValue]')",
-        "target_property_name": "#text"
-      },
-      {
-        "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:developmentValue]') = #record_text))",
-        "target_property_name": "#visible"
-      }
-    ]
-  },
   "jf_action_claim@common.button": {
     "size": [
       69,
@@ -17155,12 +16540,12 @@
       }
     ]
   },
-  "jf_data_developmentProgress": {
+  "jf_data_developmentValue": {
     "type": "label",
     "text": "#text",
     "size": [
-      131,
-      12
+      89,
+      9
     ],
     "offset": [
       0,
@@ -17171,7 +16556,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.65,
+    "font_scale_factor": 0.6,
     "color": [
       0.94,
       0.92,
@@ -17191,12 +16576,104 @@
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#record_text - '[JF:data:developmentProgress]')",
+        "source_property_name": "(#record_text - '[JF:data:developmentValue]')",
         "target_property_name": "#text"
       },
       {
         "binding_type": "view",
-        "source_property_name": "(not ((#record_text - '[JF:data:developmentProgress]') = #record_text))",
+        "source_property_name": "(not ((#record_text - '[JF:data:developmentValue]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_data_developmentHourly": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      89,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:developmentHourly]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:developmentHourly]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_data_tradeRoute": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      89,
+      9
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:tradeRoute]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:tradeRoute]') = #record_text))",
         "target_property_name": "#visible"
       }
     ]

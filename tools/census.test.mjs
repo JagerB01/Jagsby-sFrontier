@@ -171,11 +171,13 @@ test('interaction refreshes and persists once; intervals and menu navigation nev
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].biome, 'minecraft:plains');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].census.realmPowerTenths, 2);
   assert.equal(forms[0].heading, 'JF_CHARTER|Dashboard');
-  assert.equal(forms[0].records.length,76);
+  assert.equal(forms[0].records.length,77);
   assert.equal(forms[0].records[63],'[JF:data:zone]Heartlands');
-  assert.equal(forms[0].records[64],'[JF:data:developmentValue]0 (+0.0%)');
-  assert.equal(forms[0].records[66],'[JF:data:innovationLevel]Level 1');
-  assert.equal(forms[0].records[67],'[JF:data:frontierLevel]Level 0');
+  assert.equal(forms[0].records[64],'[JF:data:developmentValue]0 points');
+  assert.equal(forms[0].records[66],'[JF:data:innovationLevel]Lv 1');
+  assert.equal(forms[0].records[76],'[JF:data:tradeRoute]None');
+  assert.match(forms[0].records[60],/^\[JF:data:developmentHourly\]\+\d+\.\d{6} pts$/);
+  assert.equal(forms[0].records[67],'[JF:data:frontierLevel]Lv 0');
   assert.equal(forms[0].records[24],'[JF:action:rename]');
   assert.equal(forms[0].records[25],'[JF:data:owner]Builder');
   assert.equal(saved.villages['minecraft:overworld|0,64,0'].owner.id,'p');

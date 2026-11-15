@@ -18,3 +18,17 @@ export function powerValue(census) {
   if (census.realmPowerTenths === null) return `≥ ${(census.minimumPowerTenths / 10).toFixed(1)}`;
   return (census.realmPowerTenths / 10).toFixed(1);
 }
+
+export function tradeRouteSummary(s,v){
+ const connected=Object.values(s.roads||{}).filter(r=>(r.level||r.targetLevel)&&(r.from===v.id||r.to===v.id))
+  .map(road=>({road,target:s.villages[road.from===v.id?road.to:road.from]}))
+  .filter(entry=>entry.target).sort((a,b)=>Number(Boolean(a.road.targetLevel))-Number(Boolean(b.road.targetLevel))||a.target.id.localeCompare(b.target.id));
+ if(!connected.length)return 'None';
+ const {road,target}=connected[0];
+ const name=settlementName(target.name)||'Unnamed';
+ const more=connected.length>1?` +${connected.length-1}`:'';
+ const status=road.targetLevel?'building':['','Trail','Road','Highway'][road.level]||'Route';
+ const limit=24-status.length-3-more.length;
+ const short=[...name].length>limit?[...name].slice(0,limit-1).join('')+'…':name;
+ return `${short} (${status})${more}`;
+}

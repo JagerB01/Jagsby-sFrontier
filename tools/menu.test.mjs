@@ -107,15 +107,20 @@ test('record bindings use collection-capable stack panels and explicitly indexed
 test('Compact village identity fits without scrolling and Rename remains in the header',async()=>{
   const ui=await loadUI();
   const fields=children(ui.jf_overview_content);
-  assert.deepEqual(Object.keys(fields),['portrait','identity']);
+  assert.deepEqual(Object.keys(fields),['portrait','identity','development','production']);
   assert.ok(fields.portrait.offset[0]>fields.identity.offset[0]);
   assert.equal(Object.keys(fields).some(key=>key.endsWith('_card')),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('scroll'),false);
   for(const control of Object.values(fields))assert.ok(control.offset[1]+control.size[1]<=158);
-  assert.deepEqual(fields.identity.size,[147,154]);
+  assert.deepEqual(fields.identity.size,[147,80]);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('Size'),false);
   assert.equal(JSON.stringify(ui.jf_overview_content).includes('population'),false);
-  for(const key of ['name','tier','owner','biomes','zone','census','developmentValue','developmentProgress'])assert.ok(children(fields.identity)[key]);
+  for(const key of ['name','tier','owner','biomes','zone','census'])assert.ok(children(fields.identity)[key]);
+  assert.ok(fields.identity.offset[1]+fields.identity.size[1]<fields.development.offset[1]);
+  assert.ok(fields.development.offset[1]+fields.development.size[1]<fields.production.offset[1]);
+  for(const key of ['developmentValue','developmentHourly','tradeRoute'])assert.ok(children(fields.development)[key]);
+  assert.equal(children(fields.production).title.text,'Production');
+  assert.deepEqual(Object.keys(children(fields.production)),['surface','title']);
   const header=children(ui.jf_dashboard);
   assert.ok(header.header_rename.offset[1]+header.header_rename.size[1]<=56);
   assert.deepEqual(header.header_name.controls,[{'record@jagsby_frontier.jf_data_overview':{collection_index:0}}]);
@@ -197,6 +202,8 @@ test('Research subtabs isolate the correct native action factories',async()=>{
     for(const state of ['default','hover','pressed']){
       const level=children(children(button)[state]).level;
       assert.equal(level.type,'stack_panel');
+      assert.equal(children(children(button)[state]).note,undefined);
+      assert.ok(level.size[1]>=12);
       assert.ok(level.controls[0]['record@jagsby_frontier.jf_data_'+key+'Level']);
       assert.ok(level.offset[1]+level.size[1]<=34);
     }

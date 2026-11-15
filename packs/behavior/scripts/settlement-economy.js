@@ -42,6 +42,14 @@ export function routeRates(s){
  }
  return result;
 }
+// Snapshot estimate in Development POINTS per real-world hour. Bonus output
+// earns no Development; full physical storage blocks only production income.
+export function developmentHourlyRate(s,v){
+ const baseValue=capacity(s)-stockTotal(s)>EPS
+  ?resourceRates(v,s).reduce((sum,r)=>sum+r.rate*C.categories[r.category].value,0):0;
+ const tradeValue=(routeRates(s)[v.id]||0)*HOUR;
+ return (baseValue+tradeValue)/C.developmentThreshold;
+}
 // Exact piecewise-constant integration: stop at every Development threshold
 // and shared-capacity boundary, then recompute all rates simultaneously.
 export function accountEconomy(s,now=Date.now(),maxEvents=10000){

@@ -36,7 +36,7 @@ export const CHARTER_LAYOUT = {
     "colonization": 61,
     "zone": 63,
     "developmentValue": 64,
-    "developmentProgress": 60,
+    "developmentHourly": 60,
     "innovationLevel": 66,
     "frontierLevel": 67,
     "capacityLevel": 68,
@@ -46,7 +46,8 @@ export const CHARTER_LAYOUT = {
     "biomeLevel": 72,
     "sanctuaryLevel": 73,
     "efficiencyLevel": 74,
-    "roadsLevel": 75
+    "roadsLevel": 75,
+    "tradeRoute": 76
   },
   "actions": {
     "efficiency": 14,
@@ -79,7 +80,7 @@ export const CHARTER_LAYOUT = {
     "mapInteractive": 59,
     "colonization": 62
   },
-  "recordCount": 76,
+  "recordCount": 77,
   "tabs": [
     "Overview",
     "Research",

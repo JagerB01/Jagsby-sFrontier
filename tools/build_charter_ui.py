@@ -27,10 +27,11 @@ DATA.update({"sanctuary": 55, "roads": 56})
 ACTIONS.update({"sanctuary": 57, "roads": 58, "mapInteractive": 59})
 DATA["colonization"] = 61
 ACTIONS["colonization"] = 62
-DATA.update({"zone": 63, "developmentValue": 64, "developmentProgress": 60})
+DATA.update({"zone": 63, "developmentValue": 64, "developmentHourly": 60})
 TECHS = ["innovation", "frontier", "capacity", "colonization", "storage",
          "hearth", "biome", "sanctuary", "efficiency", "roads"]
 DATA.update({key + "Level": 66 + i for i, key in enumerate(TECHS)})
+DATA["tradeRoute"] = 76
 TABS = ["Overview", "Research", "Production", "Realm", "Information"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
@@ -285,17 +286,16 @@ def research_tooltip(key, offset, live=False):
     })
 
 
-def research_node(name, title, subtitle, position, sprite, local=False):
+def research_node(name, title, position, sprite, local=False):
     active = local or name in ["innovation", "capacity", "frontier", "colonization", "storage"]
-    level = collection_scope(data_template(DATA[name + "Level"], [78, 9], scale=0.6), [78, 9])
-    level.update({"offset": [39, 24], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8})
+    level = collection_scope(data_template(DATA[name + "Level"], [78, 12], scale=0.8), [78, 12])
+    level.update({"offset": [39, 20], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8})
     states = []
     for state in ["default", "hover", "pressed"]:
         states.append(control(state, {"type": "panel", "size": [122, 34], "controls": [
             control("face", image(button_texture(122, 34, state), [122, 34])),
             control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
-            control("name", label(title, [78, 11], (39, 4), color=IVORY, scale=0.62 if len(title) > 18 else 0.72)),
-            control("note", label(subtitle.split("\n")[0], [78, 8], (39, 15), color=SILVER, scale=0.5)),
+            control("name", label(title, [78, 12], (39, 5), color=IVORY, scale=0.65 if len(title) > 18 else 0.75)),
             control("level", copy.deepcopy(level)),
             *([research_tooltip(name, [7 - position[0], 38 if position[1] == 0 else (-100 if active else -74)], live=active)]
               if state in ["hover", "pressed"] else []),
@@ -322,11 +322,11 @@ def global_tree():
         control("tier_one", label("Tier I", [50, 9], (0, 14), scale=0.555)),
         control("tier_two", label("Tier II", [50, 9], (0, 36), scale=0.555)),
         control("tier_three", label("Tier III", [50, 9], (0, 83), scale=0.555)),
-        research_node("innovation", "Stewardship", "Endless research cap\nStarts at Level I", [66, 0], "stewardship"),
-        research_node("frontier", "Frontier Expansion", "Founding zones\nFour levels", [0, 47], "frontier_mandate"),
-        research_node("capacity", "Settlement Charters", "More settlements\nEndless", [132, 47], "settlement_charters"),
-        research_node("colonization", "Colonization", "Zone production\nFive levels", [0, 94], "reclamation"),
-        research_node("storage", "Shared Storage", "Shared item capacity\nEndless", [132, 94], "hoards"),
+        research_node("innovation", "Stewardship", [66, 0], "stewardship"),
+        research_node("frontier", "Frontier Expansion", [0, 47], "frontier_mandate"),
+        research_node("capacity", "Settlement Charters", [132, 47], "settlement_charters"),
+        research_node("colonization", "Colonization", [0, 94], "reclamation"),
+        research_node("storage", "Shared Storage", [132, 94], "hoards"),
     ]
     return {"type": "panel", "size": [254, 131], "controls": controls}
 
@@ -339,11 +339,11 @@ def local_tree():
     controls = [control("branch_" + str(i), image("frontier/solid", [w, h], (x, y), 2, [0.55, 0.35, 0.14]))
                 for i, (x, y, w, h) in enumerate(lines)]
     controls += [
-        research_node("hearth", "Hearthstone", "Regeneration / healing\nTwo levels", [66, 0], "hearthstone", local=True),
-        research_node("biome", "Resource Prospecting", "Additional biome\nProduction", [0, 47], "resource_prospecting", local=True),
-        research_node("sanctuary", "Sanctuary", "Hostile protection\nRepeatable", [132, 47], "sanctuary", local=True),
-        research_node("efficiency", "Prosperity", "+5% production\nper level", [0, 94], "prosperity", local=True),
-        research_node("roads", "Road Networks", "Food-powered travel\nManage connections", [132, 94], "road_networks", local=True),
+        research_node("hearth", "Hearthstone", [66, 0], "hearthstone", local=True),
+        research_node("biome", "Resource Prospecting", [0, 47], "resource_prospecting", local=True),
+        research_node("sanctuary", "Sanctuary", [132, 47], "sanctuary", local=True),
+        research_node("efficiency", "Prosperity", [0, 94], "prosperity", local=True),
+        research_node("roads", "Road Networks", [132, 94], "road_networks", local=True),
     ]
     return {"type": "panel", "size": [254, 131], "controls": controls}
 
@@ -464,29 +464,45 @@ def build():
     GENERATED_CONTROLS["jf_data_overview"] = header_name
     name["name"]["controls"] = [control("record@jagsby_frontier.jf_identity_name", {"collection_index": DATA["overview"]})]
     rows = []
-    for key, title, y in [("tier", "Tier", 32), ("owner", "Owner", 48),
-                          ("biomes", "Biome", 64), ("zone", "Zone", 80),
-                          ("census", "Realm Power", 96), ("developmentValue", "Development", 112)]:
+    for key, title, y in [("tier", "Tier", 28), ("owner", "Owner", 38),
+                          ("biomes", "Biome", 48), ("zone", "Zone", 58),
+                          ("census", "Realm Power", 68)]:
         rows += [control(key + "_label", label(title, [56, 11], (8, y), color=SILVER, scale=0.75)),
                  overview_value(key, DATA[key], [70, y], [69, 12], scale=0.8)]
     # In unclaimed villages the Claim control occupies the Owner value slot.
     next(row["owner"] for row in rows if "owner" in row)["bindings"] = condition(
         "((#form_text - '[JF:unclaimed]') = #form_text)", "#form_text")
     claim = action("claim", ACTIONS["claim"], "Claim", width=69, height=16)["claim"]
-    claim.update({"offset": [70, 45], "anchor_from": "top_left", "anchor_to": "top_left",
+    claim.update({"offset": [70, 35], "anchor_from": "top_left", "anchor_to": "top_left",
                   "layer": 12, "bindings": condition("(not ((#form_text - '[JF:unclaimed]') = #form_text))", "#form_text")})
-    identity = control("identity", {"type": "panel", "size": [147, 154], "offset": [0, 4],
+    identity = control("identity", {"type": "panel", "size": [147, 80], "offset": [0, 4],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("surface", image("frontier/palette_panel", [147, 154], color=[0.82, 0.82, 0.82])),
+            control("surface", image("frontier/palette_panel", [147, 80], color=[0.82, 0.82, 0.82])),
             name,
             control("divider", image("frontier/solid", [131, 1], (8, 25), 2, list(WHEAT))),
             *rows, control("claim", claim),
-            overview_value("developmentProgress", DATA["developmentProgress"], [8, 132], [131, 12], scale=0.65),
+        ]})
+    development_rows = []
+    for key, title, y in [("developmentValue", "Current", 17),
+                          ("developmentHourly", "Hourly est.", 26),
+                          ("tradeRoute", "Route", 35)]:
+        development_rows += [control(key + "_label", label(title, [42, 9], (8, y), SILVER, 0.6)),
+                             overview_value(key, DATA[key], [50, y], [89, 9], scale=0.6)]
+    development_box = control("development", {"type": "panel", "size": [147, 48], "offset": [0, 88],
+        "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
+            control("surface", image("frontier/palette_panel", [147, 48], color=[0.82, 0.82, 0.82])),
+            control("title", label("Development", [131, 10], (8, 4), WHEAT, 0.75)),
+            *development_rows,
+        ]})
+    production_box = control("production", {"type": "panel", "size": [147, 18], "offset": [0, 140],
+        "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
+            control("surface", image("frontier/palette_panel", [147, 18], color=[0.82, 0.82, 0.82])),
+            control("title", label("Production", [131, 10], (8, 4), WHEAT, 0.75)),
         ]})
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 158], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [90, 158]),
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [167, 0]}),
-        identity,
+        identity, development_box, production_box,
     ]}
     GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left"})
     ui["jf_information_content"] = {"type": "panel", "size": [257, 158], "controls": [

@@ -10,9 +10,8 @@ See [local research](local-research.md) for the authoritative current recipes,
 per-settlement progress, material categories and recovery behavior. Stewardship
 continues to set the ceiling for Sanctuary and Prosperity.
 
-Every global/local research card shows its current level without hovering.
-The Overview identity panel includes permanent Development, its production
-bonus, next-point progress and the current MineScape zone. Stewardship is the
+Every global/local research card shows its name and current **Lv X** without hovering; on-card descriptions are removed in 0.0.37, while hover explanations remain.
+The Overview identity panel shows the current MineScape zone. A separate Development box below shows permanent points, hourly increase estimate and a named trade route; the separate Production box is reserved for later design. Stewardship is the
 top global technology; Settlement Charters is the middle-right technology.
 The existing internal save key for the foundation is retained for compatibility.
 

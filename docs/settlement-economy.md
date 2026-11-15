@@ -1,3 +1,14 @@
+> 0.0.37 Overview: a separate Development panel shows permanent points, a
+> snapshot estimate in **points per real-world hour**, and a named connected
+> route. The estimate converts current base-production category value plus
+> current route income using the existing 500-value-per-point threshold.
+> Colonization bonus items earn no Development. At full storage, the production
+> portion is zero while active route income continues. This is an estimate at
+> current rates, not a forecast of later Development thresholds or storage fill.
+> Active routes are shown before routes under construction, then sorted by
+> destination ID; +N indicates additional connections. Long names are shortened.
+> A separate Production panel is a titled placeholder pending its design.
+
 > Local costs and progression are superseded by the finalized
 > [0.0.36 local research rules](local-research.md): partial contributions,
 > fixed per-level recipes, Road Networks research I–III, and Stewardship caps.

@@ -3,7 +3,7 @@ import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { nearbyVillagers, summarizeVillagers } from "./village-census.js";
 import { sampleTradingRanks } from "./villager-trade-bridge.js";
 import { CHARTER_LAYOUT } from "./charter-layout.js";
-import { settlementName, biomeName, powerValue } from "./settlement-overview.js";
+import { settlementName, biomeName, powerValue, tradeRouteSummary } from "./settlement-overview.js";
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
@@ -16,7 +16,7 @@ const KEY = "jagsby_frontier:state_v1";
 const BIOME_RADIUS = 256;
 import {DEFINITIONS,ZONES,zoneAt,maxLevel,nextCost,acceptedMaterials,lockReason,contribution,applyContribution,settlementLimit,foundingReason,storageIncrement,localLevel,colonizationBonus} from "./global-research.js";
 import {ECONOMY_CONFIG} from "./economy-config.js";
-import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower} from "./settlement-economy.js";
+import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower,developmentHourlyRate} from "./settlement-economy.js";
 import {refreshProtection,protectDamage,within,healVillager} from "./settlement-effects.js";
 import {createMapNavigation} from "./map-navigation.js";
 import {localContribution,applyLocalContribution,localResearchText} from "./local-research.js";
@@ -191,11 +191,12 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   records[data.tier]=tier.label;
   for(const key of ['efficiency','hearth','biome','sanctuary','roads','frontier','capacity','innovation','colonization','storage'])records[data[key]]=key in DEFINITIONS?`${DEFINITIONS[key].name}: ${s.global[key]} / ${Number.isFinite(maxLevel(s,key))?maxLevel(s,key):'Endless'}\nNext cost: ${nextCost(s,key)??'Complete'}\nContributed: ${s.researchProgress[key]}\n${lockReason(s,key)||'Unlocked'}\nSelect for materials and benefits.`:researchText(s,v,key,player);
   records[data.zone]=zoneAt(v.location)||'Unknown';
-  records[data.developmentValue]=`${development(v)} (+${(development(v)*0.1).toFixed(1)}%)`;
-  records[data.developmentProgress]=`${((v.developmentValue||0)%500).toFixed(1)} / 500 to next point`;
+  records[data.developmentValue]=`${development(v)} points`;
+  records[data.developmentHourly]=`+${developmentHourlyRate(s,v).toFixed(6)} pts`;
+  records[data.tradeRoute]=tradeRouteSummary(s,v);
   for(const key of ['innovation','frontier','capacity','colonization','storage','hearth','biome','sanctuary','efficiency','roads']){
     const level=key in DEFINITIONS?s.global[key]:['efficiency','sanctuary'].includes(key)?localLevel(s,v,key):researchLevel(v,key);
-    records[data[key+'Level']]=`Level ${level}`;
+    records[data[key+'Level']]=`Lv ${level}`;
   }
   records[data.production]=productionText(s,v);
   records[data.stockpile]=`Stored: ${total(s).toFixed(3)} / ${cap(s)}\nRemaining capacity: ${Math.max(0,cap(s)-total(s)).toFixed(3)}\nProduced resources only; shared by every settlement.`;
