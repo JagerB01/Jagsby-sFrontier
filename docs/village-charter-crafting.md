@@ -27,9 +27,9 @@ view can show the recipe while ingredients are missing. **Craftable Only**
 intentionally hides recipes until the full ingredients are available; the addon
 does not bypass this vanilla filter or allow crafting with partial materials.
 
-After placing the charter, open it and press **Survey** to record villagers,
-Realm Power and nearby biome choices. Later menu opens use cached values; press
-Survey again after villagers are added/promoted or nearby chunks are explored.
+After placing the charter, open it to refresh villagers and Realm Power. Press
+**Survey** to discover nearby biomes. Later charter opens refresh villagers
+automatically; press Survey again after exploring nearby chunks.
 
 References:
 

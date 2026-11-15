@@ -1,8 +1,8 @@
-# Production panels — 0.0.56
+# Production panels — 0.0.57
 
 Production has exactly two tabs: a fixed **Overview** and a scrollable
-**Resource Prospecting** list. Both use the existing charter frame. The header Survey button refreshes villagers and nearby loaded terrain;
-opening and navigating use cached data and do not trigger scans.
+**Resource Prospecting** list. Both use the existing charter frame. Opening refreshes villagers and RP. The header Survey button searches nearby
+loaded terrain; ordinary opens and navigation do not perform biome scans.
 
 ## Overview
 
@@ -143,11 +143,10 @@ At fixed production and trade value rates, the points/hour estimate is five
 times the former estimate. Saved value is retained. Old offline intervals use
 the old threshold until catch-up completes, then the new threshold takes effect.
 
-## Manual survey (0.0.56)
+## Survey behavior (0.0.57)
 
-Survey sits beside Rename and is available from any charter tab. It performs
-the villager-rank refresh and biome survey, then redraws the charter with the
-updated data.
-Opening no longer waits for the rank bridge or terrain queries. RP and biome
-choices remain cached until another Survey; new settlements need an initial
-Survey. Requests from multiple players share one job per settlement.
+Opening the charter refreshes the 80-block villager census and Realm Power,
+including the rank bridge wait. Survey beside Rename scans only nearby biomes.
+Opening does not perform the 197-position biome scan. Ordinary menu navigation
+adds neither another census nor terrain scanning. Concurrent biome surveys share
+one job for the settlement. Crafting and discovery conditions remain unchanged.

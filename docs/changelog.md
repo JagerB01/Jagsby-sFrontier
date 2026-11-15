@@ -1,3 +1,12 @@
+# 0.0.57
+
+- Restore the 80-block villager census and RP update on each charter activation.
+- Keep the 256-block biome search manual through Survey. Survey does not repeat
+  the census; opening and ordinary navigation do not scan nearby biomes.
+- Update placement/survey hints to distinguish villager refresh from biome
+  discovery. Retain the new recipe and ingredient-based recipe-book discovery.
+- 53 relevant Node tests pass; static addon validation passes.
+
 # 0.0.56
 
 - Add a Survey button beside Rename, available from every charter tab. Refresh

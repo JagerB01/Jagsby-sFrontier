@@ -58,7 +58,7 @@ using the loaded column's top block when available. It caches supported biome
 IDs and sample positions. It never loads chunks or runs continuously; narrow
 biomes between lattice points can be missed. Explore and press Survey in the charter to find additional choices. Cached current selections continue producing offline.
 
-As of 0.0.56, the header Survey button refreshes the villager census and nearby biomes on demand. The second tab
+As of 0.0.56, the header Survey button searches nearby biomes on demand. As of 0.0.57, opening the charter refreshes villagers and RP separately. The second tab
 shows a scrolling list of biome names, item icons and projected resource rates,
 with no manual survey or page controls. The confirmed allocation rules above
 remain unchanged.

@@ -381,11 +381,11 @@ test('Directory road creation cannot bypass research, dimension or source-locati
   h.api.establishDirectoryRoad(h.player,'a','b',0,'all');assert.equal(Object.keys(h.read().roads).length,0);
  }
 });
-test('Simultaneous Survey requests share one census and biome scan and preserve the selected tab',async()=>{
+test('Simultaneous biome Survey requests share a scan without repeating the villager census',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha'};let census=0,biomes=0;
  const h=await runtime(s,()=>({canceled:true}),{censusEntities:[{id:'v',typeId:'minecraft:villager_v2',getComponent:()=>({value:0})}],onCensus(){census++;},biomeAt(){biomes++;return 'minecraft:forest';}});
  await Promise.all([h.api.surveySettlement(h.player,'a',{page:'Production',productionScope:'biomes'}),h.api.surveySettlement({...h.player,id:'other'},'a',{page:'Production',productionScope:'biomes'})]);
- assert.equal(census,1);assert.equal(biomes,197);assert.equal(h.read().villages.a.productionPower,0.2);
+ assert.equal(census,0);assert.equal(biomes,197);assert.equal(h.read().villages.a.productionPower,undefined);
  assert.ok(h.read().villages.a.available.includes('minecraft:forest'));
  assert.equal(h.forms.length,2);assert.ok(h.forms.every(form=>form.text.includes('[JF:production:biomes]')));
 });

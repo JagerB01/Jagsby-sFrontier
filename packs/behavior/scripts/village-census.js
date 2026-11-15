@@ -51,12 +51,12 @@ export function summarizeVillagers(entities, readTradeTier, now = Date.now()) {
 }
 
 export function censusText(census) {
-  if (!census) return "§8Villagers / Realm Power:§r Not surveyed; use Survey in the charter menu.";
-  if (census.error) return "§8Village survey:§r Unavailable; use Survey to retry.";
+  if (!census) return "§8Villagers / Realm Power:§r Not surveyed; reopen the charter.";
+  if (census.error) return "§8Village survey:§r Unavailable; reopen the charter to retry.";
   const power = census.realmPowerTenths === null
     ? (census.minimumPowerTenths / 10).toFixed(1)
     : (census.realmPowerTenths / 10).toFixed(1);
   return `§8Nearby loaded villagers (${census.radius} blocks):§r ${census.villagers}\n` +
     `§8Settlement Realm Power:§r ${power}\n` +
-    "§7Use Survey in the charter menu to refresh.";
+    "§7Villagers refresh when you open this charter.";
 }

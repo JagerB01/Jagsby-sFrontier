@@ -288,10 +288,10 @@ async function renameSettlement(player,vId){
 async function surveySettlement(player,vid,view={}){
  let job=pendingSurveys.get(vid);
  if(!job){
-  job=(async()=>{await refreshVillage(vid);return surveyVillage(vid);})();
+  job=Promise.resolve().then(()=>surveyVillage(vid));
   pendingSurveys.set(vid,job);
  }
- try{await job;player.sendMessage('§aSurvey updated.');}
+ try{await job;player.sendMessage('§aBiome survey updated.');}
  catch(e){console.warn(`Frontier survey: ${e}`);player.sendMessage('§cSurvey could not finish. Try Survey again.');}
  finally{if(pendingSurveys.get(vid)===job)pendingSurveys.delete(vid);}
  open(player,vid,view.page||'Overview',view.researchScope||'global',view.realmPage||0,view.realmScope||'roads',view.productionScope||'summary',view.productionPages||{});
@@ -349,7 +349,7 @@ function clearSecondary(player,vid,pages={}){
 function collect(player,vid,pages={}){const s=accounted();const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
  let moved=0;for(const [type,qty] of Object.entries(s.stock)){let remain=Math.floor(qty);const fraction=qty-remain;while(remain>0){const n=Math.min(64,remain);try{const left=inv.addItem(new ItemStack(type,n));const count=n-(left?.amount||0);if(count<=0)break;remain-=count;moved+=count;if(left)break;}catch(e){break;}}s.stock[type]=remain+fraction;if(!s.stock[type])delete s.stock[type];}
  save(s);player.sendMessage(`§aCollected ${moved} items. Remaining stockpile: ${total(s)}/${cap(s)}.`);openProduction(player,vid,'summary',pages);}
-world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=accounted();const v=addVillage(s,ev.block,ev.player);if(!v)return;ev.player.sendMessage('§6Village Charter established. Open the menu and press Survey to record villagers and nearby biomes.');});
+world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=accounted();const v=addVillage(s,ev.block,ev.player);if(!v)return;ev.player.sendMessage('§6Village Charter established. Open the menu to refresh villagers. Use Survey to discover nearby biomes.');});
 const pendingCharterInteractions=new Set();
 world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
   if(ev.block.typeId!==BLOCK)return;
@@ -369,6 +369,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
       recoverResearch(player);
       let s=accounted(),v=addVillage(s,block,player);
       if(!v)return;
+      await refreshVillage(v.id);
       open(player,v.id);
     }catch(e){console.warn(`Frontier charter interaction: ${e}`);player.sendMessage(String(e).includes('catching up')?'Production is catching up. Interact with the charter again to continue.':'§cThe Village Charter could not open. Check the Minecraft content log for Frontier charter errors.');}
     finally{pendingCharterInteractions.delete(pendingKey);}

@@ -1,7 +1,6 @@
-> 0.0.56 moves census refresh to the **Survey** button. Menu opens and navigation
-> use cached RP, with no villager-rank wait or biome scan. New settlements need
-> an initial Survey. The radius remains 80 blocks; recipe/crafting instructions
-> are in [Village Charter crafting](village-charter-crafting.md).
+> 0.0.57 restores census refresh on each charter activation. Survey scans nearby
+> biomes only. Menu navigation does not add another census, and the radius stays
+> 80 blocks. Crafting is described in [Village Charter crafting](village-charter-crafting.md).
 
 > 0.0.55 displays inferred RP and tier names plainly, without ≥ or at-least
 > decorations. The existing unknown-rank fallback calculation is retained.

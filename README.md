@@ -5,11 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.56.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.57.mcaddon?raw=true)
 
-Version 0.0.56 adds a header **Survey** button that refreshes both villagers and
-nearby biomes. Opening uses cached results, without the rank-sampling wait or
-terrain scan. New settlements need Survey to record their first RP.
+Version 0.0.57 restores villager and Realm Power refresh when the charter opens.
+The header **Survey** button scans nearby biomes only. Opening no longer performs
+the 197-position biome scan; the villager-rank sampling wait is retained.
 
 The Village Charter is now [craftable](docs/village-charter-crafting.md) with
 five planks, a center lectern and three cobblestone along the bottom. Its recipe
