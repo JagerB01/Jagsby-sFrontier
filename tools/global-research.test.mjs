@@ -186,7 +186,7 @@ test('Save migration refuses a future version instead of overwriting it',()=>{
 test('Opening and canceling Research shows costs in hover records without spending',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};const h=await runtime(s);
  h.slots[0]={typeId:'minecraft:bread',amount:20};h.api.open(h.player,'a','Research','local');
- for(const value of ['Next cost: 64 Bread','64 remaining','Click: contribute 20 bread','players'])assert.ok(h.forms[0].buttons[5].includes(value));
+ for(const value of ['Next cost: 64 Bread','64 remaining','Click to contribute','players'])assert.ok(h.forms[0].buttons[5].includes(value));
  assert.equal(h.slots[0].amount,20);assert.equal(h.read().villages.a.hearth,0);
 });
 test('Selecting the actual local card contributes directly and only redraws the dashboard',async()=>{
@@ -257,7 +257,8 @@ test('All ten research hover records describe effects, next cost, progress, prer
  for(const index of [4,5,6,7,8,9,10,55,56,61]){
   const text=records[index];
   for(const label of ['Next cost:','Contributed:','remaining','Requires:','Status:'])assert.ok(text.includes(label),`${index}: ${label}`);
-  assert.ok(text.includes('Click:')||text.includes('Carry')||text.includes('Requires higher')||text.includes('Requires Hearthstone')||text.includes('Requires Resource')||text.includes('Requires Sanctuary')||text.includes('Requires Frontier')||text.includes('Requires Settlement'));
+  assert.ok(text.includes('Click to contribute'));
+  assert.equal(text.includes('Carry the required material'),false);
   assert.equal(text.includes('Select for materials'),false);
  }
  assert.ok(records[5].includes('Grants players Regeneration I while within the settlement'));

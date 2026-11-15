@@ -265,10 +265,12 @@ def info_card(name, title, index, y):
         ]})
 
 
-def research_tooltip(key, offset, live=False):
+def research_tooltip(key, position, live=False):
     title, description = RESEARCH_HELP[key]
     height = {"hearth": 112, "biome": 112, "sanctuary": 124, "efficiency": 112, "roads": 116,
               "innovation": 112, "frontier": 112, "capacity": 112, "colonization": 124, "storage": 112}[key] if live else 70
+    # Tier I opens below; other tiers open above, leaving the hovered card clear.
+    offset = [7 - position[0], 38 if position[1] == 0 else -height - 4]
     if live:
         template = data_template(DATA[key], [222, height - 36], scale=0.75)
         details = collection_scope(template, [222, height - 36])
@@ -290,16 +292,17 @@ def research_tooltip(key, offset, live=False):
 
 def research_node(name, title, position, sprite, local=False):
     active = local or name in ["innovation", "capacity", "frontier", "colonization", "storage"]
-    level = collection_scope(data_template(DATA[name + "Level"], [78, 12], scale=0.8), [78, 12])
-    level.update({"offset": [39, 20], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8})
+    level = collection_scope(data_template(DATA[name + "Level"], [80, 9], scale=0.6), [80, 9])
+    GENERATED_CONTROLS["jf_data_" + name + "Level"]["text_alignment"] = "center"
+    level.update({"offset": [38, 21], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8})
     states = []
     for state in ["default", "hover", "pressed"]:
         states.append(control(state, {"type": "panel", "size": [122, 34], "controls": [
             control("face", image(button_texture(122, 34, state), [122, 34])),
             control("icon", image("frontier/research/" + sprite, [28, 28], (4, 3), 6)),
-            control("name", label(title, [78, 12], (39, 5), color=IVORY, scale=0.65 if len(title) > 18 else 0.75)),
+            control("name", {**label(title, [80, 12], (38, 5), color=IVORY, scale=0.7 if len(title) > 18 else 0.8), "text_alignment": "center"}),
             control("level", copy.deepcopy(level)),
-            *([research_tooltip(name, [7 - position[0], 36 - 89 - position[1]], live=active)]
+            *([research_tooltip(name, position, live=active)]
               if state in ["hover", "pressed"] else []),
         ]}))
     if active:

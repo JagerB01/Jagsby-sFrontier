@@ -5,7 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.39.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.40.mcaddon?raw=true)
+
+Version 0.0.40 places research popups below the top tech or above the other
+techs, keeping the hovered card clear. Names and levels are centered beside the
+icon, with a larger name and smaller **Lv X**. The prompt is **Click to contribute**.
 
 Version 0.0.39 replaces the scrolling Production page with fixed **Overview,
 Resources, Biomes and Stockpile** panels. Resource and stock lists are paged;
@@ -22,7 +26,7 @@ the owner beside the settlement name; Production is reserved for later design.
 Every research card shows its name and **Lv X**. Hover for a plain-language
 explanation, next cost, saved contribution, remaining amount and requirements.
 **Clicking the card contributes directly**; no research details menu opens.
-The popup quotes the exact amount and item type. Eligible held items are
+The popup says **Click to contribute**. Eligible held items are
 preferred; otherwise the first eligible inventory type is used, capped at the
 remaining next-level cost. Stewardship caps all endless research.
 
@@ -47,7 +51,7 @@ The on-demand server-controller trade-rank bridge is now included. **Disable the
 separate Trade Rank Probe pack** when using this build, because both define
 vanilla villagers. Charter interaction samples normal ranks from Novice (0.2)
 through Master (1.0); unknown reads remain labeled minimum estimates. MineScape
-is not required. In-game name: **Jagsby's Frontier 0.0.39**. The user confirmed
+is not required. In-game name: **Jagsby's Frontier 0.0.40**. The user confirmed
 the probe's Apprentice reading; this production integration and updated visual
 layout still need in-game verification.
 
@@ -93,7 +97,7 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.0.39.mcaddon`. Packaging is
+Build output is `dist/Jagsbys_Frontier_v0.0.40.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.0+ with `@minecraft/server` 2.9.0 and

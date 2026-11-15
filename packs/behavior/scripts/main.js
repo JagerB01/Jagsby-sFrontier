@@ -124,13 +124,10 @@ function cardContribution(player,s,v,key){
  const held=inv?.getItem(Number.isInteger(player.selectedSlotIndex)?player.selectedSlotIndex:0)?.typeId;
  const available=inventoryMaterials(player,s,key,materials);
  const choice=available.find(([id])=>id===held)||available[0];
- if(!choice)return {level,revision,reason:'Carry the required material to contribute'};
+ if(!choice)return {level,revision,reason:'No eligible materials to contribute'};
  const [material,count]=choice;
  const amount=global?contribution(s,key,material,count):localContribution(v,key,material,count,s);
  return {level,revision,material,amount,reason:amount?'':'No contribution needed'};
-}
-function contributionHint(choice){
- return choice.amount?`Click: contribute ${choice.amount} ${choice.material.replace('minecraft:','').replaceAll('_',' ')}`:choice.reason;
 }
 function contributeResearchCard(player,vid,key,shown){
  const global=key in DEFINITIONS;
@@ -203,7 +200,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   const researchChoices=new Map();
   for(const key of ['efficiency','hearth','biome','sanctuary','roads','frontier','capacity','innovation','colonization','storage']){
    const choice=cardContribution(player,s,v,key);researchChoices.set(key,choice);
-   records[data[key]]=researchText(s,v,key,player)+'\n'+contributionHint(choice);
+   records[data[key]]=researchText(s,v,key,player)+'\nClick to contribute';
   }
   records[data.zone]=zoneAt(v.location)||'Unknown';
   records[data.developmentValue]=`${development(v)} points`;

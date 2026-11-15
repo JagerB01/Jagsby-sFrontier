@@ -1,3 +1,14 @@
+# 0.0.40
+
+- Place top-tier tech hover popups below their cards and other tier popups above
+  their cards, with a four-pixel gap. Check every hover/pressed state for overlap.
+- Center the tech name and Lv X within the text area beside the icon. Make the
+  name larger and the level smaller on all ten cards.
+- Replace inventory-carry instructions and variable click hints in the popup
+  with Click to contribute. Direct payments, safe clipping and stale checks remain.
+- 110 Node tests and 3 Python tests pass; static validation checks 148 pack files.
+  Native rendering and pointer behavior still require an in-game check.
+
 # 0.0.39
 
 - Rebuild Production as four fixed non-scrolling subtabs: Overview, Resources,

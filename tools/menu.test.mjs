@@ -206,7 +206,13 @@ test('Research subtabs isolate the correct native action factories',async()=>{
       const level=children(children(button)[state]).level;
       assert.equal(level.type,'stack_panel');
       assert.equal(children(children(button)[state]).note,undefined);
-      assert.ok(level.size[1]>=12);
+      assert.equal(level.size[1],9);
+      const name=children(children(button)[state]).name;
+      const levelTemplate=ui['jf_data_'+key+'Level'];
+      assert.equal(name.text_alignment,'center');
+      assert.equal(levelTemplate.text_alignment,'center');
+      assert.ok(levelTemplate.font_scale_factor<name.font_scale_factor);
+      assert.equal(name.offset[0]+name.size[0]/2,level.offset[0]+level.size[0]/2);
       assert.ok(level.controls[0]['record@jagsby_frontier.jf_data_'+key+'Level']);
       assert.ok(level.offset[1]+level.size[1]<=34);
     }
@@ -250,7 +256,7 @@ test('standalone UI references resolve to Frontier files and definitions',async(
   }
 });
 
-test('research explanations appear only in hover/pressed states and stay inside the charter',async()=>{
+test('research popups stay inside the charter and never overlap the hovered tech card',async()=>{
   const ui=await loadUI();
   function check(button,x,y) {
     const states=children(button);
@@ -262,7 +268,9 @@ test('research explanations appear only in hover/pressed states and stay inside 
       assert.ok(content.title.text.length>0);
       assert.ok(content.description?.text.length>0 || content.live_details);
       assert.ok(x+tip.offset[0]>=18&&x+tip.offset[0]+tip.size[0]<=362);
-      assert.ok(y+tip.offset[1]>=30&&y+tip.offset[1]+tip.size[1]<=227);
+      assert.ok(y+tip.offset[1]>=0&&y+tip.offset[1]+tip.size[1]<=240);
+      const top=y+tip.offset[1],bottom=top+tip.size[1];
+      assert.ok(bottom<=y-4||top>=y+34+4,'Popup overlaps the hovered tech card');
       assert.equal(JSON.stringify(tip).includes('button.form_button_click'),false);
     }
   }

@@ -1,10 +1,10 @@
-# Finalized local research — 0.0.39
+# Finalized local research — 0.0.40
 
 Local research uses the existing five-node tree and custom charter renderer.
 Hovering a technology states its literal current and next effect (Current is omitted at Lv 0) and shows its current
 level, next-level cost, contributed amount, remainder, prerequisite and status.
-Cards retain only their name and Lv X for readability. Clicking the card directly
-contributes the quoted inventory items; no research detail/selection menu opens.
+Cards center the name above smaller Lv X text beside the icon. The hover popup is placed above or below the card, never over it, and ends with Click to contribute. Clicking the card directly
+contributes eligible inventory items; no research detail/selection menu opens.
 The selected hotbar slot's eligible item type is preferred, falling back to the
 first eligible inventory type. One type is used per click, limited by the quote
 and remaining cost. A stale quote refreshes without spending. Road connection

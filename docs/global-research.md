@@ -1,4 +1,4 @@
-# Global research — 0.0.39
+# Global research — 0.0.40
 
 This release retains the local five-node tree, Sanctuary, road construction/travel
 and exact offline economy. The map feature was removed in 0.0.38; Realm now
@@ -50,12 +50,12 @@ The existing five 64×64 global icons, palette, tree layout and hover styling ar
 retained. All ten technologies use compact hover panels describing only current and next effects, showing
 what changes, who benefits, current/next benefits, next cost, saved progress,
 remaining amount and prerequisites. Global panels show full effects and prices
-rather than an abbreviated placeholder. Cards show only name and Lv X.
+rather than an abbreviated placeholder. Cards center the larger name above smaller Lv X text beside the icon. Popups appear below top-tier cards and above other tiers, leaving the hovered card unobstructed.
 
 Clicking a tech card contributes directly and redraws the research dashboard.
-The hover panel quotes the amount/item before the click. An eligible held item
+The hover prompt is Click to contribute. An eligible held item
 type takes priority; otherwise the first eligible inventory type is selected.
-Only that type is spent, up to the quoted amount and next-level remainder.
+Only that type is spent, up to its displayed-inventory snapshot amount and next-level remainder.
 If progress or material selection changes, the old quote is rejected without
 payment. Locked, capped and completed cards never spend items. Inventory journal
 recovery is retained. Road management lives in Realm > Road Networks and never
