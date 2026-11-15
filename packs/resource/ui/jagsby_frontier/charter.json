@@ -21808,6 +21808,146 @@
       }
     ]
   },
+  "jf_road_icon0": {
+    "type": "image",
+    "texture": "textures/ui/frontier/road_icons/trail",
+    "size": [
+      17,
+      17
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_road_icon1": {
+    "type": "image",
+    "texture": "textures/ui/frontier/road_icons/trail",
+    "size": [
+      17,
+      17
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_road_icon2": {
+    "type": "image",
+    "texture": "textures/ui/frontier/road_icons/trail",
+    "size": [
+      17,
+      17
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_road_icon3": {
+    "type": "image",
+    "texture": "textures/ui/frontier/road_icons/trail",
+    "size": [
+      17,
+      17
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "keep_ratio": true,
+    "bilinear": false,
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture",
+        "binding_name_override": "#texture",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_texture_file_system",
+        "binding_name_override": "#texture_file_system",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
   "jf_realm_roads_content": {
     "type": "panel",
     "size": [
@@ -21863,6 +22003,322 @@
             30
           ],
           "clips_children": true
+        }
+      },
+      {
+        "row0": {
+          "type": "panel",
+          "size": [
+            240,
+            18
+          ],
+          "offset": [
+            7,
+            29
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "clips_children": true,
+          "controls": [
+            {
+              "icon": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  17,
+                  17
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_road_icon0": {
+                      "collection_index": 160
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "text": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  218,
+                  18
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_roadConnection0": {
+                      "collection_index": 160
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  22,
+                  0
+                ],
+                "clips_children": true
+              }
+            }
+          ],
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:road:0]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:road:0]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ]
+        }
+      },
+      {
+        "row1": {
+          "type": "panel",
+          "size": [
+            240,
+            18
+          ],
+          "offset": [
+            7,
+            48
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "clips_children": true,
+          "controls": [
+            {
+              "icon": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  17,
+                  17
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_road_icon1": {
+                      "collection_index": 161
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "text": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  218,
+                  18
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_roadConnection1": {
+                      "collection_index": 161
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  22,
+                  0
+                ],
+                "clips_children": true
+              }
+            }
+          ],
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:road:1]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:road:1]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ]
+        }
+      },
+      {
+        "row2": {
+          "type": "panel",
+          "size": [
+            240,
+            18
+          ],
+          "offset": [
+            7,
+            67
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "clips_children": true,
+          "controls": [
+            {
+              "icon": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  17,
+                  17
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_road_icon2": {
+                      "collection_index": 162
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "text": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  218,
+                  18
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_roadConnection2": {
+                      "collection_index": 162
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  22,
+                  0
+                ],
+                "clips_children": true
+              }
+            }
+          ],
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:road:2]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:road:2]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ]
+        }
+      },
+      {
+        "row3": {
+          "type": "panel",
+          "size": [
+            240,
+            18
+          ],
+          "offset": [
+            7,
+            86
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "clips_children": true,
+          "controls": [
+            {
+              "icon": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  17,
+                  17
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_road_icon3": {
+                      "collection_index": 163
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "text": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "size": [
+                  218,
+                  18
+                ],
+                "collection_name": "form_buttons",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_data_roadConnection3": {
+                      "collection_index": 163
+                    }
+                  }
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "offset": [
+                  22,
+                  0
+                ],
+                "clips_children": true
+              }
+            }
+          ],
+          "bindings": [
+            {
+              "binding_name": "#form_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:road:3]') = #form_text))",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not ((#form_text - '[JF:road:3]') = #form_text))",
+              "target_property_name": "#enabled"
+            }
+          ]
         }
       },
       {
@@ -52408,6 +52864,158 @@
         "target_property_name": "#visible"
       }
     ]
+  },
+  "jf_data_roadConnection0": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      218,
+      18
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
+  },
+  "jf_data_roadConnection1": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      218,
+      18
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
+  },
+  "jf_data_roadConnection2": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      218,
+      18
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
+  },
+  "jf_data_roadConnection3": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      218,
+      18
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.6,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "property_bag": {
+      "#form_button_text": "Unavailable"
+    }
   },
   "jf_action_roadsPrev@common.button": {
     "size": [

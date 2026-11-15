@@ -233,7 +233,8 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   production.choices.forEach((choice,slot)=>records[data['prospectInfo'+slot]]=choice.text);
   const roadView=roadNetworkOverview(s,v,realmPage);
   records[data.roadSummary]=roadView.summary;
-  records[data.roadDetails]=roadView.details;
+  records[data.roadDetails]=roadView.rows.length?'':roadView.details;
+  for(let slot=0;slot<4;slot++)records[data['roadConnection'+slot]]=roadView.rows[slot]?.text||'';
   const handlers=new Map();
   handlers.set(actions.roadsPrev,()=>open(player,vId,'Realm','global',roadView.page-1,'roads'));
   handlers.set(actions.roadsNext,()=>open(player,vId,'Realm','global',roadView.page+1,'roads'));
@@ -254,14 +255,14 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     handlers.set(actions[scope+'Next'],()=>open(player,vId,'Realm','global',directory.page+1,scope));
   }
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
-  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction')&&!key.startsWith('directory'))records[index]=`[JF:data:${key}]${records[index]}`;
+  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction')&&!key.startsWith('directory')&&!key.startsWith('roadConnection'))records[index]=`[JF:data:${key}]${records[index]}`;
   for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i),...['Mine','All'].flatMap(scope=>Array.from({length:3},(_,i)=>'directory'+scope+'Road'+i))])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?directory.rows.map((_,slot)=>`[JF:directory:${scope}:${slot}]`).join(''):`[JF:directory:${scope}:empty]`).join('')}`);
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${roadView.rows.map((_,slot)=>`[JF:road:${slot}]`).join('')}${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?directory.rows.map((_,slot)=>`[JF:directory:${scope}:${slot}]`).join(''):`[JF:directory:${scope}:empty]`).join('')}`);
   records.forEach((text,index)=>{
-   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:directoryIcons.get(index);
+   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:index>=data.roadConnection0&&index<data.roadConnection0+4?roadView.rows[index-data.roadConnection0]?.texture:directoryIcons.get(index);
    form.button(text,texture);
   });
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
@@ -401,11 +402,12 @@ function roadNetworkOverview(s,v,requested=0){
  const pages=Math.max(1,Math.ceil(connections.length/4)),page=Math.max(0,Math.min(pages-1,Math.floor(requested)||0));
  const active=connections.filter(({road})=>road.level&&!road.targetLevel).length;
  const building=connections.filter(({road})=>road.targetLevel).length;
- const lines=connections.slice(page*4,page*4+4).map(({road,target})=>{
+ const rows=connections.slice(page*4,page*4+4).map(({road,target})=>{
   const status=road.targetLevel?`Building Lv ${road.targetLevel}: ${Math.max(0,Math.min(100,100*(gameTick()-road.startedTick)/road.durationTicks)).toFixed(0)}%`:`${['Unbuilt','Trail','Road','Highway'][road.level]} - ${foodCost(road)} food points to travel`;
-  return `${target.name}\n${status}`;
+  const tier=['','trail','road','highway'][road.targetLevel||road.level];
+  return {text:`${target.name}\n${status}`,texture:tier?`textures/ui/frontier/road_icons/${tier}`:undefined};
  });
- return {page,summary:`Road Networks Lv ${v.roads||0} | ${active} active, ${building} building\nConnections - page ${page+1} / ${pages}`,details:lines.join('\n')||'No connections yet. Research Road Networks Lv 1, then use Manage to build a Trail to another settlement in this dimension.'};
+ return {page,rows,summary:`Road Networks Lv ${v.roads||0} | ${active} active, ${building} building\nConnections - page ${page+1} / ${pages}`,details:rows.map(row=>row.text).join('\n')||'No connections yet. Research Road Networks Lv 1, then use Manage to build a Trail to another settlement in this dimension.'};
 }
 // An older map session may have saved disabled movement permissions. Restore
 // only recorded categories once; no map navigation, terrain reads or HUD remains.

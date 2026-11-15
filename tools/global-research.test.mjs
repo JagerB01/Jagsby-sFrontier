@@ -272,11 +272,15 @@ test('Road Networks lists connections in bounded pages and distinguishes constru
   s.villages['t'+i]={...v,id:'t'+i,name:'Town '+i};
   s.roads['r'+i]={from:v.id,to:'t'+i,level:1,distance:100};
  }
+ s.roads.r2.level=2;s.roads.r3.level=3;
  s.roads.r0.targetLevel=2;s.roads.r0.startedTick=0;s.roads.r0.durationTicks=100;
  const first=h.api.roadNetworkOverview(s,v,0),last=h.api.roadNetworkOverview(s,v,99);
  assert.ok(first.summary.includes('4 active, 1 building'));assert.ok(first.summary.includes('page 1 / 2'));
  assert.ok(first.details.includes('Building Lv 2'));assert.ok(first.details.includes('food points to travel'));
  assert.equal(first.details.includes('Town 4'),false);assert.ok(last.details.includes('Town 4'));
+ assert.deepEqual(first.rows.map(row=>row.texture),['road','trail','road','highway'].map(tier=>'textures/ui/frontier/road_icons/'+tier));
+ assert.equal(last.rows.length,1);
+ assert.equal(h.api.roadNetworkOverview({...s,roads:{}},v).rows.length,0);
 });
 test('Removing the map restores only previously saved movement controls once',async()=>{
  const h=await runtime();let raw=JSON.stringify({4:true,6:false});const restored=[],titles=[];

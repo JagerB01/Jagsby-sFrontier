@@ -5,7 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.57.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.58.mcaddon?raw=true)
+
+Version 0.0.58 adds the supplied Trail, Road and Highway icons to connection
+rows in Road Networks. Construction shows the tier being built; completed
+connections show their current tier alongside travel cost.
 
 Version 0.0.57 restores villager and Realm Power refresh when the charter opens.
 The header **Survey** button scans nearby biomes only. Opening no longer performs

@@ -1,0 +1,21 @@
+{
+  "source": "User upload: frontier_road_icons_64.zip",
+  "note": "Original PNG bytes copied unchanged. Construction uses the target road tier icon.",
+  "icons": [
+    {
+      "tier": "trail",
+      "path": "packs/resource/textures/ui/frontier/road_icons/trail.png",
+      "sha256": "bc1bcc6c115a664007ed5be2b91b98e91de840e0c0b1e77d27a497bcd3057981"
+    },
+    {
+      "tier": "road",
+      "path": "packs/resource/textures/ui/frontier/road_icons/road.png",
+      "sha256": "a556527a40d75d73c234d9490ac30607dca60dfc3d247892b43c01690e75cb81"
+    },
+    {
+      "tier": "highway",
+      "path": "packs/resource/textures/ui/frontier/road_icons/highway.png",
+      "sha256": "085ba6fe39e22992894ce1f5f31f6e6d0fdf60316c536d43790a15c069effd72"
+    }
+  ]
+}

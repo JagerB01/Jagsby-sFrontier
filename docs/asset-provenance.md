@@ -144,3 +144,5 @@ The user supplied `Frontier_Settlement_Icons_TOP_Option_64x64.zip`. Its five PNG
 are copied unchanged to `textures/ui/frontier/settlement_icons/`. They are used
 for directory size icons only; framed settlement portraits are retained.
 [Per-icon SHA256 values](settlement-directory-icons.json) identify the originals.
+
+Road Network icons: user-supplied `frontier_road_icons_64.zip`, copied unchanged. Original hashes and paths: [road-icons.json](road-icons.json).

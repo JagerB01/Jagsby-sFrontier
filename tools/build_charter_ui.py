@@ -19,6 +19,7 @@ ACTIONS = {name: i + 14 for i, name in enumerate([
 ])}
 ACTIONS.update({"claim": 28, "minePrev": 29, "mineNext": 30, "allPrev": 31, "allNext": 32})
 DATA.update({"roadSummary": 33, "roadDetails": 34})
+DATA.update({"roadConnection" + str(slot): 160 + slot for slot in range(4)})
 ACTIONS.update({"roadsPrev": 46, "roadsNext": 47})
 DATA.update({"sanctuary": 55, "roads": 56})
 ACTIONS.update({"sanctuary": 57, "roads": 58})
@@ -137,7 +138,7 @@ def data_template(index, size, scale=0.8):
         view(f"(#record_text - '{marker}')", "#text"),
         view(f"(not ((#record_text - '{marker}') = #record_text))"),
     ]
-    if key in ["census", "developmentValue", "developmentHourly", "owner", "realmMine", "realmAll"] or key.startswith(("stockCount", "productionModifier", "overviewProduction", "directory")):
+    if key in ["census", "developmentValue", "developmentHourly", "owner", "realmMine", "realmAll"] or key.startswith(("stockCount", "productionModifier", "overviewProduction", "directory", "roadConnection")):
         text["text"] = "#form_button_text"
         text["property_bag"] = {"#form_button_text": "Unavailable"}
         text["bindings"] = [
@@ -718,6 +719,23 @@ def build():
         overview_value("summary", DATA["roadSummary"], [7, 2], [240, 25], scale=0.7),
         overview_value("connections", DATA["roadDetails"], [7, 30], [240, 70], scale=0.7),
     ]
+    for slot in range(4):
+        key, template = "roadConnection" + str(slot), "jf_road_icon" + str(slot)
+        icon = image("frontier/road_icons/trail", [17, 17], layer=8)
+        icon["keep_ratio"] = True
+        icon["bindings"] = [
+            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+            {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        ]
+        ui[template] = icon
+        picture = control("icon", {"type": "stack_panel", "orientation": "vertical", "size": [17, 17],
+            "anchor_from": "top_left", "anchor_to": "top_left", "collection_name": "form_buttons",
+            "controls": [control("record@jagsby_frontier." + template, {"collection_index": DATA[key]})]})
+        road_controls.append(control("row" + str(slot), {"type": "panel", "size": [240, 18], "offset": [7, 29 + slot * 19],
+            "anchor_from": "top_left", "anchor_to": "top_left", "clips_children": True,
+            "controls": [picture, overview_value("text", DATA[key], [22, 0], [218, 18], scale=0.6)],
+            "bindings": condition("(not ((#form_text - '[JF:road:" + str(slot) + "]') = #form_text))", "#form_text")}))
     for key, caption, x, width in [("roadsPrev", "Previous", 0, 60), ("manageRoads", "Manage / travel", 64, 122), ("roadsNext", "Next", 190, 60)]:
         button = action(key, ACTIONS[key], caption, width=width)[key]
         button.update({"offset": [x, 107], "anchor_from": "top_left", "anchor_to": "top_left"})

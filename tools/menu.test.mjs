@@ -89,7 +89,7 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   for(const key of Object.keys(layout.data).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
-    if(['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')||key.startsWith('overviewProduction')||key.startsWith('directory')) {
+    if(['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')||key.startsWith('overviewProduction')||key.startsWith('directory')||key.startsWith('roadConnection')) {
       assert.equal(label.text,'#form_button_text');
       assert.equal(label.property_bag['#form_button_text'],'Unavailable');
       assert.equal(label.bindings.some(b=>b.target_property_name==='#visible'),false);
@@ -461,5 +461,22 @@ test('Both settlement directories use compact two-line rows with tier icons and 
  for(const tier of ['outpost','hamlet','village','town','city']){
   const png=await readFile(new URL('../packs/resource/textures/ui/frontier/settlement_icons/'+tier+'.png',import.meta.url));
   assert.equal(png.readUInt32BE(16),64);assert.equal(png.readUInt32BE(20),64);
+ }
+});
+
+ test('Road connections use compact conditional rows with tier icon bindings',async()=>{
+ const ui=await loadUI(),roads=children(ui.jf_realm_roads_content);
+ for(let slot=0;slot<4;slot++){
+  const row=roads['row'+slot];
+  assert.deepEqual(row.size,[240,18]);
+  assert.ok(row.offset[1]+row.size[1]<=107);
+  assert.ok(row.bindings.some(binding=>binding.source_property_name?.includes('[JF:road:'+slot+']')));
+  const icon=ui['jf_road_icon'+slot];
+  assert.ok(icon.keep_ratio);
+  assert.ok(icon.bindings.some(binding=>binding.binding_name==='#form_button_texture'));
+ }
+ for(const tier of ['trail','road','highway']){
+  const bytes=await readFile(new URL('../packs/resource/textures/ui/frontier/road_icons/'+tier+'.png',import.meta.url));
+  assert.equal(bytes.readUInt32BE(16),64);assert.equal(bytes.readUInt32BE(20),64);
  }
 });
