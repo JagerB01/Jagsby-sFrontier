@@ -1,3 +1,14 @@
+# 0.0.81
+
+- Allow travel during upgrades whenever the connection has a completed tier.
+  Remove the blanket pending-upgrade rejection from the shared server/UI quote.
+- Price travel using only the completed tier, capped by departure-village Road
+  Networks research. Activate the upgraded discount at completion, never early.
+- Keep first-time builds blocked, preserve six-Minecraft-day construction timers,
+  and retain the target icon/countdown while enabling the existing Travel button.
+- Test timing boundaries for both upgrades and actual bread spending before/after
+  completion, including local research that cannot use the upgraded discount.
+
 # 0.0.80
 
 - Rename the road cost heading to Travel Cost and retain the full quoted value,

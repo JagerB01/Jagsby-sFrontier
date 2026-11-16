@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.80.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.81.mcaddon?raw=true)
+
+Version 0.0.81 allows travel on an already-completed road while its next tier is
+under construction. Travel uses the current completed tier's price until the
+six-Minecraft-day upgrade finishes, then gains the new discount if the departure
+village's local Road Networks research supports it. The UI keeps showing the
+upcoming icon/countdown. First-time road construction still blocks travel.
 
 Version 0.0.80 labels the road price column Travel Cost and includes the unit in
 the value (for example, 8 corndogs). Road appears above the tier icon, with

@@ -166,7 +166,9 @@ not retroactively guessed from real-world shutdown duration.
 Connections progress independently through Trail (I), Road (II) and Highway
 (III). Construction/upgrade progress appears in the Road Networks menu. No
 route Development is earned during pending construction/upgrade. Travel is
-blocked for the entire connection while construction or an upgrade is pending.
+blocked until a first road is completed. During an upgrade, the completed tier
+remains usable at its existing price. The upgraded discount applies only after
+completion and remains capped by departure-village research.
 
 For completed routes, daily real-world Development value is exactly:
 

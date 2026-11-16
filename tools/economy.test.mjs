@@ -194,7 +194,7 @@ test('every road construction stage lasts six Minecraft days at any distance and
    assert.equal(road.durationTicks,144000);assert.equal(road.finishTick,tick+6*24000);
    s=JSON.parse(JSON.stringify(s));const saved=s.roads[road.id];
    E.completeRoads(s,tick+144000-1);assert.equal(saved.level,level-1);assert.equal(saved.targetLevel,level);
-   assert.equal(E.travelQuote(saved,s.villages.a).canTravel,false);
+   assert.equal(E.travelQuote(saved,s.villages.a).canTravel,level>1);
    E.completeRoads(s,tick+144000);assert.equal(saved.level,level);assert.equal(saved.targetLevel,undefined);
    assert.equal(E.travelQuote(saved,s.villages.a).canTravel,true);tick+=144000;
   }
@@ -230,4 +230,16 @@ test('Lower stockpile limits preserve over-cap saves and pause production until 
  // Collection frees capacity after the blocked interval has been accounted.
  s.stock={'minecraft:wheat':0.5,'minecraft:stone':0.25};
  E.accountEconomy(s,2*day+hour);close(E.stockTotal(s),2.5);close(s.villages.a.developmentValue-value,1.75);
+});
+
+test('Upgrade discounts apply only at completion; pending travel uses the last completed tier',()=>{
+ const s=state(village('a',{roads:3}));s.villages.b=village('b',{location:{x:1551,y:64,z:0}});
+ const road={id:'r',from:'a',to:'b',level:1,distance:1551,targetLevel:2,startedTick:0,durationTicks:144000,finishTick:144000,timingVersion:1};s.roads.r=road;
+ assert.equal(E.travelQuote(road,s.villages.a).canTravel,true);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,16);
+ E.completeRoads(s,143999);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,16);
+ E.completeRoads(s,144000);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,11);
+ assert.equal(E.travelQuote(road,{roads:1}).foodPoints,16,'Local tech still limits usable efficiency');
+ road.targetLevel=3;road.startedTick=144000;road.finishTick=288000;
+ E.completeRoads(s,287999);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,11);
+ E.completeRoads(s,288000);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,7);
 });

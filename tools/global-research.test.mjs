@@ -300,7 +300,7 @@ test('Road rows show destination identity, current food cost and only completed 
  row=h.api.roadNetworkOverview(s,v).rows[0];
  assert.equal(row.status,'Upgrading Road');assert.equal(row.nextTexture,'textures/ui/frontier/road_icons/road');
  assert.equal(row.texture,'textures/ui/frontier/road_icons/trail');
- assert.equal(row.cost,'Unavailable');assert.equal(row.canTravel,false);
+ assert.equal(row.cost,E.corndogCost(E.foodCost(road,v)));assert.equal(row.canTravel,true);
  delete road.targetLevel;road.level=3;
  row=h.api.roadNetworkOverview(s,v).rows[0];
  assert.equal(row.status,'Highway');assert.equal(row.texture,'textures/ui/frontier/road_icons/highway');
@@ -467,7 +467,7 @@ test('Compact road records show the upgrade icon and days, with a direct Travel 
  assert.equal(form.buttons[base],'Beta');assert.equal(form.buttons[base+1],'Builder');assert.equal(form.buttons[base+2],'100 blocks');
  assert.equal(form.buttons[base+4],'');assert.equal(form.buttons[base+5],'> 5.5 days');
  assert.equal(form.icons[base+6],'textures/ui/frontier/road_icons/road');assert.equal(form.icons[base+7],undefined);
- assert.ok(form.text.includes('[JF:travel_disabled:roads:0]'));assert.equal(form.text.includes('[JF:travel:roads:0]'),false);
+ assert.ok(form.text.includes('[JF:travel:roads:0]'));assert.equal(form.text.includes('[JF:travel_disabled:roads:0]'),false);
 });
 
 test('Realm layout overflow is reported rather than silently discarding settlements',async()=>{
@@ -479,8 +479,8 @@ test('Realm layout overflow is reported rather than silently discarding settleme
  assert.equal(Object.keys(h.read().villages).length,129);
 });
 
-test('Per-row Travel spends food and teleports directly only for completed roads',async()=>{
- for(const upgrading of [false]){
+test('Per-row Travel uses the completed road while upgrades remain pending',async()=>{
+ for(const upgrading of [false,true]){
   const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',roads:2};
   s.villages.b={...village(100),id:'b',name:'Beta'};
   s.roads.savedKey={from:'a',to:'b',level:1,distance:100,...(upgrading?{targetLevel:2,startedTick:0,durationTicks:60000,finishTick:60000}:{})};
@@ -510,8 +510,8 @@ test('New roads disable Travel and insufficient food never charges or teleports'
  }
 });
 
-test('server travel rejects upgrades and an unresearched departure even when called without the button',async()=>{
- for(const scenario of ['research','upgrade','trail']){
+test('server travel rejects unbuilt roads and an unresearched departure even when called directly',async()=>{
+ for(const scenario of ['research','trail']){
   const s=fresh(Date.now());s.villages.a={...village(),roads:scenario==='research'?0:3,name:'Alpha'};
   s.villages.b={...village(1551),id:'b',roads:3,name:'Beta'};
   s.roads.r={from:'a',to:'b',level:scenario==='trail'?0:1,distance:1551,...(scenario!=='research'?{targetLevel:2,startedTick:0,finishTick:144000,durationTicks:144000,timingVersion:1}:{})};
@@ -678,6 +678,26 @@ test('New Trails and road upgrades show their target icon and greater-than six-d
   const base=CHARTER_LAYOUT.realmRows.base+16;
   assert.equal(h.forms[0].buttons[base+5],'> 6 days');assert.equal(h.forms[0].buttons[base+4],'');
   assert.equal(h.forms[0].icons[base+6],'textures/ui/frontier/road_icons/'+(level?'road':'trail'));
-  assert.ok(h.forms[0].text.includes('[JF:travel_disabled:roads:0]'));
+  assert.ok(h.forms[0].text.includes(level?'[JF:travel:roads:0]':'[JF:travel_disabled:roads:0]'));
+ }
+});
+
+test('Upgrade travel charges the current tier before completion and the new tier afterward, capped by local research',async()=>{
+ for(const research of [1,3]){
+  let tick=0;const s=fresh(Date.now());s.global.innovation=3;
+  s.villages.a={...village(),name:'Alpha',roads:research};s.villages.b={...village(1551),id:'b',name:'Beta'};
+  s.roads.r={from:'a',to:'b',level:1,targetLevel:2,distance:1551,startedTick:0,durationTicks:144000,finishTick:144000,timingVersion:1};
+  const h=await runtime(s,undefined,{gameTick:()=>tick});h.slots[0]={typeId:'minecraft:bread',amount:64};
+  h.player.dimension={id:'minecraft:overworld'};h.player.location={x:0,y:64,z:0};
+  let arrivals=0;h.player.teleport=()=>arrivals++;
+  h.api.open(h.player,'a','Realm');const base=CHARTER_LAYOUT.realmRows.base+16;
+  assert.equal(h.forms[0].buttons[base+3],'8 corndogs');assert.ok(h.forms[0].text.includes('[JF:travel:roads:0]'));
+  assert.equal(h.forms[0].icons[base+6],'textures/ui/frontier/road_icons/road');
+  h.api.travelRoad(h.player,'a','r');assert.equal(h.slots[0].amount,60);assert.equal(h.read().roads.r.level,1);
+  tick=143999;assert.equal(h.api.roadNetworkOverview(h.read(),h.read().villages.a).rows[0].cost,'8 corndogs');
+  tick=144000;h.api.open(h.player,'a','Realm');
+  assert.equal(h.forms.at(-1).buttons[base+3],research===3?'5.5 corndogs':'8 corndogs');
+  h.api.travelRoad(h.player,'a','r');assert.equal(h.slots[0].amount,research===3?57:56);assert.equal(arrivals,2);
+  assert.equal(h.read().roads.r.level,2);assert.equal(h.read().roads.r.targetLevel,undefined);
  }
 });

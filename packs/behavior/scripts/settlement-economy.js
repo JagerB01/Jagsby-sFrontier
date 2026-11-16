@@ -159,7 +159,6 @@ export function corndogCost(points){return `${points/2} corndogs`;}
 export function travelQuote(road,source){
  let reason='';
  if(!source?.roads)reason='Unlock Road Networks I in the departure settlement before travelling.';
- else if(road?.targetLevel)reason='This connection is under construction. Wait until construction finishes.';
  else if(!road?.level)reason='No completed road from this settlement.';
  const foodPoints=reason?null:foodCost(road,source);
  return {canTravel:!reason,reason,foodPoints,effectiveLevel:reason?0:Math.min(road.level,source.roads)};
