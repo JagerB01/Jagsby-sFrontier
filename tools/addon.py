@@ -46,7 +46,7 @@ def validate():
                 width, height = struct.unpack(">II", data[16:24])
                 assert width > 0 and height > 0
                 if path.name == "pack_icon.png":
-                    assert (width, height) == (64, 64), "Pack icons must be 64x64"
+                    assert width == height, "Pack icons must be square"
             if path.suffix == ".js":
                 subprocess.run(["node", "--input-type=module", "--check"],
                                input=path.read_bytes(), check=True)

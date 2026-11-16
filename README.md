@@ -5,7 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.82.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.83.mcaddon?raw=true)
+
+Version 0.0.83 replaces the behavior and resource pack icons with the supplied
+Jagsby's Frontier emblem for Minecraft's world-creation addon selectors. The
+original PNG is used unchanged in both packs, replacing the previous artwork.
 
 Version 0.0.82 removes the completed road-tier caption and enlarges the Road
 icon from 16 to 20 UI units, centering its heading and image in the gap between

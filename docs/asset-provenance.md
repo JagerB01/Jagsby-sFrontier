@@ -146,3 +146,12 @@ for directory size icons only; framed settlement portraits are retained.
 [Per-icon SHA256 values](settlement-directory-icons.json) identify the originals.
 
 Road Network icons: user-supplied `frontier_road_icons_64.zip`, copied unchanged. Original hashes and paths: [road-icons.json](road-icons.json).
+
+## Addon selector icon (0.0.83)
+
+The user supplied `Jagsbys_Addon_Icons.zip`. Its `Jagsbys_Frontier.png` is copied
+unchanged to `packs/behavior/pack_icon.png` and `packs/resource/pack_icon.png`.
+The supplied image is 1254×1254 pixels. Both prior pack icons are replaced; the
+old artwork is not included as a backup in the current addon.
+
+Source PNG SHA-256: `e169a9ae7cb0617b74011e8b8d737d5cff6d9f45576a811724e239067678a69a`.

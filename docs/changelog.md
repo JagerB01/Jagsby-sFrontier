@@ -1,3 +1,13 @@
+# 0.0.83
+
+- Replace both pack_icon.png files with Jagsbys_Frontier.png from the user's
+  Jagsbys_Addon_Icons.zip. Use the supplied 1254×1254 PNG unchanged for both
+  behavior and resource pack entries in the addon/world-creation selector.
+- Remove the previous icon artwork from the current pack contents; do not bundle
+  a backup copy. Record the supplied file's provenance and digest.
+- Validate square pack icons rather than imposing the old generated asset's
+  64×64 dimensions. Gameplay and in-game charter UI are unchanged.
+
 # 0.0.82
 
 - Remove the completed road-tier caption beneath the icon. Center Road and the
