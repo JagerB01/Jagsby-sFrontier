@@ -531,6 +531,46 @@ test('Scrolling lists read shared row markers once and update native data only w
  countLive(ui);assert.equal(liveBindings,13,'Only the twelve tab toggles and shared form body stay live');
 });
 
+test('Controller can enter and navigate Prospecting and Realm rows even without an available action',async()=>{
+ const ui=await loadUI(),{CHARTER_LAYOUT:layout}=await import('../packs/behavior/scripts/charter-layout.js');
+ const identifiers=new Set();
+ function checkReader(row,section,scope,slot){
+  assert.equal(row.type,'button');assert.equal(row.focus_enabled,true);
+  assert.equal(row.enabled,undefined,'Reading focus must not depend on research or travel availability');
+  assert.deepEqual(row.button_mappings,[],'Reading a row must not submit/reload the form');
+  assert.equal(row.$pressed_button_name,undefined);assert.equal(row.collection_name,undefined);
+  assert.equal(row.focus_identifier,`jf_${section}_${scope}_row_${slot}`);
+  assert.ok(!identifiers.has(row.focus_identifier));identifiers.add(row.focus_identifier);
+  assert.equal(row.focus_change_left,'jf_tab_focus_'+section);
+  if(slot===0)assert.equal(row.focus_change_up,`jf_${section}_focus_${scope}`);
+  else assert.equal(row.focus_change_up,undefined);
+  assert.equal(row.focus_change_down,undefined,'Let native navigation reach the next visible row or footer');
+  const fields=children(row);
+  assert.ok(fields[row.default_control]);assert.ok(fields[row.hover_control]);
+  assert.equal(fields[row.hover_control].texture,'textures/ui/frontier/solid');
+ }
+ const prospect=children(ui.jf_prospecting_rows);
+ for(let slot=0;slot<52;slot++){
+  const wrapper=prospect['biome'+slot],row=children(wrapper).row;
+  checkReader(row,'production','biomes',slot);
+  assert.ok(JSON.stringify(wrapper.bindings).includes(`[JF:prospect:${slot}]`),'Only populated rows participate in focus');
+  assert.equal(row.bindings,undefined,'Locked and selected rows remain readable');
+  const select=template(ui,'jf_action_prospectSelect'+slot);
+  assert.ok(select.bindings.some(b=>b.target_property_name==='#enabled'),'Keep native selection validation');
+ }
+ assert.equal(children(ui.jf_production_content).jf_production_tab_biomes.focus_change_down,'jf_production_biomes_row_0');
+ for(const scope of layout.realmRows.scopes){
+  const rows=children(ui['jf_realm_'+scope+'_rows']);
+  for(let slot=0;slot<layout.realmRows.limit;slot++){
+   const row=rows['row'+slot];checkReader(row,'realm',scope,slot);
+   assert.ok(row.bindings.every(b=>b.source_property_name?.includes(`[JF:row:${scope}:${slot}]`)),
+    'Read focus follows row membership, not whether Establish/Travel is enabled');
+  }
+  assert.equal(children(ui.jf_realm_content)['jf_realm_tab_'+scope].focus_change_down,`jf_realm_${scope}_row_0`);
+ }
+ assert.equal(identifiers.size,52+3*layout.realmRows.limit);
+});
+
 test('form payload packs later records without gaps and preserves contiguous collection ranges',async()=>{
  const source=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
  const {CHARTER_LAYOUT:layout}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));

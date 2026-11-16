@@ -120,6 +120,25 @@ def label(text, size, offset=(0, 0), color=IVORY, scale=0.8):
             "color": list(color), "shadow": False}
 
 
+def focusable_scroll_row(row, section, scope, slot):
+    # A scroll_view follows controller focus, not inert labels/images. Keep a
+    # reading target even when the row's native action is hidden or disabled.
+    # This raw button has no submit mapping; its child actions keep their own.
+    row.update({"type": "button", "focus_enabled": True, "focus_magnet_enabled": True, "hover_enabled": True,
+        "focus_identifier": f"jf_{section}_{scope}_row_{slot}",
+        "focus_change_left": "jf_tab_focus_" + section,
+        "button_mappings": [], "default_control": "reading_idle",
+        "hover_control": "reading_focus", "pressed_control": "reading_focus",
+        "tts_name": "Biome production details" if section == "production" else "Settlement details"})
+    if slot == 0:
+        row["focus_change_up"] = f"jf_{section}_focus_{scope}"
+    row["controls"] += [
+        control("reading_idle", {"type": "panel", "size": [0, 0]}),
+        control("reading_focus", image("frontier/solid", [2, "100%"], layer=9, color=WHEAT)),
+    ]
+    return row
+
+
 def collection_bindings():
     return [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
             {"binding_name": "#form_button_text", "binding_name_override": "#text",
@@ -271,6 +290,8 @@ def research_tab(scope, index, section="research", caption_text=None):
         "focus_change_right": "jf_" + section + "_focus_" + order[min(len(order) - 1, index + 1)]})
     toggle.pop("focus_change_up", None)
     toggle.pop("focus_change_down", None)
+    if section == "realm" or (section == "production" and scope == "biomes"):
+        toggle["focus_change_down"] = f"jf_{section}_{scope}_row_0"
     for binding in toggle["bindings"]:
         for field in ["binding_name", "source_property_name"]:
             if field in binding:
@@ -602,7 +623,8 @@ def build():
         visible = condition("(not ((#form_text - '[JF:prospect:" + str(slot) + "]') = #form_text))", "#form_text")
         prospect_rows.append(control("biome" + str(slot), {
             "type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"], "bindings": visible,
-            "controls": [control("row", {"type": "panel", "size": [254, 32], "controls": [picture, details, button, control("selected", selected)]})],
+            "controls": [control("row", focusable_scroll_row({"size": [254, 32],
+                "controls": [picture, details, button, control("selected", selected)]}, "production", "biomes", slot))],
         }))
     lock_notice = label("§cRequired: Resource Prospecting Lv 1§r", [248, 14], (3, 1), scale=0.7)
     lock_notice["bindings"] = condition("(not ((#form_text - '[JF:prospectLocked]') = #form_text))", "#form_text")
@@ -853,8 +875,8 @@ def build():
                 establish = explicit_scope("jf_realm_establish_" + scope, base + 6, [201, 4], [47, 24])
                 establish["bindings"] = row_present("[JF:establish:" + scope + ":" + str(slot) + "]")
                 fields.append(control("establish", establish))
-            rows.append(control("row" + str(slot), {"type": "panel", "size": [251, height], "controls": fields,
-                "bindings": row_present("[JF:row:" + scope + ":" + str(slot) + "]")}))
+            rows.append(control("row" + str(slot), focusable_scroll_row({"size": [251, height], "controls": fields,
+                "bindings": row_present("[JF:row:" + scope + ":" + str(slot) + "]")}, "realm", scope, slot)))
         ui["jf_realm_" + scope + "_rows"] = {"type": "stack_panel", "orientation": "vertical", "size": [251, "100%c"], "controls": rows}
         scroll = control("entries@common.scrolling_panel", {
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 12 if road else 0],

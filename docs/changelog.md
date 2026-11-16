@@ -1,3 +1,19 @@
+# 0.0.87
+
+- Give Prospecting and Realm rows a native controller focus target even while
+  their Select, Establish Road or Travel action is hidden or disabled. Inert
+  preview text/images alone did not give the controller a path through the list.
+- Link Down from each scrolling subtab to its first row and Up from that row
+  back to the subtab. Left returns from row focus to the sidebar. Leave vertical
+  navigation between rows to the native scroll view so it can follow focus and
+  reach the next visible row or footer rather than linking to empty fixed slots.
+- Add a gold reading-focus edge. Row focus has no submit mappings; child actions
+  retain their own handlers and validation. No additional background bindings,
+  collection records or tab reloads are introduced.
+- Check all 52 Prospecting and 384 Realm row targets, unique identifiers, header
+  entry/exit links, existing action bindings and the unchanged 13-binding budget.
+  Native controller input and scrolling still require in-game confirmation.
+
 # 0.0.86
 
 - Narrow the 0.0.85 blank-panel fix: retain the shared dashboard form-state

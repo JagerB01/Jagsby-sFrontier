@@ -5,7 +5,14 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.86.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.87.mcaddon?raw=true)
+
+Version 0.0.87 gives Prospecting and Realm rows a controller reading-focus target,
+even when Select, Establish Road or Travel is unavailable. Move down from the
+subtab into the list, then use the D-pad to move through rows; the native scroll
+panel follows focus. A gold edge marks the focused row. Reading rows does not
+submit the form. Native action validation, local tabs and the 13-binding
+background-update budget are preserved. Controller behavior needs in-game testing.
 
 Version 0.0.86 removes the broad hidden-list polling added in 0.0.85. Realm and
 Prospecting keep the shared form-state source, read immutable row markers once
