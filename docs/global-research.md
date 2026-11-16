@@ -32,7 +32,7 @@ The existing internal save key for the foundation is retained for compatibility.
 | Settlement Charters | 0, two settlement slots | 64 logs | Stewardship level |
 | Frontier Expansion | 0, Heartlands + Borderlands | 32 iron, 48 iron, 32 gold, 48 gold | Lower of IV and Stewardship |
 | Colonization | 0 | 4, 8, 12, 16, 20 diamonds | Lower of V and Stewardship |
-| Shared Storage | 0, 792 items | 512 building materials | Stewardship level |
+| Shared Storage | 0, 128 items | 512 building materials | Stewardship level |
 
 Prerequisite decision: Colonization requires Frontier I; Shared Storage requires
 Capacity I. Additional levels do not need matching levels of those prerequisites.
@@ -123,14 +123,17 @@ Development for blocked base resources. Fractional stock and offline catch-up
 are retained. No new scans, per-tick settlement simulations or physical storage
 blocks are introduced.
 
-Shared Storage capacity is `792 × (1 + level)` actual items. Its configurable,
-explicit nine-item reference basket in `economy-config.js` uses each distinct
-original mapped resource once (duplicates such as stone across biomes do not
-increase its weight). Base rates sum to 1.65 items/RP/hour:
-`1.65 × 10 RP × 48 hours = 792`. The basket/rates exclude Prosperity, Development,
-Colonization and all actual civilization/settlement RP. Only a completed storage
-level changes capacity. `baseCapacity:128` is retained solely for old-save backlog
-migration, not as the new storage formula.
+Shared Storage capacity is `128 + 64 × level` total items, shared across all
+settlements. The initial two stacks become three stacks at level I, four at II,
+and five at III. Each level still costs 512 building materials and obeys
+Stewardship. The explicit `sharedStorage` configuration in `economy-config.js`
+sets the base and increment independently of production rates and Realm Power.
+The old reference-basket calculation is no longer used.
+
+Existing inventory is never truncated to the new cap. Full or over-cap storage
+pauses new production; collect items to free capacity. Whole stored items remain
+collectible, fractions remain saved, and blocked output is not banked or credited
+as Development. `baseCapacity:128` remains a separate legacy-backlog setting.
 
 Sanctuary and Prosperity upgrades stop at Stewardship before spending materials.
 Their displayed/effective levels also obey that ceiling. Existing partial or

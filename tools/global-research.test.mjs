@@ -61,14 +61,14 @@ test('Colonization costs 60 diamonds and preserves earlier zone-specific bonuses
  }
  assert.equal(spent,60);assert.equal(s.global.frontier,1);assert.equal(s.global.innovation,5);
 });
-test('Shared Storage has a fixed resource-derived 792-item increment and exactly 512 material cost',()=>{
- let s=fresh();assert.equal(R.storageIncrement(),792);assert.equal(E.capacity(s),792);
+test('Shared Storage starts at 128, adds 64 per level and costs exactly 512 materials',()=>{
+ let s=fresh();assert.equal(R.storageIncrement(),64);assert.equal(E.capacity(s),128);
  assert.equal(grant(s,'storage','minecraft:stone',512),0);grant(s,'capacity','minecraft:oak_log',64);
- grant(s,'storage','minecraft:stone',511);s=reload(s);assert.equal(E.capacity(s),792);
- assert.equal(grant(s,'storage','minecraft:oak_planks',64),1);assert.equal(E.capacity(s),1584);
+ grant(s,'storage','minecraft:stone',511);s=reload(s);assert.equal(E.capacity(s),128);
+ assert.equal(grant(s,'storage','minecraft:oak_planks',64),1);assert.equal(E.capacity(s),192);
  assert.equal(grant(s,'storage','minecraft:stone',512),0);
  s.villages.a=village();s.villages.a.productionPower=100000;s.villages.a.developmentValue=1e9;
- assert.equal(E.capacity(s),1584);assert.equal(grant(s,'storage','minecraft:dirt',512),0);
+ assert.equal(E.capacity(s),192);assert.equal(grant(s,'storage','minecraft:dirt',512),0);
 });
 test('Migration preserves stock, existing settlements, roads, local levels and unknown fields',()=>{
  const legacy={villages:{a:{...village(),efficiency:7,sanctuary:9,developmentValue:50000}},stock:{'minecraft:stone':9999},roads:{r:{level:3,from:'a',to:'b'}},global:{development:2,capacity:4,storage:3,frontier:2},custom:{keep:true}};
@@ -79,7 +79,7 @@ test('Migration preserves stock, existing settlements, roads, local levels and u
 });
 test('The first v0.0.32 backlog is paid under legacy effects before activating new storage and bonuses',()=>{
  const s={villages:{a:village(28000)},stock:{},global:{storage:0,colonization:5},roads:{},economyAt:0};
- E.accountEconomy(s,100*hour);close(E.stockTotal(s),128);assert.equal(s.researchVersion,3);assert.equal(E.capacity(s),792);
+ E.accountEconomy(s,100*hour);close(E.stockTotal(s),128);assert.equal(s.researchVersion,3);assert.equal(E.capacity(s),128);
  s.stock={};const before=s.villages.a.developmentValue;E.accountEconomy(s,101*hour);
  assert.equal(E.development(s.villages.a),1);close(E.stockTotal(s),2.627625);close(s.villages.a.developmentValue-before,1.75175);
 });
@@ -109,8 +109,8 @@ test('Offline Colonization output is separate from category-weighted base Develo
  const serialized=JSON.stringify(s);E.accountEconomy(s,20*hour);assert.equal(JSON.stringify(s),serialized);
 });
 test('Capacity limits base and bonus proportionally; blocked output cannot generate Development',()=>{
- const s=fresh();s.villages.a=village(28000);s.global.colonization=5;s.stock['minecraft:sand']=765.75;
- E.accountEconomy(s,20*hour);close(E.stockTotal(s),792);close(s.villages.a.developmentValue,17.5);
+ const s=fresh();s.villages.a=village(28000);s.global.colonization=5;s.stock['minecraft:sand']=101.75;
+ E.accountEconomy(s,20*hour);close(E.stockTotal(s),128);close(s.villages.a.developmentValue,17.5);
  E.accountEconomy(s,40*hour);close(s.villages.a.developmentValue,17.5);
 });
 test('Research changes do not reprice earlier offline production',()=>{
@@ -180,7 +180,7 @@ test('Capped global cards do not debit inventory or erase partial progress',asyn
 test('Global hover record exposes effect, next cost, progress, remaining amount, prerequisite and click action',async()=>{
  const s=fresh();const h=await runtime(s);h.api.open(h.player,'none','Research','global');
  const text=h.forms[0].buttons[10];
- for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Required: Settlement Charters Lv 1','Stored: 0.000 items','Shared capacity: §b792§r §7→§r §a1584§r items'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Required: Settlement Charters Lv 1','Stored: 0.000 items','Shared capacity: §b128§r §7→§r §a192§r items'])assert.ok(text.includes(value),value);
 });
 test('Save migration refuses a future version instead of overwriting it',()=>{
  assert.throws(()=>R.migrateResearch({researchVersion:4}),/newer/);
@@ -539,7 +539,7 @@ test('both ends of the same Highway quote and charge their own local research ef
 
 test('All global cards use compact colored comparisons while preserving zone meanings and capped states',async()=>{
  const h=await runtime(),s=h.read();
- const cases=[['innovation','Upgrade limit: §bLv 1§r §7→§r §aLv 2§r'],['capacity','Settlement limit: §b2§r §7→§r §a3§r'],['storage','Shared capacity: §b792§r §7→§r §a1584§r items'],['frontier','Founding limit: §bBorderlands§r §7→§r §aWildlands§r'],['colonization','Zone bonus: §bNone§r §7→§r §aBorderlands +10％§r']];
+ const cases=[['innovation','Upgrade limit: §bLv 1§r §7→§r §aLv 2§r'],['capacity','Settlement limit: §b2§r §7→§r §a3§r'],['storage','Shared capacity: §b128§r §7→§r §a192§r items'],['frontier','Founding limit: §bBorderlands§r §7→§r §aWildlands§r'],['colonization','Zone bonus: §bNone§r §7→§r §aBorderlands +10％§r']];
  const before=JSON.stringify(s);
  for(const [key,expected] of cases){const text=h.api.globalResearchText(s,key);assert.ok(text.includes(expected),key);assert.equal(text.includes('Current:'),false);assert.equal(text.includes('Next:'),false);assert.ok(text.includes('Next cost:'));}
  assert.equal(JSON.stringify(s),before,'Rendering must not mutate research');
@@ -652,4 +652,20 @@ test('Fresh charters request Overview and the first subtab of every section',asy
  const body=h.forms[0].text;
  for(const marker of ['[JF:tab:overview]','[JF:research:local]','[JF:production:summary]','[JF:realm:roads]'])assert.ok(body.includes(marker));
  assert.equal(h.forms.length,1);
+});
+
+test('Storage capacity follows the chosen 128 + 64 per level curve',()=>{
+ for(const [level,capacity]of [[0,128],[1,192],[2,256],[3,320],[5,448],[10,768]]){
+  const s=fresh();s.global.storage=level;assert.equal(R.storageCapacity(s),capacity);
+  assert.equal(R.storageIncrement(),64);
+ }
+});
+
+test('Collection returns all whole items from an old over-cap stockpile without discarding fractions',async()=>{
+ const s=fresh(Date.now());s.stock={'minecraft:wheat':500.75,'minecraft:stone':300.25};
+ const h=await runtime(s);h.api.collect(h.player,'none');
+ assert.equal(h.received.reduce((sum,item)=>sum+item.amount,0),800);
+ assert.equal(h.received.filter(item=>item.typeId==='minecraft:wheat').reduce((sum,item)=>sum+item.amount,0),500);
+ assert.deepEqual(h.read().stock,{'minecraft:wheat':0.75,'minecraft:stone':0.25});
+ assert.equal(h.read().global.storage,0);
 });

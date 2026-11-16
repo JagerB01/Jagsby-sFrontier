@@ -1,3 +1,17 @@
+# 0.0.79
+
+- Rebalance the shared item cap from 792 base/+792 per level to the selected
+  128 base/+64 per level. Use explicit sharedStorage base/perLevel configuration
+  rather than the obsolete nine-resource reference-basket estimate.
+- Keep the 512-material upgrade recipe, saved storage research, Stewardship gates
+  and production rates unchanged. Update the live capacity comparison and stock
+  heading through the common capacity function.
+- Preserve all existing stock, including fractions and over-cap saves. Report
+  Over capacity - collect, pause resource output while full/over capacity and
+  resume when room is freed. Do not bank blocked production or its Development.
+- Test the capacity curve, upgrade benefit/cost, save/reload preservation,
+  over-cap collection, visible status and resumed production.
+
 # 0.0.78
 
 - Restore first-tab selection for the main and nested radio groups. Fresh charters

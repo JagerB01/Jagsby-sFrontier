@@ -40,8 +40,8 @@ test('Development threshold integration is independent of access frequency',()=>
  close(resumed.stock['minecraft:wheat'],one.stock['minecraft:wheat'],1e-5);
 });
 test('full shared stock neither banks blocked output nor awards its Development',()=>{
- const s=state();s.global.storage=0;s.stock['minecraft:wheat']=791;
- E.accountEconomy(s,day);close(E.stockTotal(s),792);
+ const s=state();s.global.storage=0;s.stock['minecraft:wheat']=127;
+ E.accountEconomy(s,day);close(E.stockTotal(s),128);
  const value=s.villages.a.developmentValue;
  E.accountEconomy(s,2*day);close(s.villages.a.developmentValue,value);
  s.stock={};E.accountEconomy(s,2*day);assert.deepEqual(s.stock,{});
@@ -219,4 +219,15 @@ test('travel efficiency belongs to the departure village and cannot exceed the c
  assert.equal(E.corndogCost(16),'8 corndogs');assert.equal(E.corndogCost(5),'2.5 corndogs');
  const plan=E.foodPlan([{slot:0,typeId:'minecraft:bread',amount:4}],16);
  assert.equal(plan[0].count,4); // Four whole bread pay ten corndogs for an eight-corndog quote.
+});
+
+test('Lower stockpile limits preserve over-cap saves and pause production until collection frees space',()=>{
+ let s=state();s.global.storage=0;s.stock={'minecraft:wheat':500.5,'minecraft:stone':20.25};
+ const stock=JSON.stringify(s.stock),value=s.villages.a.developmentValue||0;
+ E.accountEconomy(s,day);assert.equal(JSON.stringify(s.stock),stock);assert.equal(s.villages.a.developmentValue,value);
+ s=JSON.parse(JSON.stringify(s));E.accountEconomy(s,2*day);
+ assert.equal(JSON.stringify(s.stock),stock);assert.equal(s.villages.a.developmentValue,value);
+ // Collection frees capacity after the blocked interval has been accounted.
+ s.stock={'minecraft:wheat':0.5,'minecraft:stone':0.25};
+ E.accountEconomy(s,2*day+hour);close(E.stockTotal(s),2.5);close(s.villages.a.developmentValue-value,1.75);
 });

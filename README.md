@@ -5,7 +5,14 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.78.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.79.mcaddon?raw=true)
+
+Version 0.0.79 reduces the shared stockpile to 128 items initially, plus 64 per
+completed Shared Storage level: 128 → 192 → 256 → 320. Storage upgrades still
+cost 512 building materials and obey Stewardship. Previously stored items are
+preserved, including fractions and amounts above the new capacity. Over-cap
+stock displays "Over capacity - collect"; production resumes only after enough
+space is available, without banking blocked output.
 
 Version 0.0.78 restores selected defaults so fresh charters immediately show
 Overview. The nested groups default to Local Research, Production Overview and

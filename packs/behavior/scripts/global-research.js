@@ -69,14 +69,6 @@ export function foundingReason(s,zone){
 }
 export function colonizationBonus(s,zone){const index=ZONES.indexOf(zone);return index>0&&s.global.colonization>=index?index/10:0;}
 // Configurable fixed basket; defaults to one of each distinct implemented resource.
-export function referenceBasket(){
- const resources=new Map(Object.values(C.resources).flat().map(r=>[r.id,r]));
- return C.storageReferenceBasket??[...resources.keys()];
-}
-export function storageIncrement(){
- if(C.storageReferenceRatePerRP!==undefined)return Math.floor(C.storageReferenceRatePerRP*10*48+1e-8);
- const resources=new Map(Object.values(C.resources).flat().map(r=>[r.id,r]));
- return Math.floor(referenceBasket().reduce((sum,id)=>sum+(C.categories[resources.get(id)?.category]?.rate??0),0)*10*48+1e-8);
-}
-export function storageCapacity(s){return storageIncrement()*(1+(s.global.storage||0));}
+export function storageIncrement(){return C.sharedStorage.perLevel;}
+export function storageCapacity(s){return C.sharedStorage.base+storageIncrement()*integer(s.global?.storage);}
 export function localLevel(s,v,key){return Math.min(integer(v[key]),s.global?.innovation??Infinity);}

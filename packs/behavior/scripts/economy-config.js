@@ -4,11 +4,9 @@ export const ECONOMY_CONFIG = {
   baseCapacity:128, developmentThreshold:100, developmentBonus:0.001,
   prosperityBonus:0.05, boundaryRadius:32,
   categories:{common:{rate:0.35,value:1},building:{rate:0.15,value:2},uncommon:{rate:0.05,value:5},valuable:{rate:0.01,value:10}},
-  // Fixed basket from the nine distinct original resource mappings; no modifiers.
-  storageReferenceBasket:['minecraft:wheat','minecraft:stone','minecraft:oak_log','minecraft:spruce_log','minecraft:mud','minecraft:clay_ball','minecraft:sand','minecraft:cocoa_beans','minecraft:jungle_log'],
   resources:BIOME_RESOURCES,
-  // Preserve the established 792-item storage increment independently of new assignments.
-  storageReferenceRatePerRP:1.65,
+  // Shared item count: two stacks initially, one more per completed upgrade.
+  sharedStorage:{base:128,perLevel:64},
   researchMaterials:{crop:['minecraft:wheat','minecraft:potato','minecraft:carrot','minecraft:cocoa_beans','minecraft:bamboo']},
   research:{
     hearth:{name:'Hearthstone',max:2,cost:[64,128],material:'minecraft:bread',label:'Bread'},

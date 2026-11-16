@@ -43,7 +43,7 @@ export function productionView(s,v,requested={}){
   ...(river?[{label:'River',percent:river*100}]:[])]
   .map(row=>({...row,value:`+ ${Number(row.percent.toFixed(2))}`}));
  return {
-  status:full?'Stockpile full - paused':!recordedPower(v)?'Waiting for Realm Power':!rates.length?'No resource assigned':'Producing',
+  status:used>cap+1e-8?'Over capacity - collect':full?'Stockpile full - paused':!recordedPower(v)?'Waiting for Realm Power':!rates.length?'No resource assigned':'Producing',
   items:output.rows.map(r=>({...r,text:`${r.name}\n+ ${r.actual.toFixed(3)}/hour`})),
   modifierRows,modifierTotal:`+ ${Number(total.toFixed(2))}`,
   stockHeading:`Stockpile  ${storedWhole} / ${cap}`,

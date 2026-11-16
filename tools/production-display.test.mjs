@@ -14,7 +14,7 @@ test('Production displays precise per-resource base and zone rates without mutat
  assert.equal(view.items[0].text,'Wheat\n+ 2.625/hour');assert.equal(view.modifierRows[2].value,'+ 50');assert.equal(JSON.stringify(s),before);
 });
 test('A full stockpile shows paused actual output while preserving potential rates',()=>{
- const {s,v}=fixture();s.stock['minecraft:wheat']=792;const view=productionView(s,v);
+ const {s,v}=fixture();s.stock['minecraft:wheat']=128;const view=productionView(s,v);
  assert.equal(view.status,'Stockpile full - paused');assert.equal(view.output.rows[0].actual,0);
  assert.equal(view.output.rows[0].base,1.75);assert.equal(view.items[0].text,'Wheat\n+ 0.000/hour');
 });
@@ -34,7 +34,7 @@ test('Stockpile packs only stocked whole items on one page',()=>{
  assert.equal(first.stock.find(i=>i.id==='minecraft:potato'),undefined);
  assert.equal(first.stock.find(i=>i.id==='minecraft:oak_log').count,250);
  assert.ok(first.stock.every(i=>Number.isInteger(i.count)&&i.count>=0));
- assert.equal(first.stockHeading,'Stockpile  265 / 792');
+ assert.equal(first.stockHeading,'Stockpile  265 / 128');
  assert.equal(JSON.stringify(s),before);
 });
 test('Biome panel explains research progress and separates verified choices from stale/out-of-range samples',()=>{
@@ -89,4 +89,15 @@ test('Prospecting lists every surveyed biome with its icon and post-selection re
  const plains=view.choices.find(c=>c.id==='minecraft:plains');assert.equal(plains.hourly,view.choices[0].hourly);
  assert.equal(JSON.stringify(s),before);
  v.biomeUnlocked=false;assert.equal(productionView(s,v).choices[0].text,'River\n+ 1.925 Wheat/hour');
+});
+
+test('Over-cap saved stock is visible and paused, and a storage upgrade opens the expected room',()=>{
+ const {s,v}=fixture();s.stock={'minecraft:wheat':500.75};
+ let view=productionView(s,v);
+ assert.equal(view.status,'Over capacity - collect');assert.equal(view.stockHeading,'Stockpile  500 / 128');
+ assert.equal(view.stock[0].count,500);assert.equal(view.output.rows[0].actual,0);
+ assert.equal(s.stock['minecraft:wheat'],500.75);
+ s.stock={'minecraft:wheat':128};view=productionView(s,v);assert.equal(view.status,'Stockpile full - paused');
+ s.global.storage=1;view=productionView(s,v);assert.equal(view.status,'Producing');assert.equal(view.stockHeading,'Stockpile  128 / 192');
+ assert.equal(view.output.rows[0].actual,1.75);
 });
