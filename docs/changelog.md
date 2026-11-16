@@ -1,3 +1,16 @@
+# 0.0.78
+
+- Restore first-tab selection for the main and nested radio groups. Fresh charters
+  request Overview, Local Research, Production Overview and Road Networks, with
+  content visible without a preliminary click.
+- Fix the action-refresh selection expression: evaluate it in a one-time view
+  binding targeting toggle state, rather than using an expression as the name of
+  a nonexistent native binding. Apply the corresponding marker to every subtab.
+- Keep all tab changes local and reload-free. Preserve view-specific Survey and
+  Rename actions, contribution return destinations and the all-tech research cap.
+- Add generated-UI checks for exactly one default per group, marker initialization
+  and the script's fresh-open view. In-game initial selection still needs testing.
+
 # 0.0.77
 
 - Restore client-side radio tabs/subtabs and remove navigation form actions.

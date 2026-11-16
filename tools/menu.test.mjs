@@ -332,7 +332,7 @@ test('research popups size to text and anchor outside the hovered tech card',asy
 test('Realm replaces the map with Road Networks and keeps both settlement directories',async()=>{
  const ui=await loadUI(),realm=children(ui.jf_realm_content),roads=children(ui.jf_realm_roads_content);
  const tabs=['roads','mine','all'].map(k=>realm['jf_realm_tab_'+k]);
- assert.deepEqual(tabs.map(t=>t.offset[0]),[0,86,172]);assert.ok(tabs[0].bindings.some(binding=>binding.binding_name?.includes('[JF:realm:roads]')));
+ assert.deepEqual(tabs.map(t=>t.offset[0]),[0,86,172]);assert.ok(tabs[0].bindings.some(binding=>binding.source_property_name?.includes('[JF:realm:roads]')));
  assert.equal(tabs[0].type,'toggle');
  assert.ok(realm['roads@jagsby_frontier.jf_realm_roads_content'].bindings.some(b=>b.source_control_name==='jf_realm_tab_roads'));
  assert.equal(ui.jf_realm_map_content,undefined);
@@ -348,7 +348,7 @@ test('Production uses exactly two fixed tabs with output, modifiers and stockpil
  assert.equal(ui.jf_production_stock_content,undefined);assert.equal(ui.jf_production_output_content,undefined);
  assert.ok(children(ui.jf_dashboard)['production@jagsby_frontier.jf_production_content']);
  for(const scope of ['summary','biomes']){
-  assert.ok(root['jf_production_tab_'+scope].bindings.some(binding=>binding.binding_name?.includes('[JF:production:'+scope+']')));
+  assert.ok(root['jf_production_tab_'+scope].bindings.some(binding=>binding.source_property_name?.includes('[JF:production:'+scope+']')));
   const pane=ui['jf_production_'+scope+'_content'];assert.equal(pane.type,'panel');
   assert.equal(JSON.stringify(pane).includes('scroll'),scope==='biomes');
   for(const child of Object.values(children(pane))){
@@ -503,16 +503,16 @@ test('form payload packs later records without gaps and preserves contiguous col
  }
 });
 
-test('Every tab stays local and lets refresh markers select the initial state without forcing the first tab',async()=>{
+test('Every tab stays local, defaults to its first page and applies refresh selection only once',async()=>{
  const ui=await loadUI(),dashboard=children(ui.jf_dashboard);
  const tabs=['overview','research','production','realm','information'].map(name=>dashboard['jf_tab_'+name]);
  for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']]]){
   const pane=children(ui['jf_'+section+'_content']);tabs.push(...scopes.map(scope=>pane['jf_'+section+'_tab_'+scope]));
  }
  for(const tab of tabs){
-  assert.equal(tab.type,'toggle');assert.equal(tab.toggle_group_default_selected,-1);assert.equal(tab.toggle_default_state,false);
+  assert.equal(tab.type,'toggle');assert.equal(tab.toggle_group_default_selected,0);assert.equal(tab.toggle_default_state,tab.toggle_group_forced_index===0);
   assert.equal(JSON.stringify(tab).includes('button.form_button_click'),false);
-  assert.ok(tab.bindings.some(binding=>binding.binding_name_override==='#toggle_state'&&binding.binding_condition==='once'));
+  assert.ok(tab.bindings.some(binding=>binding.binding_type==='view'&&binding.target_property_name==='#toggle_state'&&binding.binding_condition==='once'));
  }
  const {CHARTER_LAYOUT:layout}=await import('../packs/behavior/scripts/charter-layout.js');
  assert.equal(Object.keys(layout.actions).some(key=>key.startsWith('nav')),false);
@@ -524,6 +524,28 @@ test('Every tab stays local and lets refresh markers select the initial state wi
    assert.equal(Object.values(wrapper.controls[0])[0].collection_index,layout.actions[entry[kind]]);
    const scope=entry[entry.page.toLowerCase()+'Scope'];
    if(scope)assert.ok(wrapper.bindings.some(binding=>binding.source_control_name==='jf_'+entry.page.toLowerCase()+'_tab_'+scope));
+  }
+ }
+});
+
+test('Fresh tab groups have exactly one selected default and refresh markers select the intended view',async()=>{
+ const ui=await loadUI(),dashboard=children(ui.jf_dashboard);
+ const groups=[['tab',['overview','research','production','realm','information'].map(name=>dashboard['jf_tab_'+name])]];
+ for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']]]){
+  const pane=children(ui['jf_'+section+'_content']);groups.push([section,scopes.map(scope=>pane['jf_'+section+'_tab_'+scope])]);
+ }
+ for(const [section,tabs]of groups){
+  assert.equal(tabs.filter(tab=>tab.toggle_default_state).length,1);assert.equal(tabs[0].property_bag['#toggle_state'],true);
+  for(const chosen of tabs){
+   const chosenBinding=chosen.bindings.find(binding=>binding.binding_type==='view'&&binding.target_property_name==='#toggle_state');
+   const marker=chosenBinding.source_property_name.match(/#form_text - '([^']+)'/)[1];
+   const active=tabs.filter(tab=>{
+    const init=tab.bindings.find(binding=>binding.binding_type==='view'&&binding.target_property_name==='#toggle_state');
+    assert.equal(init.binding_condition,'once');
+    const expected=init.source_property_name.match(/#form_text - '([^']+)'/)[1];
+    return marker.replace(expected,'')!==marker;
+   });
+   assert.deepEqual(active,[chosen],section+': '+marker);
   }
  }
 });

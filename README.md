@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.77.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.78.mcaddon?raw=true)
+
+Version 0.0.78 restores selected defaults so fresh charters immediately show
+Overview. The nested groups default to Local Research, Production Overview and
+Road Networks. Correct one-time view bindings apply action-refresh selection;
+the expression is evaluated as a view rather than treated as a binding name.
+All tab/subtab switching remains local with no form reload.
 
 Version 0.0.77 restores local tab and subtab switching with no form reload.
 Only actions that update data submit the form. Research contributions return to

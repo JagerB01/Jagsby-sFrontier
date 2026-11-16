@@ -6,3 +6,4 @@
 - Use the existing checkout; cloud tasks already run in an isolated environment. Do not create a worktree unless requested.
 
 - Menu tabs and subtabs must switch locally without reloading or submitting the form. Preserve the active view on action refreshes through action-specific/view-specific bindings; do not send every tab click to the server.
+- A fresh charter opens on Overview with content visible immediately. Initialize Local Research, Production Overview and Road Networks by default; action refreshes may select another subtab. Never leave every radio toggle unselected.

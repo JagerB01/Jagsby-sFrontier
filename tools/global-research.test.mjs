@@ -646,3 +646,10 @@ test('Each header Survey variant returns to its visible client-side page and sub
   const scope=entry[entry.page.toLowerCase()+'Scope'];if(scope)assert.ok(last.includes('[JF:'+entry.page.toLowerCase()+':'+scope+']'));
  }
 });
+
+test('Fresh charters request Overview and the first subtab of every section',async()=>{
+ const h=await runtime();h.api.open(h.player,'none');
+ const body=h.forms[0].text;
+ for(const marker of ['[JF:tab:overview]','[JF:research:local]','[JF:production:summary]','[JF:realm:roads]'])assert.ok(body.includes(marker));
+ assert.equal(h.forms.length,1);
+});

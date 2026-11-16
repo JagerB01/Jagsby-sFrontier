@@ -174,9 +174,9 @@ function recoverResearch(player){
 }
 
 function reopenView(player,vid,view={}){
- open(player,vid,view.page||'Overview',view.researchScope||'global',view.realmPage||0,view.realmScope||'roads',view.productionScope||'summary',view.productionPages||{});
+ open(player,vid,view.page||'Overview',view.researchScope||'local',view.realmPage||0,view.realmScope||'roads',view.productionScope||'summary',view.productionPages||{});
 }
-function open(player,vId,page='Overview',researchScope='global',realmPage=0,realmScope='roads',productionScope='summary',productionPages={}){
+function open(player,vId,page='Overview',researchScope='local',realmPage=0,realmScope='roads',productionScope='summary',productionPages={}){
   const preparedAt=Date.now();
   const view={page,researchScope,realmPage,realmScope,productionScope,productionPages};
   const s=accounted(),v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
@@ -302,7 +302,7 @@ async function surveySettlement(player,vid,view={}){
  try{await job;player.sendMessage('§aVillager and biome survey updated.');}
  catch(e){console.warn(`Frontier survey: ${e}`);player.sendMessage('§cSurvey could not finish. Try Survey again.');}
  finally{if(pendingSurveys.get(vid)===job)pendingSurveys.delete(vid);}
- open(player,vid,view.page||'Overview',view.researchScope||'global',view.realmPage||0,view.realmScope||'roads',view.productionScope||'summary',view.productionPages||{});
+ open(player,vid,view.page||'Overview',view.researchScope||'local',view.realmPage||0,view.realmScope||'roads',view.productionScope||'summary',view.productionPages||{});
 }
 function surveyVillage(vid){const s=accounted(),v=s.villages[vid];if(!v)return;
   if(v.dimension!=='minecraft:overworld')return;

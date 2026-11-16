@@ -228,19 +228,19 @@ def tab(name, index):
         "type": "toggle", "size": [80, 28], "offset": [20, 62 + 32 * index],
         "anchor_from": "top_left", "anchor_to": "top_left", "layer": 10,
         "radio_toggle_group": True, "toggle_name": "jagsby_frontier_tabs",
-        "toggle_group_forced_index": index, "toggle_group_default_selected": -1,
-        "toggle_default_state": False, "reset_on_focus_lost": False,
+        "toggle_group_forced_index": index, "toggle_group_default_selected": 0,
+        "toggle_default_state": index == 0, "reset_on_focus_lost": False,
         "focus_enabled": True, "hover_enabled": True,
         "focus_identifier": "jf_tab_focus_" + lower,
         "focus_change_up": "jf_tab_focus_" + TABS[max(0, index - 1)].lower(),
         "focus_change_down": "jf_tab_focus_" + TABS[min(len(TABS) - 1, index + 1)].lower(),
         "toggle_on_button": "toggle.toggle_on", "toggle_off_button": "toggle.toggle_off",
-        "property_bag": {"#toggle_state": False},
+        "property_bag": {"#toggle_state": index == 0},
         "bindings": [
             {"binding_name": "#toggle_state", "binding_type": "none", "binding_condition": "always"},
             {"binding_name": "#form_text", "binding_type": "none"},
-            {"binding_name": f"(not ((#form_text - '{marker}') = #form_text))",
-             "binding_name_override": "#toggle_state", "binding_type": "none", "binding_condition": "once"},
+            {**view(f"(not ((#form_text - '{marker}') = #form_text))", "#toggle_state"),
+             "binding_condition": "once"},
         ],
         "button_mappings": [
             {"from_button_id": "button.menu_select", "to_button_id": "button.menu_select", "mapping_type": "pressed"},
@@ -272,8 +272,9 @@ def research_tab(scope, index, section="research", caption_text=None):
     toggle.pop("focus_change_up", None)
     toggle.pop("focus_change_down", None)
     for binding in toggle["bindings"]:
-        if "binding_name" in binding:
-            binding["binding_name"] = binding["binding_name"].replace("[JF:tab:research]", f"[JF:{section}:{scope}]")
+        for field in ["binding_name", "source_property_name"]:
+            if field in binding:
+                binding[field] = binding[field].replace("[JF:tab:research]", f"[JF:{section}:{scope}]")
     for state in toggle["controls"]:
         state_name = next(iter(state))
         panel = next(iter(state.values()))
