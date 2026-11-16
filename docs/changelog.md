@@ -1,3 +1,21 @@
+# 0.0.76
+
+- Apply the Stewardship ceiling to every other global/local tech, including
+  fixed-maximum research. Retain each tech's own maximum and distinguish that
+  maximum from a temporary Stewardship lock. Stewardship itself remains endless.
+- Block new contributions and fixed local saved-payment auto-progression at the
+  ceiling. Preserve paid levels and saved resources; do not grant free Stewardship
+  or downgrade existing purchases. Show unmet Stewardship levels on affected cards.
+- Replace client-only radio toggles with explicitly indexed navigation buttons,
+  retaining their artwork and selected-state appearance. Use form-body markers
+  for selected states instead of a default radio index overriding the requested
+  tab. Every navigation response reopens the selected server-known view.
+- Pass that view through contributions, Rename/save/cancel, Survey, claiming,
+  collection and production changes, including remembered sibling subtabs.
+- Cover all global caps, fixed local saved-payment gates, Local/Global contribution
+  round trips, Realm and Production actions and Rename save/cancel in tests.
+  Visual selection and focus behavior still need in-game confirmation.
+
 # 0.0.75
 
 - Explain Stewardship's upgrade limit by naming Prosperity, Sanctuary, Settlement

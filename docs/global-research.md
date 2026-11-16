@@ -9,7 +9,7 @@ Development. No MineScape installation is required at runtime.
 As of 0.0.36, local research uses finalized costs and saved partial contributions.
 See [local research](local-research.md) for the authoritative current recipes,
 per-settlement progress, material categories and recovery behavior. Stewardship
-continues to set the ceiling for Sanctuary and Prosperity.
+sets the upgrade ceiling for every other local and global technology.
 
 Every global/local research card shows its name and current **Lv X** without hovering; on-card descriptions are removed in 0.0.37, while hover explanations remain.
 The Overview identity panel shows the current MineScape zone. A separate Development box below shows permanent points, hourly increase estimate and a named trade route; the separate Production box is reserved for later design. Stewardship is the
@@ -30,13 +30,13 @@ The existing internal save key for the foundation is retained for compatibility.
 | --- | --- | --- | --- |
 | Stewardship | I, free | 192 copper ingots | Endless |
 | Settlement Charters | 0, two settlement slots | 64 logs | Stewardship level |
-| Frontier Expansion | 0, Heartlands + Borderlands | 32 iron, 48 iron, 32 gold, 48 gold | IV |
-| Colonization | 0 | 4, 8, 12, 16, 20 diamonds | V |
+| Frontier Expansion | 0, Heartlands + Borderlands | 32 iron, 48 iron, 32 gold, 48 gold | Lower of IV and Stewardship |
+| Colonization | 0 | 4, 8, 12, 16, 20 diamonds | Lower of V and Stewardship |
 | Shared Storage | 0, 792 items | 512 building materials | Stewardship level |
 
 Prerequisite decision: Colonization requires Frontier I; Shared Storage requires
 Capacity I. Additional levels do not need matching levels of those prerequisites.
-Stewardship does not limit the two fixed-length technologies. Global costs never
+Stewardship also limits the fixed-length technologies; their own maxima still apply. Global costs never
 use emeralds. Local prices/progress now follow [the finalized local rules](local-research.md); existing local prerequisites are retained.
 
 Payments continue to use **player inventory**, matching existing research.

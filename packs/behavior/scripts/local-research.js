@@ -31,7 +31,7 @@ export function migrateLocalResearch(v,s=null){
    v[key]+=complete;progress-=complete*C.research[key].cost;
   }else{
    let cost=localResearchCost(v,key);
-   while(cost&&progress>=cost.amount){
+   while(cost&&progress>=cost.amount&&(!s||localResearchLevel(v,key)<s.global.innovation)){
     progress-=cost.amount;
     if(key==='biome')v.biomeUnlocked=true;else v[key]++;
     cost=localResearchCost(v,key);
@@ -55,7 +55,7 @@ export function localResearchCost(v,key){
  return {amount,materials,label:d.label??materials[0].replace('minecraft:','').replaceAll('_',' ')};
 }
 export function localResearchRequirement(v,key,s=null){
- if(s&&['efficiency','sanctuary'].includes(key)&&localResearchLevel(v,key)>=s.global.innovation)return 'Requires higher Stewardship';
+ if(s&&localResearchLevel(v,key)>=s.global.innovation)return 'Requires higher Stewardship';
  if(['biome','sanctuary'].includes(key)&&v.hearth<1)return 'Requires Hearthstone I';
  if(key==='efficiency'&&!v.biomeUnlocked)return 'Requires Resource Prospecting';
  if(key==='roads'&&v.sanctuary<1)return 'Requires Sanctuary I';
@@ -90,7 +90,7 @@ export function localResearchText(v,key,s=null){
  if(['biome','sanctuary'].includes(key)&&v.hearth<1)missing.push('Hearthstone Lv 1');
  if(key==='efficiency'&&!v.biomeUnlocked)missing.push('Resource Prospecting Lv 1');
  if(key==='roads'&&v.sanctuary<1)missing.push('Sanctuary Lv 1');
- if(!d.max&&s&&stored>=s.global.innovation)missing.push('Stewardship Lv '+(stored+1));
+ if(cost&&s&&stored>=s.global.innovation)missing.push('Stewardship Lv '+(stored+1));
  const required=missing.length?'\nRequired: '+missing.join('; '):'';
  const compare=(now,next)=>researchComparison(now,next,Boolean(cost));
  const reduction=n=>Math.min(99.9999,(1-0.95**n)*100);

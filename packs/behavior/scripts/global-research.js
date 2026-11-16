@@ -38,12 +38,13 @@ export function migrateResearch(s){
  s.researchRevision??=0;
  return s;
 }
-export function maxLevel(s,key) {return DEFINITIONS[key].max ?? (key==='innovation'?Infinity:s.global.innovation);}
+export function maxLevel(s,key) {return key==='innovation'?Infinity:Math.min(DEFINITIONS[key].max??Infinity,s.global.innovation);}
 export function nextCost(s,key) {const d=DEFINITIONS[key]; return Array.isArray(d.cost)?d.cost[s.global[key]]:d.cost;}
 export function acceptedMaterials(s,key) {const d=DEFINITIONS[key]; return key==='frontier'?[d.materials[s.global[key]]].filter(Boolean):d.materials;}
 export function lockReason(s,key) {
   const d=DEFINITIONS[key];
-  if(s.global[key]>=maxLevel(s,key)) return d.max?'Maximum level':'Raise Stewardship';
+  if(d.max!==undefined&&s.global[key]>=d.max)return 'Maximum level';
+ if(key!=='innovation'&&s.global[key]>=s.global.innovation)return 'Raise Stewardship';
   if(d.prerequisite && s.global[d.prerequisite]<1) return `Requires ${DEFINITIONS[d.prerequisite].name} I`;
   return '';
 }

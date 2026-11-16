@@ -5,7 +5,18 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.75.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.76.mcaddon?raw=true)
+
+Version 0.0.76 applies Stewardship's ceiling to every other local and global
+tech, including Colonization, Frontier Expansion, Hearthstone and Road Networks.
+Individual maximum levels still apply. New contributions and saved-payment
+progression cannot cross the ceiling; existing purchases and contributions are
+retained. Stewardship itself remains uncapped.
+
+Tabs now send indexed navigation actions so the script knows the current page
+and subtab. Contributions, Rename (including cancel), Survey, claiming, collection
+and production changes reopen the current view. Tab selection refreshes the form
+without surveying villagers; Realm's explicit indexed rows remain intact.
 
 Version 0.0.75 explains that Stewardship sets the maximum level of Prosperity,
 Sanctuary, Settlement Charters and Shared Storage. Settlement Charters shows its

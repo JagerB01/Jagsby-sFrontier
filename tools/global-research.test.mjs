@@ -39,9 +39,10 @@ test('Capacity gives one slot per 64 mixed logs, saves partial progress and obey
  grant(s,'innovation','minecraft:copper_ingot',192);assert.equal(grant(s,'capacity','minecraft:warped_stem',64),64);
  assert.equal(R.settlementLimit(s),4);assert.equal(Object.keys(s.villages).length,0);
 });
-test('Frontier unlocks only founding in sequence at fixed iron/gold costs independent of Stewardship',()=>{
+test('Frontier unlocks only founding in sequence at fixed iron/gold costs within Stewardship',()=>{
  const s=fresh();assert.equal(R.foundingReason(s,'Heartlands'),'');assert.equal(R.foundingReason(s,'Borderlands'),'');
  for(const [i,cost]of [32,48,32,48].entries()){
+  s.global.innovation=i+1;
   assert.match(R.foundingReason(s,R.ZONES[i+2]),/Frontier/);
   const material=i<2?'minecraft:iron_ingot':'minecraft:gold_ingot';
   assert.equal(grant(s,'frontier','minecraft:emerald',cost),0);
@@ -49,16 +50,16 @@ test('Frontier unlocks only founding in sequence at fixed iron/gold costs indepe
   assert.equal(grant(s,'frontier',i<2?'minecraft:gold_ingot':'minecraft:iron_ingot',1),0);
   grant(s,'frontier',material,1);assert.equal(s.global.frontier,i+1);assert.equal(R.foundingReason(s,R.ZONES[i+2]),'');
  }
- assert.equal(s.global.innovation,1);assert.equal(R.settlementLimit(s),2);assert.equal(grant(s,'frontier','minecraft:gold_ingot',48),0);
+ assert.equal(s.global.innovation,4);assert.equal(R.settlementLimit(s),2);assert.equal(grant(s,'frontier','minecraft:gold_ingot',48),0);
 });
 test('Colonization costs 60 diamonds and preserves earlier zone-specific bonuses',()=>{
- const s=fresh();assert.equal(grant(s,'colonization','minecraft:diamond',4),0);
+ const s=fresh();s.global.innovation=5;assert.equal(grant(s,'colonization','minecraft:diamond',4),0);
  grant(s,'frontier','minecraft:iron_ingot',32);let spent=0;
  for(let level=1;level<=5;level++){
   spent+=grant(s,'colonization','minecraft:diamond',4*level);
   for(let zone=0;zone<6;zone++)assert.equal(R.colonizationBonus(s,R.ZONES[zone]),zone>0&&zone<=level?zone/10:0);
  }
- assert.equal(spent,60);assert.equal(s.global.frontier,1);assert.equal(s.global.innovation,1);
+ assert.equal(spent,60);assert.equal(s.global.frontier,1);assert.equal(s.global.innovation,5);
 });
 test('Shared Storage has a fixed resource-derived 792-item increment and exactly 512 material cost',()=>{
  let s=fresh();assert.equal(R.storageIncrement(),792);assert.equal(E.capacity(s),792);
@@ -140,7 +141,7 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
  const inventory={addItem(item){received.push(item);return undefined;},size:slots.length,getItem(i){return slots[i]?{...slots[i]}:undefined;},setItem(i,item){if(i===failSlot){failSlot=-1;throw Error('interrupted inventory write');}slots[i]=item?{...item}:undefined;}};
  const messages=[],player={id:'p',selectedSlotIndex:0,sendMessage(text){messages.push(text);},getComponent(){return {container:inventory};}};
  const forms=[];
- class Form{constructor(){this.buttons=[];this.icons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}button(text,icon){this.buttons.push(text);this.icons.push(icon);return this;}show(){return Promise.resolve(respond(this));}}
+ class Form{constructor(){this.buttons=[];this.icons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}textField(){return this;}submitButton(){return this;}button(text,icon){this.buttons.push(text);this.icons.push(icon);return this;}show(){return Promise.resolve(respond(this));}}
  globalThis.__researchRuntime={world:{getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(){return 1;},clearRun(){}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
@@ -221,7 +222,7 @@ test('Local journal recovers a failed final save without charging or crediting t
  h.api.recoverResearch(h.player);assert.equal(h.read().villages.a.hearth,1);
 });
 test('Local journal recovers interrupted multi-slot payments',async()=>{
- const s=fresh(Date.now());s.villages.a={...village(),hearth:1,name:'Test',available:[]};const h=await runtime(s);
+ const s=fresh(Date.now());s.global.innovation=2;s.villages.a={...village(),hearth:1,name:'Test',available:[]};const h=await runtime(s);
  h.slots[0]={typeId:'minecraft:bread',amount:64};h.slots[1]={typeId:'minecraft:bread',amount:64,nameTag:'Contribution'};h.failInventory(1);
  click(h,'hearth','a');assert.equal(h.slots[0],undefined);assert.equal(h.slots[1].amount,64);assert.equal(h.read().villages.a.hearth,1);
  h.api.recoverResearch(h.player);assert.equal(h.read().villages.a.hearth,2);assert.equal(h.slots[1],undefined);
@@ -264,7 +265,7 @@ test('All ten research hover records describe effects, next cost, progress, prer
  }
  assert.ok(records[5].includes('Player regeneration: §bOff§r §7→§r §aI§r'));
  assert.ok(records[55].includes('3 minutes after leaving'));
- for(const name of ['Prosperity','Sanctuary','Settlement Charters','Shared Storage'])assert.ok(records[9].includes(name));
+ assert.ok(records[9].includes('every other local and global tech'));
  assert.equal(records[9].includes('Required:'),false);
  assert.ok(records[61].includes('Bonus resources do not earn Development'));
 });
@@ -552,7 +553,7 @@ test('All global cards use compact colored comparisons while preserving zone mea
 test('Global cards omit met prerequisites, explain Stewardship and remove charter filler',async()=>{
  const h=await runtime(),s=h.read();
  let text=h.api.globalResearchText(s,'innovation');
- for(const name of ['Prosperity','Sanctuary','Settlement Charters','Shared Storage'])assert.ok(text.includes(name));
+ assert.ok(text.includes('every other local and global tech'));
  assert.ok(text.includes('maximum level'));assert.equal(text.includes('Required:'),false);assert.equal(text.includes('None'),false);
  text=h.api.globalResearchText(s,'capacity');assert.equal(text.includes('Required:'),false);
  assert.equal(text.includes('Founded:'),false);assert.equal(text.toLowerCase().includes('founding'),false);
@@ -568,4 +569,69 @@ test('Global cards omit met prerequisites, explain Stewardship and remove charte
  text=h.api.globalResearchText(s,'storage');assert.ok(text.includes('Required: Settlement Charters Lv 1; Stewardship Lv 2'));
  s.global.frontier=4;s.global.colonization=5;
  for(const key of ['frontier','colonization'])assert.equal(h.api.globalResearchText(s,key).includes('Required:'),false);
+});
+
+test('Stewardship limits every global tech other than itself, including Colonization and Frontier',()=>{
+ for(const key of ['capacity','storage','frontier','colonization']){
+  const s=fresh();s.global.innovation=2;s.global.frontier=1;s.global.capacity=1;s.global[key]=2;s.researchProgress[key]=7;
+  const material=R.acceptedMaterials(s,key)[0],cost=R.nextCost(s,key),before=JSON.stringify(s);
+  assert.equal(R.maxLevel(s,key),2);assert.match(R.lockReason(s,key),/Stewardship/);
+  assert.equal(grant(s,key,material,cost),0);assert.equal(JSON.stringify(s),before);
+  s.global.innovation=3;assert.equal(grant(s,key,material,cost),cost-7);assert.equal(s.global[key],3);
+ }
+ const s=fresh();s.global.innovation=10;s.global.colonization=5;s.global.frontier=4;
+ assert.equal(R.maxLevel(s,'colonization'),5);assert.equal(R.maxLevel(s,'frontier'),4);
+ assert.equal(grant(s,'innovation','minecraft:copper_ingot',192),192);assert.equal(s.global.innovation,11);
+});
+
+test('Research tab navigation and contributions reopen the same Local or Global subtab',async()=>{
+ for(const scope of ['local','global']){
+  const s=fresh(Date.now());s.global.innovation=5;s.global.frontier=1;
+  const key=scope==='local'?'hearth':'colonization';
+  const steps=[CHARTER_LAYOUT.actions.navResearch,CHARTER_LAYOUT.actions['navResearch'+scope],CHARTER_LAYOUT.actions[key]];
+  const h=await runtime(s,()=>steps.length?{canceled:false,selection:steps.shift()}:{canceled:true});
+  h.slots[0]={typeId:scope==='local'?'minecraft:bread':'minecraft:diamond',amount:scope==='local'?10:4};
+  h.slots[1]=undefined;h.slots[2]=undefined;
+  h.api.open(h.player,'none');await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(h.forms.length,4);
+  const last=h.forms.at(-1);assert.ok(last.text.startsWith('[JF:tab:research]'));assert.ok(last.text.includes('[JF:research:'+scope+']'));
+  if(scope==='local')assert.equal(h.read().villages.none.localResearch.progress.hearth,10);
+  else assert.equal(h.read().global.colonization,1);
+ }
+});
+
+test('Production clearing, collection and Survey preserve their selected tabs and remembered research/Realm views',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',biomeUnlocked:true,secondary:'minecraft:forest',productionMode:'diversify'};
+ const steps=[CHARTER_LAYOUT.actions.navProductionbiomes,CHARTER_LAYOUT.actions.clearSecondary,CHARTER_LAYOUT.actions.navProductionsummary,CHARTER_LAYOUT.actions.collect,CHARTER_LAYOUT.actions.scan];
+ const h=await runtime(s,()=>steps.length?{canceled:false,selection:steps.shift()}:{canceled:true});
+ h.api.open(h.player,'a','Production','local',0,'all','summary');
+ await new Promise(resolve=>setImmediate(resolve));await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.forms.length,6);
+ for(const index of [1,2])assert.ok(h.forms[index].text.includes('[JF:production:biomes]'));
+ for(const index of [3,4,5])assert.ok(h.forms[index].text.includes('[JF:production:summary]'));
+ for(const form of h.forms){assert.ok(form.text.startsWith('[JF:tab:production]'));assert.ok(form.text.includes('[JF:research:local]'));assert.ok(form.text.includes('[JF:realm:all]'));}
+ assert.equal(h.read().villages.a.secondary,null);
+});
+
+test('Realm subtab actions and claim refresh retain the current Realm view',async()=>{
+ const steps=[CHARTER_LAYOUT.actions.navRealm,CHARTER_LAYOUT.actions.navRealmall,CHARTER_LAYOUT.actions.claim];
+ const h=await runtime(undefined,()=>steps.length?{canceled:false,selection:steps.shift()}:{canceled:true});
+ h.api.open(h.player,'none');await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.forms.length,4);assert.ok(h.forms.at(-1).text.startsWith('[JF:tab:realm]'));assert.ok(h.forms.at(-1).text.includes('[JF:realm:all]'));
+});
+
+test('Saving or canceling Rename returns to the same Production subtab',async()=>{
+ for(const canceled of [false,true]){
+  const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',biomeUnlocked:true};
+  let clicked=false;
+  const h=await runtime(s,form=>{
+   if(form.heading==='JF_CHARTER|Rename')return {canceled,formValues:['Beta']};
+   if(!clicked){clicked=true;return {canceled:false,selection:CHARTER_LAYOUT.actions.rename};}
+   return {canceled:true};
+  });
+  h.api.open(h.player,'a','Production','local',0,'all','biomes');await new Promise(resolve=>setImmediate(resolve));
+  const last=h.forms.at(-1);assert.ok(last.text.startsWith('[JF:tab:production]'));assert.ok(last.text.includes('[JF:production:biomes]'));
+  assert.ok(last.text.includes('[JF:research:local]'));assert.ok(last.text.includes('[JF:realm:all]'));
+  assert.equal(h.read().villages.a.name,canceled?'Alpha':'Beta');
+ }
 });

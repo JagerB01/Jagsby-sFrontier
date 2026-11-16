@@ -44,11 +44,14 @@ for obsolete in ["selectBiome"]:
     ACTIONS.pop(obsolete, None)
 DATA.update({"overviewProduction0": 150, "overviewProduction1": 151})
 DATA["productionModifierTotal"] = 154
-# Realm list rows are native collection records appended at runtime, with no fixed slot cap.
+# Realm records use explicit indexed slots; their configured limit is saved below.
 for key in ["realmMine", "realmAll"]:
     DATA.pop(key, None)
 for key in ["minePrev", "mineNext", "allPrev", "allNext", "roadsPrev", "roadsNext"]:
     ACTIONS.pop(key, None)
+NAVIGATION = ["nav" + name for name in ["Overview", "Research", "Production", "Realm", "Information"]]
+NAVIGATION += ["nav" + section + scope for section, scopes in [("Research", ["local", "global"]), ("Realm", ["roads", "mine", "all"]), ("Production", ["summary", "biomes"])] for scope in scopes]
+ACTIONS.update({key: 700 + index for index, key in enumerate(NAVIGATION)})
 # Preserve the original low transport IDs; pack later additions contiguously.
 # These IDs are form-local, never saved. Avoid transmitting hundreds of holes.
 late = sorted([(index, mapping, key) for mapping in [DATA, ACTIONS]
@@ -202,44 +205,47 @@ def heading(text):
         ]})
 
 
-def tab(name, index):
-    lower = name.lower()
+def navigation_control(name, action_key, marker, size, offset, faces):
+    selected = "(not ((#form_text - '" + marker + "') = #form_text))"
     states = []
+    for state in ["default", "hover", "pressed"]:
+        variants = []
+        for active in [False, True]:
+            key = ("checked" if active else "unchecked") + ("_hover" if state != "default" else "")
+            panel = copy.deepcopy(faces[key])
+            panel["bindings"] = condition(selected if active else "(not " + selected + ")", "#form_text")
+            variants.append(control("selected" if active else "unselected", panel))
+        states.append(control(state, {"type": "panel", "size": size, "controls": variants}))
+    template = "jf_action_" + action_key
+    GENERATED_CONTROLS[template + "@common.button"] = {
+        "size": size, "$pressed_button_name": "button.form_button_click", "focus_enabled": True, "hover_enabled": True,
+        "button_mappings": [
+            {"from_button_id": "button.menu_select", "to_button_id": "button.form_button_click", "mapping_type": "pressed"},
+            {"from_button_id": "button.menu_ok", "to_button_id": "button.form_button_click", "mapping_type": "focused"}],
+        "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}], "controls": states}
+    wrapper = collection_scope(template, size)
+    wrapper.update({"offset": offset, "anchor_from": "top_left", "anchor_to": "top_left", "layer": 10,
+        "property_bag": {"#toggle_state": False},
+        "bindings": [{"binding_name": "#form_text", "binding_type": "none"}, view(selected, "#toggle_state")]})
+    return control(name, wrapper)
+
+
+def navigation_faces(caption, width, height, icon=None, scale=0.8):
+    faces = {}
     for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:
         selected = state.startswith("checked")
-        states.append(control(state, {"type": "panel", "size": [80, 28], "controls": [
-            control("face", image(button_texture(80, 28, state), [80, 28], layer=1)),
-            *([control("icon", image(f"frontier/icons/{lower}", [20, 20], (6, 4), 4))]
-              if lower in ["overview", "research", "production", "realm", "information"] else []),
-            control("caption", label(name, [49, 12], (27, 9), WHEAT if selected else IVORY, 0.8)),
-        ]}))
-    marker = f"[JF:tab:{lower}]"
-    return control("jf_tab_" + lower, {
-        "type": "toggle", "size": [80, 28], "offset": [20, 62 + 32 * index],
-        "anchor_from": "top_left", "anchor_to": "top_left", "layer": 10,
-        "radio_toggle_group": True, "toggle_name": "jagsby_frontier_tabs",
-        "toggle_group_forced_index": index, "toggle_group_default_selected": 0,
-        "toggle_default_state": index == 0, "reset_on_focus_lost": False,
-        "focus_enabled": True, "hover_enabled": True,
-        "focus_identifier": "jf_tab_focus_" + lower,
-        "focus_change_up": "jf_tab_focus_" + TABS[max(0, index - 1)].lower(),
-        "focus_change_down": "jf_tab_focus_" + TABS[min(len(TABS) - 1, index + 1)].lower(),
-        "toggle_on_button": "toggle.toggle_on", "toggle_off_button": "toggle.toggle_off",
-        "property_bag": {"#toggle_state": index == 0},
-        "bindings": [
-            {"binding_name": "#toggle_state", "binding_type": "none", "binding_condition": "always"},
-            {"binding_name": "#form_text", "binding_type": "none"},
-            {"binding_name": f"(not ((#form_text - '{marker}') = #form_text))",
-             "binding_name_override": "#toggle_state", "binding_type": "none", "binding_condition": "once"},
-        ],
-        "button_mappings": [
-            {"from_button_id": "button.menu_select", "to_button_id": "button.menu_select", "mapping_type": "pressed"},
-            {"from_button_id": "button.menu_ok", "to_button_id": "button.menu_ok", "mapping_type": "focused"},
-        ],
-        "unchecked_control": "unchecked", "checked_control": "checked",
-        "unchecked_hover_control": "unchecked_hover", "checked_hover_control": "checked_hover",
-        "tts_name": name, "controls": states,
-    })
+        faces[state] = {"type": "panel", "size": [width, height], "controls": [
+            control("face", image(button_texture(width, height, state), [width, height], layer=1)),
+            *([control("icon", image("frontier/icons/" + icon, [20, 20], (6, 4), 4))] if icon else []),
+            control("caption", label(caption, [width - 31, 12] if icon else [width, 13], (27, 9) if icon else (0, 6), WHEAT if selected else IVORY, scale))]}
+        if not icon:
+            faces[state]["controls"][-1]["caption"]["text_alignment"] = "center"
+    return faces
+
+
+def tab(name, index):
+    lower = name.lower()
+    return navigation_control("jf_tab_" + lower, "nav" + name, "[JF:tab:" + lower + "]", [80, 28], [20, 62 + 32 * index], navigation_faces(name, 80, 28, lower))
 
 
 def overview_value(name, index, offset, size, scale=0.9):
@@ -251,28 +257,10 @@ def overview_value(name, index, offset, size, scale=0.9):
 
 
 def research_tab(scope, index, section="research", caption_text=None):
-    width, spacing = (124, 129) if section == "production" else (82, 86) if section == "realm" else (124, 129)
-    order = ["summary", "biomes"] if section == "production" else ["roads", "mine", "all"] if section == "realm" else ["local", "global"]
-    toggle = tab("Research", index)["jf_tab_research"]
-    toggle.update({"size": [width, 23], "offset": [index * spacing, 0],
-        "toggle_name": "jagsby_frontier_" + section + "_tabs", "tts_name": caption_text or scope.title(),
-        "focus_identifier": "jf_" + section + "_focus_" + scope,
-        "focus_change_left": "jf_" + section + "_focus_" + order[max(0, index - 1)],
-        "focus_change_right": "jf_" + section + "_focus_" + order[min(len(order) - 1, index + 1)]})
-    toggle.pop("focus_change_up", None)
-    toggle.pop("focus_change_down", None)
-    for binding in toggle["bindings"]:
-        if "binding_name" in binding:
-            binding["binding_name"] = binding["binding_name"].replace("[JF:tab:research]", f"[JF:{section}:{scope}]")
-    for state in toggle["controls"]:
-        state_name = next(iter(state))
-        panel = next(iter(state.values()))
-        panel["size"] = [width, 23]
-        panel["controls"][0]["face"] = image(button_texture(width, 23, state_name), [width, 23], layer=1)
-        panel["controls"] = [entry for entry in panel["controls"] if "icon" not in entry]
-        caption = next(entry["caption"] for entry in panel["controls"] if "caption" in entry)
-        caption.update({"text": caption_text or scope.title(), "size": [width, 13], "offset": [0, 6], "text_alignment": "center", "font_scale_factor": 0.7 if section == "production" else 0.85})
-    return control("jf_" + section + "_tab_" + scope, toggle)
+    width, spacing = (82, 86) if section == "realm" else (124, 129)
+    return navigation_control("jf_" + section + "_tab_" + scope, "nav" + section.title() + scope,
+        "[JF:" + section + ":" + scope + "]", [width, 23], [index * spacing, 0],
+        navigation_faces(caption_text or scope.title(), width, 23, scale=0.7 if section == "production" else 0.85))
 
 
 def info_card(name, title, index, y):

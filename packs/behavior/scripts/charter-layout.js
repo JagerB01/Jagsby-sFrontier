@@ -197,9 +197,21 @@ export const CHARTER_LAYOUT = {
     "prospectSelect48": 239,
     "prospectSelect49": 240,
     "prospectSelect50": 241,
-    "prospectSelect51": 242
+    "prospectSelect51": 242,
+    "navOverview": 243,
+    "navResearch": 244,
+    "navProduction": 245,
+    "navRealm": 246,
+    "navInformation": 247,
+    "navResearchlocal": 248,
+    "navResearchglobal": 249,
+    "navRealmroads": 250,
+    "navRealmmine": 251,
+    "navRealmall": 252,
+    "navProductionsummary": 253,
+    "navProductionbiomes": 254
   },
-  "recordCount": 243,
+  "recordCount": 255,
   "tabs": [
     "Overview",
     "Research",
@@ -208,7 +220,7 @@ export const CHARTER_LAYOUT = {
     "Information"
   ],
   "realmRows": {
-    "base": 243,
+    "base": 255,
     "limit": 128,
     "stride": 24,
     "scopes": [

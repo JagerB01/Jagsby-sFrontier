@@ -136,8 +136,8 @@ are kept even if their new prerequisite was not previously purchased.
   level and real-time expiry three minutes after the last refresh. Outside the
   settlement, research changes do not rewrite the stored strength. Entering a
   different protected settlement grants its currently applicable strength.
-- Prosperity is repeatable, exactly +5% per level; the old global-research ceiling
-  on local efficiency no longer caps it.
+- Prosperity is repeatable, exactly +5% per level, with Stewardship setting its
+  upgrade ceiling just as it does for every other technology.
 - Road Networks unlocks managing new connections, rather than upgrading all
   roads together. The card also allows use of completed incoming routes without
   requiring the receiving settlement to buy its own unlock.

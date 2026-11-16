@@ -162,3 +162,17 @@ test('Local cards list only missing requirements and omit the line as soon as th
  assert.equal(text.match(/Required:/g).length,1);
  v.hearth=2;assert.equal(localResearchText(v,'hearth',state(1)).includes('Required:'),false);
 });
+
+test('Fixed local techs and saved payments obey Stewardship as well as their own caps',()=>{
+ const v=village();v.hearth=1;v.sanctuary=1;v.roads=1;v.efficiency=1;v.biomeUnlocked=true;
+ for(const key of ['hearth','roads','sanctuary','efficiency']){
+  const cost=localResearchCost(v,key);const before=JSON.stringify(v);
+  assert.equal(localContribution(v,key,cost.materials[0],cost.amount,state(1)),0);
+  assert.ok(localResearchText(v,key,state(1)).includes('Required: Stewardship Lv 2'));assert.equal(JSON.stringify(v),before);
+  assert.ok(localContribution(v,key,cost.materials[0],cost.amount,state(2))>0);
+ }
+ v.localResearch.progress.roads=64;migrateLocalResearch(v,state(1));assert.equal(v.roads,1);assert.equal(v.localResearch.progress.roads,64);
+ migrateLocalResearch(v,state(2));assert.equal(v.roads,2);assert.equal(v.localResearch.progress.roads,32);
+ migrateLocalResearch(v,state(3));assert.equal(v.roads,3);assert.equal(v.localResearch.progress.roads,0);
+ assert.equal(localResearchCost(v,'roads'),null);
+});

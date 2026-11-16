@@ -195,7 +195,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
   assert.equal(surveyed.records[3],'[JF:data:tier]Outpost');assert.equal(surveyed.records[25],'Owner: Builder');
   assert.equal(surveyed.records[64],'Development 0');assert.equal(surveyed.records[60],'+ 0.000');
   assert.equal(surveyed.icons[3],'textures/ui/frontier/settlements/outpost');
-  await interact({canceled:false,selection:14});
+  await interact({canceled:false,selection:CHARTER_LAYOUT.actions.navResearch});
   assert.ok(forms.at(-1).text.startsWith('[JF:tab:research]'));assert.equal(scans,1);assert.equal(biomeReads,198);
   nativeTier=4;biomeResult='minecraft:forest';
   await interact();saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
