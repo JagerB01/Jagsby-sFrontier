@@ -155,3 +155,12 @@ The supplied image is 1254×1254 pixels. Both prior pack icons are replaced; the
 old artwork is not included as a backup in the current addon.
 
 Source PNG SHA-256: `e169a9ae7cb0617b74011e8b8d737d5cff6d9f45576a811724e239067678a69a`.
+
+## Addon selector icon resize (0.0.84)
+
+Both `pack_icon.png` files now contain a 256×256 Lanczos-resampled copy of the
+same user-supplied Frontier artwork. PNG metadata was stripped; RGBA channels
+and square composition were retained. Each PNG is 98,350 bytes. No large source
+copy is included in the addon.
+
+Resized PNG SHA-256: `1e2c240c8c39fb69071ff8e1e00f5ccbf3c347024becac78a8ff22fae5c01704`.

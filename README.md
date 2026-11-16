@@ -5,7 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.83.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.84.mcaddon?raw=true)
+
+Version 0.0.84 resizes both addon-selector icons to exactly 256×256 pixels using
+the same supplied Frontier artwork. Each PNG is 98,350 bytes; the larger original
+is no longer bundled in the addon. Gameplay and the charter UI are unchanged.
 
 Version 0.0.83 replaces the behavior and resource pack icons with the supplied
 Jagsby's Frontier emblem for Minecraft's world-creation addon selectors. The

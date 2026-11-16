@@ -1,3 +1,11 @@
+# 0.0.84
+
+- Resize the supplied Frontier artwork from 1254×1254 to exactly 256×256 using
+  Lanczos resampling, retaining the square composition and alpha channel.
+- Replace both pack icons with the same 98,350-byte PNG. The large source PNG is
+  not included in the current pack. Validate the requested 256×256 dimensions.
+- Gameplay and in-game UI are unchanged.
+
 # 0.0.83
 
 - Replace both pack_icon.png files with Jagsbys_Frontier.png from the user's
