@@ -93,7 +93,7 @@ test('Local UI lists current level, category, exact quantity, saved progress and
  const v=village();v.hearth=1;v.biomeUnlocked=true;v.efficiency=5;
  v.localResearch.progress.efficiency=125;
  const text=localResearchText(v,'efficiency',state(10));
- for(const value of ['Lv 5','Next cost: 250 Building Materials','Contributed: 125 / 250','125 remaining','Current: Settlement resource production: +25%.','Next: Settlement resource production: +30%.','Available'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 5','Next cost: 250 Building Materials','Contributed: 125 / 250','125 remaining','Resource production: §b+25％§r §7→§r §a+30％§r','Available'])assert.ok(text.includes(value),value);
  v.hearth=2;assert.ok(localResearchText(v,'hearth',state(1)).includes('Fully upgraded'));
 });
 test('Paid legacy surplus survives a Stewardship ceiling and resumes when the ceiling rises',()=>{
@@ -110,4 +110,22 @@ test('Hearthstone explains only the current and next effect, with no empty Lv 0 
  v.hearth=1;text=localResearchText(v,'hearth',state(1));
  assert.ok(text.includes('Current: Grants players Regeneration I'));assert.ok(text.includes('Next: Villagers within the settlement recover 2 health points once per Minecraft day.'));
  v.hearth=2;text=localResearchText(v,'hearth',state(1));assert.equal(text.includes('Next:'),false);assert.ok(text.includes('Fully upgraded'));
+});
+
+test('Sanctuary compares colored percentages on one line and states its shared duration once',()=>{
+ const v=village();v.hearth=1;v.sanctuary=1;
+ const text=localResearchText(v,'sanctuary',state(1));
+ assert.ok(text.includes('Hostile damage reduction: §b5％§r §7→§r §a9.75％§r'));
+ assert.equal(text.match(/Persists for 3 minutes after leaving\./g).length,1);
+ assert.equal(text.includes('Current:'),false);assert.equal(text.includes('Next:'),false);
+ for(const value of ['Stewardship ceiling','Next cost: 250 Crops','Contributed: 0 / 250','250 remaining','Requires: Hearthstone Lv 1; Stewardship Lv 2','Status: Locked'])assert.ok(text.includes(value),value);
+});
+
+test('Percentage comparisons include zero, preserve resets and avoid rounding Sanctuary to immunity',()=>{
+ const v=village();v.hearth=1;
+ assert.ok(localResearchText(v,'sanctuary',state(2)).includes('§b0％§r §7→§r §a5％§r'));
+ assert.ok(localResearchText(v,'efficiency',state(2)).includes('§b+0％§r §7→§r §a+5％§r'));
+ v.sanctuary=1000;const text=localResearchText(v,'sanctuary',state(1001));
+ assert.ok(text.includes('99.9999％'));assert.equal(text.includes('100％'),false);
+ assert.equal(text.includes('%'),false,'Use the fullwidth percent glyph so Script API cannot consume it as formatting');
 });

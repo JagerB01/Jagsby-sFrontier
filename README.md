@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.72.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.73.mcaddon?raw=true)
+
+Version 0.0.73 compacts Sanctuary and Prosperity research benefits into cyan
+current values, an arrow, and green next-level values. Sanctuary's three-minute
+linger is stated once; costs, contribution progress, prerequisites and locks
+remain visible. Percent signs use a Unicode glyph to avoid the Script API's
+ASCII-percent formatting issue. Research calculations and prices are unchanged.
 
 Version 0.0.72 displays travel prices in corndogs: one stored food point is
 half a corndog, so bread is worth 2.5 corndogs. Every Trail and upgrade takes

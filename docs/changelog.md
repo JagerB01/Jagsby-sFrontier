@@ -1,3 +1,16 @@
+# 0.0.73
+
+- Condense Sanctuary and Prosperity benefit text into a color-coded current →
+  next percentage comparison: cyan current, gray arrow, green next, with resets
+  before subsequent text. Show zero before the first upgrade.
+- Describe Sanctuary's shared three-minute duration once. Retain cost, progress,
+  remaining contribution, prerequisites, Stewardship ceiling and lock status.
+- Use fullwidth Unicode percent glyphs in these comparisons, avoiding the native
+  Script API's ASCII-percent formatting behavior seen in the screenshot. Preserve
+  precision near Sanctuary's upper bound without displaying false 100% immunity.
+- Research mechanics and payment rules are unchanged. Static tests cover zero,
+  normal and high levels, color resets, and preservation of the remaining details.
+
 # 0.0.72
 
 - Quote and display travel costs in corndogs (stored food points / 2), retaining
