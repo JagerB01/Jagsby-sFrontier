@@ -336,7 +336,7 @@ test('Realm replaces the map with Road Networks and keeps both settlement direct
  assert.equal(tabs[0].tts_name,'Road Networks');
  assert.ok(realm['roads@jagsby_frontier.jf_realm_roads_content'].bindings.some(b=>b.source_control_name==='jf_realm_tab_roads'));
  assert.equal(ui.jf_realm_map_content,undefined);
- assert.ok(roads.manageRoads);assert.equal(roads.roadsPrev,undefined);assert.equal(roads.roadsNext,undefined);
+ assert.equal(roads.manageRoads,undefined);assert.equal(roads.roadsPrev,undefined);assert.equal(roads.roadsNext,undefined);
  for(const key of ['summary','empty','entries@common.scrolling_panel'])assert.ok(roads[key]);
  assert.equal(JSON.stringify(ui).includes('jf_data_map'),false);
  assert.equal(JSON.stringify(ui).includes('interactive map'),false);
@@ -466,10 +466,15 @@ test('Realm scrolling rows use explicit collection indices and the established c
    }
    assert.equal(Object.values(fields.icon.controls[0])[0].collection_index,base);
    if(scope==='roads'){
-    for(const [kind,offset] of [['current',6],['next',7]]){
-     assert.equal(Object.values(fields[kind+'_icon'].controls[0])[0].collection_index,base+offset);
-     assert.ok(fields[kind+'_icon'].bindings.some(binding=>binding.source_property_name?.includes('[JF:'+kind+':roads:'+slot+']')));
-    }
+    assert.deepEqual(row.size,[251,34]);
+    assert.equal(Object.values(fields.tier_icon.controls[0])[0].collection_index,base+6);
+    assert.equal(Object.values(fields.travel.controls[0])[0].collection_index,base+7);
+    assert.equal(Object.values(fields.travel_disabled.controls[0])[0].collection_index,base+7);
+    assert.ok(fields.travel.bindings.some(binding=>binding.source_property_name?.includes('[JF:travel:roads:'+slot+']')));
+    assert.ok(fields.travel_disabled.bindings.some(binding=>binding.source_property_name?.includes('[JF:travel_disabled:roads:'+slot+']')));
+    assert.ok(fields.name.offset[0]<fields.distance.offset[0]);assert.ok(fields.distance.offset[0]<fields.cost.offset[0]);
+    assert.ok(fields.cost.offset[0]<fields.tier_icon.offset[0]);assert.ok(fields.tier_icon.offset[0]<fields.travel.offset[0]);
+    assert.equal(fields.current_icon,undefined);assert.equal(fields.next_icon,undefined);
    }else{
     assert.equal(fields.coordinates.offset[1],fields.name.offset[1]);assert.equal(fields.owner.offset[1],fields.distance.offset[1]);
     assert.equal(Object.values(fields.establish.controls[0])[0].collection_index,base+6);

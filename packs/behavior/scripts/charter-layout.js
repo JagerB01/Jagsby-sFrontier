@@ -145,7 +145,6 @@ export const CHARTER_LAYOUT = {
     "sanctuary": 57,
     "roads": 58,
     "colonization": 62,
-    "manageRoads": 77,
     "clearSecondary": 91,
     "prospectSelect0": 191,
     "prospectSelect1": 192,

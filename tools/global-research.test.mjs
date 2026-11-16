@@ -292,7 +292,7 @@ test('Road rows show destination identity, current food cost and only completed 
  let row=h.api.roadNetworkOverview(s,v).rows[0];
  assert.equal(row.name,'Varnesk');assert.equal(row.owner,'Jagsby');assert.equal(row.distance,'1551 blocks');
  assert.equal(row.villageTexture,'textures/ui/frontier/settlement_icons/hamlet');
- assert.equal(row.status,'Building Trail');assert.equal(row.nextTexture,'textures/ui/frontier/road_icons/trail');assert.equal(row.time,'0.01 Minecraft days left');assert.equal(row.cost,'Unavailable');assert.equal(row.texture,undefined);
+ assert.equal(row.status,'Building Trail');assert.equal(row.nextTexture,'textures/ui/frontier/road_icons/trail');assert.equal(row.time,'in 0.01 days');assert.equal(row.cost,'Unavailable');assert.equal(row.texture,undefined);
  assert.match(row.text,/No road built yet/);
  road.level=1;road.targetLevel=2;
  row=h.api.roadNetworkOverview(s,v).rows[0];
@@ -445,17 +445,17 @@ test('Road construction time uses 24000 ticks per Minecraft day and rounds posit
  s.villages.target={...v,id:'target',name:'Next Village'};
  s.roads={r:{from:v.id,to:'target',level:1,targetLevel:2,distance:100,startedTick:0,durationTicks:60000,finishTick:60000}};
  let row=h.api.roadNetworkOverview(s,v).rows[0];
- assert.equal(row.remainingDays,2);assert.equal(row.time,'2.00 Minecraft days left');
+ assert.equal(row.remainingDays,2);assert.equal(row.time,'in 2 days');
  assert.equal(row.texture,'textures/ui/frontier/road_icons/trail');assert.equal(row.nextTexture,'textures/ui/frontier/road_icons/road');
- tick=48000;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'0.50 Minecraft days left');
- tick=59999;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'0.01 Minecraft days left');
+ tick=48000;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'in 0.5 days');
+ tick=59999;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'in 0.01 days');
  tick=60001;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.remainingDays,0);
  s.roads.r.level=2;delete s.roads.r.targetLevel;
  row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'');assert.equal(row.nextTexture,undefined);
  assert.equal(row.texture,'textures/ui/frontier/road_icons/road');assert.equal(row.nextTexture,undefined);
 });
 
-test('Explicit road records bind current/next textures, destination details and day estimates to separate indices',async()=>{
+test('Compact road records show the upgrade icon and days, with a direct Travel action',async()=>{
  const s=fresh(Date.now());
  s.villages.a={...village(),name:'Alpha',roads:1};
  s.villages.b={...village(100),id:'b',name:'Beta',owner:{id:'p',name:'Builder'}};
@@ -463,9 +463,9 @@ test('Explicit road records bind current/next textures, destination details and 
  const h=await runtime(s,undefined,{gameTick:()=>12000});h.api.open(h.player,'a','Realm');
  const base=CHARTER_LAYOUT.realmRows.base+16,form=h.forms[0];
  assert.equal(form.buttons[base],'Beta');assert.equal(form.buttons[base+1],'Builder');assert.equal(form.buttons[base+2],'100 blocks');
- assert.equal(form.buttons[base+4],'Upgrading Road');assert.equal(form.buttons[base+5],'2.00 Minecraft days left');
- assert.equal(form.icons[base+6],'textures/ui/frontier/road_icons/trail');assert.equal(form.icons[base+7],'textures/ui/frontier/road_icons/road');
- assert.ok(form.text.includes('[JF:current:roads:0]'));assert.ok(form.text.includes('[JF:next:roads:0]'));assert.equal(form.text.includes('[JF:noRoad:roads:0]'),false);
+ assert.equal(form.buttons[base+4],'');assert.equal(form.buttons[base+5],'in 2 days');
+ assert.equal(form.icons[base+6],'textures/ui/frontier/road_icons/road');assert.equal(form.icons[base+7],undefined);
+ assert.ok(form.text.includes('[JF:travel:roads:0]'));assert.equal(form.text.includes('[JF:travel_disabled:roads:0]'),false);
 });
 
 test('Realm layout overflow is reported rather than silently discarding settlements',async()=>{
@@ -475,4 +475,35 @@ test('Realm layout overflow is reported rather than silently discarding settleme
  h.api.open(h.player,'v0','Realm');
  assert.equal(h.forms.length,0);assert.ok(h.messages.some(message=>message.includes('128-row layout')));
  assert.equal(Object.keys(h.read().villages).length,129);
+});
+
+test('Per-row Travel spends food and teleports directly for completed and upgrading roads',async()=>{
+ for(const upgrading of [false,true]){
+  const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',roads:2};
+  s.villages.b={...village(100),id:'b',name:'Beta'};
+  s.roads.savedKey={from:'a',to:'b',level:1,distance:100,...(upgrading?{targetLevel:2,startedTick:0,durationTicks:60000,finishTick:60000}:{})};
+  const index=CHARTER_LAYOUT.realmRows.base+16+7;
+  const h=await runtime(s,()=>({canceled:false,selection:index}));
+  h.slots[0]={typeId:'minecraft:bread',amount:64};
+  h.player.dimension={id:'minecraft:overworld'};h.player.location={x:0,y:64,z:0};
+  const arrivals=[];h.player.teleport=location=>arrivals.push(location);
+  h.api.open(h.player,'a','Realm');await new Promise(resolve=>setImmediate(resolve));
+  assert.deepEqual(arrivals,[{x:100.5,y:65,z:0.5}]);assert.ok(h.slots[0].amount<64);
+  assert.ok(h.messages.includes('Arrived at Beta.'));assert.equal(h.forms.length,1,'Travel opens no management menu');
+ }
+});
+
+test('New roads disable Travel and insufficient food never charges or teleports',async()=>{
+ for(const level of [0,1]){
+  const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',roads:1};s.villages.b={...village(100),id:'b',name:'Beta'};
+  s.roads.r={from:'a',to:'b',level,distance:100,...(!level?{targetLevel:1,startedTick:0,durationTicks:60000,finishTick:60000}:{})};
+  const index=CHARTER_LAYOUT.realmRows.base+16+7;
+  const h=await runtime(s,()=>({canceled:false,selection:index}));
+  h.player.dimension={id:'minecraft:overworld'};h.player.location={x:0,y:64,z:0};h.player.teleport=()=>assert.fail('Must not teleport');
+  const before=JSON.stringify(h.slots);
+  h.api.open(h.player,'a','Realm');await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(JSON.stringify(h.slots),before);
+  assert.ok(h.forms[0].text.includes(level?'[JF:travel:roads:0]':'[JF:travel_disabled:roads:0]'));
+  if(level)assert.ok(h.messages.some(text=>text.includes('Need')&&text.includes('food points')));
+ }
 });

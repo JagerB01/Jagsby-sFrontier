@@ -1,3 +1,19 @@
+# 0.0.71
+
+- Reduce Road Networks rows from 66 to 34 UI units and order columns as settlement,
+  distance, food cost, road tier, and Travel. Retain the owner beneath the name.
+- Remove the bottom Manage / travel button and extend the scrolling viewport.
+  Each row's Travel button directly uses its saved connection and food price;
+  completed routes remain usable during upgrades. Disable Travel for new roads.
+- Show one road icon: the completed tier normally, or the next tier while building
+  or upgrading, with "in X days" underneath. Days remain Minecraft days (24,000
+  ticks), rounded up to two decimals and refreshed when reopening the charter.
+- Keep management/upgrades accessible by clicking the road-tier icon. Preserve
+  the explicit indexed collection scopes verified by the user in 0.0.70.
+- Test direct travel, food spending, insufficient food, disabled first builds,
+  column order, and construction record assignments. In-game visual confirmation
+  remains necessary.
+
 # 0.0.70
 
 - Remove Realm dynamic row factories and all sibling-source/row-text alias logic.

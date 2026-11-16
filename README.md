@@ -5,7 +5,16 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.70.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.71.mcaddon?raw=true)
+
+Version 0.0.71 makes Road Networks a compact horizontal list: settlement and
+owner, distance, food-point cost, road-tier icon, then a direct Travel button.
+Rows are 34 UI units high instead of 66. There is no bottom management button;
+click a tier icon to open the existing road management and upgrade controls.
+Upgrading routes display only the upcoming tier icon with "in X days" beneath
+it, using Minecraft days. Travel still uses the current completed road and cost
+until the upgrade finishes. New routes disable Travel until their first road
+is built. Settlement directory layouts retain their working indexed renderer.
 
 Version 0.0.70 removes the unsuccessful Realm row factories entirely. Every
 field and image now uses the explicit indexed collection scopes from the working

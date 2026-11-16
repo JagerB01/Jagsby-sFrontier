@@ -242,15 +242,15 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     directoryIcons.set(base,row.icon);
     if(row.canEstablishRoad){realmMarkers.push(`[JF:establish:${scope}:${slot}]`);handlers.set(base+6,()=>establishDirectoryRoad(player,vId,row.id,0,scope));}
    }else{
-    put(base,[row.name,row.owner,row.distance,row.cost,row.status,row.time,'','']);
+    put(base,[row.name,row.owner,row.distance,row.cost.replace(' food pts',' pts'),row.time?'':row.status,row.time,'','']);
     directoryIcons.set(base,row.villageTexture);
-    if(row.texture){directoryIcons.set(base+6,row.texture);realmMarkers.push(`[JF:current:roads:${slot}]`);}
-    else realmMarkers.push(`[JF:noRoad:roads:${slot}]`);
-    if(row.nextTexture){directoryIcons.set(base+7,row.nextTexture);realmMarkers.push(`[JF:next:roads:${slot}]`);}
+    directoryIcons.set(base+6,row.nextTexture||row.texture);
+    handlers.set(base+6,()=>roadMenu(player,vId));
+    realmMarkers.push(`[JF:${row.canTravel?'travel':'travel_disabled'}:roads:${slot}]`);
+    if(row.canTravel)handlers.set(base+7,()=>travelRoad(player,vId,row.roadId));
    }
   }));
   for(const [key,choice]of researchChoices)handlers.set(actions[key],()=>contributeResearchCard(player,vId,key,choice));
-  handlers.set(actions.manageRoads,()=>roadMenu(player,vId));
   handlers.set(actions.scan,()=>surveySettlement(player,vId,{page,researchScope,realmPage,realmScope,productionScope,productionPages}));
   const pages={};
   for(const [slot,choice]of production.choices.entries()){
@@ -415,22 +415,22 @@ world.beforeEvents.entityHurt?.subscribe(protectDamage);
 world.afterEvents.worldLoad?.subscribe(()=>{try{accounted();}catch(e){console.warn(String(e));}});
 
 function roadNetworkOverview(s,v){
- const connections=Object.values(s.roads||{}).filter(r=>[r.from,r.to].includes(v.id))
-  .map(road=>({road,target:s.villages[road.from===v.id?road.to:road.from]})).filter(entry=>entry.target)
+ const connections=Object.entries(s.roads||{}).filter(([,r])=>[r.from,r.to].includes(v.id))
+  .map(([roadId,road])=>({roadId,road,target:s.villages[road.from===v.id?road.to:road.from]})).filter(entry=>entry.target)
   .sort((a,b)=>a.target.id.localeCompare(b.target.id));
  const active=connections.filter(({road})=>road.level&&!road.targetLevel).length;
  const building=connections.filter(({road})=>road.targetLevel).length;
- const rows=connections.map(({road,target})=>{
+ const rows=connections.map(({roadId,road,target})=>{
   const tier=['','trail','road','highway'][road.level];
   const ticksLeft=road.targetLevel?Math.max(0,(road.finishTick??road.startedTick+road.durationTicks)-gameTick()):0;
   const remainingDays=Math.ceil(ticksLeft/24000*100)/100;
   const nextTier=['none','trail','road','highway'][road.targetLevel||0];
   const status=road.targetLevel?`${road.level?'Upgrading':'Building'} ${['','Trail','Road','Highway'][road.targetLevel]}`:['Unbuilt','Trail','Road','Highway'][road.level];
   const cost=road.level?`${foodCost(road)} food pts`:'Unavailable';
-  const time=road.targetLevel?`${remainingDays.toFixed(2)} Minecraft days left`:'';
+  const time=road.targetLevel?`in ${Number(remainingDays.toFixed(2))} days`:'';
   const name=target.name,owner=ownerName(target),distance=`${Math.round(road.distance)} blocks`;
   const text=`§6${name}§r\n${owner} · ${distance}\nTravel cost: ${cost}\n${status}${time?'\n'+time:''}`;
-  return {name,owner,distance,cost,status,remainingDays,time,
+  return {roadId,canTravel:Boolean(road.level),name,owner,distance,cost,status,remainingDays,time,
    villageTexture:settlementTier(target.census).iconTexture,
    texture:tier?`textures/ui/frontier/road_icons/${tier}`:undefined,
    nextTexture:road.targetLevel?`textures/ui/frontier/road_icons/${nextTier}`:undefined,

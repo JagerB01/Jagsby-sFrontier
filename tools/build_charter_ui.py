@@ -30,7 +30,7 @@ TECHS = ["innovation", "frontier", "capacity", "colonization", "storage",
          "hearth", "biome", "sanctuary", "efficiency", "roads"]
 DATA.update({key + "Level": 66 + i for i, key in enumerate(TECHS)})
 DATA["tradeRoute"] = 76
-ACTIONS["manageRoads"] = 77
+
 DATA.update({"productionOutput": 78})
 ACTIONS.update({"clearSecondary": 91})
 DATA.update({"productionItem0": 96, "productionItem1": 97})
@@ -743,17 +743,19 @@ def build():
 
     for scope_index, scope in enumerate(["mine", "all", "roads"]):
         road = scope == "roads"
-        height = 66 if road else 32
+        height = 34 if road else 32
         field_specs = [
             ("name", 0, [33, 2], [76, 12], 0.75, WHEAT),
             ("owner", 1, [33, 15], [76, 12], 0.65, SILVER),
         ]
         if road:
-            field_specs += [
-                ("distance", 2, [112, 2], [60, 12], 0.65, IVORY),
-                ("cost", 3, [177, 15], [70, 12], 0.65, IVORY),
-                ("status", 4, [33, 29], [140, 12], 0.65, IVORY),
-                ("time", 5, [33, 42], [140, 12], 0.65, IVORY),
+            field_specs = [
+                ("name", 0, [32, 2], [56, 12], 0.75, WHEAT),
+                ("owner", 1, [32, 15], [56, 12], 0.65, SILVER),
+                ("distance", 2, [91, 15], [38, 12], 0.6, IVORY),
+                ("cost", 3, [132, 15], [30, 12], 0.6, IVORY),
+                ("status", 4, [162, 24], [40, 9], 0.5, SILVER),
+                ("time", 5, [162, 24], [40, 9], 0.5, SILVER),
             ]
         else:
             field_specs += [
@@ -766,10 +768,12 @@ def build():
             template = "jf_realm_" + scope + "_" + field
             text = label("#form_button_text", size, color=color, scale=scale)
             text["property_bag"] = {"#form_button_text": ""}
+            if road and field in ["name", "owner"]:
+                text["text_truncate"] = True
             text["bindings"] = [
                 {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
                 {"binding_name": "#form_button_text", "binding_type": "collection", "binding_collection_name": "form_buttons"}]
-            if field == "status" and not road:
+            if field == "status" or (road and field == "time"):
                 text["text_alignment"] = "center"
             ui[template] = text
         if not road:
@@ -782,6 +786,25 @@ def build():
                     control("caption", {**label("Establish\nRoad", [41, 18], scale=0.65),
                         "text_alignment": "center", "anchor_from": "center", "anchor_to": "center", "offset": [0, 0]})]
             ui["jf_realm_establish_" + scope + "@common.button"] = button
+        if road:
+            for enabled in [True, False]:
+                button = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
+                button.update({"size": [43, 22], "enabled": enabled, "focus_enabled": enabled,
+                    "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}]})
+                for state in button["controls"]:
+                    state_name, panel = next(iter(state.items()))
+                    panel["size"] = [43, 22]
+                    panel["controls"] = [control("face", image(button_texture(43, 22, state_name), [43, 22])),
+                        control("caption", {**label("Travel", [37, 12], color=IVORY if enabled else SILVER, scale=0.7),
+                            "text_alignment": "center", "anchor_from": "center", "anchor_to": "center", "offset": [0, 0]})]
+                ui["jf_realm_travel" + ("" if enabled else "_disabled") + "@common.button"] = button
+            tier_action = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
+            tier_action.update({"size": [24, 24], "controls": [],
+                "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}]})
+            ui["jf_realm_tier_action@common.button"] = tier_action
+            tier_icon = copy.deepcopy(ui["jf_realm_icon"])
+            tier_icon["size"] = [20, 20]
+            ui["jf_realm_road_tier_icon"] = tier_icon
         rows = []
         for slot in range(row_limit):
             base = row_base + slot * row_stride + scope_index * 8
@@ -790,21 +813,17 @@ def build():
             for field, index, offset, size, _, _ in field_specs:
                 fields.append(control(field, explicit_scope("jf_realm_" + scope + "_" + field, base + index, offset, size)))
             if road:
-                fields.append(control("cost_label", label("Travel cost", [70, 12], (177, 2), SILVER, 0.65)))
-                for kind, index, x in [("current", 6, 178), ("next", 7, 220)]:
-                    icon = explicit_scope("jf_realm_icon", base + index, [x, 29], [24, 24])
-                    icon["bindings"] = row_present("[JF:" + kind + ":roads:" + str(slot) + "]")
-                    fields.append(control(kind + "_icon", icon))
-                    caption = label("Current" if kind == "current" else "Next", [32, 10], (x - 3, 54), SILVER, 0.6)
-                    caption["text_alignment"] = "center"
-                    if kind == "next": caption["bindings"] = icon["bindings"]
-                    fields.append(control(kind + "_caption", caption))
-                no_road = label("No road", [34, 12], (173, 34), SILVER, 0.65)
-                no_road["bindings"] = row_present("[JF:noRoad:roads:" + str(slot) + "]")
-                fields.append(control("no_road", no_road))
-                arrow = label(">", [10, 12], (207, 34), WHEAT, 0.8)
-                arrow["bindings"] = row_present("[JF:next:roads:" + str(slot) + "]")
-                fields.append(control("upgrade_arrow", arrow))
+                fields.append(control("distance_label", label("Distance", [38, 12], (91, 2), SILVER, 0.6)))
+                fields.append(control("cost_label", label("Food cost", [30, 12], (132, 2), SILVER, 0.6)))
+                icon = explicit_scope("jf_realm_road_tier_icon", base + 6, [170, 2], [20, 20])
+                fields.append(control("tier_icon", icon))
+                tier_action = explicit_scope("jf_realm_tier_action", base + 6, [168, 0], [24, 24])
+                fields.append(control("tier_action", tier_action))
+                for enabled in [True, False]:
+                    key = "travel" if enabled else "travel_disabled"
+                    travel = explicit_scope("jf_realm_" + key, base + 7, [205, 5], [43, 22])
+                    travel["bindings"] = row_present("[JF:" + key + ":roads:" + str(slot) + "]")
+                    fields.append(control(key, travel))
             else:
                 fields.append(control("dev_label", label("Dev", [23, 12], (177, 2), SILVER, 0.65)))
                 establish = explicit_scope("jf_realm_establish_" + scope, base + 6, [201, 4], [47, 24])
@@ -815,15 +834,12 @@ def build():
         ui["jf_realm_" + scope + "_rows"] = {"type": "stack_panel", "orientation": "vertical", "size": [251, "100%c"], "controls": rows}
         scroll = control("entries@common.scrolling_panel", {
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 12 if road else 0],
-            "size": [257, 93 if road else 131], "$show_background": False,
+            "size": [257, 119 if road else 131], "$show_background": False,
             "$scrolling_content": "jagsby_frontier.jf_realm_" + scope + "_rows",
             "$scroll_size": [4, "100% - 4px"], "$scrolling_pane_size": ["100% - 5px", "100% - 2px"]})
         content = [scroll]
         if road:
             content.append(overview_value("summary", DATA["roadSummary"], [3, 0], [248, 10], scale=0.6))
-            button = action("manageRoads", ACTIONS["manageRoads"], "Manage / travel", width=251)["manageRoads"]
-            button.update({"offset": [0, 107], "anchor_from": "top_left", "anchor_to": "top_left"})
-            content.append(control("manageRoads", button))
             content.append(overview_value("empty", DATA["roadDetails"], [7, 30], [236, 60], scale=0.7))
         else:
             empty = label("You do not own any settlements yet." if scope == "mine" else "No settlements registered.", [240, 24], (7, 8), IVORY, 0.75)
