@@ -1,3 +1,14 @@
+# 0.0.66
+
+- Reduce settlement directory icons from 28 to 24 UI units, inset within their row.
+  Center Establish Road captions in every button state.
+- Render Road Networks as three framed rows per page with destination village,
+  owner, distance, food-point travel cost, and completed road artwork. Match the
+  settlement directory style and retain pagination and Manage / travel.
+- Show Building progress and unavailable travel for unfinished new roads. During
+  upgrades retain the completed road image and its current cost. Hide road artwork
+  until a road is actually built. Keep the compact form payload at 300 records.
+
 # 0.0.65
 
 - Cancel charter placement within the 80-block census radius of another recorded

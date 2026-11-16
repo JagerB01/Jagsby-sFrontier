@@ -277,11 +277,32 @@ test('Road Networks lists connections in bounded pages and distinguishes constru
  s.roads.r0.targetLevel=2;s.roads.r0.startedTick=0;s.roads.r0.durationTicks=100;
  const first=h.api.roadNetworkOverview(s,v,0),last=h.api.roadNetworkOverview(s,v,99);
  assert.ok(first.summary.includes('4 active, 1 building'));assert.ok(first.summary.includes('page 1 / 2'));
- assert.ok(first.details.includes('Building Lv 2'));assert.ok(first.details.includes('food points to travel'));
+ assert.ok(first.details.includes('Upgrading'));assert.ok(first.details.includes('food points to travel'));
  assert.equal(first.details.includes('Town 4'),false);assert.ok(last.details.includes('Town 4'));
- assert.deepEqual(first.rows.map(row=>row.texture),['road','trail','road','highway'].map(tier=>'textures/ui/frontier/road_icons/'+tier));
- assert.equal(last.rows.length,1);
+ assert.deepEqual(first.rows.map(row=>row.texture),['trail','trail','road'].map(tier=>'textures/ui/frontier/road_icons/'+tier));
+ assert.equal(last.rows.length,2);
  assert.equal(h.api.roadNetworkOverview({...s,roads:{}},v).rows.length,0);
+});
+test('Road rows show destination identity, current food cost and only completed road artwork',async()=>{
+ const h=await runtime(),s=h.read(),v=s.villages.none;
+ const target={...v,id:'target',name:'Varnesk',owner:{id:'owner',name:'Jagsby'},census:{realmPowerTenths:20}};
+ s.villages.target=target;
+ const road={from:v.id,to:target.id,level:0,targetLevel:1,distance:1551,startedTick:0,durationTicks:100};
+ s.roads={route:road};
+ let row=h.api.roadNetworkOverview(s,v).rows[0];
+ assert.equal(row.name,'Varnesk');assert.equal(row.owner,'Jagsby');assert.equal(row.distance,'1551 blocks');
+ assert.equal(row.villageTexture,'textures/ui/frontier/settlement_icons/hamlet');
+ assert.match(row.status,/^Building \d+%$/);assert.equal(row.cost,'Unavailable');assert.equal(row.texture,undefined);
+ assert.match(row.text,/No road built yet/);
+ road.level=1;road.targetLevel=2;
+ row=h.api.roadNetworkOverview(s,v).rows[0];
+ assert.match(row.status,/^Upgrading \d+%$/);
+ assert.equal(row.texture,'textures/ui/frontier/road_icons/trail');
+ assert.equal(row.cost,`${E.foodCost(road)} food pts`);
+ delete road.targetLevel;road.level=3;
+ row=h.api.roadNetworkOverview(s,v).rows[0];
+ assert.equal(row.status,'Highway');assert.equal(row.texture,'textures/ui/frontier/road_icons/highway');
+ assert.equal(row.cost,`${E.foodCost(road)} food pts`);
 });
 test('Removing the map restores only previously saved movement controls once',async()=>{
  const h=await runtime();let raw=JSON.stringify({4:true,6:false});const restored=[],titles=[];

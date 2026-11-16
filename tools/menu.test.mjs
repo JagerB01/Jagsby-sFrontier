@@ -450,12 +450,20 @@ test('Both settlement directories use compact two-line rows with tier icons and 
   const pane=children(ui['jf_realm_'+scope+'_content']);assert.equal(pane.directory,undefined);
   for(let i=0;i<3;i++){
    const row=pane['row'+i],fields=children(row);assert.deepEqual(row.size,[254,31]);
-   assert.ok(fields.icon);assert.ok(fields.name);assert.ok(fields.owner);assert.ok(fields.coordinates);assert.ok(fields.distance);assert.ok(fields.development);assert.ok(fields.establish);
+   assert.deepEqual(fields.icon.size,[24,24]);assert.deepEqual(fields.icon.offset,[3,3]);assert.ok(fields.name);assert.ok(fields.owner);assert.ok(fields.coordinates);assert.ok(fields.distance);assert.ok(fields.development);assert.ok(fields.establish);
    assert.equal(fields.name.offset[1],fields.coordinates.offset[1]);assert.equal(fields.owner.offset[1],fields.distance.offset[1]);
    assert.equal(fields.development.offset[1],fields.owner.offset[1]);
    for(const field of Object.values(fields)){
     assert.ok(field.offset[0]+field.size[0]<=254);assert.ok(field.offset[1]+field.size[1]<=31);
    }
+  }
+ }
+ for(const scope of ['Mine','All'])for(let slot=0;slot<3;slot++){
+  const button=template(ui,'jf_action_directory'+scope+'Road'+slot);
+  for(const state of Object.values(children(button))){
+   const caption=children(state).caption;
+   assert.equal(caption.text_alignment,'center');assert.equal(caption.anchor_from,'center');
+   assert.equal(caption.anchor_to,'center');assert.deepEqual(caption.offset,[0,0]);
   }
  }
  for(const tier of ['outpost','hamlet','village','town','city']){
@@ -464,14 +472,17 @@ test('Both settlement directories use compact two-line rows with tier icons and 
  }
 });
 
- test('Road connections use compact conditional rows with tier icon bindings',async()=>{
+ test('Road connections use directory-style rows with village, travel cost and built road artwork',async()=>{
  const ui=await loadUI(),roads=children(ui.jf_realm_roads_content);
- for(let slot=0;slot<4;slot++){
+ for(let slot=0;slot<3;slot++){
   const row=roads['row'+slot];
-  assert.deepEqual(row.size,[240,18]);
+  assert.deepEqual(row.size,[254,31]);
+  const fields=children(row);
+  for(const name of ['name','owner','distance','status','cost','village_icon','road_icon'])assert.ok(fields[name]);
+  assert.ok(fields.road_icon.bindings.some(binding=>binding.source_property_name?.includes('[JF:roadBuilt:'+slot+']')));
   assert.ok(row.offset[1]+row.size[1]<=107);
   assert.ok(row.bindings.some(binding=>binding.source_property_name?.includes('[JF:road:'+slot+']')));
-  const icon=ui['jf_road_icon'+slot];
+  const icon=ui['jf_road_road_icon'+slot];
   assert.ok(icon.keep_ratio);
   assert.ok(icon.bindings.some(binding=>binding.binding_name==='#form_button_texture'));
  }
@@ -489,7 +500,7 @@ test('form payload packs later records without gaps and preserves contiguous col
  assert.ok(layout.recordCount<=300,'Avoid the former 506-record sparse payload');
  const later=indices.filter(index=>index>=98).sort((a,b)=>a-b);
  assert.deepEqual(later,Array.from({length:later.length},(_,i)=>i+98));
- for(const [group,prefix,count]of [['data','stockCount',30],['data','prospectInfo',52],['actions','prospectSelect',52],['data','roadConnection',4]]){
+ for(const [group,prefix,count]of [['data','stockCount',30],['data','prospectInfo',52],['actions','prospectSelect',52],['data','roadConnection',3]]){
   for(let i=0;i<count;i++)assert.equal(layout[group][prefix+i],layout[group][prefix+'0']+i);
  }
 });

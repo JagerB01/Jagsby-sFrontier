@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.65.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.66.mcaddon?raw=true)
+
+Version 0.0.66 improves Realm rows: settlement icons are inset and smaller,
+Establish Road is centered, and Road Networks uses matching village/owner/distance
+rows with travel cost in food points. Completed Trail/Road/Highway artwork appears
+beside each connection. New routes show Building progress with travel unavailable;
+upgrades show the existing road artwork and current travel price until complete.
 
 Version 0.0.65 prevents Village Charter placement within 80 blocks of another
 recorded charter and explains blocked placement in player chat.

@@ -19,7 +19,7 @@ ACTIONS = {name: i + 14 for i, name in enumerate([
 ])}
 ACTIONS.update({"claim": 28, "minePrev": 29, "mineNext": 30, "allPrev": 31, "allNext": 32})
 DATA.update({"roadSummary": 33, "roadDetails": 34})
-DATA.update({"roadConnection" + str(slot): 160 + slot for slot in range(4)})
+DATA.update({"roadConnection" + str(slot): 160 + slot for slot in range(3)})
 ACTIONS.update({"roadsPrev": 46, "roadsNext": 47})
 DATA.update({"sanctuary": 55, "roads": 56})
 ACTIONS.update({"sanctuary": 57, "roads": 58})
@@ -49,6 +49,9 @@ for scope_index, scope in enumerate(["mine", "all"]):
     for slot in range(3):
         DATA.update({"directory" + scope.title() + str(slot) + field: 400 + scope_index * 18 + slot * 6 + i for i, field in enumerate(DIRECTORY_FIELDS)})
         ACTIONS["directory" + scope.title() + "Road" + str(slot)] = 500 + scope_index * 3 + slot
+for slot in range(3):
+    for index, field in enumerate(["Owner", "Distance", "Cost", "Status"]):
+        DATA["roadConnection" + str(slot) + field] = 600 + slot * 4 + index
 # Preserve the original low transport IDs; pack later additions contiguously.
 # These IDs are form-local, never saved. Avoid transmitting hundreds of holes.
 late = sorted([(index, mapping, key) for mapping in [DATA, ACTIONS]
@@ -722,25 +725,44 @@ def build():
     ]}
     realm_controls = [research_tab("roads", 0, "realm", "Road Networks"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
     road_controls = [
-        overview_value("summary", DATA["roadSummary"], [7, 2], [240, 25], scale=0.7),
+        overview_value("summary", DATA["roadSummary"], [3, 0], [248, 10], scale=0.6),
         overview_value("connections", DATA["roadDetails"], [7, 30], [240, 70], scale=0.7),
     ]
-    for slot in range(4):
-        key, template = "roadConnection" + str(slot), "jf_road_icon" + str(slot)
-        icon = image("frontier/road_icons/trail", [17, 17], layer=8)
-        icon["keep_ratio"] = True
-        icon["bindings"] = [
-            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
-            {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
-            {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
-        ]
-        ui[template] = icon
-        picture = control("icon", {"type": "stack_panel", "orientation": "vertical", "size": [17, 17],
-            "anchor_from": "top_left", "anchor_to": "top_left", "collection_name": "form_buttons",
-            "controls": [control("record@jagsby_frontier." + template, {"collection_index": DATA[key]})]})
-        road_controls.append(control("row" + str(slot), {"type": "panel", "size": [240, 18], "offset": [7, 29 + slot * 19],
-            "anchor_from": "top_left", "anchor_to": "top_left", "clips_children": True,
-            "controls": [picture, overview_value("text", DATA[key], [22, 0], [218, 18], scale=0.6)],
+    for slot in range(3):
+        prefix = "roadConnection" + str(slot)
+        fields = [control("surface", image("frontier/palette_panel", [254, 31], color=[0.82, 0.82, 0.82]))]
+        for kind, record_key, texture, offset in [
+            ("village", prefix, "settlement_icons/outpost", [3, 3]),
+            ("road", prefix + "Status", "road_icons/trail", [226, 4]),
+        ]:
+            template = "jf_road_" + kind + "_icon" + str(slot)
+            icon = image("frontier/" + texture, [24, 24], layer=8)
+            icon["keep_ratio"] = True
+            icon["bindings"] = [
+                {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+                {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+                {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+            ]
+            ui[template] = icon
+            picture = {"type": "stack_panel", "orientation": "vertical", "size": [24, 24],
+                "anchor_from": "top_left", "anchor_to": "top_left", "offset": offset, "collection_name": "form_buttons",
+                "controls": [control("record@jagsby_frontier." + template, {"collection_index": DATA[record_key]})]}
+            if kind == "road":
+                picture["bindings"] = condition("(not ((#form_text - '[JF:roadBuilt:" + str(slot) + "]') = #form_text))", "#form_text")
+            fields.append(control(kind + "_icon", picture))
+        for field, record_key, offset, size, scale in [
+            ("name", prefix, [33, 2], [76, 12], 0.75),
+            ("owner", prefix + "Owner", [33, 15], [76, 12], 0.65),
+            ("distance", prefix + "Distance", [112, 2], [57, 12], 0.65),
+            ("status", prefix + "Status", [112, 15], [59, 12], 0.6),
+            ("cost", prefix + "Cost", [174, 15], [49, 12], 0.65),
+        ]:
+            fields.append(overview_value(field, DATA[record_key], offset, size, scale=scale))
+        GENERATED_CONTROLS["jf_data_" + prefix]["color"] = list(WHEAT)
+        GENERATED_CONTROLS["jf_data_" + prefix + "Owner"]["color"] = list(SILVER)
+        fields.append(control("cost_label", label("Travel cost", [49, 12], (174, 2), SILVER, 0.6)))
+        road_controls.append(control("row" + str(slot), {"type": "panel", "size": [254, 31], "offset": [0, 12 + slot * 31],
+            "anchor_from": "top_left", "anchor_to": "top_left", "controls": fields,
             "bindings": condition("(not ((#form_text - '[JF:road:" + str(slot) + "]') = #form_text))", "#form_text")}))
     for key, caption, x, width in [("roadsPrev", "Previous", 0, 60), ("manageRoads", "Manage / travel", 64, 122), ("roadsNext", "Next", 190, 60)]:
         button = action(key, ACTIONS[key], caption, width=width)[key]
@@ -757,7 +779,7 @@ def build():
             prefix = "directory" + scope.title() + str(slot)
             y = slot * 32
             icon_name = "jf_directory_icon_" + scope + str(slot)
-            icon = image("frontier/settlement_icons/outpost", [28, 28], layer=8)
+            icon = image("frontier/settlement_icons/outpost", [24, 24], layer=8)
             icon["keep_ratio"] = True
             icon["bindings"] = [
                 {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
@@ -765,8 +787,8 @@ def build():
                 {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
             ]
             ui[icon_name] = icon
-            picture = control("icon", {"type": "stack_panel", "orientation": "vertical", "size": [28, 28],
-                "anchor_from": "top_left", "anchor_to": "top_left", "offset": [1, 1], "collection_name": "form_buttons",
+            picture = control("icon", {"type": "stack_panel", "orientation": "vertical", "size": [24, 24],
+                "anchor_from": "top_left", "anchor_to": "top_left", "offset": [3, 3], "collection_name": "form_buttons",
                 "controls": [control("record@jagsby_frontier." + icon_name, {"collection_index": DATA[prefix + "Name"]})]})
             fields = [control("surface", image("frontier/palette_panel", [254, 31], color=[0.82, 0.82, 0.82])),picture]
             for field, offset, size, scale in [
@@ -784,7 +806,7 @@ def build():
             button.update({"anchor_from": "top_left", "anchor_to": "top_left", "offset": [207, 4], "size": [47, 24]})
             for state in GENERATED_CONTROLS["jf_action_" + key + "@common.button"]["controls"]:
                 caption = next(c["caption"] for c in next(iter(state.values()))["controls"] if "caption" in c)
-                caption.update({"text_alignment": "center", "offset": [0, 2], "size": [47, 20], "font_scale_factor": 0.65})
+                caption.update({"text_alignment": "center", "anchor_from": "center", "anchor_to": "center", "offset": [0, 0], "size": [41, 18], "font_scale_factor": 0.65})
             fields.append(control("establish", button))
             content.append(control("row" + str(slot), {"type": "panel", "size": [254, 31], "offset": [0, y],
                 "anchor_from": "top_left", "anchor_to": "top_left", "controls": fields,
