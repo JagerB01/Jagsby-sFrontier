@@ -1,3 +1,17 @@
+# 0.0.68
+
+- Correct the Realm factory-row binding contract: initialize the custom row text
+  property, bind form text into that alias, and evaluate visibility/text against
+  that same property. Start conditional controls hidden pending binding.
+- Follow the native dynamic-button pattern for descendants: retain collection
+  context from the factory and attach collection_details only to the clickable
+  Establish Road button. Keep icon texture bindings in their native scope.
+- Add regression checks for unrelated-record filtering, mutually exclusive status
+  captions, current/next icon selection, default hidden state, and property setup.
+  These checks do not replace in-game rendering verification.
+- Show destination names without road type/building suffixes in Overview Route.
+  Remove the Road Networks level from its summary heading.
+
 # 0.0.67
 
 - Replace Realm Previous/Next controls and page counters with scrolling native

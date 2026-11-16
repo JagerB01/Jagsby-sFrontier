@@ -20,10 +20,10 @@ test('Overview route summary identifies the route, construction, multiple routes
  const a={id:'a',name:'Home'},b={id:'b',name:'Rosefield'},c={id:'c',name:'A Very Long Village Name'};
  const s={villages:{a,b,c},roads:{}};
  assert.equal(tradeRouteSummary(s,a),'None');
- s.roads.ab={from:'a',to:'b',level:2};assert.equal(tradeRouteSummary(s,a),'Rosefield (Road)');
- s.roads.ab.targetLevel=3;assert.equal(tradeRouteSummary(s,a),'Rosefield (building)');
+ s.roads.ab={from:'a',to:'b',level:2};assert.equal(tradeRouteSummary(s,a),'Rosefield');
+ s.roads.ab.targetLevel=3;assert.equal(tradeRouteSummary(s,a),'Rosefield');
  s.roads.ac={from:'c',to:'a',level:1};
- const text=tradeRouteSummary(s,a);assert.ok(text.includes('(Trail) +1'));assert.ok(text.length<=24);
+ const text=tradeRouteSummary(s,a);assert.ok(text.endsWith(' +1'));assert.ok(text.length<=24);
  s.roads.orphan={from:'a',to:'missing',level:3};assert.equal(tradeRouteSummary(s,a),text);
  delete s.roads.ab;delete s.roads.ac;assert.equal(tradeRouteSummary(s,a),'None');
 });

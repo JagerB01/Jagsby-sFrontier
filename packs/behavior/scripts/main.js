@@ -428,7 +428,7 @@ function roadNetworkOverview(s,v){
    record:`[JF:list:roads][JF:current:${tier||'none'}][JF:next:${nextTier}]${text}`,
    text:text+(road.level?'':'\nNo road built yet')};
  });
- return {rows,summary:`Road Networks Lv ${v.roads||0} | ${active} active, ${building} building`,details:rows.map(row=>row.text).join('\n')||'No connections yet. Establish a road from My Settlements or All Settlements after researching Road Networks I.'};
+ return {rows,summary:`Road Networks | ${active} active, ${building} building`,details:rows.map(row=>row.text).join('\n')||'No connections yet. Establish a road from My Settlements or All Settlements after researching Road Networks I.'};
 }
 // An older map session may have saved disabled movement permissions. Restore
 // only recorded categories once; no map navigation, terrain reads or HUD remains.

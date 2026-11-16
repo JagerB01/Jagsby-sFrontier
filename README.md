@@ -5,7 +5,15 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.67.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.68.mcaddon?raw=true)
+
+Version 0.0.68 corrects the Realm scrolling-row bindings after the reported blank
+cards, unrelated icons, and overlapping labels in 0.0.67. Row text properties now
+have explicit defaults and aliases, while descendants retain the native factory
+collection context. Conditional content starts hidden until its row is bound.
+The Overview route shows the destination settlement name without its road type;
+the Road Networks summary no longer displays a research level. These binding
+changes still need confirmation in Minecraft.
 
 Version 0.0.67 replaces the Realm page controls with scrollable My Settlements,
 All Settlements, and Road Networks lists. Rows are generated for every entry;

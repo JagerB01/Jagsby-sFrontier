@@ -498,3 +498,59 @@ test('form payload packs later records without gaps and preserves contiguous col
   for(let i=0;i<count;i++)assert.equal(layout[group][prefix+i],layout[group][prefix+'0']+i);
  }
 });
+
+test('Realm factory rows initialize record properties and filter unrelated form entries before display',async()=>{
+ const ui=await loadUI();
+ const unrelated=['[JF:action:rename]','[JF:data:overview]Marovek','12','[JF:action:collect]'];
+ function visible(control,text){
+  const expression=control.bindings.find(binding=>binding.target_property_name==='#visible').source_property_name;
+  assert.equal(expression.includes('#form_button_text'),false,'Views must use the initialized per-row alias');
+  const marker=expression.match(/#row_text - '([^']+)'/)[1];
+  const equal=text.replaceAll(marker,'')===text;
+  return (expression.match(/\bnot\b/g)||[]).length%2?!equal:equal;
+ }
+ function checkBindings(value){
+  if(!value||typeof value!=='object')return;
+  if(value.bindings?.some(binding=>binding.binding_name_override==='#row_text')){
+   assert.equal(value.property_bag['#row_text'],'');
+   for(const binding of value.bindings.filter(binding=>binding.binding_type==='view')){
+    assert.equal(binding.source_property_name.includes('#form_button_text'),false);
+   }
+  }
+  if(value.bindings?.some(binding=>binding.target_property_name==='#visible'))assert.equal(value.visible,false);
+  for(const child of Object.values(value))checkBindings(child);
+ }
+ for(const scope of ['mine','all','roads']){
+  const row=ui['jf_realm_'+scope+'_row'];
+  checkBindings(row);
+  assert.equal(row.bindings.some(binding=>binding.binding_type==='collection_details'),false);
+  const text='[JF:list:'+scope+']Village';
+  assert.equal(visible(row,text),true);
+  for(const other of unrelated.concat(['mine','all','roads'].filter(s=>s!==scope).map(s=>'[JF:list:'+s+']Village'))){
+   assert.equal(visible(row,other),false,'Unrelated records must not occupy this list');
+  }
+  const fields=children(row);
+  assert.equal(fields.icon.bindings.some(binding=>binding.binding_type==='collection_details'),false);
+  assert.ok(fields.icon.bindings.some(binding=>binding.binding_name_override==='#texture'));
+  if(scope==='roads'){
+   const upgrade='[JF:list:roads][JF:current:trail][JF:next:road]Village';
+   for(const kind of ['current','next']){
+    const shown=['trail','road','highway'].filter(tier=>visible(fields[kind+'_'+tier],upgrade));
+    assert.deepEqual(shown,[kind==='current'?'trail':'road']);
+   }
+   assert.equal(visible(fields.no_road,upgrade),false);
+   assert.equal(visible(fields.upgrade_arrow,upgrade),true);
+   assert.equal(visible(fields.no_road,'[JF:list:roads][JF:current:none][JF:next:trail]Village'),true);
+   assert.equal(visible(fields.next_caption,'[JF:list:roads][JF:current:road][JF:next:none]Village'),false);
+  }else{
+   const button=template(ui,'jf_directory_establish_'+scope);checkBindings(button);
+   assert.equal(button.bindings.filter(binding=>binding.binding_type==='collection_details').length,1);
+   assert.equal(visible(button,text+'[JF:establish]'),true);
+   assert.equal(visible(button,text+'[JF:status:building]'),false);
+   for(const status of ['here','connected','building','dimension','research']){
+    const shown=['here','connected','building','dimension','research'].filter(candidate=>visible(fields['status_'+candidate],text+'[JF:status:'+status+']'));
+    assert.deepEqual(shown,[status]);
+   }
+  }
+ }
+});

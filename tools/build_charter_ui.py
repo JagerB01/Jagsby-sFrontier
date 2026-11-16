@@ -722,13 +722,13 @@ def build():
     ]}
     realm_controls = [research_tab("roads", 0, "realm", "Road Networks"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
     def list_condition(marker):
-        return "(not ((#form_button_text - '" + marker + "') = #form_button_text))"
+        return "(not ((#row_text - '" + marker + "') = #row_text))"
 
     def list_bindings():
-        return [
-            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
-            {"binding_name": "#form_button_text", "binding_type": "collection", "binding_collection_name": "form_buttons"},
-        ]
+        # Match the native dynamic-button descendants: read the factory's current
+        # collection entry without rebinding its collection_details context.
+        return [{"binding_name": "#form_button_text", "binding_name_override": "#row_text",
+                 "binding_type": "collection", "binding_collection_name": "form_buttons"}]
 
     def list_icon(name, texture, offset, marker=None):
         icon = image(texture, [24, 24], offset, layer=8)
@@ -750,13 +750,12 @@ def build():
         height = 60 if scope == "roads" else 48
         tokens = [marker, "[JF:establish]"] + ["[JF:status:" + status + "]" for status in ["here", "connected", "building", "dimension", "research"]]
         tokens += ["[JF:" + kind + ":" + tier + "]" for kind in ["current", "next"] for tier in ["none", "trail", "road", "highway"]]
-        expression = "(#form_button_text" + "".join(" - '" + token + "'" for token in tokens) + ")"
+        expression = "(#row_text" + "".join(" - '" + token + "'" for token in tokens) + ")"
         text = label("#text", [140 if scope == "roads" else 161, height - 4], (33, 2), IVORY, 0.65)
         text["bindings"] = list_bindings() + [view(expression, "#text")]
         village_icon = image("frontier/settlement_icons/outpost", [24, 24], (4, 4), layer=8)
         village_icon["keep_ratio"] = True
         village_icon["bindings"] = [
-            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
             {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
             {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
         ]
@@ -782,7 +781,7 @@ def build():
             # The factory preserves each row's native form record index for this button.
             button = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
             button.update({"size": [47, 24], "offset": [201, 12], "anchor_from": "top_left", "anchor_to": "top_left",
-                           "bindings": list_bindings() + [view(list_condition("[JF:establish]")), view(list_condition("[JF:establish]"), "#enabled")]})
+                           "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}] + list_bindings() + [view(list_condition("[JF:establish]")), view(list_condition("[JF:establish]"), "#enabled")]})
             for state in button["controls"]:
                 state_name, panel = next(iter(state.items()))
                 panel["size"] = [47, 24]
@@ -819,6 +818,25 @@ def build():
             "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "size": [257, 131],
             "bindings": [view("#toggle_state", target, "jf_realm_tab_" + scope) for target in ["#visible", "#enabled"]],
         }))
+    def initialize_row_bindings(value):
+        if isinstance(value, dict):
+            bindings = value.get("bindings", [])
+            if any(binding.get("binding_name_override") == "#row_text" for binding in bindings):
+                value.setdefault("property_bag", {})["#row_text"] = ""
+            if value.get("text") == "#text" and any(binding.get("target_property_name") == "#text" for binding in bindings):
+                value.setdefault("property_bag", {})["#text"] = ""
+            if any(binding.get("target_property_name") == "#visible" for binding in bindings):
+                value["visible"] = False
+            for child in list(value.values()):
+                initialize_row_bindings(child)
+        elif isinstance(value, list):
+            for child in value:
+                initialize_row_bindings(child)
+
+    for scope in ["roads", "mine", "all"]:
+        initialize_row_bindings(ui["jf_realm_" + scope + "_row"])
+        if scope != "roads":
+            initialize_row_bindings(ui["jf_directory_establish_" + scope + "@common.button"])
     ui["jf_realm_content"] = {"type": "panel", "size": [257, 158], "controls": realm_controls}
     picker = copy.deepcopy(frame)
     # Secondary-biome choices have their own custom button renderer, not the
