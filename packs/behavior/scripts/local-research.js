@@ -85,13 +85,13 @@ export function researchComparison(current,next,hasNext=true){
 export function researchPercent(value){return `${Number(value.toFixed(value>=99.99?4:2))}％`;}
 export function localResearchText(v,key,s=null){
  const d=C.research[key],stored=localResearchLevel(v,key),level=!d.max&&s?Math.min(stored,s.global.innovation):stored,cost=localResearchCost(v,key);
- const progress=v.localResearch?.progress?.[key]??0,requirement=localResearchRequirement(v,key,s);
+ const progress=v.localResearch?.progress?.[key]??0;
  const missing=[];
  if(['biome','sanctuary'].includes(key)&&v.hearth<1)missing.push('Hearthstone Lv 1');
  if(key==='efficiency'&&!v.biomeUnlocked)missing.push('Resource Prospecting Lv 1');
  if(key==='roads'&&v.sanctuary<1)missing.push('Sanctuary Lv 1');
  if(cost&&s&&stored>=s.global.innovation)missing.push('Stewardship Lv '+(stored+1));
- const required=missing.length?'\nRequired: '+missing.join('; '):'';
+ const required=missing.length?'\n§cRequired: '+missing.join('; ')+'§r':'';
  const compare=(now,next)=>researchComparison(now,next,Boolean(cost));
  const reduction=n=>Math.min(99.9999,(1-0.95**n)*100);
  const tier=['Locked','Trail','Road','Highway'];
@@ -108,5 +108,5 @@ export function localResearchText(v,key,s=null){
   benefit+='\nLimited by completed road tier.\nConstruction: 6 Minecraft days per stage.';
  }
 
- return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining${required}\nStatus: ${requirement?'Locked':'Available'}`:'Fully upgraded'}`;
+ return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining${required}`:'§eFully upgraded§r'}`;
 }

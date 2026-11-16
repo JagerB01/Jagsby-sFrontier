@@ -458,7 +458,7 @@ test('Realm scrolling rows use explicit collection indices and the established c
    const row=rows['row'+slot],fields=children(row);
    assert.ok(row.bindings.some(binding=>binding.source_property_name?.includes('[JF:row:'+scope+':'+slot+']')));
    const base=layout.realmRows.base+slot*layout.realmRows.stride+scopeIndex*8;
-   for(const [field,offset] of [['name',0],['owner',1],...(scope==='roads'?[['distance',2],['cost',3],['status',4],['time',5]]:[['coordinates',2],['distance',3],['development',4],['status',5]])]){
+   for(const [field,offset] of [['name',0],['owner',1],...(scope==='roads'?[['distance',2],['cost',3],['time',5]]:[['coordinates',2],['distance',3],['development',4],['status',5]])]){
     const wrapper=fields[field];assert.equal(wrapper.type,'stack_panel');assert.equal(wrapper.collection_name,'form_buttons');
     const record=Object.values(wrapper.controls[0])[0];assert.equal(record.collection_index,base+offset);
     const raw=ui['jf_realm_'+scope+'_'+field];assert.equal(raw.text,'#form_button_text');
@@ -466,7 +466,7 @@ test('Realm scrolling rows use explicit collection indices and the established c
    }
    assert.equal(Object.values(fields.icon.controls[0])[0].collection_index,base);
    if(scope==='roads'){
-    assert.deepEqual(row.size,[251,34]);
+    assert.deepEqual(row.size,[251,38]);
     assert.equal(Object.values(fields.tier_icon.controls[0])[0].collection_index,base+6);
     assert.equal(Object.values(fields.travel.controls[0])[0].collection_index,base+7);
     assert.equal(Object.values(fields.travel_disabled.controls[0])[0].collection_index,base+7);
@@ -553,8 +553,19 @@ test('Fresh tab groups have exactly one selected default and refresh markers sel
 test('Road bars label Travel Cost and Road, with the countdown beneath the tier icon',async()=>{
  const ui=await loadUI(),row=children(ui.jf_realm_roads_rows).row0,fields=children(row);
  assert.equal(fields.cost_label.text,'Travel Cost');assert.equal(fields.road_label.text,'Road');
- assert.deepEqual(row.size,[251,34]);assert.deepEqual(fields.cost.size,[44,12]);
+ assert.deepEqual(row.size,[251,38]);assert.deepEqual(fields.cost.size,[44,12]);
  assert.ok(fields.road_label.offset[1]+fields.road_label.size[1]<=fields.tier_icon.offset[1]);
  assert.ok(fields.time.offset[1]>=fields.tier_icon.offset[1]+fields.tier_icon.size[1]);
  assert.ok(fields.time.offset[1]+fields.time.size[1]<=row.size[1]);
+});
+
+test('Road heading and enlarged icon are centered between price and Travel with no tier caption',async()=>{
+ const ui=await loadUI(),row=children(ui.jf_realm_roads_rows).row0,fields=children(row);
+ const left=fields.cost.offset[0]+fields.cost.size[0],right=fields.travel.offset[0],center=(left+right)/2;
+ assert.equal(fields.road_label.offset[0]+fields.road_label.size[0]/2,center);
+ assert.equal(fields.tier_icon.offset[0]+fields.tier_icon.size[0]/2,center);
+ assert.deepEqual(fields.tier_icon.size,[20,20]);assert.deepEqual(ui.jf_realm_road_tier_icon.size,[20,20]);
+ assert.equal(fields.status,undefined);assert.equal(ui.jf_realm_roads_status,undefined);
+ assert.ok(fields.road_label.offset[1]+fields.road_label.size[1]<=fields.tier_icon.offset[1]);
+ assert.ok(fields.tier_icon.offset[1]+fields.tier_icon.size[1]<=fields.time.offset[1]);
 });

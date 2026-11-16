@@ -80,7 +80,7 @@ function total(s){return stockTotal(s);}
 function pageTitle(page){return `JF_CHARTER|${page}`;}
 function researchText(s,v,key,player){return key in DEFINITIONS?globalResearchText(s,key):localResearchText(v,key,s);}
 function globalResearchText(s,key){
- const d=DEFINITIONS[key],level=s.global[key],cost=nextCost(s,key),maximum=maxLevel(s,key),locked=lockReason(s,key);
+ const d=DEFINITIONS[key],level=s.global[key],cost=nextCost(s,key),maximum=maxLevel(s,key);
  const compare=(now,next)=>researchComparison(now,next,cost!==undefined);
  const bonus=n=>n?`${ZONES[n]} +${researchPercent(n*10)}`:'None';
  const benefits={
@@ -88,15 +88,15 @@ function globalResearchText(s,key){
   capacity:`Settlement limit: ${compare(settlementLimit(s),settlementLimit(s)+1)}`,
   frontier:`Founding limit: ${compare(ZONES[level+1],ZONES[level+2])}\nUnlocks founding zones; settlement slots are separate.`,
   colonization:`Zone bonus: ${compare(bonus(level),bonus(Math.min(5,level+1)))}\nEarlier zone bonuses remain active.\nBonus resources do not earn Development.`,
-  storage:`Shared capacity: ${compare(cap(s),cap(s)+storageIncrement())} items\nStored: ${total(s).toFixed(3)} items.`,
+  storage:`Shared capacity: ${compare(cap(s),cap(s)+storageIncrement())} items`,
  };
  const description=benefits[key];
  const resource=key==='capacity'?'Logs':key==='storage'?'Building materials':acceptedMaterials(s,key).map(id=>id.replace('minecraft:','').replaceAll('_',' ')).join(', ');
  const missing=[];
  if(d.prerequisite&&s.global[d.prerequisite]<1)missing.push(DEFINITIONS[d.prerequisite].name+' Lv 1');
  if(key!=='innovation'&&cost!==undefined&&level>=s.global.innovation)missing.push('Stewardship Lv '+(level+1));
- const required=missing.length?'\nRequired: '+missing.join('; '):'';
- return `Lv ${level}${Number.isFinite(maximum)?' / '+Math.max(level,maximum):' (endless)'}\n${description}\n${cost===undefined?'Fully upgraded':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]} / ${cost}; ${Math.max(0,cost-s.researchProgress[key])} remaining${required}\nStatus: ${locked?'Locked':'Available'}`}`;
+ const required=missing.length?'\n§cRequired: '+missing.join('; ')+'§r':'';
+ return `Lv ${level}${Number.isFinite(maximum)?' / '+Math.max(level,maximum):' (endless)'}\n${description}\n${cost===undefined?'§eFully upgraded§r':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]} / ${cost}; ${Math.max(0,cost-s.researchProgress[key])} remaining${required}`}`;
 }
 function inventoryMaterials(player,s,key,materials=acceptedMaterials(s,key)){
  const inv=player.getComponent('minecraft:inventory')?.container,counts=new Map();
@@ -195,7 +195,8 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   const researchChoices=new Map();
   for(const key of ['efficiency','hearth','biome','sanctuary','roads','frontier','capacity','innovation','colonization','storage']){
    const choice=cardContribution(player,s,v,key);researchChoices.set(key,choice);
-   records[data[key]]=researchText(s,v,key,player)+'\nClick to contribute';
+   const available=key in DEFINITIONS?nextCost(s,key)!==undefined&&!lockReason(s,key):Boolean(researchCost(v,key))&&!researchRequirement(v,key,s);
+   records[data[key]]=researchText(s,v,key,player)+(available?'\nClick to contribute':'');
   }
   records[data.zone]=zoneAt(v.location)||'Unknown';
   records[data.developmentValue]=`Development ${development(v)}`;
@@ -203,7 +204,8 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   records[data.tradeRoute]=tradeRouteSummary(s,v);
   for(const key of ['innovation','frontier','capacity','colonization','storage','hearth','biome','sanctuary','efficiency','roads']){
     const level=key in DEFINITIONS?s.global[key]:['efficiency','sanctuary'].includes(key)?localLevel(s,v,key):researchLevel(v,key);
-    records[data[key+'Level']]=`Lv ${level}`;
+    const finished=key in DEFINITIONS?DEFINITIONS[key].max!==undefined&&level>=DEFINITIONS[key].max:ECONOMY_CONFIG.research[key].max!==undefined&&level>=ECONOMY_CONFIG.research[key].max;
+    records[data[key+'Level']]=finished?`§eLv ${level}§r`:`Lv ${level}`;
   }
   const production=productionView(s,v,productionPages);
   production.modifierRows.forEach((row,slot)=>{records[data['productionModifier'+slot]]=row.value;records[data['productionModifierName'+slot]]=row.label;});
@@ -236,7 +238,7 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
     directoryIcons.set(base,row.icon);
     if(row.canEstablishRoad){realmMarkers.push(`[JF:establish:${scope}:${slot}]`);handlers.set(base+6,()=>establishDirectoryRoad(player,vId,row.id,0,scope));}
    }else{
-    put(base,[row.name,row.owner,row.distance,row.cost==='Unavailable'?'—':row.cost,row.time?'':row.status,row.time,'','']);
+    put(base,[row.name,row.owner,row.distance,row.cost==='Unavailable'?'—':row.cost,'',row.time,'','']);
     directoryIcons.set(base,row.villageTexture);
     directoryIcons.set(base+6,row.nextTexture||row.texture);
     handlers.set(base+6,()=>roadMenu(player,vId));

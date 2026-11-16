@@ -180,7 +180,7 @@ test('Capped global cards do not debit inventory or erase partial progress',asyn
 test('Global hover record exposes effect, next cost, progress, remaining amount, prerequisite and click action',async()=>{
  const s=fresh();const h=await runtime(s);h.api.open(h.player,'none','Research','global');
  const text=h.forms[0].buttons[10];
- for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Required: Settlement Charters Lv 1','Stored: 0.000 items','Shared capacity: §b128§r §7→§r §a192§r items'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Required: Settlement Charters Lv 1','Shared capacity: §b128§r §7→§r §a192§r items'])assert.ok(text.includes(value),value);
 });
 test('Save migration refuses a future version instead of overwriting it',()=>{
  assert.throws(()=>R.migrateResearch({researchVersion:4}),/newer/);
@@ -234,7 +234,7 @@ test('Local journal intent-save failure leaves items and progress untouched',asy
 test('Capped local cards preserve saved progress and inventory until Stewardship rises',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),sanctuary:1,name:'Test',available:[],localResearch:{version:1,progress:{sanctuary:125},revision:0}};
  const h=await runtime(s);h.slots[0]={typeId:'minecraft:wheat',amount:64};click(h,'sanctuary','a');
- assert.ok(h.forms[0].buttons[55].includes('Contributed: 125 / 250'));assert.ok(h.forms[0].buttons[55].includes('Stewardship Lv 2'));assert.ok(h.forms[0].buttons[55].includes('Status: Locked'));assert.equal(h.forms[0].buttons[55].includes('Status: Requires'),false);
+ assert.ok(h.forms[0].buttons[55].includes('Contributed: 125 / 250'));assert.ok(h.forms[0].buttons[55].includes('Stewardship Lv 2'));assert.ok(h.forms[0].buttons[55].includes('§cRequired: Stewardship Lv 2§r'));assert.equal(h.forms[0].buttons[55].includes('Click to contribute'),false);assert.equal(h.forms[0].buttons[55].includes('Status: Requires'),false);
  assert.equal(h.slots[0].amount,64);assert.equal(h.read().villages.a.localResearch.progress.sanctuary,125);
  h.update(s=>s.global.innovation=2);click(h,'sanctuary','a');assert.equal(h.slots[0],undefined);assert.equal(h.read().villages.a.localResearch.progress.sanctuary,189);
  h.slots[0]={typeId:'minecraft:wheat',amount:64};click(h,'sanctuary','a');assert.equal(h.slots[0].amount,3);assert.equal(h.read().villages.a.sanctuary,2);
@@ -258,8 +258,9 @@ test('All ten research hover records describe effects, next cost, progress, prer
  const h=await runtime(s);h.api.open(h.player,'a','Research','global');const records=h.forms[0].buttons;
  for(const index of [4,5,6,7,8,9,10,55,56,61]){
   const text=records[index];
-  for(const label of ['Next cost:','Contributed:','remaining','Status:'])assert.ok(text.includes(label),`${index}: ${label}`);
-  assert.ok(text.includes('Click to contribute'));
+  for(const label of ['Next cost:','Contributed:','remaining'])assert.ok(text.includes(label),`${index}: ${label}`);
+  assert.equal(text.includes('Status:'),false);
+  assert.equal(text.includes('Click to contribute'),!text.includes('Required:'));
   assert.equal(text.includes('Carry the required material'),false);
   assert.equal(text.includes('Select for materials'),false);
  }
@@ -700,4 +701,43 @@ test('Upgrade travel charges the current tier before completion and the new tier
   h.api.travelRoad(h.player,'a','r');assert.equal(h.slots[0].amount,research===3?57:56);assert.equal(arrivals,2);
   assert.equal(h.read().roads.r.level,2);assert.equal(h.read().roads.r.targetLevel,undefined);
  }
+});
+
+test('Research cards omit redundant status and prompts for locked or completed techs',async()=>{
+ const keys=['innovation','frontier','capacity','colonization','storage','hearth','biome','sanctuary','efficiency','roads'];
+ for(const key of keys){
+  const s=fresh(Date.now());s.global.innovation=10;s.global.frontier=1;s.global.capacity=1;
+  s.villages.a={...village(),name:'Alpha',hearth:1,sanctuary:1,biomeUnlocked:key!=='biome'};
+  const h=await runtime(s);h.api.open(h.player,'a','Research');
+  const text=h.forms[0].buttons[CHARTER_LAYOUT.data[key]];
+  assert.ok(text.includes('Click to contribute'),key+' available');assert.equal(text.includes('Status:'),false);
+  if(key==='storage')assert.equal(text.includes('Stored:'),false);
+  if(key==='innovation')continue;
+  h.update(state=>{
+   if(key in R.DEFINITIONS){state.global[key]=1;state.global.innovation=1;}
+   else if(key==='biome'){state.villages.a.hearth=0;state.villages.a.biomeUnlocked=false;}
+   else{state.villages.a[key]=1;state.global.innovation=1;}
+  });
+  h.api.open(h.player,'a','Research');const locked=h.forms.at(-1).buttons[CHARTER_LAYOUT.data[key]];
+  assert.ok(locked.includes('§cRequired: '),key+' locked');assert.equal(locked.includes('Click to contribute'),false);
+  assert.equal(locked.includes('Status:'),false);assert.equal(locked.includes('§eFully upgraded§r'),false);
+ }
+ for(const [key,level]of [['frontier',4],['colonization',5],['hearth',2],['biome',1],['roads',3]]){
+  const s=fresh(Date.now());s.global.innovation=10;s.villages.a={...village(),name:'Alpha'};
+  if(key in R.DEFINITIONS)s.global[key]=level;else if(key==='biome')s.villages.a.biomeUnlocked=true;else s.villages.a[key]=level;
+  const h=await runtime(s);h.api.open(h.player,'a','Research');const records=h.forms[0].buttons;
+  const text=records[CHARTER_LAYOUT.data[key]];
+  assert.ok(text.includes('§eFully upgraded§r'),key+' complete');assert.equal(text.includes('Click to contribute'),false);
+  assert.equal(text.includes('Status:'),false);assert.equal(text.includes('Required:'),false);
+  assert.equal(records[CHARTER_LAYOUT.data[key+'Level']],`[JF:data:${key}Level]§eLv ${level}§r`);
+ }
+});
+
+test('Road display leaves the completed-tier caption empty while retaining upgrade countdowns',async()=>{
+ const s=fresh(Date.now());s.global.innovation=3;s.villages.a={...village(),name:'Alpha',roads:3};s.villages.b={...village(1551),id:'b',name:'Beta'};
+ s.roads.r={from:'a',to:'b',level:1,distance:1551};
+ const h=await runtime(s);h.api.open(h.player,'a','Realm');const base=CHARTER_LAYOUT.realmRows.base+16;
+ assert.equal(h.forms[0].buttons[base+4],'');assert.equal(h.forms[0].buttons[base+5],'');
+ h.update(state=>Object.assign(state.roads.r,{targetLevel:2,startedTick:0,durationTicks:144000,finishTick:144000,timingVersion:1}));
+ h.api.open(h.player,'a','Realm');assert.equal(h.forms.at(-1).buttons[base+4],'');assert.equal(h.forms.at(-1).buttons[base+5],'> 6 days');
 });

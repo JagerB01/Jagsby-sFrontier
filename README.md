@@ -5,7 +5,15 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.81.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.82.mcaddon?raw=true)
+
+Version 0.0.82 removes the completed road-tier caption and enlarges the Road
+icon from 16 to 20 UI units, centering its heading and image in the gap between
+Travel Cost and Travel. Construction countdowns remain below the icon.
+Shared Storage's hover no longer repeats the stored amount. Research cards omit
+Status lines, show missing requirements in red, and mark permanent completion
+and its card level in yellow. Click to contribute appears only on upgradeable,
+unlocked techs. Research costs, progress and prerequisite rules are unchanged.
 
 Version 0.0.81 allows travel on an already-completed road while its next tier is
 under construction. Travel uses the current completed tier's price until the

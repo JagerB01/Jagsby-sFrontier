@@ -1,3 +1,20 @@
+# 0.0.82
+
+- Remove the completed road-tier caption beneath the icon. Center Road and the
+  enlarged 20-unit icon in the gap between Travel Cost and Travel. Keep the target
+  icon/countdown during construction; reserve sufficient row height to avoid
+  overlapping the heading, icon or time text.
+- Remove the Stored line from Shared Storage's hover; inventory remains shown in
+  Production. Remove redundant Status lines from all research hover descriptions.
+- Color unmet Required lines red with resets. Color Fully upgraded and completed
+  tech level badges yellow, distinguishing permanent completion from a temporary
+  Stewardship/prerequisite lock.
+- Append Click to contribute only for an unlocked tech with an available upgrade,
+  including when the player must fetch materials. Do not show it for blocked or
+  permanently completed research. Keep server-side payment validation intact.
+- Cover every tech's available/locked/completed presentation and exact road-column
+  centering, caption removal and retained countdown in automated tests.
+
 # 0.0.81
 
 - Allow travel during upgrades whenever the connection has a completed tier.

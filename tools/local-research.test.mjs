@@ -80,7 +80,7 @@ test('Stewardship caps both endless upgrades and preserves partial progress at t
   assert.equal(give(v,key,id,250,state(1)),0);assert.equal(v.localResearch.progress[key],125);
   assert.equal(give(v,key,id,250,state(2)),125);assert.equal(v[key],2);
  }
- assert.ok(localResearchText(v,'sanctuary',state(2)).includes('Status: Locked'));
+ assert.ok(localResearchText(v,'sanctuary',state(2)).includes('§cRequired: Stewardship Lv 3§r'));
 });
 test('Legacy aliases preserve purchased levels and paid partial contributions idempotently',()=>{
  const v={hearth:1,research:{prosperity:{level:4,progress:125},roadNetworks:{level:2,progress:12}},researchProgress:{sanctuary:80},custom:'keep'};
@@ -93,7 +93,7 @@ test('Local UI lists current level, category, exact quantity, saved progress and
  const v=village();v.hearth=1;v.biomeUnlocked=true;v.efficiency=5;
  v.localResearch.progress.efficiency=125;
  const text=localResearchText(v,'efficiency',state(10));
- for(const value of ['Lv 5','Next cost: 250 Building Materials','Contributed: 125 / 250','125 remaining','Resource production: §b+25％§r §7→§r §a+30％§r','Available'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 5','Next cost: 250 Building Materials','Contributed: 125 / 250','125 remaining','Resource production: §b+25％§r §7→§r §a+30％§r'])assert.ok(text.includes(value),value);
  v.hearth=2;assert.ok(localResearchText(v,'hearth',state(1)).includes('Fully upgraded'));
 });
 test('Paid legacy surplus survives a Stewardship ceiling and resumes when the ceiling rises',()=>{
@@ -118,7 +118,7 @@ test('Sanctuary compares colored percentages on one line and states its shared d
  assert.ok(text.includes('Hostile damage reduction: §b5％§r §7→§r §a9.75％§r'));
  assert.equal(text.match(/Persists for 3 minutes after leaving\./g).length,1);
  assert.equal(text.includes('Current:'),false);assert.equal(text.includes('Next:'),false);
- for(const value of ['Stewardship ceiling','Next cost: 250 Crops','Contributed: 0 / 250','250 remaining','Required: Stewardship Lv 2','Status: Locked'])assert.ok(text.includes(value),value);
+ for(const value of ['Stewardship ceiling','Next cost: 250 Crops','Contributed: 0 / 250','250 remaining','Required: Stewardship Lv 2'])assert.ok(text.includes(value),value);
 });
 
 test('Percentage comparisons include zero, preserve resets and avoid rounding Sanctuary to immunity',()=>{
