@@ -588,12 +588,12 @@ test('Research tab navigation and contributions reopen the same Local or Global 
  for(const scope of ['local','global']){
   const s=fresh(Date.now());s.global.innovation=5;s.global.frontier=1;
   const key=scope==='local'?'hearth':'colonization';
-  const steps=[CHARTER_LAYOUT.actions.navResearch,CHARTER_LAYOUT.actions['navResearch'+scope],CHARTER_LAYOUT.actions[key]];
+  const steps=[CHARTER_LAYOUT.actions[key]];
   const h=await runtime(s,()=>steps.length?{canceled:false,selection:steps.shift()}:{canceled:true});
   h.slots[0]={typeId:scope==='local'?'minecraft:bread':'minecraft:diamond',amount:scope==='local'?10:4};
   h.slots[1]=undefined;h.slots[2]=undefined;
   h.api.open(h.player,'none');await new Promise(resolve=>setImmediate(resolve));
-  assert.equal(h.forms.length,4);
+  assert.equal(h.forms.length,2);
   const last=h.forms.at(-1);assert.ok(last.text.startsWith('[JF:tab:research]'));assert.ok(last.text.includes('[JF:research:'+scope+']'));
   if(scope==='local')assert.equal(h.read().villages.none.localResearch.progress.hearth,10);
   else assert.equal(h.read().global.colonization,1);
@@ -602,22 +602,22 @@ test('Research tab navigation and contributions reopen the same Local or Global 
 
 test('Production clearing, collection and Survey preserve their selected tabs and remembered research/Realm views',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',biomeUnlocked:true,secondary:'minecraft:forest',productionMode:'diversify'};
- const steps=[CHARTER_LAYOUT.actions.navProductionbiomes,CHARTER_LAYOUT.actions.clearSecondary,CHARTER_LAYOUT.actions.navProductionsummary,CHARTER_LAYOUT.actions.collect,CHARTER_LAYOUT.actions.scan];
+ const steps=[CHARTER_LAYOUT.actions.clearSecondary,CHARTER_LAYOUT.actions.collect,CHARTER_LAYOUT.actions.scanProductionsummary];
  const h=await runtime(s,()=>steps.length?{canceled:false,selection:steps.shift()}:{canceled:true});
  h.api.open(h.player,'a','Production','local',0,'all','summary');
  await new Promise(resolve=>setImmediate(resolve));await new Promise(resolve=>setImmediate(resolve));
- assert.equal(h.forms.length,6);
- for(const index of [1,2])assert.ok(h.forms[index].text.includes('[JF:production:biomes]'));
- for(const index of [3,4,5])assert.ok(h.forms[index].text.includes('[JF:production:summary]'));
+ assert.equal(h.forms.length,4);
+ for(const index of [1])assert.ok(h.forms[index].text.includes('[JF:production:biomes]'));
+ for(const index of [2,3])assert.ok(h.forms[index].text.includes('[JF:production:summary]'));
  for(const form of h.forms){assert.ok(form.text.startsWith('[JF:tab:production]'));assert.ok(form.text.includes('[JF:research:local]'));assert.ok(form.text.includes('[JF:realm:all]'));}
  assert.equal(h.read().villages.a.secondary,null);
 });
 
-test('Realm subtab actions and claim refresh retain the current Realm view',async()=>{
- const steps=[CHARTER_LAYOUT.actions.navRealm,CHARTER_LAYOUT.actions.navRealmall,CHARTER_LAYOUT.actions.claim];
+test('Survey identifies the current Realm subtab even when opened on Overview',async()=>{
+ const steps=[CHARTER_LAYOUT.actions.scanRealmall];
  const h=await runtime(undefined,()=>steps.length?{canceled:false,selection:steps.shift()}:{canceled:true});
  h.api.open(h.player,'none');await new Promise(resolve=>setImmediate(resolve));
- assert.equal(h.forms.length,4);assert.ok(h.forms.at(-1).text.startsWith('[JF:tab:realm]'));assert.ok(h.forms.at(-1).text.includes('[JF:realm:all]'));
+ assert.equal(h.forms.length,2);assert.ok(h.forms.at(-1).text.startsWith('[JF:tab:realm]'));assert.ok(h.forms.at(-1).text.includes('[JF:realm:all]'));
 });
 
 test('Saving or canceling Rename returns to the same Production subtab',async()=>{
@@ -626,12 +626,23 @@ test('Saving or canceling Rename returns to the same Production subtab',async()=
   let clicked=false;
   const h=await runtime(s,form=>{
    if(form.heading==='JF_CHARTER|Rename')return {canceled,formValues:['Beta']};
-   if(!clicked){clicked=true;return {canceled:false,selection:CHARTER_LAYOUT.actions.rename};}
+   if(!clicked){clicked=true;return {canceled:false,selection:CHARTER_LAYOUT.actions.renameProductionbiomes};}
    return {canceled:true};
   });
   h.api.open(h.player,'a','Production','local',0,'all','biomes');await new Promise(resolve=>setImmediate(resolve));
   const last=h.forms.at(-1);assert.ok(last.text.startsWith('[JF:tab:production]'));assert.ok(last.text.includes('[JF:production:biomes]'));
   assert.ok(last.text.includes('[JF:research:local]'));assert.ok(last.text.includes('[JF:realm:all]'));
   assert.equal(h.read().villages.a.name,canceled?'Alpha':'Beta');
+ }
+});
+
+test('Each header Survey variant returns to its visible client-side page and subtab',async()=>{
+ for(const entry of CHARTER_LAYOUT.viewActions){
+  let clicked=false;
+  const h=await runtime(undefined,()=>{if(!clicked){clicked=true;return {canceled:false,selection:CHARTER_LAYOUT.actions[entry.scan]};}return {canceled:true};});
+  h.api.open(h.player,'none');await new Promise(resolve=>setImmediate(resolve));await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(h.forms.length,2);
+  const last=h.forms.at(-1).text;assert.ok(last.startsWith('[JF:tab:'+entry.page.toLowerCase()+']'));
+  const scope=entry[entry.page.toLowerCase()+'Scope'];if(scope)assert.ok(last.includes('[JF:'+entry.page.toLowerCase()+':'+scope+']'));
  }
 });

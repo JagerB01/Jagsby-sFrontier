@@ -141,7 +141,7 @@ function contributeResearchCard(player,vid,key,shown,view){
    if(!global)Object.assign(s.pendingResearch,{scope:'local',vid,level:shown.level,revision:shown.revision});
    save(s);recoverResearch(player);
   }
-  if(view)reopenView(player,vid,view);else open(player,vid,'Research',global?'global':'local');
+  reopenView(player,vid,{...view,page:'Research',researchScope:global?'global':'local'});
  }catch(e){console.warn(`Frontier contribution: ${e}`);player.sendMessage('Research payment paused. Reopen the charter to retry or recover; keep payment items in place.');}
 }
 function recoverResearch(player){
@@ -244,26 +244,25 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     if(row.canTravel)handlers.set(base+7,()=>travelRoad(player,vId,row.roadId));
    }
   }));
-  for(const target of tabs)handlers.set(actions['nav'+target],()=>reopenView(player,vId,{...view,page:target}));
-  for(const scope of ['local','global'])handlers.set(actions['navResearch'+scope],()=>reopenView(player,vId,{...view,page:'Research',researchScope:scope}));
-  for(const scope of ['roads','mine','all'])handlers.set(actions['navRealm'+scope],()=>reopenView(player,vId,{...view,page:'Realm',realmScope:scope}));
-  for(const scope of ['summary','biomes'])handlers.set(actions['navProduction'+scope],()=>reopenView(player,vId,{...view,page:'Production',productionScope:scope}));
+  for(const entry of CHARTER_LAYOUT.viewActions){
+   const targetView={...view,...entry};
+   handlers.set(actions[entry.scan],()=>surveySettlement(player,vId,targetView));
+   handlers.set(actions[entry.rename],()=>renameSettlement(player,vId,targetView));
+  }
   for(const [key,choice]of researchChoices)handlers.set(actions[key],()=>contributeResearchCard(player,vId,key,choice,view));
-  handlers.set(actions.scan,()=>surveySettlement(player,vId,{page,researchScope,realmPage,realmScope,productionScope,productionPages}));
   const pages=productionPages;
   for(const [slot,choice]of production.choices.entries()){
    if(v.biomeUnlocked&&choice.verified&&!choice.selected)handlers.set(actions['prospectSelect'+slot],()=>selectBiome(player,vId,choice.id,pages,choice.mode,view));
   }
   if(v.biomeUnlocked&&(v.secondary||v.productionMode==='specialize'))handlers.set(actions.clearSecondary,()=>clearSecondary(player,vId,pages,view));
   handlers.set(actions.collect,()=>collect(player,vId,pages,view));
-  handlers.set(actions.rename,()=>renameSettlement(player,vId,view));
-  handlers.set(actions.claim,()=>{const latest=state();if(claimSettlement(latest,vId,player))save(latest);reopenView(player,vId,view);});
+  handlers.set(actions.claim,()=>{const latest=state();if(claimSettlement(latest,vId,player))save(latest);reopenView(player,vId,{...view,page:'Overview'});});
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
   for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction')&&!key.startsWith('directory')&&!key.startsWith('roadConnection'))records[index]=`[JF:data:${key}]${records[index]}`;
   for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i)])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
-  // controls. Indexed tab buttons preserve navigation without surveying villagers.
+  // controls. Tab switches stay local; action variants identify their visible page.
   const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${realmMarkers.join('')}${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?'':`[JF:directory:${scope}:empty]`).join('')}`);
   records.forEach((text,index)=>{
    const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:directoryIcons.get(index);
@@ -340,7 +339,7 @@ function selectBiome(player,vid,choice,pages={},mode='diversify',view){
   const v=state().villages[vid];if(!v)return;
   applyProductionSelection(player,vid,choice,mode,v.productionSelectionRevision||0);
  }catch(e){player.sendMessage(String(e.message||e));}
- if(view)reopenView(player,vid,view);else openProduction(player,vid,'biomes',pages);
+ reopenView(player,vid,{...view,page:'Production',productionScope:'biomes',productionPages:pages});
 }
 function applyProductionSelection(player,vid,choice,mode,revision){
  const s=accounted(),v=s.villages[vid];if(!v)return;
@@ -353,11 +352,11 @@ function applyProductionSelection(player,vid,choice,mode,revision){
  v.secondary=proposed.secondary;v.productionMode=mode;v.productionSelectionRevision=revision+1;save(s);
 }
 function clearSecondary(player,vid,pages={},view){
- const s=accounted(),v=s.villages[vid];if(!v)return;v.secondary=null;v.productionMode='unassigned';v.productionSelectionRevision=(v.productionSelectionRevision||0)+1;save(s);if(view)reopenView(player,vid,view);else openProduction(player,vid,'biomes',pages);
+ const s=accounted(),v=s.villages[vid];if(!v)return;v.secondary=null;v.productionMode='unassigned';v.productionSelectionRevision=(v.productionSelectionRevision||0)+1;save(s);reopenView(player,vid,{...view,page:'Production',productionScope:'biomes',productionPages:pages});
 }
 function collect(player,vid,pages={},view){const s=accounted();const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
  let moved=0;for(const [type,qty] of Object.entries(s.stock)){let remain=Math.floor(qty);const fraction=qty-remain;while(remain>0){const n=Math.min(64,remain);try{const left=inv.addItem(new ItemStack(type,n));const count=n-(left?.amount||0);if(count<=0)break;remain-=count;moved+=count;if(left)break;}catch(e){break;}}s.stock[type]=remain+fraction;if(!s.stock[type])delete s.stock[type];}
- save(s);player.sendMessage(`§aCollected ${moved} items. Remaining stockpile: ${total(s)}/${cap(s)}.`);if(view)reopenView(player,vid,view);else openProduction(player,vid,'summary',pages);}
+ save(s);player.sendMessage(`§aCollected ${moved} items. Remaining stockpile: ${total(s)}/${cap(s)}.`);reopenView(player,vid,{...view,page:'Production',productionScope:'summary',productionPages:pages});}
 system.beforeEvents.startup.subscribe(ev=>{
   ev.blockComponentRegistry.registerCustomComponent('jagsby_frontier:charter_spacing',{
     beforeOnPlayerPlace(event){

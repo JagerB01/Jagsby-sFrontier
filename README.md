@@ -5,7 +5,15 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.76.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.77.mcaddon?raw=true)
+
+Version 0.0.77 restores local tab and subtab switching with no form reload.
+Only actions that update data submit the form. Research contributions return to
+their Local/Global card view; production actions return to their own pane. Survey
+and Rename use view-specific bindings gated by the visible local tabs, so action
+refreshes can restore that view without submitting navigation clicks. Initial
+selection comes from the refresh marker instead of forcing the first radio tab.
+The all-tech Stewardship ceilings introduced in 0.0.76 remain in place.
 
 Version 0.0.76 applies Stewardship's ceiling to every other local and global
 tech, including Colonization, Frontier Expansion, Hearthstone and Road Networks.

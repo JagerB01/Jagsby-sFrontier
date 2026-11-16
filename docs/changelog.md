@@ -1,3 +1,20 @@
+# 0.0.77
+
+- Restore client-side radio tabs/subtabs and remove navigation form actions.
+  Selecting any page or subtab no longer submits/reopens the form or surveys.
+- Let form-body markers initialize selection without forcing index zero. Keep
+  the existing local tab controls, focus mappings, artwork and content bindings.
+- Route research/production action refreshes to the pane containing that action.
+  Add Survey/Rename record variants for each visible page/subtab; gate the header
+  controls using the local selection and pass the selected action's view through
+  the refresh. Rename save/cancel and Survey can identify the originating view
+  without sending tab clicks to the server. Claim returns to Overview.
+- Retain all-tech Stewardship upgrade ceilings and preserve purchased research.
+  Add the user's no-reload-tab preference to AGENTS.md for future changes.
+- Cover all local tab controls, view-specific header gating, action record indices,
+  every Survey return destination and contribution/production/Rename refreshes.
+  Initial radio selection still requires in-game visual confirmation.
+
 # 0.0.76
 
 - Apply the Stewardship ceiling to every other global/local tech, including

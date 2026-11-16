@@ -52,16 +52,16 @@ test('standalone charter definitions are registered separately with a minimal va
   assert.equal(JSON.stringify(ui.jf_dashboard).includes('long_form_dynamic_buttons_panel'),false);
 });
 
-test('five indexed sidebar navigation buttons restore the selected page from form markers', async () => {
+test('five local sidebar toggles control custom pages without submitting form buttons', async () => {
   const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
   for(const name of ['overview','research','production','realm','information']) {
     const tab=ui.jf_dashboard.controls.find(c=>c['jf_tab_'+name])['jf_tab_'+name];
-    assert.equal(tab.type,'stack_panel');assert.equal(tab.collection_name,'form_buttons');
+    assert.equal(tab.type,'toggle');
     assert.ok(tab.offset[1]+tab.size[1]<=220);
-    assert.equal(tab.radio_toggle_group,undefined);
-    const button=template(ui,'jf_action_nav'+name[0].toUpperCase()+name.slice(1));
-    assert.ok(JSON.stringify(button).includes('button.form_button_click'));
-    assert.ok(tab.bindings.some(binding=>binding.source_property_name?.includes('[JF:tab:'+name+']')));
+    if(name==='realm')assert.equal(tab.focus_change_down,'jf_tab_focus_information');
+    if(name==='information')assert.equal(tab.focus_change_up,'jf_tab_focus_realm');
+    assert.equal(tab.radio_toggle_group,true);
+    assert.equal(JSON.stringify(tab).includes('button.form_button_click'),false);
     const key=name+'@jagsby_frontier.jf_'+name+'_content';
     const page=ui.jf_dashboard.controls.find(c=>c[key])[key];
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_tab_'+name && b.target_property_name==='#visible'));
@@ -99,7 +99,7 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   }
   for(const key of Object.keys(layout.actions).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const button=template(ui,'jf_action_'+key);
-    if(!key.startsWith('nav'))assert.ok(button.bindings.some(b=>b.source_property_name===`(#form_button_text = '[JF:action:${key}]')`&&b.target_property_name==='#enabled'));
+    assert.ok(button.bindings.some(b=>b.source_property_name===`(#form_button_text = '[JF:action:${key}]')`&&b.target_property_name==='#enabled'));
     assert.ok(button.bindings.some(b=>b.binding_type==='collection_details'));
   }
 });
@@ -192,8 +192,9 @@ test('Research subtabs isolate the correct native action factories',async()=>{
   const controls=children(ui.jf_research_content);
   for(const scope of ['global','local']) {
     const toggle=controls['jf_research_tab_'+scope];
-    assert.equal(toggle.collection_name,'form_buttons');
-    assert.ok(toggle.bindings.some(binding=>binding.source_property_name?.includes('[JF:research:'+scope+']')));
+    assert.equal(toggle.toggle_name,'jagsby_frontier_research_tabs');
+    assert.equal(toggle.radio_toggle_group,true);
+    assert.equal(JSON.stringify(toggle).includes('button.form_button_click'),false);
     const page=controls[scope+'@jagsby_frontier.jf_research_'+scope+'_content'];
     assert.ok(page.bindings.some(b=>b.source_control_name==='jf_research_tab_'+scope&&b.target_property_name==='#enabled'));
   }
@@ -245,12 +246,11 @@ test('approved transparent sprites appear in every state of their sidebar tabs',
   const ui=await loadUI();
   const dashboard=children(ui.jf_dashboard);
   for(const name of ['overview','research','production','realm','information']) {
-    const button=template(ui,'jf_action_nav'+name[0].toUpperCase()+name.slice(1));
-    for(const state of button.controls) {
-      for(const variant of Object.values(children(Object.values(state)[0]))){
-       const icon=children(variant).icon;
-       assert.equal(icon.texture,'textures/ui/frontier/icons/'+name);assert.deepEqual(icon.size,[20,20]);assert.equal(icon.bilinear,false);
-      }
+    for(const state of dashboard['jf_tab_'+name].controls) {
+      const icon=children(Object.values(state)[0]).icon;
+      assert.equal(icon.texture,'textures/ui/frontier/icons/'+name);
+      assert.deepEqual(icon.size,[20,20]);
+      assert.equal(icon.bilinear,false);
     }
   }
 });
@@ -332,8 +332,8 @@ test('research popups size to text and anchor outside the hovered tech card',asy
 test('Realm replaces the map with Road Networks and keeps both settlement directories',async()=>{
  const ui=await loadUI(),realm=children(ui.jf_realm_content),roads=children(ui.jf_realm_roads_content);
  const tabs=['roads','mine','all'].map(k=>realm['jf_realm_tab_'+k]);
- assert.deepEqual(tabs.map(t=>t.offset[0]),[0,86,172]);assert.ok(tabs[0].bindings.some(binding=>binding.source_property_name?.includes('[JF:realm:roads]')));
- assert.equal(tabs[0].collection_name,'form_buttons');
+ assert.deepEqual(tabs.map(t=>t.offset[0]),[0,86,172]);assert.ok(tabs[0].bindings.some(binding=>binding.binding_name?.includes('[JF:realm:roads]')));
+ assert.equal(tabs[0].type,'toggle');
  assert.ok(realm['roads@jagsby_frontier.jf_realm_roads_content'].bindings.some(b=>b.source_control_name==='jf_realm_tab_roads'));
  assert.equal(ui.jf_realm_map_content,undefined);
  assert.equal(roads.manageRoads,undefined);assert.equal(roads.roadsPrev,undefined);assert.equal(roads.roadsNext,undefined);
@@ -348,7 +348,7 @@ test('Production uses exactly two fixed tabs with output, modifiers and stockpil
  assert.equal(ui.jf_production_stock_content,undefined);assert.equal(ui.jf_production_output_content,undefined);
  assert.ok(children(ui.jf_dashboard)['production@jagsby_frontier.jf_production_content']);
  for(const scope of ['summary','biomes']){
-  assert.ok(root['jf_production_tab_'+scope].bindings.some(binding=>binding.source_property_name?.includes('[JF:production:'+scope+']')));
+  assert.ok(root['jf_production_tab_'+scope].bindings.some(binding=>binding.binding_name?.includes('[JF:production:'+scope+']')));
   const pane=ui['jf_production_'+scope+'_content'];assert.equal(pane.type,'panel');
   assert.equal(JSON.stringify(pane).includes('scroll'),scope==='biomes');
   for(const child of Object.values(children(pane))){
@@ -500,5 +500,30 @@ test('form payload packs later records without gaps and preserves contiguous col
  assert.deepEqual(later,Array.from({length:later.length},(_,i)=>i+98));
  for(const [group,prefix,count]of [['data','stockCount',30],['data','prospectInfo',52],['actions','prospectSelect',52]]){
   for(let i=0;i<count;i++)assert.equal(layout[group][prefix+i],layout[group][prefix+'0']+i);
+ }
+});
+
+test('Every tab stays local and lets refresh markers select the initial state without forcing the first tab',async()=>{
+ const ui=await loadUI(),dashboard=children(ui.jf_dashboard);
+ const tabs=['overview','research','production','realm','information'].map(name=>dashboard['jf_tab_'+name]);
+ for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']]]){
+  const pane=children(ui['jf_'+section+'_content']);tabs.push(...scopes.map(scope=>pane['jf_'+section+'_tab_'+scope]));
+ }
+ for(const tab of tabs){
+  assert.equal(tab.type,'toggle');assert.equal(tab.toggle_group_default_selected,-1);assert.equal(tab.toggle_default_state,false);
+  assert.equal(JSON.stringify(tab).includes('button.form_button_click'),false);
+  assert.ok(tab.bindings.some(binding=>binding.binding_name_override==='#toggle_state'&&binding.binding_condition==='once'));
+ }
+ const {CHARTER_LAYOUT:layout}=await import('../packs/behavior/scripts/charter-layout.js');
+ assert.equal(Object.keys(layout.actions).some(key=>key.startsWith('nav')),false);
+ for(const kind of ['scan','rename']){
+  const header=children(dashboard[kind==='scan'?'header_survey':'header_rename']);
+  for(const entry of layout.viewActions){
+   const group=header[entry.page.toLowerCase()];assert.ok(group.bindings.some(binding=>binding.source_control_name==='jf_tab_'+entry.page.toLowerCase()));
+   const wrapper=children(group)[entry[kind]];assert.equal(wrapper.collection_name,'form_buttons');
+   assert.equal(Object.values(wrapper.controls[0])[0].collection_index,layout.actions[entry[kind]]);
+   const scope=entry[entry.page.toLowerCase()+'Scope'];
+   if(scope)assert.ok(wrapper.bindings.some(binding=>binding.source_control_name==='jf_'+entry.page.toLowerCase()+'_tab_'+scope));
+  }
  }
 });

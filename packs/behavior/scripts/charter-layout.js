@@ -198,20 +198,24 @@ export const CHARTER_LAYOUT = {
     "prospectSelect49": 240,
     "prospectSelect50": 241,
     "prospectSelect51": 242,
-    "navOverview": 243,
-    "navResearch": 244,
-    "navProduction": 245,
-    "navRealm": 246,
-    "navInformation": 247,
-    "navResearchlocal": 248,
-    "navResearchglobal": 249,
-    "navRealmroads": 250,
-    "navRealmmine": 251,
-    "navRealmall": 252,
-    "navProductionsummary": 253,
-    "navProductionbiomes": 254
+    "scanResearchlocal": 243,
+    "renameResearchlocal": 244,
+    "scanResearchglobal": 245,
+    "renameResearchglobal": 246,
+    "scanProductionsummary": 247,
+    "renameProductionsummary": 248,
+    "scanProductionbiomes": 249,
+    "renameProductionbiomes": 250,
+    "scanRealmroads": 251,
+    "renameRealmroads": 252,
+    "scanRealmmine": 253,
+    "renameRealmmine": 254,
+    "scanRealmall": 255,
+    "renameRealmall": 256,
+    "scanInformation": 257,
+    "renameInformation": 258
   },
-  "recordCount": 255,
+  "recordCount": 259,
   "tabs": [
     "Overview",
     "Research",
@@ -219,8 +223,62 @@ export const CHARTER_LAYOUT = {
     "Realm",
     "Information"
   ],
+  "viewActions": [
+    {
+      "page": "Overview",
+      "scan": "scan",
+      "rename": "rename"
+    },
+    {
+      "page": "Research",
+      "researchScope": "local",
+      "scan": "scanResearchlocal",
+      "rename": "renameResearchlocal"
+    },
+    {
+      "page": "Research",
+      "researchScope": "global",
+      "scan": "scanResearchglobal",
+      "rename": "renameResearchglobal"
+    },
+    {
+      "page": "Production",
+      "productionScope": "summary",
+      "scan": "scanProductionsummary",
+      "rename": "renameProductionsummary"
+    },
+    {
+      "page": "Production",
+      "productionScope": "biomes",
+      "scan": "scanProductionbiomes",
+      "rename": "renameProductionbiomes"
+    },
+    {
+      "page": "Realm",
+      "realmScope": "roads",
+      "scan": "scanRealmroads",
+      "rename": "renameRealmroads"
+    },
+    {
+      "page": "Realm",
+      "realmScope": "mine",
+      "scan": "scanRealmmine",
+      "rename": "renameRealmmine"
+    },
+    {
+      "page": "Realm",
+      "realmScope": "all",
+      "scan": "scanRealmall",
+      "rename": "renameRealmall"
+    },
+    {
+      "page": "Information",
+      "scan": "scanInformation",
+      "rename": "renameInformation"
+    }
+  ],
   "realmRows": {
-    "base": 255,
+    "base": 259,
     "limit": 128,
     "stride": 24,
     "scopes": [

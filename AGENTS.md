@@ -4,3 +4,5 @@
 - Use a new version for addon updates and keep behavior/resource manifests and their pack dependencies synchronized.
 - Verify that the GitHub download contains the delivered build before presenting its link. If publishing is blocked, explain the blocker rather than linking an older build as the update.
 - Use the existing checkout; cloud tasks already run in an isolated environment. Do not create a worktree unless requested.
+
+- Menu tabs and subtabs must switch locally without reloading or submitting the form. Preserve the active view on action refreshes through action-specific/view-specific bindings; do not send every tab click to the server.
