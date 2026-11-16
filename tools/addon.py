@@ -14,6 +14,17 @@ ROOT = Path(__file__).resolve().parents[1]
 PACKS = ROOT / "packs"
 
 
+def validate_ui(value, path):
+    if isinstance(value, dict):
+        assert "text_truncate" not in value, f"text_truncate is unsupported in Bedrock JSON UI: {path}"
+        assert not (value.get("type") == "panel" and "collection_name" in value), f"collection_name is unsupported on panel: {path}"
+        for child in value.values():
+            validate_ui(child, path)
+    elif isinstance(value, list):
+        for child in value:
+            validate_ui(child, path)
+
+
 def validate():
     identifiers = set()
     manifests = {}
@@ -33,13 +44,7 @@ def validate():
             if path.suffix == ".json":
                 data = json.loads(path.read_text())
                 if path.is_relative_to(PACKS / "resource/ui"):
-                    def check_ui(value):
-                        if isinstance(value, dict):
-                            assert not (value.get("type") == "panel" and "collection_name" in value), f"collection_name is unsupported on panel: {path}"
-                            for child in value.values(): check_ui(child)
-                        elif isinstance(value, list):
-                            for child in value: check_ui(child)
-                    check_ui(data)
+                    validate_ui(data, path)
             if path.suffix == ".png":
                 data = path.read_bytes()
                 assert data[:8] == b"\x89PNG\r\n\x1a\n", f"Invalid PNG: {path}"

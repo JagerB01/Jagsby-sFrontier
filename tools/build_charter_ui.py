@@ -811,8 +811,6 @@ def build():
             template = "jf_realm_" + scope + "_" + field
             text = label("#form_button_text", size, color=color, scale=scale)
             text["property_bag"] = {"#form_button_text": ""}
-            if road and field in ["name", "owner"]:
-                text["text_truncate"] = True
             text["bindings"] = [
                 {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
                 {"binding_name": "#form_button_text", "binding_type": "collection", "binding_collection_name": "form_buttons"}]

@@ -108058,7 +108058,6 @@
     "property_bag": {
       "#form_button_text": ""
     },
-    "text_truncate": true,
     "bindings": [
       {
         "binding_type": "collection_details",
@@ -108099,7 +108098,6 @@
     "property_bag": {
       "#form_button_text": ""
     },
-    "text_truncate": true,
     "bindings": [
       {
         "binding_type": "collection_details",

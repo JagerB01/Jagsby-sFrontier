@@ -5,7 +5,15 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.87.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.88.mcaddon?raw=true)
+
+Version 0.0.88 removes unsupported `text_truncate` from the Roads name and owner
+labels. The handoff identifies these two templates repeated across 128 rows as
+the source of 256 UI errors per opening. No substitute property is introduced;
+the generated UI changes only by those two removals. Packaging now rejects this
+property anywhere in resource-pack UI. Layout, bindings, scrolling, controller
+focus and gameplay remain unchanged. A clean Minecraft content log still needs
+in-game confirmation.
 
 Version 0.0.87 gives Prospecting and Realm rows a controller reading-focus target,
 even when Select, Establish Road or Travel is unavailable. Move down from the

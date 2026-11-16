@@ -1,3 +1,21 @@
+# 0.0.88
+
+- Remove unsupported `text_truncate` from the Roads name and owner label
+  templates and their generator. The supplied UI Error Fix Handoff identifies
+  256 errors per opening: two affected templates repeated in 128 row slots.
+- Do not substitute another unverified truncation property. The generated UI
+  differs only by these two removals; fixed text boxes, row layout, bindings,
+  record values, scrolling, controller focus and gameplay logic are preserved.
+- Reject `text_truncate` anywhere in resource-pack UI during packaging. Cover
+  nested true/false properties, current UI files and the existing invalid panel
+  collection-scope guard with validation tests.
+- Native acceptance remains pending: open/close Realm → Roads three times,
+  scroll entries, and confirm no Frontier `text_truncate` errors in the exported
+  content log. Check names, owners and the other Charter screens visually.
+- The reported fly sound warning is outside this fix. Menu preparation timings
+  alone do not establish the cause of client loading delays; repeated UI errors
+  are the defect identified by this handoff.
+
 # 0.0.87
 
 - Give Prospecting and Realm rows a native controller focus target even while
