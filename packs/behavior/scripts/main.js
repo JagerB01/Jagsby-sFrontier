@@ -84,17 +84,19 @@ function globalResearchText(s,key){
  const compare=(now,next)=>researchComparison(now,next,cost!==undefined);
  const bonus=n=>n?`${ZONES[n]} +${researchPercent(n*10)}`:'None';
  const benefits={
-  innovation:`Research ceiling: ${compare('Lv '+level,'Lv '+(level+1))}\nSettlement Development remains uncapped.`,
-  capacity:`Settlement limit: ${compare(settlementLimit(s),settlementLimit(s)+1)}\nFounded: ${Object.keys(s.villages).length}. Founding-zone rules still apply.`,
+  innovation:`Upgrade limit: ${compare('Lv '+level,'Lv '+(level+1))}\nSets the maximum level of Prosperity, Sanctuary, Settlement Charters and Shared Storage.`,
+  capacity:`Settlement limit: ${compare(settlementLimit(s),settlementLimit(s)+1)}`,
   frontier:`Founding limit: ${compare(ZONES[level+1],ZONES[level+2])}\nUnlocks founding zones; settlement slots are separate.`,
   colonization:`Zone bonus: ${compare(bonus(level),bonus(Math.min(5,level+1)))}\nEarlier zone bonuses remain active.\nBonus resources do not earn Development.`,
   storage:`Shared capacity: ${compare(cap(s),cap(s)+storageIncrement())} items\nStored: ${total(s).toFixed(3)} items.`,
  };
  const description=benefits[key];
  const resource=key==='capacity'?'Logs':key==='storage'?'Building materials':acceptedMaterials(s,key).map(id=>id.replace('minecraft:','').replaceAll('_',' ')).join(', ');
- const prerequisite=key==='innovation'?'None (Lv 1 is free)':d.prerequisite?DEFINITIONS[d.prerequisite].name+' Lv 1':'Stewardship Lv 1';
- const ceiling=['capacity','storage'].includes(key)?`; Stewardship Lv ${level+1}`:'';
- return `Lv ${level}${Number.isFinite(maximum)?' / '+maximum:' (endless)'}\n${description}\n${cost===undefined?'Fully upgraded':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]} / ${cost}; ${Math.max(0,cost-s.researchProgress[key])} remaining\nRequires: ${prerequisite}${ceiling}\nStatus: ${locked?'Locked':'Available'}`}`;
+ const missing=[];
+ if(d.prerequisite&&s.global[d.prerequisite]<1)missing.push(DEFINITIONS[d.prerequisite].name+' Lv 1');
+ if(['capacity','storage'].includes(key)&&level>=s.global.innovation)missing.push('Stewardship Lv '+(level+1));
+ const required=missing.length?'\nRequired: '+missing.join('; '):'';
+ return `Lv ${level}${Number.isFinite(maximum)?' / '+maximum:' (endless)'}\n${description}\n${cost===undefined?'Fully upgraded':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]} / ${cost}; ${Math.max(0,cost-s.researchProgress[key])} remaining${required}\nStatus: ${locked?'Locked':'Available'}`}`;
 }
 function inventoryMaterials(player,s,key,materials=acceptedMaterials(s,key)){
  const inv=player.getComponent('minecraft:inventory')?.container,counts=new Map();

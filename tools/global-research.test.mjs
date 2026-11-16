@@ -179,7 +179,7 @@ test('Capped global cards do not debit inventory or erase partial progress',asyn
 test('Global hover record exposes effect, next cost, progress, remaining amount, prerequisite and click action',async()=>{
  const s=fresh();const h=await runtime(s);h.api.open(h.player,'none','Research','global');
  const text=h.forms[0].buttons[10];
- for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Requires: Settlement Charters Lv 1','Stored: 0.000 items','Shared capacity: §b792§r §7→§r §a1584§r items'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Required: Settlement Charters Lv 1','Stored: 0.000 items','Shared capacity: §b792§r §7→§r §a1584§r items'])assert.ok(text.includes(value),value);
 });
 test('Save migration refuses a future version instead of overwriting it',()=>{
  assert.throws(()=>R.migrateResearch({researchVersion:4}),/newer/);
@@ -257,14 +257,15 @@ test('All ten research hover records describe effects, next cost, progress, prer
  const h=await runtime(s);h.api.open(h.player,'a','Research','global');const records=h.forms[0].buttons;
  for(const index of [4,5,6,7,8,9,10,55,56,61]){
   const text=records[index];
-  for(const label of ['Next cost:','Contributed:','remaining','Requires:','Status:'])assert.ok(text.includes(label),`${index}: ${label}`);
+  for(const label of ['Next cost:','Contributed:','remaining','Status:'])assert.ok(text.includes(label),`${index}: ${label}`);
   assert.ok(text.includes('Click to contribute'));
   assert.equal(text.includes('Carry the required material'),false);
   assert.equal(text.includes('Select for materials'),false);
  }
  assert.ok(records[5].includes('Player regeneration: §bOff§r §7→§r §aI§r'));
  assert.ok(records[55].includes('3 minutes after leaving'));
- assert.ok(records[9].includes('Settlement Development remains uncapped'));
+ for(const name of ['Prosperity','Sanctuary','Settlement Charters','Shared Storage'])assert.ok(records[9].includes(name));
+ assert.equal(records[9].includes('Required:'),false);
  assert.ok(records[61].includes('Bonus resources do not earn Development'));
 });
 test('Road Networks returns all connections for scrolling and distinguishes construction from travel',async()=>{
@@ -537,7 +538,7 @@ test('both ends of the same Highway quote and charge their own local research ef
 
 test('All global cards use compact colored comparisons while preserving zone meanings and capped states',async()=>{
  const h=await runtime(),s=h.read();
- const cases=[['innovation','Research ceiling: §bLv 1§r §7→§r §aLv 2§r'],['capacity','Settlement limit: §b2§r §7→§r §a3§r'],['storage','Shared capacity: §b792§r §7→§r §a1584§r items'],['frontier','Founding limit: §bBorderlands§r §7→§r §aWildlands§r'],['colonization','Zone bonus: §bNone§r §7→§r §aBorderlands +10％§r']];
+ const cases=[['innovation','Upgrade limit: §bLv 1§r §7→§r §aLv 2§r'],['capacity','Settlement limit: §b2§r §7→§r §a3§r'],['storage','Shared capacity: §b792§r §7→§r §a1584§r items'],['frontier','Founding limit: §bBorderlands§r §7→§r §aWildlands§r'],['colonization','Zone bonus: §bNone§r §7→§r §aBorderlands +10％§r']];
  const before=JSON.stringify(s);
  for(const [key,expected] of cases){const text=h.api.globalResearchText(s,key);assert.ok(text.includes(expected),key);assert.equal(text.includes('Current:'),false);assert.equal(text.includes('Next:'),false);assert.ok(text.includes('Next cost:'));}
  assert.equal(JSON.stringify(s),before,'Rendering must not mutate research');
@@ -546,4 +547,25 @@ test('All global cards use compact colored comparisons while preserving zone mea
  for(const [key,level] of [['colonization',5],['frontier',4]]){
   s.global[key]=level;text=h.api.globalResearchText(s,key);assert.equal(text.includes('→'),false);assert.equal(text.includes('undefined'),false);assert.ok(text.includes('Blackreach'));assert.ok(text.includes('Fully upgraded'));
  }
+});
+
+test('Global cards omit met prerequisites, explain Stewardship and remove charter filler',async()=>{
+ const h=await runtime(),s=h.read();
+ let text=h.api.globalResearchText(s,'innovation');
+ for(const name of ['Prosperity','Sanctuary','Settlement Charters','Shared Storage'])assert.ok(text.includes(name));
+ assert.ok(text.includes('maximum level'));assert.equal(text.includes('Required:'),false);assert.equal(text.includes('None'),false);
+ text=h.api.globalResearchText(s,'capacity');assert.equal(text.includes('Required:'),false);
+ assert.equal(text.includes('Founded:'),false);assert.equal(text.toLowerCase().includes('founding'),false);
+ assert.ok(h.api.globalResearchText(s,'storage').includes('Required: Settlement Charters Lv 1'));
+ assert.ok(h.api.globalResearchText(s,'colonization').includes('Required: Frontier Expansion Lv 1'));
+ s.global.capacity=1;s.global.frontier=1;
+ text=h.api.globalResearchText(s,'storage');assert.equal(text.includes('Required:'),false);
+ assert.equal(h.api.globalResearchText(s,'colonization').includes('Required:'),false);
+ text=h.api.globalResearchText(s,'capacity');assert.ok(text.includes('Required: Stewardship Lv 2'));
+ assert.equal(text.match(/Stewardship Lv 2/g).length,1);
+ s.global.innovation=2;assert.equal(h.api.globalResearchText(s,'capacity').includes('Required:'),false);
+ s.global.innovation=1;s.global.capacity=0;s.global.storage=1;
+ text=h.api.globalResearchText(s,'storage');assert.ok(text.includes('Required: Settlement Charters Lv 1; Stewardship Lv 2'));
+ s.global.frontier=4;s.global.colonization=5;
+ for(const key of ['frontier','colonization'])assert.equal(h.api.globalResearchText(s,key).includes('Required:'),false);
 });

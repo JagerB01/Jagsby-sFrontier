@@ -86,8 +86,12 @@ export function researchPercent(value){return `${Number(value.toFixed(value>=99.
 export function localResearchText(v,key,s=null){
  const d=C.research[key],stored=localResearchLevel(v,key),level=!d.max&&s?Math.min(stored,s.global.innovation):stored,cost=localResearchCost(v,key);
  const progress=v.localResearch?.progress?.[key]??0,requirement=localResearchRequirement(v,key,s);
- const prerequisite=key==='hearth'?'None':['biome','sanctuary'].includes(key)?'Hearthstone Lv 1':key==='efficiency'?'Resource Prospecting Lv 1':'Sanctuary Lv 1';
- const ceiling=!d.max?`; Stewardship Lv ${stored+1}`:'';
+ const missing=[];
+ if(['biome','sanctuary'].includes(key)&&v.hearth<1)missing.push('Hearthstone Lv 1');
+ if(key==='efficiency'&&!v.biomeUnlocked)missing.push('Resource Prospecting Lv 1');
+ if(key==='roads'&&v.sanctuary<1)missing.push('Sanctuary Lv 1');
+ if(!d.max&&s&&stored>=s.global.innovation)missing.push('Stewardship Lv '+(stored+1));
+ const required=missing.length?'\nRequired: '+missing.join('; '):'';
  const compare=(now,next)=>researchComparison(now,next,Boolean(cost));
  const reduction=n=>Math.min(99.9999,(1-0.95**n)*100);
  const tier=['Locked','Trail','Road','Highway'];
@@ -104,5 +108,5 @@ export function localResearchText(v,key,s=null){
   benefit+='\nLimited by completed road tier.\nConstruction: 6 Minecraft days per stage.';
  }
 
- return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining\nRequires: ${prerequisite}${ceiling}\nStatus: ${requirement?'Locked':'Available'}`:'Fully upgraded'}`;
+ return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining${required}\nStatus: ${requirement?'Locked':'Available'}`:'Fully upgraded'}`;
 }

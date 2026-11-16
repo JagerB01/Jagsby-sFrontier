@@ -1,3 +1,16 @@
+# 0.0.75
+
+- Explain Stewardship's upgrade limit by naming Prosperity, Sanctuary, Settlement
+  Charters and Shared Storage. Remove the unrelated Development note.
+- Remove Settlement Charters' founded count and founding-rule reminder.
+- Replace unconditional Requires lines with Required lines containing only unmet
+  direct prerequisites or the next necessary Stewardship level. Omit the line
+  when requirements are satisfied, absent, or the tech is fully upgraded. Avoid
+  duplicate Stewardship entries and report multiple missing requirements once.
+- Test prerequisite transitions for local and global cards, ceiling-only locks,
+  combined locks, no-prerequisite cards, and fully upgraded states. Gameplay
+  requirements and research costs are unchanged.
+
 # 0.0.74
 
 - Apply shared cyan-current → green-next presentation across all ten local/global

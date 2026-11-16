@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.74.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.75.mcaddon?raw=true)
+
+Version 0.0.75 explains that Stewardship sets the maximum level of Prosperity,
+Sanctuary, Settlement Charters and Shared Storage. Settlement Charters shows its
+limit comparison without founded-count or founding-rule filler. All research
+cards show "Required:" only for unmet prerequisites, removing satisfied ones
+individually and omitting the line entirely when none remain.
 
 Version 0.0.74 extends the compact cyan-current → green-next comparisons to all
 ten research cards. Stewardship shows the ceiling, Settlement Charters the slot

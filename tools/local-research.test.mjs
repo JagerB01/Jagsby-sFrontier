@@ -118,7 +118,7 @@ test('Sanctuary compares colored percentages on one line and states its shared d
  assert.ok(text.includes('Hostile damage reduction: §b5％§r §7→§r §a9.75％§r'));
  assert.equal(text.match(/Persists for 3 minutes after leaving\./g).length,1);
  assert.equal(text.includes('Current:'),false);assert.equal(text.includes('Next:'),false);
- for(const value of ['Stewardship ceiling','Next cost: 250 Crops','Contributed: 0 / 250','250 remaining','Requires: Hearthstone Lv 1; Stewardship Lv 2','Status: Locked'])assert.ok(text.includes(value),value);
+ for(const value of ['Stewardship ceiling','Next cost: 250 Crops','Contributed: 0 / 250','250 remaining','Required: Stewardship Lv 2','Status: Locked'])assert.ok(text.includes(value),value);
 });
 
 test('Percentage comparisons include zero, preserve resets and avoid rounding Sanctuary to immunity',()=>{
@@ -142,4 +142,23 @@ test('Prospecting and Roads compare their actual allocation and local efficiency
  v.roads=2;text=localResearchText(v,'roads',state(3));assert.ok(text.includes('§b30％§r §7→§r §a55％§r'));
  v.roads=3;text=localResearchText(v,'roads',state(3));assert.ok(text.includes('§bHighway§r'));assert.ok(text.includes('§b55％§r'));assert.equal(text.includes('→'),false);
  assert.ok(text.includes('Limited by completed road tier.'));assert.ok(text.includes('6 Minecraft days'));
+});
+
+test('Local cards list only missing requirements and omit the line as soon as they are satisfied',()=>{
+ const v=village();
+ assert.equal(localResearchText(v,'hearth',state(1)).includes('Required:'),false);
+ for(const key of ['biome','sanctuary'])assert.ok(localResearchText(v,key,state(1)).includes('Required: Hearthstone Lv 1'));
+ v.hearth=1;
+ for(const key of ['biome','sanctuary'])assert.equal(localResearchText(v,key,state(1)).includes('Required:'),false);
+ assert.ok(localResearchText(v,'efficiency',state(1)).includes('Required: Resource Prospecting Lv 1'));
+ v.biomeUnlocked=true;assert.equal(localResearchText(v,'efficiency',state(1)).includes('Required:'),false);
+ assert.ok(localResearchText(v,'roads',state(1)).includes('Required: Sanctuary Lv 1'));
+ v.sanctuary=1;assert.equal(localResearchText(v,'roads',state(1)).includes('Required:'),false);
+ let text=localResearchText(v,'sanctuary',state(1));
+ assert.ok(text.includes('Required: Stewardship Lv 2'));assert.equal(text.includes('Hearthstone Lv 1'),false);
+ assert.equal(localResearchText(v,'sanctuary',state(2)).includes('Required:'),false);
+ v.hearth=0;text=localResearchText(v,'sanctuary',state(1));
+ assert.ok(text.includes('Required: Hearthstone Lv 1; Stewardship Lv 2'));
+ assert.equal(text.match(/Required:/g).length,1);
+ v.hearth=2;assert.equal(localResearchText(v,'hearth',state(1)).includes('Required:'),false);
 });
