@@ -1,3 +1,17 @@
+# 0.0.67
+
+- Replace Realm Previous/Next controls and page counters with scrolling native
+  collection lists for My Settlements, All Settlements, and Road Networks. Append
+  one form record per displayed row instead of preallocating three slots. Retain
+  owner filtering, settlement details, centered Establish Road actions, and road
+  management/travel. All known entries remain available in the scroll area.
+- Give road cards room for current and next road artwork and construction time.
+  Show No road for a new Trail and the completed road during upgrades. Convert
+  remaining game ticks to Minecraft days at 24,000 ticks per day, rounding positive
+  fractions up to two decimal places; reopen the charter to refresh the estimate.
+- Cover 40 settlements/39 roads without truncation and day conversion/road states
+  in automated tests. Minecraft UI scrolling still requires in-game validation.
+
 # 0.0.66
 
 - Reduce settlement directory icons from 28 to 24 UI units, inset within their row.

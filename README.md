@@ -5,7 +5,14 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.66.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.67.mcaddon?raw=true)
+
+Version 0.0.67 replaces the Realm page controls with scrollable My Settlements,
+All Settlements, and Road Networks lists. Rows are generated for every entry;
+there is no three-row limit. Construction cards show the current and next road
+artwork, plus time remaining in Minecraft days (24,000 ticks per day). A new
+Trail starts from No road; upgrades retain the existing route and travel cost.
+Time remaining refreshes when the charter is reopened.
 
 Version 0.0.66 improves Realm rows: settlement icons are inset and smaller,
 Establish Road is centered, and Road Networks uses matching village/owner/distance

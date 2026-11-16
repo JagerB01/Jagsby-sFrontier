@@ -175,13 +175,13 @@ test('framed portrait and compact details preserve native binding scopes',async(
   }
 });
 
-test('Realm filters have paginated directories and stockpile collection stays under Production',async()=>{
+test('Realm filters have scrollable directories and stockpile collection stays under Production',async()=>{
   const ui=await loadUI();
   const realm=children(ui.jf_realm_content);
   assert.ok(realm.jf_realm_tab_mine);assert.ok(realm.jf_realm_tab_all);
   for(const scope of ['mine','all']) {
     const directory=children(ui['jf_realm_'+scope+'_content']);
-    assert.ok(directory.prev);assert.ok(directory.next);
+    assert.ok(directory['entries@common.scrolling_panel']);assert.equal(directory.prev,undefined);assert.equal(directory.next,undefined);
   }
   assert.ok(JSON.stringify(ui.jf_production_summary_content).includes('jf_action_collect'));
   assert.equal(children(ui.jf_dashboard).jf_tab_stockpile,undefined);
@@ -336,8 +336,8 @@ test('Realm replaces the map with Road Networks and keeps both settlement direct
  assert.equal(tabs[0].tts_name,'Road Networks');
  assert.ok(realm['roads@jagsby_frontier.jf_realm_roads_content'].bindings.some(b=>b.source_control_name==='jf_realm_tab_roads'));
  assert.equal(ui.jf_realm_map_content,undefined);
- for(const key of ['roadsPrev','roadsNext','manageRoads'])assert.ok(roads[key]);
- for(const key of ['summary','connections'])assert.ok(roads[key]);
+ assert.ok(roads.manageRoads);assert.equal(roads.roadsPrev,undefined);assert.equal(roads.roadsNext,undefined);
+ for(const key of ['summary','empty','entries@common.scrolling_panel'])assert.ok(roads[key]);
  assert.equal(JSON.stringify(ui).includes('jf_data_map'),false);
  assert.equal(JSON.stringify(ui).includes('interactive map'),false);
 });
@@ -444,47 +444,41 @@ test('Prospecting scrolls all discovered choices with a shared header Survey and
  assert.ok(header.header_survey.offset[0]+header.header_survey.size[0]<=header.header_rename.offset[0]);
  for(const removed of ['biomePrev','biomeNext'])assert.equal(CHARTER_LAYOUT.actions[removed],undefined);
 });
-test('Both settlement directories use compact two-line rows with tier icons and road actions',async()=>{
+test('Settlement directories scroll native dynamic rows with centered establish buttons',async()=>{
  const ui=await loadUI();
  for(const scope of ['mine','all']){
-  const pane=children(ui['jf_realm_'+scope+'_content']);assert.equal(pane.directory,undefined);
-  for(let i=0;i<3;i++){
-   const row=pane['row'+i],fields=children(row);assert.deepEqual(row.size,[254,31]);
-   assert.deepEqual(fields.icon.size,[24,24]);assert.deepEqual(fields.icon.offset,[3,3]);assert.ok(fields.name);assert.ok(fields.owner);assert.ok(fields.coordinates);assert.ok(fields.distance);assert.ok(fields.development);assert.ok(fields.establish);
-   assert.equal(fields.name.offset[1],fields.coordinates.offset[1]);assert.equal(fields.owner.offset[1],fields.distance.offset[1]);
-   assert.equal(fields.development.offset[1],fields.owner.offset[1]);
-   for(const field of Object.values(fields)){
-    assert.ok(field.offset[0]+field.size[0]<=254);assert.ok(field.offset[1]+field.size[1]<=31);
-   }
-  }
- }
- for(const scope of ['Mine','All'])for(let slot=0;slot<3;slot++){
-  const button=template(ui,'jf_action_directory'+scope+'Road'+slot);
+  const pane=children(ui['jf_realm_'+scope+'_content']);
+  assert.ok(pane['entries@common.scrolling_panel']);
+  assert.equal(pane.prev,undefined);assert.equal(pane.next,undefined);assert.equal(pane.footer,undefined);
+  const rows=ui['jf_realm_'+scope+'_rows'];
+  assert.equal(rows.type,'stack_panel');assert.equal(rows.collection_name,'form_buttons');
+  assert.deepEqual(rows.size,[251,'100%c']);
+  assert.equal(rows.factory.control_ids.button,'jagsby_frontier.jf_realm_'+scope+'_row');
+  const row=ui['jf_realm_'+scope+'_row'],fields=children(row);
+  assert.deepEqual(row.size,[251,48]);assert.deepEqual(fields.icon.size,[24,24]);
+  assert.ok(fields.details.bindings.some(binding=>binding.target_property_name==='#text'));
+  const button=template(ui,'jf_directory_establish_'+scope);
+  assert.ok(button.bindings.some(binding=>binding.source_property_name?.includes('[JF:establish]')));
   for(const state of Object.values(children(button))){
    const caption=children(state).caption;
    assert.equal(caption.text_alignment,'center');assert.equal(caption.anchor_from,'center');
    assert.equal(caption.anchor_to,'center');assert.deepEqual(caption.offset,[0,0]);
   }
  }
- for(const tier of ['outpost','hamlet','village','town','city']){
-  const png=await readFile(new URL('../packs/resource/textures/ui/frontier/settlement_icons/'+tier+'.png',import.meta.url));
-  assert.equal(png.readUInt32BE(16),64);assert.equal(png.readUInt32BE(20),64);
- }
 });
 
- test('Road connections use directory-style rows with village, travel cost and built road artwork',async()=>{
+test('Road Networks scrolls taller cards with current and next road artwork',async()=>{
  const ui=await loadUI(),roads=children(ui.jf_realm_roads_content);
- for(let slot=0;slot<3;slot++){
-  const row=roads['row'+slot];
-  assert.deepEqual(row.size,[254,31]);
-  const fields=children(row);
-  for(const name of ['name','owner','distance','status','cost','village_icon','road_icon'])assert.ok(fields[name]);
-  assert.ok(fields.road_icon.bindings.some(binding=>binding.source_property_name?.includes('[JF:roadBuilt:'+slot+']')));
-  assert.ok(row.offset[1]+row.size[1]<=107);
-  assert.ok(row.bindings.some(binding=>binding.source_property_name?.includes('[JF:road:'+slot+']')));
-  const icon=ui['jf_road_road_icon'+slot];
-  assert.ok(icon.keep_ratio);
-  assert.ok(icon.bindings.some(binding=>binding.binding_name==='#form_button_texture'));
+ assert.ok(roads['entries@common.scrolling_panel']);
+ assert.equal(roads.roadsPrev,undefined);assert.equal(roads.roadsNext,undefined);
+ const rows=ui.jf_realm_roads_rows;
+ assert.equal(rows.collection_name,'form_buttons');assert.deepEqual(rows.size,[251,'100%c']);
+ const row=ui.jf_realm_roads_row,fields=children(row);
+ assert.deepEqual(row.size,[251,60]);
+ assert.ok(fields.details);assert.ok(fields.no_road);assert.ok(fields.upgrade_arrow);
+ for(const kind of ['current','next'])for(const tier of ['trail','road','highway']){
+  const icon=fields[kind+'_'+tier];assert.equal(icon.texture,'textures/ui/frontier/road_icons/'+tier);
+  assert.ok(icon.bindings.some(binding=>binding.source_property_name?.includes('[JF:'+kind+':'+tier+']')));
  }
  for(const tier of ['trail','road','highway']){
   const bytes=await readFile(new URL('../packs/resource/textures/ui/frontier/road_icons/'+tier+'.png',import.meta.url));
@@ -500,7 +494,7 @@ test('form payload packs later records without gaps and preserves contiguous col
  assert.ok(layout.recordCount<=300,'Avoid the former 506-record sparse payload');
  const later=indices.filter(index=>index>=98).sort((a,b)=>a-b);
  assert.deepEqual(later,Array.from({length:later.length},(_,i)=>i+98));
- for(const [group,prefix,count]of [['data','stockCount',30],['data','prospectInfo',52],['actions','prospectSelect',52],['data','roadConnection',3]]){
+ for(const [group,prefix,count]of [['data','stockCount',30],['data','prospectInfo',52],['actions','prospectSelect',52]]){
   for(let i=0;i<count;i++)assert.equal(layout[group][prefix+i],layout[group][prefix+'0']+i);
  }
 });

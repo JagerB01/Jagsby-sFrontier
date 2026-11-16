@@ -22,9 +22,7 @@ export function directoryRoadState(source,target,roads={}) {
 }
 export function settlementDirectory(villages, player, requestedPage = 0, mine = false, source=null, roads={}) {
  const settlements=Object.values(villages).filter(v=>!mine||v.owner?.id===player.id).sort((a,b)=>a.name.localeCompare(b.name));
- const pages=Math.max(1,Math.ceil(settlements.length/3));
- const page=Math.max(0,Math.min(pages-1,Math.floor(requestedPage)||0));
- const rows=settlements.slice(page*3,page*3+3).map(target=>{
+ const rows=settlements.map(target=>{
   const sameDimension=source?.dimension===target.dimension;
   const distance=sameDimension?Math.hypot(target.location.x-source.location.x,target.location.z-source.location.z):null;
   const road=directoryRoadState(source,target,roads);
@@ -33,6 +31,10 @@ export function settlementDirectory(villages, player, requestedPage = 0, mine = 
    distance, distanceText:sameDimension?`${Math.round(distance)} blocks`:target.dimension.replace('minecraft:',''),
    development:development(target),canEstablishRoad:road.canEstablish,roadStatus:road.status};
  });
- return {page,pages,count:settlements.length,rows,
-  footer:`Page ${page+1} / ${pages}`,empty:mine?'You do not own any settlements yet.':'No settlements registered.'};
+ return {count:settlements.length,rows,empty:mine?'You do not own any settlements yet.':'No settlements registered.'};
+}
+
+export function directoryRecord(row, scope) {
+ const status=row.canEstablishRoad?'[JF:establish]':`[JF:status:${({'Here':'here','Connected':'connected','Building':'building','Different\ndimension':'dimension','Requires\nRoads I':'research'})[row.roadStatus]||'research'}]`;
+ return `[JF:list:${scope}]${status}§6${row.name}§r\n${row.owner}\n${row.coordinates}\n${row.distanceText} · Dev ${row.development}`;
 }

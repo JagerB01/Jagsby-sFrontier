@@ -6,7 +6,7 @@ import { sampleTradingRanks } from "./villager-trade-bridge.js";
 import { CHARTER_LAYOUT } from "./charter-layout.js";
 import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRateText } from "./settlement-overview.js";
 import { settlementTier } from "./settlement-tiers.js";
-import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
+import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState, directoryRecord } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
 
 
@@ -195,17 +195,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   records[data.owner]=`Owner: ${ownerName(v)}`;
   const mine=settlementDirectory(s.villages,player,realmPage,true,v,s.roads);
   const all=settlementDirectory(s.villages,player,realmPage,false,v,s.roads);
-  records[data.realmMine]=mine.footer;
-  records[data.realmAll]=all.footer;
   const directoryIcons=new Map();
-  for(const [scope,directory]of [['mine',mine],['all',all]])directory.rows.forEach((row,slot)=>{
-   const prefix='directory'+scope[0].toUpperCase()+scope.slice(1)+slot;
-   for(const field of ['name','owner','coordinates','distance','development','roadStatus']){
-    const value=field==='distance'?row.distanceText:row[field];
-    records[data[prefix+field[0].toUpperCase()+field.slice(1)]]=String(value);
-   }
-   directoryIcons.set(data[prefix+'Name'],row.icon);
-  });
   const tier=settlementTier(v.census);
   records[data.tier]=tier.label;
   const researchChoices=new Map();
@@ -236,16 +226,20 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   const roadView=roadNetworkOverview(s,v,realmPage);
   records[data.roadSummary]=roadView.summary;
   records[data.roadDetails]=roadView.rows.length?'':roadView.details;
-  for(let slot=0;slot<3;slot++){
-   const row=roadView.rows[slot],prefix='roadConnection'+slot;
-   records[data[prefix]]=row?.name||'';
-   for(const field of ['Owner','Distance','Cost','Status'])records[data[prefix+field]]=row?.[field.toLowerCase()]||'';
-   directoryIcons.set(data[prefix],row?.villageTexture);
-   directoryIcons.set(data[prefix+'Status'],row?.texture);
-  }
   const handlers=new Map();
-  handlers.set(actions.roadsPrev,()=>open(player,vId,'Realm','global',roadView.page-1,'roads'));
-  handlers.set(actions.roadsNext,()=>open(player,vId,'Realm','global',roadView.page+1,'roads'));
+  for(const [scope,directory]of [['mine',mine],['all',all]]){
+   for(const row of directory.rows){
+    const index=records.length;
+    records.push(directoryRecord(row,scope));
+    directoryIcons.set(index,row.icon);
+    if(row.canEstablishRoad)handlers.set(index,()=>establishDirectoryRoad(player,vId,row.id,0,scope));
+   }
+  }
+  for(const row of roadView.rows){
+   const index=records.length;
+   records.push(row.record);
+   directoryIcons.set(index,row.villageTexture);
+  }
   for(const [key,choice]of researchChoices)handlers.set(actions[key],()=>contributeResearchCard(player,vId,key,choice));
   handlers.set(actions.manageRoads,()=>roadMenu(player,vId));
   handlers.set(actions.scan,()=>surveySettlement(player,vId,{page,researchScope,realmPage,realmScope,productionScope,productionPages}));
@@ -257,18 +251,13 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   handlers.set(actions.collect,()=>collect(player,vId,pages));
   handlers.set(actions.rename,()=>renameSettlement(player,vId));
   handlers.set(actions.claim,()=>{const latest=state();if(claimSettlement(latest,vId,player))save(latest);open(player,vId);});
-  for(const [scope,directory]of [['mine',mine],['all',all]]){
-    directory.rows.forEach((row,slot)=>{if(row.canEstablishRoad)handlers.set(actions['directory'+scope[0].toUpperCase()+scope.slice(1)+'Road'+slot],()=>establishDirectoryRoad(player,vId,row.id,directory.page,scope));});
-    handlers.set(actions[scope+'Prev'],()=>open(player,vId,'Realm','global',directory.page-1,scope));
-    handlers.set(actions[scope+'Next'],()=>open(player,vId,'Realm','global',directory.page+1,scope));
-  }
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
   for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction')&&!key.startsWith('directory')&&!key.startsWith('roadConnection'))records[index]=`[JF:data:${key}]${records[index]}`;
-  for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i),...['Mine','All'].flatMap(scope=>Array.from({length:3},(_,i)=>'directory'+scope+'Road'+i))])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
+  for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i)])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${roadView.rows.map((row,slot)=>`[JF:road:${slot}]${row.texture?'[JF:roadBuilt:'+slot+']':''}`).join('')}${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?directory.rows.map((_,slot)=>`[JF:directory:${scope}:${slot}]`).join(''):`[JF:directory:${scope}:empty]`).join('')}`);
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?'':`[JF:directory:${scope}:empty]`).join('')}`);
   records.forEach((text,index)=>{
    const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:directoryIcons.get(index);
    form.button(text,texture);
@@ -416,24 +405,30 @@ system.runInterval(()=>{
 world.beforeEvents.entityHurt?.subscribe(protectDamage);
 world.afterEvents.worldLoad?.subscribe(()=>{try{accounted();}catch(e){console.warn(String(e));}});
 
-function roadNetworkOverview(s,v,requested=0){
+function roadNetworkOverview(s,v){
  const connections=Object.values(s.roads||{}).filter(r=>[r.from,r.to].includes(v.id))
   .map(road=>({road,target:s.villages[road.from===v.id?road.to:road.from]})).filter(entry=>entry.target)
   .sort((a,b)=>a.target.id.localeCompare(b.target.id));
- const pages=Math.max(1,Math.ceil(connections.length/3)),page=Math.max(0,Math.min(pages-1,Math.floor(requested)||0));
  const active=connections.filter(({road})=>road.level&&!road.targetLevel).length;
  const building=connections.filter(({road})=>road.targetLevel).length;
- const rows=connections.slice(page*3,page*3+3).map(({road,target})=>{
+ const rows=connections.map(({road,target})=>{
   const tier=['','trail','road','highway'][road.level];
-  const progress=road.targetLevel?Math.max(0,Math.min(100,100*(gameTick()-road.startedTick)/road.durationTicks)).toFixed(0):null;
-  const status=road.targetLevel?`${road.level?'Upgrading':'Building'} ${progress}%`:['Unbuilt','Trail','Road','Highway'][road.level];
+  const ticksLeft=road.targetLevel?Math.max(0,(road.finishTick??road.startedTick+road.durationTicks)-gameTick()):0;
+  const remainingDays=Math.ceil(ticksLeft/24000*100)/100;
+  const nextTier=['none','trail','road','highway'][road.targetLevel||0];
+  const status=road.targetLevel?`${road.level?'Upgrading':'Building'} ${['','Trail','Road','Highway'][road.targetLevel]}`:['Unbuilt','Trail','Road','Highway'][road.level];
   const cost=road.level?`${foodCost(road)} food pts`:'Unavailable';
-  return {name:target.name,owner:ownerName(target),distance:`${Math.round(road.distance)} blocks`,cost,status,
+  const time=road.targetLevel?`${remainingDays.toFixed(2)} Minecraft days left`:'';
+  const name=target.name,owner=ownerName(target),distance=`${Math.round(road.distance)} blocks`;
+  const text=`§6${name}§r\n${owner} · ${distance}\nTravel cost: ${cost}\n${status}${time?'\n'+time:''}`;
+  return {name,owner,distance,cost,status,remainingDays,time,
    villageTexture:settlementTier(target.census).iconTexture,
    texture:tier?`textures/ui/frontier/road_icons/${tier}`:undefined,
-   text:`${target.name}\n${status} - ${road.level?foodCost(road)+' food points to travel':'No road built yet'}`};
+   nextTexture:road.targetLevel?`textures/ui/frontier/road_icons/${nextTier}`:undefined,
+   record:`[JF:list:roads][JF:current:${tier||'none'}][JF:next:${nextTier}]${text}`,
+   text:text+(road.level?'':'\nNo road built yet')};
  });
- return {page,rows,summary:`Roads Lv ${v.roads||0} | ${active} active, ${building} building | page ${page+1} / ${pages}`,details:rows.map(row=>row.text).join('\n')||'No connections yet. Establish a road from My Settlements or All Settlements after researching Road Networks I.'};
+ return {rows,summary:`Road Networks Lv ${v.roads||0} | ${active} active, ${building} building`,details:rows.map(row=>row.text).join('\n')||'No connections yet. Establish a road from My Settlements or All Settlements after researching Road Networks I.'};
 }
 // An older map session may have saved disabled movement permissions. Restore
 // only recorded categories once; no map navigation, terrain reads or HUD remains.

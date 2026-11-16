@@ -20,16 +20,16 @@ test('ownership tracks the placer and legacy claims cannot overwrite another own
   assert.equal(claimSettlement(state,'b',player),false);
   assert.equal(state.villages.b.owner.id,'q');
 });
-test('Realm filters settlements by owner and paginates without summing overlapping power',()=>{
+test('Realm filters settlements by owner and returns every row for scrolling',()=>{
   const player={id:'p',name:'Builder'};
   const villages=Object.fromEntries(Array.from({length:7},(_,i)=>[String(i),village(i,i<4?ownerRecord(player):null)]));
   const mine=settlementDirectory(villages,player,0,true);
-  assert.equal(mine.count,4);assert.equal(mine.pages,2);
+  assert.equal(mine.count,4);assert.equal(mine.rows.length,4);
   assert.equal(mine.rows[0].owner,'Builder');assert.equal(mine.rows[0].icon,'textures/ui/frontier/settlement_icons/hamlet');
   const all=settlementDirectory(villages,player,999,false);
-  assert.equal(all.count,7);assert.equal(all.page,2);assert.equal(all.pages,3);
-  assert.equal(all.rows[0].owner,'Unclaimed');
-  assert.equal(settlementDirectory(villages,player,-4,false).page,0);
+  assert.equal(all.count,7);assert.equal(all.rows.length,7);assert.equal(all.pages,undefined);
+  assert.equal(all.rows.at(-1).owner,'Unclaimed');
+  assert.equal(settlementDirectory(villages,player,-4,false).rows.length,7);
   assert.match(settlementDirectory(villages,{id:'nobody'},0,true).empty,/do not own/);
 });
 test('two-line directory rows use uploaded tier icons, current-settlement distances and Development',()=>{
