@@ -21816,6 +21816,45 @@
     ],
     "controls": [
       {
+        "realm_row_record": {
+          "type": "label",
+          "text": "#form_button_text",
+          "size": [
+            0,
+            0
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.65,
+          "color": [
+            0.94,
+            0.92,
+            0.85
+          ],
+          "shadow": false,
+          "alpha": 0,
+          "visible": true,
+          "property_bag": {
+            "#form_button_text": ""
+          },
+          "bindings": [
+            {
+              "binding_name": "#form_button_text",
+              "binding_type": "collection",
+              "binding_collection_name": "form_buttons",
+              "binding_condition": "always"
+            }
+          ]
+        }
+      },
+      {
         "surface": {
           "type": "image",
           "texture": "textures/ui/frontier/palette_panel",
@@ -21898,19 +21937,14 @@
           "shadow": false,
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(#row_text - '[JF:list:roads]' - '[JF:establish]' - '[JF:status:here]' - '[JF:status:connected]' - '[JF:status:building]' - '[JF:status:dimension]' - '[JF:status:research]' - '[JF:current:none]' - '[JF:current:trail]' - '[JF:current:road]' - '[JF:current:highway]' - '[JF:next:none]' - '[JF:next:trail]' - '[JF:next:road]' - '[JF:next:highway]')",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(#form_button_text - '[JF:list:roads]' - '[JF:establish]' - '[JF:status:here]' - '[JF:status:connected]' - '[JF:status:building]' - '[JF:status:dimension]' - '[JF:status:research]' - '[JF:current:none]' - '[JF:current:trail]' - '[JF:current:road]' - '[JF:current:highway]' - '[JF:next:none]' - '[JF:next:trail]' - '[JF:next:road]' - '[JF:next:highway]')",
               "target_property_name": "#text"
             }
           ],
           "property_bag": {
-            "#row_text": "",
             "#text": ""
           }
         }
@@ -21934,20 +21968,13 @@
           "layer": 8,
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:current:trail]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:current:trail]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -21970,20 +21997,13 @@
           "layer": 8,
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:current:road]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:current:road]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22006,20 +22026,13 @@
           "layer": 8,
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:current:highway]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:current:highway]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22069,20 +22082,13 @@
           "layer": 8,
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:next:trail]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:next:trail]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22105,20 +22111,13 @@
           "layer": 8,
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:next:road]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:next:road]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22141,20 +22140,13 @@
           "layer": 8,
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:next:highway]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:next:highway]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22185,20 +22177,13 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not (not ((#row_text - '[JF:next:none]') = #row_text)))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not (not ((#form_button_text - '[JF:next:none]') = #form_button_text)))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22229,20 +22214,13 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:current:none]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:current:none]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22272,40 +22250,26 @@
           "shadow": false,
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not (not ((#row_text - '[JF:next:none]') = #row_text)))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not (not ((#form_button_text - '[JF:next:none]') = #form_button_text)))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       }
     ],
     "bindings": [
       {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#row_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
         "binding_type": "view",
-        "source_property_name": "(not ((#row_text - '[JF:list:roads]') = #row_text))",
+        "source_control_name": "realm_row_record",
+        "resolve_sibling_scope": true,
+        "source_property_name": "(not ((#form_button_text - '[JF:list:roads]') = #form_button_text))",
         "target_property_name": "#visible"
       }
     ],
-    "property_bag": {
-      "#row_text": ""
-    },
     "visible": false
   },
   "jf_realm_roads_rows": {
@@ -22462,19 +22426,17 @@
         "binding_collection_name": "form_buttons"
       },
       {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#row_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
         "binding_type": "view",
-        "source_property_name": "(not ((#row_text - '[JF:establish]') = #row_text))",
+        "source_control_name": "realm_row_record",
+        "resolve_sibling_scope": true,
+        "source_property_name": "(not ((#form_button_text - '[JF:establish]') = #form_button_text))",
         "target_property_name": "#visible"
       },
       {
         "binding_type": "view",
-        "source_property_name": "(not ((#row_text - '[JF:establish]') = #row_text))",
+        "source_control_name": "realm_row_record",
+        "resolve_sibling_scope": true,
+        "source_property_name": "(not ((#form_button_text - '[JF:establish]') = #form_button_text))",
         "target_property_name": "#enabled"
       }
     ],
@@ -22657,9 +22619,6 @@
     ],
     "anchor_from": "top_left",
     "anchor_to": "top_left",
-    "property_bag": {
-      "#row_text": ""
-    },
     "visible": false
   },
   "jf_realm_mine_row": {
@@ -22669,6 +22628,45 @@
       48
     ],
     "controls": [
+      {
+        "realm_row_record": {
+          "type": "label",
+          "text": "#form_button_text",
+          "size": [
+            0,
+            0
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.65,
+          "color": [
+            0.94,
+            0.92,
+            0.85
+          ],
+          "shadow": false,
+          "alpha": 0,
+          "visible": true,
+          "property_bag": {
+            "#form_button_text": ""
+          },
+          "bindings": [
+            {
+              "binding_name": "#form_button_text",
+              "binding_type": "collection",
+              "binding_collection_name": "form_buttons",
+              "binding_condition": "always"
+            }
+          ]
+        }
+      },
       {
         "surface": {
           "type": "image",
@@ -22752,19 +22750,14 @@
           "shadow": false,
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(#row_text - '[JF:list:mine]' - '[JF:establish]' - '[JF:status:here]' - '[JF:status:connected]' - '[JF:status:building]' - '[JF:status:dimension]' - '[JF:status:research]' - '[JF:current:none]' - '[JF:current:trail]' - '[JF:current:road]' - '[JF:current:highway]' - '[JF:next:none]' - '[JF:next:trail]' - '[JF:next:road]' - '[JF:next:highway]')",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(#form_button_text - '[JF:list:mine]' - '[JF:establish]' - '[JF:status:here]' - '[JF:status:connected]' - '[JF:status:building]' - '[JF:status:dimension]' - '[JF:status:research]' - '[JF:current:none]' - '[JF:current:trail]' - '[JF:current:road]' - '[JF:current:highway]' - '[JF:next:none]' - '[JF:next:trail]' - '[JF:next:road]' - '[JF:next:highway]')",
               "target_property_name": "#text"
             }
           ],
           "property_bag": {
-            "#row_text": "",
             "#text": ""
           }
         }
@@ -22799,20 +22792,13 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:status:here]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:status:here]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22843,20 +22829,13 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:status:connected]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:status:connected]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22887,20 +22866,13 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:status:building]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:status:building]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22931,20 +22903,13 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:status:dimension]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:status:dimension]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -22975,40 +22940,26 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:status:research]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:status:research]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       }
     ],
     "bindings": [
       {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#row_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
         "binding_type": "view",
-        "source_property_name": "(not ((#row_text - '[JF:list:mine]') = #row_text))",
+        "source_control_name": "realm_row_record",
+        "resolve_sibling_scope": true,
+        "source_property_name": "(not ((#form_button_text - '[JF:list:mine]') = #form_button_text))",
         "target_property_name": "#visible"
       }
     ],
-    "property_bag": {
-      "#row_text": ""
-    },
     "visible": false
   },
   "jf_realm_mine_rows": {
@@ -23133,19 +23084,17 @@
         "binding_collection_name": "form_buttons"
       },
       {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#row_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
         "binding_type": "view",
-        "source_property_name": "(not ((#row_text - '[JF:establish]') = #row_text))",
+        "source_control_name": "realm_row_record",
+        "resolve_sibling_scope": true,
+        "source_property_name": "(not ((#form_button_text - '[JF:establish]') = #form_button_text))",
         "target_property_name": "#visible"
       },
       {
         "binding_type": "view",
-        "source_property_name": "(not ((#row_text - '[JF:establish]') = #row_text))",
+        "source_control_name": "realm_row_record",
+        "resolve_sibling_scope": true,
+        "source_property_name": "(not ((#form_button_text - '[JF:establish]') = #form_button_text))",
         "target_property_name": "#enabled"
       }
     ],
@@ -23328,9 +23277,6 @@
     ],
     "anchor_from": "top_left",
     "anchor_to": "top_left",
-    "property_bag": {
-      "#row_text": ""
-    },
     "visible": false
   },
   "jf_realm_all_row": {
@@ -23340,6 +23286,45 @@
       48
     ],
     "controls": [
+      {
+        "realm_row_record": {
+          "type": "label",
+          "text": "#form_button_text",
+          "size": [
+            0,
+            0
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "font_type": "unicode",
+          "font_size": "normal",
+          "font_scale_factor": 0.65,
+          "color": [
+            0.94,
+            0.92,
+            0.85
+          ],
+          "shadow": false,
+          "alpha": 0,
+          "visible": true,
+          "property_bag": {
+            "#form_button_text": ""
+          },
+          "bindings": [
+            {
+              "binding_name": "#form_button_text",
+              "binding_type": "collection",
+              "binding_collection_name": "form_buttons",
+              "binding_condition": "always"
+            }
+          ]
+        }
+      },
       {
         "surface": {
           "type": "image",
@@ -23423,19 +23408,14 @@
           "shadow": false,
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(#row_text - '[JF:list:all]' - '[JF:establish]' - '[JF:status:here]' - '[JF:status:connected]' - '[JF:status:building]' - '[JF:status:dimension]' - '[JF:status:research]' - '[JF:current:none]' - '[JF:current:trail]' - '[JF:current:road]' - '[JF:current:highway]' - '[JF:next:none]' - '[JF:next:trail]' - '[JF:next:road]' - '[JF:next:highway]')",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(#form_button_text - '[JF:list:all]' - '[JF:establish]' - '[JF:status:here]' - '[JF:status:connected]' - '[JF:status:building]' - '[JF:status:dimension]' - '[JF:status:research]' - '[JF:current:none]' - '[JF:current:trail]' - '[JF:current:road]' - '[JF:current:highway]' - '[JF:next:none]' - '[JF:next:trail]' - '[JF:next:road]' - '[JF:next:highway]')",
               "target_property_name": "#text"
             }
           ],
           "property_bag": {
-            "#row_text": "",
             "#text": ""
           }
         }
@@ -23470,20 +23450,13 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:status:here]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:status:here]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -23514,20 +23487,13 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:status:connected]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:status:connected]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -23558,20 +23524,13 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:status:building]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:status:building]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -23602,20 +23561,13 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:status:dimension]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:status:dimension]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       },
@@ -23646,40 +23598,26 @@
           "text_alignment": "center",
           "bindings": [
             {
-              "binding_name": "#form_button_text",
-              "binding_name_override": "#row_text",
-              "binding_type": "collection",
-              "binding_collection_name": "form_buttons"
-            },
-            {
               "binding_type": "view",
-              "source_property_name": "(not ((#row_text - '[JF:status:research]') = #row_text))",
+              "source_control_name": "realm_row_record",
+              "resolve_sibling_scope": true,
+              "source_property_name": "(not ((#form_button_text - '[JF:status:research]') = #form_button_text))",
               "target_property_name": "#visible"
             }
           ],
-          "property_bag": {
-            "#row_text": ""
-          },
           "visible": false
         }
       }
     ],
     "bindings": [
       {
-        "binding_name": "#form_button_text",
-        "binding_name_override": "#row_text",
-        "binding_type": "collection",
-        "binding_collection_name": "form_buttons"
-      },
-      {
         "binding_type": "view",
-        "source_property_name": "(not ((#row_text - '[JF:list:all]') = #row_text))",
+        "source_control_name": "realm_row_record",
+        "resolve_sibling_scope": true,
+        "source_property_name": "(not ((#form_button_text - '[JF:list:all]') = #form_button_text))",
         "target_property_name": "#visible"
       }
     ],
-    "property_bag": {
-      "#row_text": ""
-    },
     "visible": false
   },
   "jf_realm_all_rows": {

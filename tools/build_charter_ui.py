@@ -722,19 +722,20 @@ def build():
     ]}
     realm_controls = [research_tab("roads", 0, "realm", "Road Networks"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
     def list_condition(marker):
-        return "(not ((#row_text - '" + marker + "') = #row_text))"
+        return "(not ((#form_button_text - '" + marker + "') = #form_button_text))"
 
-    def list_bindings():
-        # Match the native dynamic-button descendants: read the factory's current
-        # collection entry without rebinding its collection_details context.
-        return [{"binding_name": "#form_button_text", "binding_name_override": "#row_text",
-                 "binding_type": "collection", "binding_collection_name": "form_buttons"}]
+    def row_view(expression, target="#visible"):
+        # Like vanilla dynamic_button's image wrapper, read the native property
+        # from a named descendant/sibling instead of rebinding each container.
+        return {"binding_type": "view", "source_control_name": "realm_row_record",
+                "resolve_sibling_scope": True, "source_property_name": expression,
+                "target_property_name": target}
 
     def list_icon(name, texture, offset, marker=None):
         icon = image(texture, [24, 24], offset, layer=8)
         icon["keep_ratio"] = True
         if marker:
-            icon["bindings"] = list_bindings() + [view(list_condition(marker))]
+            icon["bindings"] = [row_view(list_condition(marker))]
         return control(name, icon)
 
     def list_scroll(scope, height, y=0):
@@ -750,16 +751,21 @@ def build():
         height = 60 if scope == "roads" else 48
         tokens = [marker, "[JF:establish]"] + ["[JF:status:" + status + "]" for status in ["here", "connected", "building", "dimension", "research"]]
         tokens += ["[JF:" + kind + ":" + tier + "]" for kind in ["current", "next"] for tier in ["none", "trail", "road", "highway"]]
-        expression = "(#row_text" + "".join(" - '" + token + "'" for token in tokens) + ")"
+        expression = "(#form_button_text" + "".join(" - '" + token + "'" for token in tokens) + ")"
         text = label("#text", [140 if scope == "roads" else 161, height - 4], (33, 2), IVORY, 0.65)
-        text["bindings"] = list_bindings() + [view(expression, "#text")]
+        text["bindings"] = [row_view(expression, "#text")]
         village_icon = image("frontier/settlement_icons/outpost", [24, 24], (4, 4), layer=8)
         village_icon["keep_ratio"] = True
         village_icon["bindings"] = [
             {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
             {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
         ]
-        fields = [control("surface", image("frontier/palette_panel", [251, height - 1], color=[0.82, 0.82, 0.82])),
+        source = label("#form_button_text", [0, 0], scale=0.65)
+        source.update({"alpha": 0, "visible": True,
+            "property_bag": {"#form_button_text": ""},
+            "bindings": [{"binding_name": "#form_button_text", "binding_type": "collection",
+                          "binding_collection_name": "form_buttons", "binding_condition": "always"}]})
+        fields = [control("realm_row_record", source), control("surface", image("frontier/palette_panel", [251, height - 1], color=[0.82, 0.82, 0.82])),
                   control("icon", village_icon), control("details", text)]
         if scope == "roads":
             for kind, x in [("current", 178), ("next", 220)]:
@@ -768,20 +774,20 @@ def build():
                 caption = label("Current" if kind == "current" else "Next", [32, 10], (x - 3, 42), SILVER, 0.6)
                 caption["text_alignment"] = "center"
                 if kind == "next":
-                    caption["bindings"] = list_bindings() + [view("(not " + list_condition("[JF:next:none]") + ")")]
+                    caption["bindings"] = [row_view("(not " + list_condition("[JF:next:none]") + ")")]
                 fields.append(control(kind + "_caption", caption))
             no_road = label("No road", [34, 12], (173, 21), SILVER, 0.65)
             no_road["text_alignment"] = "center"
-            no_road["bindings"] = list_bindings() + [view(list_condition("[JF:current:none]"))]
+            no_road["bindings"] = [row_view(list_condition("[JF:current:none]"))]
             fields.append(control("no_road", no_road))
             arrow = label(">", [10, 12], (207, 21), WHEAT, 0.8)
-            arrow["bindings"] = list_bindings() + [view("(not " + list_condition("[JF:next:none]") + ")")]
+            arrow["bindings"] = [row_view("(not " + list_condition("[JF:next:none]") + ")")]
             fields.append(control("upgrade_arrow", arrow))
         else:
             # The factory preserves each row's native form record index for this button.
             button = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
             button.update({"size": [47, 24], "offset": [201, 12], "anchor_from": "top_left", "anchor_to": "top_left",
-                           "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}] + list_bindings() + [view(list_condition("[JF:establish]")), view(list_condition("[JF:establish]"), "#enabled")]})
+                           "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}] + [row_view(list_condition("[JF:establish]")), row_view(list_condition("[JF:establish]"), "#enabled")]})
             for state in button["controls"]:
                 state_name, panel = next(iter(state.items()))
                 panel["size"] = [47, 24]
@@ -793,10 +799,10 @@ def build():
             for status, caption in [("here", "Here"), ("connected", "Connected"), ("building", "Building"), ("dimension", "Different\ndimension"), ("research", "Requires\nRoads I")]:
                 status_label = label(caption, [47, 22], (201, 13), IVORY, 0.65)
                 status_label["text_alignment"] = "center"
-                status_label["bindings"] = list_bindings() + [view(list_condition("[JF:status:" + status + "]"))]
+                status_label["bindings"] = [row_view(list_condition("[JF:status:" + status + "]"))]
                 fields.append(control("status_" + status, status_label))
         ui["jf_realm_" + scope + "_row"] = {"type": "panel", "size": [251, height], "controls": fields,
-            "bindings": list_bindings() + [view(list_condition(marker))]}
+            "bindings": [row_view(list_condition(marker))]}
         ui["jf_realm_" + scope + "_rows"] = {"type": "stack_panel", "orientation": "vertical", "size": [251, "100%c"],
             "collection_name": "form_buttons", "factory": {"name": "buttons", "control_ids": {"button": "jagsby_frontier.jf_realm_" + scope + "_row"}},
             "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length"}]}
@@ -821,8 +827,6 @@ def build():
     def initialize_row_bindings(value):
         if isinstance(value, dict):
             bindings = value.get("bindings", [])
-            if any(binding.get("binding_name_override") == "#row_text" for binding in bindings):
-                value.setdefault("property_bag", {})["#row_text"] = ""
             if value.get("text") == "#text" and any(binding.get("target_property_name") == "#text" for binding in bindings):
                 value.setdefault("property_bag", {})["#text"] = ""
             if any(binding.get("target_property_name") == "#visible" for binding in bindings):

@@ -1,3 +1,17 @@
+# 0.0.69
+
+- Replace the unsuccessful 0.0.68 custom row-text aliases with one native label
+  bound to each form record. Row details and visibility predicates read that
+  named source through sibling-scope view bindings, following the native dynamic
+  form control pattern. Keep scrolling and current/next road construction cards.
+- Bind the source label continuously, including while the containing row is
+  hidden. Only the source label reads collection text; sibling controls do not
+  rebind it independently. Keep native image texture bindings and click indices.
+- Update the generated-UI regression checks for the named source and its scope.
+  Automated checks cannot confirm the in-game renderer. The user's supplied
+  0.0.68 content log confirms the loaded build and menu creation without UI errors;
+  it does not identify the rendering failure or validate this replacement.
+
 # 0.0.68
 
 - Correct the Realm factory-row binding contract: initialize the custom row text

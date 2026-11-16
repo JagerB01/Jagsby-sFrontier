@@ -5,11 +5,18 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.68.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.69.mcaddon?raw=true)
 
-Version 0.0.68 corrects the Realm scrolling-row bindings after the reported blank
-cards, unrelated icons, and overlapping labels in 0.0.67. Row text properties now
-have explicit defaults and aliases, while descendants retain the native factory
+Version 0.0.69 replaces Realm's per-control text aliases with one native
+collection-bound label per row. Visibility, displayed details, and construction
+icons read that named label using sibling-scope view bindings. The supplied
+0.0.68 content log confirms that build loaded and created 248 form records but
+contains no UI errors; the previous binding changes did not fix the reported
+rendering. This replacement still requires an in-game rendering check.
+
+Version 0.0.68 attempted to correct the Realm scrolling-row bindings after the reported blank
+cards, unrelated icons, and overlapping labels in 0.0.67. In that version, row text properties received
+explicit defaults and aliases, while descendants retained the native factory
 collection context. Conditional content starts hidden until its row is bound.
 The Overview route shows the destination settlement name without its road type;
 the Road Networks summary no longer displays a research level. These binding

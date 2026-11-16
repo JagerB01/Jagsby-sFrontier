@@ -499,22 +499,22 @@ test('form payload packs later records without gaps and preserves contiguous col
  }
 });
 
-test('Realm factory rows initialize record properties and filter unrelated form entries before display',async()=>{
+test('Realm rows read native text through a named sibling source and filter unrelated entries',async()=>{
  const ui=await loadUI();
  const unrelated=['[JF:action:rename]','[JF:data:overview]Marovek','12','[JF:action:collect]'];
  function visible(control,text){
   const expression=control.bindings.find(binding=>binding.target_property_name==='#visible').source_property_name;
-  assert.equal(expression.includes('#form_button_text'),false,'Views must use the initialized per-row alias');
-  const marker=expression.match(/#row_text - '([^']+)'/)[1];
+  const gate=control.bindings.find(binding=>binding.target_property_name==='#visible');
+  assert.equal(gate.source_control_name,'realm_row_record');assert.equal(gate.resolve_sibling_scope,true);
+  const marker=expression.match(/#form_button_text - '([^']+)'/)[1];
   const equal=text.replaceAll(marker,'')===text;
   return (expression.match(/\bnot\b/g)||[]).length%2?!equal:equal;
  }
  function checkBindings(value){
   if(!value||typeof value!=='object')return;
-  if(value.bindings?.some(binding=>binding.binding_name_override==='#row_text')){
-   assert.equal(value.property_bag['#row_text'],'');
-   for(const binding of value.bindings.filter(binding=>binding.binding_type==='view')){
-    assert.equal(binding.source_property_name.includes('#form_button_text'),false);
+  for(const binding of value.bindings||[]){
+   if(binding.binding_type==='view'&&binding.source_property_name?.includes('#form_button_text')){
+    assert.equal(binding.source_control_name,'realm_row_record');assert.equal(binding.resolve_sibling_scope,true);
    }
   }
   if(value.bindings?.some(binding=>binding.target_property_name==='#visible'))assert.equal(value.visible,false);
@@ -529,7 +529,12 @@ test('Realm factory rows initialize record properties and filter unrelated form 
   for(const other of unrelated.concat(['mine','all','roads'].filter(s=>s!==scope).map(s=>'[JF:list:'+s+']Village'))){
    assert.equal(visible(row,other),false,'Unrelated records must not occupy this list');
   }
-  const fields=children(row);
+  const fields=children(row),source=fields.realm_row_record;
+  assert.equal(source.type,'label');assert.equal(source.text,'#form_button_text');
+  assert.equal(source.property_bag['#form_button_text'],'');assert.equal(source.visible,true);assert.equal(source.alpha,0);
+  assert.deepEqual(source.bindings,[{binding_name:'#form_button_text',binding_type:'collection',binding_collection_name:'form_buttons',binding_condition:'always'}]);
+  assert.equal(fields.details.bindings.some(binding=>binding.binding_type==='collection'),false);
+  assert.equal(fields.details.bindings[0].source_control_name,'realm_row_record');
   assert.equal(fields.icon.bindings.some(binding=>binding.binding_type==='collection_details'),false);
   assert.ok(fields.icon.bindings.some(binding=>binding.binding_name_override==='#texture'));
   if(scope==='roads'){
