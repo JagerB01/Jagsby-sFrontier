@@ -444,45 +444,44 @@ test('Prospecting scrolls all discovered choices with a shared header Survey and
  assert.ok(header.header_survey.offset[0]+header.header_survey.size[0]<=header.header_rename.offset[0]);
  for(const removed of ['biomePrev','biomeNext'])assert.equal(CHARTER_LAYOUT.actions[removed],undefined);
 });
-test('Settlement directories scroll native dynamic rows with centered establish buttons',async()=>{
+test('Realm scrolling rows use explicit collection indices and the established column layout',async()=>{
  const ui=await loadUI();
- for(const scope of ['mine','all']){
+ const {CHARTER_LAYOUT:layout}=await import('../packs/behavior/scripts/charter-layout.js');
+ for(const [scopeIndex,scope] of layout.realmRows.scopes.entries()){
   const pane=children(ui['jf_realm_'+scope+'_content']);
-  assert.ok(pane['entries@common.scrolling_panel']);
-  assert.equal(pane.prev,undefined);assert.equal(pane.next,undefined);assert.equal(pane.footer,undefined);
-  const rows=ui['jf_realm_'+scope+'_rows'];
-  assert.equal(rows.type,'stack_panel');assert.equal(rows.collection_name,'form_buttons');
-  assert.deepEqual(rows.size,[251,'100%c']);
-  assert.equal(rows.factory.control_ids.button,'jagsby_frontier.jf_realm_'+scope+'_row');
-  const row=ui['jf_realm_'+scope+'_row'],fields=children(row);
-  assert.deepEqual(row.size,[251,48]);assert.deepEqual(fields.icon.size,[24,24]);
-  assert.ok(fields.details.bindings.some(binding=>binding.target_property_name==='#text'));
-  const button=template(ui,'jf_directory_establish_'+scope);
-  assert.ok(button.bindings.some(binding=>binding.source_property_name?.includes('[JF:establish]')));
-  for(const state of Object.values(children(button))){
-   const caption=children(state).caption;
-   assert.equal(caption.text_alignment,'center');assert.equal(caption.anchor_from,'center');
-   assert.equal(caption.anchor_to,'center');assert.deepEqual(caption.offset,[0,0]);
+  assert.ok(pane['entries@common.scrolling_panel']);assert.equal(pane.prev,undefined);assert.equal(pane.next,undefined);
+  const list=ui['jf_realm_'+scope+'_rows'];
+  assert.equal(list.factory,undefined,'Do not reintroduce the broken dynamic factory');
+  assert.deepEqual(list.size,[251,'100%c']);
+  const rows=children(list);assert.equal(Object.keys(rows).length,layout.realmRows.limit);
+  for(const slot of [0,1,39,layout.realmRows.limit-1]){
+   const row=rows['row'+slot],fields=children(row);
+   assert.ok(row.bindings.some(binding=>binding.source_property_name?.includes('[JF:row:'+scope+':'+slot+']')));
+   const base=layout.realmRows.base+slot*layout.realmRows.stride+scopeIndex*8;
+   for(const [field,offset] of [['name',0],['owner',1],...(scope==='roads'?[['distance',2],['cost',3],['status',4],['time',5]]:[['coordinates',2],['distance',3],['development',4],['status',5]])]){
+    const wrapper=fields[field];assert.equal(wrapper.type,'stack_panel');assert.equal(wrapper.collection_name,'form_buttons');
+    const record=Object.values(wrapper.controls[0])[0];assert.equal(record.collection_index,base+offset);
+    const raw=ui['jf_realm_'+scope+'_'+field];assert.equal(raw.text,'#form_button_text');
+    assert.equal(raw.bindings.some(binding=>binding.binding_type==='view'),false);
+   }
+   assert.equal(Object.values(fields.icon.controls[0])[0].collection_index,base);
+   if(scope==='roads'){
+    for(const [kind,offset] of [['current',6],['next',7]]){
+     assert.equal(Object.values(fields[kind+'_icon'].controls[0])[0].collection_index,base+offset);
+     assert.ok(fields[kind+'_icon'].bindings.some(binding=>binding.source_property_name?.includes('[JF:'+kind+':roads:'+slot+']')));
+    }
+   }else{
+    assert.equal(fields.coordinates.offset[1],fields.name.offset[1]);assert.equal(fields.owner.offset[1],fields.distance.offset[1]);
+    assert.equal(Object.values(fields.establish.controls[0])[0].collection_index,base+6);
+    assert.ok(fields.establish.bindings.some(binding=>binding.source_property_name?.includes('[JF:establish:'+scope+':'+slot+']')));
+   }
   }
- }
-});
-
-test('Road Networks scrolls taller cards with current and next road artwork',async()=>{
- const ui=await loadUI(),roads=children(ui.jf_realm_roads_content);
- assert.ok(roads['entries@common.scrolling_panel']);
- assert.equal(roads.roadsPrev,undefined);assert.equal(roads.roadsNext,undefined);
- const rows=ui.jf_realm_roads_rows;
- assert.equal(rows.collection_name,'form_buttons');assert.deepEqual(rows.size,[251,'100%c']);
- const row=ui.jf_realm_roads_row,fields=children(row);
- assert.deepEqual(row.size,[251,60]);
- assert.ok(fields.details);assert.ok(fields.no_road);assert.ok(fields.upgrade_arrow);
- for(const kind of ['current','next'])for(const tier of ['trail','road','highway']){
-  const icon=fields[kind+'_'+tier];assert.equal(icon.texture,'textures/ui/frontier/road_icons/'+tier);
-  assert.ok(icon.bindings.some(binding=>binding.source_property_name?.includes('[JF:'+kind+':'+tier+']')));
- }
- for(const tier of ['trail','road','highway']){
-  const bytes=await readFile(new URL('../packs/resource/textures/ui/frontier/road_icons/'+tier+'.png',import.meta.url));
-  assert.equal(bytes.readUInt32BE(16),64);assert.equal(bytes.readUInt32BE(20),64);
+  if(scope!=='roads'){
+   const button=template(ui,'jf_realm_establish_'+scope);
+   for(const state of Object.values(children(button))){
+    const caption=children(state).caption;assert.equal(caption.text_alignment,'center');assert.deepEqual(caption.offset,[0,0]);
+   }
+  }
  }
 });
 
@@ -496,66 +495,5 @@ test('form payload packs later records without gaps and preserves contiguous col
  assert.deepEqual(later,Array.from({length:later.length},(_,i)=>i+98));
  for(const [group,prefix,count]of [['data','stockCount',30],['data','prospectInfo',52],['actions','prospectSelect',52]]){
   for(let i=0;i<count;i++)assert.equal(layout[group][prefix+i],layout[group][prefix+'0']+i);
- }
-});
-
-test('Realm rows read native text through a named sibling source and filter unrelated entries',async()=>{
- const ui=await loadUI();
- const unrelated=['[JF:action:rename]','[JF:data:overview]Marovek','12','[JF:action:collect]'];
- function visible(control,text){
-  const expression=control.bindings.find(binding=>binding.target_property_name==='#visible').source_property_name;
-  const gate=control.bindings.find(binding=>binding.target_property_name==='#visible');
-  assert.equal(gate.source_control_name,'realm_row_record');assert.equal(gate.resolve_sibling_scope,true);
-  const marker=expression.match(/#form_button_text - '([^']+)'/)[1];
-  const equal=text.replaceAll(marker,'')===text;
-  return (expression.match(/\bnot\b/g)||[]).length%2?!equal:equal;
- }
- function checkBindings(value){
-  if(!value||typeof value!=='object')return;
-  for(const binding of value.bindings||[]){
-   if(binding.binding_type==='view'&&binding.source_property_name?.includes('#form_button_text')){
-    assert.equal(binding.source_control_name,'realm_row_record');assert.equal(binding.resolve_sibling_scope,true);
-   }
-  }
-  if(value.bindings?.some(binding=>binding.target_property_name==='#visible'))assert.equal(value.visible,false);
-  for(const child of Object.values(value))checkBindings(child);
- }
- for(const scope of ['mine','all','roads']){
-  const row=ui['jf_realm_'+scope+'_row'];
-  checkBindings(row);
-  assert.equal(row.bindings.some(binding=>binding.binding_type==='collection_details'),false);
-  const text='[JF:list:'+scope+']Village';
-  assert.equal(visible(row,text),true);
-  for(const other of unrelated.concat(['mine','all','roads'].filter(s=>s!==scope).map(s=>'[JF:list:'+s+']Village'))){
-   assert.equal(visible(row,other),false,'Unrelated records must not occupy this list');
-  }
-  const fields=children(row),source=fields.realm_row_record;
-  assert.equal(source.type,'label');assert.equal(source.text,'#form_button_text');
-  assert.equal(source.property_bag['#form_button_text'],'');assert.equal(source.visible,true);assert.equal(source.alpha,0);
-  assert.deepEqual(source.bindings,[{binding_name:'#form_button_text',binding_type:'collection',binding_collection_name:'form_buttons',binding_condition:'always'}]);
-  assert.equal(fields.details.bindings.some(binding=>binding.binding_type==='collection'),false);
-  assert.equal(fields.details.bindings[0].source_control_name,'realm_row_record');
-  assert.equal(fields.icon.bindings.some(binding=>binding.binding_type==='collection_details'),false);
-  assert.ok(fields.icon.bindings.some(binding=>binding.binding_name_override==='#texture'));
-  if(scope==='roads'){
-   const upgrade='[JF:list:roads][JF:current:trail][JF:next:road]Village';
-   for(const kind of ['current','next']){
-    const shown=['trail','road','highway'].filter(tier=>visible(fields[kind+'_'+tier],upgrade));
-    assert.deepEqual(shown,[kind==='current'?'trail':'road']);
-   }
-   assert.equal(visible(fields.no_road,upgrade),false);
-   assert.equal(visible(fields.upgrade_arrow,upgrade),true);
-   assert.equal(visible(fields.no_road,'[JF:list:roads][JF:current:none][JF:next:trail]Village'),true);
-   assert.equal(visible(fields.next_caption,'[JF:list:roads][JF:current:road][JF:next:none]Village'),false);
-  }else{
-   const button=template(ui,'jf_directory_establish_'+scope);checkBindings(button);
-   assert.equal(button.bindings.filter(binding=>binding.binding_type==='collection_details').length,1);
-   assert.equal(visible(button,text+'[JF:establish]'),true);
-   assert.equal(visible(button,text+'[JF:status:building]'),false);
-   for(const status of ['here','connected','building','dimension','research']){
-    const shown=['here','connected','building','dimension','research'].filter(candidate=>visible(fields['status_'+candidate],text+'[JF:status:'+status+']'));
-    assert.deepEqual(shown,[status]);
-   }
-  }
  }
 });

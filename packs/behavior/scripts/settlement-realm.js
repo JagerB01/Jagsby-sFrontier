@@ -33,8 +33,3 @@ export function settlementDirectory(villages, player, requestedPage = 0, mine = 
  });
  return {count:settlements.length,rows,empty:mine?'You do not own any settlements yet.':'No settlements registered.'};
 }
-
-export function directoryRecord(row, scope) {
- const status=row.canEstablishRoad?'[JF:establish]':`[JF:status:${({'Here':'here','Connected':'connected','Building':'building','Different\ndimension':'dimension','Requires\nRoads I':'research'})[row.roadStatus]||'research'}]`;
- return `[JF:list:${scope}]${status}§6${row.name}§r\n${row.owner}\n${row.coordinates}\n${row.distanceText} · Dev ${row.development}`;
-}

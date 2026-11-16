@@ -191,7 +191,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
   assert.equal(saved.villages[sourceId].census.realmPowerTenths,2);
   assert.equal(saved.villages[sourceId].nativeBiome,'minecraft:plains');
   const surveyed=forms.at(-1);assert.equal(surveyed.heading,'JF_CHARTER|Dashboard');
-  assert.equal(surveyed.records.length,CHARTER_LAYOUT.recordCount+2);assert.equal(surveyed.records[2],'0.2 RP');
+  assert.equal(surveyed.records.length,CHARTER_LAYOUT.recordCount+16);assert.equal(surveyed.records[2],'0.2 RP');
   assert.equal(surveyed.records[3],'[JF:data:tier]Outpost');assert.equal(surveyed.records[25],'Owner: Builder');
   assert.equal(surveyed.records[64],'Development 0');assert.equal(surveyed.records[60],'+ 0.000');
   assert.equal(surveyed.icons[3],'textures/ui/frontier/settlements/outpost');
@@ -222,7 +222,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
   await interact();
   assert.equal(CHARTER_LAYOUT.actions.roadsNext,undefined);
   assert.equal(scans,4);assert.equal(biomeReads,previousBiomeReads,'Navigation never scans nearby biomes or adds another census');
-  assert.ok(forms.at(-1).records.some(record=>record.startsWith('[JF:list:all]')));
+  assert.ok(forms.at(-1).text.includes('[JF:row:all:0]'));
   delete globalThis.__frontierTest;
 });
 test('80-block radius includes villagers beyond the old 64-block limit and excludes farther ones',()=>{

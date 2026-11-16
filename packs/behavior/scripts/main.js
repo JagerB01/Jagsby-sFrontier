@@ -6,7 +6,7 @@ import { sampleTradingRanks } from "./villager-trade-bridge.js";
 import { CHARTER_LAYOUT } from "./charter-layout.js";
 import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRateText } from "./settlement-overview.js";
 import { settlementTier } from "./settlement-tiers.js";
-import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState, directoryRecord } from "./settlement-realm.js";
+import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
 
 
@@ -227,19 +227,28 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   records[data.roadSummary]=roadView.summary;
   records[data.roadDetails]=roadView.rows.length?'':roadView.details;
   const handlers=new Map();
-  for(const [scope,directory]of [['mine',mine],['all',all]]){
-   for(const row of directory.rows){
-    const index=records.length;
-    records.push(directoryRecord(row,scope));
-    directoryIcons.set(index,row.icon);
-    if(row.canEstablishRoad)handlers.set(index,()=>establishDirectoryRoad(player,vId,row.id,0,scope));
+  const realmMarkers=[];
+  const layout=CHARTER_LAYOUT.realmRows;
+  const lists=[mine.rows,all.rows,roadView.rows];
+  if(lists.some(rows=>rows.length>layout.limit)){
+   player.sendMessage(`§cRealm lists exceed this pack's ${layout.limit}-row layout. Increase the Realm row limit and rebuild the pack; no settlements have been removed.`);return;
+  }
+  const put=(index,values)=>{while(records.length<index+values.length)records.push('');values.forEach((value,offset)=>records[index+offset]=String(value??''));};
+  lists.forEach((rows,scopeIndex)=>rows.forEach((row,slot)=>{
+   const scope=layout.scopes[scopeIndex],base=layout.base+slot*layout.stride+scopeIndex*8;
+   realmMarkers.push(`[JF:row:${scope}:${slot}]`);
+   if(scope!=='roads'){
+    put(base,[row.name,row.owner,row.coordinates,row.distanceText,row.development,row.roadStatus,'','']);
+    directoryIcons.set(base,row.icon);
+    if(row.canEstablishRoad){realmMarkers.push(`[JF:establish:${scope}:${slot}]`);handlers.set(base+6,()=>establishDirectoryRoad(player,vId,row.id,0,scope));}
+   }else{
+    put(base,[row.name,row.owner,row.distance,row.cost,row.status,row.time,'','']);
+    directoryIcons.set(base,row.villageTexture);
+    if(row.texture){directoryIcons.set(base+6,row.texture);realmMarkers.push(`[JF:current:roads:${slot}]`);}
+    else realmMarkers.push(`[JF:noRoad:roads:${slot}]`);
+    if(row.nextTexture){directoryIcons.set(base+7,row.nextTexture);realmMarkers.push(`[JF:next:roads:${slot}]`);}
    }
-  }
-  for(const row of roadView.rows){
-   const index=records.length;
-   records.push(row.record);
-   directoryIcons.set(index,row.villageTexture);
-  }
+  }));
   for(const [key,choice]of researchChoices)handlers.set(actions[key],()=>contributeResearchCard(player,vId,key,choice));
   handlers.set(actions.manageRoads,()=>roadMenu(player,vId));
   handlers.set(actions.scan,()=>surveySettlement(player,vId,{page,researchScope,realmPage,realmScope,productionScope,productionPages}));
@@ -257,7 +266,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Local toggle tabs do not submit forms or rerun the village census.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?'':`[JF:directory:${scope}:empty]`).join('')}`);
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${realmMarkers.join('')}${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?'':`[JF:directory:${scope}:empty]`).join('')}`);
   records.forEach((text,index)=>{
    const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:directoryIcons.get(index);
    form.button(text,texture);
@@ -425,7 +434,6 @@ function roadNetworkOverview(s,v){
    villageTexture:settlementTier(target.census).iconTexture,
    texture:tier?`textures/ui/frontier/road_icons/${tier}`:undefined,
    nextTexture:road.targetLevel?`textures/ui/frontier/road_icons/${nextTier}`:undefined,
-   record:`[JF:list:roads][JF:current:${tier||'none'}][JF:next:${nextTier}]${text}`,
    text:text+(road.level?'':'\nNo road built yet')};
  });
  return {rows,summary:`Road Networks | ${active} active, ${building} building`,details:rows.map(row=>row.text).join('\n')||'No connections yet. Establish a road from My Settlements or All Settlements after researching Road Networks I.'};

@@ -390,15 +390,16 @@ test('Production sends item images, aligned bonus percentages and whole stock co
 test('Directory road button starts one Trail and returns to the same settlement list',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',owner:{id:'p',name:'Builder'},roads:1};
  s.villages.b={...village(100),id:'b',name:'Beta',owner:{id:'p',name:'Builder'},developmentValue:250,census:{realmPowerTenths:null,minimumPowerTenths:20}};
- let clicked=false;const h=await runtime(s,form=>{if(!clicked){clicked=true;return {canceled:false,selection:form.buttons.findIndex(text=>text.startsWith('[JF:list:mine]')&&text.includes('Beta'))};}return {canceled:true};});
+ let clicked=false;const h=await runtime(s,form=>{if(!clicked){clicked=true;return {canceled:false,selection:CHARTER_LAYOUT.realmRows.base+CHARTER_LAYOUT.realmRows.stride+6};}return {canceled:true};});
  h.player.dimension={id:'minecraft:overworld'};h.player.location={x:0,y:64,z:0};
  h.api.open(h.player,'a','Realm','global',0,'mine');await new Promise(resolve=>setImmediate(resolve));
- const index=h.forms[0].buttons.findIndex(text=>text.startsWith('[JF:list:mine]')&&text.includes('Beta'));
- assert.ok(index>=CHARTER_LAYOUT.recordCount);
- for(const text of ['Beta','Builder','100, 64, 0','100 blocks','Dev 2','[JF:establish]'])assert.ok(h.forms[0].buttons[index].includes(text));
+ const index=CHARTER_LAYOUT.realmRows.base+CHARTER_LAYOUT.realmRows.stride;
+ assert.equal(h.forms[0].buttons[index],'Beta');assert.equal(h.forms[0].buttons[index+1],'Builder');
+ assert.equal(h.forms[0].buttons[index+2],'100, 64, 0');assert.equal(h.forms[0].buttons[index+3],'100 blocks');
+ assert.equal(h.forms[0].buttons[index+4],'2');assert.ok(h.forms[0].text.includes('[JF:establish:mine:1]'));
  assert.equal(h.forms[0].icons[index],'textures/ui/frontier/settlement_icons/hamlet');
  const roads=Object.values(h.read().roads);assert.equal(roads.length,1);assert.equal(roads[0].from,'a');assert.equal(roads[0].to,'b');assert.equal(roads[0].targetLevel,1);
- assert.equal(h.forms.length,2);assert.ok(h.forms[1].text.includes('[JF:realm:mine]'));assert.ok(h.forms[1].buttons.some(text=>text.startsWith('[JF:list:mine][JF:status:building]')&&text.includes('Beta')));
+ assert.equal(h.forms.length,2);assert.ok(h.forms[1].text.includes('[JF:realm:mine]'));assert.equal(h.forms[1].buttons[index+5],'Building');assert.equal(h.forms[1].text.includes('[JF:establish:mine:1]'),false);
  h.api.establishDirectoryRoad(h.player,'a','b',0,'mine');assert.equal(Object.values(h.read().roads).length,1);
  assert.equal(Object.values(h.read().roads)[0].targetLevel,1);
 });
@@ -428,12 +429,12 @@ test('Scrollable Realm collections include every settlement and road beyond the 
  const h=await runtime(s);
  h.update(state=>{delete state.villages.none;});
  h.api.open(h.player,'v00','Realm','global',0,'roads');
- const form=h.forms[0],rows=form.buttons.slice(CHARTER_LAYOUT.recordCount);
- assert.equal(rows.filter(text=>text.startsWith('[JF:list:mine]')).length,40);
- assert.equal(rows.filter(text=>text.startsWith('[JF:list:all]')).length,40);
- assert.equal(rows.filter(text=>text.startsWith('[JF:list:roads]')).length,39);
- assert.ok(rows.some(text=>text.startsWith('[JF:list:roads]')&&text.includes('Village 39')));
- assert.equal(form.buttons.length,CHARTER_LAYOUT.recordCount+119);
+ const form=h.forms[0],layout=CHARTER_LAYOUT.realmRows;
+ assert.equal((form.text.match(/\[JF:row:mine:/g)||[]).length,40);
+ assert.equal((form.text.match(/\[JF:row:all:/g)||[]).length,40);
+ assert.equal((form.text.match(/\[JF:row:roads:/g)||[]).length,39);
+ assert.equal(form.buttons[layout.base+38*layout.stride+16],'Village 39');
+ assert.equal(form.buttons.length,layout.base+39*layout.stride+16);
  for(const key of ['minePrev','mineNext','allPrev','allNext','roadsPrev','roadsNext'])assert.equal(CHARTER_LAYOUT.actions[key],undefined);
  assert.equal(form.buttons.some(text=>text.startsWith('Page ')),false);
 });
@@ -445,11 +446,33 @@ test('Road construction time uses 24000 ticks per Minecraft day and rounds posit
  s.roads={r:{from:v.id,to:'target',level:1,targetLevel:2,distance:100,startedTick:0,durationTicks:60000,finishTick:60000}};
  let row=h.api.roadNetworkOverview(s,v).rows[0];
  assert.equal(row.remainingDays,2);assert.equal(row.time,'2.00 Minecraft days left');
- assert.ok(row.record.includes('[JF:current:trail][JF:next:road]'));
+ assert.equal(row.texture,'textures/ui/frontier/road_icons/trail');assert.equal(row.nextTexture,'textures/ui/frontier/road_icons/road');
  tick=48000;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'0.50 Minecraft days left');
  tick=59999;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'0.01 Minecraft days left');
  tick=60001;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.remainingDays,0);
  s.roads.r.level=2;delete s.roads.r.targetLevel;
  row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'');assert.equal(row.nextTexture,undefined);
- assert.ok(row.record.includes('[JF:current:road][JF:next:none]'));
+ assert.equal(row.texture,'textures/ui/frontier/road_icons/road');assert.equal(row.nextTexture,undefined);
+});
+
+test('Explicit road records bind current/next textures, destination details and day estimates to separate indices',async()=>{
+ const s=fresh(Date.now());
+ s.villages.a={...village(),name:'Alpha',roads:1};
+ s.villages.b={...village(100),id:'b',name:'Beta',owner:{id:'p',name:'Builder'}};
+ s.roads.r={from:'a',to:'b',level:1,targetLevel:2,distance:100,startedTick:0,durationTicks:60000,finishTick:60000};
+ const h=await runtime(s,undefined,{gameTick:()=>12000});h.api.open(h.player,'a','Realm');
+ const base=CHARTER_LAYOUT.realmRows.base+16,form=h.forms[0];
+ assert.equal(form.buttons[base],'Beta');assert.equal(form.buttons[base+1],'Builder');assert.equal(form.buttons[base+2],'100 blocks');
+ assert.equal(form.buttons[base+4],'Upgrading Road');assert.equal(form.buttons[base+5],'2.00 Minecraft days left');
+ assert.equal(form.icons[base+6],'textures/ui/frontier/road_icons/trail');assert.equal(form.icons[base+7],'textures/ui/frontier/road_icons/road');
+ assert.ok(form.text.includes('[JF:current:roads:0]'));assert.ok(form.text.includes('[JF:next:roads:0]'));assert.equal(form.text.includes('[JF:noRoad:roads:0]'),false);
+});
+
+test('Realm layout overflow is reported rather than silently discarding settlements',async()=>{
+ const h=await runtime();h.update(s=>{
+  s.villages=Object.fromEntries(Array.from({length:CHARTER_LAYOUT.realmRows.limit+1},(_,i)=>['v'+i,{...village(i*100),id:'v'+i,name:'Village '+i}]));
+ });
+ h.api.open(h.player,'v0','Realm');
+ assert.equal(h.forms.length,0);assert.ok(h.messages.some(message=>message.includes('128-row layout')));
+ assert.equal(Object.keys(h.read().villages).length,129);
 });

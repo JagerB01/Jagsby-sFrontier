@@ -207,5 +207,15 @@ export const CHARTER_LAYOUT = {
     "Production",
     "Realm",
     "Information"
-  ]
+  ],
+  "realmRows": {
+    "base": 243,
+    "limit": 128,
+    "stride": 24,
+    "scopes": [
+      "mine",
+      "all",
+      "roads"
+    ]
+  }
 };

@@ -721,126 +721,118 @@ def build():
         control("placeholder", label("Road Networks\nOpen Realm > Road Networks to view connections.\nManage construction, upgrades and food-powered travel there.\nContribute research directly from the tech cards.", [233, 96], (8, 40), scale=0.75)),
     ]}
     realm_controls = [research_tab("roads", 0, "realm", "Road Networks"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
-    def list_condition(marker):
-        return "(not ((#form_button_text - '" + marker + "') = #form_button_text))"
+    # Fixed explicit collection indices reuse the renderer verified in 0.0.66.
+    # Interleave scopes by slot so a small world transmits only a short prefix.
+    row_base = max([*DATA.values(), *ACTIONS.values()]) + 1
+    row_limit, row_stride = 128, 24
+    ui["jf_realm_icon"] = image("frontier/settlement_icons/outpost", [24, 24], layer=8)
+    ui["jf_realm_icon"]["keep_ratio"] = True
+    ui["jf_realm_icon"]["bindings"] = [
+        {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+        {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+        {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+    ]
+    def explicit_scope(template, index, offset, size):
+        return {"type": "stack_panel", "orientation": "vertical", "size": size,
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": offset,
+            "collection_name": "form_buttons", "controls": [
+                control("record@jagsby_frontier." + template, {"collection_index": index})]}
 
-    def row_view(expression, target="#visible"):
-        # Like vanilla dynamic_button's image wrapper, read the native property
-        # from a named descendant/sibling instead of rebinding each container.
-        return {"binding_type": "view", "source_control_name": "realm_row_record",
-                "resolve_sibling_scope": True, "source_property_name": expression,
-                "target_property_name": target}
+    def row_present(marker):
+        return condition("(not ((#form_text - '" + marker + "') = #form_text))", "#form_text")
 
-    def list_icon(name, texture, offset, marker=None):
-        icon = image(texture, [24, 24], offset, layer=8)
-        icon["keep_ratio"] = True
-        if marker:
-            icon["bindings"] = [row_view(list_condition(marker))]
-        return control(name, icon)
-
-    def list_scroll(scope, height, y=0):
-        return control("entries@common.scrolling_panel", {
-            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, y],
-            "size": [257, height], "$show_background": False,
-            "$scrolling_content": "jagsby_frontier.jf_realm_" + scope + "_rows",
-            "$scroll_size": [4, "100% - 4px"], "$scrolling_pane_size": ["100% - 5px", "100% - 2px"],
-        })
-
-    for scope in ["roads", "mine", "all"]:
-        marker = "[JF:list:" + scope + "]"
-        height = 60 if scope == "roads" else 48
-        tokens = [marker, "[JF:establish]"] + ["[JF:status:" + status + "]" for status in ["here", "connected", "building", "dimension", "research"]]
-        tokens += ["[JF:" + kind + ":" + tier + "]" for kind in ["current", "next"] for tier in ["none", "trail", "road", "highway"]]
-        expression = "(#form_button_text" + "".join(" - '" + token + "'" for token in tokens) + ")"
-        text = label("#text", [140 if scope == "roads" else 161, height - 4], (33, 2), IVORY, 0.65)
-        text["bindings"] = [row_view(expression, "#text")]
-        village_icon = image("frontier/settlement_icons/outpost", [24, 24], (4, 4), layer=8)
-        village_icon["keep_ratio"] = True
-        village_icon["bindings"] = [
-            {"binding_name": "#form_button_texture", "binding_name_override": "#texture", "binding_type": "collection", "binding_collection_name": "form_buttons"},
-            {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system", "binding_type": "collection", "binding_collection_name": "form_buttons"},
+    for scope_index, scope in enumerate(["mine", "all", "roads"]):
+        road = scope == "roads"
+        height = 66 if road else 32
+        field_specs = [
+            ("name", 0, [33, 2], [76, 12], 0.75, WHEAT),
+            ("owner", 1, [33, 15], [76, 12], 0.65, SILVER),
         ]
-        source = label("#form_button_text", [0, 0], scale=0.65)
-        source.update({"alpha": 0, "visible": True,
-            "property_bag": {"#form_button_text": ""},
-            "bindings": [{"binding_name": "#form_button_text", "binding_type": "collection",
-                          "binding_collection_name": "form_buttons", "binding_condition": "always"}]})
-        fields = [control("realm_row_record", source), control("surface", image("frontier/palette_panel", [251, height - 1], color=[0.82, 0.82, 0.82])),
-                  control("icon", village_icon), control("details", text)]
-        if scope == "roads":
-            for kind, x in [("current", 178), ("next", 220)]:
-                for tier in ["trail", "road", "highway"]:
-                    fields.append(list_icon(kind + "_" + tier, "frontier/road_icons/" + tier, [x, 15], "[JF:" + kind + ":" + tier + "]"))
-                caption = label("Current" if kind == "current" else "Next", [32, 10], (x - 3, 42), SILVER, 0.6)
-                caption["text_alignment"] = "center"
-                if kind == "next":
-                    caption["bindings"] = [row_view("(not " + list_condition("[JF:next:none]") + ")")]
-                fields.append(control(kind + "_caption", caption))
-            no_road = label("No road", [34, 12], (173, 21), SILVER, 0.65)
-            no_road["text_alignment"] = "center"
-            no_road["bindings"] = [row_view(list_condition("[JF:current:none]"))]
-            fields.append(control("no_road", no_road))
-            arrow = label(">", [10, 12], (207, 21), WHEAT, 0.8)
-            arrow["bindings"] = [row_view("(not " + list_condition("[JF:next:none]") + ")")]
-            fields.append(control("upgrade_arrow", arrow))
+        if road:
+            field_specs += [
+                ("distance", 2, [112, 2], [60, 12], 0.65, IVORY),
+                ("cost", 3, [177, 15], [70, 12], 0.65, IVORY),
+                ("status", 4, [33, 29], [140, 12], 0.65, IVORY),
+                ("time", 5, [33, 42], [140, 12], 0.65, IVORY),
+            ]
         else:
-            # The factory preserves each row's native form record index for this button.
+            field_specs += [
+                ("coordinates", 2, [112, 2], [62, 12], 0.65, IVORY),
+                ("distance", 3, [112, 15], [62, 12], 0.65, IVORY),
+                ("development", 4, [177, 15], [23, 12], 0.65, IVORY),
+                ("status", 5, [201, 4], [47, 24], 0.65, IVORY),
+            ]
+        for field, _, offset, size, scale, color in field_specs:
+            template = "jf_realm_" + scope + "_" + field
+            text = label("#form_button_text", size, color=color, scale=scale)
+            text["property_bag"] = {"#form_button_text": ""}
+            text["bindings"] = [
+                {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+                {"binding_name": "#form_button_text", "binding_type": "collection", "binding_collection_name": "form_buttons"}]
+            if field == "status" and not road:
+                text["text_alignment"] = "center"
+            ui[template] = text
+        if not road:
             button = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
-            button.update({"size": [47, 24], "offset": [201, 12], "anchor_from": "top_left", "anchor_to": "top_left",
-                           "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}] + [row_view(list_condition("[JF:establish]")), row_view(list_condition("[JF:establish]"), "#enabled")]})
+            button.update({"size": [47, 24], "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}]})
             for state in button["controls"]:
                 state_name, panel = next(iter(state.items()))
                 panel["size"] = [47, 24]
                 panel["controls"] = [control("face", image(button_texture(47, 24, state_name), [47, 24])),
                     control("caption", {**label("Establish\nRoad", [41, 18], scale=0.65),
                         "text_alignment": "center", "anchor_from": "center", "anchor_to": "center", "offset": [0, 0]})]
-            ui["jf_directory_establish_" + scope + "@common.button"] = button
-            fields.append(control("establish@jagsby_frontier.jf_directory_establish_" + scope, {}))
-            for status, caption in [("here", "Here"), ("connected", "Connected"), ("building", "Building"), ("dimension", "Different\ndimension"), ("research", "Requires\nRoads I")]:
-                status_label = label(caption, [47, 22], (201, 13), IVORY, 0.65)
-                status_label["text_alignment"] = "center"
-                status_label["bindings"] = [row_view(list_condition("[JF:status:" + status + "]"))]
-                fields.append(control("status_" + status, status_label))
-        ui["jf_realm_" + scope + "_row"] = {"type": "panel", "size": [251, height], "controls": fields,
-            "bindings": [row_view(list_condition(marker))]}
-        ui["jf_realm_" + scope + "_rows"] = {"type": "stack_panel", "orientation": "vertical", "size": [251, "100%c"],
-            "collection_name": "form_buttons", "factory": {"name": "buttons", "control_ids": {"button": "jagsby_frontier.jf_realm_" + scope + "_row"}},
-            "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length"}]}
-        if scope == "roads":
-            content = [overview_value("summary", DATA["roadSummary"], [3, 0], [248, 10], scale=0.6),
-                       list_scroll(scope, 93, 12)]
+            ui["jf_realm_establish_" + scope + "@common.button"] = button
+        rows = []
+        for slot in range(row_limit):
+            base = row_base + slot * row_stride + scope_index * 8
+            fields = [control("surface", image("frontier/palette_panel", [251, height - 1], color=[0.82, 0.82, 0.82])),
+                      control("icon", explicit_scope("jf_realm_icon", base, [3, 3], [24, 24]))]
+            for field, index, offset, size, _, _ in field_specs:
+                fields.append(control(field, explicit_scope("jf_realm_" + scope + "_" + field, base + index, offset, size)))
+            if road:
+                fields.append(control("cost_label", label("Travel cost", [70, 12], (177, 2), SILVER, 0.65)))
+                for kind, index, x in [("current", 6, 178), ("next", 7, 220)]:
+                    icon = explicit_scope("jf_realm_icon", base + index, [x, 29], [24, 24])
+                    icon["bindings"] = row_present("[JF:" + kind + ":roads:" + str(slot) + "]")
+                    fields.append(control(kind + "_icon", icon))
+                    caption = label("Current" if kind == "current" else "Next", [32, 10], (x - 3, 54), SILVER, 0.6)
+                    caption["text_alignment"] = "center"
+                    if kind == "next": caption["bindings"] = icon["bindings"]
+                    fields.append(control(kind + "_caption", caption))
+                no_road = label("No road", [34, 12], (173, 34), SILVER, 0.65)
+                no_road["bindings"] = row_present("[JF:noRoad:roads:" + str(slot) + "]")
+                fields.append(control("no_road", no_road))
+                arrow = label(">", [10, 12], (207, 34), WHEAT, 0.8)
+                arrow["bindings"] = row_present("[JF:next:roads:" + str(slot) + "]")
+                fields.append(control("upgrade_arrow", arrow))
+            else:
+                fields.append(control("dev_label", label("Dev", [23, 12], (177, 2), SILVER, 0.65)))
+                establish = explicit_scope("jf_realm_establish_" + scope, base + 6, [201, 4], [47, 24])
+                establish["bindings"] = row_present("[JF:establish:" + scope + ":" + str(slot) + "]")
+                fields.append(control("establish", establish))
+            rows.append(control("row" + str(slot), {"type": "panel", "size": [251, height], "controls": fields,
+                "bindings": row_present("[JF:row:" + scope + ":" + str(slot) + "]")}))
+        ui["jf_realm_" + scope + "_rows"] = {"type": "stack_panel", "orientation": "vertical", "size": [251, "100%c"], "controls": rows}
+        scroll = control("entries@common.scrolling_panel", {
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 12 if road else 0],
+            "size": [257, 93 if road else 131], "$show_background": False,
+            "$scrolling_content": "jagsby_frontier.jf_realm_" + scope + "_rows",
+            "$scroll_size": [4, "100% - 4px"], "$scrolling_pane_size": ["100% - 5px", "100% - 2px"]})
+        content = [scroll]
+        if road:
+            content.append(overview_value("summary", DATA["roadSummary"], [3, 0], [248, 10], scale=0.6))
             button = action("manageRoads", ACTIONS["manageRoads"], "Manage / travel", width=251)["manageRoads"]
             button.update({"offset": [0, 107], "anchor_from": "top_left", "anchor_to": "top_left"})
             content.append(control("manageRoads", button))
-            empty = overview_value("empty", DATA["roadDetails"], [7, 30], [236, 60], scale=0.7)
-            content.append(empty)
+            content.append(overview_value("empty", DATA["roadDetails"], [7, 30], [236, 60], scale=0.7))
         else:
-            content = [list_scroll(scope, 131)]
             empty = label("You do not own any settlements yet." if scope == "mine" else "No settlements registered.", [240, 24], (7, 8), IVORY, 0.75)
-            empty["bindings"] = condition("(not ((#form_text - '[JF:directory:" + scope + ":empty]') = #form_text))", "#form_text")
+            empty["bindings"] = row_present("[JF:directory:" + scope + ":empty]")
             content.append(control("empty", empty))
         ui["jf_realm_" + scope + "_content"] = {"type": "panel", "size": [257, 131], "controls": content}
         realm_controls.append(control(scope + "@jagsby_frontier.jf_realm_" + scope + "_content", {
             "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "size": [257, 131],
-            "bindings": [view("#toggle_state", target, "jf_realm_tab_" + scope) for target in ["#visible", "#enabled"]],
-        }))
-    def initialize_row_bindings(value):
-        if isinstance(value, dict):
-            bindings = value.get("bindings", [])
-            if value.get("text") == "#text" and any(binding.get("target_property_name") == "#text" for binding in bindings):
-                value.setdefault("property_bag", {})["#text"] = ""
-            if any(binding.get("target_property_name") == "#visible" for binding in bindings):
-                value["visible"] = False
-            for child in list(value.values()):
-                initialize_row_bindings(child)
-        elif isinstance(value, list):
-            for child in value:
-                initialize_row_bindings(child)
-
-    for scope in ["roads", "mine", "all"]:
-        initialize_row_bindings(ui["jf_realm_" + scope + "_row"])
-        if scope != "roads":
-            initialize_row_bindings(ui["jf_directory_establish_" + scope + "@common.button"])
+            "bindings": [view("#toggle_state", target, "jf_realm_tab_" + scope) for target in ["#visible", "#enabled"]]}))
     ui["jf_realm_content"] = {"type": "panel", "size": [257, 158], "controls": realm_controls}
     picker = copy.deepcopy(frame)
     # Secondary-biome choices have their own custom button renderer, not the
@@ -912,7 +904,7 @@ def build():
         "namespace": "server_form", "main_screen_content/server_form_factory": {
             "control_ids": {"long_form": "@jagsby_frontier.jf_router",
                             "custom_form": "@jagsby_frontier.jf_modal_router"}}}, indent=2) + "\n")
-    layout = {"data": DATA, "actions": ACTIONS, "recordCount": max([*DATA.values(), *ACTIONS.values()]) + 1, "tabs": TABS}
+    layout = {"data": DATA, "actions": ACTIONS, "recordCount": max([*DATA.values(), *ACTIONS.values()]) + 1, "tabs": TABS, "realmRows": {"base": row_base, "limit": row_limit, "stride": row_stride, "scopes": ["mine", "all", "roads"]}}
     (ROOT / "packs/behavior/scripts/charter-layout.js").write_text(
         "// Generated by tools/build_charter_ui.py; indices match the JSON UI.\n"
         "export const CHARTER_LAYOUT = " + json.dumps(layout, indent=2) + ";\n")

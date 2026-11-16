@@ -5,9 +5,19 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.69.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.70.mcaddon?raw=true)
 
-Version 0.0.69 replaces Realm's per-control text aliases with one native
+Version 0.0.70 removes the unsuccessful Realm row factories entirely. Every
+field and image now uses the explicit indexed collection scopes from the working
+0.0.66 layout. My Settlements and All Settlements restore the two-line column
+layout inside scrolling panels. Road cards retain their construction icons and
+Minecraft-day estimates. Visibility comes from global form-body markers, without
+collection-text filtering or sibling-source lookups. The generated layout supports
+128 entries per list and reports overflow instead of hiding entries; change
+`row_limit` in `tools/build_charter_ui.py` and rebuild to expand it. This replacement
+still needs an in-game rendering check.
+
+Version 0.0.69 attempted to replace Realm's per-control text aliases with one native
 collection-bound label per row. Visibility, displayed details, and construction
 icons read that named label using sibling-scope view bindings. The supplied
 0.0.68 content log confirms that build loaded and created 248 form records but

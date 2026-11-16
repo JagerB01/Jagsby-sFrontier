@@ -1,3 +1,18 @@
+# 0.0.70
+
+- Remove Realm dynamic row factories and all sibling-source/row-text alias logic.
+  Restore explicit stack-panel collection scopes with concrete record indices for
+  every text field, image, and action, matching the working 0.0.66 renderer.
+- Keep scrolling without Previous/Next buttons. Restore compact settlement
+  columns for village/owner, coordinates/distance, Development and road action.
+  Give road cards space for current/next icons and remaining Minecraft days.
+- Gate rows, actions, and road images with global form-body markers. Transmit only
+  the indexed record prefix needed by the actual lists; interleave scopes by slot.
+- Generate 128 rows per list. Report overflow without changing saved settlements;
+  the row limit can be expanded in the UI generator. Tests cover explicit index
+  assignments, large lists, actions, construction data, and overflow. In-game
+  rendering remains unverified in this development environment.
+
 # 0.0.69
 
 - Replace the unsuccessful 0.0.68 custom row-text aliases with one native label
