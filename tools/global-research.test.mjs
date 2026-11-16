@@ -327,6 +327,30 @@ test('Selecting a verified biome applies immediately without a confirmation form
  assert.equal(h.forms[1].buttons[CHARTER_LAYOUT.data.overviewProduction1],'+ 0.750/hr');
  h.api.clearSecondary(h.player,'a');assert.equal(h.read().villages.a.secondary,null);
 });
+
+test('The initial dashboard transports owned settlements and locked Prospecting previews before any tab click',async()=>{
+ const s=fresh(Date.now());
+ s.villages.a={...village(),id:'a',name:'Dornwick',owner:{id:'p',name:'Jagsby'},biomeUnlocked:false,
+  available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:32,y:64,z:0}}};
+ const h=await runtime(s);h.api.open(h.player,'a');
+ const form=h.forms[0],layout=CHARTER_LAYOUT;
+ assert.ok(form.text.includes('[JF:tab:overview]'));
+ for(const scope of ['mine','all']){
+  assert.ok(form.text.includes(`[JF:row:${scope}:0]`));
+  const base=layout.realmRows.base+layout.realmRows.scopes.indexOf(scope)*8;
+  assert.equal(form.buttons[base],'Dornwick');assert.equal(form.buttons[base+1],'Jagsby');
+  assert.ok(form.icons[base].startsWith('textures/ui/frontier/settlement_icons/'));
+ }
+ assert.ok(form.text.includes('[JF:prospectLocked]'));
+ for(const slot of [0,1]){
+  assert.ok(form.text.includes(`[JF:prospect:${slot}]`));
+  assert.ok(form.buttons[layout.data['prospectInfo'+slot]].length>0);
+  assert.ok(!form.buttons[layout.data['prospectInfo'+slot]].includes('[JF:data:'));
+  assert.ok(form.icons[layout.data['prospectInfo'+slot]].startsWith('textures/ui/frontier/production/'));
+  assert.equal(form.buttons[layout.actions['prospectSelect'+slot]],`[JF:disabled:prospectSelect${slot}]`);
+ }
+ assert.equal(h.forms.length,1);assert.equal(h.read().villages.a.biomeUnlocked,false);
+});
 test('Unverified/out-of-range biome controls are disabled and selecting unloaded samples never changes the second biome',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Test',biomeUnlocked:true,available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:300,y:64,z:0}}};
  const h=await runtime(s,()=>({canceled:true}),{biomeAt:()=>{throw Error('unloaded');}});

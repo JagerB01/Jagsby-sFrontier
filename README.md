@@ -5,7 +5,14 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.84.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.85.mcaddon?raw=true)
+
+Version 0.0.85 addresses blank Realm and Resource Prospecting panels. Scrolling
+rows read visibility markers from a shared dashboard control; native collection
+bindings remain active while tabs are hidden. Prospecting previews use direct
+native text, with one red research requirement instead of repeated Locked labels.
+Tabs continue switching locally without reloading. Content logs include row counts
+for diagnosis. Automated checks pass; Minecraft rendering needs in-game confirmation.
 
 Version 0.0.84 resizes both addon-selector icons to exactly 256×256 pixels using
 the same supplied Frontier artwork. Each PNG is 98,350 bytes; the larger original

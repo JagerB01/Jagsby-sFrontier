@@ -89,7 +89,7 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   for(const key of Object.keys(layout.data).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
-    if(['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')||key.startsWith('overviewProduction')||key.startsWith('directory')||key.startsWith('roadConnection')) {
+    if(['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')||key.startsWith('overviewProduction')||key.startsWith('directory')||key.startsWith('roadConnection')||key.startsWith('prospectInfo')) {
       assert.equal(label.text,'#form_button_text');
       assert.equal(label.property_bag['#form_button_text'],'Unavailable');
       assert.equal(label.bindings.some(b=>b.target_property_name==='#visible'),false);
@@ -429,11 +429,17 @@ test('Prospecting scrolls all discovered choices with a shared header Survey and
  assert.deepEqual(Object.keys(pane),['choices@common.scrolling_panel','clear']);
  assert.equal(pane['choices@common.scrolling_panel'].$scrolling_content,'jagsby_frontier.jf_prospecting_rows');
  const content=ui.jf_prospecting_rows;assert.equal(content.orientation,'vertical');
- assert.equal(content.size[1],'100%c');assert.equal(content.controls.length,52);
+ assert.equal(content.size[1],'100%c');assert.equal(content.controls.length,53);
+ const requirement=children(content).research_requirement;
+ assert.equal(children(requirement).caption.text,'§cRequired: Resource Prospecting Lv 1§r');
+ assert.ok(JSON.stringify(requirement.bindings).includes('[JF:prospectLocked]'));
  for(let slot=0;slot<52;slot++){
   const wrapper=children(content)['biome'+slot],row=children(wrapper).row;
   assert.ok(JSON.stringify(wrapper.bindings).includes('[JF:prospect:'+slot+']'));
   const fields=children(row);assert.ok(fields.icon);assert.ok(fields.details);assert.ok(fields.choose);
+  assert.equal(fields.locked,undefined,'One shared requirement replaces repeated Locked captions');
+  const info=ui['jf_data_prospectInfo'+slot];assert.equal(info.text,'#form_button_text');
+  assert.ok(info.bindings.every(binding=>binding.binding_type!=='view'));
   assert.equal(ui['jf_prospect_icon'+slot].bindings.some(b=>b.binding_name==='#form_button_texture'),true);
  }
  const source=await readFile(new URL('../packs/behavior/scripts/charter-layout.js',import.meta.url),'utf8');
@@ -488,6 +494,28 @@ test('Realm scrolling rows use explicit collection indices and the established c
    }
   }
  }
+});
+
+test('Hidden scrolling lists read row markers from the shared dashboard and keep native data bindings active',async()=>{
+ const ui=await loadUI(),state=children(ui.jf_dashboard).jf_menu_state;
+ assert.equal(state.type,'panel');assert.equal(state.visible,undefined);
+ assert.deepEqual(state.bindings,[{binding_name:'#form_text',binding_type:'none',binding_condition:'always'}]);
+ let markerBindings=0,collectionBindings=0;
+ function check(value){
+  if(!value||typeof value!=='object')return;
+  for(const binding of value.bindings||[]){
+   if(binding.binding_type==='collection'||binding.binding_type==='collection_details'){
+    assert.equal(binding.binding_condition,'always');collectionBindings++;
+   }
+   if(binding.binding_type==='view'&&['#visible','#enabled'].includes(binding.target_property_name)&&binding.source_property_name.includes('#form_text')){
+    assert.equal(binding.source_control_name,'jf_menu_state');assert.equal(binding.binding_condition,'always');markerBindings++;
+    assert.ok(!(value.bindings||[]).some(b=>b.binding_name==='#form_text'),'Read shared state instead of a hidden local body binding');
+   }
+  }
+  for(const child of Object.values(value))check(child);
+ }
+ for(const [key,value]of Object.entries(ui))if(/^(jf_realm_|jf_prospect_|jf_prospecting_|jf_data_prospectInfo|jf_action_prospectSelect)/.test(key))check(value);
+ assert.ok(markerBindings>0);assert.ok(collectionBindings>0);
 });
 
 test('form payload packs later records without gaps and preserves contiguous collection ranges',async()=>{

@@ -154,7 +154,7 @@ def data_template(index, size, scale=0.8):
         view(f"(#record_text - '{marker}')", "#text"),
         view(f"(not ((#record_text - '{marker}') = #record_text))"),
     ]
-    if key in ["census", "developmentValue", "developmentHourly", "owner", "realmMine", "realmAll"] or key.startswith(("stockCount", "productionModifier", "overviewProduction", "directory", "roadConnection")):
+    if key in ["census", "developmentValue", "developmentHourly", "owner", "realmMine", "realmAll"] or key.startswith(("stockCount", "productionModifier", "overviewProduction", "directory", "roadConnection", "prospectInfo")):
         text["text"] = "#form_button_text"
         text["property_bag"] = {"#form_button_text": "Unavailable"}
         text["bindings"] = [
@@ -424,6 +424,11 @@ def build():
         control("close@common.close_button", {"$close_button_offset": [-7, 7], "layer": 30, "bindings": []}),
     ]
     dashboard = [copy.deepcopy(item) for item in frame if 'title' not in item]
+    # Read the form body outside all tab/scroll visibility gates. Scrolling rows
+    # reference this single provider rather than resolving a hidden local one.
+    dashboard.append(control("jf_menu_state", {"type": "panel", "size": [0, 0],
+        "property_bag": {"#form_text": ""}, "bindings": [
+            {"binding_name": "#form_text", "binding_type": "none", "binding_condition": "always"}]}))
     dashboard.append(overview_value("header_name", DATA["overview"], [30, 34], [185, 12], scale=1.0))
     GENERATED_CONTROLS["jf_data_overview"]["color"] = list(WHEAT)
     dashboard.append(control("subtitle", label("Village Charter", [185, 8], (30, 46), SILVER, 0.65)))
@@ -594,13 +599,15 @@ def build():
         button = production_button("choose", select_key, "Select", 207, 6, 42, 20)
         selected = label("Selected", [44, 12], (207, 10), WHEAT, 0.6)
         selected["bindings"] = condition("(not ((#form_text - '[JF:prospectSelected:" + str(slot) + "]') = #form_text))", "#form_text")
-        locked = label("Locked", [44, 12], (207, 10), SILVER, 0.6)
-        locked["bindings"] = condition("(not ((#form_text - '[JF:prospectLocked]') = #form_text))", "#form_text")
         visible = condition("(not ((#form_text - '[JF:prospect:" + str(slot) + "]') = #form_text))", "#form_text")
         prospect_rows.append(control("biome" + str(slot), {
             "type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"], "bindings": visible,
-            "controls": [control("row", {"type": "panel", "size": [254, 32], "controls": [picture, details, button, control("selected", selected), control("locked", locked)]})],
+            "controls": [control("row", {"type": "panel", "size": [254, 32], "controls": [picture, details, button, control("selected", selected)]})],
         }))
+    lock_notice = label("§cRequired: Resource Prospecting Lv 1§r", [248, 14], (3, 1), scale=0.7)
+    lock_notice["bindings"] = condition("(not ((#form_text - '[JF:prospectLocked]') = #form_text))", "#form_text")
+    prospect_rows.insert(0, control("research_requirement", {"type": "panel", "size": [254, 16],
+        "bindings": lock_notice["bindings"], "controls": [control("caption", lock_notice)]}))
     ui["jf_prospecting_rows"] = {"type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"], "controls": prospect_rows}
     production_panels = {
         "summary": summary_controls,
@@ -926,6 +933,23 @@ def build():
         control("submit@common.button", submit),
     ]}
     ui.update(GENERATED_CONTROLS)
+    def keep_list_bindings_live(value):
+        if isinstance(value, dict):
+            bindings = value.get("bindings", [])
+            for binding in bindings:
+                if binding.get("binding_type") in ["collection", "collection_details"]:
+                    binding["binding_condition"] = "always"
+                if binding.get("binding_type") == "view" and binding.get("target_property_name") in ["#visible", "#enabled"] and "#form_text" in binding.get("source_property_name", ""):
+                    binding["source_control_name"] = "jf_menu_state"
+                    binding["binding_condition"] = "always"
+            if any(binding.get("source_control_name") == "jf_menu_state" for binding in bindings):
+                value["bindings"] = [binding for binding in bindings if binding.get("binding_name") != "#form_text"]
+            for child in value.values(): keep_list_bindings_live(child)
+        elif isinstance(value, list):
+            for child in value: keep_list_bindings_live(child)
+    for key, value in ui.items():
+        if key.startswith(("jf_realm_", "jf_prospect_", "jf_prospecting_", "jf_data_prospectInfo", "jf_action_prospectSelect")):
+            keep_list_bindings_live(value)
     custom_path = RP / "ui/jagsby_frontier/charter.json"
     custom_path.parent.mkdir(parents=True, exist_ok=True)
     custom_path.write_text(json.dumps(ui, indent=2) + "\n")

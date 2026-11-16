@@ -47,6 +47,11 @@ Pillow; ordinary addon builds use the checked-in PNGs without downloads.
 
 ## Resource Prospecting
 
+Preview labels bind directly to native form-button text and remain available
+before research is unlocked. A single red requirement notice appears above locked
+previews. Scrolling row markers read shared dashboard state outside hidden tabs;
+collection bindings remain active during local tab switches.
+
 The second tab lists the native biome first, followed by every discovered
 eligible nearby biome. Each row has the biome name, item image and projected
 **+ X.XXX Resource/hour**. Native uses its name, such as River, instead of

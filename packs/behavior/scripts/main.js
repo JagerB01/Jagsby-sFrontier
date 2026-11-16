@@ -260,7 +260,7 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   handlers.set(actions.collect,()=>collect(player,vId,pages,view));
   handlers.set(actions.claim,()=>{const latest=state();if(claimSettlement(latest,vId,player))save(latest);reopenView(player,vId,{...view,page:'Overview'});});
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
-  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction')&&!key.startsWith('directory')&&!key.startsWith('roadConnection'))records[index]=`[JF:data:${key}]${records[index]}`;
+  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction')&&!key.startsWith('directory')&&!key.startsWith('roadConnection')&&!key.startsWith('prospectInfo'))records[index]=`[JF:data:${key}]${records[index]}`;
   for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i)])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
@@ -270,6 +270,7 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
    const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:directoryIcons.get(index);
    form.button(text,texture);
   });
+  console.log(`[Frontier menu data] view=${page}/${researchScope}/${realmScope}/${productionScope} mine=${mine.rows.length} all=${all.rows.length} roads=${roadView.rows.length} prospects=${production.choices.length} realm_base=${layout.base} prospect_base=${data.prospectInfo0}`);
   console.log(`[Frontier menu] prepare_ms=${Date.now()-preparedAt} records=${records.length}`);
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }

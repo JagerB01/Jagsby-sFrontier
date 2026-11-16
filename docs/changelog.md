@@ -1,3 +1,17 @@
+# 0.0.85
+
+- Address the blank Realm/Prospecting report by binding scrolling row markers to
+  one always-active form-state control outside hidden tabs. Keep native collection
+  text, icon and action bindings active as local tabs become visible.
+- Move Prospecting preview text to the direct native form-button text path used
+  by other working labels. Remove formatting-marker prefixes from these records.
+- Show one red Resource Prospecting requirement above locked previews instead of
+  repeating Locked on each row. Research and selection rules are unchanged.
+- Log active view, directory/road/preview counts and record bases for diagnosis.
+- Verify initial dashboard payload, all fixed row indices, shared visibility
+  bindings, local navigation and default tabs. No Minecraft renderer is available
+  in the cloud environment; visual resolution still needs in-game confirmation.
+
 # 0.0.84
 
 - Resize the supplied Frontier artwork from 1254×1254 to exactly 256×256 using
