@@ -101,3 +101,12 @@ test('Over-cap saved stock is visible and paused, and a storage upgrade opens th
  s.global.storage=1;view=productionView(s,v);assert.equal(view.status,'Producing');assert.equal(view.stockHeading,'Stockpile  128 / 192');
  assert.equal(view.output.rows[0].actual,1.75);
 });
+
+test('Saved acacia stock stays visible after Savanna changes to wheat production',()=>{
+ const {s,v}=fixture();v.biome='minecraft:savanna';s.stock['minecraft:acacia_log']=12.75;
+ const view=productionView(s,v);
+ assert.equal(view.items[0].id,'minecraft:wheat');assert.equal(view.items[0].texture,'textures/ui/frontier/production/wheat');
+ const acacia=view.stock.find(item=>item.id==='minecraft:acacia_log');
+ assert.equal(acacia.count,12);assert.equal(acacia.texture,'textures/ui/frontier/production/acacia_log');
+ assert.equal(s.stock['minecraft:acacia_log'],12.75);
+});

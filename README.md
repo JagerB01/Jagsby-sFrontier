@@ -5,7 +5,14 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.79.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.80.mcaddon?raw=true)
+
+Version 0.0.80 labels the road price column Travel Cost and includes the unit in
+the value (for example, 8 corndogs). Road appears above the tier icon, with
+> X days beneath a construction/upgrade target icon. Construction remains six
+Minecraft days per stage. Normal Savanna now produces wheat using common crop
+rates; Savanna Plateau and Windswept Savanna still produce acacia logs. Existing
+saved acacia stock remains visible and collectible.
 
 Version 0.0.79 reduces the shared stockpile to 128 items initially, plus 64 per
 completed Shared Storage level: 128 → 192 → 256 → 320. Storage upgrades still

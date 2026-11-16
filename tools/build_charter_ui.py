@@ -768,9 +768,9 @@ def build():
                 ("name", 0, [32, 2], [56, 12], 0.75, WHEAT),
                 ("owner", 1, [32, 15], [56, 12], 0.65, SILVER),
                 ("distance", 2, [91, 15], [38, 12], 0.6, IVORY),
-                ("cost", 3, [132, 15], [30, 12], 0.6, IVORY),
-                ("status", 4, [162, 24], [40, 9], 0.5, SILVER),
-                ("time", 5, [162, 24], [40, 9], 0.5, SILVER),
+                ("cost", 3, [132, 15], [44, 12], 0.6, IVORY),
+                ("status", 4, [174, 25], [30, 9], 0.5, SILVER),
+                ("time", 5, [174, 25], [30, 9], 0.5, SILVER),
             ]
         else:
             field_specs += [
@@ -818,7 +818,7 @@ def build():
                 "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}]})
             ui["jf_realm_tier_action@common.button"] = tier_action
             tier_icon = copy.deepcopy(ui["jf_realm_icon"])
-            tier_icon["size"] = [20, 20]
+            tier_icon["size"] = [16, 16]
             ui["jf_realm_road_tier_icon"] = tier_icon
         rows = []
         for slot in range(row_limit):
@@ -829,10 +829,13 @@ def build():
                 fields.append(control(field, explicit_scope("jf_realm_" + scope + "_" + field, base + index, offset, size)))
             if road:
                 fields.append(control("distance_label", label("Distance", [38, 12], (91, 2), SILVER, 0.6)))
-                fields.append(control("cost_label", label("Corndogs", [30, 12], (132, 2), SILVER, 0.6)))
-                icon = explicit_scope("jf_realm_road_tier_icon", base + 6, [170, 2], [20, 20])
+                fields.append(control("cost_label", label("Travel Cost", [44, 12], (132, 2), SILVER, 0.6)))
+                icon = explicit_scope("jf_realm_road_tier_icon", base + 6, [181, 9], [16, 16])
                 fields.append(control("tier_icon", icon))
-                tier_action = explicit_scope("jf_realm_tier_action", base + 6, [168, 0], [24, 24])
+                road_label = label("Road", [30, 9], (174, 0), SILVER, 0.6)
+                road_label["text_alignment"] = "center"
+                fields.append(control("road_label", road_label))
+                tier_action = explicit_scope("jf_realm_tier_action", base + 6, [177, 8], [24, 24])
                 fields.append(control("tier_action", tier_action))
                 for enabled in [True, False]:
                     key = "travel" if enabled else "travel_disabled"

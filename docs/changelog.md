@@ -1,3 +1,16 @@
+# 0.0.80
+
+- Rename the road cost heading to Travel Cost and retain the full quoted value,
+  including corndogs. Widen its value cell to accommodate the unit.
+- Add Road above the tier symbol and show > X days beneath the target icon during
+  new construction or upgrades. Keep compact row height, Travel behavior, local
+  research pricing and the six-Minecraft-day construction duration.
+- Change only minecraft:savanna from acacia logs to wheat, with the common crop
+  category and crop bonuses. Retain acacia for Savanna Plateau and Windswept
+  Savanna; preserve saved acacia inventory. Update the current mapping fixture.
+- Cover road labels/layout, construction displays, full corndog values, the exact
+  biome change, unchanged Savanna variants and retained stock in tests.
+
 # 0.0.79
 
 - Rebalance the shared item cap from 792 base/+792 per level to the selected

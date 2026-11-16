@@ -264,10 +264,10 @@ export const BIOME_ASSIGNMENTS = [
   {
     "name": "Savanna",
     "biome": "minecraft:savanna",
-    "resource": "Acacia Logs",
-    "item": "minecraft:acacia_log",
-    "category": "building",
-    "crop": false,
+    "resource": "Wheat",
+    "item": "minecraft:wheat",
+    "category": "common",
+    "crop": true,
     "supported": true
   },
   {

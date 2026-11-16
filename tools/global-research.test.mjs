@@ -294,7 +294,7 @@ test('Road rows show destination identity, current food cost and only completed 
  let row=h.api.roadNetworkOverview(s,v).rows[0];
  assert.equal(row.name,'Varnesk');assert.equal(row.owner,'Jagsby');assert.equal(row.distance,'1551 blocks');
  assert.equal(row.villageTexture,'textures/ui/frontier/settlement_icons/hamlet');
- assert.equal(row.status,'Building Trail');assert.equal(row.nextTexture,'textures/ui/frontier/road_icons/trail');assert.equal(row.time,'in 0.01 days');assert.equal(row.cost,'Unavailable');assert.equal(row.texture,undefined);
+ assert.equal(row.status,'Building Trail');assert.equal(row.nextTexture,'textures/ui/frontier/road_icons/trail');assert.equal(row.time,'> 0.01 days');assert.equal(row.cost,'Unavailable');assert.equal(row.texture,undefined);
  assert.match(row.text,/No road built yet/);
  road.level=1;road.targetLevel=2;
  row=h.api.roadNetworkOverview(s,v).rows[0];
@@ -447,10 +447,10 @@ test('Road construction time uses 24000 ticks per Minecraft day and rounds posit
  s.villages.target={...v,id:'target',name:'Next Village'};
  s.roads={r:{from:v.id,to:'target',level:1,targetLevel:2,distance:100,startedTick:0,durationTicks:60000,finishTick:60000}};
  let row=h.api.roadNetworkOverview(s,v).rows[0];
- assert.equal(row.remainingDays,2);assert.equal(row.time,'in 2 days');
+ assert.equal(row.remainingDays,2);assert.equal(row.time,'> 2 days');
  assert.equal(row.texture,'textures/ui/frontier/road_icons/trail');assert.equal(row.nextTexture,'textures/ui/frontier/road_icons/road');
- tick=48000;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'in 0.5 days');
- tick=59999;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'in 0.01 days');
+ tick=48000;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'> 0.5 days');
+ tick=59999;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'> 0.01 days');
  tick=60001;row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.remainingDays,0);
  s.roads.r.level=2;delete s.roads.r.targetLevel;
  row=h.api.roadNetworkOverview(s,v).rows[0];assert.equal(row.time,'');assert.equal(row.nextTexture,undefined);
@@ -465,7 +465,7 @@ test('Compact road records show the upgrade icon and days, with a direct Travel 
  const h=await runtime(s,undefined,{gameTick:()=>12000});h.api.open(h.player,'a','Realm');
  const base=CHARTER_LAYOUT.realmRows.base+16,form=h.forms[0];
  assert.equal(form.buttons[base],'Beta');assert.equal(form.buttons[base+1],'Builder');assert.equal(form.buttons[base+2],'100 blocks');
- assert.equal(form.buttons[base+4],'');assert.equal(form.buttons[base+5],'in 5.5 days');
+ assert.equal(form.buttons[base+4],'');assert.equal(form.buttons[base+5],'> 5.5 days');
  assert.equal(form.icons[base+6],'textures/ui/frontier/road_icons/road');assert.equal(form.icons[base+7],undefined);
  assert.ok(form.text.includes('[JF:travel_disabled:roads:0]'));assert.equal(form.text.includes('[JF:travel:roads:0]'),false);
 });
@@ -532,7 +532,7 @@ test('both ends of the same Highway quote and charge their own local research ef
   const arrivals=[];h.player.teleport=location=>arrivals.push(location);
   const row=h.api.roadNetworkOverview(h.read(),s.villages[departure]).rows[0];assert.equal(row.cost,price);
   h.api.open(h.player,departure,'Realm');
-  assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.realmRows.base+16+3],price.replace(' corndogs',''));
+  assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.realmRows.base+16+3],price);
   h.api.travelRoad(h.player,departure,'r');assert.equal(arrivals.length,1);assert.equal(h.slots[0].amount,10-breadUsed);
  }
 });
@@ -668,4 +668,16 @@ test('Collection returns all whole items from an old over-cap stockpile without 
  assert.equal(h.received.filter(item=>item.typeId==='minecraft:wheat').reduce((sum,item)=>sum+item.amount,0),500);
  assert.deepEqual(h.read().stock,{'minecraft:wheat':0.75,'minecraft:stone':0.25});
  assert.equal(h.read().global.storage,0);
+});
+
+test('New Trails and road upgrades show their target icon and greater-than six-day construction label',async()=>{
+ for(const level of [0,1]){
+  const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',roads:3};s.villages.b={...village(1551),id:'b',name:'Beta'};
+  s.roads.r={from:'a',to:'b',level,targetLevel:level+1,distance:1551,startedTick:0,durationTicks:144000,finishTick:144000,timingVersion:1};
+  const h=await runtime(s);h.api.open(h.player,'a','Realm');
+  const base=CHARTER_LAYOUT.realmRows.base+16;
+  assert.equal(h.forms[0].buttons[base+5],'> 6 days');assert.equal(h.forms[0].buttons[base+4],'');
+  assert.equal(h.forms[0].icons[base+6],'textures/ui/frontier/road_icons/'+(level?'road':'trail'));
+  assert.ok(h.forms[0].text.includes('[JF:travel_disabled:roads:0]'));
+ }
 });

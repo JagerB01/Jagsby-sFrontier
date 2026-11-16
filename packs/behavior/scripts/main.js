@@ -236,7 +236,7 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
     directoryIcons.set(base,row.icon);
     if(row.canEstablishRoad){realmMarkers.push(`[JF:establish:${scope}:${slot}]`);handlers.set(base+6,()=>establishDirectoryRoad(player,vId,row.id,0,scope));}
    }else{
-    put(base,[row.name,row.owner,row.distance,row.cost==='Unavailable'?'—':row.cost.replace(' corndogs',''),row.time?'':row.status,row.time,'','']);
+    put(base,[row.name,row.owner,row.distance,row.cost==='Unavailable'?'—':row.cost,row.time?'':row.status,row.time,'','']);
     directoryIcons.set(base,row.villageTexture);
     directoryIcons.set(base+6,row.nextTexture||row.texture);
     handlers.set(base+6,()=>roadMenu(player,vId));
@@ -425,7 +425,7 @@ function roadNetworkOverview(s,v){
   const status=road.targetLevel?`${road.level?'Upgrading':'Building'} ${['','Trail','Road','Highway'][road.targetLevel]}`:['Unbuilt','Trail','Road','Highway'][road.level];
   const quote=travelQuote(road,v);
   const cost=quote.canTravel?corndogCost(quote.foodPoints):'Unavailable';
-  const time=road.targetLevel?`in ${Number(remainingDays.toFixed(2))} days`:'';
+  const time=road.targetLevel?`> ${Number(remainingDays.toFixed(2))} days`:'';
   const name=target.name,owner=ownerName(target),distance=`${Math.round(road.distance)} blocks`;
   const text=`§6${name}§r\n${owner} · ${distance}\nTravel cost: ${cost}\n${status}${time?'\n'+time:''}`;
   return {roadId,canTravel:quote.canTravel,name,owner,distance,cost,status,remainingDays,time,

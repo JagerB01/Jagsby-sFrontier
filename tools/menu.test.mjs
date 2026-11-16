@@ -549,3 +549,12 @@ test('Fresh tab groups have exactly one selected default and refresh markers sel
   }
  }
 });
+
+test('Road bars label Travel Cost and Road, with the countdown beneath the tier icon',async()=>{
+ const ui=await loadUI(),row=children(ui.jf_realm_roads_rows).row0,fields=children(row);
+ assert.equal(fields.cost_label.text,'Travel Cost');assert.equal(fields.road_label.text,'Road');
+ assert.deepEqual(row.size,[251,34]);assert.deepEqual(fields.cost.size,[44,12]);
+ assert.ok(fields.road_label.offset[1]+fields.road_label.size[1]<=fields.tier_icon.offset[1]);
+ assert.ok(fields.time.offset[1]>=fields.tier_icon.offset[1]+fields.tier_icon.size[1]);
+ assert.ok(fields.time.offset[1]+fields.time.size[1]<=row.size[1]);
+});

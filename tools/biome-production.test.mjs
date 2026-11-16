@@ -101,3 +101,17 @@ test('Dappled Forest produces Poplar Logs in either allocation and accepts them 
  assert.ok(!categoryMaterials('crop').includes('minecraft:poplar_log'));
  const s=state(native);accountEconomy(s,hour);close(s.stock['minecraft:poplar_log'],1.5);close(native.developmentValue,3);
 });
+
+test('Only Savanna changes to wheat; Plateau and Windswept variants retain acacia logs',()=>{
+ for(const biome of ['minecraft:savanna']){
+  const resource=biomeResource(biome);assert.equal(resource.id,'minecraft:wheat');assert.equal(resource.category,'common');assert.equal(resource.crop,true);
+  const v=village({biome}),s=state(v),rates=resourceRates(v,s);
+  assert.equal(rates.length,1);assert.equal(rates[0].id,'minecraft:wheat');close(rates[0].rate,1.75);
+ }
+ for(const biome of ['minecraft:savanna_plateau','minecraft:savanna_mutated','minecraft:windswept_savanna']){
+  const resource=biomeResource(biome);assert.equal(resource.id,'minecraft:acacia_log');assert.equal(resource.category,'building');assert.equal(resource.crop,false);
+  const v=village({biome}),rates=resourceRates(v,state(v));assert.equal(rates[0].id,'minecraft:acacia_log');close(rates[0].rate,0.75);
+ }
+ const s=state(village({biome:'minecraft:savanna'}));s.stock['minecraft:acacia_log']=12.5;
+ accountEconomy(s,hour);close(s.stock['minecraft:wheat'],1.75);close(s.stock['minecraft:acacia_log'],12.5);
+});
