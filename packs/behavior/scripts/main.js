@@ -15,7 +15,7 @@ const KEY = "jagsby_frontier:state_v1";
 const BIOME_RADIUS = 256;
 import {DEFINITIONS,ZONES,zoneAt,maxLevel,nextCost,acceptedMaterials,lockReason,contribution,applyContribution,settlementLimit,foundingReason,storageIncrement,localLevel,colonizationBonus} from "./global-research.js";
 import {ECONOMY_CONFIG} from "./economy-config.js";
-import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower,developmentHourlyRate} from "./settlement-economy.js";
+import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,normalizeRoadTimers,travelQuote,corndogCost,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower,developmentHourlyRate} from "./settlement-economy.js";
 import {refreshProtection,protectDamage,within,healVillager} from "./settlement-effects.js";
 import {localContribution,applyLocalContribution,localResearchText} from "./local-research.js";
 import {productionView} from "./production-display.js";
@@ -24,7 +24,7 @@ const roadTimers=new Map();
 const pendingSurveys=new Map();
 function gameTick(){return world.getAbsoluteTime?.()??0;}
 function accounted(){
- const s=state(),result=accountEconomy(s);
+ const s=state();normalizeRoadTimers(s,gameTick());const result=accountEconomy(s);
  if(!result.complete){save(s);throw Error('Offline accounting is catching up; reopen the charter to continue.');}
  completeRoads(s,gameTick());save(s);return s;
 }
@@ -242,7 +242,7 @@ function open(player,vId,page='Overview',researchScope='global',realmPage=0,real
     directoryIcons.set(base,row.icon);
     if(row.canEstablishRoad){realmMarkers.push(`[JF:establish:${scope}:${slot}]`);handlers.set(base+6,()=>establishDirectoryRoad(player,vId,row.id,0,scope));}
    }else{
-    put(base,[row.name,row.owner,row.distance,row.cost.replace(' food pts',' pts'),row.time?'':row.status,row.time,'','']);
+    put(base,[row.name,row.owner,row.distance,row.cost==='Unavailable'?'—':row.cost.replace(' corndogs',''),row.time?'':row.status,row.time,'','']);
     directoryIcons.set(base,row.villageTexture);
     directoryIcons.set(base+6,row.nextTexture||row.texture);
     handlers.set(base+6,()=>roadMenu(player,vId));
@@ -426,11 +426,12 @@ function roadNetworkOverview(s,v){
   const remainingDays=Math.ceil(ticksLeft/24000*100)/100;
   const nextTier=['none','trail','road','highway'][road.targetLevel||0];
   const status=road.targetLevel?`${road.level?'Upgrading':'Building'} ${['','Trail','Road','Highway'][road.targetLevel]}`:['Unbuilt','Trail','Road','Highway'][road.level];
-  const cost=road.level?`${foodCost(road)} food pts`:'Unavailable';
+  const quote=travelQuote(road,v);
+  const cost=quote.canTravel?corndogCost(quote.foodPoints):'Unavailable';
   const time=road.targetLevel?`in ${Number(remainingDays.toFixed(2))} days`:'';
   const name=target.name,owner=ownerName(target),distance=`${Math.round(road.distance)} blocks`;
   const text=`§6${name}§r\n${owner} · ${distance}\nTravel cost: ${cost}\n${status}${time?'\n'+time:''}`;
-  return {roadId,canTravel:Boolean(road.level),name,owner,distance,cost,status,remainingDays,time,
+  return {roadId,canTravel:quote.canTravel,name,owner,distance,cost,status,remainingDays,time,
    villageTexture:settlementTier(target.census).iconTexture,
    texture:tier?`textures/ui/frontier/road_icons/${tier}`:undefined,
    nextTexture:road.targetLevel?`textures/ui/frontier/road_icons/${nextTier}`:undefined,
@@ -465,7 +466,7 @@ async function roadMenu(player,vid){
     const name=['Unbuilt','Trail','Road','Highway'][road.level];
     if(road.targetLevel){const done=Math.max(0,Math.min(100,100*(gameTick()-road.startedTick)/road.durationTicks));add(`${target.name}: building level ${road.targetLevel} (${done.toFixed(1)}%)`,()=>roadMenu(player,vid));}
     else if(road.level<3&&v.roads)add(`Upgrade ${name} to ${target.name}`,()=>buildRoad(player,vid,target.id));
-    if(road.level)add(`Travel to ${target.name}: ${foodCost(road)} food points (${name})`,()=>travelRoad(player,vid,road.id));
+    const quote=travelQuote(road,v);if(quote.canTravel)add(`Travel to ${target.name}: ${corndogCost(quote.foodPoints)}`,()=>travelRoad(player,vid,road.id));
    }
   }
   add('Back to Road Networks',()=>open(player,vid,'Realm','global',0,'roads'));
@@ -484,14 +485,14 @@ function establishDirectoryRoad(player,vid,targetId,page,scope){
   const status=directoryRoadState(source,target,s.roads);
   if(!status.canEstablish)throw Error(status.status.replace('\n',' '));
   startRoad(s,vid,targetId,gameTick());save(s);
-  player.sendMessage(`Trail construction to ${target.name} started.`);
+  player.sendMessage(`Trail construction to ${target.name} started: 6 Minecraft days until completion.`);
  }catch(e){player.sendMessage(String(e.message||e));}
  open(player,vid,'Realm','global',page,scope);
 }
 function buildRoad(player,vid,target){
  try{const s=accounted(),v=s.villages[vid];if(!v||!within(player,v))throw Error('Stand inside the source settlement to manage roads.');
   const road=startRoad(s,vid,target,gameTick());save(s);
-  player.sendMessage(`Construction started: level ${road.targetLevel}; ${(road.durationTicks/20).toFixed(0)} in-game seconds (trial timing).`);
+  player.sendMessage('Construction started: 6 Minecraft days until completion.');
  }catch(e){player.sendMessage(String(e));}
  roadMenu(player,vid);
 }
@@ -499,10 +500,11 @@ function travelRoad(player,vid,roadId){
  try{
   const s=accounted(),v=s.villages[vid],road=s.roads[roadId];
   if(!v||!within(player,v)||!road?.level||![road.from,road.to].includes(vid))throw Error('No completed route from this settlement.');
+  const quote=travelQuote(road,v);if(!quote.canTravel)throw Error(quote.reason);
   const target=s.villages[road.from===vid?road.to:road.from];if(!target)throw Error('Destination no longer exists.');
   const inventory=player.getComponent('minecraft:inventory')?.container;if(!inventory)throw Error('Inventory unavailable.');
   const items=[];for(let slot=0;slot<inventory.size;slot++){const item=inventory.getItem(slot);if(item)items.push({slot,typeId:item.typeId,amount:item.amount});}
-  const plan=foodPlan(items,foodCost(road));if(!plan)throw Error(`Need ${foodCost(road)} food points. Different foods provide different values.`);
+  const plan=foodPlan(items,quote.foodPoints);if(!plan)throw Error(`Need ${corndogCost(quote.foodPoints)} worth of food. Bread is worth 2.5 corndogs each.`);
   spendFoodAndTravel(inventory,plan,()=>player.teleport({x:target.location.x+0.5,y:target.location.y+1,z:target.location.z+0.5},{dimension:world.getDimension(target.dimension)}));
   player.sendMessage(`Arrived at ${target.name}.`);
  }catch(e){player.sendMessage(String(e));}

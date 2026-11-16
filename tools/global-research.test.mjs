@@ -144,7 +144,7 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
  globalThis.__researchRuntime={world:{getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(){return 1;},clearRun(){}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
- source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad,surveySettlement};\n//'+Math.random();
+ source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad,surveySettlement,travelRoad};\n//'+Math.random();
  const api=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
  return {api,player,slots,forms,messages,received,read:()=>JSON.parse(stored),update(fn){const s=JSON.parse(stored);fn(s);stored=JSON.stringify(s);},failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
 }
@@ -268,7 +268,7 @@ test('All ten research hover records describe effects, next cost, progress, prer
  assert.ok(records[61].includes('Extra resources do not earn Development'));
 });
 test('Road Networks returns all connections for scrolling and distinguishes construction from travel',async()=>{
- const h=await runtime();const s=h.read(),v=s.villages.none;
+ const h=await runtime();const s=h.read(),v=s.villages.none;v.roads=3;
  for(let i=0;i<5;i++){
   s.villages['t'+i]={...v,id:'t'+i,name:'Town '+i};
   s.roads['r'+i]={from:v.id,to:'t'+i,level:1,distance:100};
@@ -277,14 +277,14 @@ test('Road Networks returns all connections for scrolling and distinguishes cons
  s.roads.r0.targetLevel=2;s.roads.r0.startedTick=0;s.roads.r0.durationTicks=100;
  const first=h.api.roadNetworkOverview(s,v,0),last=h.api.roadNetworkOverview(s,v,99);
  assert.ok(first.summary.includes('4 active, 1 building'));assert.equal(first.summary.includes('page'),false);
- assert.ok(first.details.includes('Upgrading'));assert.ok(first.details.includes('food pts'));
+ assert.ok(first.details.includes('Upgrading'));assert.ok(first.details.includes('corndogs'));
  assert.ok(first.details.includes('Town 4'));assert.deepEqual(first.rows,last.rows);
  assert.deepEqual(first.rows.map(row=>row.texture),['trail','trail','road','highway','trail'].map(tier=>'textures/ui/frontier/road_icons/'+tier));
  assert.equal(last.rows.length,5);
  assert.equal(h.api.roadNetworkOverview({...s,roads:{}},v).rows.length,0);
 });
 test('Road rows show destination identity, current food cost and only completed road artwork',async()=>{
- const h=await runtime(),s=h.read(),v=s.villages.none;
+ const h=await runtime(),s=h.read(),v=s.villages.none;v.roads=3;
  const target={...v,id:'target',name:'Varnesk',owner:{id:'owner',name:'Jagsby'},census:{realmPowerTenths:20}};
  s.villages.target=target;
  const road={from:v.id,to:target.id,level:0,targetLevel:1,distance:1551,startedTick:0,durationTicks:100};
@@ -298,11 +298,11 @@ test('Road rows show destination identity, current food cost and only completed 
  row=h.api.roadNetworkOverview(s,v).rows[0];
  assert.equal(row.status,'Upgrading Road');assert.equal(row.nextTexture,'textures/ui/frontier/road_icons/road');
  assert.equal(row.texture,'textures/ui/frontier/road_icons/trail');
- assert.equal(row.cost,`${E.foodCost(road)} food pts`);
+ assert.equal(row.cost,'Unavailable');assert.equal(row.canTravel,false);
  delete road.targetLevel;road.level=3;
  row=h.api.roadNetworkOverview(s,v).rows[0];
  assert.equal(row.status,'Highway');assert.equal(row.texture,'textures/ui/frontier/road_icons/highway');
- assert.equal(row.cost,`${E.foodCost(road)} food pts`);
+ assert.equal(row.cost,E.corndogCost(E.foodCost(road,v)));
 });
 test('Removing the map restores only previously saved movement controls once',async()=>{
  const h=await runtime();let raw=JSON.stringify({4:true,6:false});const restored=[],titles=[];
@@ -463,9 +463,9 @@ test('Compact road records show the upgrade icon and days, with a direct Travel 
  const h=await runtime(s,undefined,{gameTick:()=>12000});h.api.open(h.player,'a','Realm');
  const base=CHARTER_LAYOUT.realmRows.base+16,form=h.forms[0];
  assert.equal(form.buttons[base],'Beta');assert.equal(form.buttons[base+1],'Builder');assert.equal(form.buttons[base+2],'100 blocks');
- assert.equal(form.buttons[base+4],'');assert.equal(form.buttons[base+5],'in 2 days');
+ assert.equal(form.buttons[base+4],'');assert.equal(form.buttons[base+5],'in 5.5 days');
  assert.equal(form.icons[base+6],'textures/ui/frontier/road_icons/road');assert.equal(form.icons[base+7],undefined);
- assert.ok(form.text.includes('[JF:travel:roads:0]'));assert.equal(form.text.includes('[JF:travel_disabled:roads:0]'),false);
+ assert.ok(form.text.includes('[JF:travel_disabled:roads:0]'));assert.equal(form.text.includes('[JF:travel:roads:0]'),false);
 });
 
 test('Realm layout overflow is reported rather than silently discarding settlements',async()=>{
@@ -477,8 +477,8 @@ test('Realm layout overflow is reported rather than silently discarding settleme
  assert.equal(Object.keys(h.read().villages).length,129);
 });
 
-test('Per-row Travel spends food and teleports directly for completed and upgrading roads',async()=>{
- for(const upgrading of [false,true]){
+test('Per-row Travel spends food and teleports directly only for completed roads',async()=>{
+ for(const upgrading of [false]){
   const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',roads:2};
   s.villages.b={...village(100),id:'b',name:'Beta'};
   s.roads.savedKey={from:'a',to:'b',level:1,distance:100,...(upgrading?{targetLevel:2,startedTick:0,durationTicks:60000,finishTick:60000}:{})};
@@ -504,6 +504,33 @@ test('New roads disable Travel and insufficient food never charges or teleports'
   h.api.open(h.player,'a','Realm');await new Promise(resolve=>setImmediate(resolve));
   assert.equal(JSON.stringify(h.slots),before);
   assert.ok(h.forms[0].text.includes(level?'[JF:travel:roads:0]':'[JF:travel_disabled:roads:0]'));
-  if(level)assert.ok(h.messages.some(text=>text.includes('Need')&&text.includes('food points')));
+  if(level)assert.ok(h.messages.some(text=>text.includes('Need')&&text.includes('corndogs')));
+ }
+});
+
+test('server travel rejects upgrades and an unresearched departure even when called without the button',async()=>{
+ for(const scenario of ['research','upgrade','trail']){
+  const s=fresh(Date.now());s.villages.a={...village(),roads:scenario==='research'?0:3,name:'Alpha'};
+  s.villages.b={...village(1551),id:'b',roads:3,name:'Beta'};
+  s.roads.r={from:'a',to:'b',level:scenario==='trail'?0:1,distance:1551,...(scenario!=='research'?{targetLevel:2,startedTick:0,finishTick:144000,durationTicks:144000,timingVersion:1}:{})};
+  const h=await runtime(s);h.slots[0]={typeId:'minecraft:bread',amount:64};
+  h.player.dimension={id:'minecraft:overworld'};h.player.location={x:0,y:64,z:0};h.player.teleport=()=>assert.fail('Blocked travel must not teleport');
+  const before=JSON.stringify(h.slots);h.api.travelRoad(h.player,'a','r');
+  assert.equal(JSON.stringify(h.slots),before);
+  assert.ok(h.messages.some(text=>text.includes(scenario==='research'?'Road Networks':scenario==='upgrade'?'construction':'completed')));
+ }
+});
+
+test('both ends of the same Highway quote and charge their own local research efficiency in corndogs',async()=>{
+ for(const [departure,tech,price,breadUsed] of [['a',1,'8 corndogs',4],['b',3,'3.5 corndogs',2]]){
+  const s=fresh(Date.now());s.villages.a={...village(),id:'a',name:'Alpha',roads:1};
+  s.villages.b={...village(1551),id:'b',name:'Beta',roads:3};s.roads.r={from:'a',to:'b',level:3,distance:1551};
+  const h=await runtime(s);h.slots[0]={typeId:'minecraft:bread',amount:10};
+  h.player.dimension={id:'minecraft:overworld'};h.player.location={...s.villages[departure].location};
+  const arrivals=[];h.player.teleport=location=>arrivals.push(location);
+  const row=h.api.roadNetworkOverview(h.read(),s.villages[departure]).rows[0];assert.equal(row.cost,price);
+  h.api.open(h.player,departure,'Realm');
+  assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.realmRows.base+16+3],price.replace(' corndogs',''));
+  h.api.travelRoad(h.player,departure,'r');assert.equal(arrivals.length,1);assert.equal(h.slots[0].amount,10-breadUsed);
  }
 });

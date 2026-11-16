@@ -184,3 +184,39 @@ test('Unknown newer Development schemas are rejected without changing the save',
  const s=state();s.developmentVersion=3;const saved=JSON.stringify(s);
  assert.throws(()=>E.accountEconomy(s,hour),/Development save is newer/);assert.equal(JSON.stringify(s),saved);
 });
+
+test('every road construction stage lasts six Minecraft days at any distance and survives reload',()=>{
+ for(const distance of [10,1551,100000]){
+  let s=state(village('a',{roads:3}));s.villages.b=village('b',{location:{x:distance,y:64,z:0}});E.migrateEconomy(s,0);
+  let tick=100;
+  for(let level=1;level<=3;level++){
+   const road=E.startRoad(s,'a','b',tick);
+   assert.equal(road.durationTicks,144000);assert.equal(road.finishTick,tick+6*24000);
+   s=JSON.parse(JSON.stringify(s));const saved=s.roads[road.id];
+   E.completeRoads(s,tick+144000-1);assert.equal(saved.level,level-1);assert.equal(saved.targetLevel,level);
+   assert.equal(E.travelQuote(saved,s.villages.a).canTravel,false);
+   E.completeRoads(s,tick+144000);assert.equal(saved.level,level);assert.equal(saved.targetLevel,undefined);
+   assert.equal(E.travelQuote(saved,s.villages.a).canTravel,true);tick+=144000;
+  }
+ }
+});
+
+test('pending trial timers migrate from their original start; completed roads are preserved',()=>{
+ const s={roads:{pending:{level:1,targetLevel:2,startedTick:100,durationTicks:1200,finishTick:1300},done:{level:3,durationTicks:1200,finishTick:1300}}};
+ E.completeRoads(s,1300);assert.equal(s.roads.pending.level,1);assert.equal(s.roads.pending.finishTick,144100);
+ E.normalizeRoadTimers(s,5000);assert.equal(s.roads.pending.finishTick,144100);
+ assert.equal(s.roads.done.level,3);assert.equal(s.roads.done.finishTick,1300);
+ E.completeRoads(s,144100);assert.equal(s.roads.pending.level,2);
+});
+
+test('travel efficiency belongs to the departure village and cannot exceed the completed road tier',()=>{
+ const road={level:3,distance:1551};
+ assert.equal(E.travelQuote(road,{roads:0}).canTravel,false);
+ for(const [roads,points] of [[1,16],[2,11],[3,7]]){
+  const quote=E.travelQuote(road,{roads});assert.equal(quote.effectiveLevel,roads);assert.equal(quote.foodPoints,points);
+ }
+ assert.equal(E.travelQuote({level:1,distance:1551},{roads:3}).foodPoints,16);
+ assert.equal(E.corndogCost(16),'8 corndogs');assert.equal(E.corndogCost(5),'2.5 corndogs');
+ const plan=E.foodPlan([{slot:0,typeId:'minecraft:bread',amount:4}],16);
+ assert.equal(plan[0].count,4); // Four whole bread pay ten corndogs for an eight-corndog quote.
+});

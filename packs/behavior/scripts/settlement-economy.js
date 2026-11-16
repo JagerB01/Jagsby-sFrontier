@@ -130,18 +130,40 @@ export function startRoad(s,from,to,gameTick){
  const distance=Math.hypot(a.location.x-b.location.x,a.location.z-b.location.z);
  if(!road)road=s.roads[id]={id,from,to,level:0,distance};
  road.targetLevel=road.level+1;
- road.durationTicks=Math.ceil(Math.max(C.roads.minimumTicks,distance*C.roads.ticksPerBlock)*road.targetLevel);
+ road.durationTicks=C.roads.constructionTicks;road.timingVersion=1;
  road.startedTick=gameTick;road.finishTick=gameTick+road.durationTicks;
  return road;
 }
+export function normalizeRoadTimers(s,gameTick){
+ // Upgrade only pending trial timers, measured from their original start. Never
+ // roll back a completed road whose construction history is no longer stored.
+ for(const road of Object.values(s.roads||{}))if(road.targetLevel&&road.timingVersion!==1){
+  road.startedTick=Number.isFinite(road.startedTick)?road.startedTick:gameTick;
+  road.durationTicks=C.roads.constructionTicks;road.finishTick=road.startedTick+road.durationTicks;road.timingVersion=1;
+ }
+}
 export function completeRoads(s,gameTick){
+ normalizeRoadTimers(s,gameTick);
  let changed=false;
  for(const road of Object.values(s.roads))if(road.targetLevel&&gameTick>=road.finishTick){
   road.level=road.targetLevel;delete road.targetLevel;changed=true;
  }
  return changed;
 }
-export function foodCost(road){return Math.max(C.roads.minimumFood,Math.ceil(road.distance*C.roads.foodPerBlock*C.roads.foodCostMultipliers[road.level]));}
+export function foodCost(road,source){
+ const level=source?Math.min(road.level,Math.max(0,Math.min(3,Math.floor(source.roads||0)))):road.level;
+ if(!level)return null;
+ return Math.max(C.roads.minimumFood,Math.ceil(road.distance*C.roads.foodPerBlock*C.roads.foodCostMultipliers[level]));
+}
+export function corndogCost(points){return `${points/2} corndogs`;}
+export function travelQuote(road,source){
+ let reason='';
+ if(!source?.roads)reason='Unlock Road Networks I in the departure settlement before travelling.';
+ else if(road?.targetLevel)reason='This connection is under construction. Wait until construction finishes.';
+ else if(!road?.level)reason='No completed road from this settlement.';
+ const foodPoints=reason?null:foodCost(road,source);
+ return {canTravel:!reason,reason,foodPoints,effectiveLevel:reason?0:Math.min(road.level,source.roads)};
+}
 export function foodPlan(items,cost){
  if(cost<=0)return [];
  const eligible=items.filter(i=>Number.isFinite(C.food[i.typeId])&&C.food[i.typeId]>0);

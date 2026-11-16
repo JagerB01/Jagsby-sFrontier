@@ -1,3 +1,18 @@
+# 0.0.72
+
+- Quote and display travel costs in corndogs (stored food points / 2), retaining
+  integer accounting for exact half-corndog food values. Bread is 2.5 corndogs;
+  sixteen old points are eight corndogs. Update the cost header and chat messages.
+- Fix every construction stage at six Minecraft days, 144,000 world ticks.
+  Migrate pending trial timers from their original start without resetting jobs
+  on reload. Preserve completed roads whose history cannot be reliably recovered.
+- Block travel throughout construction and upgrades. Require Road Networks I in
+  the departure settlement and cap travel efficiency at the lesser of its local
+  research and the completed connection tier. Revalidate on the server immediately
+  before charging or teleporting; the UI uses the same quote rules.
+- Cover exact completion boundaries, reloads, pending-timer migration, corndog
+  conversion, endpoint-specific charges, and direct-call bypass attempts in tests.
+
 # 0.0.71
 
 - Reduce Road Networks rows from 66 to 34 UI units and order columns as settlement,

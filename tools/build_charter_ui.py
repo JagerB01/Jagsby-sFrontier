@@ -814,7 +814,7 @@ def build():
                 fields.append(control(field, explicit_scope("jf_realm_" + scope + "_" + field, base + index, offset, size)))
             if road:
                 fields.append(control("distance_label", label("Distance", [38, 12], (91, 2), SILVER, 0.6)))
-                fields.append(control("cost_label", label("Food cost", [30, 12], (132, 2), SILVER, 0.6)))
+                fields.append(control("cost_label", label("Corndogs", [30, 12], (132, 2), SILVER, 0.6)))
                 icon = explicit_scope("jf_realm_road_tier_icon", base + 6, [170, 2], [20, 20])
                 fields.append(control("tier_icon", icon))
                 tier_action = explicit_scope("jf_realm_tier_action", base + 6, [168, 0], [24, 24])

@@ -5,7 +5,16 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.71.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.72.mcaddon?raw=true)
+
+Version 0.0.72 displays travel prices in corndogs: one stored food point is
+half a corndog, so bread is worth 2.5 corndogs. Every Trail and upgrade takes
+six Minecraft days (144,000 ticks). Travel is blocked during all construction
+and upgrades. Departure requires local Road Networks I; pricing uses the lower
+of the completed connection tier and the departure village's local research.
+The two endpoints can therefore have different travel costs. Pending trial timers
+are corrected from their original start; already-completed roads are preserved.
+Whole food items are still consumed, with no refund for unavoidable overpayment.
 
 Version 0.0.71 makes Road Networks a compact horizontal list: settlement and
 owner, distance, food-point cost, road-tier icon, then a direct Travel button.

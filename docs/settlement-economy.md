@@ -153,7 +153,9 @@ to create it remains `from`/sender permanently, including upgrades initiated at
 the opposite endpoint. Self-connections and duplicate construction are refused.
 Deleting either charter removes its orphaned roads.
 
-Trial construction ticks are `max(1200, distance × 5) × targetLevel`. These are
+Every construction stage takes six Minecraft days (`144000` ticks), independent
+of distance and target level. Pending trial timers migrate from their original
+start; completed roads are preserved. These are
 in-game ticks, so shutdowns pause construction; empty-server time counts only if
 the world keeps ticking. One scheduled completion callback is used per pending
 road, rehydrated from persistent world ticks on world load/access. There are no
@@ -163,8 +165,8 @@ not retroactively guessed from real-world shutdown duration.
 
 Connections progress independently through Trail (I), Road (II) and Highway
 (III). Construction/upgrade progress appears in the Road Networks menu. No
-route Development is earned during pending construction/upgrade. An existing
-completed level remains usable for travel while its next level is building.
+route Development is earned during pending construction/upgrade. Travel is
+blocked for the entire connection while construction or an upgrade is pending.
 
 For completed routes, daily real-world Development value is exactly:
 
@@ -176,13 +178,17 @@ route rewards enter each endpoint's same lifetime value ledger; no physical
 resources are consumed or generated. Offline progression uses the same threshold
 integration as production.
 
-Trial travel cost is `ceil(distance × 0.01 × levelMultiplier)`, minimum two food
-points; Trail/Road/Highway multipliers are 1 / 0.7 / 0.45. Food values are a
-configurable vanilla-item whitelist using hunger points. Whole foods are spent,
+Travel requires Road Networks I in the departure village. The effective level
+is the lower of its local Road Networks research and the completed connection
+tier. Internal cost is `ceil(distance × 0.01 × levelMultiplier)`, minimum two
+points; Trail/Road/Highway multipliers are 1 / 0.7 / 0.45. Display costs in
+corndogs by dividing those points by two. The food whitelist uses these same
+half-corndog units: bread is five points, or 2.5 corndogs. Whole foods are spent,
 not player hunger bars. The bounded inventory planner minimizes overpayment;
 unavoidable surplus whole-item value is not refunded. This is item spending,
 so no eating effects or empty containers are generated. Food is restored if the
-teleport throws. Both directions use the same connection and cost. Players must
+teleport throws. Both directions use the same connection but can have different
+costs because their departure villages have different research levels. Players must
 stand within the source settlement. Arrival is one block above the target
 charter; test landing clearance in a disposable world. No persistent forced
 chunk loading is created.
