@@ -49,8 +49,9 @@ Pillow; ordinary addon builds use the checked-in PNGs without downloads.
 
 Preview labels bind directly to native form-button text and remain available
 before research is unlocked. A single red requirement notice appears above locked
-previews. Scrolling row markers read shared dashboard state outside hidden tabs;
-collection bindings remain active during local tab switches.
+previews. Scrolling row markers read shared dashboard state outside hidden tabs once per
+opening. Collection text, icons and actions update only while visible, including
+when a local tab is first selected. Hidden lists do not continuously poll records.
 
 The second tab lists the native biome first, followed by every discovered
 eligible nearby biome. Each row has the biome name, item image and projected

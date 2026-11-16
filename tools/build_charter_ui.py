@@ -933,23 +933,27 @@ def build():
         control("submit@common.button", submit),
     ]}
     ui.update(GENERATED_CONTROLS)
-    def keep_list_bindings_live(value):
+    def bind_static_list_state(value):
         if isinstance(value, dict):
             bindings = value.get("bindings", [])
             for binding in bindings:
                 if binding.get("binding_type") in ["collection", "collection_details"]:
-                    binding["binding_condition"] = "always"
+                    # Native form records are ready when the panel is shown.
+                    # Hidden tabs need no collection text/icon/action updates.
+                    binding["binding_condition"] = "visible"
                 if binding.get("binding_type") == "view" and binding.get("target_property_name") in ["#visible", "#enabled"] and "#form_text" in binding.get("source_property_name", ""):
                     binding["source_control_name"] = "jf_menu_state"
-                    binding["binding_condition"] = "always"
+                    # The body and row membership cannot change within a form.
+                    # Action refreshes create a new form with new bindings.
+                    binding["binding_condition"] = "once"
             if any(binding.get("source_control_name") == "jf_menu_state" for binding in bindings):
                 value["bindings"] = [binding for binding in bindings if binding.get("binding_name") != "#form_text"]
-            for child in value.values(): keep_list_bindings_live(child)
+            for child in value.values(): bind_static_list_state(child)
         elif isinstance(value, list):
-            for child in value: keep_list_bindings_live(child)
+            for child in value: bind_static_list_state(child)
     for key, value in ui.items():
         if key.startswith(("jf_realm_", "jf_prospect_", "jf_prospecting_", "jf_data_prospectInfo", "jf_action_prospectSelect")):
-            keep_list_bindings_live(value)
+            bind_static_list_state(value)
     custom_path = RP / "ui/jagsby_frontier/charter.json"
     custom_path.parent.mkdir(parents=True, exist_ok=True)
     custom_path.write_text(json.dumps(ui, indent=2) + "\n")

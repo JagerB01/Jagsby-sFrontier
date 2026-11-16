@@ -1,3 +1,16 @@
+# 0.0.86
+
+- Narrow the 0.0.85 blank-panel fix: retain the shared dashboard form-state
+  source and direct native Prospecting text, but stop polling every hidden list.
+- Read immutable row-visibility/action markers once per form opening. Action
+  refreshes create a new form and therefore initialize the new row state.
+- Bind collection text, icons and native actions only while their controls are
+  visible. Preserve all local tab switches, defaults, scrolling and row capacity.
+- Reduce always-updating binding definitions from 2,430 to 13: twelve native tab
+  toggles and one shared form-body source. Add a regression budget to prevent
+  restoring broad list polling. Do not claim measured Minecraft load times from
+  static or script tests; the cloud environment has no Minecraft renderer.
+
 # 0.0.85
 
 - Address the blank Realm/Prospecting report by binding scrolling row markers to

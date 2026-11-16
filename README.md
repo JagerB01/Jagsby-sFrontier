@@ -5,7 +5,14 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.85.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.86.mcaddon?raw=true)
+
+Version 0.0.86 removes the broad hidden-list polling added in 0.0.85. Realm and
+Prospecting keep the shared form-state source, read immutable row markers once
+per opening, and update native text, icon and action bindings only while visible.
+Always-updating binding definitions fall from 2,430 to 13 (the existing tab toggles
+and shared body). Layout, scrolling, local navigation and gameplay are unchanged.
+Minecraft loading-time improvement still needs in-game confirmation.
 
 Version 0.0.85 addresses blank Realm and Resource Prospecting panels. Scrolling
 rows read visibility markers from a shared dashboard control; native collection
