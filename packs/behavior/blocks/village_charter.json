@@ -8,6 +8,7 @@
       }
     },
     "components": {
+      "jagsby_frontier:charter_spacing": {},
       "minecraft:geometry": "geometry.village_charter_center",
       "minecraft:material_instances": {
         "*": {

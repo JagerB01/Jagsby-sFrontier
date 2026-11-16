@@ -1,3 +1,11 @@
+# 0.0.65
+
+- Cancel charter placement within the 80-block census radius of another recorded
+  charter in the same dimension, preserving the held item and notifying the player
+  in chat. Record newly placed charters even if founding is rejected.
+- Retain existing registered settlements; older unregistered blocks need replacement
+  to enter the placement index.
+
 # 0.0.64
 
 - Opening the charter uses the last saved census and no longer queries villagers

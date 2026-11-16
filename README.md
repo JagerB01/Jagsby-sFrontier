@@ -5,7 +5,10 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.64.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.65.mcaddon?raw=true)
+
+Version 0.0.65 prevents Village Charter placement within 80 blocks of another
+recorded charter and explains blocked placement in player chat.
 
 Version 0.0.64 makes **Survey** refresh both villagers/RP (80 blocks) and nearby
 biomes (256 blocks). Opening and navigating use saved census results with no rank
@@ -167,6 +170,15 @@ layout still need in-game verification.
 - Source: `packs/behavior` and `packs/resource`.
 - Current census feature and limitations: [village census](docs/village-census.md).
 - Standalone custom UI: [charter dashboard](docs/custom-charter-ui.md).
+
+Village Charters cannot be placed within 80 blocks (including exactly 80) of
+another recorded charter in the same dimension. This uses the Survey census
+radius and three-dimensional distance. Blocked placements keep the held item
+and show a chat message to the placing player. Newly placed charters are recorded
+even if settlement founding is unavailable; breaking a charter clears its placement
+record. Existing registered settlements also enforce the spacing rule. Older
+unregistered charter blocks must be broken and replaced once to enter the index.
+Existing settlements are not removed by this rule.
 
 ## Development
 

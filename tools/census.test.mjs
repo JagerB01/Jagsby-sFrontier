@@ -125,7 +125,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
       getDimension: id => dimensions.get(id), getPlayers: () => [],
       getDynamicProperty: key => properties.get(key),
       setDynamicProperty: (key,value) => properties.set(key,value) },
-    system: { run: fn => queued.push(fn), runInterval: fn => intervals.push(fn),
+    system: { beforeEvents: {startup: {subscribe(fn){handlers.startup=fn;}}}, run: fn => queued.push(fn), runInterval: fn => intervals.push(fn),
       runTimeout: fn => {rankWaits++;fn();} },
     Form, RenameForm,
   };
@@ -134,6 +134,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
     'const {world,system}=globalThis.__frontierTest; class ItemStack {}')
     .replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";',
       'const ActionFormData=globalThis.__frontierTest.Form;const ModalFormData=globalThis.__frontierTest.RenameForm;')
+    .replace('"./charter-placement.js"',JSON.stringify(new URL('charter-placement.js',scriptBase).href))
     .replace('"./village-census.js"', JSON.stringify(moduleUrl))
     .replace('"./menu-display.js"', JSON.stringify(menuModuleUrl))
     .replace('"./charter-layout.js"', JSON.stringify(layoutModuleUrl))
@@ -150,7 +151,24 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
   const location = { x:0, y:64, z:0 };
   const player = { id:'p', name:'Builder', sendMessage() {}, getComponent() {} };
   const event = { player, block:dimension.getBlock(location), isFirstEvent:true };
+  const components={};
+  handlers.startup({blockComponentRegistry:{registerCustomComponent(name,component){components[name]=component;}}});
+  const spacing=components['jagsby_frontier:charter_spacing'];
+  assert.ok(spacing);
+  const firstPlacement={...event,cancel:false};
+  spacing.beforeOnPlayerPlace(firstPlacement);
+  assert.equal(firstPlacement.cancel,false);
   handlers.playerPlaceBlock(event);
+  const closePlacement={...event,cancel:false,block:{dimension,location:{x:80,y:64,z:0}}};
+  const chat=[];closePlacement.player={sendMessage:message=>chat.push(message)};
+  spacing.beforeOnPlayerPlace(closePlacement);
+  assert.equal(closePlacement.cancel,true);
+  assert.equal(chat.length,0);
+  queued.shift()();
+  assert.match(chat[0],/cannot place.*80 blocks/);
+  const distantPlacement={...closePlacement,cancel:false,block:{dimension,location:{x:81,y:64,z:0}}};
+  spacing.beforeOnPlayerPlace(distantPlacement);
+  assert.equal(distantPlacement.cancel,false);
   assert.equal(scans, 0);
   for (const callback of intervals) callback();
   assert.equal(scans, 0);

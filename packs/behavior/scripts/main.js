@@ -1,3 +1,4 @@
+import { charterKey, preventClosePlacement } from "./charter-placement.js";
 import { world, system, ItemStack } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { nearbyVillagers, summarizeVillagers } from "./village-census.js";
@@ -355,7 +356,17 @@ function clearSecondary(player,vid,pages={}){
 function collect(player,vid,pages={}){const s=accounted();const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
  let moved=0;for(const [type,qty] of Object.entries(s.stock)){let remain=Math.floor(qty);const fraction=qty-remain;while(remain>0){const n=Math.min(64,remain);try{const left=inv.addItem(new ItemStack(type,n));const count=n-(left?.amount||0);if(count<=0)break;remain-=count;moved+=count;if(left)break;}catch(e){break;}}s.stock[type]=remain+fraction;if(!s.stock[type])delete s.stock[type];}
  save(s);player.sendMessage(`§aCollected ${moved} items. Remaining stockpile: ${total(s)}/${cap(s)}.`);openProduction(player,vid,'summary',pages);}
-world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=accounted();const v=addVillage(s,ev.block,ev.player);if(!v)return;ev.player.sendMessage('§6Village Charter established. Use Survey to refresh villagers and discover nearby biomes.');});
+system.beforeEvents.startup.subscribe(ev=>{
+  ev.blockComponentRegistry.registerCustomComponent('jagsby_frontier:charter_spacing',{
+    beforeOnPlayerPlace(event){
+      // Read only: dynamic-property writes and chat are deferred outside this event.
+      const saved=JSON.parse(world.getDynamicProperty(KEY)||'{}');
+      preventClosePlacement(event,saved,callback=>system.run(callback));
+    }
+  });
+});
+world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=accounted();
+(s.placedCharters??={})[charterKey(ev.block.dimension.id,ev.block.location)]={dimension:ev.block.dimension.id,location:{...ev.block.location}};save(s);const v=addVillage(s,ev.block,ev.player);if(!v)return;ev.player.sendMessage('§6Village Charter established. Use Survey to refresh villagers and discover nearby biomes.');});
 const pendingCharterInteractions=new Set();
 world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
   if(ev.block.typeId!==BLOCK)return;
@@ -380,7 +391,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
     finally{pendingCharterInteractions.delete(pendingKey);}
   });
 });
-world.afterEvents.playerBreakBlock.subscribe(ev=>{if(ev.brokenBlockPermutation.type.id!==BLOCK)return;const s=accounted(),legacy=id(ev.block.location);if(s.pendingResearch?.scope==='local'&&[legacy,`${ev.block.dimension.id}|${legacy}`].includes(s.pendingResearch.vid)){ev.player.sendMessage('Research payment recovery is pending. Replace this charter and reopen it before removing the settlement.');return;}delete s.villages[`${ev.block.dimension.id}|${legacy}`];if(s.villages[legacy]?.dimension===ev.block.dimension.id)delete s.villages[legacy];for(const [key,road]of Object.entries(s.roads||{}))if(!s.villages[road.from]||!s.villages[road.to])delete s.roads[key];save(s);});
+world.afterEvents.playerBreakBlock.subscribe(ev=>{if(ev.brokenBlockPermutation.type.id!==BLOCK)return;const s=accounted(),legacy=id(ev.block.location);if(s.placedCharters){delete s.placedCharters[charterKey(ev.block.dimension.id,ev.block.location)];save(s);}if(s.pendingResearch?.scope==='local'&&[legacy,`${ev.block.dimension.id}|${legacy}`].includes(s.pendingResearch.vid)){ev.player.sendMessage('Research payment recovery is pending. Replace this charter and reopen it before removing the settlement.');return;}delete s.villages[`${ev.block.dimension.id}|${legacy}`];if(s.villages[legacy]?.dimension===ev.block.dimension.id)delete s.villages[legacy];for(const [key,road]of Object.entries(s.roads||{}))if(!s.villages[road.from]||!s.villages[road.to])delete s.roads[key];save(s);});
 // Player-only buffs are refreshed every four seconds. Villagers are queried
 // at most once per in-game day, only around an occupied loaded settlement.
 system.runInterval(()=>{
