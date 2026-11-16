@@ -103,12 +103,12 @@ test('Paid legacy surplus survives a Stewardship ceiling and resumes when the ce
  migrateLocalResearch(v,state(4));assert.equal(v.efficiency,3);assert.equal(v.localResearch.progress.efficiency,125);
  const before=JSON.stringify(v);migrateLocalResearch(v,state(4));assert.equal(JSON.stringify(v),before);
 });
-test('Hearthstone explains only the current and next effect, with no empty Lv 0 benefit or future-level list',()=>{
+test('Hearthstone compares regeneration and healing without listing future-level effects',()=>{
  const v=village();let text=localResearchText(v,'hearth',state(1));
- assert.equal(text.includes('Current:'),false);assert.ok(text.includes('Grants players Regeneration I while within the settlement.'));
- assert.ok(text.includes('Persists for 3 minutes after leaving.'));assert.equal(text.includes('Villagers'),false);
+ assert.equal(text.includes('Current:'),false);assert.ok(text.includes('Player regeneration: §bOff§r §7→§r §aI§r'));
+ assert.ok(text.includes('persists 3 minutes after leaving.'));assert.equal(text.includes('Villager healing'),false);
  v.hearth=1;text=localResearchText(v,'hearth',state(1));
- assert.ok(text.includes('Current: Grants players Regeneration I'));assert.ok(text.includes('Next: Villagers within the settlement recover 2 health points once per Minecraft day.'));
+ assert.ok(text.includes('Player regeneration: §bI§r'));assert.ok(text.includes('Villager healing: §b0§r §7→§r §a2§r HP / Minecraft day'));
  v.hearth=2;text=localResearchText(v,'hearth',state(1));assert.equal(text.includes('Next:'),false);assert.ok(text.includes('Fully upgraded'));
 });
 
@@ -128,4 +128,18 @@ test('Percentage comparisons include zero, preserve resets and avoid rounding Sa
  v.sanctuary=1000;const text=localResearchText(v,'sanctuary',state(1001));
  assert.ok(text.includes('99.9999％'));assert.equal(text.includes('100％'),false);
  assert.equal(text.includes('%'),false,'Use the fullwidth percent glyph so Script API cannot consume it as formatting');
+});
+
+test('Prospecting and Roads compare their actual allocation and local efficiency, including maximum levels',()=>{
+ const v=village();v.hearth=1;v.sanctuary=1;
+ let text=localResearchText(v,'biome',state(3));
+ assert.ok(text.includes('Secondary allocation: §b0％§r §7→§r §a50％§r'));
+ assert.ok(text.includes('256 blocks'));v.biomeUnlocked=true;
+ text=localResearchText(v,'biome',state(3));assert.ok(text.includes('§b50％§r'));assert.equal(text.includes('→'),false);assert.ok(text.includes('Fully upgraded'));
+ text=localResearchText(v,'roads',state(3));assert.ok(text.includes('Travel tier: §bLocked§r §7→§r §aTrail§r'));
+ v.roads=1;text=localResearchText(v,'roads',state(3));assert.ok(text.includes('Travel tier: §bTrail§r §7→§r §aRoad§r'));
+ assert.ok(text.includes('Food cost reduction: §b0％§r §7→§r §a30％§r'));
+ v.roads=2;text=localResearchText(v,'roads',state(3));assert.ok(text.includes('§b30％§r §7→§r §a55％§r'));
+ v.roads=3;text=localResearchText(v,'roads',state(3));assert.ok(text.includes('§bHighway§r'));assert.ok(text.includes('§b55％§r'));assert.equal(text.includes('→'),false);
+ assert.ok(text.includes('Limited by completed road tier.'));assert.ok(text.includes('6 Minecraft days'));
 });

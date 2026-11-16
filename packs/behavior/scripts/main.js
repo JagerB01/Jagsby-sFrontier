@@ -17,7 +17,7 @@ import {DEFINITIONS,ZONES,zoneAt,maxLevel,nextCost,acceptedMaterials,lockReason,
 import {ECONOMY_CONFIG} from "./economy-config.js";
 import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,normalizeRoadTimers,travelQuote,corndogCost,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower,developmentHourlyRate} from "./settlement-economy.js";
 import {refreshProtection,protectDamage,within,healVillager} from "./settlement-effects.js";
-import {localContribution,applyLocalContribution,localResearchText} from "./local-research.js";
+import {localContribution,applyLocalContribution,localResearchText,researchComparison,researchPercent} from "./local-research.js";
 import {productionView} from "./production-display.js";
 import {canonicalBiome,eligibleBiome,productionAllocations} from "./biome-resources.js";
 const roadTimers=new Map();
@@ -81,28 +81,16 @@ function pageTitle(page){return `JF_CHARTER|${page}`;}
 function researchText(s,v,key,player){return key in DEFINITIONS?globalResearchText(s,key):localResearchText(v,key,s);}
 function globalResearchText(s,key){
  const d=DEFINITIONS[key],level=s.global[key],cost=nextCost(s,key),maximum=maxLevel(s,key),locked=lockReason(s,key);
- const current={
-  innovation:`Endless research ceiling: Lv ${level}.`,
-  capacity:level?`Maximum settlements: ${settlementLimit(s)}.`:'',
-  frontier:level?`Settlement founding unlocked through ${ZONES[level+1]}.`:'',
-  colonization:level?`${ZONES[level]} settlements produce ${level*10}% extra resources.`:'',
-  storage:level?`Shared stockpile capacity: ${cap(s)} items.`:'',
+ const compare=(now,next)=>researchComparison(now,next,cost!==undefined);
+ const bonus=n=>n?`${ZONES[n]} +${researchPercent(n*10)}`:'None';
+ const benefits={
+  innovation:`Research ceiling: ${compare('Lv '+level,'Lv '+(level+1))}\nSettlement Development remains uncapped.`,
+  capacity:`Settlement limit: ${compare(settlementLimit(s),settlementLimit(s)+1)}\nFounded: ${Object.keys(s.villages).length}. Founding-zone rules still apply.`,
+  frontier:`Founding limit: ${compare(ZONES[level+1],ZONES[level+2])}\nUnlocks founding zones; settlement slots are separate.`,
+  colonization:`Zone bonus: ${compare(bonus(level),bonus(Math.min(5,level+1)))}\nEarlier zone bonuses remain active.\nBonus resources do not earn Development.`,
+  storage:`Shared capacity: ${compare(cap(s),cap(s)+storageIncrement())} items\nStored: ${total(s).toFixed(3)} items.`,
  };
- const next={
-  innovation:`Raises the endless research ceiling to Lv ${level+1}.`,
-  capacity:`Raises the settlement limit to ${settlementLimit(s)+1}.`,
-  frontier:level<4?`Unlocks settlement founding in ${ZONES[level+2]}.`:'',
-  colonization:level<5?`${ZONES[level+1]} settlements produce ${(level+1)*10}% extra resources.`:'',
-  storage:`Adds ${storageIncrement()} shared item spaces (${cap(s)+storageIncrement()} total).`,
- };
- const extra={
-  innovation:'Permanent settlement Development is not capped.',
-  capacity:`Settlements: ${Object.keys(s.villages).length} / ${settlementLimit(s)}. Zone research is still required.`,
-  frontier:'Does not restrict player travel or add settlement slots.',
-  colonization:'Earlier zone bonuses remain active. Extra resources do not earn Development.',
-  storage:`Stored: ${total(s).toFixed(3)} / ${cap(s)} items.`,
- };
- const description=[current[key]?'Current: '+current[key]:'',cost!==undefined&&next[key]?'Next: '+next[key]:'',extra[key]].filter(Boolean).join('\n');
+ const description=benefits[key];
  const resource=key==='capacity'?'Logs':key==='storage'?'Building materials':acceptedMaterials(s,key).map(id=>id.replace('minecraft:','').replaceAll('_',' ')).join(', ');
  const prerequisite=key==='innovation'?'None (Lv 1 is free)':d.prerequisite?DEFINITIONS[d.prerequisite].name+' Lv 1':'Stewardship Lv 1';
  const ceiling=['capacity','storage'].includes(key)?`; Stewardship Lv ${level+1}`:'';

@@ -77,30 +77,32 @@ export function applyLocalContribution(v,key,material,amount,s=null){
  v.localResearch.revision++;
  return accepted;
 }
+// Shared presentation for local and global cards. Text and the arrow preserve
+// meaning without relying on colors; native formatting resets after each value.
+export function researchComparison(current,next,hasNext=true){
+ return `§b${current}§r${hasNext&&next!==current?` §7→§r §a${next}§r`:''}`;
+}
+export function researchPercent(value){return `${Number(value.toFixed(value>=99.99?4:2))}％`;}
 export function localResearchText(v,key,s=null){
  const d=C.research[key],stored=localResearchLevel(v,key),level=!d.max&&s?Math.min(stored,s.global.innovation):stored,cost=localResearchCost(v,key);
  const progress=v.localResearch?.progress?.[key]??0,requirement=localResearchRequirement(v,key,s);
  const prerequisite=key==='hearth'?'None':['biome','sanctuary'].includes(key)?'Hearthstone Lv 1':key==='efficiency'?'Resource Prospecting Lv 1':'Sanctuary Lv 1';
  const ceiling=!d.max?`; Stewardship Lv ${stored+1}`:'';
- const healing='Grants players Regeneration I while within the settlement. Persists for 3 minutes after leaving.';
- const current={
-  hearth:level>0?healing+(level>=2?' Villagers recover 2 health points once per Minecraft day.':''):'',
-  biome:level?'Unlocks the second 50% allocation. Choose Native Specialization or a surveyed surface biome within 256 blocks in Production > Resource Prospecting.':'',
-  roads:level?'Enables trade connections and travel by spending food.':'',
- };
- const next={
-  hearth:level===0?healing:level===1?'Villagers within the settlement recover 2 health points once per Minecraft day.':'',
-  biome:level?'':'Unlocks the second 50% allocation. Choose Native Specialization or a surveyed surface biome within 256 blocks in Production > Resource Prospecting.',
-  roads:level===0?'Enables trade connections and travel by spending food.':level<3?'Raises Road Networks research to Lv '+(level+1)+'. Connections are built and upgraded separately.':'',
- };
- // Fullwidth percent is a real Unicode glyph, avoiding Script API substitution
- // of ASCII percent characters (the same issue addressed in Production's UI).
- const percent=n=>`${Number(n.toFixed(n>=99.99?4:2))}％`;
- const compare=(now,next)=>`§b${now}§r${cost?` §7→§r §a${next}§r`:''}`;
+ const compare=(now,next)=>researchComparison(now,next,Boolean(cost));
  const reduction=n=>Math.min(99.9999,(1-0.95**n)*100);
- const benefit=key==='sanctuary'
-  ?`Hostile damage reduction: ${compare(percent(reduction(level)),percent(reduction(level+1)))}\nPersists for 3 minutes after leaving.`
-  :key==='efficiency'?`Resource production: ${compare('+'+percent(level*5),'+'+percent((level+1)*5))}`
-  :[current[key]?'Current: '+current[key]:'',cost&&next[key]?'Next: '+next[key]:''].filter(Boolean).join('\n');
+ const tier=['Locked','Trail','Road','Highway'];
+ let benefit;
+ if(key==='sanctuary')benefit=`Hostile damage reduction: ${compare(researchPercent(reduction(level)),researchPercent(reduction(level+1)))}\nPersists for 3 minutes after leaving.`;
+ else if(key==='efficiency')benefit=`Resource production: ${compare('+'+researchPercent(level*5),'+'+researchPercent((level+1)*5))}`;
+ else if(key==='hearth'){
+  benefit=`Player regeneration: ${compare(level?'I':'Off','I')}\nWithin settlement; persists 3 minutes after leaving.`;
+  if(level>=1)benefit+=`\nVillager healing: ${compare(level>=2?'2':'0','2')} HP / Minecraft day`;
+ }else if(key==='biome')benefit=`Secondary allocation: ${compare(researchPercent(level?50:0),researchPercent(50))}\nNative specialization or surveyed biome within 256 blocks.\nChoose in Production > Resource Prospecting.`;
+ else if(key==='roads'){
+  benefit=`Travel tier: ${compare(tier[level],tier[Math.min(3,level+1)])}`;
+  if(level)benefit+=`\nFood cost reduction: ${compare(researchPercent((1-C.roads.foodCostMultipliers[level])*100),researchPercent((1-C.roads.foodCostMultipliers[Math.min(3,level+1)])*100))}`;
+  benefit+='\nLimited by completed road tier.\nConstruction: 6 Minecraft days per stage.';
+ }
+
  return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining\nRequires: ${prerequisite}${ceiling}\nStatus: ${requirement?'Locked':'Available'}`:'Fully upgraded'}`;
 }

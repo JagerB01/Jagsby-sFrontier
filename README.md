@@ -5,7 +5,16 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.73.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.74.mcaddon?raw=true)
+
+Version 0.0.74 extends the compact cyan-current → green-next comparisons to all
+ten research cards. Stewardship shows the ceiling, Settlement Charters the slot
+limit, Shared Storage the item capacity, Frontier Expansion the founding zone,
+and Colonization the named zone and bonus. Hearthstone compares regeneration and
+villager healing, Prospecting the secondary allocation, and Road Networks its
+travel tier and food savings. Sanctuary and Prosperity retain their percentage
+comparisons. Shared notes appear once; capped cards show only their current
+benefit. Costs, prerequisites, progression and gameplay rules are unchanged.
 
 Version 0.0.73 compacts Sanctuary and Prosperity research benefits into cyan
 current values, an arrow, and green next-level values. Sanctuary's three-minute

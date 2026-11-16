@@ -1,3 +1,17 @@
+# 0.0.74
+
+- Apply shared cyan-current → green-next presentation across all ten local/global
+  research cards, including numeric capacity, level ceilings and named unlocks.
+- Show Frontier founding zones explicitly and label both zone/bonus pairs for
+  Colonization; retain the note that earlier zone bonuses remain active.
+- Compact Hearthstone into regeneration and villager-healing comparisons, with
+  shared duration once. Show Prospecting's secondary allocation and Roads' usable
+  tier/food-cost reduction, preserving completed-road and construction notes.
+- Hide next values/arrows for maximum-level research and omit duplicate unchanged
+  comparisons. Keep cost, contribution, prerequisite and lock details intact.
+- Test all global comparisons, zero/unlocked/capped local states, zone semantics,
+  percent glyphs and rendering without mutation. No research mechanics change.
+
 # 0.0.73
 
 - Condense Sanctuary and Prosperity benefit text into a color-coded current →

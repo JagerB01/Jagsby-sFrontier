@@ -179,7 +179,7 @@ test('Capped global cards do not debit inventory or erase partial progress',asyn
 test('Global hover record exposes effect, next cost, progress, remaining amount, prerequisite and click action',async()=>{
  const s=fresh();const h=await runtime(s);h.api.open(h.player,'none','Research','global');
  const text=h.forms[0].buttons[10];
- for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Requires: Settlement Charters Lv 1','Stored: 0.000 / 792','792 shared item spaces'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Requires: Settlement Charters Lv 1','Stored: 0.000 items','Shared capacity: §b792§r §7→§r §a1584§r items'])assert.ok(text.includes(value),value);
 });
 test('Save migration refuses a future version instead of overwriting it',()=>{
  assert.throws(()=>R.migrateResearch({researchVersion:4}),/newer/);
@@ -187,7 +187,7 @@ test('Save migration refuses a future version instead of overwriting it',()=>{
 test('Opening and canceling Research shows costs in hover records without spending',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};const h=await runtime(s);
  h.slots[0]={typeId:'minecraft:bread',amount:20};h.api.open(h.player,'a','Research','local');
- for(const value of ['Next cost: 64 Bread','64 remaining','Click to contribute','players'])assert.ok(h.forms[0].buttons[5].includes(value));
+ for(const value of ['Next cost: 64 Bread','64 remaining','Click to contribute','Player regeneration'])assert.ok(h.forms[0].buttons[5].includes(value));
  assert.equal(h.slots[0].amount,20);assert.equal(h.read().villages.a.hearth,0);
 });
 test('Selecting the actual local card contributes directly and only redraws the dashboard',async()=>{
@@ -262,10 +262,10 @@ test('All ten research hover records describe effects, next cost, progress, prer
   assert.equal(text.includes('Carry the required material'),false);
   assert.equal(text.includes('Select for materials'),false);
  }
- assert.ok(records[5].includes('Grants players Regeneration I while within the settlement'));
+ assert.ok(records[5].includes('Player regeneration: §bOff§r §7→§r §aI§r'));
  assert.ok(records[55].includes('3 minutes after leaving'));
- assert.ok(records[9].includes('Permanent settlement Development is not capped'));
- assert.ok(records[61].includes('Extra resources do not earn Development'));
+ assert.ok(records[9].includes('Settlement Development remains uncapped'));
+ assert.ok(records[61].includes('Bonus resources do not earn Development'));
 });
 test('Road Networks returns all connections for scrolling and distinguishes construction from travel',async()=>{
  const h=await runtime();const s=h.read(),v=s.villages.none;v.roads=3;
@@ -532,5 +532,18 @@ test('both ends of the same Highway quote and charge their own local research ef
   h.api.open(h.player,departure,'Realm');
   assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.realmRows.base+16+3],price.replace(' corndogs',''));
   h.api.travelRoad(h.player,departure,'r');assert.equal(arrivals.length,1);assert.equal(h.slots[0].amount,10-breadUsed);
+ }
+});
+
+test('All global cards use compact colored comparisons while preserving zone meanings and capped states',async()=>{
+ const h=await runtime(),s=h.read();
+ const cases=[['innovation','Research ceiling: §bLv 1§r §7→§r §aLv 2§r'],['capacity','Settlement limit: §b2§r §7→§r §a3§r'],['storage','Shared capacity: §b792§r §7→§r §a1584§r items'],['frontier','Founding limit: §bBorderlands§r §7→§r §aWildlands§r'],['colonization','Zone bonus: §bNone§r §7→§r §aBorderlands +10％§r']];
+ const before=JSON.stringify(s);
+ for(const [key,expected] of cases){const text=h.api.globalResearchText(s,key);assert.ok(text.includes(expected),key);assert.equal(text.includes('Current:'),false);assert.equal(text.includes('Next:'),false);assert.ok(text.includes('Next cost:'));}
+ assert.equal(JSON.stringify(s),before,'Rendering must not mutate research');
+ s.global.colonization=1;let text=h.api.globalResearchText(s,'colonization');
+ assert.ok(text.includes('§bBorderlands +10％§r §7→§r §aWildlands +20％§r'));assert.ok(text.includes('Earlier zone bonuses remain active.'));
+ for(const [key,level] of [['colonization',5],['frontier',4]]){
+  s.global[key]=level;text=h.api.globalResearchText(s,key);assert.equal(text.includes('→'),false);assert.equal(text.includes('undefined'),false);assert.ok(text.includes('Blackreach'));assert.ok(text.includes('Fully upgraded'));
  }
 });
