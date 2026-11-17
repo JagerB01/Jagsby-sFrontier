@@ -1,5 +1,20 @@
 # 0.0.88
 
+## 0.0.94 — Realm row spacing and controller actions
+
+- Replace automatic Realm grid-slot height with the explicit height of its
+  row template: 32px for My/All and 33px for Roads. The user reported overlapping
+  names and distances after the grid-loading change; the stack must reserve
+  height even while the grid's native data is resolving.
+- Disable Realm reading-row focus attraction and add explicit controller links:
+  row → Right → road tier/upgrade → Right → Travel; Left retraces the links and
+  Up returns to the reading row. My/All also link Right to Establish Road.
+- Retain native collection indices, click mappings and disabled Travel behavior.
+  No gameplay, research, travel validation or map changes.
+- Automated checks cover row-slot geometry and controller focus/action links;
+  actual in-game layout and controller verification remain outstanding.
+
+
 ## 0.0.93 — Map D-pad zoom shortcuts
 
 - Add gamepad-only Up/Down mappings on the map zoom controls; keep mouse/touch

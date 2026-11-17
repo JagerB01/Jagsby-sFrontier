@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.93.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.94.mcaddon?raw=true)
+
+Version 0.0.94 gives Realm grid slots explicit row heights to prevent overlapping
+settlement entries. Controller reading rows no longer attract focus away from
+actions: Right moves to the road icon, Right again to Travel, then A activates
+it. Left retraces that path; Up returns to the row. In-game verification remains
+required.
 
 Version 0.0.93 adds gamepad D-pad Up/Down shortcuts to zoom the Settlement Map.
 Mouse/touch zoom buttons remain. Zoom still replaces the native form; this

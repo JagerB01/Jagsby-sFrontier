@@ -675,3 +675,46 @@ test('Realm lists defer every heavy row until its own population marker arrives'
   }
  }
 });
+
+test('Realm grid slots reserve the full row height so separate settlements cannot stack at y=0',async()=>{
+ const ui=await loadUI(),{CHARTER_LAYOUT:layout}=await import('../packs/behavior/scripts/charter-layout.js');
+ for(const scope of layout.realmRows.scopes){
+  let stackedHeight=0;
+  for(const gate of Object.values(children(ui['jf_realm_'+scope+'_rows']))){
+   const row=ui[gate.grid_item_template.split('.')[1]];
+   assert.deepEqual(gate.size,row.size,'The outer stack must measure the same numeric height as the grid child');
+   assert.equal(typeof gate.size[1],'number');assert.ok(gate.size[1]>0);
+   const start=stackedHeight;stackedHeight+=gate.size[1];assert.ok(stackedHeight>start);
+   assert.equal(gate.maximum_grid_items,0);assert.equal(gate.precached_grid_item_count,0);
+   assert.ok(gate.bindings.some(b=>b.target_property_name==='#visible'),'Unused slots must still collapse');
+  }
+ }
+});
+
+test('Controller has explicit routes from Realm reading rows into real native action buttons',async()=>{
+ const ui=await loadUI(),{CHARTER_LAYOUT:layout}=await import('../packs/behavior/scripts/charter-layout.js');
+ const nativeRecord=scope=>Object.values(scope.controls[0])[0];
+ for(const [scopeIndex,scope]of layout.realmRows.scopes.entries())for(let slot=0;slot<layout.realmRows.limit;slot++){
+  const gate=children(ui['jf_realm_'+scope+'_rows'])['row'+slot],row=ui[gate.grid_item_template.split('.')[1]],fields=children(row);
+  assert.equal(row.focus_magnet_enabled,false,'Reading targets must not pull focus away from actions');
+  assert.deepEqual(row.button_mappings,[],'Reading rows must not submit a wrong action');
+  const base=layout.realmRows.base+slot*layout.realmRows.stride+scopeIndex*8;
+  if(scope==='roads'){
+   const tier=nativeRecord(fields.tier_action),travel=nativeRecord(fields.travel);
+   assert.equal(row.focus_change_right,tier.focus_identifier);
+   assert.equal(tier.focus_change_right,travel.focus_identifier);
+   assert.equal(travel.focus_change_left,tier.focus_identifier);
+   assert.equal(tier.focus_change_left,row.focus_identifier);
+   assert.equal(travel.focus_change_up,row.focus_identifier);
+   assert.equal(tier.collection_index,base+6);assert.equal(travel.collection_index,base+7);
+   const action=template(ui,'jf_realm_travel');
+   assert.equal(action.focus_enabled,true);assert.equal(action.enabled,true);
+   assert.ok(action.button_mappings.some(m=>m.from_button_id==='button.menu_ok'&&m.to_button_id==='button.form_button_click'&&m.mapping_type==='focused'));
+   const disabled=template(ui,'jf_realm_travel_disabled');assert.equal(disabled.focus_enabled,false);assert.equal(disabled.enabled,false);
+  }else{
+   const establish=nativeRecord(fields.establish);
+   assert.equal(row.focus_change_right,establish.focus_identifier);assert.equal(establish.focus_change_left,row.focus_identifier);
+   assert.equal(establish.collection_index,base+6);
+  }
+ }
+});

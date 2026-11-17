@@ -42,3 +42,25 @@ all content fits inside the compact row. These checks cannot execute Bedrock's
 UI runtime. Test opening latency, initial and refresh population, empty lists,
 scrolling, controller/touch/mouse actions and building countdowns in-game, then
 export the content log to confirm no new UI errors.
+
+## Spacing and focus correction (0.0.94)
+
+The first grid implementation used `size: [251, "default"]` for each gate.
+The user supplied a screenshot of My/All names and distances overlaid at the
+same row position. An automatically measured native grid can initially report
+zero height to the enclosing stack. Gates now reserve the row's explicit height
+(32px for My/All, 33px for Roads); population-marker visibility still collapses
+unused slots. The zero item limit and zero-precache configuration are retained.
+
+Realm reading rows now set `focus_magnet_enabled: false`. Every action record
+has a unique focus identifier and explicit horizontal links. On Roads, move
+Right from the reading row to the road icon, Right again to Travel, and press A.
+Left retraces the path; Up returns to the reading row. Disabled Travel remains
+disabled. On My/All, Right enters Establish Road when available. Scroll reading
+targets remain available when no action can be used. Prospecting is unchanged.
+
+Static tests verify nonzero slot heights equal to their children, all compact
+field bounds, focus links resolving to the proper records, and preserved native
+collection indices. Test two or more settlements, empty lists, building and
+completed roads, scrolling and controller activation in-game before claiming
+that the rendering and input defects are resolved on Bedrock.

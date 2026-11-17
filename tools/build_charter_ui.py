@@ -869,25 +869,49 @@ def build():
                 road_label["text_alignment"] = "center"
                 fields.append(control("road_label", road_label))
                 tier_action = explicit_scope("jf_realm_tier_action", base + 6, [178.5, 3], [24, 24])
+                tier_record = tier_action["controls"][0]["record@jagsby_frontier.jf_realm_tier_action"]
+                tier_record.update({
+                    "focus_identifier": f"jf_realm_roads_tier_{slot}",
+                    "focus_change_left": f"jf_realm_roads_row_{slot}",
+                    "focus_change_right": f"jf_realm_roads_travel_{slot}",
+                    "focus_change_up": f"jf_realm_roads_row_{slot}",
+                })
                 fields.append(control("tier_action", tier_action))
                 for enabled in [True, False]:
                     key = "travel" if enabled else "travel_disabled"
                     travel = explicit_scope("jf_realm_" + key, base + 7, [205, 5], [43, 22])
+                    if enabled:
+                        travel["controls"][0]["record@jagsby_frontier.jf_realm_travel"].update({
+                            "focus_identifier": f"jf_realm_roads_travel_{slot}",
+                            "focus_change_left": f"jf_realm_roads_tier_{slot}",
+                            "focus_change_up": f"jf_realm_roads_row_{slot}",
+                        })
                     travel["bindings"] = row_present("[JF:" + key + ":roads:" + str(slot) + "]")
                     fields.append(control(key, travel))
             else:
                 fields.append(control("dev_label", label("Dev", [23, 12], (177, 2), SILVER, 0.65)))
                 establish = explicit_scope("jf_realm_establish_" + scope, base + 6, [201, 4], [47, 24])
                 establish["bindings"] = row_present("[JF:establish:" + scope + ":" + str(slot) + "]")
+                establish["controls"][0]["record@jagsby_frontier.jf_realm_establish_" + scope].update({
+                    "focus_identifier": f"jf_realm_{scope}_establish_{slot}",
+                    "focus_change_left": f"jf_realm_{scope}_row_{slot}",
+                    "focus_change_up": f"jf_realm_{scope}_row_{slot}",
+                })
                 fields.append(control("establish", establish))
             marker = "[JF:row:" + scope + ":" + str(slot) + "]"
             template = "jf_realm_" + scope + "_row" + str(slot)
             ui[template] = focusable_scroll_row({"size": [251, height], "controls": fields}, "realm", scope, slot)
+            # Keep inert reading focus for locked rows, but do not attract
+            # controller focus away from the nested native action controls.
+            ui[template]["focus_magnet_enabled"] = False
+            ui[template]["focus_change_right"] = f"jf_realm_roads_tier_{slot}" if road else f"jf_realm_{scope}_establish_{slot}"
             # Mojang grids support #maximum_grid_items. The numeric 0/1 limit
             # controls creation, rather than merely hiding an instantiated row.
             present = "(not ((#form_text - '" + marker + "') = #form_text))"
             rows.append(control("row" + str(slot), {
-                "type": "grid", "size": [251, "default"],
+                # A grid's automatic height can be zero while native data is
+                # resolving, making the outer stack overlap subsequent rows.
+                "type": "grid", "size": [251, height],
                 "grid_dimensions": [1, 1], "grid_rescaling_type": "vertical",
                 "collection_name": "form_buttons", "grid_item_template": "jagsby_frontier." + template,
                 "maximum_grid_items": 0, "precached_grid_item_count": 0,
