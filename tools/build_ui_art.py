@@ -125,7 +125,7 @@ def build():
     c.rect(103, 60, 1, 159, (150, 144, 121))
     c.rect(104, 59, 258, 161, (30, 32, 33))
     c.save("charter_frame.png")
-    for name in ["overview", "research", "production", "realm", "information"]:
+    for name in ["overview", "research", "production", "realm", "diplomacy"]:
         for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:
             selected = state.startswith("checked")
             hover = "hover" in state

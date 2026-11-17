@@ -50,7 +50,7 @@ for key in ["realmMine", "realmAll"]:
 for key in ["minePrev", "mineNext", "allPrev", "allNext", "roadsPrev", "roadsNext"]:
     ACTIONS.pop(key, None)
 VIEW_ACTIONS = []
-for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("Production", ["summary", "biomes"]), ("Realm", ["roads", "mine", "all"]), ("Information", [None])]:
+for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("Production", ["summary", "biomes"]), ("Realm", ["roads", "mine", "all"]), ("Diplomacy", [None])]:
     for scope in scopes:
         entry = {"page": page}
         if scope: entry[page.lower() + "Scope"] = scope
@@ -65,7 +65,7 @@ late = sorted([(index, mapping, key) for mapping in [DATA, ACTIONS]
                for key, index in mapping.items() if index >= 98], key=lambda entry: entry[0])
 for index, (_, mapping, key) in enumerate(late, start=98):
     mapping[key] = index
-TABS = ["Overview", "Research", "Production", "Realm", "Information"]
+TABS = ["Overview", "Research", "Production", "Realm", "Diplomacy"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
 SILVER = (0.73, 0.73, 0.68)
@@ -239,7 +239,7 @@ def tab(name, index):
         states.append(control(state, {"type": "panel", "size": [80, 28], "controls": [
             control("face", image(button_texture(80, 28, state), [80, 28], layer=1)),
             *([control("icon", image(f"frontier/icons/{lower}", [20, 20], (6, 4), 4))]
-              if lower in ["overview", "research", "production", "realm", "information"] else []),
+              if lower in ["overview", "research", "production", "realm", "diplomacy"] else []),
             control("caption", label(name, [49, 12], (27, 9), WHEAT if selected else IVORY, 0.8)),
         ]}))
     marker = f"[JF:tab:{lower}]"
@@ -456,7 +456,7 @@ def build():
     dashboard += [tab(name, index) for index, name in enumerate(TABS)]
     for name in TABS:
         lower = name.lower()
-        if lower in ["overview", "research", "production", "realm", "information"]:
+        if lower in ["overview", "research", "production", "realm", "diplomacy"]:
             dashboard.append(control(lower + "@jagsby_frontier.jf_" + lower + "_content", {
                 "anchor_from": "top_left", "anchor_to": "top_left", "offset": [104, 62],
                 "size": [257, 158], "layer": 5,
@@ -759,10 +759,10 @@ def build():
         identity, development_box, production_box,
     ]}
     GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left"})
-    ui["jf_information_content"] = {"type": "panel", "size": [257, 158], "controls": [
-        control("heading", label("Information", [233, 14], (8, 8), WHEAT, 0.95)),
+    ui["jf_diplomacy_content"] = {"type": "panel", "size": [257, 158], "controls": [
+        control("heading", label("Diplomacy", [233, 14], (8, 8), WHEAT, 0.95)),
         control("rule", image("frontier/solid", [233, 1], (8, 29), 2, list(WHEAT))),
-        control("placeholder", label("Road Networks\nOpen Realm > Road Networks to view connections.\nManage construction, upgrades and food-powered travel there.\nContribute research directly from the tech cards.", [233, 96], (8, 40), scale=0.75)),
+        control("placeholder", label("Diplomacy features are not yet available.", [233, 96], (8, 40), scale=0.75)),
     ]}
     realm_controls = [research_tab("roads", 0, "realm", "Road Networks"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
     # Fixed explicit collection indices reuse the renderer verified in 0.0.66.

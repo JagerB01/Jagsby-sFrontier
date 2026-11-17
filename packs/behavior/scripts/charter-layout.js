@@ -212,8 +212,8 @@ export const CHARTER_LAYOUT = {
     "renameRealmmine": 254,
     "scanRealmall": 255,
     "renameRealmall": 256,
-    "scanInformation": 257,
-    "renameInformation": 258
+    "scanDiplomacy": 257,
+    "renameDiplomacy": 258
   },
   "recordCount": 259,
   "tabs": [
@@ -221,7 +221,7 @@ export const CHARTER_LAYOUT = {
     "Research",
     "Production",
     "Realm",
-    "Information"
+    "Diplomacy"
   ],
   "viewActions": [
     {
@@ -272,9 +272,9 @@ export const CHARTER_LAYOUT = {
       "rename": "renameRealmall"
     },
     {
-      "page": "Information",
-      "scan": "scanInformation",
-      "rename": "renameInformation"
+      "page": "Diplomacy",
+      "scan": "scanDiplomacy",
+      "rename": "renameDiplomacy"
     }
   ],
   "realmRows": {

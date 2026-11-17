@@ -1394,7 +1394,7 @@
           "hover_enabled": true,
           "focus_identifier": "jf_tab_focus_realm",
           "focus_change_up": "jf_tab_focus_production",
-          "focus_change_down": "jf_tab_focus_information",
+          "focus_change_down": "jf_tab_focus_diplomacy",
           "toggle_on_button": "toggle.toggle_on",
           "toggle_off_button": "toggle.toggle_off",
           "property_bag": {
@@ -1739,7 +1739,7 @@
         }
       },
       {
-        "jf_tab_information": {
+        "jf_tab_diplomacy": {
           "type": "toggle",
           "size": [
             80,
@@ -1760,9 +1760,9 @@
           "reset_on_focus_lost": false,
           "focus_enabled": true,
           "hover_enabled": true,
-          "focus_identifier": "jf_tab_focus_information",
+          "focus_identifier": "jf_tab_focus_diplomacy",
           "focus_change_up": "jf_tab_focus_realm",
-          "focus_change_down": "jf_tab_focus_information",
+          "focus_change_down": "jf_tab_focus_diplomacy",
           "toggle_on_button": "toggle.toggle_on",
           "toggle_off_button": "toggle.toggle_off",
           "property_bag": {
@@ -1780,7 +1780,7 @@
             },
             {
               "binding_type": "view",
-              "source_property_name": "(not ((#form_text - '[JF:tab:information]') = #form_text))",
+              "source_property_name": "(not ((#form_text - '[JF:tab:diplomacy]') = #form_text))",
               "target_property_name": "#toggle_state",
               "binding_condition": "once"
             }
@@ -1801,7 +1801,7 @@
           "checked_control": "checked",
           "unchecked_hover_control": "unchecked_hover",
           "checked_hover_control": "checked_hover",
-          "tts_name": "Information",
+          "tts_name": "Diplomacy",
           "controls": [
             {
               "unchecked": {
@@ -1833,7 +1833,7 @@
                   {
                     "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/icons/information",
+                      "texture": "textures/ui/frontier/icons/diplomacy",
                       "size": [
                         20,
                         20
@@ -1852,7 +1852,7 @@
                   {
                     "caption": {
                       "type": "label",
-                      "text": "Information",
+                      "text": "Diplomacy",
                       "size": [
                         49,
                         12
@@ -1908,7 +1908,7 @@
                   {
                     "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/icons/information",
+                      "texture": "textures/ui/frontier/icons/diplomacy",
                       "size": [
                         20,
                         20
@@ -1927,7 +1927,7 @@
                   {
                     "caption": {
                       "type": "label",
-                      "text": "Information",
+                      "text": "Diplomacy",
                       "size": [
                         49,
                         12
@@ -1983,7 +1983,7 @@
                   {
                     "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/icons/information",
+                      "texture": "textures/ui/frontier/icons/diplomacy",
                       "size": [
                         20,
                         20
@@ -2002,7 +2002,7 @@
                   {
                     "caption": {
                       "type": "label",
-                      "text": "Information",
+                      "text": "Diplomacy",
                       "size": [
                         49,
                         12
@@ -2058,7 +2058,7 @@
                   {
                     "icon": {
                       "type": "image",
-                      "texture": "textures/ui/frontier/icons/information",
+                      "texture": "textures/ui/frontier/icons/diplomacy",
                       "size": [
                         20,
                         20
@@ -2077,7 +2077,7 @@
                   {
                     "caption": {
                       "type": "label",
-                      "text": "Information",
+                      "text": "Diplomacy",
                       "size": [
                         49,
                         12
@@ -2223,7 +2223,7 @@
         }
       },
       {
-        "information@jagsby_frontier.jf_information_content": {
+        "diplomacy@jagsby_frontier.jf_diplomacy_content": {
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "offset": [
@@ -2240,13 +2240,13 @@
               "binding_type": "view",
               "source_property_name": "#toggle_state",
               "target_property_name": "#visible",
-              "source_control_name": "jf_tab_information"
+              "source_control_name": "jf_tab_diplomacy"
             },
             {
               "binding_type": "view",
               "source_property_name": "#toggle_state",
               "target_property_name": "#enabled",
-              "source_control_name": "jf_tab_information"
+              "source_control_name": "jf_tab_diplomacy"
             }
           ]
         }
@@ -2657,7 +2657,7 @@
               }
             },
             {
-              "information": {
+              "diplomacy": {
                 "type": "panel",
                 "size": [
                   58,
@@ -2665,7 +2665,7 @@
                 ],
                 "controls": [
                   {
-                    "renameInformation": {
+                    "renameDiplomacy": {
                       "type": "stack_panel",
                       "orientation": "vertical",
                       "size": [
@@ -2675,7 +2675,7 @@
                       "collection_name": "form_buttons",
                       "controls": [
                         {
-                          "record@jagsby_frontier.jf_action_renameInformation": {
+                          "record@jagsby_frontier.jf_action_renameDiplomacy": {
                             "collection_index": 258
                           }
                         }
@@ -2694,13 +2694,13 @@
                     "binding_type": "view",
                     "source_property_name": "#toggle_state",
                     "target_property_name": "#visible",
-                    "source_control_name": "jf_tab_information"
+                    "source_control_name": "jf_tab_diplomacy"
                   },
                   {
                     "binding_type": "view",
                     "source_property_name": "#toggle_state",
                     "target_property_name": "#enabled",
-                    "source_control_name": "jf_tab_information"
+                    "source_control_name": "jf_tab_diplomacy"
                   }
                 ]
               }
@@ -3114,7 +3114,7 @@
               }
             },
             {
-              "information": {
+              "diplomacy": {
                 "type": "panel",
                 "size": [
                   58,
@@ -3122,7 +3122,7 @@
                 ],
                 "controls": [
                   {
-                    "scanInformation": {
+                    "scanDiplomacy": {
                       "type": "stack_panel",
                       "orientation": "vertical",
                       "size": [
@@ -3132,7 +3132,7 @@
                       "collection_name": "form_buttons",
                       "controls": [
                         {
-                          "record@jagsby_frontier.jf_action_scanInformation": {
+                          "record@jagsby_frontier.jf_action_scanDiplomacy": {
                             "collection_index": 257
                           }
                         }
@@ -3151,13 +3151,13 @@
                     "binding_type": "view",
                     "source_property_name": "#toggle_state",
                     "target_property_name": "#visible",
-                    "source_control_name": "jf_tab_information"
+                    "source_control_name": "jf_tab_diplomacy"
                   },
                   {
                     "binding_type": "view",
                     "source_property_name": "#toggle_state",
                     "target_property_name": "#enabled",
-                    "source_control_name": "jf_tab_information"
+                    "source_control_name": "jf_tab_diplomacy"
                   }
                 ]
               }
@@ -22517,7 +22517,7 @@
       }
     ]
   },
-  "jf_information_content": {
+  "jf_diplomacy_content": {
     "type": "panel",
     "size": [
       257,
@@ -22527,7 +22527,7 @@
       {
         "heading": {
           "type": "label",
-          "text": "Information",
+          "text": "Diplomacy",
           "size": [
             233,
             14
@@ -22577,7 +22577,7 @@
       {
         "placeholder": {
           "type": "label",
-          "text": "Road Networks\nOpen Realm > Road Networks to view connections.\nManage construction, upgrades and food-powered travel there.\nContribute research directly from the tech cards.",
+          "text": "Diplomacy features are not yet available.",
           "size": [
             233,
             96
@@ -192119,7 +192119,7 @@
       }
     ]
   },
-  "jf_action_renameInformation@common.button": {
+  "jf_action_renameDiplomacy@common.button": {
     "size": [
       58,
       17
@@ -192151,12 +192151,12 @@
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:renameInformation]')",
+        "source_property_name": "(#form_button_text = '[JF:action:renameDiplomacy]')",
         "target_property_name": "#visible"
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:renameInformation]')",
+        "source_property_name": "(#form_button_text = '[JF:action:renameDiplomacy]')",
         "target_property_name": "#enabled"
       }
     ],
@@ -194297,7 +194297,7 @@
       }
     ]
   },
-  "jf_action_scanInformation@common.button": {
+  "jf_action_scanDiplomacy@common.button": {
     "size": [
       58,
       17
@@ -194329,12 +194329,12 @@
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:scanInformation]')",
+        "source_property_name": "(#form_button_text = '[JF:action:scanDiplomacy]')",
         "target_property_name": "#visible"
       },
       {
         "binding_type": "view",
-        "source_property_name": "(#form_button_text = '[JF:action:scanInformation]')",
+        "source_property_name": "(#form_button_text = '[JF:action:scanDiplomacy]')",
         "target_property_name": "#enabled"
       }
     ],

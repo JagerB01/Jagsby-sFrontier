@@ -1,5 +1,14 @@
 # 0.0.88
 
+## 0.0.90 — Diplomacy tab
+
+- Rename Information to Diplomacy, including controller navigation and the
+  Survey/Rename refresh targets.
+- Use the approved transparent 64×64 paired banners sprite in every tab state.
+- Replace the old Road Networks help with an explicit diplomacy placeholder.
+  No diplomacy gameplay is implemented by this visual change.
+
+
 ## 0.0.89 — Restore list data binding
 
 - Remove the special `once` condition from shared-body row visibility bindings

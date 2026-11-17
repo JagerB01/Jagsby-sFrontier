@@ -5,7 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.89.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.90.mcaddon?raw=true)
+
+Version 0.0.90 replaces the Information tab with **Diplomacy** and the approved
+64×64 transparent banners icon. The tab is a placeholder for future diplomacy
+features; tab switching remains local.
 
 Version 0.0.89 restores normal data binding in Realm directories, Road Networks
 and Resource Prospecting. Rows no longer freeze their visibility before the

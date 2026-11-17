@@ -164,3 +164,12 @@ and square composition were retained. Each PNG is 98,350 bytes. No large source
 copy is included in the addon.
 
 Resized PNG SHA-256: `1e2c240c8c39fb69071ff8e1e00f5ccbf3c347024becac78a8ff22fae5c01704`.
+
+## Diplomacy tab icon (0.0.90)
+
+`packs/resource/textures/ui/frontier/icons/diplomacy.png` is the paired-banners
+option generated with OpenAI image generation using the existing addon icons
+as style references and selected by the user. Extracted from the three-option
+sprite sheet, reduced with nearest-neighbor sampling to 64×64 pixels and given
+binary alpha transparency. Warm gold/parchment and burgundy banners share a
+red wax seal. No change to the other tab sprites.
