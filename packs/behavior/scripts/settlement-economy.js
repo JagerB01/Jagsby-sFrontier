@@ -51,13 +51,26 @@ export function resourceRates(v,s=null,legacy=false,oldProduction=false){
  }
  return [...result.values()];
 }
-export function routeRates(s){
+// Roads are shared infrastructure. Trade selections are directional: one
+// outgoing connection per departure settlement, with any number of incoming.
+export function selectedTradeRoutes(s){
+ if((s.tradeRouteVersion||0)>1)throw Error('Trade route save is newer than this addon');
+ const roads=s.roads||{},villages=s.villages||{};
+ const valid=(from,id)=>{const r=roads[id];return r&&villages[from]&&[r.from,r.to].includes(from)&&villages[r.from]&&villages[r.to]&&villages[r.from].dimension===villages[r.to].dimension;};
+ if(s.tradeRouteVersion===1)return Object.fromEntries(Object.entries(s.tradeRoutes||{}).filter(([from,id])=>valid(from,id)));
+ const result={};
+ const entries=Object.entries(roads).sort(([ai,a],[bi,b])=>Number(!a.targetLevel)-Number(!b.targetLevel)||(a.startedTick||0)-(b.startedTick||0)||ai.localeCompare(bi));
+ for(const [id,r]of entries)if((r.level||r.targetLevel)&&!Object.hasOwn(result,r.from)&&valid(r.from,id))result[r.from]=id;
+ return result;
+}
+export function routeRates(s,legacyAll=false){
  const result=Object.fromEntries(Object.keys(s.villages).map(k=>[k,0]));
- for(const road of Object.values(s.roads)){
-  const a=s.villages[road.from],b=s.villages[road.to];
-  if(!a||!b||!road.level||road.targetLevel)continue;
-  result[road.from]+=10*road.level*(1+development(b)/100)/DAY;
-  result[road.to]+=2*road.level*(1+development(a)/100)/DAY;
+ const routes=legacyAll?Object.entries(s.roads||{}).filter(([,r])=>s.villages[r.from]&&s.villages[r.to]).map(([id,r])=>[r.from,id]):Object.entries(selectedTradeRoutes(s));
+ for(const [from,id]of routes){
+  const road=s.roads[id],to=road.from===from?road.to:road.from;
+  if(!road.level||road.targetLevel)continue;
+  result[from]+=10*road.level*(1+development(s.villages[to])/100)/DAY;
+  result[to]+=2*road.level*(1+development(s.villages[from])/100)/DAY;
  }
  return result;
 }
@@ -73,6 +86,7 @@ export function developmentHourlyRate(s,v){
 // and shared-capacity boundary, then recompute all rates simultaneously.
 export function accountEconomy(s,now=Date.now(),maxEvents=10000){
  if(s.developmentVersion>2)throw Error('Development save is newer than this addon');
+ if((s.tradeRouteVersion||0)>1)throw Error('Trade route save is newer than this addon');
  if(s.productionVersion>2)throw Error('Production save is newer than this addon');
  if(s.researchVersion>3)throw Error('Research save version is newer than this addon');
  migrateEconomy(s,now);let t=s.economyAt,events=0;
@@ -82,7 +96,7 @@ export function accountEconomy(s,now=Date.now(),maxEvents=10000){
  const entries=Object.entries(s.villages).sort(([a],[b])=>a.localeCompare(b));
  while(t<now&&events++<maxEvents){
   const free=Math.max(0,capacity(s,legacy)-stockTotal(s)),producing=free>EPS;
-  const routes=routeRates(s),rates={},devRates={};let totalRate=0;
+  const routes=routeRates(s,s.tradeRouteVersion!==1),rates={},devRates={};let totalRate=0;
   for(const [id,v]of entries){
    const bonus=legacy?0:colonizationBonus(s,zoneAt(v.location));
    rates[id]=producing?resourceRates(v,s,legacy,oldProduction).map(r=>({...r,basePerMs:r.rate/HOUR,perMs:r.rate*(1+bonus)/HOUR})):[];
@@ -119,34 +133,85 @@ export const researchLevel=localResearchLevel;
 export const researchCost=localResearchCost;
 export const researchRequirement=localResearchRequirement;
 export function connectionKey(a,b){return JSON.stringify([a,b].sort());}
+export function roadTicksRemaining(road,gameTick){
+ if(!road?.targetLevel)return 0;
+ return road.paused?Math.max(0,road.remainingTicks||0):Math.max(0,(road.finishTick??((road.startedTick??gameTick)+(road.durationTicks??0)))-gameTick);
+}
+function pauseConstruction(road,gameTick){
+ if(!road.targetLevel||road.paused)return;
+ road.remainingTicks=roadTicksRemaining(road,gameTick);road.paused=true;
+ delete road.finishTick;
+}
+function resumeConstruction(road,gameTick){
+ if(!road.targetLevel||!road.paused)return;
+ const left=Math.max(0,Math.min(road.durationTicks,road.remainingTicks||0));
+ road.finishTick=gameTick+left;road.startedTick=road.finishTick-road.durationTicks;
+ delete road.paused;delete road.remainingTicks;
+}
+export function normalizeRoadTimers(s,gameTick){
+ // Preserve the existing six-day migration for old construction timers.
+ for(const [id,road]of Object.entries(s.roads||{})){
+  road.id=id;
+  if(!road.targetLevel)continue;
+  if(road.timingVersion!==1){
+   road.startedTick=Number.isFinite(road.startedTick)?road.startedTick:gameTick;
+   road.durationTicks=C.roads.constructionTicks;road.finishTick=road.startedTick+road.durationTicks;road.timingVersion=1;
+  }
+  road.constructionFrom??=road.from;
+ }
+ const selected=selectedTradeRoutes(s);
+ s.tradeRoutes=selected;s.tradeRouteVersion=1;
+ for(const [id,road]of Object.entries(s.roads||{}))if(road.targetLevel){
+  if(selected[road.constructionFrom]===id)resumeConstruction(road,gameTick);
+  else pauseConstruction(road,gameTick);
+ }
+}
+function activateTradeRoute(s,from,id,gameTick){
+ if(id===null)delete s.tradeRoutes[from];else s.tradeRoutes[from]=id;
+ for(const [key,road]of Object.entries(s.roads||{}))if(road.targetLevel&&road.constructionFrom===from){
+  if(key===id)resumeConstruction(road,gameTick);else pauseConstruction(road,gameTick);
+ }
+ return id===null?null:s.roads[id];
+}
+export function selectTradeRoute(s,from,id,gameTick){
+ const source=s.villages[from],road=s.roads?.[id];
+ if(!source)throw Error('Departure settlement no longer exists');
+ if(id!==null){
+  if(!source.roads)throw Error('Research Road Networks first');
+  if(!road||![road.from,road.to].includes(from))throw Error('Choose a connection from this settlement');
+  const target=s.villages[road.from===from?road.to:road.from];
+  if(!target||target.dimension!==source.dimension)throw Error('Choose a settlement in the same dimension');
+ }
+ normalizeRoadTimers(s,gameTick);
+ return activateTradeRoute(s,from,id,gameTick);
+}
 export function startRoad(s,from,to,gameTick){
  const a=s.villages[from],b=s.villages[to];
  if(!a||!b||from===to)throw Error('Choose another known settlement');
  if(!a.roads)throw Error('Research Road Networks first');
  if(a.dimension!==b.dimension)throw Error('Roads connect settlements in the same dimension');
- const id=connectionKey(from,to);let road=s.roads[id];
- if(road?.targetLevel)throw Error('This connection is already under construction');
+ normalizeRoadTimers(s,gameTick);s.roads??={};
+ const canonical=connectionKey(from,to);
+ const id=s.roads[canonical]?canonical:Object.keys(s.roads).find(key=>{const r=s.roads[key];return r.from===from&&r.to===to||r.from===to&&r.to===from;})||canonical;
+ let road=s.roads[id];
+ if(road?.targetLevel){
+  if(road.constructionFrom!==from)throw Error('This connection is being built from the other settlement');
+  return activateTradeRoute(s,from,id,gameTick);
+ }
  if(road?.level>=3)throw Error('This connection is already a Highway');
  const distance=Math.hypot(a.location.x-b.location.x,a.location.z-b.location.z);
  if(!road)road=s.roads[id]={id,from,to,level:0,distance};
- road.targetLevel=road.level+1;
+ road.targetLevel=road.level+1;road.constructionFrom=from;
  road.durationTicks=C.roads.constructionTicks;road.timingVersion=1;
  road.startedTick=gameTick;road.finishTick=gameTick+road.durationTicks;
- return road;
-}
-export function normalizeRoadTimers(s,gameTick){
- // Upgrade only pending trial timers, measured from their original start. Never
- // roll back a completed road whose construction history is no longer stored.
- for(const road of Object.values(s.roads||{}))if(road.targetLevel&&road.timingVersion!==1){
-  road.startedTick=Number.isFinite(road.startedTick)?road.startedTick:gameTick;
-  road.durationTicks=C.roads.constructionTicks;road.finishTick=road.startedTick+road.durationTicks;road.timingVersion=1;
- }
+ return activateTradeRoute(s,from,id,gameTick);
 }
 export function completeRoads(s,gameTick){
  normalizeRoadTimers(s,gameTick);
  let changed=false;
- for(const road of Object.values(s.roads))if(road.targetLevel&&gameTick>=road.finishTick){
-  road.level=road.targetLevel;delete road.targetLevel;changed=true;
+ for(const road of Object.values(s.roads||{}))if(road.targetLevel&&!road.paused&&gameTick>=road.finishTick){
+  road.level=road.targetLevel;delete road.targetLevel;delete road.constructionFrom;
+  delete road.remainingTicks;delete road.paused;changed=true;
  }
  return changed;
 }

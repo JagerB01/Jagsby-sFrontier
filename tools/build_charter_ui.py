@@ -434,8 +434,8 @@ def build():
     is_charter = "(not ((#title_text - 'JF_CHARTER|') = #title_text))"
     is_dashboard = "(#title_text = 'JF_CHARTER|Dashboard')"
     is_map = "(#title_text = 'JF_CHARTER|SettlementMap')"
-    ui["jf_router"] = {"type": "panel", "size": [380, 240], "controls": [
-        control("vanilla@server_form.long_form", {"bindings": condition(f"(not {is_charter})")}),
+    ui["jf_router"] = {"type": "panel", "size": [380, 240], "$msfm_standard_long_form|default": "server_form.long_form", "controls": [
+        control("vanilla@$msfm_standard_long_form", {"bindings": condition(f"(not {is_charter})")}),
         control("charter@jagsby_frontier.jf_dashboard", {"bindings": condition(is_dashboard)}),
         control("map@jagsby_frontier.jf_settlement_map", {"bindings": condition(is_map)}),
         control("picker@jagsby_frontier.jf_picker", {"bindings": condition(f"({is_charter} and (not {is_dashboard}) and (not {is_map}))")}),

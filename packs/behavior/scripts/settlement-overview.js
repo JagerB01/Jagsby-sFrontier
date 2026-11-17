@@ -1,3 +1,4 @@
+import { selectedTradeRoutes } from './settlement-economy.js';
 export const MAX_SETTLEMENT_NAME_LENGTH = 24;
 
 export function settlementName(value) {
@@ -22,16 +23,11 @@ export function powerValue(census) {
 }
 
 export function tradeRouteSummary(s,v){
- const connected=Object.values(s.roads||{}).filter(r=>(r.level||r.targetLevel)&&(r.from===v.id||r.to===v.id))
-  .map(road=>({road,target:s.villages[road.from===v.id?road.to:road.from]}))
-  .filter(entry=>entry.target).sort((a,b)=>Number(Boolean(a.road.targetLevel))-Number(Boolean(b.road.targetLevel))||a.target.id.localeCompare(b.target.id));
- if(!connected.length)return 'None';
- const {target}=connected[0];
- const name=settlementName(target.name)||'Unnamed';
- const more=connected.length>1?` +${connected.length-1}`:'';
- const limit=24-more.length;
- const short=[...name].length>limit?[...name].slice(0,limit-1).join('')+'…':name;
- return `${short}${more}`;
+ const road=s.roads?.[selectedTradeRoutes(s)[v.id]];
+ if(!road)return 'None';
+ const target=s.villages[road.from===v.id?road.to:road.from];
+ const name=settlementName(target?.name)||'Unnamed';
+ return [...name].length>24?[...name].slice(0,23).join('')+'…':name;
 }
 
 export function developmentRateText(rate){

@@ -45,7 +45,8 @@ test('standalone charter definitions are registered separately with a minimal va
     control_ids:{long_form:'@jagsby_frontier.jf_router',custom_form:'@jagsby_frontier.jf_modal_router'}}});
   assert.deepEqual(registration.ui_defs,['ui/jagsby_frontier/charter.json']);
   assert.equal(ui.namespace,'jagsby_frontier');
-  assert.ok(ui.jf_router.controls.some(c=>c['vanilla@server_form.long_form']));
+  assert.ok(ui.jf_router.controls.some(c=>c['vanilla@$msfm_standard_long_form']));
+  assert.equal(ui.jf_router['$msfm_standard_long_form|default'],'server_form.long_form');
   assert.ok(ui.jf_router.controls.some(c=>c['charter@jagsby_frontier.jf_dashboard']));
   assert.equal(JSON.stringify(ui).toLowerCase().includes('minescape'),false);
   assert.equal(ui.long_form,undefined);

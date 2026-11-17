@@ -142,10 +142,10 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
  const messages=[],player={id:'p',selectedSlotIndex:0,sendMessage(text){messages.push(text);},getComponent(){return {container:inventory};}};
  const forms=[];
  class Form{constructor(){this.buttons=[];this.icons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}textField(){return this;}submitButton(){return this;}button(text,icon){this.buttons.push(text);this.icons.push(icon);return this;}show(){return Promise.resolve(respond(this));}}
- globalThis.__researchRuntime={world:{getDefaultSpawnLocation(){return options.spawnLocation?.()??{x:0,y:64,z:0};},getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(){return 1;},clearRun(){}},Form};
+ globalThis.__researchRuntime={world:{getDefaultSpawnLocation(){return options.spawnLocation?.()??{x:0,y:64,z:0};},getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(fn,delay){return options.onTimeout?.(fn,delay)??1;},clearRun(handle){options.onClear?.(handle);}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
- source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openSettlementMap,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad,surveySettlement,travelRoad};\n//'+Math.random();
+ source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openSettlementMap,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad,surveySettlement,travelRoad,roadMenu,changeTradeRoute,buildRoad,accounted};\n//'+Math.random();
  const api=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
  return {api,player,slots,forms,messages,received,read:()=>JSON.parse(stored),update(fn){const s=JSON.parse(stored);fn(s);stored=JSON.stringify(s);},failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
 }
@@ -279,7 +279,7 @@ test('Road Networks returns all connections for scrolling and distinguishes cons
  s.roads.r2.level=2;s.roads.r3.level=3;
  s.roads.r0.targetLevel=2;s.roads.r0.startedTick=0;s.roads.r0.durationTicks=100;
  const first=h.api.roadNetworkOverview(s,v,0),last=h.api.roadNetworkOverview(s,v,99);
- assert.ok(first.summary.includes('4 active, 1 building'));assert.equal(first.summary.includes('page'),false);
+ assert.ok(first.summary.includes('0 sending, 1 building'));assert.equal(first.summary.includes('page'),false);
  assert.ok(first.details.includes('Upgrading'));assert.ok(first.details.includes('corndogs'));
  assert.ok(first.details.includes('Town 4'));assert.deepEqual(first.rows,last.rows);
  assert.deepEqual(first.rows.map(row=>row.texture),['trail','trail','road','highway','trail'].map(tier=>'textures/ui/frontier/road_icons/'+tier));
@@ -844,4 +844,46 @@ test('Spawn hover record and tier textures are shipped as inert map data without
  assert.ok(index>=0);assert.equal(f.icons[index],'textures/ui/frontier/map_markers/city');
  assert.equal(f.buttons.length,m.spawnInfo+1);assert.match(f.buttons[m.bounds],/2\/2 settlements/);
  assert.deepEqual(h.read(),before);
+});
+
+test('route changes cancel old completion timers; stale callbacks cannot finish paused construction',async()=>{
+ const s=fresh(Date.now());for(const [i,id]of ['a','b','c'].entries())s.villages[id]={...village(i*1000),id,name:id,roads:3,biome:'unknown'};
+ let tick=0;const jobs=[],cleared=[];
+ const h=await runtime(s,()=>({canceled:true}),{gameTick:()=>tick,onTimeout(fn,delay){jobs.push({fn,delay});return jobs.length;},onClear(handle){cleared.push(handle);}});
+ Object.assign(h.player,{location:s.villages.a.location,dimension:{id:s.villages.a.dimension}});
+ h.api.buildRoad(h.player,'a','b');await new Promise(resolve=>setImmediate(resolve));
+ const first=jobs[0];assert.equal(first.delay,144000);tick=24000;
+ h.api.buildRoad(h.player,'a','c');await new Promise(resolve=>setImmediate(resolve));
+ assert.ok(cleared.includes(1));assert.equal(jobs.length,2);
+ const ab=E.connectionKey('a','b'),ac=E.connectionKey('a','c');
+ assert.equal(h.read().roads[ab].paused,true);assert.equal(h.read().roads[ab].remainingTicks,120000);
+ tick=144000;first.fn();assert.equal(h.read().roads[ab].level,0);assert.equal(h.read().roads[ac].level,0);
+ tick=168000;jobs[1].fn();assert.equal(h.read().roads[ab].level,0);assert.equal(h.read().roads[ac].level,1);
+ h.api.changeTradeRoute(h.player,'a',ab);await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.read().roads[ab].finishTick,288000);assert.equal(jobs[2].delay,120000);
+ tick=288000;jobs[2].fn();assert.equal(h.read().roads[ab].level,1);
+});
+
+test('road management exposes sending/resume choices and preserves Travel for an unselected completed connection',async()=>{
+ const s=fresh(Date.now());for(const [i,id]of ['a','b','c','d'].entries())s.villages[id]={...village(i*1000),id,name:id,roads:3,biome:'unknown'};
+ const ab=E.startRoad(s,'a','b',0);E.completeRoads(s,144000);
+ const ac=E.startRoad(s,'a','c',150000);E.startRoad(s,'a','d',174000);
+ const h=await runtime(s,()=>({canceled:true}),{gameTick:()=>174000});
+ await h.api.roadMenu(h.player,'a');
+ const choices=h.forms[0].buttons.join('\n');
+ for(const caption of ['Send trade route to b','Travel to b','Resume construction to c (16.7%)','Stop sending trade route to d'])assert.ok(choices.includes(caption),caption);
+ const view=h.api.roadNetworkOverview(h.read(),h.read().villages.a);
+ assert.ok(view.summary.includes('0 sending, 1 building, 1 paused'));assert.equal(view.rows.find(r=>r.roadId===ac.id).time,'Paused');
+ assert.equal(view.rows.find(r=>r.roadId===ab.id).canTravel,true);
+});
+
+test('route handlers use latest saved state and refuse a departure outside the player settlement',async()=>{
+ const s=fresh(Date.now());for(const [i,id]of ['a','b','c'].entries())s.villages[id]={...village(i*1000),id,name:id,roads:3,biome:'unknown'};
+ const ab=E.startRoad(s,'a','b',0);E.completeRoads(s,144000);const ac=E.startRoad(s,'a','c',144000);E.completeRoads(s,288000);
+ const h=await runtime(s,()=>({canceled:true}),{gameTick:()=>300000});
+ Object.assign(h.player,{location:s.villages.a.location,dimension:{id:s.villages.a.dimension}});
+ h.api.changeTradeRoute(h.player,'a',ab.id);h.api.changeTradeRoute(h.player,'a',ac.id);await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.read().tradeRoutes.a,ac.id);assert.equal(Object.keys(h.read().tradeRoutes).length,1);
+ h.player.location={x:99999,y:64,z:0};h.api.changeTradeRoute(h.player,'a',ab.id);await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.read().tradeRoutes.a,ac.id);assert.ok(h.messages.at(-1).includes('Stand inside'));
 });

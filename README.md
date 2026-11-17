@@ -5,7 +5,16 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.101.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.104.mcaddon?raw=true)
+
+Version 0.0.104 adopts the supplied working **MineScape UI Adapter v3** and
+limits each departure settlement to **one outgoing trade route**. Switching
+routes pauses previous construction, preserving progress for resuming later.
+Other settlements can send their own routes; completed roads remain usable for
+travel. Use Road Networks management to Send, Stop sending or Resume construction.
+The upload already used numeric 0.0.103, so this build is 0.0.104. Its UI layout,
+map, artwork, research and villager surveying are preserved. Automated checks
+pass; Minecraft/Realm gameplay still needs verification.
 
 Version 0.0.101 adopts the supplied **MineScape UI Adapter v1** hooks and fixes
 its display labels to match its existing numeric 101 version. All gameplay,
@@ -455,7 +464,7 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.0.42.mcaddon`. Packaging is
+Build output is `dist/Jagsbys_Frontier_v0.0.104.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

@@ -202,7 +202,7 @@ test('every road construction stage lasts six Minecraft days at any distance and
 });
 
 test('pending trial timers migrate from their original start; completed roads are preserved',()=>{
- const s={roads:{pending:{level:1,targetLevel:2,startedTick:100,durationTicks:1200,finishTick:1300},done:{level:3,durationTicks:1200,finishTick:1300}}};
+ const s={villages:{a:village('a'),b:village('b')},roads:{pending:{from:'a',to:'b',level:1,targetLevel:2,startedTick:100,durationTicks:1200,finishTick:1300},done:{level:3,durationTicks:1200,finishTick:1300}}};
  E.completeRoads(s,1300);assert.equal(s.roads.pending.level,1);assert.equal(s.roads.pending.finishTick,144100);
  E.normalizeRoadTimers(s,5000);assert.equal(s.roads.pending.finishTick,144100);
  assert.equal(s.roads.done.level,3);assert.equal(s.roads.done.finishTick,1300);

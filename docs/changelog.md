@@ -1,5 +1,29 @@
 # 0.0.88
 
+## 0.0.104 — Working MineScape Adapter v3 and one outgoing trade route
+
+- Adopt the user's working Adapter v3 upload, whose synchronized numeric version
+  is 0.0.103. Bump both manifests, modules and dependency to 0.0.104.
+- Preserve its UI definitions exactly (JSON formatting differs), including the `$msfm_standard_long_form` fallback
+  hook. Update the UI generator so rebuilding retains the working v3 router.
+- Persist one selected outgoing trade connection per departure settlement.
+  Incoming routes and other departure settlements remain independent. Trade
+  rewards use the selected direction; existing formulas are unchanged.
+- Selecting another route or stopping trade pauses the departure's previous
+  construction/upgrade. Save remaining ticks, cancel its completion callback,
+  and resume only the remaining time when selected again. No new tick loops.
+- Retain completed roads, tiers and food travel, regardless of trade selection.
+  Road management offers Send/Stop/Resume; existing lists show paused status
+  and Overview identifies the selected outgoing destination.
+- Settle legacy offline earnings before migration. Keep every saved road and
+  partial construction stage. Prefer the oldest unfinished job per legacy
+  departure, otherwise the first completed connection by start tick/ID; pause
+  additional jobs until explicitly selected. Preserve older saved road IDs.
+- No surveying, villager ranks, research, map/artwork or MineScape pack edits.
+- Validation: 282 Node tests, 8 Python tests, pack/schema validation, exact
+  upload resource comparison, deterministic packaging and archive integrity.
+  Bedrock/Realm runtime testing is still required.
+
 ## 0.0.101 — Adopt reviewed MineScape UI Adapter v1
 
 - Reviewed the supplied `Jagsbys_Frontier_v0.0.100_MineScape_Adapter_v1.mcaddon`.

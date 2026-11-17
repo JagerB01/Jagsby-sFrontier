@@ -15,7 +15,7 @@ export function directoryRoadState(source,target,roads={}) {
  if(source.id===target.id)return {canEstablish:false,status:'Here'};
  if(source.dimension!==target.dimension)return {canEstablish:false,status:'Different\ndimension'};
  const road=roads[connectionKey(source.id,target.id)]||Object.values(roads).find(r=>(r.from===source.id&&r.to===target.id)||(r.to===source.id&&r.from===target.id));
- if(road?.targetLevel)return {canEstablish:false,status:'Building'};
+ if(road?.targetLevel)return {canEstablish:false,status:road.paused?'Paused':'Building'};
  if(road?.level)return {canEstablish:false,status:'Connected'};
  if(!source.roads)return {canEstablish:false,status:'Requires\nRoads I'};
  return {canEstablish:true,status:''};

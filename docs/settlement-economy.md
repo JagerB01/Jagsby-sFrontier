@@ -1,3 +1,7 @@
+> 0.0.104 limits outgoing trade to one selected connection per departure
+> settlement. This supersedes the older multiple-route summary and permanent
+> sender description. See the updated roads section below.
+
 > 0.0.54 reduces the Development threshold to **100 value per point** and expands
 > the loaded-villager census to an **80-block radius**. Existing earned value is
 > retained. Pre-update offline intervals settle at the former 500-value threshold
@@ -148,17 +152,34 @@ and gameplay verification remain necessary, especially with other combat packs.
 
 ## Roads, construction and food travel
 
-Each same-dimension settlement pair has one canonical key. The first settlement
-to create it remains `from`/sender permanently, including upgrades initiated at
-the opposite endpoint. Self-connections and duplicate construction are refused.
-Deleting either charter removes its orphaned roads.
+Each same-dimension settlement pair has one shared road. Its stored `from`/`to`
+endpoints preserve the original road identity, while `tradeRoutes[departureId]`
+selects at most one outgoing road per settlement. Either endpoint can select a
+completed connection; sender/receiver rewards follow that selection. Incoming
+routes are unrestricted, and each other departure has its own selection. Roads
+not selected for trade remain available for food travel. Self-connections and
+duplicate construction are refused. Deleting either charter removes its roads.
+
+Starting or selecting a different route pauses the previous construction owned
+by that departure, saving exact remaining ticks. Selecting it again resumes
+that stage without restarting. Stopping outgoing trade also pauses construction.
+A shared unfinished stage retains its construction owner; the opposite endpoint
+cannot take it over. A paused upgrade keeps its completed tier for travel.
+Road management offers Send trade route, Stop sending and Resume construction.
+
+On first upgrade, old offline earnings settle under the prior multi-route rules.
+Migration preserves all roads and progress, selecting the oldest unfinished road
+per original departure (stable road ID breaks ties), or the first completed road
+by start tick then ID if no construction exists. Other unfinished roads pause.
+The selected map, schema version, construction owner and remaining ticks persist
+in the existing world dynamic-property state.
 
 Every construction stage takes six Minecraft days (`144000` ticks), independent
 of distance and target level. Pending trial timers migrate from their original
 start; completed roads are preserved. These are
 in-game ticks, so shutdowns pause construction; empty-server time counts only if
-the world keeps ticking. One scheduled completion callback is used per pending
-road, rehydrated from persistent world ticks on world load/access. There are no
+the world keeps ticking. One scheduled completion callback is used per active construction
+road (paused roads have none), rehydrated from persistent world ticks on world load/access. There are no
 road entities, ticking areas, caravans or continuous road-simulation loop.
 A late recovered completion is accounted conservatively at observation time,
 not retroactively guessed from real-world shutdown duration.
@@ -170,7 +191,7 @@ blocked until a first road is completed. During an upgrade, the completed tier
 remains usable at its existing price. The upgraded discount applies only after
 completion and remains capped by departure-village research.
 
-For completed routes, daily real-world Development value is exactly:
+For each selected completed route, daily real-world Development value is exactly:
 
 - Sender: `10 × level × (1 + receiverDevelopment / 100)`.
 - Receiver: `2 × level × (1 + senderDevelopment / 100)`.

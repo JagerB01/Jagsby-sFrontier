@@ -1,3 +1,29 @@
+# Working Adapter v3 — Frontier 0.0.104
+
+The user designated `Jagsbys_Frontier_v0.0.100_MineScape_Adapter_v3.mcaddon`
+as the working base. Its SHA-256 is
+`05931912d2b713c7a92b75157cfbbfad721a71112a423d3dd9d7584679b048ca`.
+Both packs/modules and the BP→RP dependency already have numeric 0.0.103,
+despite the 0.0.100 filename/display label. The next build is **0.0.104**.
+
+Compared with the repository's 0.0.101 Adapter v1, its behavior scripts and
+assets are identical. The only UI change is the Charter router's native fallback:
+`vanilla@$msfm_standard_long_form`, with
+`$msfm_standard_long_form|default: "server_form.long_form"`. Its two external
+renderer globals are unchanged. This permits the working MineScape router to
+supply its standard form without hardwiring Frontier back to the shared router.
+The UI generator now reproduces that v3 definition. No MineScape files are edited.
+
+0.0.104 retains all v3 resource content, with synchronized manifest labels and
+versions. The generated Charter JSON uses expanded formatting; its parsed
+definitions are identical to the upload. Frontier behavior adds the per-departure outgoing trade selection and
+pause/resume feature documented in [the economy guide](settlement-economy.md).
+Surveying and trade-rank bridge code are unchanged. Static tests validate the
+hooks and routing structure; the user's working-v3 report is the runtime evidence
+for the base. This build's Realm gameplay still needs in-game verification.
+
+---
+
 # MineScape UI Adapter v1 review — Frontier 0.0.101
 
 The user supplied `Jagsbys_Frontier_v0.0.100_MineScape_Adapter_v1.mcaddon` for

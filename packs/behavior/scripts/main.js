@@ -16,7 +16,7 @@ const KEY = "jagsby_frontier:state_v1";
 const BIOME_RADIUS = 256;
 import {DEFINITIONS,ZONES,zoneAt,maxLevel,nextCost,acceptedMaterials,lockReason,contribution,applyContribution,settlementLimit,foundingReason,storageIncrement,localLevel,colonizationBonus} from "./global-research.js";
 import {ECONOMY_CONFIG} from "./economy-config.js";
-import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,normalizeRoadTimers,travelQuote,corndogCost,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower,developmentHourlyRate} from "./settlement-economy.js";
+import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,normalizeRoadTimers,selectTradeRoute,selectedTradeRoutes,roadTicksRemaining,travelQuote,corndogCost,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower,developmentHourlyRate} from "./settlement-economy.js";
 import {refreshProtection,protectDamage,within,healVillager} from "./settlement-effects.js";
 import {localContribution,applyLocalContribution,localResearchText,researchComparison,researchPercent} from "./local-research.js";
 import {productionView} from "./production-display.js";
@@ -25,16 +25,16 @@ const roadTimers=new Map();
 const pendingSurveys=new Map();
 function gameTick(){return world.getAbsoluteTime?.()??0;}
 function accounted(){
- const s=state();normalizeRoadTimers(s,gameTick());const result=accountEconomy(s);
+ const s=state();const result=accountEconomy(s);
  if(!result.complete){save(s);throw Error('Offline accounting is catching up; reopen the charter to continue.');}
- completeRoads(s,gameTick());save(s);return s;
+ normalizeRoadTimers(s,gameTick());completeRoads(s,gameTick());save(s);return s;
 }
 function scheduleRoads(s){
  for(const [id,job]of roadTimers){
   const road=s.roads?.[id];
-  if(!road?.targetLevel||road.finishTick!==job.finishTick){system.clearRun(job.handle);roadTimers.delete(id);}
+  if(s.tradeRouteVersion!==1||!road?.targetLevel||road.paused||road.finishTick!==job.finishTick){system.clearRun(job.handle);roadTimers.delete(id);}
  }
- for(const road of Object.values(s.roads||{}))if(road.targetLevel&&!roadTimers.has(road.id)){
+ for(const road of Object.values(s.roads||{}))if(s.tradeRouteVersion===1&&road.targetLevel&&!road.paused&&Number.isFinite(road.finishTick)&&!roadTimers.has(road.id)){
   const finishTick=road.finishTick,delay=Math.max(1,finishTick-gameTick());
   const handle=system.runTimeout(()=>{
    if(roadTimers.get(road.id)?.finishTick!==finishTick)return;
@@ -462,17 +462,19 @@ function roadNetworkOverview(s,v){
  const connections=Object.entries(s.roads||{}).filter(([,r])=>[r.from,r.to].includes(v.id))
   .map(([roadId,road])=>({roadId,road,target:s.villages[road.from===v.id?road.to:road.from]})).filter(entry=>entry.target)
   .sort((a,b)=>a.target.id.localeCompare(b.target.id));
- const active=connections.filter(({road})=>road.level&&!road.targetLevel).length;
- const building=connections.filter(({road})=>road.targetLevel).length;
+ const selected=selectedTradeRoutes(s);
+ const active=connections.filter(({roadId,road})=>roadId===selected[v.id]&&road.level&&!road.targetLevel).length;
+ const building=connections.filter(({road})=>road.targetLevel&&!road.paused).length;
+ const paused=connections.filter(({road})=>road.targetLevel&&road.paused).length;
  const rows=connections.map(({roadId,road,target})=>{
   const tier=['','trail','road','highway'][road.level];
-  const ticksLeft=road.targetLevel?Math.max(0,(road.finishTick??road.startedTick+road.durationTicks)-gameTick()):0;
+  const ticksLeft=roadTicksRemaining(road,gameTick());
   const remainingDays=Math.ceil(ticksLeft/24000*100)/100;
   const nextTier=['none','trail','road','highway'][road.targetLevel||0];
-  const status=road.targetLevel?`${road.level?'Upgrading':'Building'} ${['','Trail','Road','Highway'][road.targetLevel]}`:['Unbuilt','Trail','Road','Highway'][road.level];
+  const status=road.targetLevel?`${road.paused?'Paused: ':''}${road.level?'Upgrading':'Building'} ${['','Trail','Road','Highway'][road.targetLevel]}`:['Unbuilt','Trail','Road','Highway'][road.level];
   const quote=travelQuote(road,v);
   const cost=quote.canTravel?corndogCost(quote.foodPoints):'Unavailable';
-  const time=road.targetLevel?`> ${Number(remainingDays.toFixed(2))} days`:'';
+  const time=road.targetLevel?(road.paused?'Paused':`> ${Number(remainingDays.toFixed(2))} days`):'';
   const name=target.name,owner=ownerName(target),distance=`${Math.round(road.distance)} blocks`;
   const text=`§6${name}§r\n${owner} · ${distance}\nTravel cost: ${cost}\n${status}${time?'\n'+time:''}`;
   return {roadId,canTravel:quote.canTravel,name,owner,distance,cost,status,remainingDays,time,
@@ -481,7 +483,7 @@ function roadNetworkOverview(s,v){
    nextTexture:road.targetLevel?`textures/ui/frontier/road_icons/${nextTier}`:undefined,
    text:text+(road.level?'':'\nNo road built yet')};
  });
- return {rows,summary:`Road Networks | ${active} active, ${building} building`,details:rows.map(row=>row.text).join('\n')||'No connections yet. Establish a road from My Settlements or All Settlements after researching Road Networks I.'};
+ return {rows,summary:`Road Networks | ${active} sending, ${building} building, ${paused} paused`,details:rows.map(row=>row.text).join('\n')||'No connections yet. Establish a road from My Settlements or All Settlements after researching Road Networks I.'};
 }
 // An older map session may have saved disabled movement permissions. Restore
 // only recorded categories once; no map navigation, terrain reads or HUD remains.
@@ -504,12 +506,18 @@ async function roadMenu(player,vid){
   if(v.roads<3)add('Contribute to Road Networks research',()=>open(player,vid,'Research','local'));
   for(const target of Object.values(s.villages).sort((a,b)=>a.id.localeCompare(b.id))){
    if(target.id===vid||target.dimension!==v.dimension)continue;
-   const road=Object.values(s.roads).find(r=>(r.from===vid&&r.to===target.id)||(r.to===vid&&r.from===target.id));
+   const entry=Object.entries(s.roads).find(([,r])=>(r.from===vid&&r.to===target.id)||(r.to===vid&&r.from===target.id));
+   const roadId=entry?.[0],road=entry?.[1];
    if(!road){if(v.roads)add(`Establish Trail to ${target.name}`,()=>buildRoad(player,vid,target.id));}
    else{
     const name=['Unbuilt','Trail','Road','Highway'][road.level];
-    if(road.targetLevel){const done=Math.max(0,Math.min(100,100*(gameTick()-road.startedTick)/road.durationTicks));add(`${target.name}: building level ${road.targetLevel} (${done.toFixed(1)}%)`,()=>roadMenu(player,vid));}
-    else if(road.level<3&&v.roads)add(`Upgrade ${name} to ${target.name}`,()=>buildRoad(player,vid,target.id));
+    const selected=selectedTradeRoutes(s)[vid]===roadId;
+    if(v.roads)add(`${selected?'Stop sending trade route to':'Send trade route to'} ${target.name}`,()=>changeTradeRoute(player,vid,selected?null:roadId));
+    if(road.targetLevel){
+     const done=Math.max(0,Math.min(100,100*(1-roadTicksRemaining(road,gameTick())/road.durationTicks)));
+     if(road.paused&&road.constructionFrom===vid)add(`Resume construction to ${target.name} (${done.toFixed(1)}%)`,()=>buildRoad(player,vid,target.id));
+     else add(`${target.name}: ${road.paused?'paused':'building'} level ${road.targetLevel} (${done.toFixed(1)}%)`,()=>roadMenu(player,vid));
+    }else if(road.level<3&&v.roads)add(`Upgrade ${name} to ${target.name}`,()=>buildRoad(player,vid,target.id));
     const quote=travelQuote(road,v);if(quote.canTravel)add(`Travel to ${target.name}: ${corndogCost(quote.foodPoints)}`,()=>travelRoad(player,vid,road.id));
    }
   }
@@ -520,6 +528,16 @@ async function roadMenu(player,vid){
   if(!response.canceled)options[response.selection]?.run();
   else open(player,vid,'Realm','global',0,'roads');
  }catch(e){player.sendMessage(String(e));}
+}
+function changeTradeRoute(player,vid,roadId){
+ try{
+  const s=accounted(),v=s.villages[vid];
+  if(!v||!within(player,v))throw Error('Stand inside the source settlement to change its trade route.');
+  const road=selectTradeRoute(s,vid,roadId,gameTick());save(s);
+  const target=road?s.villages[road.from===vid?road.to:road.from]:null;
+  player.sendMessage(target?`Trade route switched to ${target.name}. Previous construction is paused.`:'Outgoing trade route stopped; construction progress is saved.');
+ }catch(e){player.sendMessage(String(e.message||e));}
+ roadMenu(player,vid);
 }
 function establishDirectoryRoad(player,vid,targetId,page,scope){
  try{
@@ -536,7 +554,7 @@ function establishDirectoryRoad(player,vid,targetId,page,scope){
 function buildRoad(player,vid,target){
  try{const s=accounted(),v=s.villages[vid];if(!v||!within(player,v))throw Error('Stand inside the source settlement to manage roads.');
   const road=startRoad(s,vid,target,gameTick());save(s);
-  player.sendMessage('Construction started: 6 Minecraft days until completion.');
+  player.sendMessage(`Construction active: ${Number((roadTicksRemaining(road,gameTick())/24000).toFixed(2))} Minecraft days remaining. Previous construction is paused.`);
  }catch(e){player.sendMessage(String(e));}
  roadMenu(player,vid);
 }
