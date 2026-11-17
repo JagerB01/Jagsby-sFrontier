@@ -542,7 +542,7 @@ test('Controller can enter and navigate Prospecting and Realm rows even without 
   assert.equal(row.$pressed_button_name,undefined);assert.equal(row.collection_name,undefined);
   assert.equal(row.focus_identifier,`jf_${section}_${scope}_row_${slot}`);
   assert.ok(!identifiers.has(row.focus_identifier));identifiers.add(row.focus_identifier);
-  assert.equal(row.focus_change_left,'jf_tab_focus_'+section);
+  assert.equal(row.focus_change_left,section==='realm'&&scope==='roads'?`jf_realm_roads_tier_${slot}`:'jf_tab_focus_'+section);
   if(slot===0)assert.equal(row.focus_change_up,`jf_${section}_focus_${scope}`);
   else assert.equal(row.focus_change_up,undefined);
   assert.equal(row.focus_change_down,undefined,'Let native navigation reach the next visible row or footer');
@@ -701,10 +701,11 @@ test('Controller has explicit routes from Realm reading rows into real native ac
   const base=layout.realmRows.base+slot*layout.realmRows.stride+scopeIndex*8;
   if(scope==='roads'){
    const tier=nativeRecord(fields.tier_action),travel=nativeRecord(fields.travel);
-   assert.equal(row.focus_change_right,tier.focus_identifier);
+   assert.equal(row.focus_change_right,travel.focus_identifier);
+   assert.equal(row.focus_change_left,tier.focus_identifier);
    assert.equal(tier.focus_change_right,travel.focus_identifier);
    assert.equal(travel.focus_change_left,tier.focus_identifier);
-   assert.equal(tier.focus_change_left,row.focus_identifier);
+   assert.equal(tier.focus_change_left,'jf_tab_focus_realm');
    assert.equal(travel.focus_change_up,row.focus_identifier);
    assert.equal(tier.collection_index,base+6);assert.equal(travel.collection_index,base+7);
    const action=template(ui,'jf_realm_travel');

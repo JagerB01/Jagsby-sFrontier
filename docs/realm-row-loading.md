@@ -64,3 +64,12 @@ field bounds, focus links resolving to the proper records, and preserved native
 collection indices. Test two or more settlements, empty lists, building and
 completed roads, scrolling and controller activation in-game before claiming
 that the rendering and input defects are resolved on Bedrock.
+
+## Direct Travel navigation (0.0.95)
+
+The current controller path is row → Right → Travel → A. The upgrade icon is
+secondary: Left from either the reading row or Travel reaches it, even on a
+building road whose Travel button is disabled. Left from the upgrade icon
+returns to the Realm sidebar, and Up from an action returns to the reading row.
+This supersedes the 0.0.94 two-step Right path above. Layout and native action
+indices are unchanged. In-game controller verification remains required.

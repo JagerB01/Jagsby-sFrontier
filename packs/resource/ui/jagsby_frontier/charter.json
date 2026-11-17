@@ -112724,7 +112724,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 281,
                 "focus_identifier": "jf_realm_roads_tier_0",
-                "focus_change_left": "jf_realm_roads_row_0",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_0",
                 "focus_change_up": "jf_realm_roads_row_0"
               }
@@ -112850,14 +112850,14 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_0",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_0",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
     "focus_change_up": "jf_realm_focus_roads",
-    "focus_change_right": "jf_realm_roads_tier_0"
+    "focus_change_right": "jf_realm_roads_travel_0"
   },
   "jf_realm_roads_row1": {
     "size": [
@@ -113156,7 +113156,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 305,
                 "focus_identifier": "jf_realm_roads_tier_1",
-                "focus_change_left": "jf_realm_roads_row_1",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_1",
                 "focus_change_up": "jf_realm_roads_row_1"
               }
@@ -113282,13 +113282,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_1",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_1",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_1"
+    "focus_change_right": "jf_realm_roads_travel_1"
   },
   "jf_realm_roads_row2": {
     "size": [
@@ -113587,7 +113587,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 329,
                 "focus_identifier": "jf_realm_roads_tier_2",
-                "focus_change_left": "jf_realm_roads_row_2",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_2",
                 "focus_change_up": "jf_realm_roads_row_2"
               }
@@ -113713,13 +113713,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_2",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_2",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_2"
+    "focus_change_right": "jf_realm_roads_travel_2"
   },
   "jf_realm_roads_row3": {
     "size": [
@@ -114018,7 +114018,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 353,
                 "focus_identifier": "jf_realm_roads_tier_3",
-                "focus_change_left": "jf_realm_roads_row_3",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_3",
                 "focus_change_up": "jf_realm_roads_row_3"
               }
@@ -114144,13 +114144,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_3",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_3",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_3"
+    "focus_change_right": "jf_realm_roads_travel_3"
   },
   "jf_realm_roads_row4": {
     "size": [
@@ -114449,7 +114449,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 377,
                 "focus_identifier": "jf_realm_roads_tier_4",
-                "focus_change_left": "jf_realm_roads_row_4",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_4",
                 "focus_change_up": "jf_realm_roads_row_4"
               }
@@ -114575,13 +114575,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_4",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_4",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_4"
+    "focus_change_right": "jf_realm_roads_travel_4"
   },
   "jf_realm_roads_row5": {
     "size": [
@@ -114880,7 +114880,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 401,
                 "focus_identifier": "jf_realm_roads_tier_5",
-                "focus_change_left": "jf_realm_roads_row_5",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_5",
                 "focus_change_up": "jf_realm_roads_row_5"
               }
@@ -115006,13 +115006,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_5",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_5",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_5"
+    "focus_change_right": "jf_realm_roads_travel_5"
   },
   "jf_realm_roads_row6": {
     "size": [
@@ -115311,7 +115311,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 425,
                 "focus_identifier": "jf_realm_roads_tier_6",
-                "focus_change_left": "jf_realm_roads_row_6",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_6",
                 "focus_change_up": "jf_realm_roads_row_6"
               }
@@ -115437,13 +115437,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_6",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_6",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_6"
+    "focus_change_right": "jf_realm_roads_travel_6"
   },
   "jf_realm_roads_row7": {
     "size": [
@@ -115742,7 +115742,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 449,
                 "focus_identifier": "jf_realm_roads_tier_7",
-                "focus_change_left": "jf_realm_roads_row_7",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_7",
                 "focus_change_up": "jf_realm_roads_row_7"
               }
@@ -115868,13 +115868,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_7",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_7",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_7"
+    "focus_change_right": "jf_realm_roads_travel_7"
   },
   "jf_realm_roads_row8": {
     "size": [
@@ -116173,7 +116173,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 473,
                 "focus_identifier": "jf_realm_roads_tier_8",
-                "focus_change_left": "jf_realm_roads_row_8",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_8",
                 "focus_change_up": "jf_realm_roads_row_8"
               }
@@ -116299,13 +116299,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_8",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_8",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_8"
+    "focus_change_right": "jf_realm_roads_travel_8"
   },
   "jf_realm_roads_row9": {
     "size": [
@@ -116604,7 +116604,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 497,
                 "focus_identifier": "jf_realm_roads_tier_9",
-                "focus_change_left": "jf_realm_roads_row_9",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_9",
                 "focus_change_up": "jf_realm_roads_row_9"
               }
@@ -116730,13 +116730,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_9",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_9",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_9"
+    "focus_change_right": "jf_realm_roads_travel_9"
   },
   "jf_realm_roads_row10": {
     "size": [
@@ -117035,7 +117035,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 521,
                 "focus_identifier": "jf_realm_roads_tier_10",
-                "focus_change_left": "jf_realm_roads_row_10",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_10",
                 "focus_change_up": "jf_realm_roads_row_10"
               }
@@ -117161,13 +117161,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_10",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_10",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_10"
+    "focus_change_right": "jf_realm_roads_travel_10"
   },
   "jf_realm_roads_row11": {
     "size": [
@@ -117466,7 +117466,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 545,
                 "focus_identifier": "jf_realm_roads_tier_11",
-                "focus_change_left": "jf_realm_roads_row_11",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_11",
                 "focus_change_up": "jf_realm_roads_row_11"
               }
@@ -117592,13 +117592,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_11",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_11",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_11"
+    "focus_change_right": "jf_realm_roads_travel_11"
   },
   "jf_realm_roads_row12": {
     "size": [
@@ -117897,7 +117897,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 569,
                 "focus_identifier": "jf_realm_roads_tier_12",
-                "focus_change_left": "jf_realm_roads_row_12",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_12",
                 "focus_change_up": "jf_realm_roads_row_12"
               }
@@ -118023,13 +118023,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_12",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_12",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_12"
+    "focus_change_right": "jf_realm_roads_travel_12"
   },
   "jf_realm_roads_row13": {
     "size": [
@@ -118328,7 +118328,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 593,
                 "focus_identifier": "jf_realm_roads_tier_13",
-                "focus_change_left": "jf_realm_roads_row_13",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_13",
                 "focus_change_up": "jf_realm_roads_row_13"
               }
@@ -118454,13 +118454,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_13",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_13",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_13"
+    "focus_change_right": "jf_realm_roads_travel_13"
   },
   "jf_realm_roads_row14": {
     "size": [
@@ -118759,7 +118759,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 617,
                 "focus_identifier": "jf_realm_roads_tier_14",
-                "focus_change_left": "jf_realm_roads_row_14",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_14",
                 "focus_change_up": "jf_realm_roads_row_14"
               }
@@ -118885,13 +118885,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_14",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_14",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_14"
+    "focus_change_right": "jf_realm_roads_travel_14"
   },
   "jf_realm_roads_row15": {
     "size": [
@@ -119190,7 +119190,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 641,
                 "focus_identifier": "jf_realm_roads_tier_15",
-                "focus_change_left": "jf_realm_roads_row_15",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_15",
                 "focus_change_up": "jf_realm_roads_row_15"
               }
@@ -119316,13 +119316,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_15",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_15",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_15"
+    "focus_change_right": "jf_realm_roads_travel_15"
   },
   "jf_realm_roads_row16": {
     "size": [
@@ -119621,7 +119621,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 665,
                 "focus_identifier": "jf_realm_roads_tier_16",
-                "focus_change_left": "jf_realm_roads_row_16",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_16",
                 "focus_change_up": "jf_realm_roads_row_16"
               }
@@ -119747,13 +119747,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_16",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_16",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_16"
+    "focus_change_right": "jf_realm_roads_travel_16"
   },
   "jf_realm_roads_row17": {
     "size": [
@@ -120052,7 +120052,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 689,
                 "focus_identifier": "jf_realm_roads_tier_17",
-                "focus_change_left": "jf_realm_roads_row_17",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_17",
                 "focus_change_up": "jf_realm_roads_row_17"
               }
@@ -120178,13 +120178,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_17",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_17",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_17"
+    "focus_change_right": "jf_realm_roads_travel_17"
   },
   "jf_realm_roads_row18": {
     "size": [
@@ -120483,7 +120483,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 713,
                 "focus_identifier": "jf_realm_roads_tier_18",
-                "focus_change_left": "jf_realm_roads_row_18",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_18",
                 "focus_change_up": "jf_realm_roads_row_18"
               }
@@ -120609,13 +120609,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_18",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_18",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_18"
+    "focus_change_right": "jf_realm_roads_travel_18"
   },
   "jf_realm_roads_row19": {
     "size": [
@@ -120914,7 +120914,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 737,
                 "focus_identifier": "jf_realm_roads_tier_19",
-                "focus_change_left": "jf_realm_roads_row_19",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_19",
                 "focus_change_up": "jf_realm_roads_row_19"
               }
@@ -121040,13 +121040,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_19",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_19",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_19"
+    "focus_change_right": "jf_realm_roads_travel_19"
   },
   "jf_realm_roads_row20": {
     "size": [
@@ -121345,7 +121345,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 761,
                 "focus_identifier": "jf_realm_roads_tier_20",
-                "focus_change_left": "jf_realm_roads_row_20",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_20",
                 "focus_change_up": "jf_realm_roads_row_20"
               }
@@ -121471,13 +121471,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_20",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_20",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_20"
+    "focus_change_right": "jf_realm_roads_travel_20"
   },
   "jf_realm_roads_row21": {
     "size": [
@@ -121776,7 +121776,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 785,
                 "focus_identifier": "jf_realm_roads_tier_21",
-                "focus_change_left": "jf_realm_roads_row_21",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_21",
                 "focus_change_up": "jf_realm_roads_row_21"
               }
@@ -121902,13 +121902,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_21",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_21",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_21"
+    "focus_change_right": "jf_realm_roads_travel_21"
   },
   "jf_realm_roads_row22": {
     "size": [
@@ -122207,7 +122207,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 809,
                 "focus_identifier": "jf_realm_roads_tier_22",
-                "focus_change_left": "jf_realm_roads_row_22",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_22",
                 "focus_change_up": "jf_realm_roads_row_22"
               }
@@ -122333,13 +122333,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_22",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_22",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_22"
+    "focus_change_right": "jf_realm_roads_travel_22"
   },
   "jf_realm_roads_row23": {
     "size": [
@@ -122638,7 +122638,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 833,
                 "focus_identifier": "jf_realm_roads_tier_23",
-                "focus_change_left": "jf_realm_roads_row_23",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_23",
                 "focus_change_up": "jf_realm_roads_row_23"
               }
@@ -122764,13 +122764,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_23",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_23",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_23"
+    "focus_change_right": "jf_realm_roads_travel_23"
   },
   "jf_realm_roads_row24": {
     "size": [
@@ -123069,7 +123069,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 857,
                 "focus_identifier": "jf_realm_roads_tier_24",
-                "focus_change_left": "jf_realm_roads_row_24",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_24",
                 "focus_change_up": "jf_realm_roads_row_24"
               }
@@ -123195,13 +123195,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_24",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_24",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_24"
+    "focus_change_right": "jf_realm_roads_travel_24"
   },
   "jf_realm_roads_row25": {
     "size": [
@@ -123500,7 +123500,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 881,
                 "focus_identifier": "jf_realm_roads_tier_25",
-                "focus_change_left": "jf_realm_roads_row_25",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_25",
                 "focus_change_up": "jf_realm_roads_row_25"
               }
@@ -123626,13 +123626,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_25",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_25",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_25"
+    "focus_change_right": "jf_realm_roads_travel_25"
   },
   "jf_realm_roads_row26": {
     "size": [
@@ -123931,7 +123931,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 905,
                 "focus_identifier": "jf_realm_roads_tier_26",
-                "focus_change_left": "jf_realm_roads_row_26",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_26",
                 "focus_change_up": "jf_realm_roads_row_26"
               }
@@ -124057,13 +124057,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_26",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_26",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_26"
+    "focus_change_right": "jf_realm_roads_travel_26"
   },
   "jf_realm_roads_row27": {
     "size": [
@@ -124362,7 +124362,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 929,
                 "focus_identifier": "jf_realm_roads_tier_27",
-                "focus_change_left": "jf_realm_roads_row_27",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_27",
                 "focus_change_up": "jf_realm_roads_row_27"
               }
@@ -124488,13 +124488,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_27",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_27",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_27"
+    "focus_change_right": "jf_realm_roads_travel_27"
   },
   "jf_realm_roads_row28": {
     "size": [
@@ -124793,7 +124793,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 953,
                 "focus_identifier": "jf_realm_roads_tier_28",
-                "focus_change_left": "jf_realm_roads_row_28",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_28",
                 "focus_change_up": "jf_realm_roads_row_28"
               }
@@ -124919,13 +124919,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_28",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_28",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_28"
+    "focus_change_right": "jf_realm_roads_travel_28"
   },
   "jf_realm_roads_row29": {
     "size": [
@@ -125224,7 +125224,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 977,
                 "focus_identifier": "jf_realm_roads_tier_29",
-                "focus_change_left": "jf_realm_roads_row_29",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_29",
                 "focus_change_up": "jf_realm_roads_row_29"
               }
@@ -125350,13 +125350,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_29",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_29",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_29"
+    "focus_change_right": "jf_realm_roads_travel_29"
   },
   "jf_realm_roads_row30": {
     "size": [
@@ -125655,7 +125655,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1001,
                 "focus_identifier": "jf_realm_roads_tier_30",
-                "focus_change_left": "jf_realm_roads_row_30",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_30",
                 "focus_change_up": "jf_realm_roads_row_30"
               }
@@ -125781,13 +125781,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_30",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_30",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_30"
+    "focus_change_right": "jf_realm_roads_travel_30"
   },
   "jf_realm_roads_row31": {
     "size": [
@@ -126086,7 +126086,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1025,
                 "focus_identifier": "jf_realm_roads_tier_31",
-                "focus_change_left": "jf_realm_roads_row_31",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_31",
                 "focus_change_up": "jf_realm_roads_row_31"
               }
@@ -126212,13 +126212,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_31",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_31",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_31"
+    "focus_change_right": "jf_realm_roads_travel_31"
   },
   "jf_realm_roads_row32": {
     "size": [
@@ -126517,7 +126517,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1049,
                 "focus_identifier": "jf_realm_roads_tier_32",
-                "focus_change_left": "jf_realm_roads_row_32",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_32",
                 "focus_change_up": "jf_realm_roads_row_32"
               }
@@ -126643,13 +126643,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_32",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_32",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_32"
+    "focus_change_right": "jf_realm_roads_travel_32"
   },
   "jf_realm_roads_row33": {
     "size": [
@@ -126948,7 +126948,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1073,
                 "focus_identifier": "jf_realm_roads_tier_33",
-                "focus_change_left": "jf_realm_roads_row_33",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_33",
                 "focus_change_up": "jf_realm_roads_row_33"
               }
@@ -127074,13 +127074,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_33",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_33",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_33"
+    "focus_change_right": "jf_realm_roads_travel_33"
   },
   "jf_realm_roads_row34": {
     "size": [
@@ -127379,7 +127379,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1097,
                 "focus_identifier": "jf_realm_roads_tier_34",
-                "focus_change_left": "jf_realm_roads_row_34",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_34",
                 "focus_change_up": "jf_realm_roads_row_34"
               }
@@ -127505,13 +127505,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_34",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_34",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_34"
+    "focus_change_right": "jf_realm_roads_travel_34"
   },
   "jf_realm_roads_row35": {
     "size": [
@@ -127810,7 +127810,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1121,
                 "focus_identifier": "jf_realm_roads_tier_35",
-                "focus_change_left": "jf_realm_roads_row_35",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_35",
                 "focus_change_up": "jf_realm_roads_row_35"
               }
@@ -127936,13 +127936,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_35",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_35",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_35"
+    "focus_change_right": "jf_realm_roads_travel_35"
   },
   "jf_realm_roads_row36": {
     "size": [
@@ -128241,7 +128241,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1145,
                 "focus_identifier": "jf_realm_roads_tier_36",
-                "focus_change_left": "jf_realm_roads_row_36",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_36",
                 "focus_change_up": "jf_realm_roads_row_36"
               }
@@ -128367,13 +128367,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_36",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_36",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_36"
+    "focus_change_right": "jf_realm_roads_travel_36"
   },
   "jf_realm_roads_row37": {
     "size": [
@@ -128672,7 +128672,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1169,
                 "focus_identifier": "jf_realm_roads_tier_37",
-                "focus_change_left": "jf_realm_roads_row_37",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_37",
                 "focus_change_up": "jf_realm_roads_row_37"
               }
@@ -128798,13 +128798,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_37",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_37",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_37"
+    "focus_change_right": "jf_realm_roads_travel_37"
   },
   "jf_realm_roads_row38": {
     "size": [
@@ -129103,7 +129103,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1193,
                 "focus_identifier": "jf_realm_roads_tier_38",
-                "focus_change_left": "jf_realm_roads_row_38",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_38",
                 "focus_change_up": "jf_realm_roads_row_38"
               }
@@ -129229,13 +129229,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_38",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_38",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_38"
+    "focus_change_right": "jf_realm_roads_travel_38"
   },
   "jf_realm_roads_row39": {
     "size": [
@@ -129534,7 +129534,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1217,
                 "focus_identifier": "jf_realm_roads_tier_39",
-                "focus_change_left": "jf_realm_roads_row_39",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_39",
                 "focus_change_up": "jf_realm_roads_row_39"
               }
@@ -129660,13 +129660,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_39",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_39",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_39"
+    "focus_change_right": "jf_realm_roads_travel_39"
   },
   "jf_realm_roads_row40": {
     "size": [
@@ -129965,7 +129965,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1241,
                 "focus_identifier": "jf_realm_roads_tier_40",
-                "focus_change_left": "jf_realm_roads_row_40",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_40",
                 "focus_change_up": "jf_realm_roads_row_40"
               }
@@ -130091,13 +130091,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_40",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_40",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_40"
+    "focus_change_right": "jf_realm_roads_travel_40"
   },
   "jf_realm_roads_row41": {
     "size": [
@@ -130396,7 +130396,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1265,
                 "focus_identifier": "jf_realm_roads_tier_41",
-                "focus_change_left": "jf_realm_roads_row_41",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_41",
                 "focus_change_up": "jf_realm_roads_row_41"
               }
@@ -130522,13 +130522,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_41",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_41",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_41"
+    "focus_change_right": "jf_realm_roads_travel_41"
   },
   "jf_realm_roads_row42": {
     "size": [
@@ -130827,7 +130827,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1289,
                 "focus_identifier": "jf_realm_roads_tier_42",
-                "focus_change_left": "jf_realm_roads_row_42",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_42",
                 "focus_change_up": "jf_realm_roads_row_42"
               }
@@ -130953,13 +130953,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_42",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_42",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_42"
+    "focus_change_right": "jf_realm_roads_travel_42"
   },
   "jf_realm_roads_row43": {
     "size": [
@@ -131258,7 +131258,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1313,
                 "focus_identifier": "jf_realm_roads_tier_43",
-                "focus_change_left": "jf_realm_roads_row_43",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_43",
                 "focus_change_up": "jf_realm_roads_row_43"
               }
@@ -131384,13 +131384,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_43",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_43",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_43"
+    "focus_change_right": "jf_realm_roads_travel_43"
   },
   "jf_realm_roads_row44": {
     "size": [
@@ -131689,7 +131689,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1337,
                 "focus_identifier": "jf_realm_roads_tier_44",
-                "focus_change_left": "jf_realm_roads_row_44",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_44",
                 "focus_change_up": "jf_realm_roads_row_44"
               }
@@ -131815,13 +131815,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_44",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_44",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_44"
+    "focus_change_right": "jf_realm_roads_travel_44"
   },
   "jf_realm_roads_row45": {
     "size": [
@@ -132120,7 +132120,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1361,
                 "focus_identifier": "jf_realm_roads_tier_45",
-                "focus_change_left": "jf_realm_roads_row_45",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_45",
                 "focus_change_up": "jf_realm_roads_row_45"
               }
@@ -132246,13 +132246,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_45",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_45",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_45"
+    "focus_change_right": "jf_realm_roads_travel_45"
   },
   "jf_realm_roads_row46": {
     "size": [
@@ -132551,7 +132551,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1385,
                 "focus_identifier": "jf_realm_roads_tier_46",
-                "focus_change_left": "jf_realm_roads_row_46",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_46",
                 "focus_change_up": "jf_realm_roads_row_46"
               }
@@ -132677,13 +132677,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_46",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_46",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_46"
+    "focus_change_right": "jf_realm_roads_travel_46"
   },
   "jf_realm_roads_row47": {
     "size": [
@@ -132982,7 +132982,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1409,
                 "focus_identifier": "jf_realm_roads_tier_47",
-                "focus_change_left": "jf_realm_roads_row_47",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_47",
                 "focus_change_up": "jf_realm_roads_row_47"
               }
@@ -133108,13 +133108,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_47",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_47",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_47"
+    "focus_change_right": "jf_realm_roads_travel_47"
   },
   "jf_realm_roads_row48": {
     "size": [
@@ -133413,7 +133413,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1433,
                 "focus_identifier": "jf_realm_roads_tier_48",
-                "focus_change_left": "jf_realm_roads_row_48",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_48",
                 "focus_change_up": "jf_realm_roads_row_48"
               }
@@ -133539,13 +133539,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_48",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_48",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_48"
+    "focus_change_right": "jf_realm_roads_travel_48"
   },
   "jf_realm_roads_row49": {
     "size": [
@@ -133844,7 +133844,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1457,
                 "focus_identifier": "jf_realm_roads_tier_49",
-                "focus_change_left": "jf_realm_roads_row_49",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_49",
                 "focus_change_up": "jf_realm_roads_row_49"
               }
@@ -133970,13 +133970,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_49",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_49",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_49"
+    "focus_change_right": "jf_realm_roads_travel_49"
   },
   "jf_realm_roads_row50": {
     "size": [
@@ -134275,7 +134275,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1481,
                 "focus_identifier": "jf_realm_roads_tier_50",
-                "focus_change_left": "jf_realm_roads_row_50",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_50",
                 "focus_change_up": "jf_realm_roads_row_50"
               }
@@ -134401,13 +134401,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_50",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_50",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_50"
+    "focus_change_right": "jf_realm_roads_travel_50"
   },
   "jf_realm_roads_row51": {
     "size": [
@@ -134706,7 +134706,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1505,
                 "focus_identifier": "jf_realm_roads_tier_51",
-                "focus_change_left": "jf_realm_roads_row_51",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_51",
                 "focus_change_up": "jf_realm_roads_row_51"
               }
@@ -134832,13 +134832,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_51",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_51",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_51"
+    "focus_change_right": "jf_realm_roads_travel_51"
   },
   "jf_realm_roads_row52": {
     "size": [
@@ -135137,7 +135137,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1529,
                 "focus_identifier": "jf_realm_roads_tier_52",
-                "focus_change_left": "jf_realm_roads_row_52",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_52",
                 "focus_change_up": "jf_realm_roads_row_52"
               }
@@ -135263,13 +135263,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_52",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_52",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_52"
+    "focus_change_right": "jf_realm_roads_travel_52"
   },
   "jf_realm_roads_row53": {
     "size": [
@@ -135568,7 +135568,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1553,
                 "focus_identifier": "jf_realm_roads_tier_53",
-                "focus_change_left": "jf_realm_roads_row_53",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_53",
                 "focus_change_up": "jf_realm_roads_row_53"
               }
@@ -135694,13 +135694,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_53",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_53",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_53"
+    "focus_change_right": "jf_realm_roads_travel_53"
   },
   "jf_realm_roads_row54": {
     "size": [
@@ -135999,7 +135999,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1577,
                 "focus_identifier": "jf_realm_roads_tier_54",
-                "focus_change_left": "jf_realm_roads_row_54",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_54",
                 "focus_change_up": "jf_realm_roads_row_54"
               }
@@ -136125,13 +136125,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_54",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_54",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_54"
+    "focus_change_right": "jf_realm_roads_travel_54"
   },
   "jf_realm_roads_row55": {
     "size": [
@@ -136430,7 +136430,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1601,
                 "focus_identifier": "jf_realm_roads_tier_55",
-                "focus_change_left": "jf_realm_roads_row_55",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_55",
                 "focus_change_up": "jf_realm_roads_row_55"
               }
@@ -136556,13 +136556,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_55",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_55",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_55"
+    "focus_change_right": "jf_realm_roads_travel_55"
   },
   "jf_realm_roads_row56": {
     "size": [
@@ -136861,7 +136861,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1625,
                 "focus_identifier": "jf_realm_roads_tier_56",
-                "focus_change_left": "jf_realm_roads_row_56",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_56",
                 "focus_change_up": "jf_realm_roads_row_56"
               }
@@ -136987,13 +136987,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_56",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_56",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_56"
+    "focus_change_right": "jf_realm_roads_travel_56"
   },
   "jf_realm_roads_row57": {
     "size": [
@@ -137292,7 +137292,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1649,
                 "focus_identifier": "jf_realm_roads_tier_57",
-                "focus_change_left": "jf_realm_roads_row_57",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_57",
                 "focus_change_up": "jf_realm_roads_row_57"
               }
@@ -137418,13 +137418,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_57",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_57",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_57"
+    "focus_change_right": "jf_realm_roads_travel_57"
   },
   "jf_realm_roads_row58": {
     "size": [
@@ -137723,7 +137723,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1673,
                 "focus_identifier": "jf_realm_roads_tier_58",
-                "focus_change_left": "jf_realm_roads_row_58",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_58",
                 "focus_change_up": "jf_realm_roads_row_58"
               }
@@ -137849,13 +137849,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_58",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_58",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_58"
+    "focus_change_right": "jf_realm_roads_travel_58"
   },
   "jf_realm_roads_row59": {
     "size": [
@@ -138154,7 +138154,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1697,
                 "focus_identifier": "jf_realm_roads_tier_59",
-                "focus_change_left": "jf_realm_roads_row_59",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_59",
                 "focus_change_up": "jf_realm_roads_row_59"
               }
@@ -138280,13 +138280,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_59",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_59",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_59"
+    "focus_change_right": "jf_realm_roads_travel_59"
   },
   "jf_realm_roads_row60": {
     "size": [
@@ -138585,7 +138585,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1721,
                 "focus_identifier": "jf_realm_roads_tier_60",
-                "focus_change_left": "jf_realm_roads_row_60",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_60",
                 "focus_change_up": "jf_realm_roads_row_60"
               }
@@ -138711,13 +138711,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_60",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_60",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_60"
+    "focus_change_right": "jf_realm_roads_travel_60"
   },
   "jf_realm_roads_row61": {
     "size": [
@@ -139016,7 +139016,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1745,
                 "focus_identifier": "jf_realm_roads_tier_61",
-                "focus_change_left": "jf_realm_roads_row_61",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_61",
                 "focus_change_up": "jf_realm_roads_row_61"
               }
@@ -139142,13 +139142,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_61",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_61",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_61"
+    "focus_change_right": "jf_realm_roads_travel_61"
   },
   "jf_realm_roads_row62": {
     "size": [
@@ -139447,7 +139447,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1769,
                 "focus_identifier": "jf_realm_roads_tier_62",
-                "focus_change_left": "jf_realm_roads_row_62",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_62",
                 "focus_change_up": "jf_realm_roads_row_62"
               }
@@ -139573,13 +139573,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_62",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_62",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_62"
+    "focus_change_right": "jf_realm_roads_travel_62"
   },
   "jf_realm_roads_row63": {
     "size": [
@@ -139878,7 +139878,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1793,
                 "focus_identifier": "jf_realm_roads_tier_63",
-                "focus_change_left": "jf_realm_roads_row_63",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_63",
                 "focus_change_up": "jf_realm_roads_row_63"
               }
@@ -140004,13 +140004,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_63",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_63",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_63"
+    "focus_change_right": "jf_realm_roads_travel_63"
   },
   "jf_realm_roads_row64": {
     "size": [
@@ -140309,7 +140309,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1817,
                 "focus_identifier": "jf_realm_roads_tier_64",
-                "focus_change_left": "jf_realm_roads_row_64",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_64",
                 "focus_change_up": "jf_realm_roads_row_64"
               }
@@ -140435,13 +140435,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_64",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_64",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_64"
+    "focus_change_right": "jf_realm_roads_travel_64"
   },
   "jf_realm_roads_row65": {
     "size": [
@@ -140740,7 +140740,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1841,
                 "focus_identifier": "jf_realm_roads_tier_65",
-                "focus_change_left": "jf_realm_roads_row_65",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_65",
                 "focus_change_up": "jf_realm_roads_row_65"
               }
@@ -140866,13 +140866,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_65",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_65",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_65"
+    "focus_change_right": "jf_realm_roads_travel_65"
   },
   "jf_realm_roads_row66": {
     "size": [
@@ -141171,7 +141171,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1865,
                 "focus_identifier": "jf_realm_roads_tier_66",
-                "focus_change_left": "jf_realm_roads_row_66",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_66",
                 "focus_change_up": "jf_realm_roads_row_66"
               }
@@ -141297,13 +141297,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_66",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_66",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_66"
+    "focus_change_right": "jf_realm_roads_travel_66"
   },
   "jf_realm_roads_row67": {
     "size": [
@@ -141602,7 +141602,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1889,
                 "focus_identifier": "jf_realm_roads_tier_67",
-                "focus_change_left": "jf_realm_roads_row_67",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_67",
                 "focus_change_up": "jf_realm_roads_row_67"
               }
@@ -141728,13 +141728,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_67",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_67",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_67"
+    "focus_change_right": "jf_realm_roads_travel_67"
   },
   "jf_realm_roads_row68": {
     "size": [
@@ -142033,7 +142033,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1913,
                 "focus_identifier": "jf_realm_roads_tier_68",
-                "focus_change_left": "jf_realm_roads_row_68",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_68",
                 "focus_change_up": "jf_realm_roads_row_68"
               }
@@ -142159,13 +142159,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_68",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_68",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_68"
+    "focus_change_right": "jf_realm_roads_travel_68"
   },
   "jf_realm_roads_row69": {
     "size": [
@@ -142464,7 +142464,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1937,
                 "focus_identifier": "jf_realm_roads_tier_69",
-                "focus_change_left": "jf_realm_roads_row_69",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_69",
                 "focus_change_up": "jf_realm_roads_row_69"
               }
@@ -142590,13 +142590,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_69",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_69",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_69"
+    "focus_change_right": "jf_realm_roads_travel_69"
   },
   "jf_realm_roads_row70": {
     "size": [
@@ -142895,7 +142895,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1961,
                 "focus_identifier": "jf_realm_roads_tier_70",
-                "focus_change_left": "jf_realm_roads_row_70",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_70",
                 "focus_change_up": "jf_realm_roads_row_70"
               }
@@ -143021,13 +143021,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_70",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_70",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_70"
+    "focus_change_right": "jf_realm_roads_travel_70"
   },
   "jf_realm_roads_row71": {
     "size": [
@@ -143326,7 +143326,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 1985,
                 "focus_identifier": "jf_realm_roads_tier_71",
-                "focus_change_left": "jf_realm_roads_row_71",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_71",
                 "focus_change_up": "jf_realm_roads_row_71"
               }
@@ -143452,13 +143452,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_71",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_71",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_71"
+    "focus_change_right": "jf_realm_roads_travel_71"
   },
   "jf_realm_roads_row72": {
     "size": [
@@ -143757,7 +143757,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2009,
                 "focus_identifier": "jf_realm_roads_tier_72",
-                "focus_change_left": "jf_realm_roads_row_72",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_72",
                 "focus_change_up": "jf_realm_roads_row_72"
               }
@@ -143883,13 +143883,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_72",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_72",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_72"
+    "focus_change_right": "jf_realm_roads_travel_72"
   },
   "jf_realm_roads_row73": {
     "size": [
@@ -144188,7 +144188,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2033,
                 "focus_identifier": "jf_realm_roads_tier_73",
-                "focus_change_left": "jf_realm_roads_row_73",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_73",
                 "focus_change_up": "jf_realm_roads_row_73"
               }
@@ -144314,13 +144314,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_73",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_73",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_73"
+    "focus_change_right": "jf_realm_roads_travel_73"
   },
   "jf_realm_roads_row74": {
     "size": [
@@ -144619,7 +144619,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2057,
                 "focus_identifier": "jf_realm_roads_tier_74",
-                "focus_change_left": "jf_realm_roads_row_74",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_74",
                 "focus_change_up": "jf_realm_roads_row_74"
               }
@@ -144745,13 +144745,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_74",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_74",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_74"
+    "focus_change_right": "jf_realm_roads_travel_74"
   },
   "jf_realm_roads_row75": {
     "size": [
@@ -145050,7 +145050,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2081,
                 "focus_identifier": "jf_realm_roads_tier_75",
-                "focus_change_left": "jf_realm_roads_row_75",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_75",
                 "focus_change_up": "jf_realm_roads_row_75"
               }
@@ -145176,13 +145176,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_75",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_75",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_75"
+    "focus_change_right": "jf_realm_roads_travel_75"
   },
   "jf_realm_roads_row76": {
     "size": [
@@ -145481,7 +145481,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2105,
                 "focus_identifier": "jf_realm_roads_tier_76",
-                "focus_change_left": "jf_realm_roads_row_76",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_76",
                 "focus_change_up": "jf_realm_roads_row_76"
               }
@@ -145607,13 +145607,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_76",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_76",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_76"
+    "focus_change_right": "jf_realm_roads_travel_76"
   },
   "jf_realm_roads_row77": {
     "size": [
@@ -145912,7 +145912,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2129,
                 "focus_identifier": "jf_realm_roads_tier_77",
-                "focus_change_left": "jf_realm_roads_row_77",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_77",
                 "focus_change_up": "jf_realm_roads_row_77"
               }
@@ -146038,13 +146038,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_77",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_77",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_77"
+    "focus_change_right": "jf_realm_roads_travel_77"
   },
   "jf_realm_roads_row78": {
     "size": [
@@ -146343,7 +146343,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2153,
                 "focus_identifier": "jf_realm_roads_tier_78",
-                "focus_change_left": "jf_realm_roads_row_78",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_78",
                 "focus_change_up": "jf_realm_roads_row_78"
               }
@@ -146469,13 +146469,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_78",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_78",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_78"
+    "focus_change_right": "jf_realm_roads_travel_78"
   },
   "jf_realm_roads_row79": {
     "size": [
@@ -146774,7 +146774,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2177,
                 "focus_identifier": "jf_realm_roads_tier_79",
-                "focus_change_left": "jf_realm_roads_row_79",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_79",
                 "focus_change_up": "jf_realm_roads_row_79"
               }
@@ -146900,13 +146900,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_79",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_79",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_79"
+    "focus_change_right": "jf_realm_roads_travel_79"
   },
   "jf_realm_roads_row80": {
     "size": [
@@ -147205,7 +147205,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2201,
                 "focus_identifier": "jf_realm_roads_tier_80",
-                "focus_change_left": "jf_realm_roads_row_80",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_80",
                 "focus_change_up": "jf_realm_roads_row_80"
               }
@@ -147331,13 +147331,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_80",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_80",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_80"
+    "focus_change_right": "jf_realm_roads_travel_80"
   },
   "jf_realm_roads_row81": {
     "size": [
@@ -147636,7 +147636,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2225,
                 "focus_identifier": "jf_realm_roads_tier_81",
-                "focus_change_left": "jf_realm_roads_row_81",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_81",
                 "focus_change_up": "jf_realm_roads_row_81"
               }
@@ -147762,13 +147762,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_81",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_81",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_81"
+    "focus_change_right": "jf_realm_roads_travel_81"
   },
   "jf_realm_roads_row82": {
     "size": [
@@ -148067,7 +148067,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2249,
                 "focus_identifier": "jf_realm_roads_tier_82",
-                "focus_change_left": "jf_realm_roads_row_82",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_82",
                 "focus_change_up": "jf_realm_roads_row_82"
               }
@@ -148193,13 +148193,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_82",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_82",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_82"
+    "focus_change_right": "jf_realm_roads_travel_82"
   },
   "jf_realm_roads_row83": {
     "size": [
@@ -148498,7 +148498,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2273,
                 "focus_identifier": "jf_realm_roads_tier_83",
-                "focus_change_left": "jf_realm_roads_row_83",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_83",
                 "focus_change_up": "jf_realm_roads_row_83"
               }
@@ -148624,13 +148624,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_83",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_83",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_83"
+    "focus_change_right": "jf_realm_roads_travel_83"
   },
   "jf_realm_roads_row84": {
     "size": [
@@ -148929,7 +148929,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2297,
                 "focus_identifier": "jf_realm_roads_tier_84",
-                "focus_change_left": "jf_realm_roads_row_84",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_84",
                 "focus_change_up": "jf_realm_roads_row_84"
               }
@@ -149055,13 +149055,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_84",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_84",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_84"
+    "focus_change_right": "jf_realm_roads_travel_84"
   },
   "jf_realm_roads_row85": {
     "size": [
@@ -149360,7 +149360,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2321,
                 "focus_identifier": "jf_realm_roads_tier_85",
-                "focus_change_left": "jf_realm_roads_row_85",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_85",
                 "focus_change_up": "jf_realm_roads_row_85"
               }
@@ -149486,13 +149486,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_85",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_85",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_85"
+    "focus_change_right": "jf_realm_roads_travel_85"
   },
   "jf_realm_roads_row86": {
     "size": [
@@ -149791,7 +149791,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2345,
                 "focus_identifier": "jf_realm_roads_tier_86",
-                "focus_change_left": "jf_realm_roads_row_86",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_86",
                 "focus_change_up": "jf_realm_roads_row_86"
               }
@@ -149917,13 +149917,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_86",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_86",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_86"
+    "focus_change_right": "jf_realm_roads_travel_86"
   },
   "jf_realm_roads_row87": {
     "size": [
@@ -150222,7 +150222,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2369,
                 "focus_identifier": "jf_realm_roads_tier_87",
-                "focus_change_left": "jf_realm_roads_row_87",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_87",
                 "focus_change_up": "jf_realm_roads_row_87"
               }
@@ -150348,13 +150348,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_87",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_87",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_87"
+    "focus_change_right": "jf_realm_roads_travel_87"
   },
   "jf_realm_roads_row88": {
     "size": [
@@ -150653,7 +150653,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2393,
                 "focus_identifier": "jf_realm_roads_tier_88",
-                "focus_change_left": "jf_realm_roads_row_88",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_88",
                 "focus_change_up": "jf_realm_roads_row_88"
               }
@@ -150779,13 +150779,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_88",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_88",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_88"
+    "focus_change_right": "jf_realm_roads_travel_88"
   },
   "jf_realm_roads_row89": {
     "size": [
@@ -151084,7 +151084,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2417,
                 "focus_identifier": "jf_realm_roads_tier_89",
-                "focus_change_left": "jf_realm_roads_row_89",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_89",
                 "focus_change_up": "jf_realm_roads_row_89"
               }
@@ -151210,13 +151210,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_89",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_89",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_89"
+    "focus_change_right": "jf_realm_roads_travel_89"
   },
   "jf_realm_roads_row90": {
     "size": [
@@ -151515,7 +151515,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2441,
                 "focus_identifier": "jf_realm_roads_tier_90",
-                "focus_change_left": "jf_realm_roads_row_90",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_90",
                 "focus_change_up": "jf_realm_roads_row_90"
               }
@@ -151641,13 +151641,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_90",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_90",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_90"
+    "focus_change_right": "jf_realm_roads_travel_90"
   },
   "jf_realm_roads_row91": {
     "size": [
@@ -151946,7 +151946,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2465,
                 "focus_identifier": "jf_realm_roads_tier_91",
-                "focus_change_left": "jf_realm_roads_row_91",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_91",
                 "focus_change_up": "jf_realm_roads_row_91"
               }
@@ -152072,13 +152072,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_91",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_91",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_91"
+    "focus_change_right": "jf_realm_roads_travel_91"
   },
   "jf_realm_roads_row92": {
     "size": [
@@ -152377,7 +152377,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2489,
                 "focus_identifier": "jf_realm_roads_tier_92",
-                "focus_change_left": "jf_realm_roads_row_92",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_92",
                 "focus_change_up": "jf_realm_roads_row_92"
               }
@@ -152503,13 +152503,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_92",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_92",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_92"
+    "focus_change_right": "jf_realm_roads_travel_92"
   },
   "jf_realm_roads_row93": {
     "size": [
@@ -152808,7 +152808,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2513,
                 "focus_identifier": "jf_realm_roads_tier_93",
-                "focus_change_left": "jf_realm_roads_row_93",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_93",
                 "focus_change_up": "jf_realm_roads_row_93"
               }
@@ -152934,13 +152934,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_93",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_93",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_93"
+    "focus_change_right": "jf_realm_roads_travel_93"
   },
   "jf_realm_roads_row94": {
     "size": [
@@ -153239,7 +153239,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2537,
                 "focus_identifier": "jf_realm_roads_tier_94",
-                "focus_change_left": "jf_realm_roads_row_94",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_94",
                 "focus_change_up": "jf_realm_roads_row_94"
               }
@@ -153365,13 +153365,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_94",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_94",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_94"
+    "focus_change_right": "jf_realm_roads_travel_94"
   },
   "jf_realm_roads_row95": {
     "size": [
@@ -153670,7 +153670,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2561,
                 "focus_identifier": "jf_realm_roads_tier_95",
-                "focus_change_left": "jf_realm_roads_row_95",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_95",
                 "focus_change_up": "jf_realm_roads_row_95"
               }
@@ -153796,13 +153796,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_95",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_95",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_95"
+    "focus_change_right": "jf_realm_roads_travel_95"
   },
   "jf_realm_roads_row96": {
     "size": [
@@ -154101,7 +154101,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2585,
                 "focus_identifier": "jf_realm_roads_tier_96",
-                "focus_change_left": "jf_realm_roads_row_96",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_96",
                 "focus_change_up": "jf_realm_roads_row_96"
               }
@@ -154227,13 +154227,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_96",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_96",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_96"
+    "focus_change_right": "jf_realm_roads_travel_96"
   },
   "jf_realm_roads_row97": {
     "size": [
@@ -154532,7 +154532,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2609,
                 "focus_identifier": "jf_realm_roads_tier_97",
-                "focus_change_left": "jf_realm_roads_row_97",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_97",
                 "focus_change_up": "jf_realm_roads_row_97"
               }
@@ -154658,13 +154658,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_97",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_97",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_97"
+    "focus_change_right": "jf_realm_roads_travel_97"
   },
   "jf_realm_roads_row98": {
     "size": [
@@ -154963,7 +154963,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2633,
                 "focus_identifier": "jf_realm_roads_tier_98",
-                "focus_change_left": "jf_realm_roads_row_98",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_98",
                 "focus_change_up": "jf_realm_roads_row_98"
               }
@@ -155089,13 +155089,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_98",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_98",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_98"
+    "focus_change_right": "jf_realm_roads_travel_98"
   },
   "jf_realm_roads_row99": {
     "size": [
@@ -155394,7 +155394,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2657,
                 "focus_identifier": "jf_realm_roads_tier_99",
-                "focus_change_left": "jf_realm_roads_row_99",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_99",
                 "focus_change_up": "jf_realm_roads_row_99"
               }
@@ -155520,13 +155520,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_99",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_99",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_99"
+    "focus_change_right": "jf_realm_roads_travel_99"
   },
   "jf_realm_roads_row100": {
     "size": [
@@ -155825,7 +155825,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2681,
                 "focus_identifier": "jf_realm_roads_tier_100",
-                "focus_change_left": "jf_realm_roads_row_100",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_100",
                 "focus_change_up": "jf_realm_roads_row_100"
               }
@@ -155951,13 +155951,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_100",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_100",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_100"
+    "focus_change_right": "jf_realm_roads_travel_100"
   },
   "jf_realm_roads_row101": {
     "size": [
@@ -156256,7 +156256,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2705,
                 "focus_identifier": "jf_realm_roads_tier_101",
-                "focus_change_left": "jf_realm_roads_row_101",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_101",
                 "focus_change_up": "jf_realm_roads_row_101"
               }
@@ -156382,13 +156382,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_101",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_101",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_101"
+    "focus_change_right": "jf_realm_roads_travel_101"
   },
   "jf_realm_roads_row102": {
     "size": [
@@ -156687,7 +156687,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2729,
                 "focus_identifier": "jf_realm_roads_tier_102",
-                "focus_change_left": "jf_realm_roads_row_102",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_102",
                 "focus_change_up": "jf_realm_roads_row_102"
               }
@@ -156813,13 +156813,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_102",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_102",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_102"
+    "focus_change_right": "jf_realm_roads_travel_102"
   },
   "jf_realm_roads_row103": {
     "size": [
@@ -157118,7 +157118,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2753,
                 "focus_identifier": "jf_realm_roads_tier_103",
-                "focus_change_left": "jf_realm_roads_row_103",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_103",
                 "focus_change_up": "jf_realm_roads_row_103"
               }
@@ -157244,13 +157244,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_103",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_103",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_103"
+    "focus_change_right": "jf_realm_roads_travel_103"
   },
   "jf_realm_roads_row104": {
     "size": [
@@ -157549,7 +157549,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2777,
                 "focus_identifier": "jf_realm_roads_tier_104",
-                "focus_change_left": "jf_realm_roads_row_104",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_104",
                 "focus_change_up": "jf_realm_roads_row_104"
               }
@@ -157675,13 +157675,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_104",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_104",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_104"
+    "focus_change_right": "jf_realm_roads_travel_104"
   },
   "jf_realm_roads_row105": {
     "size": [
@@ -157980,7 +157980,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2801,
                 "focus_identifier": "jf_realm_roads_tier_105",
-                "focus_change_left": "jf_realm_roads_row_105",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_105",
                 "focus_change_up": "jf_realm_roads_row_105"
               }
@@ -158106,13 +158106,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_105",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_105",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_105"
+    "focus_change_right": "jf_realm_roads_travel_105"
   },
   "jf_realm_roads_row106": {
     "size": [
@@ -158411,7 +158411,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2825,
                 "focus_identifier": "jf_realm_roads_tier_106",
-                "focus_change_left": "jf_realm_roads_row_106",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_106",
                 "focus_change_up": "jf_realm_roads_row_106"
               }
@@ -158537,13 +158537,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_106",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_106",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_106"
+    "focus_change_right": "jf_realm_roads_travel_106"
   },
   "jf_realm_roads_row107": {
     "size": [
@@ -158842,7 +158842,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2849,
                 "focus_identifier": "jf_realm_roads_tier_107",
-                "focus_change_left": "jf_realm_roads_row_107",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_107",
                 "focus_change_up": "jf_realm_roads_row_107"
               }
@@ -158968,13 +158968,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_107",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_107",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_107"
+    "focus_change_right": "jf_realm_roads_travel_107"
   },
   "jf_realm_roads_row108": {
     "size": [
@@ -159273,7 +159273,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2873,
                 "focus_identifier": "jf_realm_roads_tier_108",
-                "focus_change_left": "jf_realm_roads_row_108",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_108",
                 "focus_change_up": "jf_realm_roads_row_108"
               }
@@ -159399,13 +159399,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_108",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_108",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_108"
+    "focus_change_right": "jf_realm_roads_travel_108"
   },
   "jf_realm_roads_row109": {
     "size": [
@@ -159704,7 +159704,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2897,
                 "focus_identifier": "jf_realm_roads_tier_109",
-                "focus_change_left": "jf_realm_roads_row_109",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_109",
                 "focus_change_up": "jf_realm_roads_row_109"
               }
@@ -159830,13 +159830,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_109",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_109",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_109"
+    "focus_change_right": "jf_realm_roads_travel_109"
   },
   "jf_realm_roads_row110": {
     "size": [
@@ -160135,7 +160135,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2921,
                 "focus_identifier": "jf_realm_roads_tier_110",
-                "focus_change_left": "jf_realm_roads_row_110",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_110",
                 "focus_change_up": "jf_realm_roads_row_110"
               }
@@ -160261,13 +160261,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_110",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_110",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_110"
+    "focus_change_right": "jf_realm_roads_travel_110"
   },
   "jf_realm_roads_row111": {
     "size": [
@@ -160566,7 +160566,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2945,
                 "focus_identifier": "jf_realm_roads_tier_111",
-                "focus_change_left": "jf_realm_roads_row_111",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_111",
                 "focus_change_up": "jf_realm_roads_row_111"
               }
@@ -160692,13 +160692,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_111",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_111",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_111"
+    "focus_change_right": "jf_realm_roads_travel_111"
   },
   "jf_realm_roads_row112": {
     "size": [
@@ -160997,7 +160997,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2969,
                 "focus_identifier": "jf_realm_roads_tier_112",
-                "focus_change_left": "jf_realm_roads_row_112",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_112",
                 "focus_change_up": "jf_realm_roads_row_112"
               }
@@ -161123,13 +161123,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_112",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_112",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_112"
+    "focus_change_right": "jf_realm_roads_travel_112"
   },
   "jf_realm_roads_row113": {
     "size": [
@@ -161428,7 +161428,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 2993,
                 "focus_identifier": "jf_realm_roads_tier_113",
-                "focus_change_left": "jf_realm_roads_row_113",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_113",
                 "focus_change_up": "jf_realm_roads_row_113"
               }
@@ -161554,13 +161554,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_113",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_113",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_113"
+    "focus_change_right": "jf_realm_roads_travel_113"
   },
   "jf_realm_roads_row114": {
     "size": [
@@ -161859,7 +161859,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3017,
                 "focus_identifier": "jf_realm_roads_tier_114",
-                "focus_change_left": "jf_realm_roads_row_114",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_114",
                 "focus_change_up": "jf_realm_roads_row_114"
               }
@@ -161985,13 +161985,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_114",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_114",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_114"
+    "focus_change_right": "jf_realm_roads_travel_114"
   },
   "jf_realm_roads_row115": {
     "size": [
@@ -162290,7 +162290,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3041,
                 "focus_identifier": "jf_realm_roads_tier_115",
-                "focus_change_left": "jf_realm_roads_row_115",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_115",
                 "focus_change_up": "jf_realm_roads_row_115"
               }
@@ -162416,13 +162416,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_115",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_115",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_115"
+    "focus_change_right": "jf_realm_roads_travel_115"
   },
   "jf_realm_roads_row116": {
     "size": [
@@ -162721,7 +162721,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3065,
                 "focus_identifier": "jf_realm_roads_tier_116",
-                "focus_change_left": "jf_realm_roads_row_116",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_116",
                 "focus_change_up": "jf_realm_roads_row_116"
               }
@@ -162847,13 +162847,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_116",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_116",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_116"
+    "focus_change_right": "jf_realm_roads_travel_116"
   },
   "jf_realm_roads_row117": {
     "size": [
@@ -163152,7 +163152,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3089,
                 "focus_identifier": "jf_realm_roads_tier_117",
-                "focus_change_left": "jf_realm_roads_row_117",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_117",
                 "focus_change_up": "jf_realm_roads_row_117"
               }
@@ -163278,13 +163278,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_117",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_117",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_117"
+    "focus_change_right": "jf_realm_roads_travel_117"
   },
   "jf_realm_roads_row118": {
     "size": [
@@ -163583,7 +163583,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3113,
                 "focus_identifier": "jf_realm_roads_tier_118",
-                "focus_change_left": "jf_realm_roads_row_118",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_118",
                 "focus_change_up": "jf_realm_roads_row_118"
               }
@@ -163709,13 +163709,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_118",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_118",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_118"
+    "focus_change_right": "jf_realm_roads_travel_118"
   },
   "jf_realm_roads_row119": {
     "size": [
@@ -164014,7 +164014,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3137,
                 "focus_identifier": "jf_realm_roads_tier_119",
-                "focus_change_left": "jf_realm_roads_row_119",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_119",
                 "focus_change_up": "jf_realm_roads_row_119"
               }
@@ -164140,13 +164140,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_119",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_119",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_119"
+    "focus_change_right": "jf_realm_roads_travel_119"
   },
   "jf_realm_roads_row120": {
     "size": [
@@ -164445,7 +164445,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3161,
                 "focus_identifier": "jf_realm_roads_tier_120",
-                "focus_change_left": "jf_realm_roads_row_120",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_120",
                 "focus_change_up": "jf_realm_roads_row_120"
               }
@@ -164571,13 +164571,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_120",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_120",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_120"
+    "focus_change_right": "jf_realm_roads_travel_120"
   },
   "jf_realm_roads_row121": {
     "size": [
@@ -164876,7 +164876,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3185,
                 "focus_identifier": "jf_realm_roads_tier_121",
-                "focus_change_left": "jf_realm_roads_row_121",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_121",
                 "focus_change_up": "jf_realm_roads_row_121"
               }
@@ -165002,13 +165002,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_121",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_121",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_121"
+    "focus_change_right": "jf_realm_roads_travel_121"
   },
   "jf_realm_roads_row122": {
     "size": [
@@ -165307,7 +165307,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3209,
                 "focus_identifier": "jf_realm_roads_tier_122",
-                "focus_change_left": "jf_realm_roads_row_122",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_122",
                 "focus_change_up": "jf_realm_roads_row_122"
               }
@@ -165433,13 +165433,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_122",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_122",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_122"
+    "focus_change_right": "jf_realm_roads_travel_122"
   },
   "jf_realm_roads_row123": {
     "size": [
@@ -165738,7 +165738,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3233,
                 "focus_identifier": "jf_realm_roads_tier_123",
-                "focus_change_left": "jf_realm_roads_row_123",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_123",
                 "focus_change_up": "jf_realm_roads_row_123"
               }
@@ -165864,13 +165864,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_123",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_123",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_123"
+    "focus_change_right": "jf_realm_roads_travel_123"
   },
   "jf_realm_roads_row124": {
     "size": [
@@ -166169,7 +166169,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3257,
                 "focus_identifier": "jf_realm_roads_tier_124",
-                "focus_change_left": "jf_realm_roads_row_124",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_124",
                 "focus_change_up": "jf_realm_roads_row_124"
               }
@@ -166295,13 +166295,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_124",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_124",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_124"
+    "focus_change_right": "jf_realm_roads_travel_124"
   },
   "jf_realm_roads_row125": {
     "size": [
@@ -166600,7 +166600,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3281,
                 "focus_identifier": "jf_realm_roads_tier_125",
-                "focus_change_left": "jf_realm_roads_row_125",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_125",
                 "focus_change_up": "jf_realm_roads_row_125"
               }
@@ -166726,13 +166726,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_125",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_125",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_125"
+    "focus_change_right": "jf_realm_roads_travel_125"
   },
   "jf_realm_roads_row126": {
     "size": [
@@ -167031,7 +167031,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3305,
                 "focus_identifier": "jf_realm_roads_tier_126",
-                "focus_change_left": "jf_realm_roads_row_126",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_126",
                 "focus_change_up": "jf_realm_roads_row_126"
               }
@@ -167157,13 +167157,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_126",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_126",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_126"
+    "focus_change_right": "jf_realm_roads_travel_126"
   },
   "jf_realm_roads_row127": {
     "size": [
@@ -167462,7 +167462,7 @@
               "record@jagsby_frontier.jf_realm_tier_action": {
                 "collection_index": 3329,
                 "focus_identifier": "jf_realm_roads_tier_127",
-                "focus_change_left": "jf_realm_roads_row_127",
+                "focus_change_left": "jf_tab_focus_realm",
                 "focus_change_right": "jf_realm_roads_travel_127",
                 "focus_change_up": "jf_realm_roads_row_127"
               }
@@ -167588,13 +167588,13 @@
     "focus_magnet_enabled": false,
     "hover_enabled": true,
     "focus_identifier": "jf_realm_roads_row_127",
-    "focus_change_left": "jf_tab_focus_realm",
+    "focus_change_left": "jf_realm_roads_tier_127",
     "button_mappings": [],
     "default_control": "reading_idle",
     "hover_control": "reading_focus",
     "pressed_control": "reading_focus",
     "tts_name": "Settlement details",
-    "focus_change_right": "jf_realm_roads_tier_127"
+    "focus_change_right": "jf_realm_roads_travel_127"
   },
   "jf_realm_roads_rows": {
     "type": "stack_panel",

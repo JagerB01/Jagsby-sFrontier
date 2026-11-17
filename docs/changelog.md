@@ -1,5 +1,14 @@
 # 0.0.88
 
+## 0.0.95 — Direct controller path to Travel
+
+- Right from a road reading row now focuses Travel directly. Press A to travel.
+- Left from the row or Travel focuses the road upgrade icon. Left again returns
+  to the Realm sidebar. Up from either action returns to the reading row.
+- Keep upgrades accessible on building/unavailable routes without focusing
+  disabled Travel. No layout, data bindings or gameplay changes.
+
+
 ## 0.0.94 — Realm row spacing and controller actions
 
 - Replace automatic Realm grid-slot height with the explicit height of its

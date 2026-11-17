@@ -872,7 +872,7 @@ def build():
                 tier_record = tier_action["controls"][0]["record@jagsby_frontier.jf_realm_tier_action"]
                 tier_record.update({
                     "focus_identifier": f"jf_realm_roads_tier_{slot}",
-                    "focus_change_left": f"jf_realm_roads_row_{slot}",
+                    "focus_change_left": "jf_tab_focus_realm",
                     "focus_change_right": f"jf_realm_roads_travel_{slot}",
                     "focus_change_up": f"jf_realm_roads_row_{slot}",
                 })
@@ -904,7 +904,10 @@ def build():
             # Keep inert reading focus for locked rows, but do not attract
             # controller focus away from the nested native action controls.
             ui[template]["focus_magnet_enabled"] = False
-            ui[template]["focus_change_right"] = f"jf_realm_roads_tier_{slot}" if road else f"jf_realm_{scope}_establish_{slot}"
+            ui[template]["focus_change_right"] = f"jf_realm_roads_travel_{slot}" if road else f"jf_realm_{scope}_establish_{slot}"
+            if road:
+                # Keep upgrades reachable even when Travel is disabled.
+                ui[template]["focus_change_left"] = f"jf_realm_roads_tier_{slot}"
             # Mojang grids support #maximum_grid_items. The numeric 0/1 limit
             # controls creation, rather than merely hiding an instantiated row.
             present = "(not ((#form_text - '" + marker + "') = #form_text))"

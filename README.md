@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.94.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.95.mcaddon?raw=true)
+
+Version 0.0.95 makes Right from a road row go directly to Travel, then A
+activates it. Left from the row or Travel reaches the road upgrade icon; Left
+from that icon returns to the Realm sidebar. Up from an action returns to the
+reading row. This keeps upgrades accessible when Travel is disabled.
 
 Version 0.0.94 gives Realm grid slots explicit row heights to prevent overlapping
 settlement entries. Controller reading rows no longer attract focus away from
