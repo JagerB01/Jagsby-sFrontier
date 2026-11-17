@@ -1,5 +1,20 @@
 # 0.0.88
 
+## 0.0.101 — Adopt reviewed MineScape UI Adapter v1
+
+- Reviewed the supplied `Jagsbys_Frontier_v0.0.100_MineScape_Adapter_v1.mcaddon`.
+  Its only content differences from published 0.0.100 were manifests and an
+  added `ui/_global_variables.json`; all gameplay, UI definitions and assets match.
+- Retain its renderer-provider hooks: `$msfm_external_long_form` points to
+  `jagsby_frontier.jf_router`; `$msfm_external_modal_form` points to
+  `jagsby_frontier.jf_modal_router`. Both targets are registered in Frontier.
+- The upload already used numeric 0.0.101 in both packs/modules/dependency.
+  Correct the display names from 0.0.100 to 0.0.101 and preserve pack identities.
+- No survey/rank/Realm Power, research, gameplay or UI-layout change.
+- Requires a MineScape version that consumes these hooks for integrated routing.
+  Original supplied MineScape 1.5.130 does not. MineScape itself is untouched.
+
+
 ## 0.0.100 — Fixed information dock and readable map markers
 
 - The user's screenshot shows the prior tooltip still over the map and tier

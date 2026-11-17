@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.100.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.101.mcaddon?raw=true)
+
+Version 0.0.101 adopts the supplied **MineScape UI Adapter v1** hooks and fixes
+its display labels to match its existing numeric 101 version. All gameplay,
+surveying, UI definitions and artwork match 0.0.100. The hooks need a compatible
+MineScape consumer; original MineScape 1.5.130 does not read them. See
+[adapter review](docs/minescape-ui-adapter.md).
 
 Version 0.0.100 moves hover information into a fixed strip below the map,
 with literal positions and a gap from the drawing area. Markers are doubled
