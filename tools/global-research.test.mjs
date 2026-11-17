@@ -826,9 +826,9 @@ test('A single unowned settlement supplies exactly one Realm row creation marker
   const gates=Object.assign({},...ui['jf_realm_'+scope+'_rows'].controls);
   for(const [key,gate]of Object.entries(gates)){
    const slot=Number(key.slice(3)),marker=`[JF:row:${scope}:${slot}]`;
-   const creation=gate.bindings.find(b=>b.target_property_name==='#maximum_grid_items');
+   const creation=gate.bindings.find(b=>b.target_property_name==='#visible');
    assert.ok(creation.source_property_name.includes(marker));
-   assert.equal(gate.maximum_grid_items,0);assert.equal('precached_grid_item_count' in gate,false);
+   assert.equal(gate.type,'button');assert.equal('precached_grid_item_count' in gate,false);
    if(form.text.includes(marker))assert.equal(scope,'all');
   }
  }

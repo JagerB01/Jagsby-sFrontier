@@ -771,8 +771,8 @@ def build():
         control("open_map", {**action("open", ACTIONS["settlementMap"], "Open Settlement Map", width=233)["open"], "offset": [8, 112], "anchor_from": "top_left", "anchor_to": "top_left"}),
     ]}
     realm_controls = [research_tab("roads", 0, "realm", "Road Networks"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
-    # Preserve the working explicit collection indices. An initially empty grid
-    # creates each heavy row only when the shared form body includes its marker.
+    # Use ordinary explicitly indexed rows. Native grid allocation is backed
+    # out following crashes during Charter opening; visibility only hides rows.
     # Interleave scopes by slot so a small world transmits only a short prefix.
     row_base = max([*DATA.values(), *ACTIONS.values()]) + 1
     row_limit, row_stride = 128, 24
@@ -899,28 +899,13 @@ def build():
                 })
                 fields.append(control("establish", establish))
             marker = "[JF:row:" + scope + ":" + str(slot) + "]"
-            template = "jf_realm_" + scope + "_row" + str(slot)
-            ui[template] = focusable_scroll_row({"size": [251, height], "controls": fields}, "realm", scope, slot)
-            # Keep inert reading focus for locked rows, but do not attract
-            # controller focus away from the nested native action controls.
-            ui[template]["focus_magnet_enabled"] = False
-            ui[template]["focus_change_right"] = f"jf_realm_roads_travel_{slot}" if road else f"jf_realm_{scope}_establish_{slot}"
+            row = focusable_scroll_row({"size": [251, height], "controls": fields,
+                "bindings": row_present(marker)}, "realm", scope, slot)
+            row["focus_magnet_enabled"] = False
+            row["focus_change_right"] = f"jf_realm_roads_travel_{slot}" if road else f"jf_realm_{scope}_establish_{slot}"
             if road:
-                # Keep upgrades reachable even when Travel is disabled.
-                ui[template]["focus_change_left"] = f"jf_realm_roads_tier_{slot}"
-            # Mojang grids support #maximum_grid_items. The numeric 0/1 limit
-            # controls creation, rather than merely hiding an instantiated row.
-            present = "(not ((#form_text - '" + marker + "') = #form_text))"
-            rows.append(control("row" + str(slot), {
-                # A grid's automatic height can be zero while native data is
-                # resolving, making the outer stack overlap subsequent rows.
-                "type": "grid", "size": [251, height],
-                "grid_dimensions": [1, 1], "grid_rescaling_type": "vertical",
-                "collection_name": "form_buttons", "grid_item_template": "jagsby_frontier." + template,
-                "maximum_grid_items": 0,
-                "bindings": [view("(" + present + " * 1)", "#maximum_grid_items", "jf_menu_state"),
-                             view(present, "#visible", "jf_menu_state")],
-            }))
+                row["focus_change_left"] = f"jf_realm_roads_tier_{slot}"
+            rows.append(control("row" + str(slot), row))
         ui["jf_realm_" + scope + "_rows"] = {"type": "stack_panel", "orientation": "vertical", "size": [251, "100%c"], "controls": rows}
         scroll = control("entries@common.scrolling_panel", {
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 12 if road else 0],

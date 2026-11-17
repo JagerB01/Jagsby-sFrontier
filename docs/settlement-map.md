@@ -1,4 +1,4 @@
-# Settlement Map (0.0.96)
+# Settlement Map (0.0.98)
 
 Open Village Charter → Diplomacy → Open Settlement Map. Controls are grouped in
 a framed panel on the left; the map occupies a 240×144 UI-pixel rectangle on
@@ -8,7 +8,7 @@ in the user's earlier screenshot.
 
 ## Markers and information
 
-Green house icons mark settlements. Hovering a settlement shows a native info
+Green house icons mark settlements. Hovering a settlement shows an info
 box with exactly Name, Biome, Development and Owner. Biome/owner names use the
 same helpers as the Charter's existing settlement views. Unowned settlements
 show Unclaimed. Controller focus shows the same hover state. The icons have no
@@ -59,10 +59,12 @@ control actions. The map uses 72 fixed cells and 156 form records. World spawn
 is a separate body marker, so it does not inflate settlement totals.
 
 The renderer uses the addon's existing native collection bindings. Tooltip
-content uses Mojang's `common.hover_text` / `hover_text_renderer`, with collection
-text bound to `#hover_text`; no unverified hover property is introduced. The
-screen has a distinct `JF_CHARTER|SettlementMap` route, preserving other forms.
-Reference: https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/ui/ui_common.json
+content uses ordinary panels, images and labels, following the research
+popover pattern. The custom native hover-text renderer from 0.0.96/97 is
+removed as part of the Charter-opening stability fallback. Hover targets
+have no form-submit mappings. Popovers flip above lower map cells and keep
+their horizontal bounds inside the map. The screen has a distinct
+`JF_CHARTER|SettlementMap` route, preserving other forms.
 
 Automated tests cover signed coordinates, bounds, dimension isolation, zoom,
 pan, large clusters, registry changes, world-spawn projection and setting

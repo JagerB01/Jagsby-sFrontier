@@ -69,8 +69,12 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
  for(const state of marker.controls){
   const c=children(Object.values(state)[0]);assert.equal(c.icon.texture,'textures/ui/frontier/map_settlement');
  }
- const info=children(children(marker).info)['tooltip@common.hover_text'];
- assert.ok(info.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_name_override==='#hover_text'));
+ const info=children(children(marker).info).tooltip;
+ const text=children(children(children(info).content).text).inset;
+ assert.ok(text.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_type==='collection'));
+ assert.ok(!JSON.stringify(marker).includes('hover_text'));
+ assert.ok(!JSON.stringify(marker).includes('renderer'));
+ assert.equal(info.type,'panel');
  const code=await readFile(new URL('../packs/behavior/scripts/settlement-map.js',import.meta.url),'utf8');
  for(const forbidden of ['runInterval','runTimeout','getBlock','getEntities','setDynamicProperty'])assert.ok(!code.includes(forbidden));
 });
@@ -145,5 +149,24 @@ test('Map drawing fills its rectangle and controls are framed entirely to its le
   assert.equal(grid['name'+i].controls[0]['record@jagsby_frontier.jf_map_name'].collection_index,L.settlementMap.names+i);
   assert.equal(grid['spawn'+i].texture,'textures/ui/frontier/map_spawn');
   assert.ok(grid['spawn'+i].bindings.some(b=>b.source_property_name?.includes(`[JF:spawn:${i}]`)));
+ }
+});
+
+test('Map hover info uses ordinary panel/image/label popovers instead of native custom renderers',async()=>{
+ const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
+ const children=v=>Object.assign({},...(v.controls||[])),grid=children(children(ui.jf_settlement_map).grid);
+ function check(v){
+  if(!v||typeof v!=='object')return;
+  assert.notEqual(v.type,'custom');assert.equal(v.renderer,undefined);
+  for(const [key,child]of Object.entries(v)){assert.ok(!key.includes('common.hover_text'));check(child);}
+ }
+ for(const [key,value]of Object.entries(ui))if(key.startsWith('jf_map_')||key==='jf_settlement_map')check(value);
+ const popup=children(children(ui.jf_map_marker).info).tooltip;
+ assert.equal(popup.type,'panel');assert.equal(popup.allow_clipping,false);
+ for(let slot=0;slot<72;slot++){
+  const record=grid['cell'+slot].controls[0]['record@jagsby_frontier.jf_map_marker'];
+  const popupX=slot%12*20+record.$info_x;
+  assert.ok(popupX>=0&&popupX+160<=240,'Popover must stay within the map horizontally');
+  assert.equal(record.$info_anchor,Math.floor(slot/12)<3?'top_left':'bottom_left');
  }
 });

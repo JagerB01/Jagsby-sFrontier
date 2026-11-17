@@ -1,5 +1,22 @@
 # 0.0.88
 
+## 0.0.98 — Charter-opening stability fallback
+
+- User reports 0.0.97 crashes when opening the Village Charter. Its supplied
+  log has no UI errors, script exceptions, native crash stack or menu timing
+  entry; it cannot identify the native failure cause.
+- Back out the newer Realm grid item-limit/allocation path. Restore ordinary
+  indexed rows with population-marker visibility, retaining 32/33px heights
+  and the direct controller Travel path. The lazy allocation optimization is
+  withdrawn; unused hidden rows are instantiated again.
+- Replace the map's native custom hover-text renderer with plain panel/image/
+  label popovers, matching the existing research tooltip approach. Hover-only
+  markers, four info fields, left controls and world spawn remain.
+- No gameplay, research, settlement persistence or native action-index change.
+  This is a conservative rollback of two native UI paths, not a proven native
+  crash diagnosis. A crash-free target-device opening must still be verified.
+
+
 ## 0.0.97 — Remove runtime-rejected Realm grid property
 
 - The supplied 0.0.96 crash-session content log records 382 UI errors for

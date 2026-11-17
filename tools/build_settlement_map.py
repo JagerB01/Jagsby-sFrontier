@@ -38,14 +38,23 @@ def build_map_ui(ui, frame):
     for state in ["idle", "info"]:
         children=[c("icon", sprite("map_settlement", [9, 9], [2, 1]))]
         if state=="info":
-            children.append(c("tooltip@common.hover_text", {
-                "layer": 100, "$hover_text_max_width": 170,
-                "bindings": [
-                    {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
-                    {"binding_name": "#form_button_text", "binding_name_override": "#hover_text",
-                     "binding_type": "collection", "binding_collection_name": "form_buttons"}]}))
+            # Ordinary panels/images/labels, matching the working research
+            # popovers. Avoid the native custom hover renderer on form records.
+            text={**label("#form_button_text", [148, "default"], (6, 0), scale=0.65),
+                "property_bag":{"#form_button_text":""},"bindings":copy.deepcopy(bindings)}
+            body={"type":"stack_panel","orientation":"vertical","size":[160,"100%c"],"controls":[
+                c("top",{"type":"panel","size":[160,6]}),
+                c("text",{"type":"panel","size":[160,"100%cm"],"controls":[c("inset",text)]}),
+                c("bottom",{"type":"panel","size":[160,6]})]}
+            children.append(c("tooltip",{"type":"panel","size":[160,"100%cm"],
+                "offset":["$info_x","$info_y"],"anchor_from":"top_left","anchor_to":"$info_anchor",
+                "layer":100,"allow_clipping":False,"controls":[
+                    c("background",image([160,"100%sm"],[0,0],[0.07,0.08,0.07])),
+                    c("left_edge",image([1,"100%sm"],[0,0],[0.64,0.58,0.37])),
+                    c("right_edge",image([1,"100%sm"],[159,0],[0.64,0.58,0.37])),
+                    c("content",body)]}))
         marker_controls.append(c(state, {"type": "panel", "size": [20, 20], "controls": children}))
-    ui["jf_map_marker"]={"type": "button", "size": [20, 20], "focus_enabled": True,
+    ui["jf_map_marker"]={"$info_x|default":20,"$info_y|default":20,"$info_anchor|default":"top_left","type": "button", "size": [20, 20], "focus_enabled": True,
         "hover_enabled": True, "button_mappings": [], "default_control": "idle", "hover_control": "info", "pressed_control": "info",
         "bindings": copy.deepcopy(bindings)+[
             {"binding_type": "view", "source_property_name": "(not (#form_button_text = ''))", "target_property_name": "#visible"},
@@ -61,7 +70,12 @@ def build_map_ui(ui, frame):
     for z in range(ROWS+1): grid.append(c("z"+str(z), image([WIDTH, 1], [0, min(HEIGHT-1, z*24)], [0.10, 0.14, 0.11])))
     for slot in range(COLUMNS*ROWS):
         x,z=(slot%COLUMNS)*20,(slot//COLUMNS)*24
-        grid.append(c("cell"+str(slot), scope("jf_map_marker", slot, [20, 20], [x, z])))
+        marker=scope("jf_map_marker", slot, [20, 20], [x, z])
+        marker["controls"][0]["record@jagsby_frontier.jf_map_marker"].update({
+            "$info_x":min(x+20, WIDTH-160)-x,
+            "$info_y":20 if slot//COLUMNS<3 else -2,
+            "$info_anchor":"top_left" if slot//COLUMNS<3 else "bottom_left"})
+        grid.append(c("cell"+str(slot), marker))
         grid.append(c("name"+str(slot), scope("jf_map_name", MAP_LAYOUT['names']+slot, [20, 9], [x, z+11])))
         spawn=sprite("map_spawn", [9, 9], [x+11, z+1])
         spawn['bindings']=[{"binding_name": "#form_text", "binding_type": "none"},

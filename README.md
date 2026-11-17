@@ -5,7 +5,14 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.97.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.98.mcaddon?raw=true)
+
+Version 0.0.98 backs out native Realm grid allocation and the map custom hover
+renderer after another crash on Charter opening. Realm lists use ordinary
+explicitly indexed rows again; hover info uses plain panels/images/labels.
+The map layout, world spawn, compact road rows and direct Travel links remain.
+This is a stability fallback: the unused-row optimization is withdrawn, and
+crash-free operation still requires an in-game session.
 
 Version 0.0.97 removes `precached_grid_item_count` from all Realm grid slots.
 The supplied 0.0.96 crash-session log records 382 errors rejecting this property

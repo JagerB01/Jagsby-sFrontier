@@ -1,4 +1,12 @@
-# Realm row loading (current: 0.0.97)
+# Realm rows — stability fallback (0.0.98)
+
+**Current behavior:** Realm rows are ordinary explicitly indexed controls again.
+The grid allocation optimization described historically below was withdrawn in
+0.0.98 after another native crash on Charter opening. Population markers hide
+unused rows; they do not prevent row construction. Row heights and controller
+links from 0.0.94/95 remain. This trades the attempted allocation optimization
+for the pre-grid construction pattern, pending actual device stability tests.
+
 
 The 0.0.91 content log supplied by the user contains no UI errors and reports
 21 ms of script data preparation for 299 records. This does not measure client
@@ -93,3 +101,20 @@ zero or false. Grid item limits, dimensions, explicit row heights, marker
 bindings and controller navigation are preserved. No gameplay script or world
 state is changed. A target-device session with a clean content log is still
 required to verify runtime stability.
+
+## Second crash report and fallback (0.0.98)
+
+The supplied `ContentLog2026-11-17_14-16-53_1.txt` identifies version 0.0.97,
+contains no UI errors or script exceptions and ends during verbose sound
+messages. The user confirms crashing when opening the Village Charter. No
+native crash stack or Charter data-timing message is recorded. The sound
+messages are not evidence of the crash cause.
+
+Hidden map/Realm definitions participate in Charter UI construction. This
+release removes both newer native paths from that construction: per-slot
+Realm grids and the map custom hover-text renderer. Ordinary row controls and
+panel/image/label popovers replace them. These are rollback choices, not a
+claim that the log proves either mechanism caused the crash. No settlement
+or research data is changed, and no sound definitions are modified. Validate
+Charter opening, all tabs, multi-row lists, controller Travel and map hover in
+a target-device session before claiming stability.
