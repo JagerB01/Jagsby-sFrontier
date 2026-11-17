@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.99.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.100.mcaddon?raw=true)
+
+Version 0.0.100 moves hover information into a fixed strip below the map,
+with literal positions and a gap from the drawing area. Markers are doubled
+to 16×16 UI pixels and use padded 64×64 artwork. The map uses a coarser 6×3
+grid to give the larger settlement/spawn icons separate hit areas; zoom in
+for individual settlements in dense cells. In-game rendering needs confirmation.
 
 Version 0.0.99 makes world spawn hoverable, outlines the hovered marker and
 positions its info box clear of the icon. It installs the approved spawn and

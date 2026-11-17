@@ -4,7 +4,7 @@ import { development } from './settlement-economy.js';
 import { biomeName } from './settlement-overview.js';
 import { ownerName } from './settlement-realm.js';
 import { settlementTier } from './settlement-tiers.js';
-export const MAP_COLUMNS=12, MAP_ROWS=6, MAP_ASPECT=240/144;
+export const MAP_COLUMNS=6, MAP_ROWS=3, MAP_ASPECT=240/90;
 export const MAP_MIN_SPAN=64, MAP_MAX_SPAN=200000000;
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
 export function settlementPoints(villages={}) {
@@ -71,7 +71,7 @@ export function mapDetails(point){
 }
 export function mapCellInfo(points){
  // Hover text is bounded even when zoomed far out over many settlements.
- return points.slice(0,8).map(mapDetails).join('\n\n')+(points.length>8?'\n\nZoom in to separate '+(points.length-8)+' more settlements.':'');
+ return (points.length?mapDetails(points[0]):'')+(points.length>1?'\n+'+(points.length-1)+' nearby. Zoom in for individual markers.':'');
 }
 
 export function spawnDetails(spawn){

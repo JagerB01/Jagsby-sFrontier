@@ -191,3 +191,18 @@ PNG SHA-256 values:
 - `village.png`: `519642b8c369762fb1419fa83689eb9077e0c45ebf0bfa1036e97fda52479feb`
 - `town.png`: `2ad6e56704ce493c675ec7d68431d2204b59507f13975737d601188dd32d1cf4`
 - `city.png`: `a31b3680071bb68e44303c2b81df02b1780468bf0baa76400a2b7a3cbcc9721c`
+
+## Larger map marker sources (0.0.100)
+
+Replace the earlier 12×12 derivatives with variants of the same approved 64×64
+source sprites. Trim fully transparent margins, resize the trimmed glyph to
+fit 56×56 using nearest-neighbor sampling, then center on a transparent 64×64
+canvas. The UI displays these at 16×16. The generated originals outside the
+checkout are preserved. Updated PNG SHA-256 values:
+
+- `world_spawn.png`: `a4a869e9e30f36e8aa94ab1a097b0a621f240e3d7eb167d99b60344d923c49e8`
+- `outpost.png`: `68b03bd7fe4797e0317bd914c685d79488973ae4975a629260f4a92716fe4134`
+- `hamlet.png`: `9dbaa3f2158dd80a660eed207f91671bf268eff239d7f2eaa4167b6493fc349e`
+- `village.png`: `27c891f230ad9d2b154a8764a9d83973935636e8f769f3aca65b651b11c4fd1d`
+- `town.png`: `8c87ce93b824244a02e3522854052811c712c1b57faaa1b42a2a0fc4bcf1c415`
+- `city.png`: `2240b793136c1b9ed43f218bce2c965820a5d1ef50294c990d1ccb5cd59f6ffe`

@@ -1,5 +1,22 @@
 # 0.0.88
 
+## 0.0.100 — Fixed information dock and readable map markers
+
+- The user's screenshot shows the prior tooltip still over the map and tier
+  artwork too small to recognize. Remove variable-offset/anchor popovers.
+- Reserve a 240×54 information strip below the map. Each marker template uses
+  explicit top-left anchors and a literal offset resolving to that dock, with
+  a 12px gap below the map. Hover keeps the outline and has no submit action.
+- Double icon display size from 8×8 to 16×16 UI pixels. Use the approved 64×64
+  source art, trim excess transparent margins and preserve a 4px source border.
+- Use a 6×3 projection grid with separate larger spawn/settlement hit areas.
+  The grid is coarser; dense cells show the first settlement's four fields
+  plus an explicit zoom hint. All settlements remain in the shared projection.
+- Keep the left controls, spawn, tier rules and all non-map functionality.
+  No native grid allocation or custom hover renderer is introduced.
+- Test actual target-device hover layout, marker legibility and content logs.
+
+
 ## 0.0.99 — Shared POI hover, outline and approved marker art
 
 - Use one inert hover/focus marker template for settlements and world spawn.
