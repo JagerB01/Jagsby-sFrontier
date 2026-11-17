@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.98.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.99.mcaddon?raw=true)
+
+Version 0.0.99 makes world spawn hoverable, outlines the hovered marker and
+positions its info box clear of the icon. It installs the approved spawn and
+Outpost/Hamlet/Village/Town/City artwork; tier selection uses existing Realm
+Power rules. Current markers are hover-only, with no discovery or click action.
 
 Version 0.0.98 backs out native Realm grid allocation and the map custom hover
 renderer after another crash on Charter opening. Realm lists use ordinary

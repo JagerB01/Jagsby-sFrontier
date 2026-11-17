@@ -3,12 +3,14 @@
 import { development } from './settlement-economy.js';
 import { biomeName } from './settlement-overview.js';
 import { ownerName } from './settlement-realm.js';
+import { settlementTier } from './settlement-tiers.js';
 export const MAP_COLUMNS=12, MAP_ROWS=6, MAP_ASPECT=240/144;
 export const MAP_MIN_SPAN=64, MAP_MAX_SPAN=200000000;
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
 export function settlementPoints(villages={}) {
  return Object.entries(villages).filter(([,v])=>v&&finite(v.location?.x)&&finite(v.location?.z)&&typeof v.dimension==='string').map(([id,v])=>({
   id,type:'settlement',name:String(v.name||'Unnamed settlement'),dimension:v.dimension,
+  texture:'textures/ui/frontier/map_markers/'+settlementTier(v.census).id,
   x:v.location.x,y:finite(v.location.y)?v.location.y:null,z:v.location.z,development:development(v),biome:biomeName(v.biome),owner:ownerName(v)
  })).sort((a,b)=>a.name.localeCompare(b.name)||a.id.localeCompare(b.id));
 }
@@ -21,7 +23,7 @@ export function fitMap(points,dimension) {
 }
 export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=null) {
  const points=settlementPoints(villages);
- const spawn=finite(spawnLocation?.x)&&finite(spawnLocation?.z)?{id:'world-spawn',type:'spawn',dimension:'minecraft:overworld',name:'World spawn',x:spawnLocation.x,z:spawnLocation.z}:null;
+ const spawn=finite(spawnLocation?.x)&&finite(spawnLocation?.z)?{id:'world-spawn',type:'spawn',dimension:'minecraft:overworld',name:'World spawn',x:spawnLocation.x,y:finite(spawnLocation.y)?spawnLocation.y:null,z:spawnLocation.z}:null;
  const fitPoints=spawn?[...points,spawn]:points;
  const dimensions=[...new Set(fitPoints.map(p=>p.dimension))].sort();
  const dimension=typeof requested.dimension==='string'?requested.dimension:dimensions[0]||'minecraft:overworld';
@@ -46,7 +48,7 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
   const row=Math.min(MAP_ROWS-1,Math.floor((spawn.z-bounds.minZ)/height*MAP_ROWS));
   spawnCell=row*MAP_COLUMNS+col;
  }
- return {viewport,bounds,cells,dimensions,count,visible,spawnCell,selected:points.find(p=>p.id===selectedId&&p.dimension===dimension)||null};
+ return {viewport,bounds,cells,dimensions,count,visible,spawn,spawnCell,selected:points.find(p=>p.id===selectedId&&p.dimension===dimension)||null};
 }
 export function moveMap(viewport,action){
  const next={...viewport};
@@ -70,4 +72,8 @@ export function mapDetails(point){
 export function mapCellInfo(points){
  // Hover text is bounded even when zoomed far out over many settlements.
  return points.slice(0,8).map(mapDetails).join('\n\n')+(points.length>8?'\n\nZoom in to separate '+(points.length-8)+' more settlements.':'');
+}
+
+export function spawnDetails(spawn){
+ return spawn?`Name: World spawn\nCoordinates: ${Math.floor(spawn.x)}, ${spawn.y===null?'?':Math.floor(spawn.y)}, ${Math.floor(spawn.z)}\nDimension: Overworld`:'';
 }

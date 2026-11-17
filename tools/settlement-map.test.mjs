@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {mapSnapshot,fitMap,settlementPoints,moveMap,mapDetails,mapCellInfo,mapCellName,MAP_ASPECT,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
+import {mapSnapshot,fitMap,settlementPoints,moveMap,mapDetails,mapCellInfo,mapCellName,MAP_ASPECT,MAP_MIN_SPAN,MAP_MAX_SPAN,spawnDetails} from '../packs/behavior/scripts/settlement-map.js';
 import {CHARTER_LAYOUT as L} from '../packs/behavior/scripts/charter-layout.js';
 const village=(name,x,z,dimension='minecraft:overworld')=>({name,location:{x,y:64,z},dimension,developmentValue:250,developmentThreshold:100});
 const points=s=>s.cells.flat();
@@ -67,7 +67,8 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
  }
  const marker=ui.jf_map_marker;assert.equal(marker.$pressed_button_name,undefined);assert.deepEqual(marker.button_mappings,[]);
  for(const state of marker.controls){
-  const c=children(Object.values(state)[0]);assert.equal(c.icon.texture,'textures/ui/frontier/map_settlement');
+  const c=children(Object.values(state)[0]);assert.equal(c.icon.texture,'textures/ui/frontier/map_markers/outpost');
+  assert.ok(c.icon.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_name_override==='#texture'));
  }
  const info=children(children(marker).info).tooltip;
  const text=children(children(children(info).content).text).inset;
@@ -147,7 +148,7 @@ test('Map drawing fills its rectangle and controls are framed entirely to its le
  assert.deepEqual(grid.x1.size,[1,144]);assert.deepEqual(grid.z1.size,[240,1]);
  for(let i=0;i<72;i++){
   assert.equal(grid['name'+i].controls[0]['record@jagsby_frontier.jf_map_name'].collection_index,L.settlementMap.names+i);
-  assert.equal(grid['spawn'+i].texture,'textures/ui/frontier/map_spawn');
+  assert.equal(grid['spawn'+i].controls[0]['record@jagsby_frontier.jf_map_marker'].collection_index,L.settlementMap.spawnInfo);
   assert.ok(grid['spawn'+i].bindings.some(b=>b.source_property_name?.includes(`[JF:spawn:${i}]`)));
  }
 });
@@ -168,5 +169,49 @@ test('Map hover info uses ordinary panel/image/label popovers instead of native 
   const popupX=slot%12*20+record.$info_x;
   assert.ok(popupX>=0&&popupX+160<=240,'Popover must stay within the map horizontally');
   assert.equal(record.$info_anchor,Math.floor(slot/12)<3?'top_left':'bottom_left');
+ }
+});
+
+test('Both settlement and world-spawn hover targets keep info boxes away from their icons in every cell',async()=>{
+ const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
+ const children=v=>Object.assign({},...(v.controls||[])),grid=children(children(ui.jf_settlement_map).grid),marker=ui.jf_map_marker;
+ assert.deepEqual(marker.button_mappings,[]);assert.equal(marker.$pressed_button_name,undefined);
+ assert.equal(marker.hover_enabled,true);assert.equal(marker.focus_enabled,true);
+ for(let slot=0;slot<72;slot++){
+  const settlement=grid['cell'+slot],spawn=grid['spawn'+slot];
+  assert.ok(settlement.offset[0]+settlement.size[0]<=spawn.offset[0],'Shared-cell POIs must have distinct hit areas');
+  for(const target of [settlement,spawn]){
+   assert.deepEqual(target.size,[10,11]);
+   const record=target.controls[0]['record@jagsby_frontier.jf_map_marker'];
+   if(record.$info_anchor==='top_left')assert.ok(record.$info_y>=marker.size[1]+2);
+   else {assert.equal(record.$info_anchor,'bottom_left');assert.ok(record.$info_y<=-2);}
+   const boxX=target.offset[0]+record.$info_x;
+   assert.ok(boxX>=0&&boxX+160<=240,'Hover box stays within map horizontally');
+  }
+  for(const property of ['#visible','#enabled'])assert.ok(spawn.bindings.some(b=>b.target_property_name===property&&b.source_property_name.includes(`[JF:spawn:${slot}]`)));
+ }
+ const idle=children(children(marker).idle),hover=children(children(marker).info);
+ assert.equal(idle.tooltip,undefined);assert.ok(hover.tooltip);
+ for(const edge of ['top','bottom','left','right']){
+  assert.equal(idle['outline_'+edge],undefined);
+  const line=hover['outline_'+edge];assert.equal(line.type,'image');assert.equal(line.keep_ratio,false);
+  const [x,y]=line.offset,[w,h]=line.size,[ix,iy]=hover.icon.offset,[iw,ih]=hover.icon.size;
+  assert.ok(x+w<=ix||x>=ix+iw||y+h<=iy||y>=iy+ih,'Outline must frame rather than paint over the icon');
+ }
+ assert.equal(marker.pressed_control,marker.hover_control,'Activation retains hover info without form submission');
+});
+
+test('Map settlement art follows all existing Realm Power tiers and spawn info uses the actual configured coordinates',async()=>{
+ const names=['outpost','hamlet','village','town','city'];
+ for(const [i,power]of [0,20,50,100,200].entries()){
+  const p=settlementPoints({a:{...village('A',0,0),census:{realmPowerTenths:power}}})[0];
+  assert.equal(p.texture,'textures/ui/frontier/map_markers/'+names[i]);
+ }
+ const s=mapSnapshot({}, {}, null,{x:-10.2,y:75,z:20.8});
+ assert.equal(spawnDetails(s.spawn),'Name: World spawn\nCoordinates: -11, 75, 20\nDimension: Overworld');
+ assert.equal(spawnDetails(null),'');
+ for(const name of ['world_spawn',...names]){
+  const data=await readFile(new URL('../packs/resource/textures/ui/frontier/map_markers/'+name+'.png',import.meta.url));
+  assert.equal(data.readUInt32BE(16),12);assert.equal(data.readUInt32BE(20),12);
  }
 });

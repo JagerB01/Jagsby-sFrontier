@@ -1,4 +1,4 @@
-"""Map geometry uses explicit rectangles; markers only expose native hover text."""
+"""Map geometry uses explicit rectangles; markers expose ordinary hover panels."""
 import copy
 
 COLUMNS, ROWS, WIDTH, HEIGHT = 12, 6, 240, 144
@@ -6,6 +6,7 @@ MAP_LAYOUT = {"columns": COLUMNS, "rows": ROWS, "cells": COLUMNS * ROWS}
 MAP_LAYOUT.update({key: COLUMNS * ROWS + i for i, key in enumerate([
     "back", "fit", "zoomOut", "zoomIn", "west", "east", "north", "south", "dimension", "refresh", "bounds", "details"])})
 MAP_LAYOUT["names"] = MAP_LAYOUT["details"] + 1
+MAP_LAYOUT["spawnInfo"] = MAP_LAYOUT["names"] + MAP_LAYOUT["cells"]
 
 
 def build_map_ui(ui, frame):
@@ -36,8 +37,18 @@ def build_map_ui(ui, frame):
     # a pressed event. The engine's button primitive provides hover state only.
     marker_controls=[]
     for state in ["idle", "info"]:
-        children=[c("icon", sprite("map_settlement", [9, 9], [2, 1]))]
+        icon=sprite("map_markers/outpost", [8, 8], [1, 1])
+        icon["bindings"]=[
+            {"binding_type":"collection_details","binding_collection_name":"form_buttons"},
+            {"binding_name":"#form_button_texture","binding_name_override":"#texture","binding_type":"collection","binding_collection_name":"form_buttons"},
+            {"binding_name":"#form_button_texture_file_system","binding_name_override":"#texture_file_system","binding_type":"collection","binding_collection_name":"form_buttons"}]
+        children=[c("icon", icon)]
         if state=="info":
+            # A one-pixel frame outside the icon identifies the hovered POI.
+            for edge,size,offset in [("top",[10,1],[0,0]),("bottom",[10,1],[0,9]),
+                                     ("left",[1,8],[0,1]),("right",[1,8],[9,1])]:
+                outline=image(size,offset,[1.0,0.95,0.65]);outline["layer"]=9
+                children.append(c("outline_"+edge,outline))
             # Ordinary panels/images/labels, matching the working research
             # popovers. Avoid the native custom hover renderer on form records.
             text={**label("#form_button_text", [148, "default"], (6, 0), scale=0.65),
@@ -53,8 +64,8 @@ def build_map_ui(ui, frame):
                     c("left_edge",image([1,"100%sm"],[0,0],[0.64,0.58,0.37])),
                     c("right_edge",image([1,"100%sm"],[159,0],[0.64,0.58,0.37])),
                     c("content",body)]}))
-        marker_controls.append(c(state, {"type": "panel", "size": [20, 20], "controls": children}))
-    ui["jf_map_marker"]={"$info_x|default":20,"$info_y|default":20,"$info_anchor|default":"top_left","type": "button", "size": [20, 20], "focus_enabled": True,
+        marker_controls.append(c(state, {"type": "panel", "size": [10, 11], "controls": children}))
+    ui["jf_map_marker"]={"$info_x|default":20,"$info_y|default":20,"$info_anchor|default":"top_left","type": "button", "size": [10, 11], "focus_enabled": True,
         "hover_enabled": True, "button_mappings": [], "default_control": "idle", "hover_control": "info", "pressed_control": "info",
         "bindings": copy.deepcopy(bindings)+[
             {"binding_type": "view", "source_property_name": "(not (#form_button_text = ''))", "target_property_name": "#visible"},
@@ -70,16 +81,22 @@ def build_map_ui(ui, frame):
     for z in range(ROWS+1): grid.append(c("z"+str(z), image([WIDTH, 1], [0, min(HEIGHT-1, z*24)], [0.10, 0.14, 0.11])))
     for slot in range(COLUMNS*ROWS):
         x,z=(slot%COLUMNS)*20,(slot//COLUMNS)*24
-        marker=scope("jf_map_marker", slot, [20, 20], [x, z])
+        marker=scope("jf_map_marker", slot, [10, 11], [x, z])
         marker["controls"][0]["record@jagsby_frontier.jf_map_marker"].update({
             "$info_x":min(x+20, WIDTH-160)-x,
             "$info_y":20 if slot//COLUMNS<3 else -2,
             "$info_anchor":"top_left" if slot//COLUMNS<3 else "bottom_left"})
         grid.append(c("cell"+str(slot), marker))
         grid.append(c("name"+str(slot), scope("jf_map_name", MAP_LAYOUT['names']+slot, [20, 9], [x, z+11])))
-        spawn=sprite("map_spawn", [9, 9], [x+11, z+1])
-        spawn['bindings']=[{"binding_name": "#form_text", "binding_type": "none"},
-            {"binding_type": "view", "source_property_name": f"(not ((#form_text - '[JF:spawn:{slot}]') = #form_text))", "target_property_name": "#visible"}]
+        spawn=scope("jf_map_marker", MAP_LAYOUT['spawnInfo'], [10,11], [x+10,z])
+        spawn["controls"][0]["record@jagsby_frontier.jf_map_marker"].update({
+            "$info_x":min(x+30, WIDTH-160)-(x+10),
+            "$info_y":20 if slot//COLUMNS<3 else -2,
+            "$info_anchor":"top_left" if slot//COLUMNS<3 else "bottom_left"})
+        present=f"(not ((#form_text - '[JF:spawn:{slot}]') = #form_text))"
+        spawn['bindings']=[{"binding_name":"#form_text","binding_type":"none"}]+[
+            {"binding_type":"view","source_property_name":present,"target_property_name":target}
+            for target in ['#visible','#enabled']]
         grid.append(c("spawn"+str(slot),spawn))
     content.append(c("grid", {"type": "panel", "size": [WIDTH, HEIGHT], "offset": [110, 68],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": grid}))
@@ -112,5 +129,5 @@ def build_map_ui(ui, frame):
         panel.append(c(key,scope(template,MAP_LAYOUT[key],[width,height],[x,y])))
     content.append(c('controls',{'type':'panel','size':[76,162],'offset':[26,61],
         'anchor_from':'top_left','anchor_to':'top_left','controls':panel}))
-    content.append(c('legend',label('Green: settlement  Gold: spawn',[150,10],(204,38),scale=0.45)))
+    content.append(c('legend',label('Settlements | Star: world spawn',[150,10],(204,38),scale=0.45)))
     ui['jf_settlement_map']={"type":"panel","size":[380,240],"controls":content}

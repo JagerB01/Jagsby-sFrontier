@@ -8,7 +8,7 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
-import { mapSnapshot, moveMap, mapCellName, mapCellInfo } from "./settlement-map.js";
+import { mapSnapshot, moveMap, mapCellName, mapCellInfo, spawnDetails } from "./settlement-map.js";
 
 
 const BLOCK = "jagsby_frontier:village_charter";
@@ -286,7 +286,8 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
   let spawn=null;
   try{spawn=world.getDefaultSpawnLocation();}catch(error){console.warn(`Frontier map spawn: ${error}`);}
   const snapshot=mapSnapshot(villages,requested,selectedId,spawn),layout=CHARTER_LAYOUT.settlementMap;
-  const records=Array(layout.names+layout.cells).fill('');
+  const records=Array(layout.spawnInfo+1).fill('');
+  records[layout.spawnInfo]=spawnDetails(snapshot.spawn);
   snapshot.cells.forEach((points,index)=>{records[index]=mapCellInfo(points);records[layout.names+index]=mapCellName(points);});
   const labels={back:'Back',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
   for(const [key,text]of Object.entries(labels))records[layout[key]]=text;
@@ -294,7 +295,10 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
   records[layout.bounds]=`${snapshot.viewport.dimension.replace('minecraft:','')} | ${snapshot.visible}/${snapshot.count} settlements`;
   records[layout.details]=`X ${Math.floor(b.minX)}..${Math.ceil(b.maxX)}  |  Z ${Math.floor(b.minZ)}..${Math.ceil(b.maxZ)}`;
   const form=new ActionFormData().title(pageTitle('SettlementMap')).body(snapshot.spawnCell===null?'':`[JF:spawn:${snapshot.spawnCell}]`);
-  records.forEach(text=>form.button(text));
+  records.forEach((text,index)=>{
+   const texture=index<layout.cells?snapshot.cells[index][0]?.texture:index===layout.spawnInfo?'textures/ui/frontier/map_markers/world_spawn':undefined;
+   form.button(text,texture);
+  });
   const show=(next=snapshot.viewport,selection=selectedId)=>openSettlementMap(player,vid,next,selection,returnView);
   displayMenu(player,form,system).then(response=>{
    if(response.canceled)return;

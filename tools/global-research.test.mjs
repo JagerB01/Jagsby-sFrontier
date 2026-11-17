@@ -833,3 +833,15 @@ test('A single unowned settlement supplies exactly one Realm row creation marker
   }
  }
 });
+
+test('Spawn hover record and tier textures are shipped as inert map data without altering settlement totals',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),id:'a',name:'City',census:{realmPowerTenths:200}};
+ const h=await runtime(s,()=>({canceled:true}),{spawnLocation:()=>({x:20,y:73,z:-50})});
+ const before=h.read();h.api.openSettlementMap(h.player,'a');const f=h.forms.at(-1),m=CHARTER_LAYOUT.settlementMap;
+ assert.equal(f.buttons[m.spawnInfo],'Name: World spawn\nCoordinates: 20, 73, -50\nDimension: Overworld');
+ assert.equal(f.icons[m.spawnInfo],'textures/ui/frontier/map_markers/world_spawn');
+ const index=f.buttons.findIndex((text,i)=>i<m.cells&&text.includes('Name: City'));
+ assert.ok(index>=0);assert.equal(f.icons[index],'textures/ui/frontier/map_markers/city');
+ assert.equal(f.buttons.length,m.spawnInfo+1);assert.match(f.buttons[m.bounds],/2\/2 settlements/);
+ assert.deepEqual(h.read(),before);
+});

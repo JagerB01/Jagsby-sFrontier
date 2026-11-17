@@ -1,5 +1,21 @@
 # 0.0.88
 
+## 0.0.99 — Shared POI hover, outline and approved marker art
+
+- Use one inert hover/focus marker template for settlements and world spawn.
+  Spawn info shows its name, configured coordinates and dimension. Settlement
+  info retains Name, Biome, Development and Owner.
+- Add a thin outline in hover/focus state only. Position the popover below or
+  above the target with a gap; it cannot cover its own icon. Horizontally clamp
+  popovers to the map and give co-located spawn/settlements separate hit areas.
+- Install approved 12×12 world-spawn and five settlement-tier sprites. Choose
+  settlement art via the existing Realm Power tier helper, not Development.
+- Reuse ordinary panels/images/labels. Keep the 0.0.98 crash-session rollback:
+  no native grid allocation or custom hover renderer is reintroduced.
+- No new POI discovery, tick loops or world-state writes. Other Charter screens,
+  gameplay, research and existing action slots are unchanged.
+
+
 ## 0.0.98 — Charter-opening stability fallback
 
 - User reports 0.0.97 crashes when opening the Village Charter. Its supplied

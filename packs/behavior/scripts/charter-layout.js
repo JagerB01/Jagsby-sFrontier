@@ -16,7 +16,8 @@ export const CHARTER_LAYOUT = {
     "refresh": 81,
     "bounds": 82,
     "details": 83,
-    "names": 84
+    "names": 84,
+    "spawnInfo": 156
   },
   "data": {
     "overview": 0,

@@ -173,3 +173,21 @@ as style references and selected by the user. Extracted from the three-option
 sprite sheet, reduced with nearest-neighbor sampling to 64×64 pixels and given
 binary alpha transparency. Warm gold/parchment and burgundy banners share a
 red wax seal. No change to the other tab sprites.
+
+## Settlement Map POI markers (0.0.99)
+
+The user approved the generated World Spawn, Outpost, Hamlet, Village, Town and
+City set for map use. OpenAI image generation used the existing addon settlement
+icons as style references. The selected sprites were extracted from a 3×2 sheet,
+resized with nearest-neighbor sampling and given binary alpha transparency.
+The 12×12 variants are retained under `textures/ui/frontier/map_markers/`.
+Other generated POI artwork remains outside the addon; no POI discovery is added.
+
+PNG SHA-256 values:
+
+- `world_spawn.png`: `4f7fc7f7011512028c92cb980d3a3ec6282a5c9534b096fac83f1aeb90bce4d2`
+- `outpost.png`: `bc132eeeb0d5fabf56a1987750e662dba3475812b9331ad9bdca0f1d881ec929`
+- `hamlet.png`: `dee6976d32e2b165bde8d184182c3052109a06d252681085d6c7e17a7e1a964f`
+- `village.png`: `519642b8c369762fb1419fa83689eb9077e0c45ebf0bfa1036e97fda52479feb`
+- `town.png`: `2ad6e56704ce493c675ec7d68431d2204b59507f13975737d601188dd32d1cf4`
+- `city.png`: `a31b3680071bb68e44303c2b81df02b1780468bf0baa76400a2b7a3cbcc9721c`

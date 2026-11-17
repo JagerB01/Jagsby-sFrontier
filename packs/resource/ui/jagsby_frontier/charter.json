@@ -197768,8 +197768,8 @@
     "$info_anchor|default": "top_left",
     "type": "button",
     "size": [
-      20,
-      20
+      10,
+      11
     ],
     "focus_enabled": true,
     "hover_enabled": true,
@@ -197803,27 +197803,45 @@
         "idle": {
           "type": "panel",
           "size": [
-            20,
-            20
+            10,
+            11
           ],
           "controls": [
             {
               "icon": {
                 "type": "image",
-                "texture": "textures/ui/frontier/map_settlement",
+                "texture": "textures/ui/frontier/map_markers/outpost",
                 "size": [
-                  9,
-                  9
+                  8,
+                  8
                 ],
                 "offset": [
-                  2,
+                  1,
                   1
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "keep_ratio": false,
-                "bilinear": false
+                "bilinear": false,
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_texture",
+                    "binding_name_override": "#texture",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_texture_file_system",
+                    "binding_name_override": "#texture_file_system",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
               }
             }
           ]
@@ -197833,27 +197851,141 @@
         "info": {
           "type": "panel",
           "size": [
-            20,
-            20
+            10,
+            11
           ],
           "controls": [
             {
               "icon": {
                 "type": "image",
-                "texture": "textures/ui/frontier/map_settlement",
+                "texture": "textures/ui/frontier/map_markers/outpost",
                 "size": [
-                  9,
-                  9
+                  8,
+                  8
                 ],
                 "offset": [
-                  2,
+                  1,
                   1
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "layer": 8,
                 "keep_ratio": false,
-                "bilinear": false
+                "bilinear": false,
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_texture",
+                    "binding_name_override": "#texture",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_texture_file_system",
+                    "binding_name_override": "#texture_file_system",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            },
+            {
+              "outline_top": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  10,
+                  1
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  1.0,
+                  0.95,
+                  0.65
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "layer": 9
+              }
+            },
+            {
+              "outline_bottom": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  10,
+                  1
+                ],
+                "offset": [
+                  0,
+                  9
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  1.0,
+                  0.95,
+                  0.65
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "layer": 9
+              }
+            },
+            {
+              "outline_left": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  8
+                ],
+                "offset": [
+                  0,
+                  1
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  1.0,
+                  0.95,
+                  0.65
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "layer": 9
+              }
+            },
+            {
+              "outline_right": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  8
+                ],
+                "offset": [
+                  9,
+                  1
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  1.0,
+                  0.95,
+                  0.65
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "layer": 9
               }
             },
             {
@@ -201980,8 +202112,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   0,
@@ -202027,21 +202159,29 @@
             },
             {
               "spawn0": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  11,
-                  1
+                  10,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202051,6 +202191,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:0]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:0]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202061,8 +202206,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   20,
@@ -202108,21 +202253,29 @@
             },
             {
               "spawn1": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  31,
-                  1
+                  30,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202132,6 +202285,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:1]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:1]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202142,8 +202300,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   40,
@@ -202189,21 +202347,29 @@
             },
             {
               "spawn2": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  51,
-                  1
+                  50,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202213,6 +202379,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:2]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:2]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202223,8 +202394,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   60,
@@ -202270,21 +202441,29 @@
             },
             {
               "spawn3": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  71,
-                  1
+                  70,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 10,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202294,6 +202473,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:3]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:3]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202304,8 +202488,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   80,
@@ -202351,21 +202535,29 @@
             },
             {
               "spawn4": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  91,
-                  1
+                  90,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -10,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202375,6 +202567,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:4]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:4]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202385,8 +202582,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   100,
@@ -202432,21 +202629,29 @@
             },
             {
               "spawn5": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  111,
-                  1
+                  110,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -30,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202456,6 +202661,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:5]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:5]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202466,8 +202676,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   120,
@@ -202513,21 +202723,29 @@
             },
             {
               "spawn6": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  131,
-                  1
+                  130,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -50,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202537,6 +202755,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:6]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:6]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202547,8 +202770,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   140,
@@ -202594,21 +202817,29 @@
             },
             {
               "spawn7": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  151,
-                  1
+                  150,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -70,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202618,6 +202849,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:7]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:7]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202628,8 +202864,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   160,
@@ -202675,21 +202911,29 @@
             },
             {
               "spawn8": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  171,
-                  1
+                  170,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -90,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202699,6 +202943,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:8]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:8]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202709,8 +202958,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   180,
@@ -202756,21 +203005,29 @@
             },
             {
               "spawn9": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  191,
-                  1
+                  190,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -110,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202780,6 +203037,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:9]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:9]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202790,8 +203052,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   200,
@@ -202837,21 +203099,29 @@
             },
             {
               "spawn10": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  211,
-                  1
+                  210,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -130,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202861,6 +203131,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:10]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:10]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202871,8 +203146,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   220,
@@ -202918,21 +203193,29 @@
             },
             {
               "spawn11": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  231,
-                  1
+                  230,
+                  0
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -150,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -202942,6 +203225,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:11]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:11]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -202952,8 +203240,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   0,
@@ -202999,21 +203287,29 @@
             },
             {
               "spawn12": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  11,
-                  25
+                  10,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203023,6 +203319,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:12]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:12]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203033,8 +203334,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   20,
@@ -203080,21 +203381,29 @@
             },
             {
               "spawn13": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  31,
-                  25
+                  30,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203104,6 +203413,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:13]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:13]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203114,8 +203428,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   40,
@@ -203161,21 +203475,29 @@
             },
             {
               "spawn14": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  51,
-                  25
+                  50,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203185,6 +203507,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:14]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:14]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203195,8 +203522,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   60,
@@ -203242,21 +203569,29 @@
             },
             {
               "spawn15": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  71,
-                  25
+                  70,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 10,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203266,6 +203601,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:15]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:15]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203276,8 +203616,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   80,
@@ -203323,21 +203663,29 @@
             },
             {
               "spawn16": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  91,
-                  25
+                  90,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -10,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203347,6 +203695,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:16]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:16]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203357,8 +203710,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   100,
@@ -203404,21 +203757,29 @@
             },
             {
               "spawn17": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  111,
-                  25
+                  110,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -30,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203428,6 +203789,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:17]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:17]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203438,8 +203804,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   120,
@@ -203485,21 +203851,29 @@
             },
             {
               "spawn18": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  131,
-                  25
+                  130,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -50,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203509,6 +203883,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:18]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:18]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203519,8 +203898,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   140,
@@ -203566,21 +203945,29 @@
             },
             {
               "spawn19": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  151,
-                  25
+                  150,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -70,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203590,6 +203977,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:19]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:19]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203600,8 +203992,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   160,
@@ -203647,21 +204039,29 @@
             },
             {
               "spawn20": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  171,
-                  25
+                  170,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -90,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203671,6 +204071,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:20]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:20]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203681,8 +204086,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   180,
@@ -203728,21 +204133,29 @@
             },
             {
               "spawn21": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  191,
-                  25
+                  190,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -110,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203752,6 +204165,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:21]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:21]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203762,8 +204180,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   200,
@@ -203809,21 +204227,29 @@
             },
             {
               "spawn22": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  211,
-                  25
+                  210,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -130,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203833,6 +204259,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:22]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:22]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203843,8 +204274,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   220,
@@ -203890,21 +204321,29 @@
             },
             {
               "spawn23": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  231,
-                  25
+                  230,
+                  24
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -150,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203914,6 +204353,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:23]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:23]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -203924,8 +204368,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   0,
@@ -203971,21 +204415,29 @@
             },
             {
               "spawn24": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  11,
-                  49
+                  10,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -203995,6 +204447,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:24]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:24]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204005,8 +204462,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   20,
@@ -204052,21 +204509,29 @@
             },
             {
               "spawn25": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  31,
-                  49
+                  30,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204076,6 +204541,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:25]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:25]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204086,8 +204556,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   40,
@@ -204133,21 +204603,29 @@
             },
             {
               "spawn26": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  51,
-                  49
+                  50,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204157,6 +204635,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:26]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:26]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204167,8 +204650,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   60,
@@ -204214,21 +204697,29 @@
             },
             {
               "spawn27": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  71,
-                  49
+                  70,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 10,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204238,6 +204729,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:27]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:27]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204248,8 +204744,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   80,
@@ -204295,21 +204791,29 @@
             },
             {
               "spawn28": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  91,
-                  49
+                  90,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -10,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204319,6 +204823,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:28]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:28]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204329,8 +204838,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   100,
@@ -204376,21 +204885,29 @@
             },
             {
               "spawn29": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  111,
-                  49
+                  110,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -30,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204400,6 +204917,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:29]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:29]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204410,8 +204932,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   120,
@@ -204457,21 +204979,29 @@
             },
             {
               "spawn30": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  131,
-                  49
+                  130,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -50,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204481,6 +205011,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:30]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:30]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204491,8 +205026,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   140,
@@ -204538,21 +205073,29 @@
             },
             {
               "spawn31": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  151,
-                  49
+                  150,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -70,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204562,6 +205105,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:31]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:31]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204572,8 +205120,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   160,
@@ -204619,21 +205167,29 @@
             },
             {
               "spawn32": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  171,
-                  49
+                  170,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -90,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204643,6 +205199,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:32]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:32]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204653,8 +205214,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   180,
@@ -204700,21 +205261,29 @@
             },
             {
               "spawn33": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  191,
-                  49
+                  190,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -110,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204724,6 +205293,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:33]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:33]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204734,8 +205308,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   200,
@@ -204781,21 +205355,29 @@
             },
             {
               "spawn34": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  211,
-                  49
+                  210,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -130,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204805,6 +205387,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:34]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:34]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204815,8 +205402,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   220,
@@ -204862,21 +205449,29 @@
             },
             {
               "spawn35": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  231,
-                  49
+                  230,
+                  48
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -150,
+                      "$info_y": 20,
+                      "$info_anchor": "top_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204886,6 +205481,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:35]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:35]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204896,8 +205496,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   0,
@@ -204943,21 +205543,29 @@
             },
             {
               "spawn36": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  11,
-                  73
+                  10,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -204967,6 +205575,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:36]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:36]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -204977,8 +205590,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   20,
@@ -205024,21 +205637,29 @@
             },
             {
               "spawn37": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  31,
-                  73
+                  30,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205048,6 +205669,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:37]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:37]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205058,8 +205684,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   40,
@@ -205105,21 +205731,29 @@
             },
             {
               "spawn38": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  51,
-                  73
+                  50,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205129,6 +205763,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:38]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:38]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205139,8 +205778,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   60,
@@ -205186,21 +205825,29 @@
             },
             {
               "spawn39": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  71,
-                  73
+                  70,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 10,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205210,6 +205857,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:39]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:39]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205220,8 +205872,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   80,
@@ -205267,21 +205919,29 @@
             },
             {
               "spawn40": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  91,
-                  73
+                  90,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -10,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205291,6 +205951,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:40]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:40]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205301,8 +205966,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   100,
@@ -205348,21 +206013,29 @@
             },
             {
               "spawn41": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  111,
-                  73
+                  110,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -30,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205372,6 +206045,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:41]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:41]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205382,8 +206060,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   120,
@@ -205429,21 +206107,29 @@
             },
             {
               "spawn42": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  131,
-                  73
+                  130,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -50,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205453,6 +206139,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:42]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:42]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205463,8 +206154,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   140,
@@ -205510,21 +206201,29 @@
             },
             {
               "spawn43": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  151,
-                  73
+                  150,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -70,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205534,6 +206233,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:43]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:43]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205544,8 +206248,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   160,
@@ -205591,21 +206295,29 @@
             },
             {
               "spawn44": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  171,
-                  73
+                  170,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -90,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205615,6 +206327,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:44]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:44]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205625,8 +206342,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   180,
@@ -205672,21 +206389,29 @@
             },
             {
               "spawn45": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  191,
-                  73
+                  190,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -110,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205696,6 +206421,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:45]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:45]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205706,8 +206436,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   200,
@@ -205753,21 +206483,29 @@
             },
             {
               "spawn46": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  211,
-                  73
+                  210,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -130,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205777,6 +206515,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:46]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:46]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205787,8 +206530,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   220,
@@ -205834,21 +206577,29 @@
             },
             {
               "spawn47": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  231,
-                  73
+                  230,
+                  72
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -150,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205858,6 +206609,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:47]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:47]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205868,8 +206624,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   0,
@@ -205915,21 +206671,29 @@
             },
             {
               "spawn48": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  11,
-                  97
+                  10,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -205939,6 +206703,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:48]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:48]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -205949,8 +206718,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   20,
@@ -205996,21 +206765,29 @@
             },
             {
               "spawn49": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  31,
-                  97
+                  30,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206020,6 +206797,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:49]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:49]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206030,8 +206812,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   40,
@@ -206077,21 +206859,29 @@
             },
             {
               "spawn50": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  51,
-                  97
+                  50,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206101,6 +206891,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:50]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:50]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206111,8 +206906,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   60,
@@ -206158,21 +206953,29 @@
             },
             {
               "spawn51": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  71,
-                  97
+                  70,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 10,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206182,6 +206985,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:51]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:51]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206192,8 +207000,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   80,
@@ -206239,21 +207047,29 @@
             },
             {
               "spawn52": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  91,
-                  97
+                  90,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -10,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206263,6 +207079,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:52]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:52]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206273,8 +207094,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   100,
@@ -206320,21 +207141,29 @@
             },
             {
               "spawn53": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  111,
-                  97
+                  110,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -30,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206344,6 +207173,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:53]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:53]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206354,8 +207188,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   120,
@@ -206401,21 +207235,29 @@
             },
             {
               "spawn54": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  131,
-                  97
+                  130,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -50,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206425,6 +207267,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:54]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:54]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206435,8 +207282,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   140,
@@ -206482,21 +207329,29 @@
             },
             {
               "spawn55": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  151,
-                  97
+                  150,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -70,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206506,6 +207361,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:55]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:55]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206516,8 +207376,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   160,
@@ -206563,21 +207423,29 @@
             },
             {
               "spawn56": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  171,
-                  97
+                  170,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -90,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206587,6 +207455,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:56]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:56]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206597,8 +207470,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   180,
@@ -206644,21 +207517,29 @@
             },
             {
               "spawn57": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  191,
-                  97
+                  190,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -110,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206668,6 +207549,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:57]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:57]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206678,8 +207564,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   200,
@@ -206725,21 +207611,29 @@
             },
             {
               "spawn58": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  211,
-                  97
+                  210,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -130,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206749,6 +207643,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:58]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:58]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206759,8 +207658,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   220,
@@ -206806,21 +207705,29 @@
             },
             {
               "spawn59": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  231,
-                  97
+                  230,
+                  96
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -150,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206830,6 +207737,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:59]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:59]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206840,8 +207752,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   0,
@@ -206887,21 +207799,29 @@
             },
             {
               "spawn60": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  11,
-                  121
+                  10,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206911,6 +207831,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:60]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:60]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -206921,8 +207846,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   20,
@@ -206968,21 +207893,29 @@
             },
             {
               "spawn61": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  31,
-                  121
+                  30,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -206992,6 +207925,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:61]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:61]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -207002,8 +207940,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   40,
@@ -207049,21 +207987,29 @@
             },
             {
               "spawn62": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  51,
-                  121
+                  50,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 20,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -207073,6 +208019,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:62]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:62]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -207083,8 +208034,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   60,
@@ -207130,21 +208081,29 @@
             },
             {
               "spawn63": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  71,
-                  121
+                  70,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": 10,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -207154,6 +208113,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:63]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:63]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -207164,8 +208128,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   80,
@@ -207211,21 +208175,29 @@
             },
             {
               "spawn64": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  91,
-                  121
+                  90,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -10,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -207235,6 +208207,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:64]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:64]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -207245,8 +208222,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   100,
@@ -207292,21 +208269,29 @@
             },
             {
               "spawn65": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  111,
-                  121
+                  110,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -30,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -207316,6 +208301,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:65]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:65]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -207326,8 +208316,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   120,
@@ -207373,21 +208363,29 @@
             },
             {
               "spawn66": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  131,
-                  121
+                  130,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -50,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -207397,6 +208395,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:66]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:66]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -207407,8 +208410,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   140,
@@ -207454,21 +208457,29 @@
             },
             {
               "spawn67": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  151,
-                  121
+                  150,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -70,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -207478,6 +208489,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:67]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:67]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -207488,8 +208504,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   160,
@@ -207535,21 +208551,29 @@
             },
             {
               "spawn68": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  171,
-                  121
+                  170,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -90,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -207559,6 +208583,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:68]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:68]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -207569,8 +208598,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   180,
@@ -207616,21 +208645,29 @@
             },
             {
               "spawn69": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  191,
-                  121
+                  190,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -110,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -207640,6 +208677,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:69]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:69]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -207650,8 +208692,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   200,
@@ -207697,21 +208739,29 @@
             },
             {
               "spawn70": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  211,
-                  121
+                  210,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -130,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -207721,6 +208771,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:70]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:70]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -207731,8 +208786,8 @@
                 "orientation": "vertical",
                 "collection_name": "form_buttons",
                 "size": [
-                  20,
-                  20
+                  10,
+                  11
                 ],
                 "offset": [
                   220,
@@ -207778,21 +208833,29 @@
             },
             {
               "spawn71": {
-                "type": "image",
-                "texture": "textures/ui/frontier/map_spawn",
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
                 "size": [
-                  9,
-                  9
+                  10,
+                  11
                 ],
                 "offset": [
-                  231,
-                  121
+                  230,
+                  120
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "layer": 8,
-                "keep_ratio": false,
-                "bilinear": false,
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 156,
+                      "$info_x": -150,
+                      "$info_y": -2,
+                      "$info_anchor": "bottom_left"
+                    }
+                  }
+                ],
                 "bindings": [
                   {
                     "binding_name": "#form_text",
@@ -207802,6 +208865,11 @@
                     "binding_type": "view",
                     "source_property_name": "(not ((#form_text - '[JF:spawn:71]') = #form_text))",
                     "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:spawn:71]') = #form_text))",
+                    "target_property_name": "#enabled"
                   }
                 ]
               }
@@ -208140,7 +209208,7 @@
       {
         "legend": {
           "type": "label",
-          "text": "Green: settlement  Gold: spawn",
+          "text": "Settlements | Star: world spawn",
           "size": [
             150,
             10
