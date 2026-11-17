@@ -496,7 +496,7 @@ test('Realm scrolling rows use explicit collection indices and the established c
  }
 });
 
-test('Scrolling lists read shared row markers once and update native data only while visible',async()=>{
+test('Scrolling lists resolve late form data and initially hidden indexed records',async()=>{
  const ui=await loadUI(),state=children(ui.jf_dashboard).jf_menu_state;
  assert.equal(state.type,'panel');assert.equal(state.visible,undefined);
  assert.deepEqual(state.bindings,[{binding_name:'#form_text',binding_type:'none',binding_condition:'always'}]);
@@ -505,12 +505,12 @@ test('Scrolling lists read shared row markers once and update native data only w
   if(!value||typeof value!=='object')return;
   if(value.type==='toggle')return; // User-controlled radio state must stay live.
   for(const binding of value.bindings||[]){
-   assert.notEqual(binding.binding_condition,'always','List bindings must not poll hidden rows');
+   assert.notEqual(binding.binding_condition,'always','Use standard list bindings rather than forcing continuous polling');
    if(binding.binding_type==='collection'||binding.binding_type==='collection_details'){
-    assert.equal(binding.binding_condition,'visible');collectionBindings++;
+    assert.equal(binding.binding_condition,undefined,'Indexed text/icons must resolve even before their tab or scroll row is visible');collectionBindings++;
    }
    if(binding.binding_type==='view'&&['#visible','#enabled'].includes(binding.target_property_name)&&binding.source_property_name.includes('#form_text')){
-    assert.equal(binding.source_control_name,'jf_menu_state');assert.equal(binding.binding_condition,'once');markerBindings++;
+    assert.equal(binding.source_control_name,'jf_menu_state');assert.equal(binding.binding_condition,undefined,'Row membership must update when the shared form body arrives');markerBindings++;
     assert.ok(!(value.bindings||[]).some(b=>b.binding_name==='#form_text'),'Read shared state instead of a hidden local body binding');
    }
   }
@@ -528,7 +528,7 @@ test('Scrolling lists read shared row markers once and update native data only w
   }
   for(const child of Object.values(value))countLive(child);
  }
- countLive(ui);assert.equal(liveBindings,13,'Only the twelve tab toggles and shared form body stay live');
+ countLive(ui);assert.equal(liveBindings,13,'Only the twelve tab toggles and shared form body explicitly force always');
 });
 
 test('Controller can enter and navigate Prospecting and Realm rows even without an available action',async()=>{

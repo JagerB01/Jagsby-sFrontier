@@ -1,5 +1,20 @@
 # 0.0.88
 
+## 0.0.89 — Restore list data binding
+
+- Remove the special `once` condition from shared-body row visibility bindings
+  in Realm and Resource Prospecting so an early empty body is not permanent.
+- Restore standard collection bindings for the same lists so text and icons
+  can resolve before their tab or scroll row becomes visible.
+- Preserve all UI controls, sizes, positions, indices, record values, actions,
+  local tab switching, controller focus and gameplay scripts. No new properties.
+- Static verification: 247 Node tests, 6 Python tests and 212-file pack validation.
+- Runtime acceptance remains: open each Realm subtab and Resource Prospecting,
+  scroll the entries and reopen the Charter three times; confirm text/icons,
+  locked/selected states and empty states, and export the content log to check
+  for UI errors. This environment does not run Minecraft.
+
+
 - Remove unsupported `text_truncate` from the Roads name and owner label
   templates and their generator. The supplied UI Error Fix Handoff identifies
   256 errors per opening: two affected templates repeated in 128 row slots.

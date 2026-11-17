@@ -5,7 +5,15 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.88.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.89.mcaddon?raw=true)
+
+Version 0.0.89 restores normal data binding in Realm directories, Road Networks
+and Resource Prospecting. Rows no longer freeze their visibility before the
+shared form body arrives, and indexed text/icons can populate while their tab
+or scroll row is initially hidden. Layout, record values, local tab switching
+and gameplay logic are unchanged. No new JSON UI properties are introduced;
+`text_truncate` remains rejected. In-game display and content-log confirmation
+are still required.
 
 Version 0.0.88 removes unsupported `text_truncate` from the Roads name and owner
 labels. The handoff identifies these two templates repeated across 128 rows as

@@ -958,14 +958,14 @@ def build():
             bindings = value.get("bindings", [])
             for binding in bindings:
                 if binding.get("binding_type") in ["collection", "collection_details"]:
-                    # Native form records are ready when the panel is shown.
-                    # Hidden tabs need no collection text/icon/action updates.
-                    binding["binding_condition"] = "visible"
+                    # Resolve indexed records normally, including tabs initially
+                    # hidden and rows outside the scroll viewport.
+                    binding.pop("binding_condition", None)
                 if binding.get("binding_type") == "view" and binding.get("target_property_name") in ["#visible", "#enabled"] and "#form_text" in binding.get("source_property_name", ""):
                     binding["source_control_name"] = "jf_menu_state"
-                    # The body and row membership cannot change within a form.
-                    # Action refreshes create a new form with new bindings.
-                    binding["binding_condition"] = "once"
+                    # The shared body can arrive after this control is created.
+                    # Do not freeze an empty initial read for the life of the form.
+                    binding.pop("binding_condition", None)
             if any(binding.get("source_control_name") == "jf_menu_state" for binding in bindings):
                 value["bindings"] = [binding for binding in bindings if binding.get("binding_name") != "#form_text"]
             for child in value.values(): bind_static_list_state(child)
