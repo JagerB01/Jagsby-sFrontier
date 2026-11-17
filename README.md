@@ -5,7 +5,11 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.92.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.93.mcaddon?raw=true)
+
+Version 0.0.93 adds gamepad D-pad Up/Down shortcuts to zoom the Settlement Map.
+Mouse/touch zoom buttons remain. Zoom still replaces the native form; this
+release does not implement in-place map rerendering.
 
 Version 0.0.92 defers Realm row construction until its population marker is
 available. Empty positions retain only lightweight zero-precache grid slots,

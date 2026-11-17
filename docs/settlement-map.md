@@ -8,6 +8,9 @@ on the explicit Open action, not on Charter startup or a periodic timer.
 - Black background, subtle coordinate grid, green house markers and short names.
 - X increases to the right; Z increases downwards (north is up).
 - Select a marker to show its full name, X/Y/Z and existing Development level.
+- On gamepad, D-pad Up zooms in and D-pad Down zooms out while the map is open.
+  The +/− buttons remain for mouse/touch. Up/Down are reserved for zoom on this
+  screen rather than marker navigation.
 - Fit includes all settlements in the selected dimension; +/− zoom, < / > pan
   west/east, and N/S pan north/south. Dimension cycles through registered
   dimensions. Refresh rereads shared world data; Back returns to Diplomacy.
@@ -74,3 +77,21 @@ Rename/create/remove a settlement from another player, then refresh. Restart
 the world and verify locations. Confirm controller/touch/mouse marker selection,
 small-screen name readability, all Charter screens and an exported content log
 without new Frontier UI errors. These in-game checks remain unverified.
+
+## Input and refresh limitation (0.0.93)
+
+D-pad shortcuts map `button.menu_up` / `button.menu_down` to the existing zoom
+buttons' native form-click event. The mappings use `scope: view` and the
+`gamepad_and_not_gaze` input condition; they are inside the map route, whose
+visibility and enabled state are false on other Charter screens. Each zoom
+button retains its own collection index and original mouse/touch mappings.
+
+Zoom still submits ActionFormData and immediately opens its replacement. The
+current Script API form has no update/redraw operation, and the UI does not
+send non-closing custom messages to the script. This release does not claim
+in-place rerendering or eliminate form transitions. Implementing that would
+require an independently validated client-side rendering/state approach;
+prebuilding many zoom grids would increase UI construction cost again.
+
+Validate gamepad direction dispatch, repeated presses and marker navigation
+in-game, and confirm Up/Down do not trigger map actions on other screens.

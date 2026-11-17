@@ -47,7 +47,7 @@ def build_map_ui(ui, frame):
                 {"from_button_id": "button.menu_ok", "to_button_id": "button.form_button_click", "mapping_type": "focused"}], "controls": controls}
     button("jf_map_marker", 26, 20, True)
     content=copy.deepcopy([item for item in frame if 'title' not in item])
-    content.append(c("title", label("Settlement Map", [220, 14], (30, 34), scale=0.9)))
+    content.append(c("title", label("Settlement Map  |  D-pad Up/Down: zoom", [290, 14], (30, 34), scale=0.7)))
     content.append(c("bounds", scope("jf_map_bounds", MAP_LAYOUT['bounds'], [320, 14], [30, 61])))
     content.append(c("details", scope("jf_map_details", MAP_LAYOUT['details'], [320, 25], [30, 199])))
     grid=[c("black", image([312, 120], [0, 0], [0.025, 0.035, 0.03]))]
@@ -61,6 +61,15 @@ def build_map_ui(ui, frame):
     for key, width in [("back", 34), ("fit", 24), ("zoomOut", 18), ("zoomIn", 18), ("west", 18), ("east", 18), ("north", 18), ("south", 18), ("dimension", 62), ("refresh", 47)]:
         template="jf_map_"+key
         button(template, width, 14)
+        if key in ["zoomIn", "zoomOut"]:
+            # Native form selection retains this button's explicit collection
+            # index. Restrict the shortcut to gamepad input on the map view.
+            zoom = ui[template + "@common.button"]
+            zoom["button_mappings"].append({
+                "from_button_id": "button.menu_up" if key == "zoomIn" else "button.menu_down",
+                "to_button_id": "button.form_button_click", "mapping_type": "global",
+                "scope": "view", "input_mode_condition": "gamepad_and_not_gaze"})
+            zoom["tts_name"] = "Zoom in, D-pad up" if key == "zoomIn" else "Zoom out, D-pad down"
         content.append(c(key, scope(template, MAP_LAYOUT[key], [width, 14], [x, 47])))
         x+=width+2
     ui['jf_settlement_map']={"type": "panel", "size": [380, 240], "controls": content}

@@ -79,3 +79,26 @@ test('Fit includes the supported Minecraft coordinate range even along the talle
  const s=mapSnapshot({north:village('Far north',-30000000,-30000000),south:village('Far south',30000000,30000000)});
  assert.equal(s.visible,2);assert.equal(points(s).length,2);
 });
+
+test('Map D-pad zoom is gamepad-only, scoped to the zoom controls and keeps native button indices',async()=>{
+ const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
+ const children=value=>Object.assign({},...(value.controls||[])),map=children(ui.jf_settlement_map);
+ for(const [action,direction]of [['zoomIn','up'],['zoomOut','down']]){
+  const wrapper=map[action];assert.equal(wrapper.controls[0]['record@jagsby_frontier.jf_map_'+action].collection_index,L.settlementMap[action]);
+  const button=ui['jf_map_'+action+'@common.button'];
+  assert.ok(button.button_mappings.some(m=>m.from_button_id==='button.menu_select'&&m.mapping_type==='pressed'));
+  assert.ok(button.button_mappings.some(m=>m.from_button_id==='button.menu_ok'&&m.mapping_type==='focused'));
+  assert.deepEqual(button.button_mappings.find(m=>m.from_button_id==='button.menu_'+direction),{
+   from_button_id:'button.menu_'+direction,to_button_id:'button.form_button_click',mapping_type:'global',scope:'view',input_mode_condition:'gamepad_and_not_gaze'});
+ }
+ function check(value,path=''){
+  if(!value||typeof value!=='object')return;
+  for(const mapping of value.button_mappings||[])if(['button.menu_up','button.menu_down'].includes(mapping.from_button_id)){
+   assert.ok(path.startsWith('/jf_map_zoomIn@common.button')||path.startsWith('/jf_map_zoomOut@common.button'),path);
+  }
+  for(const [key,child]of Object.entries(value))check(child,path+'/'+key);
+ }
+ check(ui);
+ const route=children(ui.jf_router)['map@jagsby_frontier.jf_settlement_map'];
+ for(const target of ['#visible','#enabled'])assert.ok(route.bindings.some(b=>b.target_property_name===target&&b.source_property_name==="(#title_text = 'JF_CHARTER|SettlementMap')"));
+});

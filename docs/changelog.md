@@ -1,5 +1,15 @@
 # 0.0.88
 
+## 0.0.93 — Map D-pad zoom shortcuts
+
+- Add gamepad-only Up/Down mappings on the map zoom controls; keep mouse/touch
+  buttons, explicit native action indices and existing map projection logic.
+- Add a shortcut hint to the map header. Up/Down are reserved for zoom while
+  viewing the map. Other Charter screens keep their existing navigation.
+- Zoom still replaces the ActionFormData form; true in-place redraw is not
+  implemented. See settlement-map.md for the API limitation and runtime checks.
+
+
 ## 0.0.92 — Defer unused Realm rows and tighten road rows
 
 - Put each Realm row template behind a 1×1 grid with an initial item limit of

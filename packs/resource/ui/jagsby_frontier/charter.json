@@ -202622,6 +202622,13 @@
         "from_button_id": "button.menu_ok",
         "to_button_id": "button.form_button_click",
         "mapping_type": "focused"
+      },
+      {
+        "from_button_id": "button.menu_down",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "global",
+        "scope": "view",
+        "input_mode_condition": "gamepad_and_not_gaze"
       }
     ],
     "controls": [
@@ -202829,7 +202836,8 @@
           ]
         }
       }
-    ]
+    ],
+    "tts_name": "Zoom out, D-pad down"
   },
   "jf_map_zoomIn@common.button": {
     "size": [
@@ -202863,6 +202871,13 @@
         "from_button_id": "button.menu_ok",
         "to_button_id": "button.form_button_click",
         "mapping_type": "focused"
+      },
+      {
+        "from_button_id": "button.menu_up",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "global",
+        "scope": "view",
+        "input_mode_condition": "gamepad_and_not_gaze"
       }
     ],
     "controls": [
@@ -203070,7 +203085,8 @@
           ]
         }
       }
-    ]
+    ],
+    "tts_name": "Zoom in, D-pad up"
   },
   "jf_map_west@common.button": {
     "size": [
@@ -204648,9 +204664,9 @@
       {
         "title": {
           "type": "label",
-          "text": "Settlement Map",
+          "text": "Settlement Map  |  D-pad Up/Down: zoom",
           "size": [
-            220,
+            290,
             14
           ],
           "offset": [
@@ -204665,7 +204681,7 @@
             0.91,
             0.86
           ],
-          "font_scale_factor": 0.9
+          "font_scale_factor": 0.7
         }
       },
       {
