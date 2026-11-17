@@ -1,5 +1,18 @@
 # 0.0.88
 
+## 0.0.92 — Defer unused Realm rows and tighten road rows
+
+- Put each Realm row template behind a 1×1 grid with an initial item limit of
+  zero and zero precached items. Bind its item limit to its own shared-body
+  population marker (0/1). Empty positions keep lightweight grid slots, but
+  no embedded full row controls. Existing explicit data/action indices remain.
+- Keep local tabs, marker updates, scroll behavior and controller reading focus.
+- Reduce Road Networks row height from 38 to 33 UI pixels. Keep the 20px tier
+  icon, travel buttons, name, owner, distance, cost and construction countdown.
+- Static and scripted tests validate the grid gates and compact geometry;
+  Minecraft opening-speed and content-log verification remain outstanding.
+
+
 ## 0.0.91 — Settlement Map
 
 - Add Diplomacy → Open Settlement Map with a dark coordinate grid and green

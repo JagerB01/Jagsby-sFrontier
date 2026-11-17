@@ -771,7 +771,8 @@ def build():
         control("open_map", {**action("open", ACTIONS["settlementMap"], "Open Settlement Map", width=233)["open"], "offset": [8, 112], "anchor_from": "top_left", "anchor_to": "top_left"}),
     ]}
     realm_controls = [research_tab("roads", 0, "realm", "Road Networks"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
-    # Fixed explicit collection indices reuse the renderer verified in 0.0.66.
+    # Preserve the working explicit collection indices. A zero-precache grid
+    # creates each heavy row only when the shared form body includes its marker.
     # Interleave scopes by slot so a small world transmits only a short prefix.
     row_base = max([*DATA.values(), *ACTIONS.values()]) + 1
     row_limit, row_stride = 128, 24
@@ -793,7 +794,7 @@ def build():
 
     for scope_index, scope in enumerate(["mine", "all", "roads"]):
         road = scope == "roads"
-        height = 38 if road else 32
+        height = 33 if road else 32
         field_specs = [
             ("name", 0, [33, 2], [76, 12], 0.75, WHEAT),
             ("owner", 1, [33, 15], [76, 12], 0.65, SILVER),
@@ -804,7 +805,7 @@ def build():
                 ("owner", 1, [32, 15], [56, 12], 0.65, SILVER),
                 ("distance", 2, [91, 15], [38, 12], 0.6, IVORY),
                 ("cost", 3, [132, 15], [44, 12], 0.6, IVORY),
-                ("time", 5, [176, 28], [29, 9], 0.5, SILVER),
+                ("time", 5, [176, 25], [29, 7], 0.5, SILVER),
             ]
         else:
             field_specs += [
@@ -862,12 +863,12 @@ def build():
             if road:
                 fields.append(control("distance_label", label("Distance", [38, 12], (91, 2), SILVER, 0.6)))
                 fields.append(control("cost_label", label("Travel Cost", [44, 12], (132, 2), SILVER, 0.6)))
-                icon = explicit_scope("jf_realm_road_tier_icon", base + 6, [180.5, 8], [20, 20])
+                icon = explicit_scope("jf_realm_road_tier_icon", base + 6, [180.5, 5], [20, 20])
                 fields.append(control("tier_icon", icon))
-                road_label = label("Road", [29, 8], (176, 0), SILVER, 0.6)
+                road_label = label("Road", [29, 5], (176, 0), SILVER, 0.6)
                 road_label["text_alignment"] = "center"
                 fields.append(control("road_label", road_label))
-                tier_action = explicit_scope("jf_realm_tier_action", base + 6, [178.5, 7], [24, 24])
+                tier_action = explicit_scope("jf_realm_tier_action", base + 6, [178.5, 3], [24, 24])
                 fields.append(control("tier_action", tier_action))
                 for enabled in [True, False]:
                     key = "travel" if enabled else "travel_disabled"
@@ -879,8 +880,20 @@ def build():
                 establish = explicit_scope("jf_realm_establish_" + scope, base + 6, [201, 4], [47, 24])
                 establish["bindings"] = row_present("[JF:establish:" + scope + ":" + str(slot) + "]")
                 fields.append(control("establish", establish))
-            rows.append(control("row" + str(slot), focusable_scroll_row({"size": [251, height], "controls": fields,
-                "bindings": row_present("[JF:row:" + scope + ":" + str(slot) + "]")}, "realm", scope, slot)))
+            marker = "[JF:row:" + scope + ":" + str(slot) + "]"
+            template = "jf_realm_" + scope + "_row" + str(slot)
+            ui[template] = focusable_scroll_row({"size": [251, height], "controls": fields}, "realm", scope, slot)
+            # Mojang grids support #maximum_grid_items. The numeric 0/1 limit
+            # controls creation, rather than merely hiding an instantiated row.
+            present = "(not ((#form_text - '" + marker + "') = #form_text))"
+            rows.append(control("row" + str(slot), {
+                "type": "grid", "size": [251, "default"],
+                "grid_dimensions": [1, 1], "grid_rescaling_type": "vertical",
+                "collection_name": "form_buttons", "grid_item_template": "jagsby_frontier." + template,
+                "maximum_grid_items": 0, "precached_grid_item_count": 0,
+                "bindings": [view("(" + present + " * 1)", "#maximum_grid_items", "jf_menu_state"),
+                             view(present, "#visible", "jf_menu_state")],
+            }))
         ui["jf_realm_" + scope + "_rows"] = {"type": "stack_panel", "orientation": "vertical", "size": [251, "100%c"], "controls": rows}
         scroll = control("entries@common.scrolling_panel", {
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 12 if road else 0],

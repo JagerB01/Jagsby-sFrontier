@@ -822,3 +822,21 @@ test('Cluster selection shows the exact selected settlement and refresh clears a
  h.update(s=>delete s.villages.b);h.api.openSettlementMap(h.player,'a',{},'b');
  assert.match(h.forms.at(-1).buttons[m.details],/Select/);
 });
+
+test('A single unowned settlement supplies exactly one Realm row creation marker',async()=>{
+ const h=await runtime();h.api.open(h.player,'none');
+ const form=h.forms.at(-1),markers=form.text.match(/\[JF:row:(mine|all|roads):\d+\]/g)||[];
+ assert.deepEqual(markers,['[JF:row:all:0]']);
+ const source=await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8');
+ const ui=JSON.parse(source);
+ for(const scope of ['mine','all','roads']){
+  const gates=Object.assign({},...ui['jf_realm_'+scope+'_rows'].controls);
+  for(const [key,gate]of Object.entries(gates)){
+   const slot=Number(key.slice(3)),marker=`[JF:row:${scope}:${slot}]`;
+   const creation=gate.bindings.find(b=>b.target_property_name==='#maximum_grid_items');
+   assert.ok(creation.source_property_name.includes(marker));
+   assert.equal(gate.maximum_grid_items,0);assert.equal(gate.precached_grid_item_count,0);
+   if(form.text.includes(marker))assert.equal(scope,'all');
+  }
+ }
+});

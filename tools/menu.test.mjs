@@ -78,7 +78,7 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   const ui=await loadUI();
   function validateScope(value) {
     if(value && typeof value==='object') {
-      if('collection_name' in value) assert.equal(value.type,'stack_panel',
+      if('collection_name' in value) assert.ok(['stack_panel','grid'].includes(value.type),
         'Content log regression: collection_name is unsupported on plain panel');
       for(const child of Object.values(value))validateScope(child);
     }
@@ -461,8 +461,9 @@ test('Realm scrolling rows use explicit collection indices and the established c
   assert.deepEqual(list.size,[251,'100%c']);
   const rows=children(list);assert.equal(Object.keys(rows).length,layout.realmRows.limit);
   for(const slot of [0,1,39,layout.realmRows.limit-1]){
-   const row=rows['row'+slot],fields=children(row);
-   assert.ok(row.bindings.some(binding=>binding.source_property_name?.includes('[JF:row:'+scope+':'+slot+']')));
+   const gate=rows['row'+slot],row=ui[gate.grid_item_template.split('.')[1]],fields=children(row);
+   assert.equal(gate.type,'grid');assert.equal(gate.maximum_grid_items,0);assert.equal(gate.precached_grid_item_count,0);
+   assert.ok(gate.bindings.some(binding=>binding.target_property_name==='#maximum_grid_items'&&binding.source_property_name.includes('[JF:row:'+scope+':'+slot+']')));
    const base=layout.realmRows.base+slot*layout.realmRows.stride+scopeIndex*8;
    for(const [field,offset] of [['name',0],['owner',1],...(scope==='roads'?[['distance',2],['cost',3],['time',5]]:[['coordinates',2],['distance',3],['development',4],['status',5]])]){
     const wrapper=fields[field];assert.equal(wrapper.type,'stack_panel');assert.equal(wrapper.collection_name,'form_buttons');
@@ -472,7 +473,7 @@ test('Realm scrolling rows use explicit collection indices and the established c
    }
    assert.equal(Object.values(fields.icon.controls[0])[0].collection_index,base);
    if(scope==='roads'){
-    assert.deepEqual(row.size,[251,38]);
+    assert.deepEqual(row.size,[251,33]);
     assert.equal(Object.values(fields.tier_icon.controls[0])[0].collection_index,base+6);
     assert.equal(Object.values(fields.travel.controls[0])[0].collection_index,base+7);
     assert.equal(Object.values(fields.travel_disabled.controls[0])[0].collection_index,base+7);
@@ -562,8 +563,8 @@ test('Controller can enter and navigate Prospecting and Realm rows even without 
  for(const scope of layout.realmRows.scopes){
   const rows=children(ui['jf_realm_'+scope+'_rows']);
   for(let slot=0;slot<layout.realmRows.limit;slot++){
-   const row=rows['row'+slot];checkReader(row,'realm',scope,slot);
-   assert.ok(row.bindings.every(b=>b.source_property_name?.includes(`[JF:row:${scope}:${slot}]`)),
+   const gate=rows['row'+slot],row=ui[gate.grid_item_template.split('.')[1]];checkReader(row,'realm',scope,slot);
+   assert.ok(gate.bindings.every(b=>b.source_property_name?.includes(`[JF:row:${scope}:${slot}]`)),
     'Read focus follows row membership, not whether Establish/Travel is enabled');
   }
   assert.equal(children(ui.jf_realm_content)['jf_realm_tab_'+scope].focus_change_down,`jf_realm_${scope}_row_0`);
@@ -632,16 +633,16 @@ test('Fresh tab groups have exactly one selected default and refresh markers sel
 });
 
 test('Road bars label Travel Cost and Road, with the countdown beneath the tier icon',async()=>{
- const ui=await loadUI(),row=children(ui.jf_realm_roads_rows).row0,fields=children(row);
+ const ui=await loadUI(),row=ui.jf_realm_roads_row0,fields=children(row);
  assert.equal(fields.cost_label.text,'Travel Cost');assert.equal(fields.road_label.text,'Road');
- assert.deepEqual(row.size,[251,38]);assert.deepEqual(fields.cost.size,[44,12]);
+ assert.deepEqual(row.size,[251,33]);assert.deepEqual(fields.cost.size,[44,12]);
  assert.ok(fields.road_label.offset[1]+fields.road_label.size[1]<=fields.tier_icon.offset[1]);
  assert.ok(fields.time.offset[1]>=fields.tier_icon.offset[1]+fields.tier_icon.size[1]);
  assert.ok(fields.time.offset[1]+fields.time.size[1]<=row.size[1]);
 });
 
 test('Road heading and enlarged icon are centered between price and Travel with no tier caption',async()=>{
- const ui=await loadUI(),row=children(ui.jf_realm_roads_rows).row0,fields=children(row);
+ const ui=await loadUI(),row=ui.jf_realm_roads_row0,fields=children(row);
  const left=fields.cost.offset[0]+fields.cost.size[0],right=fields.travel.offset[0],center=(left+right)/2;
  assert.equal(fields.road_label.offset[0]+fields.road_label.size[0]/2,center);
  assert.equal(fields.tier_icon.offset[0]+fields.tier_icon.size[0]/2,center);
@@ -649,4 +650,28 @@ test('Road heading and enlarged icon are centered between price and Travel with 
  assert.equal(fields.status,undefined);assert.equal(ui.jf_realm_roads_status,undefined);
  assert.ok(fields.road_label.offset[1]+fields.road_label.size[1]<=fields.tier_icon.offset[1]);
  assert.ok(fields.tier_icon.offset[1]+fields.tier_icon.size[1]<=fields.time.offset[1]);
+});
+
+test('Realm lists defer every heavy row until its own population marker arrives',async()=>{
+ const ui=await loadUI(),{CHARTER_LAYOUT:layout}=await import('../packs/behavior/scripts/charter-layout.js');
+ for(const scope of layout.realmRows.scopes){
+  const gates=children(ui['jf_realm_'+scope+'_rows']);
+  for(let slot=0;slot<layout.realmRows.limit;slot++){
+   const gate=gates['row'+slot],marker=`[JF:row:${scope}:${slot}]`;
+   assert.equal(gate.type,'grid');assert.equal(gate.collection_name,'form_buttons');
+   assert.deepEqual(gate.grid_dimensions,[1,1]);assert.equal(gate.maximum_grid_items,0);
+   assert.equal(gate.precached_grid_item_count,0,'Do not allocate row children before population data');
+   assert.equal(gate.controls,undefined,'No heavy child may be embedded in the gate');
+   const limit=gate.bindings.find(b=>b.target_property_name==='#maximum_grid_items');
+   assert.equal(limit.source_control_name,'jf_menu_state');
+   assert.equal(limit.source_property_name,`((not ((#form_text - '${marker}') = #form_text)) * 1)`);
+   assert.equal(limit.binding_condition,undefined,'Late form data must be able to create the row');
+   const row=ui[gate.grid_item_template.split('.')[1]];assert.ok(row);
+   const fields=children(row);
+   assert.equal(fields.surface.size[1],row.size[1]-1);
+   for(const field of ['icon','name','owner',...(scope==='roads'?['distance','cost','time','tier_icon','tier_action','travel']:['coordinates','distance','development','status','establish'])]){
+    assert.ok(fields[field].offset[1]+fields[field].size[1]<=row.size[1],`${scope} ${field} must stay inside its compact row`);
+   }
+  }
+ }
 });

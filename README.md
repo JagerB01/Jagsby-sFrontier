@@ -5,7 +5,13 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.91.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.92.mcaddon?raw=true)
+
+Version 0.0.92 defers Realm row construction until its population marker is
+available. Empty positions retain only lightweight zero-precache grid slots,
+rather than full hidden rows. Road Networks rows are reduced from 38 to 33 UI
+pixels with all information and actions retained. In-game opening speed still
+needs verification.
 
 Version 0.0.91 adds **Diplomacy → Open Settlement Map**: shared settlement
 locations, a dark grid with green named markers, selection details, zoom, pan
