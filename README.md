@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.90.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.91.mcaddon?raw=true)
+
+Version 0.0.91 adds **Diplomacy → Open Settlement Map**: shared settlement
+locations, a dark grid with green named markers, selection details, zoom, pan
+and dimension selection. It reads the existing saved registry only on map
+actions, with no scans or tick loops. See [map controls and limitations](docs/settlement-map.md).
 
 Version 0.0.90 replaces the Information tab with **Diplomacy** and the approved
 64×64 transparent banners icon. The tab is a placeholder for future diplomacy

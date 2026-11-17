@@ -48,6 +48,26 @@
         }
       },
       {
+        "map@jagsby_frontier.jf_settlement_map": {
+          "bindings": [
+            {
+              "binding_name": "#title_text",
+              "binding_type": "none"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(#title_text = 'JF_CHARTER|SettlementMap')",
+              "target_property_name": "#visible"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(#title_text = 'JF_CHARTER|SettlementMap')",
+              "target_property_name": "#enabled"
+            }
+          ]
+        }
+      },
+      {
         "picker@jagsby_frontier.jf_picker": {
           "bindings": [
             {
@@ -56,12 +76,12 @@
             },
             {
               "binding_type": "view",
-              "source_property_name": "((not ((#title_text - 'JF_CHARTER|') = #title_text)) and (not (#title_text = 'JF_CHARTER|Dashboard')))",
+              "source_property_name": "((not ((#title_text - 'JF_CHARTER|') = #title_text)) and (not (#title_text = 'JF_CHARTER|Dashboard')) and (not (#title_text = 'JF_CHARTER|SettlementMap')))",
               "target_property_name": "#visible"
             },
             {
               "binding_type": "view",
-              "source_property_name": "((not ((#title_text - 'JF_CHARTER|') = #title_text)) and (not (#title_text = 'JF_CHARTER|Dashboard')))",
+              "source_property_name": "((not ((#title_text - 'JF_CHARTER|') = #title_text)) and (not (#title_text = 'JF_CHARTER|Dashboard')) and (not (#title_text = 'JF_CHARTER|SettlementMap')))",
               "target_property_name": "#enabled"
             }
           ]
@@ -22575,12 +22595,12 @@
         }
       },
       {
-        "placeholder": {
+        "description": {
           "type": "label",
-          "text": "Diplomacy features are not yet available.",
+          "text": "Settlement Map\nView shared settlement locations, coordinates\nand Development. Select markers for details.\nZoom, pan and switch dimensions on the map.",
           "size": [
             233,
-            96
+            65
           ],
           "offset": [
             8,
@@ -22598,6 +22618,30 @@
             0.85
           ],
           "shadow": false
+        }
+      },
+      {
+        "open_map": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "size": [
+            233,
+            24
+          ],
+          "collection_name": "form_buttons",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_action_settlementMap": {
+                "collection_index": 11
+              }
+            }
+          ],
+          "offset": [
+            8,
+            112
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left"
         }
       }
     ]
@@ -195242,6 +195286,245 @@
       "#form_button_text": "Unavailable"
     }
   },
+  "jf_action_settlementMap@common.button": {
+    "size": [
+      233,
+      21
+    ],
+    "$pressed_button_name": "button.form_button_click",
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:settlementMap]')",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#form_button_text = '[JF:action:settlementMap]')",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            233,
+            21
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_233x21_default",
+                "size": [
+                  233,
+                  21
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  231,
+                  19
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Open Settlement Map",
+                "size": [
+                  221,
+                  12
+                ],
+                "offset": [
+                  6,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.8,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            233,
+            21
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_233x21_hover",
+                "size": [
+                  233,
+                  21
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  231,
+                  19
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Open Settlement Map",
+                "size": [
+                  221,
+                  12
+                ],
+                "offset": [
+                  6,
+                  4
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.8,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            233,
+            21
+          ],
+          "controls": [
+            {
+              "gold": {
+                "type": "image",
+                "texture": "textures/ui/frontier/button_233x21_pressed",
+                "size": [
+                  233,
+                  21
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "keep_ratio": false,
+                "bilinear": false,
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 0
+              }
+            },
+            {
+              "wood": {
+                "type": "panel",
+                "size": [
+                  231,
+                  19
+                ]
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "Open Settlement Map",
+                "size": [
+                  221,
+                  12
+                ],
+                "offset": [
+                  6,
+                  5
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "font_type": "unicode",
+                "font_size": "normal",
+                "font_scale_factor": 0.8,
+                "color": [
+                  0.94,
+                  0.92,
+                  0.85
+                ],
+                "shadow": false
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
   "jf_data_roadSummary": {
     "type": "label",
     "text": "#text",
@@ -195331,6 +195614,5410 @@
         "binding_type": "view",
         "source_property_name": "(not ((#record_text - '[JF:data:roadDetails]') = #record_text))",
         "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_map_bounds": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      320,
+      14
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "color": [
+      0.88,
+      0.91,
+      0.86
+    ],
+    "font_scale_factor": 0.55,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_map_details": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      320,
+      25
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "color": [
+      0.88,
+      0.91,
+      0.86
+    ],
+    "font_scale_factor": 0.65,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_map_marker@common.button": {
+    "size": [
+      26,
+      20
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not (#form_button_text = ''))",
+        "target_property_name": "#visible"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not (#form_button_text = ''))",
+        "target_property_name": "#enabled"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            26,
+            20
+          ],
+          "controls": [
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/map_settlement",
+                "size": [
+                  8,
+                  8
+                ],
+                "offset": [
+                  9,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "bilinear": false
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  26,
+                  9
+                ],
+                "offset": [
+                  0,
+                  9
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.5,
+                  1.0,
+                  0.55
+                ],
+                "font_scale_factor": 0.45,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            26,
+            20
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/map_settlement",
+                "size": [
+                  8,
+                  8
+                ],
+                "offset": [
+                  9,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "bilinear": false
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  26,
+                  9
+                ],
+                "offset": [
+                  0,
+                  9
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.5,
+                  1.0,
+                  0.55
+                ],
+                "font_scale_factor": 0.45,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            26,
+            20
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "icon": {
+                "type": "image",
+                "texture": "textures/ui/frontier/map_settlement",
+                "size": [
+                  8,
+                  8
+                ],
+                "offset": [
+                  9,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "bilinear": false
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  26,
+                  9
+                ],
+                "offset": [
+                  0,
+                  9
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.5,
+                  1.0,
+                  0.55
+                ],
+                "font_scale_factor": 0.45,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_map_back@common.button": {
+    "size": [
+      34,
+      14
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            34,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  34,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.15,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  34,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            34,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  34,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  34,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            34,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  34,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  34,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_map_fit@common.button": {
+    "size": [
+      24,
+      14
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            24,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  24,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.15,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  24,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            24,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  24,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  24,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            24,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  24,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  24,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_map_zoomOut@common.button": {
+    "size": [
+      18,
+      14
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.15,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_map_zoomIn@common.button": {
+    "size": [
+      18,
+      14
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.15,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_map_west@common.button": {
+    "size": [
+      18,
+      14
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.15,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_map_east@common.button": {
+    "size": [
+      18,
+      14
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.15,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_map_north@common.button": {
+    "size": [
+      18,
+      14
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.15,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_map_south@common.button": {
+    "size": [
+      18,
+      14
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.15,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            18,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  18,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  18,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_map_dimension@common.button": {
+    "size": [
+      62,
+      14
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            62,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  62,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.15,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  62,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            62,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  62,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  62,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            62,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  62,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  62,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_map_refresh@common.button": {
+    "size": [
+      47,
+      14
+    ],
+    "focus_enabled": true,
+    "hover_enabled": true,
+    "$pressed_button_name": "button.form_button_click",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ],
+    "default_control": "default",
+    "hover_control": "hover",
+    "pressed_control": "pressed",
+    "button_mappings": [
+      {
+        "from_button_id": "button.menu_select",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "pressed"
+      },
+      {
+        "from_button_id": "button.menu_ok",
+        "to_button_id": "button.form_button_click",
+        "mapping_type": "focused"
+      }
+    ],
+    "controls": [
+      {
+        "default": {
+          "type": "panel",
+          "size": [
+            47,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  47,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.15,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  47,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "hover": {
+          "type": "panel",
+          "size": [
+            47,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  47,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  47,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "pressed": {
+          "type": "panel",
+          "size": [
+            47,
+            14
+          ],
+          "controls": [
+            {
+              "background": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  47,
+                  14
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.2,
+                  0.27,
+                  0.2
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "caption": {
+                "type": "label",
+                "text": "#form_button_text",
+                "size": [
+                  47,
+                  9
+                ],
+                "offset": [
+                  0,
+                  3
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 8,
+                "color": [
+                  0.9,
+                  0.93,
+                  0.88
+                ],
+                "font_scale_factor": 0.55,
+                "text_alignment": "center",
+                "bindings": [
+                  {
+                    "binding_type": "collection_details",
+                    "binding_collection_name": "form_buttons"
+                  },
+                  {
+                    "binding_name": "#form_button_text",
+                    "binding_type": "collection",
+                    "binding_collection_name": "form_buttons"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "jf_settlement_map": {
+    "type": "panel",
+    "size": [
+      380,
+      240
+    ],
+    "controls": [
+      {
+        "frame": {
+          "type": "image",
+          "texture": "textures/ui/frontier/charter_frame",
+          "size": [
+            380,
+            240
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 1
+        }
+      },
+      {
+        "leather": {
+          "type": "image",
+          "texture": "textures/ui/frontier/palette_leather",
+          "size": [
+            344,
+            197
+          ],
+          "offset": [
+            18,
+            30
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 2,
+          "color": [
+            0.58,
+            0.58,
+            0.58
+          ]
+        }
+      },
+      {
+        "banner": {
+          "type": "image",
+          "texture": "textures/ui/frontier/palette_leather",
+          "size": [
+            344,
+            25
+          ],
+          "offset": [
+            18,
+            31
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 3,
+          "color": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "banner_rule": {
+          "type": "image",
+          "texture": "textures/ui/frontier/solid",
+          "size": [
+            344,
+            1
+          ],
+          "offset": [
+            18,
+            55
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 4,
+          "color": [
+            0.82,
+            0.7,
+            0.44
+          ]
+        }
+      },
+      {
+        "ornament": {
+          "type": "image",
+          "texture": "textures/ui/frontier/harvest_border",
+          "size": [
+            380,
+            240
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "keep_ratio": false,
+          "bilinear": false,
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 20
+        }
+      },
+      {
+        "close@common.close_button": {
+          "$close_button_offset": [
+            -7,
+            7
+          ],
+          "layer": 30,
+          "bindings": []
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "Settlement Map",
+          "size": [
+            220,
+            14
+          ],
+          "offset": [
+            30,
+            34
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "color": [
+            0.88,
+            0.91,
+            0.86
+          ],
+          "font_scale_factor": 0.9
+        }
+      },
+      {
+        "bounds": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            320,
+            14
+          ],
+          "offset": [
+            30,
+            61
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_bounds": {
+                "collection_index": 82
+              }
+            }
+          ]
+        }
+      },
+      {
+        "details": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            320,
+            25
+          ],
+          "offset": [
+            30,
+            199
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_details": {
+                "collection_index": 83
+              }
+            }
+          ]
+        }
+      },
+      {
+        "grid": {
+          "type": "panel",
+          "size": [
+            312,
+            120
+          ],
+          "offset": [
+            30,
+            77
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "black": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  312,
+                  120
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.025,
+                  0.035,
+                  0.03
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x0": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x1": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  26,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x2": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  52,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x3": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  78,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x4": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  104,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x5": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  130,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x6": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  156,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x7": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  182,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x8": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  208,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x9": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  234,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x10": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  260,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x11": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  286,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "x12": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  1,
+                  120
+                ],
+                "offset": [
+                  311,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "z0": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  312,
+                  1
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "z1": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  312,
+                  1
+                ],
+                "offset": [
+                  0,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "z2": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  312,
+                  1
+                ],
+                "offset": [
+                  0,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "z3": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  312,
+                  1
+                ],
+                "offset": [
+                  0,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "z4": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  312,
+                  1
+                ],
+                "offset": [
+                  0,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "z5": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  312,
+                  1
+                ],
+                "offset": [
+                  0,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "z6": {
+                "type": "image",
+                "texture": "textures/ui/frontier/solid",
+                "size": [
+                  312,
+                  1
+                ],
+                "offset": [
+                  0,
+                  119
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "color": [
+                  0.12,
+                  0.16,
+                  0.13
+                ],
+                "layer": 3
+              }
+            },
+            {
+              "cell0": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 0
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell1": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  26,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 1
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell2": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  52,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 2
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell3": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  78,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 3
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell4": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  104,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 4
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell5": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  130,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 5
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell6": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  156,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 6
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell7": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  182,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 7
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell8": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  208,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 8
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell9": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  234,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 9
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell10": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  260,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 10
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell11": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  286,
+                  0
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 11
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell12": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  0,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 12
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell13": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  26,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 13
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell14": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  52,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 14
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell15": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  78,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 15
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell16": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  104,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 16
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell17": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  130,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 17
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell18": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  156,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 18
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell19": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  182,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 19
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell20": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  208,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 20
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell21": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  234,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 21
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell22": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  260,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 22
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell23": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  286,
+                  20
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 23
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell24": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  0,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 24
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell25": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  26,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 25
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell26": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  52,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 26
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell27": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  78,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 27
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell28": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  104,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 28
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell29": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  130,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 29
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell30": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  156,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 30
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell31": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  182,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 31
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell32": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  208,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 32
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell33": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  234,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 33
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell34": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  260,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 34
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell35": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  286,
+                  40
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 35
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell36": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  0,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 36
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell37": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  26,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 37
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell38": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  52,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 38
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell39": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  78,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 39
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell40": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  104,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 40
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell41": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  130,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 41
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell42": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  156,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 42
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell43": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  182,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 43
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell44": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  208,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 44
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell45": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  234,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 45
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell46": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  260,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 46
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell47": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  286,
+                  60
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 47
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell48": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  0,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 48
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell49": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  26,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 49
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell50": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  52,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 50
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell51": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  78,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 51
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell52": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  104,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 52
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell53": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  130,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 53
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell54": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  156,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 54
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell55": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  182,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 55
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell56": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  208,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 56
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell57": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  234,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 57
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell58": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  260,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 58
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell59": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  286,
+                  80
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 59
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell60": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  0,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 60
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell61": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  26,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 61
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell62": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  52,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 62
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell63": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  78,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 63
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell64": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  104,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 64
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell65": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  130,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 65
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell66": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  156,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 66
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell67": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  182,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 67
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell68": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  208,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 68
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell69": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  234,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 69
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell70": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  260,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 70
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "cell71": {
+                "type": "stack_panel",
+                "orientation": "vertical",
+                "collection_name": "form_buttons",
+                "size": [
+                  26,
+                  20
+                ],
+                "offset": [
+                  286,
+                  100
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "controls": [
+                  {
+                    "record@jagsby_frontier.jf_map_marker": {
+                      "collection_index": 71
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "back": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            34,
+            14
+          ],
+          "offset": [
+            30,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_back": {
+                "collection_index": 72
+              }
+            }
+          ]
+        }
+      },
+      {
+        "fit": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            24,
+            14
+          ],
+          "offset": [
+            66,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_fit": {
+                "collection_index": 73
+              }
+            }
+          ]
+        }
+      },
+      {
+        "zoomOut": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            18,
+            14
+          ],
+          "offset": [
+            92,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_zoomOut": {
+                "collection_index": 74
+              }
+            }
+          ]
+        }
+      },
+      {
+        "zoomIn": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            18,
+            14
+          ],
+          "offset": [
+            112,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_zoomIn": {
+                "collection_index": 75
+              }
+            }
+          ]
+        }
+      },
+      {
+        "west": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            18,
+            14
+          ],
+          "offset": [
+            132,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_west": {
+                "collection_index": 76
+              }
+            }
+          ]
+        }
+      },
+      {
+        "east": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            18,
+            14
+          ],
+          "offset": [
+            152,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_east": {
+                "collection_index": 77
+              }
+            }
+          ]
+        }
+      },
+      {
+        "north": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            18,
+            14
+          ],
+          "offset": [
+            172,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_north": {
+                "collection_index": 78
+              }
+            }
+          ]
+        }
+      },
+      {
+        "south": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            18,
+            14
+          ],
+          "offset": [
+            192,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_south": {
+                "collection_index": 79
+              }
+            }
+          ]
+        }
+      },
+      {
+        "dimension": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            62,
+            14
+          ],
+          "offset": [
+            212,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_dimension": {
+                "collection_index": 80
+              }
+            }
+          ]
+        }
+      },
+      {
+        "refresh": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            47,
+            14
+          ],
+          "offset": [
+            276,
+            47
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_refresh": {
+                "collection_index": 81
+              }
+            }
+          ]
+        }
       }
     ]
   }

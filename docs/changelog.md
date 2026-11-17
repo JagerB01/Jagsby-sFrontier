@@ -1,5 +1,18 @@
 # 0.0.88
 
+## 0.0.91 — Settlement Map
+
+- Add Diplomacy → Open Settlement Map with a dark coordinate grid and green
+  named settlement markers. Selection shows full name, X/Y/Z and Development.
+- Add fit, zoom, pan, dimension switching, refresh and return to Diplomacy.
+  Overlapping markers have a paged selector; none are discarded by a marker cap.
+- Read the existing shared persistent settlement registry on map actions only.
+  No new registration/cache, block scanning, tick loops or POI discovery.
+- Keep existing Charter action indices, tabs, research and settlement logic.
+- See settlement-map.md for grid precision, snapshot freshness, UI investigation,
+  automated checks and outstanding in-game acceptance testing.
+
+
 ## 0.0.90 — Diplomacy tab
 
 - Rename Information to Diplomacy, including controller navigation and the

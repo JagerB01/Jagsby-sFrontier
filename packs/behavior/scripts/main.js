@@ -8,6 +8,7 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
+import { mapSnapshot, moveMap, mapCellName, mapDetails } from "./settlement-map.js";
 
 
 const BLOCK = "jagsby_frontier:village_charter";
@@ -223,6 +224,7 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   records[data.roadSummary]=roadView.summary;
   records[data.roadDetails]=roadView.rows.length?'':roadView.details;
   const handlers=new Map();
+  handlers.set(actions.settlementMap,()=>openSettlementMap(player,vId,{},vId,view));
   const realmMarkers=[];
   const layout=CHARTER_LAYOUT.realmRows;
   const lists=[mine.rows,all.rows,roadView.rows];
@@ -274,6 +276,61 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   console.log(`[Frontier menu] prepare_ms=${Date.now()-preparedAt} records=${records.length}`);
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
+
+// Map data is built only on this explicit Diplomacy action and map interactions.
+// No cache, persistent duplicate registry, block access or scheduled work.
+function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
+ try{
+  const villages=state().villages;
+  const requested={...viewport,dimension:viewport.dimension||villages[vid]?.dimension||player.dimension?.id||'minecraft:overworld'};
+  const snapshot=mapSnapshot(villages,requested,selectedId),layout=CHARTER_LAYOUT.settlementMap;
+  const records=Array(layout.details+1).fill('');
+  snapshot.cells.forEach((points,index)=>records[index]=mapCellName(points));
+  const labels={back:'Back',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
+  for(const [key,text]of Object.entries(labels))records[layout[key]]=text;
+  const b=snapshot.bounds;
+  records[layout.bounds]=`${snapshot.viewport.dimension.replace('minecraft:','')} | ${snapshot.visible}/${snapshot.count} settlements | X ${Math.floor(b.minX)}..${Math.ceil(b.maxX)} Z ${Math.floor(b.minZ)}..${Math.ceil(b.maxZ)}`;
+  records[layout.details]=snapshot.count?mapDetails(snapshot.selected):'No settlements registered in this dimension. Use Dimension to change maps.';
+  const form=new ActionFormData().title(pageTitle('SettlementMap')).body('Shared settlement map');
+  records.forEach(text=>form.button(text));
+  const show=(next=snapshot.viewport,selection=selectedId)=>openSettlementMap(player,vid,next,selection,returnView);
+  displayMenu(player,form,system).then(response=>{
+   if(response.canceled)return;
+   const index=response.selection;
+   if(index<layout.cells){
+    const points=snapshot.cells[index];
+    if(points?.length===1)show(snapshot.viewport,points[0].id);
+    else if(points?.length>1)selectMapSettlement(player,points.map(p=>p.id),selectedId,id=>show(snapshot.viewport,id));
+    return;
+   }
+   const action=Object.keys(labels).find(key=>layout[key]===index);
+   if(action==='back'){reopenView(player,vid,{...returnView,page:'Diplomacy'});return;}
+   if(action==='fit'){show({dimension:snapshot.viewport.dimension});return;}
+   if(action==='dimension'){
+    const next=snapshot.dimensions[(snapshot.dimensions.indexOf(snapshot.viewport.dimension)+1)%snapshot.dimensions.length];
+    show({dimension:next});return;
+   }
+   if(action==='refresh'){show();return;}
+   if(action)show(moveMap(snapshot.viewport,action));
+  }).catch(error=>{console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not open. Please reopen the charter.');});
+ }catch(error){console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not load. Please reopen the charter.');}
+}
+function selectMapSettlement(player,ids,selectedId,done,page=0){
+ // Resolve again so renamed/removed entries are never selected from stale data.
+ const villages=state().villages,available=ids.filter(id=>villages[id]);
+ const pages=Math.max(1,Math.ceil(available.length/20));page=Math.max(0,Math.min(pages-1,page));
+ const current=available.slice(page*20,page*20+20);
+ const form=new ActionFormData().title('Settlement Map: select').body(`These settlements share a map cell. Page ${page+1}/${pages}`);
+ current.forEach(id=>{const v=villages[id];form.button(`${v.name} (${Math.floor(v.location.x)}, ${Math.floor(v.location.z)})`);});
+ const previous=current.length,next=previous+1,back=next+1;
+ form.button('Previous page').button('Next page').button('Back to map');
+ displayMenu(player,form,system).then(r=>{
+  if(r.canceled||r.selection===back){done(selectedId);return;}
+  if(r.selection<current.length){done(current[r.selection]);return;}
+  if(r.selection===previous||r.selection===next)selectMapSettlement(player,ids,selectedId,done,page+(r.selection===next?1:-1));
+ }).catch(error=>{console.warn(`Frontier map selection: ${error}`);done(selectedId);});
+}
+
 function openProduction(player,vid,scope='summary',pages={}){open(player,vid,'Production','global',0,'roads',scope==='biomes'?'biomes':'summary',pages);}
 async function renameSettlement(player,vId,view={}){
   const current=state().villages[vId];if(!current)return;

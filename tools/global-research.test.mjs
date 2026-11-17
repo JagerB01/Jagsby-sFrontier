@@ -145,7 +145,7 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
  globalThis.__researchRuntime={world:{getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(){return 1;},clearRun(){}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
- source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad,surveySettlement,travelRoad};\n//'+Math.random();
+ source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openSettlementMap,selectMapSettlement,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad,surveySettlement,travelRoad};\n//'+Math.random();
  const api=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
  return {api,player,slots,forms,messages,received,read:()=>JSON.parse(stored),update(fn){const s=JSON.parse(stored);fn(s);stored=JSON.stringify(s);},failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
 }
@@ -764,4 +764,61 @@ test('Road display leaves the completed-tier caption empty while retaining upgra
  assert.equal(h.forms[0].buttons[base+4],'');assert.equal(h.forms[0].buttons[base+5],'');
  h.update(state=>Object.assign(state.roads.r,{targetLevel:2,startedTick:0,durationTicks:144000,finishTick:144000,timingVersion:1}));
  h.api.open(h.player,'a','Realm');assert.equal(h.forms.at(-1).buttons[base+4],'');assert.equal(h.forms.at(-1).buttons[base+5],'> 6 days');
+});
+
+test('Diplomacy opens map on demand, reads fresh shared data and never scans or changes research',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),name:'Map home',id:'a'};
+ const h=await runtime(s,()=>({canceled:true}),{onCensus(){assert.fail('Map must not scan villagers');}});
+ const before=h.read();h.api.open(h.player,'a','Diplomacy');
+ assert.equal(h.forms.at(-1).buttons[CHARTER_LAYOUT.actions.settlementMap],'[JF:action:settlementMap]');
+ assert.ok(h.forms.every(f=>f.heading!=='JF_CHARTER|SettlementMap'),'Switching local tabs must not generate a map');
+ const prior=h.read();h.api.openSettlementMap(h.player,'a');
+ const m=CHARTER_LAYOUT.settlementMap,form=h.forms.at(-1);
+ assert.equal(form.heading,'JF_CHARTER|SettlementMap');assert.match(form.buttons[m.details],/Map home/);
+ assert.match(form.buttons[m.details],/Development/);assert.deepEqual(h.read(),prior);
+ h.update(s=>{s.villages.a.name='Renamed';s.villages.b={...village(1000),name:'Second',id:'b'};});
+ h.api.openSettlementMap(h.player,'a');assert.match(h.forms.at(-1).buttons[m.bounds],/3\/3 settlements/);
+ assert.match(h.forms.at(-1).buttons[m.details],/Renamed/);
+ h.update(s=>delete s.villages.a);h.api.openSettlementMap(h.player,'a');assert.match(h.forms.at(-1).buttons[m.details],/Select/);
+ assert.deepEqual(h.read().global,before.global);assert.deepEqual(h.read().researchProgress,before.researchProgress);
+});
+
+test('Map zoom, marker selection, cluster chooser, dimensions and Back dispatch native form actions',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),name:'Map home',id:'a'};
+ s.villages.b={...village(),name:'Map neighbour',id:'b'};
+ s.villages.end={...village(200),name:'End',id:'end',dimension:'minecraft:the_end'};
+ let respond=()=>({canceled:true});
+ const h=await runtime(s,form=>respond(form));const m=CHARTER_LAYOUT.settlementMap;
+ const flush=async()=>{for(let i=0;i<8;i++)await Promise.resolve();};
+ respond=()=>{respond=()=>({canceled:true});return {selection:m.zoomIn};};
+ h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.filter(f=>f.heading==='JF_CHARTER|SettlementMap').length,2);
+ respond=form=>{respond=()=>({canceled:true});return {selection:form.buttons.findIndex((text,i)=>i<m.cells&&text.includes('+'))};};
+ h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.at(-1).heading,'JF_CHARTER|SettlementMap'); // canceled chooser returns to map
+ assert.ok(h.forms.some(f=>f.heading==='Settlement Map: select'));
+ respond=()=>{respond=()=>({canceled:true});return {selection:m.dimension};};
+ h.api.openSettlementMap(h.player,'a');await flush();assert.match(h.forms.at(-1).buttons[m.bounds],/the_end/);
+ respond=()=>{respond=()=>({canceled:true});return {selection:m.back};};
+ h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.at(-1).heading,'JF_CHARTER|Dashboard');
+ assert.match(h.forms.at(-1).text,/\[JF:tab:diplomacy\]/);
+});
+
+test('Cluster selection shows the exact selected settlement and refresh clears a deleted selection',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),id:'a',name:'Map home'};
+ s.villages.b={...village(),id:'b',name:'Map neighbour',developmentValue:500};
+ let step=0;
+ const h=await runtime(s,form=>{
+  if(step===0&&form.heading==='JF_CHARTER|SettlementMap'){
+   step++;return {selection:form.buttons.findIndex((text,i)=>i<CHARTER_LAYOUT.settlementMap.cells&&text.includes('+'))};
+  }
+  if(step===1&&form.heading==='Settlement Map: select'){
+   step++;return {selection:form.buttons.findIndex(text=>text.startsWith('Map neighbour'))};
+  }
+  return {canceled:true};
+ });
+ h.api.openSettlementMap(h.player,'a');for(let i=0;i<12;i++)await Promise.resolve();
+ const m=CHARTER_LAYOUT.settlementMap;
+ assert.equal(step,2);assert.match(h.forms.at(-1).buttons[m.details],/Map neighbour/);
+ assert.match(h.forms.at(-1).buttons[m.details],/X 0  Y 64  Z 0/);
+ h.update(s=>delete s.villages.b);h.api.openSettlementMap(h.player,'a',{},'b');
+ assert.match(h.forms.at(-1).buttons[m.details],/Select/);
 });

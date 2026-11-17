@@ -96,6 +96,15 @@ def button_texture(width, height, state):
 
 def build():
     DEST.mkdir(parents=True, exist_ok=True)
+    # Tiny transparent green house silhouette for coordinate-map markers.
+    marker = Canvas(12, 12, (0, 0, 0, 0))
+    for y in range(5):
+        marker.rect(5 - y, y + 1, 2 + 2 * y, 1, (77, 214, 103, 255))
+    marker.rect(2, 6, 8, 5, (55, 169, 77, 255))
+    marker.rect(5, 8, 2, 3, (17, 53, 26, 255))
+    marker.rect(3, 7, 2, 2, (170, 245, 174, 255))
+    marker.save("map_settlement.png")
+
     Canvas(1, 1, (255, 255, 255)).save("solid.png")
     # Palette materials are generated at their native UI sizes so all screens
     # share neutral charcoal surfaces, aged silver trim and wheat highlights.

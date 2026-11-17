@@ -134,6 +134,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
     'const {world,system}=globalThis.__frontierTest; class ItemStack {}')
     .replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";',
       'const ActionFormData=globalThis.__frontierTest.Form;const ModalFormData=globalThis.__frontierTest.RenameForm;')
+    .replace('"./settlement-map.js"',JSON.stringify(new URL('settlement-map.js',scriptBase).href))
     .replace('"./charter-placement.js"',JSON.stringify(new URL('charter-placement.js',scriptBase).href))
     .replace('"./village-census.js"', JSON.stringify(moduleUrl))
     .replace('"./menu-display.js"', JSON.stringify(menuModuleUrl))
