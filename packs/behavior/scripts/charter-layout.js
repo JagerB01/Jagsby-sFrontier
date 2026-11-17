@@ -15,7 +15,8 @@ export const CHARTER_LAYOUT = {
     "dimension": 80,
     "refresh": 81,
     "bounds": 82,
-    "details": 83
+    "details": 83,
+    "names": 84
   },
   "data": {
     "overview": 0,

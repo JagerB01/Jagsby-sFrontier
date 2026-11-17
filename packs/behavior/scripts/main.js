@@ -8,7 +8,7 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
-import { mapSnapshot, moveMap, mapCellName, mapDetails } from "./settlement-map.js";
+import { mapSnapshot, moveMap, mapCellName, mapCellInfo } from "./settlement-map.js";
 
 
 const BLOCK = "jagsby_frontier:village_charter";
@@ -283,26 +283,24 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
  try{
   const villages=state().villages;
   const requested={...viewport,dimension:viewport.dimension||villages[vid]?.dimension||player.dimension?.id||'minecraft:overworld'};
-  const snapshot=mapSnapshot(villages,requested,selectedId),layout=CHARTER_LAYOUT.settlementMap;
-  const records=Array(layout.details+1).fill('');
-  snapshot.cells.forEach((points,index)=>records[index]=mapCellName(points));
+  let spawn=null;
+  try{spawn=world.getDefaultSpawnLocation();}catch(error){console.warn(`Frontier map spawn: ${error}`);}
+  const snapshot=mapSnapshot(villages,requested,selectedId,spawn),layout=CHARTER_LAYOUT.settlementMap;
+  const records=Array(layout.names+layout.cells).fill('');
+  snapshot.cells.forEach((points,index)=>{records[index]=mapCellInfo(points);records[layout.names+index]=mapCellName(points);});
   const labels={back:'Back',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
   for(const [key,text]of Object.entries(labels))records[layout[key]]=text;
   const b=snapshot.bounds;
-  records[layout.bounds]=`${snapshot.viewport.dimension.replace('minecraft:','')} | ${snapshot.visible}/${snapshot.count} settlements | X ${Math.floor(b.minX)}..${Math.ceil(b.maxX)} Z ${Math.floor(b.minZ)}..${Math.ceil(b.maxZ)}`;
-  records[layout.details]=snapshot.count?mapDetails(snapshot.selected):'No settlements registered in this dimension. Use Dimension to change maps.';
-  const form=new ActionFormData().title(pageTitle('SettlementMap')).body('Shared settlement map');
+  records[layout.bounds]=`${snapshot.viewport.dimension.replace('minecraft:','')} | ${snapshot.visible}/${snapshot.count} settlements`;
+  records[layout.details]=`X ${Math.floor(b.minX)}..${Math.ceil(b.maxX)}  |  Z ${Math.floor(b.minZ)}..${Math.ceil(b.maxZ)}`;
+  const form=new ActionFormData().title(pageTitle('SettlementMap')).body(snapshot.spawnCell===null?'':`[JF:spawn:${snapshot.spawnCell}]`);
   records.forEach(text=>form.button(text));
   const show=(next=snapshot.viewport,selection=selectedId)=>openSettlementMap(player,vid,next,selection,returnView);
   displayMenu(player,form,system).then(response=>{
    if(response.canceled)return;
    const index=response.selection;
-   if(index<layout.cells){
-    const points=snapshot.cells[index];
-    if(points?.length===1)show(snapshot.viewport,points[0].id);
-    else if(points?.length>1)selectMapSettlement(player,points.map(p=>p.id),selectedId,id=>show(snapshot.viewport,id));
-    return;
-   }
+   // Marker records are data-only. Hover/focus never submits or replaces a form.
+   if(index<layout.cells)return;
    const action=Object.keys(labels).find(key=>layout[key]===index);
    if(action==='back'){reopenView(player,vid,{...returnView,page:'Diplomacy'});return;}
    if(action==='fit'){show({dimension:snapshot.viewport.dimension});return;}
@@ -314,21 +312,6 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
    if(action)show(moveMap(snapshot.viewport,action));
   }).catch(error=>{console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not open. Please reopen the charter.');});
  }catch(error){console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not load. Please reopen the charter.');}
-}
-function selectMapSettlement(player,ids,selectedId,done,page=0){
- // Resolve again so renamed/removed entries are never selected from stale data.
- const villages=state().villages,available=ids.filter(id=>villages[id]);
- const pages=Math.max(1,Math.ceil(available.length/20));page=Math.max(0,Math.min(pages-1,page));
- const current=available.slice(page*20,page*20+20);
- const form=new ActionFormData().title('Settlement Map: select').body(`These settlements share a map cell. Page ${page+1}/${pages}`);
- current.forEach(id=>{const v=villages[id];form.button(`${v.name} (${Math.floor(v.location.x)}, ${Math.floor(v.location.z)})`);});
- const previous=current.length,next=previous+1,back=next+1;
- form.button('Previous page').button('Next page').button('Back to map');
- displayMenu(player,form,system).then(r=>{
-  if(r.canceled||r.selection===back){done(selectedId);return;}
-  if(r.selection<current.length){done(current[r.selection]);return;}
-  if(r.selection===previous||r.selection===next)selectMapSettlement(player,ids,selectedId,done,page+(r.selection===next?1:-1));
- }).catch(error=>{console.warn(`Frontier map selection: ${error}`);done(selectedId);});
 }
 
 function openProduction(player,vid,scope='summary',pages={}){open(player,vid,'Production','global',0,'roads',scope==='biomes'?'biomes':'summary',pages);}

@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.95.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.96.mcaddon?raw=true)
+
+Version 0.0.96 redesigns the Settlement Map with a left control panel, a properly
+stretched rectangular map/grid and a gold world-spawn icon. Settlement icons
+are hover-only: their info box shows Name, Biome, Development and Owner, with
+no click action or selection screen. See [map details](docs/settlement-map.md).
 
 Version 0.0.95 makes Right from a road row go directly to Travel, then A
 activates it. Left from the row or Travel reaches the road upgrade icon; Left

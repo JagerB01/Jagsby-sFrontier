@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {mapSnapshot,fitMap,settlementPoints,moveMap,mapDetails,mapCellName,MAP_ASPECT,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
+import {mapSnapshot,fitMap,settlementPoints,moveMap,mapDetails,mapCellInfo,mapCellName,MAP_ASPECT,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
 import {CHARTER_LAYOUT as L} from '../packs/behavior/scripts/charter-layout.js';
 const village=(name,x,z,dimension='minecraft:overworld')=>({name,location:{x,y:64,z},dimension,developmentValue:250,developmentThreshold:100});
 const points=s=>s.cells.flat();
@@ -16,7 +16,7 @@ test('Separate dimensions, preserve raw coordinates, and expose the existing Dev
  const villages={o:village('Surface',8,10),n:village('Nether',8,10,'minecraft:nether')};
  const s=mapSnapshot(villages,{dimension:'minecraft:nether'},'n');
  assert.deepEqual(points(s).map(p=>p.id),['n']);assert.equal(s.selected.x,8);assert.equal(s.selected.z,10);
- assert.equal(s.selected.development,2);assert.match(mapDetails(s.selected),/X 8  Y 64  Z 10.*Development 2/);
+ assert.equal(s.selected.development,2);assert.match(mapDetails(s.selected),/Name: Nether\nBiome: Unknown\nDevelopment: 2\nOwner: Unclaimed/);
  assert.equal(s.dimensions.length,2);
 });
 test('Registry is the only source: creation, rename, removal and world serialization appear on the next snapshot',()=>{
@@ -36,7 +36,7 @@ test('Clusters retain all settlements without a marker cap and labels indicate o
  assert.equal(new Set(points(s).map(p=>p.id)).size,500);
 });
 test('Empty and invalid locations are safe; zero coordinates and legacy ids remain valid',()=>{
- assert.equal(mapSnapshot({}).count,0);assert.match(mapDetails(null),/Select/);
+ assert.equal(mapSnapshot({}).count,0);assert.equal(mapDetails(null),'');
  const locations={good:village('Good',0,0),bad:village('Bad',NaN,0),infinite:village('Bad',0,Infinity),missing:{name:'Bad'}};
  assert.deepEqual(settlementPoints(locations).map(p=>p.id),['good']);
  const empty=mapSnapshot(locations,{dimension:'minecraft:the_end'});assert.equal(empty.count,0);assert.equal(empty.visible,0);
@@ -59,18 +59,18 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
  const router=children(ui.jf_router);assert.ok(router['map@jagsby_frontier.jf_settlement_map']);
  assert.match(JSON.stringify(router['picker@jagsby_frontier.jf_picker']),/not \(#title_text = 'JF_CHARTER\|SettlementMap'\)/);
  const map=children(ui.jf_settlement_map),grid=children(map.grid);
- assert.equal(L.settlementMap.cells,72);assert.deepEqual(map.grid.size,[312,120]);
+ assert.equal(L.settlementMap.cells,72);assert.deepEqual(map.grid.size,[240,144]);
  for(let i=0;i<72;i++){
   assert.equal(grid['cell'+i].collection_name,'form_buttons');
   assert.equal(grid['cell'+i].controls[0]['record@jagsby_frontier.jf_map_marker'].collection_index,i);
-  assert.deepEqual(grid['cell'+i].offset,[i%12*26,Math.floor(i/12)*20]);
+  assert.deepEqual(grid['cell'+i].offset,[i%12*20,Math.floor(i/12)*24]);
  }
- const marker=ui['jf_map_marker@common.button'];assert.equal(marker.$pressed_button_name,'button.form_button_click');
+ const marker=ui.jf_map_marker;assert.equal(marker.$pressed_button_name,undefined);assert.deepEqual(marker.button_mappings,[]);
  for(const state of marker.controls){
   const c=children(Object.values(state)[0]);assert.equal(c.icon.texture,'textures/ui/frontier/map_settlement');
-  assert.equal(c.caption.text,'#form_button_text');assert.ok(c.caption.bindings.some(b=>b.binding_type==='collection'));
  }
- assert.equal(JSON.stringify(ui.jf_settlement_map).includes('binding_condition'),false);
+ const info=children(children(marker).info)['tooltip@common.hover_text'];
+ assert.ok(info.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_name_override==='#hover_text'));
  const code=await readFile(new URL('../packs/behavior/scripts/settlement-map.js',import.meta.url),'utf8');
  for(const forbidden of ['runInterval','runTimeout','getBlock','getEntities','setDynamicProperty'])assert.ok(!code.includes(forbidden));
 });
@@ -84,7 +84,7 @@ test('Map D-pad zoom is gamepad-only, scoped to the zoom controls and keeps nati
  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
  const children=value=>Object.assign({},...(value.controls||[])),map=children(ui.jf_settlement_map);
  for(const [action,direction]of [['zoomIn','up'],['zoomOut','down']]){
-  const wrapper=map[action];assert.equal(wrapper.controls[0]['record@jagsby_frontier.jf_map_'+action].collection_index,L.settlementMap[action]);
+  const wrapper=children(map.controls)[action];assert.equal(wrapper.controls[0]['record@jagsby_frontier.jf_map_'+action].collection_index,L.settlementMap[action]);
   const button=ui['jf_map_'+action+'@common.button'];
   assert.ok(button.button_mappings.some(m=>m.from_button_id==='button.menu_select'&&m.mapping_type==='pressed'));
   assert.ok(button.button_mappings.some(m=>m.from_button_id==='button.menu_ok'&&m.mapping_type==='focused'));
@@ -101,4 +101,49 @@ test('Map D-pad zoom is gamepad-only, scoped to the zoom controls and keeps nati
  check(ui);
  const route=children(ui.jf_router)['map@jagsby_frontier.jf_settlement_map'];
  for(const target of ['#visible','#enabled'])assert.ok(route.bindings.some(b=>b.target_property_name===target&&b.source_property_name==="(#title_text = 'JF_CHARTER|SettlementMap')"));
+});
+
+test('World spawn is fitted and projected in Overworld without affecting settlement counts or registry',()=>{
+ const villages={a:village('A',5000,2000)},before=JSON.stringify(villages);
+ const s=mapSnapshot(villages,{},null,{x:-1200,y:70,z:-700});
+ assert.equal(s.count,1);assert.equal(s.visible,1);assert.ok(Number.isInteger(s.spawnCell));
+ assert.ok(s.bounds.minX<-1200&&s.bounds.maxX>5000);assert.ok(s.bounds.minZ<-700&&s.bounds.maxZ>2000);
+ assert.equal(mapSnapshot(villages,{dimension:'minecraft:nether'},null,{x:0,z:0}).spawnCell,null);
+ assert.equal(mapSnapshot(villages,{dimension:'minecraft:overworld',x:5000,z:2000,span:64},null,{x:0,z:0}).spawnCell,null);
+ assert.equal(mapSnapshot(villages,{},null,{x:NaN,z:0}).spawnCell,null);
+ assert.equal(JSON.stringify(villages),before);
+ const empty=mapSnapshot({}, {}, null,{x:320,z:-900});assert.equal(empty.count,0);assert.ok(Number.isInteger(empty.spawnCell));
+ assert.equal(empty.viewport.x,320);assert.equal(empty.viewport.z,-900);
+});
+
+test('Hover data resolves biome and owner and stays bounded for dense clusters',()=>{
+ const villages={a:{...village('Home',0,0),biome:'minecraft:birch_forest',owner:{name:'Jagsby',id:'p'}}};
+ const p=settlementPoints(villages)[0];
+ assert.equal(mapDetails(p),'Name: Home\nBiome: Birch Forest\nDevelopment: 2\nOwner: Jagsby');
+ const cluster=Array.from({length:500},(_,i)=>({...p,name:'Home '+i}));
+ const info=mapCellInfo(cluster);assert.equal((info.match(/Name:/g)||[]).length,8);assert.match(info,/492 more settlements/);
+ assert.equal(mapCellInfo([]),'');
+});
+
+test('Map drawing fills its rectangle and controls are framed entirely to its left',async()=>{
+ const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
+ const children=v=>Object.assign({},...(v.controls||[])),map=children(ui.jf_settlement_map),grid=children(map.grid);
+ assert.deepEqual(map.grid.size,[240,144]);assert.equal(MAP_ASPECT,240/144);
+ assert.ok(map.controls.offset[0]+map.controls.size[0]<map.grid.offset[0]);
+ for(const child of Object.values(children(map.controls)))if(child.collection_name){
+  assert.ok(child.offset[0]>=0&&child.offset[1]>=0);
+  assert.ok(child.offset[0]+child.size[0]<=map.controls.size[0]);
+  assert.ok(child.offset[1]+child.size[1]<=map.controls.size[1]);
+ }
+ for(const [name,image]of Object.entries(grid))if(image.type==='image'){
+  assert.equal(image.keep_ratio,false,`${name} must not collapse a rectangular image to a square`);
+  assert.equal(image.bilinear,false);
+ }
+ assert.deepEqual(grid.black.size,map.grid.size);
+ assert.deepEqual(grid.x1.size,[1,144]);assert.deepEqual(grid.z1.size,[240,1]);
+ for(let i=0;i<72;i++){
+  assert.equal(grid['name'+i].controls[0]['record@jagsby_frontier.jf_map_name'].collection_index,L.settlementMap.names+i);
+  assert.equal(grid['spawn'+i].texture,'textures/ui/frontier/map_spawn');
+  assert.ok(grid['spawn'+i].bindings.some(b=>b.source_property_name?.includes(`[JF:spawn:${i}]`)));
+ }
 });

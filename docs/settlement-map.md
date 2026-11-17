@@ -1,97 +1,77 @@
-# Settlement Map
+# Settlement Map (0.0.96)
 
-Open Village Charter → Diplomacy → Open Settlement Map. The map opens as a
-larger dedicated Charter screen so it has room for markers and controls.
-The five Charter tabs continue to switch locally. Map preparation occurs only
-on the explicit Open action, not on Charter startup or a periodic timer.
+Open Village Charter → Diplomacy → Open Settlement Map. Controls are grouped in
+a framed panel on the left; the map occupies a 240×144 UI-pixel rectangle on
+the right. Stretchable backgrounds and grid lines explicitly disable texture
+aspect preservation, correcting the square background and dotted grid seen
+in the user's earlier screenshot.
 
-- Black background, subtle coordinate grid, green house markers and short names.
-- X increases to the right; Z increases downwards (north is up).
-- Select a marker to show its full name, X/Y/Z and existing Development level.
-- On gamepad, D-pad Up zooms in and D-pad Down zooms out while the map is open.
-  The +/− buttons remain for mouse/touch. Up/Down are reserved for zoom on this
-  screen rather than marker navigation.
-- Fit includes all settlements in the selected dimension; +/− zoom, < / > pan
-  west/east, and N/S pan north/south. Dimension cycles through registered
-  dimensions. Refresh rereads shared world data; Back returns to Diplomacy.
-- Names are shortened on the grid to keep adjacent markers readable. Locations
-  are projected into a 12×6 grid. If several settlements occupy one cell, its
-  label shows +N; selection opens a paged list of the individual settlements.
-  Zoom separates nearby points; exact coordinates are always in the details.
-- Each action rereads the current world registry, so created, renamed and
-  removed settlements appear on the next refresh/open/action. An idle open map
-  is a snapshot, not a live feed. Players share locations, but choose their own
-  viewport. Dimensions are separate coordinate spaces without Nether scaling.
+## Markers and information
 
-## Persistence and performance
+Green house icons mark settlements. Hovering a settlement shows a native info
+box with exactly Name, Biome, Development and Owner. Biome/owner names use the
+same helpers as the Charter's existing settlement views. Unowned settlements
+show Unclaimed. Controller focus shows the same hover state. The icons have no
+button frame, submit action or click mapping; they do not open another form.
+The engine's inert button primitive is used only for hover/focus hit testing,
+like a reading target. It is not a native form action button.
 
-The existing `jagsby_frontier:state_v1` world dynamic property and `villages`
-registry remain authoritative. Establishing a settlement already saves its
-Village Charter location and dimension; existing rename/removal paths update
-that registry. There is no second map registration, migration or saved cache.
-Saved worlds therefore restore locations using the existing persistence path.
-Opening a map does not change research, economy, inventory or settlement state.
+Names are shortened under the icons to preserve legibility. Several settlements
+projecting into one 12×6 grid cell share a marker with +N in its name. Its hover
+text shows up to eight sets of the same four fields, then asks the player to
+zoom in to separate additional settlements. The projection retains all entries.
+There is no cluster-selection screen or click-to-select details footer.
 
-`settlement-map.js` converts registry entries to typed `settlement` points,
-then performs a read-only projection. Other POI types can later provide points
-through a separate adapter; none are registered or discovered in this release.
-The map does not access blocks, villagers, terrain, entity tracking or tick
-scheduling. It groups any number of settlements into 72 fixed cells and sends
-84 form records; cluster selection is paged at 20 entries. Work is O(n log n)
-for stable name ordering plus O(n) projection per map action. Invalid or missing
-coordinates are excluded rather than drawn at a fabricated location.
+A separate gold star marks the configured **world spawn**, read on each map
+request using `world.getDefaultSpawnLocation()`. Fit includes it in the
+Overworld. It does not use player spawn/bed locations and does not create a
+settlement or write any world data. The icon is hidden in other dimensions or
+when outside the current viewport. A failed/invalid spawn read does not invent
+an origin. Spawn and settlement icons use separate positions within a shared
+cell so both can appear.
 
-## Bedrock UI choice
+## Controls and freshness
 
-The addon already uses a custom JSON UI renderer for native ActionFormData.
-Mojang's [vanilla server_form.json](https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/ui/server_form.json)
-uses `form_buttons`, collection text bindings and `button.form_button_click`.
-The map reuses those bindings, explicitly indexed collection-capable stack
-panels and existing button/image/label controls. The Script API does not supply
-a map canvas; a fixed coordinate grid avoids relying on unverified dynamically
-bound vector offsets, per-player textures or unsupported UI properties.
-Terrain rendering is intentionally absent.
+- Fit includes all settlements and world spawn in the current dimension.
+- +/− zoom; < / > pan west/east; N/S pan north/south. X increases right; Z
+  increases down, so north is up.
+- Dimension cycles through dimensions containing registered points.
+- Refresh rereads world data. Back returns to Diplomacy.
+- Gamepad D-pad Up/Down retains the map zoom shortcuts. Mouse/touch buttons
+  remain. Up/Down are reserved for zoom while viewing the map.
 
-A distinct `JF_CHARTER|SettlementMap` route excludes both the dashboard and the
-generic picker. Other native forms retain their original routing. The cluster
-picker uses the native form renderer, rather than adding more custom UI.
-Microsoft Learn documentation was unavailable from the setup network; the
-vanilla sample and existing addon bindings were inspected directly.
+Opening and map actions read the existing shared persistent `villages` registry;
+created, renamed and removed settlements appear on the next request. An idle
+map is a snapshot. Players choose their own viewports over the same shared
+locations. There is no duplicate registration/cache, migration, terrain/block
+scan, POI discovery or added tick loop. Development is the existing saved
+settlement Development level. Spawn is the only added non-settlement landmark.
 
-## Validation
+Only control actions replace the native ActionFormData form. Hovering is local
+and does not submit it. The current form API has no in-place script update;
+zoom/pan still replace the form as in previous versions.
 
-Release 0.0.91 passed 258 Node tests, 6 Python tests, 222-file pack
-validation, deterministic rebuild and nested archive integrity checks. Existing
-UI definitions outside the router/Diplomacy changes and all prior transport
-indices were compared against 0.0.90 and remain equivalent.
+## Implementation and checks
 
-Automated tests cover signed coordinate projection, borders, dimensions, zoom,
-pan, clusters with 500 settlements, invalid coordinates, registry serialization,
-creation/rename/removal, map action dispatch and return to Diplomacy. The pack
-validator rejects unsupported `text_truncate` and invalid collection scopes.
+`settlement-map.js` performs a read-only projection. Per-cell hover records and
+short names are separate form data, keeping non-action markers independent of
+control actions. The map uses 72 fixed cells and 156 form records. World spawn
+is a separate body marker, so it does not inflate settlement totals.
 
-Minecraft rendering cannot run in this environment. In a disposable Bedrock
-1.26.40+ world, test with two settlements and a cluster: open the map, select
-markers, zoom, pan, switch dimensions, refresh, select a cluster entry and Back.
-Rename/create/remove a settlement from another player, then refresh. Restart
-the world and verify locations. Confirm controller/touch/mouse marker selection,
-small-screen name readability, all Charter screens and an exported content log
-without new Frontier UI errors. These in-game checks remain unverified.
+The renderer uses the addon's existing native collection bindings. Tooltip
+content uses Mojang's `common.hover_text` / `hover_text_renderer`, with collection
+text bound to `#hover_text`; no unverified hover property is introduced. The
+screen has a distinct `JF_CHARTER|SettlementMap` route, preserving other forms.
+Reference: https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/ui/ui_common.json
 
-## Input and refresh limitation (0.0.93)
+Automated tests cover signed coordinates, bounds, dimension isolation, zoom,
+pan, large clusters, registry changes, world-spawn projection and setting
+changes, read-only state, the four requested hover fields, absence of marker
+submit mappings, non-overlapping left-panel geometry, non-square backgrounds
+and continuous grid-line sizing. Existing research and Realm tests also run.
 
-D-pad shortcuts map `button.menu_up` / `button.menu_down` to the existing zoom
-buttons' native form-click event. The mappings use `scope: view` and the
-`gamepad_and_not_gaze` input condition; they are inside the map route, whose
-visibility and enabled state are false on other Charter screens. Each zoom
-button retains its own collection index and original mouse/touch mappings.
-
-Zoom still submits ActionFormData and immediately opens its replacement. The
-current Script API form has no update/redraw operation, and the UI does not
-send non-closing custom messages to the script. This release does not claim
-in-place rerendering or eliminate form transitions. Implementing that would
-require an independently validated client-side rendering/state approach;
-prebuilding many zoom grids would increase UI construction cost again.
-
-Validate gamepad direction dispatch, repeated presses and marker navigation
-in-game, and confirm Up/Down do not trigger map actions on other screens.
+In-game checks remain required: mouse hover, controller focus, tooltip wrapping
+and screen-edge placement, left-panel navigation, spawn on initial Fit and
+Refresh, same-cell spawn/settlement icons, zoom/pan/dimensions, and an exported
+content log without new UI errors. Touch hover depends on Bedrock's native
+focus behavior. Static tests do not render Minecraft UI.

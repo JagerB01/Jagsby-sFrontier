@@ -142,10 +142,10 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
  const messages=[],player={id:'p',selectedSlotIndex:0,sendMessage(text){messages.push(text);},getComponent(){return {container:inventory};}};
  const forms=[];
  class Form{constructor(){this.buttons=[];this.icons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}textField(){return this;}submitButton(){return this;}button(text,icon){this.buttons.push(text);this.icons.push(icon);return this;}show(){return Promise.resolve(respond(this));}}
- globalThis.__researchRuntime={world:{getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(){return 1;},clearRun(){}},Form};
+ globalThis.__researchRuntime={world:{getDefaultSpawnLocation(){return options.spawnLocation?.()??{x:0,y:64,z:0};},getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(){return 1;},clearRun(){}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
- source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openSettlementMap,selectMapSettlement,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad,surveySettlement,travelRoad};\n//'+Math.random();
+ source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openSettlementMap,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad,surveySettlement,travelRoad};\n//'+Math.random();
  const api=await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
  return {api,player,slots,forms,messages,received,read:()=>JSON.parse(stored),update(fn){const s=JSON.parse(stored);fn(s);stored=JSON.stringify(s);},failWorld(n){failWrite=write+n;},failInventory(i){failSlot=i;}};
 }
@@ -774,16 +774,16 @@ test('Diplomacy opens map on demand, reads fresh shared data and never scans or 
  assert.ok(h.forms.every(f=>f.heading!=='JF_CHARTER|SettlementMap'),'Switching local tabs must not generate a map');
  const prior=h.read();h.api.openSettlementMap(h.player,'a');
  const m=CHARTER_LAYOUT.settlementMap,form=h.forms.at(-1);
- assert.equal(form.heading,'JF_CHARTER|SettlementMap');assert.match(form.buttons[m.details],/Map home/);
- assert.match(form.buttons[m.details],/Development/);assert.deepEqual(h.read(),prior);
+ assert.equal(form.heading,'JF_CHARTER|SettlementMap');assert.match(form.buttons.slice(0,m.cells).join('\n'),/Name: Map home/);
+ assert.match(form.buttons.slice(0,m.cells).join('\n'),/Development:/);assert.deepEqual(h.read(),prior);
  h.update(s=>{s.villages.a.name='Renamed';s.villages.b={...village(1000),name:'Second',id:'b'};});
  h.api.openSettlementMap(h.player,'a');assert.match(h.forms.at(-1).buttons[m.bounds],/3\/3 settlements/);
- assert.match(h.forms.at(-1).buttons[m.details],/Renamed/);
- h.update(s=>delete s.villages.a);h.api.openSettlementMap(h.player,'a');assert.match(h.forms.at(-1).buttons[m.details],/Select/);
+ assert.match(h.forms.at(-1).buttons.slice(0,m.cells).join('\n'),/Name: Renamed/);
+ h.update(s=>delete s.villages.a);h.api.openSettlementMap(h.player,'a');assert.ok(!h.forms.at(-1).buttons.slice(0,m.cells).join('\n').includes('Renamed'));
  assert.deepEqual(h.read().global,before.global);assert.deepEqual(h.read().researchProgress,before.researchProgress);
 });
 
-test('Map zoom, marker selection, cluster chooser, dimensions and Back dispatch native form actions',async()=>{
+test('Map controls retain zoom, dimensions and Back; marker records never dispatch click actions',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Map home',id:'a'};
  s.villages.b={...village(),name:'Map neighbour',id:'b'};
  s.villages.end={...village(200),name:'End',id:'end',dimension:'minecraft:the_end'};
@@ -792,9 +792,9 @@ test('Map zoom, marker selection, cluster chooser, dimensions and Back dispatch 
  const flush=async()=>{for(let i=0;i<8;i++)await Promise.resolve();};
  respond=()=>{respond=()=>({canceled:true});return {selection:m.zoomIn};};
  h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.filter(f=>f.heading==='JF_CHARTER|SettlementMap').length,2);
- respond=form=>{respond=()=>({canceled:true});return {selection:form.buttons.findIndex((text,i)=>i<m.cells&&text.includes('+'))};};
- h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.at(-1).heading,'JF_CHARTER|SettlementMap'); // canceled chooser returns to map
- assert.ok(h.forms.some(f=>f.heading==='Settlement Map: select'));
+ const previousCount=h.forms.length;
+ respond=form=>{respond=()=>({canceled:true});return {selection:form.buttons.findIndex((text,i)=>i<m.cells&&text.includes('Map home'))};};
+ h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.length,previousCount+1,'Marker data must not open a replacement or a cluster chooser');
  respond=()=>{respond=()=>({canceled:true});return {selection:m.dimension};};
  h.api.openSettlementMap(h.player,'a');await flush();assert.match(h.forms.at(-1).buttons[m.bounds],/the_end/);
  respond=()=>{respond=()=>({canceled:true});return {selection:m.back};};
@@ -802,25 +802,18 @@ test('Map zoom, marker selection, cluster chooser, dimensions and Back dispatch 
  assert.match(h.forms.at(-1).text,/\[JF:tab:diplomacy\]/);
 });
 
-test('Cluster selection shows the exact selected settlement and refresh clears a deleted selection',async()=>{
- const s=fresh(Date.now());s.villages.a={...village(),id:'a',name:'Map home'};
- s.villages.b={...village(),id:'b',name:'Map neighbour',developmentValue:500};
- let step=0;
- const h=await runtime(s,form=>{
-  if(step===0&&form.heading==='JF_CHARTER|SettlementMap'){
-   step++;return {selection:form.buttons.findIndex((text,i)=>i<CHARTER_LAYOUT.settlementMap.cells&&text.includes('+'))};
-  }
-  if(step===1&&form.heading==='Settlement Map: select'){
-   step++;return {selection:form.buttons.findIndex(text=>text.startsWith('Map neighbour'))};
-  }
-  return {canceled:true};
- });
- h.api.openSettlementMap(h.player,'a');for(let i=0;i<12;i++)await Promise.resolve();
- const m=CHARTER_LAYOUT.settlementMap;
- assert.equal(step,2);assert.match(h.forms.at(-1).buttons[m.details],/Map neighbour/);
- assert.match(h.forms.at(-1).buttons[m.details],/X 0  Y 64  Z 0/);
- h.update(s=>delete s.villages.b);h.api.openSettlementMap(h.player,'a',{},'b');
- assert.match(h.forms.at(-1).buttons[m.details],/Select/);
+test('Hover records include only Name, Biome, Development and Owner; world spawn is fresh map data',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(500),id:'a',name:'Map home',owner:{id:'p',name:'Jagsby'},biome:'minecraft:forest'};
+ let spawn={x:-1000,y:80,z:0};
+ const h=await runtime(s,()=>({canceled:true}),{spawnLocation:()=>spawn});
+ h.api.openSettlementMap(h.player,'a');const m=CHARTER_LAYOUT.settlementMap,form=h.forms.at(-1);
+ assert.match(form.text,/^\[JF:spawn:\d+\]$/);
+ const info=form.buttons.slice(0,m.cells).find(text=>text.includes('Map home'));
+ assert.match(info,/Name: Map home\nBiome: Forest\nDevelopment: \d+\nOwner: Jagsby/);
+ assert.ok(!info.includes('X 500'));assert.ok(!form.buttons[m.details].includes('Development'));
+ const before=h.read();spawn={x:10000,y:60,z:10000};h.api.openSettlementMap(h.player,'a');
+ assert.notEqual(h.forms.at(-1).buttons[m.details],form.buttons[m.details],'Auto-fit must use the updated configured spawn');
+ assert.deepEqual(h.read(),before,'Spawn is never registered as a settlement or written to world state');
 });
 
 test('A single unowned settlement supplies exactly one Realm row creation marker',async()=>{

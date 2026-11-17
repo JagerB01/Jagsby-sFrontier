@@ -1,10 +1,11 @@
-"""Fixed native form slots, projected in script; no dynamic UI property names."""
+"""Map geometry uses explicit rectangles; markers only expose native hover text."""
 import copy
 
-COLUMNS, ROWS = 12, 6
+COLUMNS, ROWS, WIDTH, HEIGHT = 12, 6, 240, 144
 MAP_LAYOUT = {"columns": COLUMNS, "rows": ROWS, "cells": COLUMNS * ROWS}
 MAP_LAYOUT.update({key: COLUMNS * ROWS + i for i, key in enumerate([
     "back", "fit", "zoomOut", "zoomIn", "west", "east", "north", "south", "dimension", "refresh", "bounds", "details"])})
+MAP_LAYOUT["names"] = MAP_LAYOUT["details"] + 1
 
 
 def build_map_ui(ui, frame):
@@ -15,61 +16,87 @@ def build_map_ui(ui, frame):
                 "color": list(color), "font_scale_factor": scale}
     def image(size, offset, color):
         return {"type": "image", "texture": "textures/ui/frontier/solid", "size": size,
-                "offset": offset, "anchor_from": "top_left", "anchor_to": "top_left", "color": color, "layer": 3}
+                "offset": offset, "anchor_from": "top_left", "anchor_to": "top_left", "color": color,
+                "keep_ratio": False, "bilinear": False, "layer": 3}
     bindings = [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
                 {"binding_name": "#form_button_text", "binding_type": "collection", "binding_collection_name": "form_buttons"}]
     def scope(template, index, size, offset):
         return {"type": "stack_panel", "orientation": "vertical", "collection_name": "form_buttons",
                 "size": size, "offset": offset, "anchor_from": "top_left", "anchor_to": "top_left",
                 "controls": [c("record@jagsby_frontier." + template, {"collection_index": index})]}
-    for key, size, scale in [("bounds", [320, 14], 0.55), ("details", [320, 25], 0.65)]:
+    def sprite(texture, size, offset):
+        return {"type": "image", "texture": "textures/ui/frontier/"+texture, "size": size,
+                "offset": offset, "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8,
+                "keep_ratio": False, "bilinear": False}
+    for key, size, scale in [("bounds", [240, 12], 0.6), ("details", [240, 10], 0.5), ("name", [20, 9], 0.4)]:
         ui["jf_map_" + key] = {**label("#form_button_text", size, scale=scale), "bindings": copy.deepcopy(bindings)}
-    def button(template, width, height, marker=False):
-        controls=[]
-        for state in ["default", "hover", "pressed"]:
-            children=[]
-            if not marker or state!='default':
-                children.append(c("background", image([width, height], [0, 0], [0.20, 0.27, 0.20] if state!='default' else [0.12, 0.15, 0.13])))
-            if marker:
-                children.append(c("icon", {"type": "image", "texture": "textures/ui/frontier/map_settlement",
-                    "size": [8, 8], "offset": [9, 0], "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8, "bilinear": False}))
-            children.append(c("caption", {**label("#form_button_text", [width, 9], (0, 9 if marker else 3),
-                color=(0.5, 1.0, 0.55) if marker else (0.9, 0.93, 0.88), scale=0.45 if marker else 0.55),
-                "text_alignment": "center", "bindings": copy.deepcopy(bindings)}))
-            controls.append(c(state, {"type": "panel", "size": [width, height], "controls": children}))
-        ui[template + "@common.button"] = {"size": [width, height], "focus_enabled": True, "hover_enabled": True,
-            "$pressed_button_name": "button.form_button_click", "bindings": copy.deepcopy(bindings) + ([
-                {"binding_type": "view", "source_property_name": "(not (#form_button_text = ''))", "target_property_name": "#visible"},
-                {"binding_type": "view", "source_property_name": "(not (#form_button_text = ''))", "target_property_name": "#enabled"}] if marker else []),
-            "default_control": "default", "hover_control": "hover", "pressed_control": "pressed",
-            "button_mappings": [
-                {"from_button_id": "button.menu_select", "to_button_id": "button.form_button_click", "mapping_type": "pressed"},
-                {"from_button_id": "button.menu_ok", "to_button_id": "button.form_button_click", "mapping_type": "focused"}], "controls": controls}
-    button("jf_map_marker", 26, 20, True)
+        if key=="name":
+            ui["jf_map_name"].update({"text_alignment":"center","color":[0.5,1.0,0.55]})
+    # An inert hover/focus hit target, without button chrome, submit mappings or
+    # a pressed event. The engine's button primitive provides hover state only.
+    marker_controls=[]
+    for state in ["idle", "info"]:
+        children=[c("icon", sprite("map_settlement", [9, 9], [2, 1]))]
+        if state=="info":
+            children.append(c("tooltip@common.hover_text", {
+                "layer": 100, "$hover_text_max_width": 170,
+                "bindings": [
+                    {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+                    {"binding_name": "#form_button_text", "binding_name_override": "#hover_text",
+                     "binding_type": "collection", "binding_collection_name": "form_buttons"}]}))
+        marker_controls.append(c(state, {"type": "panel", "size": [20, 20], "controls": children}))
+    ui["jf_map_marker"]={"type": "button", "size": [20, 20], "focus_enabled": True,
+        "hover_enabled": True, "button_mappings": [], "default_control": "idle", "hover_control": "info", "pressed_control": "info",
+        "bindings": copy.deepcopy(bindings)+[
+            {"binding_type": "view", "source_property_name": "(not (#form_button_text = ''))", "target_property_name": "#visible"},
+            {"binding_type": "view", "source_property_name": "(not (#form_button_text = ''))", "target_property_name": "#enabled"}],
+        "controls": marker_controls}
     content=copy.deepcopy([item for item in frame if 'title' not in item])
-    content.append(c("title", label("Settlement Map  |  D-pad Up/Down: zoom", [290, 14], (30, 34), scale=0.7)))
-    content.append(c("bounds", scope("jf_map_bounds", MAP_LAYOUT['bounds'], [320, 14], [30, 61])))
-    content.append(c("details", scope("jf_map_details", MAP_LAYOUT['details'], [320, 25], [30, 199])))
-    grid=[c("black", image([312, 120], [0, 0], [0.025, 0.035, 0.03]))]
-    for x in range(COLUMNS+1): grid.append(c("x"+str(x), image([1, 120], [min(311, x*26), 0], [0.12, 0.16, 0.13])))
-    for z in range(ROWS+1): grid.append(c("z"+str(z), image([312, 1], [0, min(119, z*20)], [0.12, 0.16, 0.13])))
+    content.append(c("title", label("Settlement Map", [170, 14], (28, 34), color=(0.86, 0.73, 0.44), scale=1)))
+    content.append(c("bounds", scope("jf_map_bounds", MAP_LAYOUT['bounds'], [240, 12], [110, 56])))
+    content.append(c("details", scope("jf_map_details", MAP_LAYOUT['details'], [240, 10], [110, 214])))
+    grid=[c("border", image([242, 146], [-1, -1], [0.32, 0.34, 0.30])),
+          c("black", image([WIDTH, HEIGHT], [0, 0], [0.025, 0.035, 0.03]))]
+    for x in range(COLUMNS+1): grid.append(c("x"+str(x), image([1, HEIGHT], [min(WIDTH-1, x*20), 0], [0.10, 0.14, 0.11])))
+    for z in range(ROWS+1): grid.append(c("z"+str(z), image([WIDTH, 1], [0, min(HEIGHT-1, z*24)], [0.10, 0.14, 0.11])))
     for slot in range(COLUMNS*ROWS):
-        grid.append(c("cell"+str(slot), scope("jf_map_marker", slot, [26, 20], [(slot%COLUMNS)*26, (slot//COLUMNS)*20])))
-    content.append(c("grid", {"type": "panel", "size": [312, 120], "offset": [30, 77],
+        x,z=(slot%COLUMNS)*20,(slot//COLUMNS)*24
+        grid.append(c("cell"+str(slot), scope("jf_map_marker", slot, [20, 20], [x, z])))
+        grid.append(c("name"+str(slot), scope("jf_map_name", MAP_LAYOUT['names']+slot, [20, 9], [x, z+11])))
+        spawn=sprite("map_spawn", [9, 9], [x+11, z+1])
+        spawn['bindings']=[{"binding_name": "#form_text", "binding_type": "none"},
+            {"binding_type": "view", "source_property_name": f"(not ((#form_text - '[JF:spawn:{slot}]') = #form_text))", "target_property_name": "#visible"}]
+        grid.append(c("spawn"+str(slot),spawn))
+    content.append(c("grid", {"type": "panel", "size": [WIDTH, HEIGHT], "offset": [110, 68],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": grid}))
-    x=30
-    for key, width in [("back", 34), ("fit", 24), ("zoomOut", 18), ("zoomIn", 18), ("west", 18), ("east", 18), ("north", 18), ("south", 18), ("dimension", 62), ("refresh", 47)]:
+    # One framed control panel, kept outside the drawing area.
+    panel=[c("edge", image([76, 162], [0, 0], [0.30, 0.32, 0.28])),
+           c("background", image([74, 160], [1, 1], [0.075, 0.09, 0.08])),
+           c("heading", label("Controls", [64, 10], (6, 4), color=(0.86, 0.73, 0.44), scale=0.65))]
+    controls=[("fit",62,16,7,17), ("zoomOut",29,16,7,36), ("zoomIn",29,16,40,36),
+              ("north",28,14,24,56), ("west",28,14,7,73), ("east",28,14,40,73),
+              ("south",28,14,24,90), ("dimension",62,16,7,109),
+              ("refresh",62,14,7,128), ("back",62,14,7,145)]
+    for key,width,height,x,y in controls:
         template="jf_map_"+key
-        button(template, width, 14)
-        if key in ["zoomIn", "zoomOut"]:
-            # Native form selection retains this button's explicit collection
-            # index. Restrict the shortcut to gamepad input on the map view.
-            zoom = ui[template + "@common.button"]
-            zoom["button_mappings"].append({
-                "from_button_id": "button.menu_up" if key == "zoomIn" else "button.menu_down",
-                "to_button_id": "button.form_button_click", "mapping_type": "global",
-                "scope": "view", "input_mode_condition": "gamepad_and_not_gaze"})
-            zoom["tts_name"] = "Zoom in, D-pad up" if key == "zoomIn" else "Zoom out, D-pad down"
-        content.append(c(key, scope(template, MAP_LAYOUT[key], [width, 14], [x, 47])))
-        x+=width+2
-    ui['jf_settlement_map']={"type": "panel", "size": [380, 240], "controls": content}
+        states=[]
+        for state in ['default','hover','pressed']:
+            states.append(c(state,{"type":"panel","size":[width,height],"controls":[
+                c('rim',image([width,height],[0,0],[0.48,0.48,0.41] if state=='default' else [0.75,0.65,0.40])),
+                c('face',image([width-2,height-2],[1,1],[0.13,0.16,0.14] if state=='default' else [0.22,0.26,0.21])),
+                c('caption',{**label('#form_button_text',[width-4,10],(2,3),scale=0.6),
+                    'text_alignment':'center','bindings':copy.deepcopy(bindings)})]}))
+        button={"size":[width,height],"focus_enabled":True,"hover_enabled":True,
+            "$pressed_button_name":"button.form_button_click","bindings":copy.deepcopy(bindings),
+            "default_control":"default","hover_control":"hover","pressed_control":"pressed",
+            "button_mappings":[{"from_button_id":"button.menu_select","to_button_id":"button.form_button_click","mapping_type":"pressed"},
+                {"from_button_id":"button.menu_ok","to_button_id":"button.form_button_click","mapping_type":"focused"}],"controls":states}
+        if key in ['zoomIn','zoomOut']:
+            button['button_mappings'].append({'from_button_id':'button.menu_up' if key=='zoomIn' else 'button.menu_down',
+                'to_button_id':'button.form_button_click','mapping_type':'global','scope':'view','input_mode_condition':'gamepad_and_not_gaze'})
+        ui[template+'@common.button']=button
+        panel.append(c(key,scope(template,MAP_LAYOUT[key],[width,height],[x,y])))
+    content.append(c('controls',{'type':'panel','size':[76,162],'offset':[26,61],
+        'anchor_from':'top_left','anchor_to':'top_left','controls':panel}))
+    content.append(c('legend',label('Green: settlement  Gold: spawn',[150,10],(204,38),scale=0.45)))
+    ui['jf_settlement_map']={"type":"panel","size":[380,240],"controls":content}

@@ -104,6 +104,12 @@ def build():
     marker.rect(5, 8, 2, 3, (17, 53, 26, 255))
     marker.rect(3, 7, 2, 2, (170, 245, 174, 255))
     marker.save("map_settlement.png")
+    spawn = Canvas(12, 12, (0, 0, 0, 0))
+    spawn.rect(5, 0, 2, 12, (243, 201, 87, 255))
+    spawn.rect(0, 5, 12, 2, (243, 201, 87, 255))
+    spawn.rect(3, 3, 6, 6, (182, 123, 38, 255))
+    spawn.rect(4, 4, 4, 4, (255, 231, 156, 255))
+    spawn.save("map_spawn.png")
 
     Canvas(1, 1, (255, 255, 255)).save("solid.png")
     # Palette materials are generated at their native UI sizes so all screens

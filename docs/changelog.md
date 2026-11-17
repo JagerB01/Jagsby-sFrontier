@@ -1,5 +1,20 @@
 # 0.0.88
 
+## 0.0.96 — Map layout, world spawn and hover information
+
+- Frame all map controls in a left panel and move the drawing area to the right.
+- Set rectangular map images to stretch: fix the square black background and
+  grid lines rendering as dots. Match projection aspect to the actual drawing.
+- Add a gold configured-world-spawn icon in the Overworld, included by Fit.
+- Replace clickable settlement/cluster actions with inert hover/focus markers.
+  Native tooltips show Name, Biome, Development and Owner. Remove the old
+  selected-details footer and cluster picker. Keep short names under icons.
+- Preserve zoom/pan/dimension controls, D-pad shortcuts, shared registry and
+  Realm/research logic. Hover never submits or replaces a form.
+- Dense cells show bounded hover details and can be separated with zoom.
+  Rendering/input and content-log checks remain required in-game.
+
+
 ## 0.0.95 — Direct controller path to Travel
 
 - Right from a road reading row now focuses Travel directly. Press A to travel.
