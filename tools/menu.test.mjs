@@ -462,7 +462,7 @@ test('Realm scrolling rows use explicit collection indices and the established c
   const rows=children(list);assert.equal(Object.keys(rows).length,layout.realmRows.limit);
   for(const slot of [0,1,39,layout.realmRows.limit-1]){
    const gate=rows['row'+slot],row=ui[gate.grid_item_template.split('.')[1]],fields=children(row);
-   assert.equal(gate.type,'grid');assert.equal(gate.maximum_grid_items,0);assert.equal(gate.precached_grid_item_count,0);
+   assert.equal(gate.type,'grid');assert.equal(gate.maximum_grid_items,0);assert.equal('precached_grid_item_count' in gate,false);
    assert.ok(gate.bindings.some(binding=>binding.target_property_name==='#maximum_grid_items'&&binding.source_property_name.includes('[JF:row:'+scope+':'+slot+']')));
    const base=layout.realmRows.base+slot*layout.realmRows.stride+scopeIndex*8;
    for(const [field,offset] of [['name',0],['owner',1],...(scope==='roads'?[['distance',2],['cost',3],['time',5]]:[['coordinates',2],['distance',3],['development',4],['status',5]])]){
@@ -660,7 +660,7 @@ test('Realm lists defer every heavy row until its own population marker arrives'
    const gate=gates['row'+slot],marker=`[JF:row:${scope}:${slot}]`;
    assert.equal(gate.type,'grid');assert.equal(gate.collection_name,'form_buttons');
    assert.deepEqual(gate.grid_dimensions,[1,1]);assert.equal(gate.maximum_grid_items,0);
-   assert.equal(gate.precached_grid_item_count,0,'Do not allocate row children before population data');
+   assert.equal('precached_grid_item_count' in gate,false,'The runtime rejects this property even when zero');
    assert.equal(gate.controls,undefined,'No heavy child may be embedded in the gate');
    const limit=gate.bindings.find(b=>b.target_property_name==='#maximum_grid_items');
    assert.equal(limit.source_control_name,'jf_menu_state');
@@ -685,7 +685,7 @@ test('Realm grid slots reserve the full row height so separate settlements canno
    assert.deepEqual(gate.size,row.size,'The outer stack must measure the same numeric height as the grid child');
    assert.equal(typeof gate.size[1],'number');assert.ok(gate.size[1]>0);
    const start=stackedHeight;stackedHeight+=gate.size[1];assert.ok(stackedHeight>start);
-   assert.equal(gate.maximum_grid_items,0);assert.equal(gate.precached_grid_item_count,0);
+   assert.equal(gate.maximum_grid_items,0);assert.equal('precached_grid_item_count' in gate,false);
    assert.ok(gate.bindings.some(b=>b.target_property_name==='#visible'),'Unused slots must still collapse');
   }
  }

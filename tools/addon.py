@@ -16,6 +16,7 @@ PACKS = ROOT / "packs"
 
 def validate_ui(value, path):
     if isinstance(value, dict):
+        assert "precached_grid_item_count" not in value, f"precached_grid_item_count is rejected by the target Bedrock runtime: {path}"
         assert "text_truncate" not in value, f"text_truncate is unsupported in Bedrock JSON UI: {path}"
         assert not (value.get("type") == "panel" and "collection_name" in value), f"collection_name is unsupported on panel: {path}"
         for child in value.values():

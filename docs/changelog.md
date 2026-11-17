@@ -1,5 +1,20 @@
 # 0.0.88
 
+## 0.0.97 — Remove runtime-rejected Realm grid property
+
+- The supplied 0.0.96 crash-session content log records 382 UI errors for
+  `precached_grid_item_count`, then ends during another Realm-row error.
+- Remove this unsupported property from all 384 generated Realm grid slots.
+  Do not substitute another unverified caching property.
+- Add a recursive packaging guard and regression cases rejecting the property,
+  including zero/false values in nested grid definitions.
+- Keep map layout/hover/spawn, row heights, controller links, native action
+  indices, settlement data and all gameplay scripts unchanged.
+- The content log has no native crash stack. This corrects the confirmed UI
+  defect, but does not establish that it was the sole crash cause or that a
+  patched in-game session is crash-free.
+
+
 ## 0.0.96 — Map layout, world spawn and hover information
 
 - Frame all map controls in a left panel and move the drawing area to the right.
@@ -52,7 +67,7 @@
 ## 0.0.92 — Defer unused Realm rows and tighten road rows
 
 - Put each Realm row template behind a 1×1 grid with an initial item limit of
-  zero and zero precached items. Bind its item limit to its own shared-body
+  zero (the precache property was rejected by the runtime and removed in 0.0.97). Bind its item limit to its own shared-body
   population marker (0/1). Empty positions keep lightweight grid slots, but
   no embedded full row controls. Existing explicit data/action indices remain.
 - Keep local tabs, marker updates, scroll behavior and controller reading focus.

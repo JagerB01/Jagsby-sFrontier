@@ -15,6 +15,16 @@ class UIValidationTests(unittest.TestCase):
                 with self.assertRaisesRegex(AssertionError, "text_truncate.*roads.json"):
                     validate_ui(ui, Path("roads.json"))
 
+    def test_rejects_runtime_reported_precache_property_inside_grid_templates(self):
+        for setting in (0, 1, False):
+            ui = {"namespace": "jagsby_frontier", "rows": {
+                "type": "stack_panel", "controls": [{"row0": {
+                    "type": "grid", "grid_item_template": "jagsby_frontier.row",
+                    "maximum_grid_items": 0, "precached_grid_item_count": setting}}]}}
+            with self.subTest(setting=setting):
+                with self.assertRaisesRegex(AssertionError, "precached_grid_item_count.*realm.json"):
+                    validate_ui(ui, Path("realm.json"))
+
     def test_preserves_rejection_of_unsupported_panel_collection_scopes(self):
         with self.assertRaisesRegex(AssertionError, "collection_name.*panel"):
             validate_ui({"type": "panel", "collection_name": "form_buttons"}, Path("ui.json"))

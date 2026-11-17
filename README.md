@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.96.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.97.mcaddon?raw=true)
+
+Version 0.0.97 removes `precached_grid_item_count` from all Realm grid slots.
+The supplied 0.0.96 crash-session log records 382 errors rejecting this property
+before ending mid-error. Packaging now rejects it. This is a targeted UI-property
+correction; a crash-free in-game session still needs confirmation.
 
 Version 0.0.96 redesigns the Settlement Map with a left control panel, a properly
 stretched rectangular map/grid and a gold world-spawn icon. Settlement icons
@@ -28,7 +33,7 @@ Mouse/touch zoom buttons remain. Zoom still replaces the native form; this
 release does not implement in-place map rerendering.
 
 Version 0.0.92 defers Realm row construction until its population marker is
-available. Empty positions retain only lightweight zero-precache grid slots,
+available. Empty positions retain only lightweight grid slots,
 rather than full hidden rows. Road Networks rows are reduced from 38 to 33 UI
 pixels with all information and actions retained. In-game opening speed still
 needs verification.

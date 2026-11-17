@@ -771,7 +771,7 @@ def build():
         control("open_map", {**action("open", ACTIONS["settlementMap"], "Open Settlement Map", width=233)["open"], "offset": [8, 112], "anchor_from": "top_left", "anchor_to": "top_left"}),
     ]}
     realm_controls = [research_tab("roads", 0, "realm", "Road Networks"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
-    # Preserve the working explicit collection indices. A zero-precache grid
+    # Preserve the working explicit collection indices. An initially empty grid
     # creates each heavy row only when the shared form body includes its marker.
     # Interleave scopes by slot so a small world transmits only a short prefix.
     row_base = max([*DATA.values(), *ACTIONS.values()]) + 1
@@ -917,7 +917,7 @@ def build():
                 "type": "grid", "size": [251, height],
                 "grid_dimensions": [1, 1], "grid_rescaling_type": "vertical",
                 "collection_name": "form_buttons", "grid_item_template": "jagsby_frontier." + template,
-                "maximum_grid_items": 0, "precached_grid_item_count": 0,
+                "maximum_grid_items": 0,
                 "bindings": [view("(" + present + " * 1)", "#maximum_grid_items", "jf_menu_state"),
                              view(present, "#visible", "jf_menu_state")],
             }))

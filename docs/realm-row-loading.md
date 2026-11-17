@@ -1,4 +1,4 @@
-# Realm row loading (0.0.92)
+# Realm row loading (current: 0.0.97)
 
 The 0.0.91 content log supplied by the user contains no UI errors and reports
 21 ms of script data preparation for 299 records. This does not measure client
@@ -7,7 +7,7 @@ screen creation or establish the cause of the reported long opening delay.
 Previously, each of the 128 potential positions in each of the three Realm
 lists embedded its full row, hidden by the population marker. Now those full
 rows are separate templates. Each position contains a 1×1 grid only, with
-`maximum_grid_items: 0` and `precached_grid_item_count: 0`. A view binding from
+`maximum_grid_items: 0`. A view binding from
 `jf_menu_state` converts that slot's population-marker predicate into a numeric
 0/1 `#maximum_grid_items`. Only populated positions request a row template.
 The visibility binding also collapses unused positions. Both bindings remain
@@ -21,7 +21,9 @@ world-state properties were added. Native form/action indices are unchanged.
 
 The grid item-limit property and binding target are used by Mojang's vanilla
 `expanded_skin_pack.skins_grid` and crafting/furnace scroll grids. The 1×1 grid,
-item template and zero-precache properties are documented JSON UI grid fields.
+and item-template properties are documented JSON UI grid fields. The earlier
+precache-property claim was incorrect for the user's runtime; see the 0.0.97
+correction below.
 References:
 
 - https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/ui/expanded_skin_pack.json
@@ -35,7 +37,7 @@ its original 43×22 size and position. The surface and focus stripe follow the
 shorter row height. No road price, timer, research, travel or settlement logic
 is changed.
 
-Tests check default zero allocation, zero precache, absence of embedded heavy
+Tests check an initial zero item limit, absence of embedded heavy
 controls, exact per-slot markers, late-bound limits, all prior field/action
 indices and controller identities, a single-settlement form payload, and that
 all content fits inside the compact row. These checks cannot execute Bedrock's
@@ -50,7 +52,7 @@ The user supplied a screenshot of My/All names and distances overlaid at the
 same row position. An automatically measured native grid can initially report
 zero height to the enclosing stack. Gates now reserve the row's explicit height
 (32px for My/All, 33px for Roads); population-marker visibility still collapses
-unused slots. The zero item limit and zero-precache configuration are retained.
+unused slots. The zero item limit is retained.
 
 Realm reading rows now set `focus_magnet_enabled: false`. Every action record
 has a unique focus identifier and explicit horizontal links. On Roads, move
@@ -73,3 +75,21 @@ building road whose Travel button is disabled. Left from the upgrade icon
 returns to the Realm sidebar, and Up from an action returns to the reading row.
 This supersedes the 0.0.94 two-step Right path above. Layout and native action
 indices are unchanged. In-game controller verification remains required.
+
+## Runtime evidence and correction (0.0.97)
+
+`ContentLog2026-11-17_14-12-07_1.txt` identifies Frontier 0.0.96. At 14:13:21,
+Charter data preparation took 18 ms for 299 records. At 14:13:22, UI loading
+reported 382 occurrences of unknown property `precached_grid_item_count`: 128
+under My Settlements, 128 under All Settlements, and 126 under Roads, with the
+log ending in the next Roads error. No other unknown property is present in
+the supplied log. There is no native fatal/crash stack, so causality beyond the
+confirmed error flood is not established.
+
+This property was introduced in 0.0.92 based on community documentation, but
+is rejected by the user's target build. 0.0.97 removes it from every grid slot
+without adding a replacement. Packaging recursively rejects it, even if set to
+zero or false. Grid item limits, dimensions, explicit row heights, marker
+bindings and controller navigation are preserved. No gameplay script or world
+state is changed. A target-device session with a clean content log is still
+required to verify runtime stability.
