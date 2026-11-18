@@ -1,5 +1,11 @@
 # 0.0.88
 
+## 0.0.105 — Settlement Map pins and coordinates
+
+- Use a shared 6×6 UI-pixel grid to position settlement and world-spawn pins.
+- Reveal the full POI artwork on the map on hover or focus. Show the POI's
+  X, Y and Z coordinates in the information box below the map.
+
 ## 0.0.104 — Working MineScape Adapter v3 and one outgoing trade route
 
 - Adopt the user's working Adapter v3 upload, whose synchronized numeric version

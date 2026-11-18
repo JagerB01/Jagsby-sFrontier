@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {mapSnapshot,fitMap,settlementPoints,moveMap,mapDetails,mapCellInfo,mapCellName,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN,spawnDetails} from '../packs/behavior/scripts/settlement-map.js';
+import {mapSnapshot,fitMap,settlementPoints,moveMap,mapDetails,mapCellInfo,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
 import {CHARTER_LAYOUT as L} from '../packs/behavior/scripts/charter-layout.js';
 const village=(name,x,z,dimension='minecraft:overworld')=>({name,location:{x,y:64,z},dimension,developmentValue:250,developmentThreshold:100});
 const points=s=>s.cells.flat();
 const children=v=>Object.assign({},...(v.controls||[]));
 const record=v=>Object.values(v.controls[0])[0];
-const markerFor=(ui,v)=>ui[Object.keys(v.controls[0])[0].split('@')[1].split('.')[1]];
+const markerFor=(ui,v)=>ui[Object.keys(v.controls[0])[0].split('@')[1].split('.')[1]+'@jagsby_frontier.jf_map_pin'];
 test('Fit maps signed X/Z coordinates with north up and east right without mutation',()=>{
  const villages={nw:village('Northwest',-2000,-1000),se:village('Southeast',2000,1000)},before=JSON.stringify(villages);
  const snapshot=mapSnapshot(villages);assert.equal(snapshot.count,2);assert.equal(snapshot.visible,2);
@@ -19,7 +19,7 @@ test('Separate dimensions, preserve raw coordinates, and expose the existing Dev
  const villages={o:village('Surface',8,10),n:village('Nether',8,10,'minecraft:nether')};
  const s=mapSnapshot(villages,{dimension:'minecraft:nether'},'n');
  assert.deepEqual(points(s).map(p=>p.id),['n']);assert.equal(s.selected.x,8);assert.equal(s.selected.z,10);
- assert.equal(s.selected.development,2);assert.match(mapDetails(s.selected),/Name: Nether\nBiome: Unknown\nDevelopment: 2\nOwner: Unclaimed/);
+ assert.equal(s.selected.development,2);assert.match(mapDetails(s.selected),/Name: Nether\nCoordinates: X 8, Y 64, Z 10\nBiome: Unknown\nDevelopment: 2\nOwner: Unclaimed/);
  assert.equal(s.dimensions.length,2);
 });
 test('Registry is the only source: creation, rename, removal and world serialization appear on the next snapshot',()=>{
@@ -35,7 +35,7 @@ test('Clusters retain all settlements without a marker cap and labels indicate o
  const villages=Object.fromEntries(Array.from({length:500},(_,i)=>['v'+i,village('Settlement '+i,0,0)]));
  const s=mapSnapshot(villages);assert.equal(s.count,500);assert.equal(s.visible,500);
  const cluster=s.cells.find(c=>c.length);assert.equal(cluster.length,500);
- assert.match(mapCellName(cluster),/\+499$/);assert.equal(mapCellName([]),'');
+ assert.match(mapCellInfo(cluster),/\+499 nearby/);
  assert.equal(new Set(points(s).map(p=>p.id)).size,500);
 });
 test('Empty and invalid locations are safe; zero coordinates and legacy ids remain valid',()=>{
@@ -66,19 +66,15 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
  for(let i=0;i<L.settlementMap.cells;i++){
   assert.equal(grid['cell'+i].collection_name,'form_buttons');
   assert.equal(record(grid['cell'+i]).collection_index,i);
-  assert.deepEqual(grid['cell'+i].offset,[i%MAP_COLUMNS*40+1,Math.floor(i/MAP_COLUMNS)*30+1]);
+  assert.deepEqual(grid['cell'+i].offset,[i%MAP_COLUMNS*6,Math.floor(i/MAP_COLUMNS)*6]);
  }
- const marker=markerFor(ui,grid.cell0);assert.equal(marker.$pressed_button_name,undefined);assert.deepEqual(marker.button_mappings,[]);
- for(const state of marker.controls){
-  const c=children(Object.values(state)[0]);assert.equal(c.icon.texture,'textures/ui/frontier/map_markers/outpost');
-  assert.ok(c.icon.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_name_override==='#texture'));
- }
- const info=children(children(marker).info).tooltip;
- const text=children(info).text;
+ const marker=ui.jf_map_pin;assert.equal(marker.$pressed_button_name,undefined);assert.deepEqual(marker.button_mappings,[]);
+ assert.equal(marker.hover_enabled,true);assert.equal(marker.focus_enabled,true);
+ assert.deepEqual(marker.size,[6,6]);
+ const art=ui.jf_map_pin_art;
+ assert.ok(art.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_name_override==='#texture'));
+ const text=children(ui.jf_map_pin_details).text;
  assert.ok(text.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_type==='collection'));
- assert.ok(!JSON.stringify(marker).includes('hover_text'));
- assert.ok(!JSON.stringify(marker).includes('renderer'));
- assert.equal(info.type,'panel');
  const code=await readFile(new URL('../packs/behavior/scripts/settlement-map.js',import.meta.url),'utf8');
  for(const forbidden of ['runInterval','runTimeout','getBlock','getEntities','setDynamicProperty'])assert.ok(!code.includes(forbidden));
 });
@@ -127,7 +123,7 @@ test('World spawn is fitted and projected in Overworld without affecting settlem
 test('Hover data resolves biome and owner and stays bounded for dense clusters',()=>{
  const villages={a:{...village('Home',0,0),biome:'minecraft:birch_forest',owner:{name:'Jagsby',id:'p'}}};
  const p=settlementPoints(villages)[0];
- assert.equal(mapDetails(p),'Name: Home\nBiome: Birch Forest\nDevelopment: 2\nOwner: Jagsby');
+ assert.equal(mapDetails(p),'Name: Home\nCoordinates: X 0, Y 64, Z 0\nBiome: Birch Forest\nDevelopment: 2\nOwner: Jagsby');
  const cluster=Array.from({length:500},(_,i)=>({...p,name:'Home '+i}));
  const info=mapCellInfo(cluster);assert.equal((info.match(/Name:/g)||[]).length,1);assert.match(info,/499 nearby/);
  assert.equal(mapCellInfo([]),'');
@@ -149,47 +145,36 @@ test('Map drawing fills its rectangle and controls are framed entirely to its le
  }
  assert.deepEqual(grid.black.size,map.grid.size);
  assert.deepEqual(grid.x1.size,[1,90]);assert.deepEqual(grid.z1.size,[240,1]);
- for(let i=0;i<L.settlementMap.cells;i++){
-  assert.equal(grid['name'+i].controls[0]['record@jagsby_frontier.jf_map_name'].collection_index,L.settlementMap.names+i);
-  assert.equal(record(grid['spawn'+i]).collection_index,L.settlementMap.spawnInfo);
-  assert.ok(grid['spawn'+i].bindings.some(b=>b.source_property_name?.includes(`[JF:spawn:${i}]`)));
- }
 });
 
-test('Every hover box resolves to the separate fixed info dock outside the drawing area',async()=>{
+test('Small idle pins reveal artwork in the map and text in the fixed info dock',async()=>{
  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
  const map=children(ui.jf_settlement_map),grid=children(map.grid),dock=map.info_dock;
- assert.ok(map.grid.offset[1]+map.grid.size[1]<dock.offset[1],'Reserve a real gap between map and info dock');
- assert.ok(dock.offset[1]+dock.size[1]<=226,'Dock must fit inside the Charter frame');
+ assert.ok(map.grid.offset[1]+map.grid.size[1]<dock.offset[1]);
+ assert.deepEqual(children(ui.jf_map_pin_idle).pin.size,[4,4]);
  for(let slot=0;slot<L.settlementMap.cells;slot++){
-  const settlement=grid['cell'+slot],spawn=grid['spawn'+slot];
-  assert.ok(settlement.offset[0]+settlement.size[0]<spawn.offset[0],'Shared-cell icons have separate non-overlapping hit areas');
-  for(const target of [settlement,spawn]){
-   const marker=markerFor(ui,target);assert.deepEqual(marker.size,[18,20]);
-   assert.deepEqual(marker.button_mappings,[]);assert.equal(marker.$pressed_button_name,undefined);
-   assert.equal(marker.hover_enabled,true);assert.equal(marker.focus_enabled,true);
-   assert.deepEqual(marker.offset,[0,0]);assert.equal(marker.anchor_from,'top_left');assert.equal(marker.anchor_to,'top_left');
-   const states=children(marker),idle=children(states.idle),hover=children(states.info),box=hover.tooltip;
-   assert.equal(idle.tooltip,undefined);assert.equal(box.type,'panel');
-   assert.equal(box.anchor_from,'top_left');assert.equal(box.anchor_to,'top_left');
-   assert.deepEqual(states.info.offset,[0,0]);assert.equal(states.info.anchor_from,'top_left');assert.equal(states.info.anchor_to,'top_left');
-   assert.ok(box.offset.every(Number.isFinite),'Offsets must be literal numeric values, not inherited variables');
-   const x=map.grid.offset[0]+target.offset[0]+box.offset[0],y=map.grid.offset[1]+target.offset[1]+box.offset[1];
-   assert.deepEqual([x,y,...box.size],[...dock.offset,...dock.size],'Every actual marker template must draw inside exactly the same dock rectangle');
-   assert.ok(y>map.grid.offset[1]+map.grid.size[1],'Info can never overlay any map icon');
-   assert.ok(children(box).text.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_type==='collection'));
-   assert.equal(marker.pressed_control,marker.hover_control);
-   assert.deepEqual(hover.icon.size,[16,16]);assert.equal(hover.icon.bilinear,false);
-   assert.equal(idle.icon.texture,hover.icon.texture);
-   for(const edge of ['top','bottom','left','right']){
-    assert.equal(idle['outline_'+edge],undefined);
-    const line=hover['outline_'+edge],[ex,ey]=line.offset,[ew,eh]=line.size,[ix,iy]=hover.icon.offset,[iw,ih]=hover.icon.size;
-    assert.ok(ex+ew<=ix||ex>=ix+iw||ey+eh<=iy||ey>=iy+ih,'Outline frames rather than paints over artwork');
-   }
-   assert.equal(JSON.stringify(marker).includes('$info_'),false,'Old variable-position popovers must not remain');
-  }
-  for(const property of ['#visible','#enabled'])assert.ok(spawn.bindings.some(b=>b.target_property_name===property&&b.source_property_name.includes(`[JF:spawn:${slot}]`)));
+  const target=grid['cell'+slot],states=children(markerFor(ui,target));
+  assert.deepEqual(Object.keys(states['idle@jagsby_frontier.jf_map_pin_idle']),[]);
+  const hover=children(states.info);
+  const [x,z]=target.offset;
+  const [artX,artZ]=hover['art@jagsby_frontier.jf_map_pin_art'].offset;
+  const [width,height]=ui.jf_map_pin_art.size;
+  assert.ok(x+artX>=0&&x+artX+width<=map.grid.size[0]);
+  assert.ok(z+artZ>=0&&z+artZ+height<=map.grid.size[1]);
+  const [dx,dz]=hover['tooltip@jagsby_frontier.jf_map_pin_details'].offset;
+  assert.deepEqual([map.grid.offset[0]+x+dx,map.grid.offset[1]+z+dz],dock.offset);
  }
+ assert.deepEqual(Object.keys(children(ui.jf_map_pin_details)),['background','text']);
+});
+
+test('Points within the old coarse cell project independently and spawn shares the same axes',()=>{
+ const viewport={dimension:'minecraft:overworld',x:0,z:0,span:240};
+ const s=mapSnapshot({a:village('A',-39,-14),b:village('B',-20,-8)},viewport,null,{x:-20,y:70,z:-8});
+ assert.equal(s.cells[5*MAP_COLUMNS+13][0].id,'a');
+ const slot=6*MAP_COLUMNS+16;
+ assert.equal(s.spawnCell,slot);
+ assert.deepEqual(s.cells[slot].map(p=>p.id),['b','world-spawn']);
+ assert.match(mapCellInfo(s.cells[slot]),/World spawn: X -20, Y 70, Z -8/);
 });
 
 test('Map settlement art follows all existing Realm Power tiers and spawn info uses the actual configured coordinates',async()=>{
@@ -199,8 +184,7 @@ test('Map settlement art follows all existing Realm Power tiers and spawn info u
   assert.equal(p.texture,'textures/ui/frontier/map_markers/'+names[i]);
  }
  const s=mapSnapshot({}, {}, null,{x:-10.2,y:75,z:20.8});
- assert.equal(spawnDetails(s.spawn),'Name: World spawn\nCoordinates: -11, 75, 20\nDimension: Overworld');
- assert.equal(spawnDetails(null),'');
+ assert.equal(mapDetails(s.spawn),'Name: World spawn\nCoordinates: X -10.2, Y 75, Z 20.8\nDimension: Overworld');
  for(const name of ['world_spawn',...names]){
   const data=await readFile(new URL('../packs/resource/textures/ui/frontier/map_markers/'+name+'.png',import.meta.url));
   assert.equal(data.readUInt32BE(16),64);assert.equal(data.readUInt32BE(20),64);

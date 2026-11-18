@@ -5,7 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.104.mcaddon?raw=true)
+[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.105.mcaddon?raw=true)
+
+Version 0.0.105 improves Settlement Map positioning for settlements and world
+spawn. Small pins reveal the full artwork on the map when hovered or focused.
+The info box below the map shows the POI's X, Y and Z coordinates.
+See [Settlement Map](docs/settlement-map.md).
 
 Version 0.0.104 adopts the supplied working **MineScape UI Adapter v3** and
 limits each departure settlement to **one outgoing trade route**. Switching
@@ -464,7 +469,7 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-Build output is `dist/Jagsbys_Frontier_v0.0.104.mcaddon`. Packaging is
+Build output is `dist/Jagsbys_Frontier_v0.0.105.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

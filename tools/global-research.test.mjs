@@ -802,15 +802,15 @@ test('Map controls retain zoom, dimensions and Back; marker records never dispat
  assert.match(h.forms.at(-1).text,/\[JF:tab:diplomacy\]/);
 });
 
-test('Hover records include only Name, Biome, Development and Owner; world spawn is fresh map data',async()=>{
+test('Hover records include coordinates, biome, Development and owner; world spawn is fresh map data',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(500),id:'a',name:'Map home',owner:{id:'p',name:'Jagsby'},biome:'minecraft:forest'};
  let spawn={x:-1000,y:80,z:0};
  const h=await runtime(s,()=>({canceled:true}),{spawnLocation:()=>spawn});
  h.api.openSettlementMap(h.player,'a');const m=CHARTER_LAYOUT.settlementMap,form=h.forms.at(-1);
- assert.match(form.text,/^\[JF:spawn:\d+\]$/);
+ assert.ok(form.buttons.slice(0,m.cells).some(text=>text.includes('Coordinates: X -1000, Y 80, Z 0')));
  const info=form.buttons.slice(0,m.cells).find(text=>text.includes('Map home'));
- assert.match(info,/Name: Map home\nBiome: Forest\nDevelopment: \d+\nOwner: Jagsby/);
- assert.ok(!info.includes('X 500'));assert.ok(!form.buttons[m.details].includes('Development'));
+ assert.match(info,/Name: Map home\nCoordinates: X 500, Y \d+, Z 0\nBiome: Forest\nDevelopment: \d+\nOwner: Jagsby/);
+ assert.ok(!form.buttons[m.details].includes('Development'));
  const before=h.read();spawn={x:10000,y:60,z:10000};h.api.openSettlementMap(h.player,'a');
  assert.notEqual(h.forms.at(-1).buttons[m.details],form.buttons[m.details],'Auto-fit must use the updated configured spawn');
  assert.deepEqual(h.read(),before,'Spawn is never registered as a settlement or written to world state');
@@ -838,11 +838,12 @@ test('Spawn hover record and tier textures are shipped as inert map data without
  const s=fresh(Date.now());s.villages.a={...village(),id:'a',name:'City',census:{realmPowerTenths:200}};
  const h=await runtime(s,()=>({canceled:true}),{spawnLocation:()=>({x:20,y:73,z:-50})});
  const before=h.read();h.api.openSettlementMap(h.player,'a');const f=h.forms.at(-1),m=CHARTER_LAYOUT.settlementMap;
- assert.equal(f.buttons[m.spawnInfo],'Name: World spawn\nCoordinates: 20, 73, -50\nDimension: Overworld');
- assert.equal(f.icons[m.spawnInfo],'textures/ui/frontier/map_markers/world_spawn');
+ const spawnIndex=f.buttons.indexOf('Name: World spawn\nCoordinates: X 20, Y 73, Z -50\nDimension: Overworld');
+ assert.ok(spawnIndex>=0&&spawnIndex<m.cells);
+ assert.equal(f.icons[spawnIndex],'textures/ui/frontier/map_markers/world_spawn');
  const index=f.buttons.findIndex((text,i)=>i<m.cells&&text.includes('Name: City'));
  assert.ok(index>=0);assert.equal(f.icons[index],'textures/ui/frontier/map_markers/city');
- assert.equal(f.buttons.length,m.spawnInfo+1);assert.match(f.buttons[m.bounds],/2\/2 settlements/);
+ assert.equal(f.buttons.length,m.details+1);assert.match(f.buttons[m.bounds],/2\/2 settlements/);
  assert.deepEqual(h.read(),before);
 });
 
