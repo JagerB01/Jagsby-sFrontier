@@ -68,6 +68,15 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
   assert.equal(record(grid['cell'+i]).collection_index,i);
   assert.deepEqual(grid['cell'+i].offset,[i%MAP_COLUMNS*6,Math.floor(i/MAP_COLUMNS)*6]);
  }
+ for(const [axis,ticks] of [['x',L.settlementMap.xTicks],['z',L.settlementMap.zTicks]]){
+  ticks.forEach((index,i)=>{
+   const tick=map[axis+'_tick'+i];
+   assert.equal(record(tick).collection_index,index);
+   const dimension=axis==='x'?0:1;
+   const center=tick.offset[dimension]+tick.size[dimension]/2-map.grid.offset[dimension];
+   assert.ok(Math.abs(center-grid[axis+i].offset[dimension])<=1);
+  });
+ }
  const marker=ui.jf_map_pin;assert.equal(marker.$pressed_button_name,undefined);assert.deepEqual(marker.button_mappings,[]);
  assert.equal(marker.hover_enabled,true);assert.equal(marker.focus_enabled,true);
  assert.deepEqual(marker.size,[6,6]);
@@ -151,7 +160,7 @@ test('Small idle pins reveal adjacent tooltips that stay inside the expanded map
  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
  const map=children(ui.jf_settlement_map),grid=children(map.grid);
  assert.equal(map.info_dock,undefined);
- assert.ok(map.grid.offset[1]+map.grid.size[1]<map.details.offset[1]);
+ assert.ok(map.grid.offset[1]+map.grid.size[1]<map.bounds.offset[1]);
  const [tooltipWidth,tooltipHeight]=ui.jf_map_pin_details.size;
  assert.deepEqual(children(ui.jf_map_pin_idle).pin.size,[4,4]);
  for(let slot=0;slot<L.settlementMap.cells;slot++){

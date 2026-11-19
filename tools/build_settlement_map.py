@@ -6,9 +6,14 @@ COLUMNS, ROWS = 40, 25
 WIDTH, HEIGHT = COLUMNS * CELL, ROWS * CELL
 ART_SIZE = 16
 TOOLTIP_WIDTH, TOOLTIP_HEIGHT, TOOLTIP_GAP = 108, 76, 4
+GRID_X, GRID_Y = 110, 68
+X_TICKS = range(0, WIDTH + 1, 40)
+Z_TICKS = range(0, HEIGHT + 1, 30)
 MAP_LAYOUT = {"columns": COLUMNS, "rows": ROWS, "cells": COLUMNS * ROWS}
 MAP_LAYOUT.update({key: COLUMNS * ROWS + i for i, key in enumerate([
-    "back", "fit", "zoomOut", "zoomIn", "west", "east", "north", "south", "dimension", "refresh", "bounds", "details"])})
+    "back", "fit", "zoomOut", "zoomIn", "west", "east", "north", "south", "dimension", "refresh", "bounds"])})
+MAP_LAYOUT["xTicks"] = list(range(MAP_LAYOUT["bounds"] + 1, MAP_LAYOUT["bounds"] + 1 + len(X_TICKS)))
+MAP_LAYOUT["zTicks"] = list(range(MAP_LAYOUT["xTicks"][-1] + 1, MAP_LAYOUT["xTicks"][-1] + 1 + len(Z_TICKS)))
 
 
 def build_map_ui(ui, frame):
@@ -31,8 +36,11 @@ def build_map_ui(ui, frame):
         return {"type": "image", "texture": "textures/ui/frontier/"+texture, "size": size,
                 "offset": offset, "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8,
                 "keep_ratio": False, "bilinear": False}
-    for key, size, scale in [("bounds", [240, 12], 0.6), ("details", [240, 10], 0.5)]:
-        ui["jf_map_" + key] = {**label("#form_button_text", size, scale=scale), "bindings": copy.deepcopy(bindings)}
+    ui["jf_map_bounds"] = {**label("#form_button_text", [WIDTH, 12]), "bindings": copy.deepcopy(bindings)}
+    for key, width, alignment in [("x_tick", 40, "center"), ("z_tick", 28, "left")]:
+        ui["jf_map_" + key] = {
+            **label("#form_button_text", [width, 8], scale=0.45),
+            "text_alignment": alignment, "bindings": copy.deepcopy(bindings)}
 
     idle_pin = image([4, 4], [1, 1], [0.93, 0.74, 0.35])
     idle_pin["layer"] = 8
@@ -81,18 +89,24 @@ def build_map_ui(ui, frame):
                              {"offset": [tooltip_x - x, tooltip_z - z]})]})]}
     content=copy.deepcopy([item for item in frame if 'title' not in item])
     content.append(c("title", label("Settlement Map", [170, 14], (28, 34), color=(0.86, 0.73, 0.44), scale=1)))
-    content.append(c("bounds", scope("jf_map_bounds", MAP_LAYOUT['bounds'], [240, 12], [110, 56])))
-    content.append(c("details", scope("jf_map_details", MAP_LAYOUT['details'], [240, 10], [110, 220])))
+    content.append(c("bounds", scope("jf_map_bounds", MAP_LAYOUT["bounds"], [WIDTH, 12], [GRID_X, 220])))
+    content.append(c("z_axis", label("Z", [28, 8], (GRID_X + WIDTH + 2, GRID_Y - 11), scale=0.55)))
     grid=[c("border", image([WIDTH+2, HEIGHT+2], [-1, -1], [0.32, 0.34, 0.30])),
           c("black", image([WIDTH, HEIGHT], [0, 0], [0.025, 0.035, 0.03]))]
-    for x in range(7): grid.append(c("x"+str(x), image([1, HEIGHT], [min(WIDTH-1, x*40), 0], [0.10, 0.14, 0.11])))
-    for z in range(6): grid.append(c("z"+str(z), image([WIDTH, 1], [0, min(HEIGHT-1, z*30)], [0.10, 0.14, 0.11])))
+    for i, x in enumerate(X_TICKS):
+        grid.append(c(f"x{i}", image([1, HEIGHT], [min(WIDTH - 1, x), 0], [0.10, 0.14, 0.11])))
+        content.append(c(f"x_tick{i}", scope("jf_map_x_tick", MAP_LAYOUT["xTicks"][i], [40, 8],
+                                             [GRID_X + x - 20, GRID_Y - 11])))
+    for i, z in enumerate(Z_TICKS):
+        grid.append(c(f"z{i}", image([WIDTH, 1], [0, min(HEIGHT - 1, z)], [0.10, 0.14, 0.11])))
+        content.append(c(f"z_tick{i}", scope("jf_map_z_tick", MAP_LAYOUT["zTicks"][i], [28, 8],
+                                             [GRID_X + WIDTH + 2, GRID_Y + z - 4])))
     for slot in range(COLUMNS*ROWS):
         x, z = (slot % COLUMNS) * CELL, (slot // COLUMNS) * CELL
         template = f"jf_map_marker_{slot}"
         hover_marker(template, x, z)
         grid.append(c("cell"+str(slot), scope(template, slot, [CELL, CELL], [x, z])))
-    content.append(c("grid", {"type":"panel","size":[WIDTH,HEIGHT],"offset":[110,68],
+    content.append(c("grid", {"type":"panel","size":[WIDTH,HEIGHT],"offset":[GRID_X,GRID_Y],
         "anchor_from":"top_left","anchor_to":"top_left","controls":grid}))
     # One framed control panel, kept outside the drawing area.
     panel=[c("edge", image([76, 162], [0, 0], [0.30, 0.32, 0.28])),

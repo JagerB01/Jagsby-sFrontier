@@ -16,7 +16,9 @@ details also include the name, biome, Development and owner. Spawn details
 identify the Overworld. The map reads the configured world spawn on each
 request and includes it in Overworld Fit.
 
-X increases to the right and Z increases downward. The 240×150 UI-pixel map
+X increases to the right and Z increases downward. The grid lines show their
+world coordinates in blocks, rounded to the nearest block. The labels update
+as you zoom, pan or change dimensions. The 240×150 UI-pixel map
 rounds positions to the centers of 6×6 UI-pixel cells, within three UI pixels
 per axis of the projected position. Points in the same cell share a pin.
 Hovering that pin shows one settlement's details, any co-located spawn

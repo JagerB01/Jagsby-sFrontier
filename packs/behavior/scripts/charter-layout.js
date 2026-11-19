@@ -15,7 +15,23 @@ export const CHARTER_LAYOUT = {
     "dimension": 1008,
     "refresh": 1009,
     "bounds": 1010,
-    "details": 1011
+    "xTicks": [
+      1011,
+      1012,
+      1013,
+      1014,
+      1015,
+      1016,
+      1017
+    ],
+    "zTicks": [
+      1018,
+      1019,
+      1020,
+      1021,
+      1022,
+      1023
+    ]
   },
   "data": {
     "overview": 0,

@@ -286,13 +286,18 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
   let spawn=null;
   try{spawn=world.getDefaultSpawnLocation();}catch(error){console.warn(`Frontier map spawn: ${error}`);}
   const snapshot=mapSnapshot(villages,requested,selectedId,spawn),layout=CHARTER_LAYOUT.settlementMap;
-  const records=Array(layout.details+1).fill('');
+  const records=Array(layout.zTicks.at(-1)+1).fill('');
   snapshot.cells.forEach((points,index)=>{records[index]=mapCellInfo(points);});
   const labels={back:'Back',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
   for(const [key,text]of Object.entries(labels))records[layout[key]]=text;
   const b=snapshot.bounds;
   records[layout.bounds]=`${snapshot.viewport.dimension.replace('minecraft:','')} | ${snapshot.visible}/${snapshot.count} settlements`;
-  records[layout.details]=`X ${Math.floor(b.minX)}..${Math.ceil(b.maxX)}  |  Z ${Math.floor(b.minZ)}..${Math.ceil(b.maxZ)}`;
+  layout.xTicks.forEach((index,i)=>{
+    records[index]=`X ${Math.round(b.minX+(b.maxX-b.minX)*i/(layout.xTicks.length-1))}`;
+  });
+  layout.zTicks.forEach((index,i)=>{
+    records[index]=String(Math.round(b.minZ+(b.maxZ-b.minZ)*i/(layout.zTicks.length-1)));
+  });
   const form=new ActionFormData().title(pageTitle('SettlementMap'));
   records.forEach((text,index)=>form.button(text,snapshot.cells[index]?.[0]?.texture));
   const show=(next=snapshot.viewport,selection=selectedId)=>openSettlementMap(player,vid,next,selection,returnView);

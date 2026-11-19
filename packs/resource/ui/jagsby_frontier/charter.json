@@ -197698,12 +197698,12 @@
       }
     ]
   },
-  "jf_map_details": {
+  "jf_map_x_tick": {
     "type": "label",
     "text": "#form_button_text",
     "size": [
-      240,
-      10
+      40,
+      8
     ],
     "offset": [
       0,
@@ -197717,7 +197717,41 @@
       0.91,
       0.86
     ],
-    "font_scale_factor": 0.5,
+    "font_scale_factor": 0.45,
+    "text_alignment": "center",
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      }
+    ]
+  },
+  "jf_map_z_tick": {
+    "type": "label",
+    "text": "#form_button_text",
+    "size": [
+      28,
+      8
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "color": [
+      0.88,
+      0.91,
+      0.86
+    ],
+    "font_scale_factor": 0.45,
+    "text_alignment": "left",
     "bindings": [
       {
         "binding_type": "collection_details",
@@ -242278,7 +242312,7 @@
           ],
           "offset": [
             110,
-            56
+            220
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -242292,24 +242326,335 @@
         }
       },
       {
-        "details": {
+        "z_axis": {
+          "type": "label",
+          "text": "Z",
+          "size": [
+            28,
+            8
+          ],
+          "offset": [
+            352,
+            57
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "layer": 8,
+          "color": [
+            0.88,
+            0.91,
+            0.86
+          ],
+          "font_scale_factor": 0.55
+        }
+      },
+      {
+        "x_tick0": {
           "type": "stack_panel",
           "orientation": "vertical",
           "collection_name": "form_buttons",
           "size": [
-            240,
-            10
+            40,
+            8
           ],
           "offset": [
-            110,
-            220
+            90,
+            57
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "controls": [
             {
-              "record@jagsby_frontier.jf_map_details": {
+              "record@jagsby_frontier.jf_map_x_tick": {
                 "collection_index": 1011
+              }
+            }
+          ]
+        }
+      },
+      {
+        "x_tick1": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            40,
+            8
+          ],
+          "offset": [
+            130,
+            57
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_x_tick": {
+                "collection_index": 1012
+              }
+            }
+          ]
+        }
+      },
+      {
+        "x_tick2": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            40,
+            8
+          ],
+          "offset": [
+            170,
+            57
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_x_tick": {
+                "collection_index": 1013
+              }
+            }
+          ]
+        }
+      },
+      {
+        "x_tick3": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            40,
+            8
+          ],
+          "offset": [
+            210,
+            57
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_x_tick": {
+                "collection_index": 1014
+              }
+            }
+          ]
+        }
+      },
+      {
+        "x_tick4": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            40,
+            8
+          ],
+          "offset": [
+            250,
+            57
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_x_tick": {
+                "collection_index": 1015
+              }
+            }
+          ]
+        }
+      },
+      {
+        "x_tick5": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            40,
+            8
+          ],
+          "offset": [
+            290,
+            57
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_x_tick": {
+                "collection_index": 1016
+              }
+            }
+          ]
+        }
+      },
+      {
+        "x_tick6": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            40,
+            8
+          ],
+          "offset": [
+            330,
+            57
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_x_tick": {
+                "collection_index": 1017
+              }
+            }
+          ]
+        }
+      },
+      {
+        "z_tick0": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            28,
+            8
+          ],
+          "offset": [
+            352,
+            64
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_z_tick": {
+                "collection_index": 1018
+              }
+            }
+          ]
+        }
+      },
+      {
+        "z_tick1": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            28,
+            8
+          ],
+          "offset": [
+            352,
+            94
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_z_tick": {
+                "collection_index": 1019
+              }
+            }
+          ]
+        }
+      },
+      {
+        "z_tick2": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            28,
+            8
+          ],
+          "offset": [
+            352,
+            124
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_z_tick": {
+                "collection_index": 1020
+              }
+            }
+          ]
+        }
+      },
+      {
+        "z_tick3": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            28,
+            8
+          ],
+          "offset": [
+            352,
+            154
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_z_tick": {
+                "collection_index": 1021
+              }
+            }
+          ]
+        }
+      },
+      {
+        "z_tick4": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            28,
+            8
+          ],
+          "offset": [
+            352,
+            184
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_z_tick": {
+                "collection_index": 1022
+              }
+            }
+          ]
+        }
+      },
+      {
+        "z_tick5": {
+          "type": "stack_panel",
+          "orientation": "vertical",
+          "collection_name": "form_buttons",
+          "size": [
+            28,
+            8
+          ],
+          "offset": [
+            352,
+            214
+          ],
+          "anchor_from": "top_left",
+          "anchor_to": "top_left",
+          "controls": [
+            {
+              "record@jagsby_frontier.jf_map_z_tick": {
+                "collection_index": 1023
               }
             }
           ]
