@@ -62,7 +62,7 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
  const router=children(ui.jf_router);assert.ok(router['map@jagsby_frontier.jf_settlement_map']);
  assert.match(JSON.stringify(router['picker@jagsby_frontier.jf_picker']),/not \(#title_text = 'JF_CHARTER\|SettlementMap'\)/);
  const map=children(ui.jf_settlement_map),grid=children(map.grid);
- assert.equal(L.settlementMap.cells,MAP_COLUMNS*MAP_ROWS);assert.deepEqual(map.grid.size,[240,90]);
+ assert.equal(L.settlementMap.cells,MAP_COLUMNS*MAP_ROWS);assert.deepEqual(map.grid.size,[240,150]);
  for(let i=0;i<L.settlementMap.cells;i++){
   assert.equal(grid['cell'+i].collection_name,'form_buttons');
   assert.equal(record(grid['cell'+i]).collection_index,i);
@@ -132,7 +132,7 @@ test('Hover data resolves biome and owner and stays bounded for dense clusters',
 test('Map drawing fills its rectangle and controls are framed entirely to its left',async()=>{
  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
  const children=v=>Object.assign({},...(v.controls||[])),map=children(ui.jf_settlement_map),grid=children(map.grid);
- assert.deepEqual(map.grid.size,[240,90]);assert.equal(MAP_ASPECT,240/90);
+ assert.deepEqual(map.grid.size,[240,150]);assert.equal(MAP_ASPECT,240/150);
  assert.ok(map.controls.offset[0]+map.controls.size[0]<map.grid.offset[0]);
  for(const child of Object.values(children(map.controls)))if(child.collection_name){
   assert.ok(child.offset[0]>=0&&child.offset[1]>=0);
@@ -144,13 +144,15 @@ test('Map drawing fills its rectangle and controls are framed entirely to its le
   assert.equal(image.bilinear,false);
  }
  assert.deepEqual(grid.black.size,map.grid.size);
- assert.deepEqual(grid.x1.size,[1,90]);assert.deepEqual(grid.z1.size,[240,1]);
+ assert.deepEqual(grid.x1.size,[1,150]);assert.deepEqual(grid.z1.size,[240,1]);
 });
 
-test('Small idle pins reveal artwork in the map and text in the fixed info dock',async()=>{
+test('Small idle pins reveal adjacent tooltips that stay inside the expanded map',async()=>{
  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
- const map=children(ui.jf_settlement_map),grid=children(map.grid),dock=map.info_dock;
- assert.ok(map.grid.offset[1]+map.grid.size[1]<dock.offset[1]);
+ const map=children(ui.jf_settlement_map),grid=children(map.grid);
+ assert.equal(map.info_dock,undefined);
+ assert.ok(map.grid.offset[1]+map.grid.size[1]<map.details.offset[1]);
+ const [tooltipWidth,tooltipHeight]=ui.jf_map_pin_details.size;
  assert.deepEqual(children(ui.jf_map_pin_idle).pin.size,[4,4]);
  for(let slot=0;slot<L.settlementMap.cells;slot++){
   const target=grid['cell'+slot],states=children(markerFor(ui,target));
@@ -162,7 +164,13 @@ test('Small idle pins reveal artwork in the map and text in the fixed info dock'
   assert.ok(x+artX>=0&&x+artX+width<=map.grid.size[0]);
   assert.ok(z+artZ>=0&&z+artZ+height<=map.grid.size[1]);
   const [dx,dz]=hover['tooltip@jagsby_frontier.jf_map_pin_details'].offset;
-  assert.deepEqual([map.grid.offset[0]+x+dx,map.grid.offset[1]+z+dz],dock.offset);
+  assert.ok(x+dx>=0&&x+dx+tooltipWidth<=map.grid.size[0]);
+  assert.ok(z+dz>=0&&z+dz+tooltipHeight<=map.grid.size[1]);
+  const expectedX=x+artX+width+4+tooltipWidth<=map.grid.size[0]
+   ? artX+width+4 : artX-4-tooltipWidth;
+  assert.equal(dx,expectedX);
+  assert.ok(dz<=3&&dz+tooltipHeight>=3);
+  assert.equal(states.info.allow_clipping,false);
  }
  assert.deepEqual(Object.keys(children(ui.jf_map_pin_details)),['background','text']);
 });
@@ -170,8 +178,8 @@ test('Small idle pins reveal artwork in the map and text in the fixed info dock'
 test('Points within the old coarse cell project independently and spawn shares the same axes',()=>{
  const viewport={dimension:'minecraft:overworld',x:0,z:0,span:240};
  const s=mapSnapshot({a:village('A',-39,-14),b:village('B',-20,-8)},viewport,null,{x:-20,y:70,z:-8});
- assert.equal(s.cells[5*MAP_COLUMNS+13][0].id,'a');
- const slot=6*MAP_COLUMNS+16;
+ assert.equal(s.cells[10*MAP_COLUMNS+13][0].id,'a');
+ const slot=11*MAP_COLUMNS+16;
  assert.equal(s.spawnCell,slot);
  assert.deepEqual(s.cells[slot].map(p=>p.id),['b','world-spawn']);
  assert.match(mapCellInfo(s.cells[slot]),/World spawn: X -20, Y 70, Z -8/);

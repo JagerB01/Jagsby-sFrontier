@@ -1,9 +1,11 @@
 """Map geometry uses explicit rectangles; markers expose ordinary hover panels."""
 import copy
 
-COLUMNS, ROWS, WIDTH, HEIGHT = 40, 15, 240, 90
 CELL = 6
+COLUMNS, ROWS = 40, 25
+WIDTH, HEIGHT = COLUMNS * CELL, ROWS * CELL
 ART_SIZE = 16
+TOOLTIP_WIDTH, TOOLTIP_HEIGHT, TOOLTIP_GAP = 108, 76, 4
 MAP_LAYOUT = {"columns": COLUMNS, "rows": ROWS, "cells": COLUMNS * ROWS}
 MAP_LAYOUT.update({key: COLUMNS * ROWS + i for i, key in enumerate([
     "back", "fit", "zoomOut", "zoomIn", "west", "east", "north", "south", "dimension", "refresh", "bounds", "details"])})
@@ -46,10 +48,11 @@ def build_map_ui(ui, frame):
          "binding_type": "collection", "binding_collection_name": "form_buttons"}]
     ui["jf_map_pin_art"] = art
     ui["jf_map_pin_details"] = {
-        "type": "panel", "size": [240, 54], "anchor_from": "top_left", "anchor_to": "top_left",
+        "type": "panel", "size": [TOOLTIP_WIDTH, TOOLTIP_HEIGHT],
+        "anchor_from": "top_left", "anchor_to": "top_left",
         "layer": 100, "allow_clipping": False, "controls": [
-            c("background", image([240, 54], [0, 0], [0.07, 0.08, 0.07])),
-            c("text", {**label("#form_button_text", [228, 48], (6, 3), scale=0.65),
+            c("background", image([TOOLTIP_WIDTH, TOOLTIP_HEIGHT], [0, 0], [0.07, 0.08, 0.07])),
+            c("text", {**label("#form_button_text", [TOOLTIP_WIDTH - 12, TOOLTIP_HEIGHT - 6], (6, 3), scale=0.65),
                        "property_bag": {"#form_button_text": ""}, "bindings": copy.deepcopy(bindings)})]}
     ui["jf_map_pin"] = {
         "type": "button", "size": [CELL, CELL], "offset": [0, 0],
@@ -64,21 +67,26 @@ def build_map_ui(ui, frame):
         # The hit area stays fixed. Clamp the expanded art at the map border.
         art_x = min(WIDTH - ART_SIZE, max(0, x + (CELL - ART_SIZE) // 2))
         art_z = min(HEIGHT - ART_SIZE, max(0, z + (CELL - ART_SIZE) // 2))
+        tooltip_x = art_x + ART_SIZE + TOOLTIP_GAP
+        if tooltip_x + TOOLTIP_WIDTH > WIDTH:
+            tooltip_x = art_x - TOOLTIP_GAP - TOOLTIP_WIDTH
+        tooltip_z = min(HEIGHT - TOOLTIP_HEIGHT, max(0, z + (CELL - TOOLTIP_HEIGHT) // 2))
         ui[template + "@jagsby_frontier.jf_map_pin"] = {"controls": [
             c("idle@jagsby_frontier.jf_map_pin_idle", {}),
             c("info", {"type": "panel", "size": [CELL, CELL], "offset": [0, 0],
                        "anchor_from": "top_left", "anchor_to": "top_left", "allow_clipping": False,
                        "controls": [
                            c("art@jagsby_frontier.jf_map_pin_art", {"offset": [art_x - x, art_z - z]}),
-                           c("tooltip@jagsby_frontier.jf_map_pin_details", {"offset": [-x, 102 - z]})]})]}
+                           c("tooltip@jagsby_frontier.jf_map_pin_details",
+                             {"offset": [tooltip_x - x, tooltip_z - z]})]})]}
     content=copy.deepcopy([item for item in frame if 'title' not in item])
     content.append(c("title", label("Settlement Map", [170, 14], (28, 34), color=(0.86, 0.73, 0.44), scale=1)))
     content.append(c("bounds", scope("jf_map_bounds", MAP_LAYOUT['bounds'], [240, 12], [110, 56])))
-    content.append(c("details", scope("jf_map_details", MAP_LAYOUT['details'], [240, 10], [110, 159])))
+    content.append(c("details", scope("jf_map_details", MAP_LAYOUT['details'], [240, 10], [110, 220])))
     grid=[c("border", image([WIDTH+2, HEIGHT+2], [-1, -1], [0.32, 0.34, 0.30])),
           c("black", image([WIDTH, HEIGHT], [0, 0], [0.025, 0.035, 0.03]))]
     for x in range(7): grid.append(c("x"+str(x), image([1, HEIGHT], [min(WIDTH-1, x*40), 0], [0.10, 0.14, 0.11])))
-    for z in range(4): grid.append(c("z"+str(z), image([WIDTH, 1], [0, min(HEIGHT-1, z*30)], [0.10, 0.14, 0.11])))
+    for z in range(6): grid.append(c("z"+str(z), image([WIDTH, 1], [0, min(HEIGHT-1, z*30)], [0.10, 0.14, 0.11])))
     for slot in range(COLUMNS*ROWS):
         x, z = (slot % COLUMNS) * CELL, (slot // COLUMNS) * CELL
         template = f"jf_map_marker_{slot}"
@@ -86,10 +94,6 @@ def build_map_ui(ui, frame):
         grid.append(c("cell"+str(slot), scope(template, slot, [CELL, CELL], [x, z])))
     content.append(c("grid", {"type":"panel","size":[WIDTH,HEIGHT],"offset":[110,68],
         "anchor_from":"top_left","anchor_to":"top_left","controls":grid}))
-    content.append(c("info_dock",{"type":"panel","size":[240,54],"offset":[110,170],
-        "anchor_from":"top_left","anchor_to":"top_left","controls":[
-            c("background",image([240,54],[0,0],[0.07,0.08,0.07])),
-            c("hint",label("Hover a pin for artwork and coordinates.\nZoom in to separate clustered points.",[228,36],(6,8),scale=0.65))]}))
     # One framed control panel, kept outside the drawing area.
     panel=[c("edge", image([76, 162], [0, 0], [0.30, 0.32, 0.28])),
            c("background", image([74, 160], [1, 1], [0.075, 0.09, 0.08])),

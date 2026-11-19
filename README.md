@@ -5,14 +5,10 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.106 for Cauldron 0.0.18](downloads/Jagsbys_Frontier_v0.0.106_Cauldron.mcaddon?raw=true)
+[Download Frontier 0.0.107](downloads/Jagsbys_Frontier_v0.0.107.mcaddon?raw=true)
 
-This Frontier build includes the trade-rank bridge in Cauldron's normal villager
-definition. Keep Cauldron 0.0.18 enabled and place Frontier above Cauldron in
-the world's Behavior Packs list. Disable the separate Villager Compatibility
-and Trade Rank Probe packs.
-
-[Download the current prototype addon](downloads/Jagsbys_Frontier_v0.0.105.mcaddon?raw=true)
+Hover or focus a Diplomacy map pin to see its details beside the pin. The map
+now uses the space previously reserved for the details box.
 
 Version 0.0.105 improves Settlement Map positioning for settlements and world
 spawn. Small pins reveal the full artwork on the map when hovered or focused.
@@ -476,10 +472,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.106.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.107.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.106_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.107_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and
