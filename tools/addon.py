@@ -3,12 +3,14 @@ import argparse
 import io
 import json
 from pathlib import Path
+import re
 import struct
 import subprocess
 import uuid
 import zipfile
 from build_charter_ui import build as build_charter_ui
-from build_villager_bridge import build as build_villager_bridge
+from build_trade_rank_probe import probe_entity
+from build_villager_bridge import CONTROLLER, PREFIX, build as build_villager_bridge
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKS = ROOT / "packs"
@@ -97,18 +99,52 @@ def archive(entries):
     return buffer.getvalue()
 
 
-def build():
+def cauldron_villager_overlay(addon_path):
+    pack = "Jagsbys_Cauldron_BP/"
+    with zipfile.ZipFile(addon_path) as addon:
+        cauldron = json.loads(addon.read(pack + "manifest.json"))
+        source = addon.read(pack + "entities/villager_v2.json").decode("utf-8-sig")
+    header = cauldron["header"]
+    if (header["uuid"], header["version"]) != ("5b864eeb-7ebf-447a-83b8-d896ee6fbda5", [0, 0, 18]):
+        raise ValueError("The compatibility build requires Jagsby's Cauldron v0.0.18.")
+
+    # Bedrock accepts comments and trailing commas. Preserve quoted strings.
+    string = r'"(?:\\.|[^"\\])*"'
+    source = re.sub(string + r'|//[^\r\n]*|/\*[\s\S]*?\*/',
+                    lambda match: match[0] if match[0].startswith('"') else " ", source)
+    source = re.sub(string + r'|,(?=\s*[}\]])',
+                    lambda match: match[0] if match[0].startswith('"') else "", source)
+    baseline = json.loads(source)
+    if baseline["minecraft:entity"]["description"]["identifier"] != "minecraft:villager_v2":
+        raise ValueError("Expected Cauldron's minecraft:villager_v2 definition.")
+    villager = probe_entity(baseline, prefix=PREFIX, controller=CONTROLLER,
+                            animation="frontier_trade_rank", tier_count=5)
+    manifest = json.loads((PACKS / "behavior/manifest.json").read_text())
+    manifest["dependencies"].append({"uuid": header["uuid"], "version": header["version"]})
+    manifest["metadata"] = {"authors": cauldron["metadata"]["authors"]}
+    return {
+        "entities/villager_v2.json": json.dumps(villager, indent=2).encode(),
+        "manifest.json": json.dumps(manifest, indent=2).encode(),
+    }
+
+
+def build(cauldron_addon=None):
+    overlay = cauldron_villager_overlay(cauldron_addon) if cauldron_addon else {}
     build_charter_ui()
     build_villager_bridge()
     validate()
     entries = []
     for kind, suffix in (("behavior", "BP"), ("resource", "RP")):
         base = PACKS / kind
-        content = archive([(p.relative_to(base).as_posix(), p.read_bytes())
-                           for p in base.rglob("*") if p.is_file()])
+        files = {p.relative_to(base).as_posix(): p.read_bytes()
+                 for p in base.rglob("*") if p.is_file()}
+        if kind == "behavior":
+            files.update(overlay)
+        content = archive(files.items())
         entries.append((f"Jagsbys_Frontier_{suffix}.mcpack", content))
     version = ".".join(map(str, json.loads((PACKS / "behavior/manifest.json").read_text())["header"]["version"]))
-    destination = ROOT / f"dist/Jagsbys_Frontier_v{version}.mcaddon"
+    variant = "_Cauldron" if cauldron_addon else ""
+    destination = ROOT / f"dist/Jagsbys_Frontier_v{version}{variant}.mcaddon"
     destination.parent.mkdir(exist_ok=True)
     destination.write_bytes(archive(entries))
     print(f"Built {destination}")
@@ -117,5 +153,12 @@ def build():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("validate", "build"))
+    parser.add_argument("--cauldron-addon", type=Path,
+                        help="Build Frontier for use with the supplied Cauldron 0.0.18 archive.")
     args = parser.parse_args()
-    {"validate": validate, "build": build}[args.command]()
+    if args.command == "build":
+        build(args.cauldron_addon)
+    else:
+        if args.cauldron_addon:
+            parser.error("--cauldron-addon requires the build command")
+        validate()
