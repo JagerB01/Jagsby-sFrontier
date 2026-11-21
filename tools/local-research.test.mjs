@@ -6,12 +6,12 @@ const state=level=>({global:{innovation:level}});
 const village=()=>migrateLocalResearch({hearth:0,efficiency:0,sanctuary:0,roads:0,biomeUnlocked:false});
 const give=(v,k,id,n,s=state(100))=>applyLocalContribution(v,k,id,n,s);
 
-test('Hearthstone unlocks after exactly 64 bread and another 128, with clipped partial payments',()=>{
+test('Hearthstone unlocks after exactly 32 bread and another 64, with clipped partial payments',()=>{
  let v=village();assert.equal(give(v,'hearth','minecraft:bread',20),20);assert.equal(v.hearth,0);
  v=JSON.parse(JSON.stringify(v));assert.equal(v.localResearch.progress.hearth,20);
- assert.equal(give(v,'hearth','minecraft:bread',100),44);assert.equal(v.hearth,1);assert.equal(v.localResearch.progress.hearth,0);
- assert.equal(localResearchCost(v,'hearth').amount,128);
- give(v,'hearth','minecraft:bread',127);assert.equal(v.hearth,1);
+ assert.equal(give(v,'hearth','minecraft:bread',100),12);assert.equal(v.hearth,1);assert.equal(v.localResearch.progress.hearth,0);
+ assert.equal(localResearchCost(v,'hearth').amount,64);
+ give(v,'hearth','minecraft:bread',63);assert.equal(v.hearth,1);
  assert.equal(give(v,'hearth','minecraft:bread',64),1);assert.equal(v.hearth,2);
  assert.equal(localResearchCost(v,'hearth'),null);assert.equal(give(v,'hearth','minecraft:bread',64),0);
 });
@@ -70,7 +70,7 @@ test('Partial local progress is settlement-specific, survives reload and combine
  let a=village(),b=village();give(a,'hearth','minecraft:bread',20);give(b,'hearth','minecraft:bread',5);
  ({a,b}=JSON.parse(JSON.stringify({a,b})));
  assert.equal(give(a,'hearth','minecraft:bread',10),10);assert.equal(a.localResearch.progress.hearth,30);
- assert.equal(b.localResearch.progress.hearth,5);assert.equal(give(a,'hearth','minecraft:bread',64),34);
+ assert.equal(b.localResearch.progress.hearth,5);assert.equal(give(a,'hearth','minecraft:bread',64),2);
  assert.equal(a.hearth,1);assert.equal(b.hearth,0);
 });
 test('Stewardship caps both endless upgrades and preserves partial progress at the cap',()=>{

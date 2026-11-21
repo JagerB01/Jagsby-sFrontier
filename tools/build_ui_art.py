@@ -63,7 +63,7 @@ def icon(c, name, x, y):
             c.rect(x, y + 7, 17, 1, dark)
 
 
-def silver_frame(width, height, face, outer, inner):
+def wheat_frame(width, height, face, outer, inner):
     canvas = Canvas(width, height, (0, 0, 0, 0))
     corner = min(5, height // 4)
     for inset, color in enumerate((outer, (21, 24, 27), inner, face)):
@@ -75,28 +75,28 @@ def silver_frame(width, height, face, outer, inner):
 
 
 def button_texture(width, height, state):
-    """Draw silver trim at the final button size to keep the corners sharp."""
+    """Draw wheat-gold trim at the final button size to keep the corners sharp."""
     selected = state.startswith("checked")
     hover = "hover" in state
     pressed = state == "pressed"
     name = f"button_{width}x{height}_{state}"
     face = (22, 26, 32)
-    outer, inner = (169, 182, 188), (107, 122, 130)
+    outer, inner = (214, 173, 89), (143, 101, 48)
     if selected:
         face, inner = (43, 41, 33), (189, 159, 101)
     if hover:
         face = (54, 56, 48) if selected else (40, 51, 63)
-        outer = (240, 246, 248)
-        inner = (226, 195, 135) if selected else (174, 199, 211)
+        outer = (255, 228, 152)
+        inner = (226, 195, 135) if selected else (204, 151, 66)
     if pressed:
-        face, outer, inner = (15, 19, 25), (212, 226, 234), (138, 173, 189)
-    silver_frame(width, height, face, outer, inner).save(name + ".png")
+        face, outer, inner = (15, 19, 25), (190, 141, 62), (120, 79, 40)
+    wheat_frame(width, height, face, outer, inner).save(name + ".png")
     return "frontier/" + name
 
 
 def map_tooltip_texture():
     name = "map_tooltip_border"
-    silver_frame(24, 24, (18, 23, 29), (195, 208, 216), (119, 140, 152)).save(name + ".png")
+    wheat_frame(24, 24, (18, 23, 29), (221, 181, 93), (150, 107, 48)).save(name + ".png")
     return "frontier/" + name
 
 
@@ -140,11 +140,11 @@ def build():
     # Charcoal/ink surfaces. The original silver-and-wheat ornament
     # is a separate transparent asset so its silhouette is not boxed in.
     c = Canvas(380, 240, (0, 0, 0, 0))
-    c.rect(18, 30, 344, 197, (35, 37, 38))
-    c.rect(18, 31, 344, 25, (47, 49, 49))
-    c.rect(18, 55, 344, 1, (184, 146, 78))
+    c.rect(17, 29, 347, 199, (35, 37, 38))
+    c.rect(17, 31, 347, 25, (47, 49, 49))
+    c.rect(17, 55, 347, 1, (184, 146, 78))
     c.rect(103, 60, 1, 159, (150, 144, 121))
-    c.rect(104, 59, 258, 161, (30, 32, 33))
+    c.rect(104, 59, 260, 161, (30, 32, 33))
     c.save("charter_frame.png")
     for name in ["overview", "research", "production", "realm", "diplomacy"]:
         for state in ["unchecked", "checked", "unchecked_hover", "checked_hover"]:

@@ -442,9 +442,9 @@ def build():
     ]}
     frame = [
         control("frame", image("frontier/charter_frame", [380, 240], layer=1)),
-        control("leather", image("frontier/palette_leather", [344, 197], (18, 30), layer=2, color=[0.58, 0.58, 0.58])),
-        control("banner", image("frontier/palette_leather", [344, 25], (18, 31), layer=3, color=[1, 1, 1])),
-        control("banner_rule", image("frontier/solid", [344, 1], (18, 55), layer=4, color=list(WHEAT))),
+        control("leather", image("frontier/palette_leather", [347, 199], (17, 29), layer=2, color=[0.58, 0.58, 0.58])),
+        control("banner", image("frontier/palette_leather", [347, 25], (17, 31), layer=3, color=[1, 1, 1])),
+        control("banner_rule", image("frontier/solid", [347, 1], (17, 55), layer=4, color=list(WHEAT))),
         control("ornament", image("frontier/harvest_border", [380, 240], layer=20)),
         control("title", label("Village Charter", [236, 17], (30, 34), WHEAT, 1.0)),
         control("close@common.close_button", {"$close_button_offset": [-7, 7], "layer": 30, "bindings": []}),

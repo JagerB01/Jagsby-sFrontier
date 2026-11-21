@@ -138,7 +138,7 @@ function contributeResearchCard(player,vid,key,shown,view){
     const take=Math.min(left,item.amount);slots.push({slot,before:item.amount,after:item.amount-take});left-=take;
    }
    if(left)throw Error('Inventory changed before payment');
-   s.pendingResearch={playerId:player.id,key,material:shown.material,amount,slots,recipeVersion:1};
+   s.pendingResearch={playerId:player.id,key,material:shown.material,amount,slots,recipeVersion:2};
    if(!global)Object.assign(s.pendingResearch,{scope:'local',vid,level:shown.level,revision:shown.revision});
    save(s);recoverResearch(player);
   }
@@ -155,9 +155,11 @@ function recoverResearch(player){
   // A journal saved before the recipe change already authorized these items.
   const legacyStorage=!tx.recipeVersion&&!target&&tx.key==='storage';
   const legacyProsperity=!tx.recipeVersion&&target&&tx.key==='efficiency';
+  const legacyHearthstone=(tx.recipeVersion??0)<2&&target&&tx.key==='hearth';
+  const legacyLocalCost=legacyProsperity?250:legacyHearthstone?[64,128][target.hearth]:undefined;
   let eligible;
   if(legacyStorage)eligible=lockReason(s,tx.key)?0:Math.min(tx.amount,512-s.researchProgress.storage);
-  else if(legacyProsperity)eligible=researchRequirement(target,tx.key,s)?0:Math.min(tx.amount,250-target.localResearch.progress.efficiency);
+  else if(legacyLocalCost!==undefined)eligible=researchRequirement(target,tx.key,s)?0:Math.min(tx.amount,legacyLocalCost-target.localResearch.progress[tx.key]);
   else eligible=target?localContribution(target,tx.key,tx.material,tx.amount,s):contribution(s,tx.key,tx.material,tx.amount);
   if(eligible!==tx.amount)throw Error('Saved payment does not match current research; nothing further removed');
   const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
@@ -177,16 +179,16 @@ function recoverResearch(player){
   if(legacyStorage){
    s.researchProgress.storage+=tx.amount;
    s.researchRevision++;
-  }else if(legacyProsperity){
-   target.localResearch.progress.efficiency+=tx.amount;
+  }else if(legacyLocalCost!==undefined){
+   target.localResearch.progress[tx.key]+=tx.amount;
    target.localResearch.revision++;
-   migrateLocalResearch(target,s);
   }else{
    const accepted=target?applyLocalContribution(target,tx.key,tx.material,tx.amount,s):applyContribution(s,tx.key,tx.material,tx.amount);
    if(accepted!==tx.amount)throw Error('Saved payment is inconsistent with research progress');
   }
   delete s.pendingResearch;
   if(legacyStorage)migrateResearch(s);
+  if(legacyLocalCost!==undefined)migrateLocalResearch(target,s);
   save(s);
   player.sendMessage(`§aContributed ${tx.amount} toward ${tx.scope==='local'?ECONOMY_CONFIG.research[tx.key].name:DEFINITIONS[tx.key].name}.`);
 }

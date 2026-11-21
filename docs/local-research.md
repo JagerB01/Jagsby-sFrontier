@@ -12,7 +12,7 @@ management is separate, under Realm > Road Networks.
 
 | Technology | Levels | Cost per additional level |
 | --- | --- | --- |
-| Hearthstone | I–II | 64 bread, then 128 bread |
+| Hearthstone | I–II | 32 bread, then 64 bread |
 | Resource Prospecting | I | 64 paper |
 | Sanctuary | Endless, subject to Stewardship | 250 crops |
 | Prosperity | Endless, subject to Stewardship | 256 stone blocks |
@@ -45,9 +45,9 @@ introduced by these research costs.
 Different eligible item types and different players may contribute to the same
 requirement over multiple transactions. Each transaction selects one item type,
 clips payment to the remaining next-level cost, and unlocks exactly one level
-when its requirement completes. For example, Hearthstone I at 20/64 accepts
-only another 44 bread; excess bread stays in inventory. Completion resets progress
-for the following level. Sanctuary and Prosperity always require 250 items.
+when its requirement completes. For example, Hearthstone I at 20/32 accepts
+only another 12 bread; excess bread stays in inventory. Completion resets progress
+for the following level. Sanctuary requires 250 crops and Prosperity requires 256 stone blocks per level.
 
 Hearthstone, Prospecting, Sanctuary and Prosperity retain their existing
 prerequisites. Road Networks requires Sanctuary I and now has three research

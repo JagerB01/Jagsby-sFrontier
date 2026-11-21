@@ -121,12 +121,12 @@
           "type": "image",
           "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            344,
-            197
+            347,
+            199
           ],
           "offset": [
-            18,
-            30
+            17,
+            29
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -145,11 +145,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            344,
+            347,
             25
           ],
           "offset": [
-            18,
+            17,
             31
           ],
           "keep_ratio": false,
@@ -169,11 +169,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/solid",
           "size": [
-            344,
+            347,
             1
           ],
           "offset": [
-            18,
+            17,
             55
           ],
           "keep_ratio": false,
@@ -166657,12 +166657,12 @@
           "type": "image",
           "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            344,
-            197
+            347,
+            199
           ],
           "offset": [
-            18,
-            30
+            17,
+            29
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -166681,11 +166681,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            344,
+            347,
             25
           ],
           "offset": [
-            18,
+            17,
             31
           ],
           "keep_ratio": false,
@@ -166705,11 +166705,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/solid",
           "size": [
-            344,
+            347,
             1
           ],
           "offset": [
-            18,
+            17,
             55
           ],
           "keep_ratio": false,
@@ -167307,12 +167307,12 @@
           "type": "image",
           "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            344,
-            197
+            347,
+            199
           ],
           "offset": [
-            18,
-            30
+            17,
+            29
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -167331,11 +167331,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            344,
+            347,
             25
           ],
           "offset": [
-            18,
+            17,
             31
           ],
           "keep_ratio": false,
@@ -167355,11 +167355,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/solid",
           "size": [
-            344,
+            347,
             1
           ],
           "offset": [
-            18,
+            17,
             55
           ],
           "keep_ratio": false,
@@ -243561,12 +243561,12 @@
           "type": "image",
           "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            344,
-            197
+            347,
+            199
           ],
           "offset": [
-            18,
-            30
+            17,
+            29
           ],
           "keep_ratio": false,
           "bilinear": false,
@@ -243585,11 +243585,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/palette_leather",
           "size": [
-            344,
+            347,
             25
           ],
           "offset": [
-            18,
+            17,
             31
           ],
           "keep_ratio": false,
@@ -243609,11 +243609,11 @@
           "type": "image",
           "texture": "textures/ui/frontier/solid",
           "size": [
-            344,
+            347,
             1
           ],
           "offset": [
-            18,
+            17,
             55
           ],
           "keep_ratio": false,

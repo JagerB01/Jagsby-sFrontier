@@ -12,7 +12,7 @@ export const ECONOMY_CONFIG = {
     stone:['stone','cobblestone','deepslate','cobbled_deepslate','granite','diorite','andesite','tuff'].map(id=>`minecraft:${id}`),
   },
   research:{
-    hearth:{name:'Hearthstone',max:2,cost:[64,128],material:'minecraft:bread',label:'Bread'},
+    hearth:{name:'Hearthstone',max:2,cost:[32,64],material:'minecraft:bread',label:'Bread'},
     biome:{name:'Resource Prospecting',max:1,cost:64,material:'minecraft:paper',label:'Paper'},
     sanctuary:{name:'Sanctuary',cost:250,category:'crop',label:'Crops'},
     efficiency:{name:'Prosperity',cost:256,category:'stone',label:'Stone Blocks'},

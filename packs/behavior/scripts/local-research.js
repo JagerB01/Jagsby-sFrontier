@@ -22,7 +22,10 @@ export function migrateLocalResearch(v,s=null){
  }
  v.localResearch.progress??={};v.localResearch.revision??=0;
  for(const key of LOCAL_KEYS)v.localResearch.progress[key]=count(v.localResearch.progress[key]);
+ const pending=s?.pendingResearch;
+ const pendingHearthstone=pending?.key==='hearth'&&(pending.recipeVersion??0)<2&&s.villages?.[pending.vid]===v;
  for(const key of LOCAL_KEYS){
+  if(key==='hearth'&&pendingHearthstone)continue;
   const before=localResearchLevel(v,key);let progress=v.localResearch.progress[key];
   if(C.research[key].max===undefined){
    const allowed=s?Math.max(0,s.global.innovation-before):Infinity;

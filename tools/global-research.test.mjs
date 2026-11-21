@@ -219,7 +219,7 @@ test('Save migration refuses a future version instead of overwriting it',()=>{
 test('Opening and canceling Research shows costs in hover records without spending',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};const h=await runtime(s);
  h.slots[0]={typeId:'minecraft:bread',amount:20};h.api.open(h.player,'a','Research','local');
- for(const value of ['Next cost: 64 Bread','64 remaining','Click to contribute','Villager healing'])assert.ok(h.forms[0].buttons[5].includes(value));
+ for(const value of ['Next cost: 32 Bread','32 remaining','Click to contribute','Villager healing'])assert.ok(h.forms[0].buttons[5].includes(value));
  assert.equal(h.slots[0].amount,20);assert.equal(h.read().villages.a.hearth,0);
 });
 test('Selecting the actual local card contributes directly and only redraws the dashboard',async()=>{
@@ -228,13 +228,13 @@ test('Selecting the actual local card contributes directly and only redraws the 
  h.slots[0]={typeId:'minecraft:bread',amount:20};h.api.open(h.player,'a','Research','local');await new Promise(resolve=>setImmediate(resolve));
  assert.equal(h.slots[0],undefined);assert.equal(h.read().villages.a.localResearch.progress.hearth,20);
  assert.equal(h.forms.length,2);assert.ok(h.forms.every(f=>f.heading==='JF_CHARTER|Dashboard'));
- assert.ok(h.forms[1].buttons[5].includes('Contributed: 20 / 64'));
+ assert.ok(h.forms[1].buttons[5].includes('Contributed: 20 / 32'));
 });
 test('A stale local card never spends for a different level',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};const h=await runtime(s);
  h.slots[0]={typeId:'minecraft:bread',amount:64};const shown=choice(h,'hearth','a');h.update(s=>s.villages.a.hearth=1);
  click(h,'hearth','a',shown);assert.equal(h.slots[0].amount,64);assert.equal(h.read().villages.a.hearth,1);
- assert.ok(h.forms[0].buttons[5].includes('Next cost: 128 Bread'));
+ assert.ok(h.forms[0].buttons[5].includes('Next cost: 64 Bread'));
 });
 test('Two players accumulate local progress; stale cards cannot double-debit',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};const h=await runtime(s);h.slots[0]={typeId:'minecraft:bread',amount:20};
@@ -243,20 +243,34 @@ test('Two players accumulate local progress; stale cards cannot double-debit',as
  const stale=choice(h,'hearth','a',other);click(h,'hearth','a');assert.equal(h.read().villages.a.localResearch.progress.hearth,20);
  click(h,'hearth','a',stale,other);assert.equal(bread.amount,50);
  const refreshed=choice(h,'hearth','a',other);click(h,'hearth','a',refreshed,other);
- assert.equal(bread.amount,6);assert.equal(h.read().villages.a.hearth,1);
- click(h,'hearth','a',refreshed,other);assert.equal(bread.amount,6);
+ assert.equal(bread.amount,38);assert.equal(h.read().villages.a.hearth,1);
+ click(h,'hearth','a',refreshed,other);assert.equal(bread.amount,38);
 });
 test('Local journal recovers a failed final save without charging or crediting twice',async()=>{
- const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};const h=await runtime(s);h.slots[0]={typeId:'minecraft:bread',amount:64};h.failWorld(3);
+ const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};const h=await runtime(s);h.slots[0]={typeId:'minecraft:bread',amount:32};h.failWorld(3);
  click(h,'hearth','a');assert.equal(h.read().pendingResearch.scope,'local');assert.equal(h.slots[0],undefined);assert.equal(h.read().villages.a.hearth,0);
  h.api.recoverResearch(h.player);assert.equal(h.read().villages.a.hearth,1);assert.equal(h.read().pendingResearch,undefined);
  h.api.recoverResearch(h.player);assert.equal(h.read().villages.a.hearth,1);
 });
 test('Local journal recovers interrupted multi-slot payments',async()=>{
  const s=fresh(Date.now());s.global.innovation=2;s.villages.a={...village(),hearth:1,name:'Test',available:[]};const h=await runtime(s);
- h.slots[0]={typeId:'minecraft:bread',amount:64};h.slots[1]={typeId:'minecraft:bread',amount:64,nameTag:'Contribution'};h.failInventory(1);
- click(h,'hearth','a');assert.equal(h.slots[0],undefined);assert.equal(h.slots[1].amount,64);assert.equal(h.read().villages.a.hearth,1);
+ h.slots[0]={typeId:'minecraft:bread',amount:32};h.slots[1]={typeId:'minecraft:bread',amount:32,nameTag:'Contribution'};h.failInventory(1);
+ click(h,'hearth','a');assert.equal(h.slots[0],undefined);assert.equal(h.slots[1].amount,32);assert.equal(h.read().villages.a.hearth,1);
  h.api.recoverResearch(h.player);assert.equal(h.read().villages.a.hearth,2);assert.equal(h.slots[1],undefined);
+});
+test('Hearthstone price cut preserves paid bread and recovers an outstanding old-price payment',async()=>{
+ const s=fresh();s.global.innovation=2;
+ s.villages.a={...village(),id:'a',hearth:0,localResearch:{version:1,progress:{hearth:40},revision:3}};
+ s.pendingResearch={playerId:'p',scope:'local',vid:'a',key:'hearth',level:0,revision:3,recipeVersion:1,
+  material:'minecraft:bread',amount:24,slots:[{slot:0,before:24,after:0}]};
+ const h=await runtime(s);
+ assert.equal(h.read().villages.a.hearth,0);
+ h.slots[0]=undefined;
+ h.api.recoverResearch(h.player);
+ h.api.recoverResearch(h.player);
+ assert.equal(h.read().villages.a.hearth,1);
+ assert.equal(h.read().villages.a.localResearch.progress.hearth,32);
+ assert.equal(h.read().pendingResearch,undefined);
 });
 test('Local journal intent-save failure leaves items and progress untouched',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};const h=await runtime(s);h.slots[0]={typeId:'minecraft:bread',amount:20};h.failWorld(2);
