@@ -1,5 +1,6 @@
 """Map geometry uses explicit rectangles; markers expose ordinary hover panels."""
 import copy
+from build_ui_art import button_texture, map_tooltip_texture
 
 CELL = 6
 COLUMNS, ROWS = 40, 25
@@ -58,15 +59,17 @@ def build_map_ui(ui, frame):
         "type": "panel", "size": [TOOLTIP_WIDTH, "100%cm"],
         "anchor_from": "top_left", "anchor_to": "top_left",
         "layer": 100, "allow_clipping": False, "controls": [
-            c("background", image([TOOLTIP_WIDTH, "100%sm"], [0, 0], [0.07, 0.08, 0.07])),
+            c("background", {**sprite(map_tooltip_texture().removeprefix("frontier/"),
+                                       [TOOLTIP_WIDTH, "100%sm"], [0, 0]),
+                             "layer": 3, "nineslice_size": 7}),
             c("content", {"type": "stack_panel", "orientation": "vertical",
                 "size": [TOOLTIP_WIDTH, "100%c"], "anchor_from": "top_left", "anchor_to": "top_left",
                 "controls": [
-                    c("top_padding", {"type": "panel", "size": [TOOLTIP_WIDTH, 3]}),
+                    c("top_padding", {"type": "panel", "size": [TOOLTIP_WIDTH, 5]}),
                     c("body", {"type": "panel", "size": [TOOLTIP_WIDTH, "100%cm"], "controls": [
                         c("text", {**label("#form_button_text", [TOOLTIP_WIDTH - 12, "default"], (6, 0), scale=0.65),
                                    "property_bag": {"#form_button_text": ""}, "bindings": copy.deepcopy(bindings)})]}),
-                    c("bottom_padding", {"type": "panel", "size": [TOOLTIP_WIDTH, 3]}),
+                    c("bottom_padding", {"type": "panel", "size": [TOOLTIP_WIDTH, 5]}),
                 ]})]}
     ui["jf_map_pin"] = {
         "type": "button", "size": [CELL, CELL], "offset": [0, 0],
@@ -128,8 +131,8 @@ def build_map_ui(ui, frame):
         states=[]
         for state in ['default','hover','pressed']:
             states.append(c(state,{"type":"panel","size":[width,height],"controls":[
-                c('rim',image([width,height],[0,0],[0.48,0.48,0.41] if state=='default' else [0.75,0.65,0.40])),
-                c('face',image([width-2,height-2],[1,1],[0.13,0.16,0.14] if state=='default' else [0.22,0.26,0.21])),
+                c('face', {**sprite(button_texture(width, height, state).removeprefix("frontier/"),
+                                    [width, height], [0, 0]), "layer": 3}),
                 c('caption',{**label('#form_button_text',[width-4,10],(2,3),scale=0.6),
                     'text_alignment':'center','bindings':copy.deepcopy(bindings)})]}))
         button={"size":[width,height],"focus_enabled":True,"hover_enabled":True,

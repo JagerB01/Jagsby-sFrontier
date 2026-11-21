@@ -197814,7 +197814,7 @@
       {
         "background": {
           "type": "image",
-          "texture": "textures/ui/frontier/solid",
+          "texture": "textures/ui/frontier/map_tooltip_border",
           "size": [
             108,
             "100%sm"
@@ -197825,14 +197825,10 @@
           ],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "color": [
-            0.07,
-            0.08,
-            0.07
-          ],
+          "layer": 3,
           "keep_ratio": false,
           "bilinear": false,
-          "layer": 3
+          "nineslice_size": 7
         }
       },
       {
@@ -197851,7 +197847,7 @@
                 "type": "panel",
                 "size": [
                   108,
-                  3
+                  5
                 ]
               }
             },
@@ -197908,7 +197904,7 @@
                 "type": "panel",
                 "size": [
                   108,
-                  3
+                  5
                 ]
               }
             }
@@ -241002,9 +240998,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x16_default",
                 "size": [
                   62,
                   16
@@ -241015,38 +241011,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -241096,9 +241063,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x16_hover",
                 "size": [
                   62,
                   16
@@ -241109,38 +241076,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -241190,9 +241128,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x16_pressed",
                 "size": [
                   62,
                   16
@@ -241203,38 +241141,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -241328,9 +241237,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_29x16_default",
                 "size": [
                   29,
                   16
@@ -241341,38 +241250,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  27,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -241422,9 +241302,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_29x16_hover",
                 "size": [
                   29,
                   16
@@ -241435,38 +241315,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  27,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -241516,9 +241367,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_29x16_pressed",
                 "size": [
                   29,
                   16
@@ -241529,38 +241380,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  27,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -241654,9 +241476,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_29x16_default",
                 "size": [
                   29,
                   16
@@ -241667,38 +241489,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  27,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -241748,9 +241541,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_29x16_hover",
                 "size": [
                   29,
                   16
@@ -241761,38 +241554,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  27,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -241842,9 +241606,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_29x16_pressed",
                 "size": [
                   29,
                   16
@@ -241855,38 +241619,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  27,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -241973,9 +241708,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_default",
                 "size": [
                   28,
                   14
@@ -241986,38 +241721,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -242067,9 +241773,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_hover",
                 "size": [
                   28,
                   14
@@ -242080,38 +241786,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -242161,9 +241838,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_pressed",
                 "size": [
                   28,
                   14
@@ -242174,38 +241851,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -242292,9 +241940,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_default",
                 "size": [
                   28,
                   14
@@ -242305,38 +241953,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -242386,9 +242005,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_hover",
                 "size": [
                   28,
                   14
@@ -242399,38 +242018,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -242480,9 +242070,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_pressed",
                 "size": [
                   28,
                   14
@@ -242493,38 +242083,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -242611,9 +242172,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_default",
                 "size": [
                   28,
                   14
@@ -242624,38 +242185,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -242705,9 +242237,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_hover",
                 "size": [
                   28,
                   14
@@ -242718,38 +242250,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -242799,9 +242302,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_pressed",
                 "size": [
                   28,
                   14
@@ -242812,38 +242315,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -242930,9 +242404,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_default",
                 "size": [
                   28,
                   14
@@ -242943,38 +242417,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -243024,9 +242469,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_hover",
                 "size": [
                   28,
                   14
@@ -243037,38 +242482,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -243118,9 +242534,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_28x14_pressed",
                 "size": [
                   28,
                   14
@@ -243131,38 +242547,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  26,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -243249,9 +242636,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x16_default",
                 "size": [
                   62,
                   16
@@ -243262,38 +242649,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -243343,9 +242701,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x16_hover",
                 "size": [
                   62,
                   16
@@ -243356,38 +242714,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -243437,9 +242766,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x16_pressed",
                 "size": [
                   62,
                   16
@@ -243450,38 +242779,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  14
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -243568,9 +242868,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x14_default",
                 "size": [
                   62,
                   14
@@ -243581,38 +242881,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -243662,9 +242933,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x14_hover",
                 "size": [
                   62,
                   14
@@ -243675,38 +242946,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -243756,9 +242998,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x14_pressed",
                 "size": [
                   62,
                   14
@@ -243769,38 +243011,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -243887,9 +243100,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x14_default",
                 "size": [
                   62,
                   14
@@ -243900,38 +243113,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -243981,9 +243165,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x14_hover",
                 "size": [
                   62,
                   14
@@ -243994,38 +243178,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -244075,9 +243230,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_62x14_pressed",
                 "size": [
                   62,
                   14
@@ -244088,38 +243243,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  60,
-                  12
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -244216,9 +243342,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_120x12_default",
                 "size": [
                   120,
                   12
@@ -244229,38 +243355,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.48,
-                  0.48,
-                  0.41
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  118,
-                  10
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.13,
-                  0.16,
-                  0.14
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -244310,9 +243407,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_120x12_hover",
                 "size": [
                   120,
                   12
@@ -244323,38 +243420,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  118,
-                  10
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
@@ -244404,9 +243472,9 @@
           ],
           "controls": [
             {
-              "rim": {
+              "face": {
                 "type": "image",
-                "texture": "textures/ui/frontier/solid",
+                "texture": "textures/ui/frontier/button_120x12_pressed",
                 "size": [
                   120,
                   12
@@ -244417,38 +243485,9 @@
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
-                "color": [
-                  0.75,
-                  0.65,
-                  0.4
-                ],
+                "layer": 3,
                 "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
-              }
-            },
-            {
-              "face": {
-                "type": "image",
-                "texture": "textures/ui/frontier/solid",
-                "size": [
-                  118,
-                  10
-                ],
-                "offset": [
-                  1,
-                  1
-                ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
-                "color": [
-                  0.22,
-                  0.26,
-                  0.21
-                ],
-                "keep_ratio": false,
-                "bilinear": false,
-                "layer": 3
+                "bilinear": false
               }
             },
             {
