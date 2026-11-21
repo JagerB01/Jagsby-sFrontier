@@ -5,11 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.108](downloads/Jagsbys_Frontier_v0.0.108.mcaddon?raw=true)
+[Download Frontier 0.0.109](downloads/Jagsbys_Frontier_v0.0.109.mcaddon?raw=true)
 
 Hover or focus a Diplomacy map pin to see its details beside the pin. The map
 now uses the space previously reserved for the details box. X and Z grid labels
-show world coordinates in blocks and update when you zoom or pan.
+show world coordinates in blocks and update when you zoom or pan. POI tooltips
+fit their text and include X, Y (elevation) and Z.
 
 Version 0.0.105 improves Settlement Map positioning for settlements and world
 spawn. Small pins reveal the full artwork on the map when hovered or focused.
@@ -473,10 +474,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.108.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.109.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.108_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.109_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

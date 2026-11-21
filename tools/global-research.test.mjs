@@ -774,11 +774,11 @@ test('Diplomacy opens map on demand, reads fresh shared data and never scans or 
  assert.ok(h.forms.every(f=>f.heading!=='JF_CHARTER|SettlementMap'),'Switching local tabs must not generate a map');
  const prior=h.read();h.api.openSettlementMap(h.player,'a');
  const m=CHARTER_LAYOUT.settlementMap,form=h.forms.at(-1);
- assert.equal(form.heading,'JF_CHARTER|SettlementMap');assert.match(form.buttons.slice(0,m.cells).join('\n'),/Name: Map home/);
+ assert.equal(form.heading,'JF_CHARTER|SettlementMap');assert.match(form.buttons.slice(0,m.cells).join('\n'),/Map home/);
  assert.match(form.buttons.slice(0,m.cells).join('\n'),/Development:/);assert.deepEqual(h.read(),prior);
  h.update(s=>{s.villages.a.name='Renamed';s.villages.b={...village(1000),name:'Second',id:'b'};});
- h.api.openSettlementMap(h.player,'a');assert.match(h.forms.at(-1).buttons[m.bounds],/3\/3 settlements/);
- assert.match(h.forms.at(-1).buttons.slice(0,m.cells).join('\n'),/Name: Renamed/);
+ h.api.openSettlementMap(h.player,'a');assert.ok(h.forms.at(-1).buttons.slice(0,m.cells).some(text=>text.startsWith('Second\n')));
+ assert.match(h.forms.at(-1).buttons.slice(0,m.cells).join('\n'),/Renamed/);
  h.update(s=>delete s.villages.a);h.api.openSettlementMap(h.player,'a');assert.ok(!h.forms.at(-1).buttons.slice(0,m.cells).join('\n').includes('Renamed'));
  assert.deepEqual(h.read().global,before.global);assert.deepEqual(h.read().researchProgress,before.researchProgress);
 });
@@ -803,7 +803,7 @@ test('Map controls retain zoom, dimensions and Back; marker records never dispat
  respond=form=>{respond=()=>({canceled:true});return {selection:form.buttons.findIndex((text,i)=>i<m.cells&&text.includes('Map home'))};};
  h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.length,previousCount+1,'Marker data must not open a replacement or a cluster chooser');
  respond=()=>{respond=()=>({canceled:true});return {selection:m.dimension};};
- h.api.openSettlementMap(h.player,'a');await flush();assert.match(h.forms.at(-1).buttons[m.bounds],/the_end/);
+ h.api.openSettlementMap(h.player,'a');await flush();assert.ok(h.forms.at(-1).buttons.slice(0,m.cells).some(text=>text.startsWith('End\n')));
  respond=()=>{respond=()=>({canceled:true});return {selection:m.back};};
  h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.at(-1).heading,'JF_CHARTER|Dashboard');
  assert.match(h.forms.at(-1).text,/\[JF:tab:diplomacy\]/);
@@ -814,9 +814,9 @@ test('Hover records include coordinates, biome, Development and owner; world spa
  let spawn={x:-1000,y:80,z:0};
  const h=await runtime(s,()=>({canceled:true}),{spawnLocation:()=>spawn});
  h.api.openSettlementMap(h.player,'a');const m=CHARTER_LAYOUT.settlementMap,form=h.forms.at(-1);
- assert.ok(form.buttons.slice(0,m.cells).some(text=>text.includes('Coordinates: X -1000, Y 80, Z 0')));
+ assert.ok(form.buttons.slice(0,m.cells).some(text=>text.includes('X -1000, Y 80, Z 0')));
  const info=form.buttons.slice(0,m.cells).find(text=>text.includes('Map home'));
- assert.match(info,/Name: Map home\nCoordinates: X 500, Y \d+, Z 0\nBiome: Forest\nDevelopment: \d+\nOwner: Jagsby/);
+ assert.match(info,/Map home\nX 500, Y \d+, Z 0\nBiome: Forest\nDevelopment: \d+\nOwner: Jagsby/);
  const before=h.read();spawn={x:10000,y:60,z:10000};h.api.openSettlementMap(h.player,'a');
  assert.notEqual(h.forms.at(-1).buttons[m.xTicks[0]],form.buttons[m.xTicks[0]],'Auto-fit must use the updated configured spawn');
  assert.deepEqual(h.read(),before,'Spawn is never registered as a settlement or written to world state');
@@ -844,12 +844,12 @@ test('Spawn hover record and tier textures are shipped as inert map data without
  const s=fresh(Date.now());s.villages.a={...village(),id:'a',name:'City',census:{realmPowerTenths:200}};
  const h=await runtime(s,()=>({canceled:true}),{spawnLocation:()=>({x:20,y:73,z:-50})});
  const before=h.read();h.api.openSettlementMap(h.player,'a');const f=h.forms.at(-1),m=CHARTER_LAYOUT.settlementMap;
- const spawnIndex=f.buttons.indexOf('Name: World spawn\nCoordinates: X 20, Y 73, Z -50\nDimension: Overworld');
+ const spawnIndex=f.buttons.indexOf('World spawn\nX 20, Y 73, Z -50');
  assert.ok(spawnIndex>=0&&spawnIndex<m.cells);
  assert.equal(f.icons[spawnIndex],'textures/ui/frontier/map_markers/world_spawn');
- const index=f.buttons.findIndex((text,i)=>i<m.cells&&text.includes('Name: City'));
+ const index=f.buttons.findIndex((text,i)=>i<m.cells&&text.includes('City'));
  assert.ok(index>=0);assert.equal(f.icons[index],'textures/ui/frontier/map_markers/city');
- assert.equal(f.buttons.length,m.zTicks.at(-1)+1);assert.match(f.buttons[m.bounds],/2\/2 settlements/);
+ assert.equal(f.buttons.length,m.zTicks.at(-1)+1);assert.equal(m.bounds,undefined);
  assert.deepEqual(h.read(),before);
 });
 

@@ -19,7 +19,7 @@ test('Separate dimensions, preserve raw coordinates, and expose the existing Dev
  const villages={o:village('Surface',8,10),n:village('Nether',8,10,'minecraft:nether')};
  const s=mapSnapshot(villages,{dimension:'minecraft:nether'},'n');
  assert.deepEqual(points(s).map(p=>p.id),['n']);assert.equal(s.selected.x,8);assert.equal(s.selected.z,10);
- assert.equal(s.selected.development,2);assert.match(mapDetails(s.selected),/Name: Nether\nCoordinates: X 8, Y 64, Z 10\nBiome: Unknown\nDevelopment: 2\nOwner: Unclaimed/);
+ assert.equal(s.selected.development,2);assert.match(mapDetails(s.selected),/Nether\nX 8, Y 64, Z 10\nBiome: Unknown\nDevelopment: 2\nOwner: Unclaimed/);
  assert.equal(s.dimensions.length,2);
 });
 test('Registry is the only source: creation, rename, removal and world serialization appear on the next snapshot',()=>{
@@ -82,7 +82,10 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
  assert.deepEqual(marker.size,[6,6]);
  const art=ui.jf_map_pin_art;
  assert.ok(art.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_name_override==='#texture'));
- const text=children(ui.jf_map_pin_details).text;
+ const tooltip=children(ui.jf_map_pin_details);
+ const text=children(children(tooltip.content).body).text;
+ assert.equal(text.size[1],'default');
+ assert.equal(tooltip.background.size[1],'100%sm');
  assert.ok(text.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_type==='collection'));
  const code=await readFile(new URL('../packs/behavior/scripts/settlement-map.js',import.meta.url),'utf8');
  for(const forbidden of ['runInterval','runTimeout','getBlock','getEntities','setDynamicProperty'])assert.ok(!code.includes(forbidden));
@@ -132,9 +135,9 @@ test('World spawn is fitted and projected in Overworld without affecting settlem
 test('Hover data resolves biome and owner and stays bounded for dense clusters',()=>{
  const villages={a:{...village('Home',0,0),biome:'minecraft:birch_forest',owner:{name:'Jagsby',id:'p'}}};
  const p=settlementPoints(villages)[0];
- assert.equal(mapDetails(p),'Name: Home\nCoordinates: X 0, Y 64, Z 0\nBiome: Birch Forest\nDevelopment: 2\nOwner: Jagsby');
+ assert.equal(mapDetails(p),'Home\nX 0, Y 64, Z 0\nBiome: Birch Forest\nDevelopment: 2\nOwner: Jagsby');
  const cluster=Array.from({length:500},(_,i)=>({...p,name:'Home '+i}));
- const info=mapCellInfo(cluster);assert.equal((info.match(/Name:/g)||[]).length,1);assert.match(info,/499 nearby/);
+ const info=mapCellInfo(cluster);assert.equal((info.match(/^Home /gm)||[]).length,1);assert.match(info,/499 nearby/);
  assert.equal(mapCellInfo([]),'');
 });
 
@@ -160,8 +163,9 @@ test('Small idle pins reveal adjacent tooltips that stay inside the expanded map
  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
  const map=children(ui.jf_settlement_map),grid=children(map.grid);
  assert.equal(map.info_dock,undefined);
- assert.ok(map.grid.offset[1]+map.grid.size[1]<map.bounds.offset[1]);
+ assert.equal(map.bounds,undefined);
  const [tooltipWidth,tooltipHeight]=ui.jf_map_pin_details.size;
+ assert.equal(tooltipHeight,'100%cm');
  assert.deepEqual(children(ui.jf_map_pin_idle).pin.size,[4,4]);
  for(let slot=0;slot<L.settlementMap.cells;slot++){
   const target=grid['cell'+slot],states=children(markerFor(ui,target));
@@ -172,16 +176,18 @@ test('Small idle pins reveal adjacent tooltips that stay inside the expanded map
   const [width,height]=ui.jf_map_pin_art.size;
   assert.ok(x+artX>=0&&x+artX+width<=map.grid.size[0]);
   assert.ok(z+artZ>=0&&z+artZ+height<=map.grid.size[1]);
-  const [dx,dz]=hover['tooltip@jagsby_frontier.jf_map_pin_details'].offset;
+  const tooltip=hover['tooltip@jagsby_frontier.jf_map_pin_details'];
+  const [dx,dz]=tooltip.offset;
+  assert.equal(dz,0);
+  assert.equal(tooltip.anchor_from,z<map.grid.size[1]/2?'top_left':'bottom_left');
+  assert.equal(tooltip.anchor_to,tooltip.anchor_from);
   assert.ok(x+dx>=0&&x+dx+tooltipWidth<=map.grid.size[0]);
-  assert.ok(z+dz>=0&&z+dz+tooltipHeight<=map.grid.size[1]);
   const expectedX=x+artX+width+4+tooltipWidth<=map.grid.size[0]
    ? artX+width+4 : artX-4-tooltipWidth;
   assert.equal(dx,expectedX);
-  assert.ok(dz<=3&&dz+tooltipHeight>=3);
   assert.equal(states.info.allow_clipping,false);
  }
- assert.deepEqual(Object.keys(children(ui.jf_map_pin_details)),['background','text']);
+ assert.deepEqual(Object.keys(children(ui.jf_map_pin_details)),['background','content']);
 });
 
 test('Points within the old coarse cell project independently and spawn shares the same axes',()=>{
@@ -201,7 +207,7 @@ test('Map settlement art follows all existing Realm Power tiers and spawn info u
   assert.equal(p.texture,'textures/ui/frontier/map_markers/'+names[i]);
  }
  const s=mapSnapshot({}, {}, null,{x:-10.2,y:75,z:20.8});
- assert.equal(mapDetails(s.spawn),'Name: World spawn\nCoordinates: X -10.2, Y 75, Z 20.8\nDimension: Overworld');
+ assert.equal(mapDetails(s.spawn),'World spawn\nX -10.2, Y 75, Z 20.8');
  for(const name of ['world_spawn',...names]){
   const data=await readFile(new URL('../packs/resource/textures/ui/frontier/map_markers/'+name+'.png',import.meta.url));
   assert.equal(data.readUInt32BE(16),64);assert.equal(data.readUInt32BE(20),64);

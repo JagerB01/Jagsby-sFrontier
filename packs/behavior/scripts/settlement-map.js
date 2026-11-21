@@ -68,8 +68,8 @@ function coordinates(point){
 }
 export function mapDetails(point){
  if(!point)return '';
- if(point.type==='spawn')return `Name: World spawn\nCoordinates: ${coordinates(point)}\nDimension: Overworld`;
- return `Name: ${point.name}\nCoordinates: ${coordinates(point)}\nBiome: ${point.biome}\nDevelopment: ${point.development}\nOwner: ${point.owner}`;
+ if(point.type==='spawn')return `World spawn\n${coordinates(point)}`;
+ return `${point.name}\n${coordinates(point)}\nBiome: ${point.biome}\nDevelopment: ${point.development}\nOwner: ${point.owner}`;
 }
 export function mapCellInfo(points){
  if(!points.length)return '';

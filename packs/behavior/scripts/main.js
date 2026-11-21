@@ -291,7 +291,6 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
   const labels={back:'Back',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
   for(const [key,text]of Object.entries(labels))records[layout[key]]=text;
   const b=snapshot.bounds;
-  records[layout.bounds]=`${snapshot.viewport.dimension.replace('minecraft:','')} | ${snapshot.visible}/${snapshot.count} settlements`;
   layout.xTicks.forEach((index,i)=>{
     records[index]=`X ${Math.round(b.minX+(b.maxX-b.minX)*i/(layout.xTicks.length-1))}`;
   });

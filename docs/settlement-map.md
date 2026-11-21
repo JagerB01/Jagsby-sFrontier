@@ -11,9 +11,9 @@ spawn reveals the gold compass star. Expanded artwork stays inside the map
 border, and hovering keeps the original pin's hit area.
 
 The tooltip stays inside the map and opens on the left when it cannot fit on
-the right. It displays the point's X, Y and Z coordinates. Settlement
-details also include the name, biome, Development and owner. Spawn details
-identify the Overworld. The map reads the configured world spawn on each
+the right. It sizes to the rendered text and displays the point’s X, Y
+(elevation) and Z coordinates. Settlement
+details also include the name, biome, Development and owner. The map reads the configured world spawn on each
 request and includes it in Overworld Fit.
 
 X increases to the right and Z increases downward. The grid lines show their

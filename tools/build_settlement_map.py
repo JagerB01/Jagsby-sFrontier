@@ -5,14 +5,14 @@ CELL = 6
 COLUMNS, ROWS = 40, 25
 WIDTH, HEIGHT = COLUMNS * CELL, ROWS * CELL
 ART_SIZE = 16
-TOOLTIP_WIDTH, TOOLTIP_HEIGHT, TOOLTIP_GAP = 108, 76, 4
+TOOLTIP_WIDTH, TOOLTIP_GAP = 108, 4
 GRID_X, GRID_Y = 110, 68
 X_TICKS = range(0, WIDTH + 1, 40)
 Z_TICKS = range(0, HEIGHT + 1, 30)
 MAP_LAYOUT = {"columns": COLUMNS, "rows": ROWS, "cells": COLUMNS * ROWS}
 MAP_LAYOUT.update({key: COLUMNS * ROWS + i for i, key in enumerate([
-    "back", "fit", "zoomOut", "zoomIn", "west", "east", "north", "south", "dimension", "refresh", "bounds"])})
-MAP_LAYOUT["xTicks"] = list(range(MAP_LAYOUT["bounds"] + 1, MAP_LAYOUT["bounds"] + 1 + len(X_TICKS)))
+    "back", "fit", "zoomOut", "zoomIn", "west", "east", "north", "south", "dimension", "refresh"])})
+MAP_LAYOUT["xTicks"] = list(range(MAP_LAYOUT["refresh"] + 1, MAP_LAYOUT["refresh"] + 1 + len(X_TICKS)))
 MAP_LAYOUT["zTicks"] = list(range(MAP_LAYOUT["xTicks"][-1] + 1, MAP_LAYOUT["xTicks"][-1] + 1 + len(Z_TICKS)))
 
 
@@ -36,7 +36,6 @@ def build_map_ui(ui, frame):
         return {"type": "image", "texture": "textures/ui/frontier/"+texture, "size": size,
                 "offset": offset, "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8,
                 "keep_ratio": False, "bilinear": False}
-    ui["jf_map_bounds"] = {**label("#form_button_text", [WIDTH, 12]), "bindings": copy.deepcopy(bindings)}
     for key, width, alignment in [("x_tick", 40, "center"), ("z_tick", 28, "left")]:
         ui["jf_map_" + key] = {
             **label("#form_button_text", [width, 8], scale=0.45),
@@ -56,12 +55,19 @@ def build_map_ui(ui, frame):
          "binding_type": "collection", "binding_collection_name": "form_buttons"}]
     ui["jf_map_pin_art"] = art
     ui["jf_map_pin_details"] = {
-        "type": "panel", "size": [TOOLTIP_WIDTH, TOOLTIP_HEIGHT],
+        "type": "panel", "size": [TOOLTIP_WIDTH, "100%cm"],
         "anchor_from": "top_left", "anchor_to": "top_left",
         "layer": 100, "allow_clipping": False, "controls": [
-            c("background", image([TOOLTIP_WIDTH, TOOLTIP_HEIGHT], [0, 0], [0.07, 0.08, 0.07])),
-            c("text", {**label("#form_button_text", [TOOLTIP_WIDTH - 12, TOOLTIP_HEIGHT - 6], (6, 3), scale=0.65),
-                       "property_bag": {"#form_button_text": ""}, "bindings": copy.deepcopy(bindings)})]}
+            c("background", image([TOOLTIP_WIDTH, "100%sm"], [0, 0], [0.07, 0.08, 0.07])),
+            c("content", {"type": "stack_panel", "orientation": "vertical",
+                "size": [TOOLTIP_WIDTH, "100%c"], "anchor_from": "top_left", "anchor_to": "top_left",
+                "controls": [
+                    c("top_padding", {"type": "panel", "size": [TOOLTIP_WIDTH, 3]}),
+                    c("body", {"type": "panel", "size": [TOOLTIP_WIDTH, "100%cm"], "controls": [
+                        c("text", {**label("#form_button_text", [TOOLTIP_WIDTH - 12, "default"], (6, 0), scale=0.65),
+                                   "property_bag": {"#form_button_text": ""}, "bindings": copy.deepcopy(bindings)})]}),
+                    c("bottom_padding", {"type": "panel", "size": [TOOLTIP_WIDTH, 3]}),
+                ]})]}
     ui["jf_map_pin"] = {
         "type": "button", "size": [CELL, CELL], "offset": [0, 0],
         "anchor_from": "top_left", "anchor_to": "top_left", "allow_clipping": False,
@@ -78,7 +84,7 @@ def build_map_ui(ui, frame):
         tooltip_x = art_x + ART_SIZE + TOOLTIP_GAP
         if tooltip_x + TOOLTIP_WIDTH > WIDTH:
             tooltip_x = art_x - TOOLTIP_GAP - TOOLTIP_WIDTH
-        tooltip_z = min(HEIGHT - TOOLTIP_HEIGHT, max(0, z + (CELL - TOOLTIP_HEIGHT) // 2))
+        tooltip_anchor = "top_left" if z < HEIGHT / 2 else "bottom_left"
         ui[template + "@jagsby_frontier.jf_map_pin"] = {"controls": [
             c("idle@jagsby_frontier.jf_map_pin_idle", {}),
             c("info", {"type": "panel", "size": [CELL, CELL], "offset": [0, 0],
@@ -86,11 +92,11 @@ def build_map_ui(ui, frame):
                        "controls": [
                            c("art@jagsby_frontier.jf_map_pin_art", {"offset": [art_x - x, art_z - z]}),
                            c("tooltip@jagsby_frontier.jf_map_pin_details",
-                             {"offset": [tooltip_x - x, tooltip_z - z]})]})]}
+                             {"offset": [tooltip_x - x, 0],
+                              "anchor_from": tooltip_anchor, "anchor_to": tooltip_anchor})]})]}
     content=copy.deepcopy([item for item in frame if 'title' not in item])
     content.append(c("title", label("Settlement Map", [170, 14], (28, 34), color=(0.86, 0.73, 0.44), scale=1)))
-    content.append(c("bounds", scope("jf_map_bounds", MAP_LAYOUT["bounds"], [WIDTH, 12], [GRID_X, 220])))
-    content.append(c("z_axis", label("Z", [28, 8], (GRID_X + WIDTH + 2, GRID_Y - 11), scale=0.55)))
+    content.append(c("z_axis", label("Z", [28, 8], (GRID_X + WIDTH + 2, GRID_Y - 20), scale=0.55)))
     grid=[c("border", image([WIDTH+2, HEIGHT+2], [-1, -1], [0.32, 0.34, 0.30])),
           c("black", image([WIDTH, HEIGHT], [0, 0], [0.025, 0.035, 0.03]))]
     for i, x in enumerate(X_TICKS):
