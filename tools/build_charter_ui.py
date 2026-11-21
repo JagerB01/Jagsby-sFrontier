@@ -76,7 +76,7 @@ WHEAT = (0.82, 0.70, 0.44)
 CHARCOAL = (0.16, 0.17, 0.18)
 RESEARCH_HELP = {
     "efficiency": ("Prosperity", "Each level adds 5% production.\nRepeatable; requires Resource Prospecting."),
-    "hearth": ("Hearthstone", "I: Regeneration I inside the settlement.\nII: villagers recover 2 HP once per game day."),
+    "hearth": ("Hearthstone", "I: villagers recover 2 HP once per Minecraft day.\nII: Regeneration I within 80 blocks."),
     "biome": ("Resource Prospecting", "Unlocks one secondary production biome.\nSurvey nearby biomes, then choose one in\nProduction. Survey range: 256 blocks."),
     "sanctuary": ("Sanctuary", "Repeatable hostile-mob protection.\nEach level removes 5% of remaining damage.\nLasts three minutes after leaving."),
     "roads": ("Road Networks", "Establish and upgrade food-powered travel\nroutes. Connections progress from Trail\nto Road to Highway."),

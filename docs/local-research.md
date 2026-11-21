@@ -58,9 +58,11 @@ unchanged. Research level I continues to unlock connection management.
 
 ## Perks, production and persistence
 
-Hearthstone grants Regeneration I inside the settlement with a three-minute retention after leaving; existing daily villager healing, Prospecting's one
-secondary biome, Sanctuary's percentage-based hostile protection and three-minute
-retention, and Prosperity's additive `1 + 0.05 × level` multiplier remain.
+Hearthstone I heals villagers daily. Hearthstone II adds player Regeneration I
+within 80 horizontal blocks, refreshed every six seconds and retained for up to
+three minutes after leaving. Prospecting adds one secondary biome. Sanctuary
+reduces hostile damage and lasts up to three minutes after leaving. Prosperity
+uses the additive `1 + 0.05 × level` multiplier.
 Production, permanent Development and road reward formulas are unchanged.
 Old effects are fully accounted through the existing offline economy before a
 new completed research level takes effect. Partial local contributions confer

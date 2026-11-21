@@ -124,7 +124,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
       getDimension: id => dimensions.get(id), getPlayers: () => [],
       getDynamicProperty: key => properties.get(key),
       setDynamicProperty: (key,value) => properties.set(key,value) },
-    system: { beforeEvents: {startup: {subscribe(fn){handlers.startup=fn;}}}, run: fn => queued.push(fn), runInterval: fn => intervals.push(fn),
+    system: { beforeEvents: {startup: {subscribe(fn){handlers.startup=fn;}}}, run: fn => queued.push(fn), runInterval: (fn,ticks) => {assert.equal(ticks,120);intervals.push(fn);},
       runTimeout: fn => {rankWaits++;fn();} },
     Form, RenameForm,
   };

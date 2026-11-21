@@ -99,8 +99,8 @@ export function localResearchText(v,key,s=null){
  if(key==='sanctuary')benefit=`Hostile damage reduction: ${compare(researchPercent(reduction(level)),researchPercent(reduction(level+1)))}\nPersists for 3 minutes after leaving.`;
  else if(key==='efficiency')benefit=`Resource production: ${compare('+'+researchPercent(level*5),'+'+researchPercent((level+1)*5))}`;
  else if(key==='hearth'){
-  benefit=`Player regeneration: ${compare(level?'I':'Off','I')}\nWithin settlement; persists 3 minutes after leaving.`;
-  if(level>=1)benefit+=`\nVillager healing: ${compare(level>=2?'2':'0','2')} HP / Minecraft day`;
+  benefit=`Villager healing: ${researchComparison(level?'2':'0','2',level===0)} HP / Minecraft day`;
+  if(level>=1)benefit+=`\nPlayer regeneration: ${compare(level>=2?'I':'Off','I')}\nWithin 80 blocks; persists 3 minutes after leaving.`;
  }else if(key==='biome')benefit=`Secondary allocation: ${compare(researchPercent(level?50:0),researchPercent(50))}\nNative specialization or surveyed biome within 256 blocks.\nChoose in Production > Resource Prospecting.`;
  else if(key==='roads'){
   benefit=`Travel tier: ${compare(tier[level],tier[Math.min(3,level+1)])}`;

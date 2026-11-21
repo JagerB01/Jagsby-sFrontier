@@ -123,10 +123,9 @@ preserved. Hearthstone I unlocks both middle branches; Prospecting is required
 for Prosperity, Sanctuary I for the Road Networks unlock. Saved legacy levels
 are kept even if their new prerequisite was not previously purchased.
 
-- Hearthstone I grants Regeneration I to nearby players. II additionally heals
-  vanilla villagers by 2 HP, capped at effective maximum health, once per
-  Minecraft day. Boundaries reuse the existing 32-block horizontal player radius.
-  Player effects refresh every four seconds. A villager query runs at most once
+- Hearthstone I heals vanilla villagers by 2 HP, capped at effective maximum
+  health, once per Minecraft day. II adds Regeneration I for players.
+  Player effects refresh every six seconds within an 80-block horizontal radius. A villager query runs at most once
   per day per occupied settlement; per-villager daily markers prevent double
   healing from overlapping settlements. Unloaded/empty settlements are not
   searched. Daily healing occurs when an eligible loaded settlement is occupied.

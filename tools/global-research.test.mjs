@@ -188,7 +188,7 @@ test('Save migration refuses a future version instead of overwriting it',()=>{
 test('Opening and canceling Research shows costs in hover records without spending',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:0,name:'Test',available:[]};const h=await runtime(s);
  h.slots[0]={typeId:'minecraft:bread',amount:20};h.api.open(h.player,'a','Research','local');
- for(const value of ['Next cost: 64 Bread','64 remaining','Click to contribute','Player regeneration'])assert.ok(h.forms[0].buttons[5].includes(value));
+ for(const value of ['Next cost: 64 Bread','64 remaining','Click to contribute','Villager healing'])assert.ok(h.forms[0].buttons[5].includes(value));
  assert.equal(h.slots[0].amount,20);assert.equal(h.read().villages.a.hearth,0);
 });
 test('Selecting the actual local card contributes directly and only redraws the dashboard',async()=>{
@@ -264,7 +264,7 @@ test('All ten research hover records describe effects, next cost, progress, prer
   assert.equal(text.includes('Carry the required material'),false);
   assert.equal(text.includes('Select for materials'),false);
  }
- assert.ok(records[5].includes('Player regeneration: §bOff§r §7→§r §aI§r'));
+ assert.ok(records[5].includes('Villager healing: §b0§r §7→§r §a2§r'));
  assert.ok(records[55].includes('3 minutes after leaving'));
  assert.ok(records[9].includes('every other local and global tech'));
  assert.equal(records[9].includes('Required:'),false);

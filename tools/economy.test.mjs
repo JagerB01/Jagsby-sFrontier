@@ -103,7 +103,7 @@ test('Sanctuary applies only hostile-sourced damage and preserves grant level/ex
  event.damage=20;F.protectDamage(event,1001);close(event.damage,20);
  for(const source of [{cause:'fall'},{cause:'entityAttack',damagingEntity:{typeId:'minecraft:player'}},{cause:'lava',damagingEntity:{typeId:'custom:goblin'}}])assert.equal(F.hostileSource(source),false);
 });
-test('Hearthstone II healing respects maximum HP and one heal per villager per Minecraft day',()=>{
+test('Hearthstone I healing respects maximum HP and one heal per villager per Minecraft day',()=>{
  const props=new Map();let hp=19;
  const entity={typeId:'minecraft:villager_v2',getDynamicProperty:k=>props.get(k),setDynamicProperty:(k,v)=>props.set(k,v),getComponent:()=>({currentValue:hp,effectiveMax:20,setCurrentValue:v=>hp=v})};
  assert.equal(F.healVillager(entity,5),true);assert.equal(hp,20);hp=15;
@@ -152,11 +152,13 @@ test('Overview hourly Development estimate blocks full-storage production while 
  close(E.developmentHourlyRate(s,v),0.005);
  s.roads.ab.targetLevel=2;close(E.developmentHourlyRate(s,v),0);
 });
-test('Hearthstone refreshes Regeneration I for three minutes inside and stops refreshing after leaving',()=>{
- const grants=[],p={dimension:{id:'minecraft:overworld'},location:{x:0,z:0},addEffect:(...args)=>grants.push(args)};
+test('Hearthstone II refreshes Regeneration I within 80 horizontal blocks',()=>{
+ const grants=[],p={dimension:{id:'minecraft:overworld'},location:{x:80,y:200,z:0},addEffect:(...args)=>grants.push(args)};
  const v=village('a',{hearth:1,sanctuary:0});F.refreshProtection(p,{a:v});
+ assert.equal(grants.length,0);
+ v.hearth=2;F.refreshProtection(p,{a:v});
  assert.deepEqual(grants,[['regeneration',3600,{amplifier:0,showParticles:false}]]);
- p.location.x=100;F.refreshProtection(p,{a:v});assert.equal(grants.length,1);
+ p.location.x=80.01;F.refreshProtection(p,{a:v});assert.equal(grants.length,1);
 });
 test('Development now awards a point every 100 value and converts hourly production at that threshold',()=>{
  assert.equal(C.developmentThreshold,100);

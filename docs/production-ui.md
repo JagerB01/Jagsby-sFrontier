@@ -112,10 +112,9 @@ character counts. See [layout reference](https://wiki.bedrock.dev/json-ui/json-u
 Current effects are omitted at Lv 0; only current/next effects are described.
 The prerequisite is shown once and status is Available, Locked or Fully upgraded.
 Direct contribution, costs, saved progress and Stewardship caps are unchanged.
-Hearthstone explicitly grants Regeneration I within the settlement and retains
-it for three minutes after leaving; the native effect is refreshed to 3,600
-game ticks while inside. Hearthstone II's next/current paragraph adds the
-existing 2-health-point villager heal once per Minecraft day.
+Hearthstone I heals villagers by 2 HP once per Minecraft day. Hearthstone II
+adds player Regeneration I, refreshed to 3,600 ticks every six seconds within
+80 horizontal blocks.
 
 ## Validation
 

@@ -103,13 +103,17 @@ test('Paid legacy surplus survives a Stewardship ceiling and resumes when the ce
  migrateLocalResearch(v,state(4));assert.equal(v.efficiency,3);assert.equal(v.localResearch.progress.efficiency,125);
  const before=JSON.stringify(v);migrateLocalResearch(v,state(4));assert.equal(JSON.stringify(v),before);
 });
-test('Hearthstone compares regeneration and healing without listing future-level effects',()=>{
+test('Hearthstone I unlocks villager healing and II unlocks player regeneration',()=>{
  const v=village();let text=localResearchText(v,'hearth',state(1));
- assert.equal(text.includes('Current:'),false);assert.ok(text.includes('Player regeneration: §bOff§r §7→§r §aI§r'));
- assert.ok(text.includes('persists 3 minutes after leaving.'));assert.equal(text.includes('Villager healing'),false);
+ assert.ok(text.includes('Villager healing: §b0§r §7→§r §a2§r HP / Minecraft day'));
+ assert.equal(text.includes('Player regeneration'),false);
  v.hearth=1;text=localResearchText(v,'hearth',state(1));
- assert.ok(text.includes('Player regeneration: §bI§r'));assert.ok(text.includes('Villager healing: §b0§r §7→§r §a2§r HP / Minecraft day'));
- v.hearth=2;text=localResearchText(v,'hearth',state(1));assert.equal(text.includes('Next:'),false);assert.ok(text.includes('Fully upgraded'));
+ assert.ok(text.includes('Villager healing: §b2§r HP / Minecraft day'));
+ assert.ok(text.includes('Player regeneration: §bOff§r §7→§r §aI§r'));
+ assert.ok(text.includes('Within 80 blocks; persists 3 minutes after leaving.'));
+ v.hearth=2;text=localResearchText(v,'hearth',state(1));
+ assert.ok(text.includes('Player regeneration: §bI§r'));
+ assert.ok(text.includes('Fully upgraded'));
 });
 
 test('Sanctuary compares colored percentages on one line and states its shared duration once',()=>{

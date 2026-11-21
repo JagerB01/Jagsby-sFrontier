@@ -1,5 +1,5 @@
 import {ECONOMY_CONFIG as C} from './economy-config.js';
-export function within(player,v){return player.dimension.id===v.dimension&&Math.hypot(player.location.x-v.location.x,player.location.z-v.location.z)<=C.boundaryRadius;}
+export function within(player,v,radius=C.boundaryRadius){return player.dimension.id===v.dimension&&Math.hypot(player.location.x-v.location.x,player.location.z-v.location.z)<=radius;}
 export function sanctuaryDamage(damage,level){return damage*Math.max(1e-6,Math.pow(0.95,Math.max(0,level||0)));}
 export function hostileSource(source){
  const actor=source?.damagingEntity;
@@ -8,10 +8,10 @@ export function hostileSource(source){
  try{return actor.typeId.includes('goblin')||actor.matches?.({families:['monster']})||actor.matches?.({families:['hostile']})||false;}catch{return false;}
 }
 export function refreshProtection(player,villages,now=Date.now(),cap=Infinity){
- const nearby=Object.values(villages).filter(v=>within(player,v));
+ const nearby=Object.values(villages).filter(v=>within(player,v,C.protectionRadius));
  const best=nearby.filter(v=>v.sanctuary>0).sort((a,b)=>b.sanctuary-a.sanctuary)[0];
  if(best)player.setDynamicProperty('jagsby_frontier:sanctuary',JSON.stringify({source:best.id,level:Math.min(best.sanctuary,cap),expires:now+180000}));
- if(nearby.some(v=>v.hearth>=1))player.addEffect('regeneration',3600,{amplifier:0,showParticles:false});
+ if(nearby.some(v=>v.hearth>=2))player.addEffect('regeneration',3600,{amplifier:0,showParticles:false});
  return nearby;
 }
 export function protectDamage(event,now=Date.now()){

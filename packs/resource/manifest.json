@@ -1,13 +1,13 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Jagsby's Frontier 0.0.111 [MineScape UI Adapter v3]",
+    "name": "Jagsby's Frontier 0.0.112 [MineScape UI Adapter v3]",
     "description": "Village Charter block, pack icon and JSON UI styling Optional UI renderer hooks; works alone or with MineScape. Original gameplay/UI retained.",
     "uuid": "d3c24899-08b6-4399-a037-e6d4b6e46cba",
     "version": [
       0,
       0,
-      111
+      112
     ],
     "min_engine_version": [
       1,
@@ -22,7 +22,7 @@
       "version": [
         0,
         0,
-        111
+        112
       ]
     }
   ],

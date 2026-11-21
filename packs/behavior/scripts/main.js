@@ -444,21 +444,21 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
   });
 });
 world.afterEvents.playerBreakBlock.subscribe(ev=>{if(ev.brokenBlockPermutation.type.id!==BLOCK)return;const s=accounted(),legacy=id(ev.block.location);if(s.placedCharters){delete s.placedCharters[charterKey(ev.block.dimension.id,ev.block.location)];save(s);}if(s.pendingResearch?.scope==='local'&&[legacy,`${ev.block.dimension.id}|${legacy}`].includes(s.pendingResearch.vid)){ev.player.sendMessage('Research payment recovery is pending. Replace this charter and reopen it before removing the settlement.');return;}delete s.villages[`${ev.block.dimension.id}|${legacy}`];if(s.villages[legacy]?.dimension===ev.block.dimension.id)delete s.villages[legacy];for(const [key,road]of Object.entries(s.roads||{}))if(!s.villages[road.from]||!s.villages[road.to])delete s.roads[key];save(s);});
-// Player-only buffs are refreshed every four seconds. Villagers are queried
+// Player-only buffs are refreshed every six seconds. Villagers are queried
 // at most once per in-game day, only around an occupied loaded settlement.
 system.runInterval(()=>{
  const s=state(),day=Math.floor(gameTick()/24000);let changed=false;
  const healing=new Map();
  for(const player of world.getPlayers())try{
-  for(const v of refreshProtection(player,s.villages,Date.now(),s.global?.innovation??Infinity))if(v.hearth>=2&&v.lastHealDay!==day)healing.set(v.id,v);
+  for(const v of refreshProtection(player,s.villages,Date.now(),s.global?.innovation??Infinity))if(v.hearth>=1&&v.lastHealDay!==day)healing.set(v.id,v);
  }catch(e){console.warn(`Frontier protection: ${e}`);}
  for(const v of healing.values())try{
   const dim=world.getDimension(v.dimension);
-  for(const entity of dim.getEntities({location:v.location,maxDistance:ECONOMY_CONFIG.boundaryRadius,families:['villager']}))healVillager(entity,day);
+  for(const entity of dim.getEntities({location:v.location,maxDistance:ECONOMY_CONFIG.protectionRadius,families:['villager']}))healVillager(entity,day);
   v.lastHealDay=day;changed=true;
  }catch(e){console.warn(`Frontier daily healing: ${e}`);}
  if(changed)save(s);
-},80);
+},120);
 world.beforeEvents.entityHurt?.subscribe(protectDamage);
 world.afterEvents.worldLoad?.subscribe(()=>{try{accounted();}catch(e){console.warn(String(e));}});
 
