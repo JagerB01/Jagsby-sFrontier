@@ -14,11 +14,11 @@ import { mapSnapshot, moveMap, mapDetails } from "./settlement-map.js";
 const BLOCK = "jagsby_frontier:village_charter";
 const KEY = "jagsby_frontier:state_v1";
 const BIOME_RADIUS = 256;
-import {DEFINITIONS,ZONES,zoneAt,maxLevel,nextCost,acceptedMaterials,lockReason,contribution,applyContribution,settlementLimit,foundingReason,storageIncrement,localLevel,colonizationBonus} from "./global-research.js";
+import {DEFINITIONS,ZONES,zoneAt,maxLevel,nextCost,acceptedMaterials,lockReason,contribution,applyContribution,migrateResearch,settlementLimit,foundingReason,storageIncrement,localLevel,colonizationBonus} from "./global-research.js";
 import {ECONOMY_CONFIG} from "./economy-config.js";
 import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,normalizeRoadTimers,selectTradeRoute,selectedTradeRoutes,roadTicksRemaining,travelQuote,corndogCost,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower,developmentHourlyRate} from "./settlement-economy.js";
 import {refreshProtection,protectDamage,within,healVillager} from "./settlement-effects.js";
-import {localContribution,applyLocalContribution,localResearchText,researchComparison,researchPercent} from "./local-research.js";
+import {localContribution,applyLocalContribution,migrateLocalResearch,localResearchText,researchComparison,researchPercent} from "./local-research.js";
 import {productionView} from "./production-display.js";
 import {canonicalBiome,eligibleBiome,productionAllocations} from "./biome-resources.js";
 const roadTimers=new Map();
@@ -92,7 +92,7 @@ function globalResearchText(s,key){
   storage:`Shared capacity: ${compare(cap(s),cap(s)+storageIncrement())} items`,
  };
  const description=benefits[key];
- const resource=key==='capacity'?'Logs':key==='storage'?'Building materials':acceptedMaterials(s,key).map(id=>id.replace('minecraft:','').replaceAll('_',' ')).join(', ');
+ const resource=key==='capacity'?'Logs':key==='storage'?'Logs or Nether Stems':acceptedMaterials(s,key).map(id=>id.replace('minecraft:','').replaceAll('_',' ')).join(', ');
  const missing=[];
  if(d.prerequisite&&s.global[d.prerequisite]<1)missing.push(DEFINITIONS[d.prerequisite].name+' Lv 1');
  if(key!=='innovation'&&cost!==undefined&&level>=s.global.innovation)missing.push('Stewardship Lv '+(level+1));
@@ -138,7 +138,7 @@ function contributeResearchCard(player,vid,key,shown,view){
     const take=Math.min(left,item.amount);slots.push({slot,before:item.amount,after:item.amount-take});left-=take;
    }
    if(left)throw Error('Inventory changed before payment');
-   s.pendingResearch={playerId:player.id,key,material:shown.material,amount,slots};
+   s.pendingResearch={playerId:player.id,key,material:shown.material,amount,slots,recipeVersion:1};
    if(!global)Object.assign(s.pendingResearch,{scope:'local',vid,level:shown.level,revision:shown.revision});
    save(s);recoverResearch(player);
   }
@@ -152,7 +152,13 @@ function recoverResearch(player){
   if(!result.complete){save(s);throw Error('Offline accounting is catching up; reopen the charter to continue.');}
   const target=tx.scope==='local'?s.villages[tx.vid]:null;
   if(tx.scope==='local'&&(!target||(tx.level!==undefined&&researchLevel(target,tx.key)!==tx.level)||(tx.revision!==undefined&&target.localResearch.revision!==tx.revision)))throw Error('Saved local payment requires manual recovery; research changed');
-  const eligible=tx.scope==='local'?target&&localContribution(target,tx.key,tx.material,tx.amount,s):contribution(s,tx.key,tx.material,tx.amount);
+  // A journal saved before the recipe change already authorized these items.
+  const legacyStorage=!tx.recipeVersion&&!target&&tx.key==='storage';
+  const legacyProsperity=!tx.recipeVersion&&target&&tx.key==='efficiency';
+  let eligible;
+  if(legacyStorage)eligible=lockReason(s,tx.key)?0:Math.min(tx.amount,512-s.researchProgress.storage);
+  else if(legacyProsperity)eligible=researchRequirement(target,tx.key,s)?0:Math.min(tx.amount,250-target.localResearch.progress.efficiency);
+  else eligible=target?localContribution(target,tx.key,tx.material,tx.amount,s):contribution(s,tx.key,tx.material,tx.amount);
   if(eligible!==tx.amount)throw Error('Saved payment does not match current research; nothing further removed');
   const inv=player.getComponent('minecraft:inventory')?.container;if(!inv)return;
   // Refuse ambiguous recovery rather than consuming different items or crediting twice.
@@ -168,9 +174,20 @@ function recoverResearch(player){
       else{item.amount=entry.after;inv.setItem(entry.slot,item);}
     }
   }
-  const accepted=tx.scope==='local'?applyLocalContribution(target,tx.key,tx.material,tx.amount,s):applyContribution(s,tx.key,tx.material,tx.amount);
-  if(accepted!==tx.amount)throw Error('Saved payment is inconsistent with research progress');
-  delete s.pendingResearch;save(s);
+  if(legacyStorage){
+   s.researchProgress.storage+=tx.amount;
+   s.researchRevision++;
+  }else if(legacyProsperity){
+   target.localResearch.progress.efficiency+=tx.amount;
+   target.localResearch.revision++;
+   migrateLocalResearch(target,s);
+  }else{
+   const accepted=target?applyLocalContribution(target,tx.key,tx.material,tx.amount,s):applyContribution(s,tx.key,tx.material,tx.amount);
+   if(accepted!==tx.amount)throw Error('Saved payment is inconsistent with research progress');
+  }
+  delete s.pendingResearch;
+  if(legacyStorage)migrateResearch(s);
+  save(s);
   player.sendMessage(`§aContributed ${tx.amount} toward ${tx.scope==='local'?ECONOMY_CONFIG.research[tx.key].name:DEFINITIONS[tx.key].name}.`);
 }
 

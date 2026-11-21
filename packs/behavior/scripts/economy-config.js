@@ -7,12 +7,15 @@ export const ECONOMY_CONFIG = {
   resources:BIOME_RESOURCES,
   // Shared item count: two stacks initially, one more per completed upgrade.
   sharedStorage:{base:128,perLevel:64},
-  researchMaterials:{crop:['minecraft:wheat','minecraft:potato','minecraft:carrot','minecraft:cocoa_beans','minecraft:bamboo']},
+  researchMaterials:{
+    crop:['minecraft:wheat','minecraft:potato','minecraft:carrot','minecraft:cocoa_beans','minecraft:bamboo'],
+    stone:['stone','cobblestone','deepslate','cobbled_deepslate','granite','diorite','andesite','tuff'].map(id=>`minecraft:${id}`),
+  },
   research:{
     hearth:{name:'Hearthstone',max:2,cost:[64,128],material:'minecraft:bread',label:'Bread'},
     biome:{name:'Resource Prospecting',max:1,cost:64,material:'minecraft:paper',label:'Paper'},
     sanctuary:{name:'Sanctuary',cost:250,category:'crop',label:'Crops'},
-    efficiency:{name:'Prosperity',cost:250,category:'building',label:'Building Materials'},
+    efficiency:{name:'Prosperity',cost:256,category:'stone',label:'Stone Blocks'},
     roads:{name:'Road Networks',max:3,cost:[32,32,32],material:['minecraft:copper_ingot','minecraft:iron_ingot','minecraft:gold_ingot']},
   },
   roads:{constructionTicks:144000,foodPerBlock:0.01,foodCostMultipliers:[0,1,0.7,0.45],minimumFood:2},

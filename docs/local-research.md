@@ -15,7 +15,7 @@ management is separate, under Realm > Road Networks.
 | Hearthstone | I–II | 64 bread, then 128 bread |
 | Resource Prospecting | I | 64 paper |
 | Sanctuary | Endless, subject to Stewardship | 250 crops |
-| Prosperity | Endless, subject to Stewardship | 250 building materials |
+| Prosperity | Endless, subject to Stewardship | 256 stone blocks |
 | Road Networks | I–III | 32 copper, then 32 iron, then 32 gold ingots |
 
 These replace provisional local costs. There is no increasing per-level price
@@ -55,6 +55,9 @@ levels. Research does not automatically construct or upgrade connections, nor
 charge its ingot recipes for individual connections. The existing game-tick
 construction, travel, connection cap III, and trade Development formulas are
 unchanged. Research level I continues to unlock connection management.
+
+Prosperity accepts any mix of stone, cobblestone, deepslate, cobbled deepslate,
+granite, diorite, andesite and tuff.
 
 ## Perks, production and persistence
 

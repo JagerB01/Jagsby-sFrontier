@@ -5,13 +5,14 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.112](downloads/Jagsbys_Frontier_v0.0.112.mcaddon?raw=true)
+[Download Frontier 0.0.113](downloads/Jagsbys_Frontier_v0.0.113.mcaddon?raw=true)
 
 Hover or focus a Diplomacy map pin to see its details beside the pin. The map
 now uses the space previously reserved for the details box. X and Z grid labels
 show world coordinates in blocks and update when you zoom or pan. POI tooltips
 fit their text and include X, Y (elevation) and Z. Overlapping POIs each get
-a separate pin. Hearthstone I heals villagers. Hearthstone II refreshes player
+a separate pin. Shared Storage costs 256 logs or Nether stems, and Prosperity
+costs 256 stone blocks. Hearthstone I heals villagers. Hearthstone II refreshes player
 Regeneration I every six seconds within 80 blocks. Buttons and map POI tooltips use beveled double silver trim.
 
 Version 0.0.105 improves Settlement Map positioning for settlements and world
@@ -160,7 +161,7 @@ saved acacia stock remains visible and collectible.
 
 Version 0.0.79 reduces the shared stockpile to 128 items initially, plus 64 per
 completed Shared Storage level: 128 → 192 → 256 → 320. Storage upgrades still
-cost 512 building materials and obey Stewardship. Previously stored items are
+cost 256 logs or Nether stems and obey Stewardship. Previously stored items are
 preserved, including fractions and amounts above the new capacity. Over-cap
 stock displays "Over capacity - collect"; production resumes only after enough
 space is available, without banking blocked output.
@@ -476,10 +477,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.112.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.113.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.112_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.113_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

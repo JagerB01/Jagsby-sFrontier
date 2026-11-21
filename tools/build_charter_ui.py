@@ -84,7 +84,7 @@ RESEARCH_HELP = {
     "frontier": ("Frontier Expansion", "Unlocks settlement founding in four frontier zones."),
     "innovation": ("Stewardship", "192 copper per level. Caps endless research."),
     "colonization": ("Colonization", "Zone-specific production bonuses, up to Blackreach."),
-    "storage": ("Shared Storage", "512 building materials per fixed storage increment."),
+    "storage": ("Shared Storage", "256 logs or Nether stems per level."),
 }
 GENERATED_CONTROLS = {}
 

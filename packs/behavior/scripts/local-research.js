@@ -1,5 +1,4 @@
 import {ECONOMY_CONFIG as C} from './economy-config.js';
-import {BUILDING} from './global-research.js';
 export const LOCAL_KEYS=['hearth','biome','sanctuary','efficiency','roads'];
 const aliases={hearth:['hearthstone'],biome:['prospecting','resourceProspecting'],sanctuary:[],efficiency:['prosperity'],roads:['roadNetworks']};
 const count=n=>Number.isSafeInteger(n)&&n>=0?n:0;
@@ -43,8 +42,7 @@ export function migrateLocalResearch(v,s=null){
  return v;
 }
 export function categoryMaterials(category){
- const mapped=category==='crop'?C.researchMaterials.crop:Object.values(C.resources).flat().filter(r=>r.category===category).map(r=>r.id);
- return [...new Set(category==='building'?[...mapped,...BUILDING]:mapped)];
+ return [...new Set(C.researchMaterials[category]??Object.values(C.resources).flat().filter(r=>r.category===category).map(r=>r.id))];
 }
 export function localResearchCost(v,key){
  const d=C.research[key];if(!d)return null;
@@ -108,5 +106,6 @@ export function localResearchText(v,key,s=null){
   benefit+='\nLimited by completed road tier.\nConstruction: 6 Minecraft days per stage.';
  }
 
- return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining${required}`:'§eFully upgraded§r'}`;
+ const accepted=key==='efficiency'?'\nStone, cobblestone, deepslate, cobbled deepslate, granite, diorite, andesite or tuff.':'';
+ return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}${accepted}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining${required}`:'§eFully upgraded§r'}`;
 }

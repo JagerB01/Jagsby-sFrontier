@@ -31,14 +31,16 @@ test('Sanctuary uses mapped crops, mixes eligible items and costs a fixed 250 at
   assert.equal(give(v,'sanctuary','minecraft:cocoa_beans',200),125);assert.equal(v.sanctuary,level);
  }
 });
-test('Prosperity accepts building categories and allowlisted variants at a fixed 250 per level',()=>{
+test('Prosperity costs 256 blocks per level and accepts only the eight stone types',()=>{
  const v=village();v.biomeUnlocked=true;
  for(let level=1;level<=7;level++){
-  assert.equal(localResearchCost(v,'efficiency').amount,250);
-  give(v,'efficiency','minecraft:stone',100);give(v,'efficiency','minecraft:oak_planks',100);
-  assert.equal(give(v,'efficiency','minecraft:warped_stem',100),50);assert.equal(v.efficiency,level);
+  const cost=localResearchCost(v,'efficiency');
+  assert.equal(cost.amount,256);
+  assert.deepEqual(cost.materials,['stone','cobblestone','deepslate','cobbled_deepslate','granite','diorite','andesite','tuff'].map(id=>'minecraft:'+id));
+  give(v,'efficiency','minecraft:stone',100);give(v,'efficiency','minecraft:tuff',100);
+  assert.equal(give(v,'efficiency','minecraft:andesite',100),56);assert.equal(v.efficiency,level);
  }
- assert.equal(give(v,'efficiency','minecraft:wheat',250),0);
+ for(const id of ['wheat','oak_log','oak_planks','warped_stem','sandstone','stone_bricks','packed_ice'])assert.equal(give(v,'efficiency','minecraft:'+id,256),0);
 });
 test('Wrong materials, seeds, food, emeralds and non-integer counts are rejected without progress',()=>{
  const v=village();v.hearth=1;v.biomeUnlocked=true;
@@ -74,11 +76,12 @@ test('Partial local progress is settlement-specific, survives reload and combine
 test('Stewardship caps both endless upgrades and preserves partial progress at the cap',()=>{
  const v=village();v.hearth=1;v.biomeUnlocked=true;
  for(const [key,id]of [['sanctuary','minecraft:wheat'],['efficiency','minecraft:stone']]){
-  give(v,key,id,250,state(1));assert.equal(v[key],1);
+  const cost=localResearchCost(v,key).amount;
+  give(v,key,id,cost,state(1));assert.equal(v[key],1);
   assert.equal(give(v,key,id,250,state(1)),0);
   v.localResearch.progress[key]=125;
   assert.equal(give(v,key,id,250,state(1)),0);assert.equal(v.localResearch.progress[key],125);
-  assert.equal(give(v,key,id,250,state(2)),125);assert.equal(v[key],2);
+  assert.equal(give(v,key,id,cost,state(2)),cost-125);assert.equal(v[key],2);
  }
  assert.ok(localResearchText(v,'sanctuary',state(2)).includes('§cRequired: Stewardship Lv 3§r'));
 });
@@ -93,14 +96,14 @@ test('Local UI lists current level, category, exact quantity, saved progress and
  const v=village();v.hearth=1;v.biomeUnlocked=true;v.efficiency=5;
  v.localResearch.progress.efficiency=125;
  const text=localResearchText(v,'efficiency',state(10));
- for(const value of ['Lv 5','Next cost: 250 Building Materials','Contributed: 125 / 250','125 remaining','Resource production: §b+25％§r §7→§r §a+30％§r'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 5','Next cost: 256 Stone Blocks','Contributed: 125 / 256','131 remaining','Resource production: §b+25％§r §7→§r §a+30％§r'])assert.ok(text.includes(value),value);
  v.hearth=2;assert.ok(localResearchText(v,'hearth',state(1)).includes('Fully upgraded'));
 });
 test('Paid legacy surplus survives a Stewardship ceiling and resumes when the ceiling rises',()=>{
  const v={hearth:1,efficiency:1,biomeUnlocked:true,researchProgress:{prosperity:625}};
  migrateLocalResearch(v,state(1));assert.equal(v.efficiency,1);assert.equal(v.localResearch.progress.efficiency,625);
- migrateLocalResearch(v,state(2));assert.equal(v.efficiency,2);assert.equal(v.localResearch.progress.efficiency,375);
- migrateLocalResearch(v,state(4));assert.equal(v.efficiency,3);assert.equal(v.localResearch.progress.efficiency,125);
+ migrateLocalResearch(v,state(2));assert.equal(v.efficiency,2);assert.equal(v.localResearch.progress.efficiency,369);
+ migrateLocalResearch(v,state(4));assert.equal(v.efficiency,3);assert.equal(v.localResearch.progress.efficiency,113);
  const before=JSON.stringify(v);migrateLocalResearch(v,state(4));assert.equal(JSON.stringify(v),before);
 });
 test('Hearthstone I unlocks villager healing and II unlocks player regeneration',()=>{

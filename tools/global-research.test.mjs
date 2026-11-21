@@ -61,14 +61,23 @@ test('Colonization costs 60 diamonds and preserves earlier zone-specific bonuses
  }
  assert.equal(spent,60);assert.equal(s.global.frontier,1);assert.equal(s.global.innovation,5);
 });
-test('Shared Storage starts at 128, adds 64 per level and costs exactly 512 materials',()=>{
+test('Shared Storage starts at 128, adds 64 per level and costs 256 logs or stems',()=>{
  let s=fresh();assert.equal(R.storageIncrement(),64);assert.equal(E.capacity(s),128);
- assert.equal(grant(s,'storage','minecraft:stone',512),0);grant(s,'capacity','minecraft:oak_log',64);
- grant(s,'storage','minecraft:stone',511);s=reload(s);assert.equal(E.capacity(s),128);
- assert.equal(grant(s,'storage','minecraft:oak_planks',64),1);assert.equal(E.capacity(s),192);
- assert.equal(grant(s,'storage','minecraft:stone',512),0);
- s.villages.a=village();s.villages.a.productionPower=100000;s.villages.a.developmentValue=1e9;
- assert.equal(E.capacity(s),192);assert.equal(grant(s,'storage','minecraft:dirt',512),0);
+ assert.equal(grant(s,'storage','minecraft:poplar_log',256),0);
+ grant(s,'capacity','minecraft:oak_log',64);
+ for(const material of ['stone','oak_planks','oak_wood','warped_hyphae','dirt'])assert.equal(grant(s,'storage','minecraft:'+material,256),0);
+ assert.equal(grant(s,'storage','minecraft:poplar_log',255),255);
+ s=reload(s);assert.equal(E.capacity(s),128);
+ assert.equal(grant(s,'storage','minecraft:stripped_warped_stem',64),1);assert.equal(E.capacity(s),192);
+ assert.equal(grant(s,'storage','minecraft:oak_log',256),0);
+});
+test('Storage repricing preserves paid progress, including surplus at the Stewardship cap',()=>{
+ let s=fresh();s.global.capacity=1;s.researchProgress.storage=511;
+ s=reload(s);assert.equal(s.global.storage,1);assert.equal(s.researchProgress.storage,255);
+ assert.deepEqual(reload(s),s);
+ s.global.innovation=2;
+ assert.equal(grant(s,'storage','minecraft:oak_log',64),1);
+ assert.equal(s.global.storage,2);
 });
 test('Migration preserves stock, existing settlements, roads, local levels and unknown fields',()=>{
  const legacy={villages:{a:{...village(),efficiency:7,sanctuary:9,developmentValue:50000}},stock:{'minecraft:stone':9999},roads:{r:{level:3,from:'a',to:'b'}},global:{development:2,capacity:4,storage:3,frontier:2},custom:{keep:true}};
@@ -163,6 +172,28 @@ test('Interrupted global final save recovers once without duplicate charge',asyn
  h.api.recoverResearch(h.player);assert.equal(h.read().global.innovation,2);assert.equal(h.read().pendingResearch,undefined);
  h.api.recoverResearch(h.player);assert.equal(h.read().global.innovation,2);
 });
+test('Outstanding storage and Prosperity payments survive a recipe change',async()=>{
+ const s=fresh();
+ s.global.capacity=1;s.researchProgress.storage=250;
+ s.pendingResearch={playerId:'p',key:'storage',material:'minecraft:stone',amount:16,slots:[{slot:0,before:16,after:0}]};
+ const h=await runtime(s);
+ h.slots[0]=undefined;
+ h.api.recoverResearch(h.player);
+ assert.equal(h.read().global.storage,1);
+ assert.equal(h.read().researchProgress.storage,10);
+ assert.equal(h.read().pendingResearch,undefined);
+ h.update(saved=>{
+  saved.villages.none.biomeUnlocked=true;
+  saved.pendingResearch={playerId:'p',scope:'local',vid:'none',key:'efficiency',material:'minecraft:oak_planks',
+   amount:32,slots:[{slot:0,before:32,after:0}]};
+ });
+ h.slots[0]={typeId:'minecraft:oak_planks',amount:32};
+ h.api.recoverResearch(h.player);
+ h.api.recoverResearch(h.player);
+ assert.equal(h.slots[0],undefined);
+ assert.equal(h.read().villages.none.localResearch.progress.efficiency,32);
+ assert.equal(h.read().pendingResearch,undefined);
+});
 test('Partly debited inventory recovers remaining slots; ambiguous inventories stop safely',async()=>{
  const h=await runtime();h.failInventory(1);click(h,'innovation');
  assert.ok(h.read().pendingResearch);assert.equal(h.slots[0],undefined);assert.equal(h.slots[1].amount,64);
@@ -180,7 +211,7 @@ test('Capped global cards do not debit inventory or erase partial progress',asyn
 test('Global hover record exposes effect, next cost, progress, remaining amount, prerequisite and click action',async()=>{
  const s=fresh();const h=await runtime(s);h.api.open(h.player,'none','Research','global');
  const text=h.forms[0].buttons[10];
- for(const value of ['Lv 0','512 Building materials','Contributed: 0 / 512','512 remaining','Required: Settlement Charters Lv 1','Shared capacity: §b128§r §7→§r §a192§r items'])assert.ok(text.includes(value),value);
+ for(const value of ['Lv 0','256 Logs or Nether Stems','Contributed: 0 / 256','256 remaining','Required: Settlement Charters Lv 1','Shared capacity: §b128§r §7→§r §a192§r items'])assert.ok(text.includes(value),value);
 });
 test('Save migration refuses a future version instead of overwriting it',()=>{
  assert.throws(()=>R.migrateResearch({researchVersion:4}),/newer/);

@@ -32,7 +32,7 @@ The existing internal save key for the foundation is retained for compatibility.
 | Settlement Charters | 0, two settlement slots | 64 logs | Stewardship level |
 | Frontier Expansion | 0, Heartlands + Borderlands | 32 iron, 48 iron, 32 gold, 48 gold | Lower of IV and Stewardship |
 | Colonization | 0 | 4, 8, 12, 16, 20 diamonds | Lower of V and Stewardship |
-| Shared Storage | 0, 128 items | 512 building materials | Stewardship level |
+| Shared Storage | 0, 128 items | 256 logs or Nether stems | Stewardship level |
 
 Prerequisite decision: Colonization requires Frontier I; Shared Storage requires
 Capacity I. Additional levels do not need matching levels of those prerequisites.
@@ -125,7 +125,7 @@ blocks are introduced.
 
 Shared Storage capacity is `128 + 64 × level` total items, shared across all
 settlements. The initial two stacks become three stacks at level I, four at II,
-and five at III. Each level still costs 512 building materials and obeys
+and five at III. Each level costs 256 logs or Nether stems and obeys
 Stewardship. The explicit `sharedStorage` configuration in `economy-config.js`
 sets the base and increment independently of production rates and Realm Power.
 The old reference-basket calculation is no longer used.

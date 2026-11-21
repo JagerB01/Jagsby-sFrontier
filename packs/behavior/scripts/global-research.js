@@ -3,13 +3,14 @@ import {ECONOMY_CONFIG as C} from './economy-config.js';
 export const ZONES = ['Heartlands','Borderlands','Wildlands','Dreadlands','Blightlands','Blackreach'];
 const WOODS = ['oak','spruce','birch','jungle','acacia','dark_oak','mangrove','cherry','pale_oak'];
 export const LOGS = [...WOODS.flatMap(w=>[`minecraft:${w}_log`,`minecraft:${w}_wood`,`minecraft:stripped_${w}_log`,`minecraft:stripped_${w}_wood`]),... ['crimson','warped'].flatMap(w=>[`minecraft:${w}_stem`,`minecraft:stripped_${w}_stem`,`minecraft:${w}_hyphae`,`minecraft:stripped_${w}_hyphae`])];
-export const BUILDING = [...LOGS,...WOODS.map(w=>`minecraft:${w}_planks`),...['crimson_stem','warped_stem','crimson_hyphae','warped_hyphae','crimson_planks','warped_planks','stone','cobblestone','deepslate','cobbled_deepslate','stone_bricks','bricks','sandstone','red_sandstone'].map(w=>`minecraft:${w}`)];
+const STORAGE_LOGS = [...LOGS.filter(id=>id.endsWith('_log')||id.endsWith('_stem')),
+  'minecraft:poplar_log','minecraft:stripped_poplar_log'];
 export const DEFINITIONS = {
   innovation:{name:'Stewardship',cost:192,materials:['minecraft:copper_ingot']},
   frontier:{name:'Frontier Expansion',max:4,cost:[32,48,32,48],materials:['minecraft:iron_ingot','minecraft:iron_ingot','minecraft:gold_ingot','minecraft:gold_ingot']},
   capacity:{name:'Settlement Charters',cost:64,materials:LOGS},
   colonization:{name:'Colonization',max:5,cost:[4,8,12,16,20],materials:['minecraft:diamond'],prerequisite:'frontier'},
-  storage:{name:'Shared Storage',cost:512,materials:BUILDING,prerequisite:'capacity'},
+  storage:{name:'Shared Storage',cost:256,materials:STORAGE_LOGS,prerequisite:'capacity'},
 };
 const integer = value => Number.isSafeInteger(value) && value >= 0 ? value : 0;
 // Same square rings as MineScape 1.5.119 BP/scripts/slayer_hunt_data.js.
@@ -36,6 +37,13 @@ export function migrateResearch(s){
  s.global.innovation=Math.max(1,s.global.innovation);
  s.global.frontier=Math.min(4,s.global.frontier);s.global.colonization=Math.min(5,s.global.colonization);
  s.researchRevision??=0;
+ if(s.pendingResearch?.key!=='storage'&&s.global.capacity>=1){
+  const progress=s.researchProgress.storage,cost=DEFINITIONS.storage.cost;
+  const levels=Math.min(Math.floor(progress/cost),Math.max(0,s.global.innovation-s.global.storage));
+  s.global.storage+=levels;
+  s.researchProgress.storage-=levels*cost;
+  s.researchRevision+=levels;
+ }
  return s;
 }
 export function maxLevel(s,key) {return key==='innovation'?Infinity:Math.min(DEFINITIONS[key].max??Infinity,s.global.innovation);}
