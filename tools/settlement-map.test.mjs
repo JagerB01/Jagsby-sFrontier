@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {mapSnapshot,fitMap,settlementPoints,moveMap,mapDetails,mapCellInfo,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
+import {mapSnapshot,fitMap,settlementPoints,moveMap,mapDetails,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
 import {CHARTER_LAYOUT as L} from '../packs/behavior/scripts/charter-layout.js';
 const village=(name,x,z,dimension='minecraft:overworld')=>({name,location:{x,y:64,z},dimension,developmentValue:250,developmentThreshold:100});
 const points=s=>s.cells.flat();
@@ -31,12 +31,16 @@ test('Registry is the only source: creation, rename, removal and world serializa
  delete saved.a;const s=mapSnapshot(saved,{},'a');assert.equal(s.count,1);assert.equal(s.selected,null);
  assert.equal(points(s)[0].id,'b');
 });
-test('Clusters retain all settlements without a marker cap and labels indicate overlapping entries',()=>{
- const villages=Object.fromEntries(Array.from({length:500},(_,i)=>['v'+i,village('Settlement '+i,0,0)]));
- const s=mapSnapshot(villages);assert.equal(s.count,500);assert.equal(s.visible,500);
- const cluster=s.cells.find(c=>c.length);assert.equal(cluster.length,500);
- assert.match(mapCellInfo(cluster),/\+499 nearby/);
- assert.equal(new Set(points(s).map(p=>p.id)).size,500);
+test('Overlapping POIs get separate pins and a full map spills onto another page',()=>{
+ const capacity=MAP_COLUMNS*MAP_ROWS;
+ const villages=Object.fromEntries(Array.from({length:capacity+2},(_,i)=>['v'+i,village('Settlement '+i,0,0)]));
+ const first=mapSnapshot(villages),second=mapSnapshot(villages,{page:1});
+ assert.equal(first.visible,capacity+2);
+ assert.equal(first.pageCount,2);
+ assert.ok(first.cells.every(cell=>cell.length===1));
+ assert.ok(second.cells.every(cell=>cell.length<=1));
+ assert.equal(points(second).length,2);
+ assert.equal(new Set([...points(first),...points(second)].map(p=>p.id)).size,capacity+2);
 });
 test('Empty and invalid locations are safe; zero coordinates and legacy ids remain valid',()=>{
  assert.equal(mapSnapshot({}).count,0);assert.equal(mapDetails(null),'');
@@ -132,13 +136,11 @@ test('World spawn is fitted and projected in Overworld without affecting settlem
  assert.equal(empty.viewport.x,320);assert.equal(empty.viewport.z,-900);
 });
 
-test('Hover data resolves biome and owner and stays bounded for dense clusters',()=>{
+test('Hover data resolves biome and owner',()=>{
  const villages={a:{...village('Home',0,0),biome:'minecraft:birch_forest',owner:{name:'Jagsby',id:'p'}}};
  const p=settlementPoints(villages)[0];
  assert.equal(mapDetails(p),'Home\nX 0, Y 64, Z 0\nBiome: Birch Forest\nDevelopment: 2\nOwner: Jagsby');
- const cluster=Array.from({length:500},(_,i)=>({...p,name:'Home '+i}));
- const info=mapCellInfo(cluster);assert.equal((info.match(/^Home /gm)||[]).length,1);assert.match(info,/499 nearby/);
- assert.equal(mapCellInfo([]),'');
+
 });
 
 test('Map drawing fills its rectangle and controls are framed entirely to its left',async()=>{
@@ -195,9 +197,12 @@ test('Points within the old coarse cell project independently and spawn shares t
  const s=mapSnapshot({a:village('A',-39,-14),b:village('B',-20,-8)},viewport,null,{x:-20,y:70,z:-8});
  assert.equal(s.cells[10*MAP_COLUMNS+13][0].id,'a');
  const slot=11*MAP_COLUMNS+16;
- assert.equal(s.spawnCell,slot);
- assert.deepEqual(s.cells[slot].map(p=>p.id),['b','world-spawn']);
- assert.match(mapCellInfo(s.cells[slot]),/World spawn: X -20, Y 70, Z -8/);
+ assert.equal(s.cells[slot][0].id,'b');
+ assert.notEqual(s.spawnCell,slot);
+ const columnDelta=s.spawnCell%MAP_COLUMNS-slot%MAP_COLUMNS;
+ const rowDelta=Math.floor(s.spawnCell/MAP_COLUMNS)-Math.floor(slot/MAP_COLUMNS);
+ assert.equal(Math.abs(columnDelta)+Math.abs(rowDelta),1);
+ assert.equal(mapDetails(s.cells[s.spawnCell][0]),'World spawn\nX -20, Y 70, Z -8');
 });
 
 test('Map settlement art follows all existing Realm Power tiers and spawn info uses the actual configured coordinates',async()=>{

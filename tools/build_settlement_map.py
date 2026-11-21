@@ -11,8 +11,8 @@ X_TICKS = range(0, WIDTH + 1, 40)
 Z_TICKS = range(0, HEIGHT + 1, 30)
 MAP_LAYOUT = {"columns": COLUMNS, "rows": ROWS, "cells": COLUMNS * ROWS}
 MAP_LAYOUT.update({key: COLUMNS * ROWS + i for i, key in enumerate([
-    "back", "fit", "zoomOut", "zoomIn", "west", "east", "north", "south", "dimension", "refresh"])})
-MAP_LAYOUT["xTicks"] = list(range(MAP_LAYOUT["refresh"] + 1, MAP_LAYOUT["refresh"] + 1 + len(X_TICKS)))
+    "back", "fit", "zoomOut", "zoomIn", "west", "east", "north", "south", "dimension", "refresh", "nextPage"])})
+MAP_LAYOUT["xTicks"] = list(range(MAP_LAYOUT["nextPage"] + 1, MAP_LAYOUT["nextPage"] + 1 + len(X_TICKS)))
 MAP_LAYOUT["zTicks"] = list(range(MAP_LAYOUT["xTicks"][-1] + 1, MAP_LAYOUT["xTicks"][-1] + 1 + len(Z_TICKS)))
 
 
@@ -121,7 +121,8 @@ def build_map_ui(ui, frame):
     controls=[("fit",62,16,7,17), ("zoomOut",29,16,7,36), ("zoomIn",29,16,40,36),
               ("north",28,14,24,56), ("west",28,14,7,73), ("east",28,14,40,73),
               ("south",28,14,24,90), ("dimension",62,16,7,109),
-              ("refresh",62,14,7,128), ("back",62,14,7,145)]
+              ("refresh",62,14,7,128), ("back",62,14,7,145),
+              ("nextPage",120,12,GRID_X,221)]
     for key,width,height,x,y in controls:
         template="jf_map_"+key
         states=[]
@@ -139,8 +140,13 @@ def build_map_ui(ui, frame):
         if key in ['zoomIn','zoomOut']:
             button['button_mappings'].append({'from_button_id':'button.menu_up' if key=='zoomIn' else 'button.menu_down',
                 'to_button_id':'button.form_button_click','mapping_type':'global','scope':'view','input_mode_condition':'gamepad_and_not_gaze'})
+        if key == "nextPage":
+            button["bindings"].extend(
+                {"binding_type": "view", "source_property_name": "(not (#form_button_text = ''))",
+                 "target_property_name": prop} for prop in ("#visible", "#enabled"))
         ui[template+'@common.button']=button
-        panel.append(c(key,scope(template,MAP_LAYOUT[key],[width,height],[x,y])))
+        target = content if key == "nextPage" else panel
+        target.append(c(key,scope(template,MAP_LAYOUT[key],[width,height],[x,y])))
     content.append(c('controls',{'type':'panel','size':[76,162],'offset':[26,61],
         'anchor_from':'top_left','anchor_to':'top_left','controls':panel}))
     content.append(c('legend',label('Hover pins for settlements and spawn',[150,10],(204,38),scale=0.45)))

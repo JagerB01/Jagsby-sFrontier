@@ -40,18 +40,34 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
   const row=Math.min(MAP_ROWS-1,Math.floor((point.z-bounds.minZ)/height*MAP_ROWS));
   return row*MAP_COLUMNS+column;
  };
- let count=0,visible=0;
- for(const point of points){
-  if(point.dimension!==dimension)continue;
-  count++;
+ const projected=[];
+ let count=0;
+ for(const point of fitPoints){
+  if(point.dimension===dimension&&point.type==='settlement')count++;
   const slot=project(point);
-  if(slot===null)continue;
-  cells[slot].push(point);
-  visible++;
+  if(slot!==null)projected.push({point,slot});
  }
- const spawnCell=spawn?project(spawn):null;
- if(spawnCell!==null)cells[spawnCell].push(spawn);
- return {viewport,bounds,cells,dimensions,count,visible,spawn,spawnCell,selected:points.find(p=>p.id===selectedId&&p.dimension===dimension)||null};
+ const pageCount=Math.max(1,Math.ceil(projected.length/cells.length));
+ const page=Number.isInteger(requested.page)?Math.max(0,Math.min(requested.page,pageCount-1)):0;
+ const displaced=[];
+ for(const entry of projected.slice(page*cells.length,(page+1)*cells.length)){
+  if(cells[entry.slot].length)displaced.push(entry);
+  else cells[entry.slot].push(entry.point);
+ }
+ // Reserve each unoccupied projected cell before moving overlapping pins.
+ for(const {point,slot} of displaced){
+  const column=slot%MAP_COLUMNS,row=Math.floor(slot/MAP_COLUMNS);
+  let closest=-1,best=Infinity;
+  for(let i=0;i<cells.length;i++){
+   if(cells[i].length)continue;
+   const distance=(i%MAP_COLUMNS-column)**2+(Math.floor(i/MAP_COLUMNS)-row)**2;
+   if(distance<best){closest=i;best=distance;}
+  }
+  cells[closest].push(point);
+ }
+ const spawnIndex=cells.findIndex(cell=>cell[0]?.type==='spawn');
+ const visible=projected.length-Number(projected.some(({point})=>point.type==='spawn'));
+ return {viewport,bounds,cells,dimensions,count,visible,spawn,spawnCell:spawnIndex<0?null:spawnIndex,page,pageCount,selected:points.find(p=>p.id===selectedId&&p.dimension===dimension)||null};
 }
 export function moveMap(viewport,action){
  const next={...viewport};
@@ -70,12 +86,4 @@ export function mapDetails(point){
  if(!point)return '';
  if(point.type==='spawn')return `World spawn\n${coordinates(point)}`;
  return `${point.name}\n${coordinates(point)}\nBiome: ${point.biome}\nDevelopment: ${point.development}\nOwner: ${point.owner}`;
-}
-export function mapCellInfo(points){
- if(!points.length)return '';
- const [first,...nearby]=points;
- const spawn=nearby.find(point=>point.type==='spawn');
- const otherCount=nearby.length-Number(!!spawn);
- return mapDetails(first)+(spawn?`\nWorld spawn: ${coordinates(spawn)}`:'')+
-  (otherCount?`\n+${otherCount} nearby. Zoom in to separate.`:'');
 }

@@ -8,7 +8,7 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
-import { mapSnapshot, moveMap, mapCellInfo } from "./settlement-map.js";
+import { mapSnapshot, moveMap, mapDetails } from "./settlement-map.js";
 
 
 const BLOCK = "jagsby_frontier:village_charter";
@@ -287,9 +287,10 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
   try{spawn=world.getDefaultSpawnLocation();}catch(error){console.warn(`Frontier map spawn: ${error}`);}
   const snapshot=mapSnapshot(villages,requested,selectedId,spawn),layout=CHARTER_LAYOUT.settlementMap;
   const records=Array(layout.zTicks.at(-1)+1).fill('');
-  snapshot.cells.forEach((points,index)=>{records[index]=mapCellInfo(points);});
+  snapshot.cells.forEach(([point],index)=>{records[index]=mapDetails(point);});
   const labels={back:'Back',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
   for(const [key,text]of Object.entries(labels))records[layout[key]]=text;
+  if(snapshot.pageCount>1)records[layout.nextPage]=`POI page ${snapshot.page+1}/${snapshot.pageCount} >`;
   const b=snapshot.bounds;
   layout.xTicks.forEach((index,i)=>{
     records[index]=`X ${Math.round(b.minX+(b.maxX-b.minX)*i/(layout.xTicks.length-1))}`;
@@ -305,6 +306,9 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
    const index=response.selection;
    // Marker records are data-only. Hover/focus never submits or replaces a form.
    if(index<layout.cells)return;
+   if(index===layout.nextPage&&snapshot.pageCount>1){
+    show({...snapshot.viewport,page:(snapshot.page+1)%snapshot.pageCount});return;
+   }
    const action=Object.keys(labels).find(key=>layout[key]===index);
    if(action==='back'){reopenView(player,vid,{...returnView,page:'Diplomacy'});return;}
    if(action==='fit'){show({dimension:snapshot.viewport.dimension});return;}
@@ -312,7 +316,7 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
     const next=snapshot.dimensions[(snapshot.dimensions.indexOf(snapshot.viewport.dimension)+1)%snapshot.dimensions.length];
     show({dimension:next});return;
    }
-   if(action==='refresh'){show();return;}
+   if(action==='refresh'){show({...snapshot.viewport,page:snapshot.page});return;}
    if(action)show(moveMap(snapshot.viewport,action));
   }).catch(error=>{console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not open. Please reopen the charter.');});
  }catch(error){console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not load. Please reopen the charter.');}

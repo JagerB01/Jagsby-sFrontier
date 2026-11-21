@@ -14,22 +14,23 @@ export const CHARTER_LAYOUT = {
     "south": 1007,
     "dimension": 1008,
     "refresh": 1009,
+    "nextPage": 1010,
     "xTicks": [
-      1010,
       1011,
       1012,
       1013,
       1014,
       1015,
-      1016
+      1016,
+      1017
     ],
     "zTicks": [
-      1017,
       1018,
       1019,
       1020,
       1021,
-      1022
+      1022,
+      1023
     ]
   },
   "data": {
