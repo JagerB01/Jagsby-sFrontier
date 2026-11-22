@@ -556,8 +556,23 @@ test('Controller can enter and navigate Prospecting and Realm rows even without 
   checkReader(row,'production','biomes',slot);
   assert.ok(JSON.stringify(wrapper.bindings).includes(`[JF:prospect:${slot}]`),'Only populated rows participate in focus');
   assert.equal(row.bindings,undefined,'Locked and selected rows remain readable');
+  assert.equal(row.focus_magnet_enabled,false);
+  const record=children(children(row).choose)['record@jagsby_frontier.jf_action_prospectSelect'+slot];
+  assert.equal(record.collection_index,layout.actions['prospectSelect'+slot]);
+  assert.equal(record.focus_identifier,`jf_production_biomes_select_${slot}`);
+  assert.equal(row.focus_change_right,record.focus_identifier);
+  assert.equal(record.focus_change_left,row.focus_identifier);
+  assert.equal(record.focus_change_up,row.focus_identifier);
   const select=template(ui,'jf_action_prospectSelect'+slot);
   assert.ok(select.bindings.some(b=>b.target_property_name==='#enabled'),'Keep native selection validation');
+  assert.ok(select.button_mappings.some(b=>b.from_button_id==='button.menu_ok'&&b.to_button_id==='button.form_button_click'&&b.mapping_type==='focused'));
+  for(const state of Object.values(children(select))){
+   const {caption}=children(state);
+   assert.equal(caption.text_alignment,'center');
+   assert.equal(caption.anchor_from,'center');
+   assert.equal(caption.anchor_to,'center');
+   assert.deepEqual(caption.offset,[0,0]);
+  }
  }
  assert.equal(children(ui.jf_production_content).jf_production_tab_biomes.focus_change_down,'jf_production_biomes_row_0');
  for(const scope of layout.realmRows.scopes){

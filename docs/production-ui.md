@@ -55,8 +55,10 @@ when a local tab is first selected. Hidden lists do not continuously poll record
 
 Controller: move Down from Resource Prospecting into the first row, then move
 through rows with the D-pad. Each row has a native reading-focus target and gold
-focus edge even when Select is unavailable. Up from the first row returns to the
-subtab; Left returns to the Production sidebar. Reading focus has no submit
+focus edge even when Select is unavailable. Press Right on an eligible row to
+focus Select, then Confirm to assign it. Left returns from Select to the row.
+Up from the first row returns to the subtab, and Left from a row returns to the
+Production sidebar. Reading focus has no submit
 mapping. The native scroll panel follows focus; Select retains its research and
 verification requirements. Realm lists use the same reading-focus behavior.
 

@@ -9103,7 +9103,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect0": {
-                            "collection_index": 191
+                            "collection_index": 191,
+                            "focus_identifier": "jf_production_biomes_select_0",
+                            "focus_change_left": "jf_production_biomes_row_0",
+                            "focus_change_up": "jf_production_biomes_row_0"
                           }
                         }
                       ],
@@ -9191,7 +9194,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_0",
                 "focus_change_left": "jf_tab_focus_production",
@@ -9200,7 +9203,8 @@
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
                 "tts_name": "Biome production details",
-                "focus_change_up": "jf_production_focus_biomes"
+                "focus_change_up": "jf_production_focus_biomes",
+                "focus_change_right": "jf_production_biomes_select_0"
               }
             }
           ]
@@ -9297,7 +9301,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect1": {
-                            "collection_index": 192
+                            "collection_index": 192,
+                            "focus_identifier": "jf_production_biomes_select_1",
+                            "focus_change_left": "jf_production_biomes_row_1",
+                            "focus_change_up": "jf_production_biomes_row_1"
                           }
                         }
                       ],
@@ -9385,7 +9392,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_1",
                 "focus_change_left": "jf_tab_focus_production",
@@ -9393,7 +9400,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_1"
               }
             }
           ]
@@ -9490,7 +9498,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect2": {
-                            "collection_index": 193
+                            "collection_index": 193,
+                            "focus_identifier": "jf_production_biomes_select_2",
+                            "focus_change_left": "jf_production_biomes_row_2",
+                            "focus_change_up": "jf_production_biomes_row_2"
                           }
                         }
                       ],
@@ -9578,7 +9589,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_2",
                 "focus_change_left": "jf_tab_focus_production",
@@ -9586,7 +9597,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_2"
               }
             }
           ]
@@ -9683,7 +9695,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect3": {
-                            "collection_index": 194
+                            "collection_index": 194,
+                            "focus_identifier": "jf_production_biomes_select_3",
+                            "focus_change_left": "jf_production_biomes_row_3",
+                            "focus_change_up": "jf_production_biomes_row_3"
                           }
                         }
                       ],
@@ -9771,7 +9786,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_3",
                 "focus_change_left": "jf_tab_focus_production",
@@ -9779,7 +9794,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_3"
               }
             }
           ]
@@ -9876,7 +9892,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect4": {
-                            "collection_index": 195
+                            "collection_index": 195,
+                            "focus_identifier": "jf_production_biomes_select_4",
+                            "focus_change_left": "jf_production_biomes_row_4",
+                            "focus_change_up": "jf_production_biomes_row_4"
                           }
                         }
                       ],
@@ -9964,7 +9983,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_4",
                 "focus_change_left": "jf_tab_focus_production",
@@ -9972,7 +9991,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_4"
               }
             }
           ]
@@ -10069,7 +10089,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect5": {
-                            "collection_index": 196
+                            "collection_index": 196,
+                            "focus_identifier": "jf_production_biomes_select_5",
+                            "focus_change_left": "jf_production_biomes_row_5",
+                            "focus_change_up": "jf_production_biomes_row_5"
                           }
                         }
                       ],
@@ -10157,7 +10180,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_5",
                 "focus_change_left": "jf_tab_focus_production",
@@ -10165,7 +10188,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_5"
               }
             }
           ]
@@ -10262,7 +10286,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect6": {
-                            "collection_index": 197
+                            "collection_index": 197,
+                            "focus_identifier": "jf_production_biomes_select_6",
+                            "focus_change_left": "jf_production_biomes_row_6",
+                            "focus_change_up": "jf_production_biomes_row_6"
                           }
                         }
                       ],
@@ -10350,7 +10377,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_6",
                 "focus_change_left": "jf_tab_focus_production",
@@ -10358,7 +10385,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_6"
               }
             }
           ]
@@ -10455,7 +10483,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect7": {
-                            "collection_index": 198
+                            "collection_index": 198,
+                            "focus_identifier": "jf_production_biomes_select_7",
+                            "focus_change_left": "jf_production_biomes_row_7",
+                            "focus_change_up": "jf_production_biomes_row_7"
                           }
                         }
                       ],
@@ -10543,7 +10574,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_7",
                 "focus_change_left": "jf_tab_focus_production",
@@ -10551,7 +10582,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_7"
               }
             }
           ]
@@ -10648,7 +10680,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect8": {
-                            "collection_index": 199
+                            "collection_index": 199,
+                            "focus_identifier": "jf_production_biomes_select_8",
+                            "focus_change_left": "jf_production_biomes_row_8",
+                            "focus_change_up": "jf_production_biomes_row_8"
                           }
                         }
                       ],
@@ -10736,7 +10771,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_8",
                 "focus_change_left": "jf_tab_focus_production",
@@ -10744,7 +10779,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_8"
               }
             }
           ]
@@ -10841,7 +10877,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect9": {
-                            "collection_index": 200
+                            "collection_index": 200,
+                            "focus_identifier": "jf_production_biomes_select_9",
+                            "focus_change_left": "jf_production_biomes_row_9",
+                            "focus_change_up": "jf_production_biomes_row_9"
                           }
                         }
                       ],
@@ -10929,7 +10968,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_9",
                 "focus_change_left": "jf_tab_focus_production",
@@ -10937,7 +10976,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_9"
               }
             }
           ]
@@ -11034,7 +11074,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect10": {
-                            "collection_index": 201
+                            "collection_index": 201,
+                            "focus_identifier": "jf_production_biomes_select_10",
+                            "focus_change_left": "jf_production_biomes_row_10",
+                            "focus_change_up": "jf_production_biomes_row_10"
                           }
                         }
                       ],
@@ -11122,7 +11165,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_10",
                 "focus_change_left": "jf_tab_focus_production",
@@ -11130,7 +11173,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_10"
               }
             }
           ]
@@ -11227,7 +11271,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect11": {
-                            "collection_index": 202
+                            "collection_index": 202,
+                            "focus_identifier": "jf_production_biomes_select_11",
+                            "focus_change_left": "jf_production_biomes_row_11",
+                            "focus_change_up": "jf_production_biomes_row_11"
                           }
                         }
                       ],
@@ -11315,7 +11362,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_11",
                 "focus_change_left": "jf_tab_focus_production",
@@ -11323,7 +11370,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_11"
               }
             }
           ]
@@ -11420,7 +11468,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect12": {
-                            "collection_index": 203
+                            "collection_index": 203,
+                            "focus_identifier": "jf_production_biomes_select_12",
+                            "focus_change_left": "jf_production_biomes_row_12",
+                            "focus_change_up": "jf_production_biomes_row_12"
                           }
                         }
                       ],
@@ -11508,7 +11559,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_12",
                 "focus_change_left": "jf_tab_focus_production",
@@ -11516,7 +11567,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_12"
               }
             }
           ]
@@ -11613,7 +11665,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect13": {
-                            "collection_index": 204
+                            "collection_index": 204,
+                            "focus_identifier": "jf_production_biomes_select_13",
+                            "focus_change_left": "jf_production_biomes_row_13",
+                            "focus_change_up": "jf_production_biomes_row_13"
                           }
                         }
                       ],
@@ -11701,7 +11756,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_13",
                 "focus_change_left": "jf_tab_focus_production",
@@ -11709,7 +11764,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_13"
               }
             }
           ]
@@ -11806,7 +11862,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect14": {
-                            "collection_index": 205
+                            "collection_index": 205,
+                            "focus_identifier": "jf_production_biomes_select_14",
+                            "focus_change_left": "jf_production_biomes_row_14",
+                            "focus_change_up": "jf_production_biomes_row_14"
                           }
                         }
                       ],
@@ -11894,7 +11953,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_14",
                 "focus_change_left": "jf_tab_focus_production",
@@ -11902,7 +11961,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_14"
               }
             }
           ]
@@ -11999,7 +12059,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect15": {
-                            "collection_index": 206
+                            "collection_index": 206,
+                            "focus_identifier": "jf_production_biomes_select_15",
+                            "focus_change_left": "jf_production_biomes_row_15",
+                            "focus_change_up": "jf_production_biomes_row_15"
                           }
                         }
                       ],
@@ -12087,7 +12150,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_15",
                 "focus_change_left": "jf_tab_focus_production",
@@ -12095,7 +12158,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_15"
               }
             }
           ]
@@ -12192,7 +12256,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect16": {
-                            "collection_index": 207
+                            "collection_index": 207,
+                            "focus_identifier": "jf_production_biomes_select_16",
+                            "focus_change_left": "jf_production_biomes_row_16",
+                            "focus_change_up": "jf_production_biomes_row_16"
                           }
                         }
                       ],
@@ -12280,7 +12347,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_16",
                 "focus_change_left": "jf_tab_focus_production",
@@ -12288,7 +12355,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_16"
               }
             }
           ]
@@ -12385,7 +12453,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect17": {
-                            "collection_index": 208
+                            "collection_index": 208,
+                            "focus_identifier": "jf_production_biomes_select_17",
+                            "focus_change_left": "jf_production_biomes_row_17",
+                            "focus_change_up": "jf_production_biomes_row_17"
                           }
                         }
                       ],
@@ -12473,7 +12544,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_17",
                 "focus_change_left": "jf_tab_focus_production",
@@ -12481,7 +12552,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_17"
               }
             }
           ]
@@ -12578,7 +12650,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect18": {
-                            "collection_index": 209
+                            "collection_index": 209,
+                            "focus_identifier": "jf_production_biomes_select_18",
+                            "focus_change_left": "jf_production_biomes_row_18",
+                            "focus_change_up": "jf_production_biomes_row_18"
                           }
                         }
                       ],
@@ -12666,7 +12741,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_18",
                 "focus_change_left": "jf_tab_focus_production",
@@ -12674,7 +12749,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_18"
               }
             }
           ]
@@ -12771,7 +12847,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect19": {
-                            "collection_index": 210
+                            "collection_index": 210,
+                            "focus_identifier": "jf_production_biomes_select_19",
+                            "focus_change_left": "jf_production_biomes_row_19",
+                            "focus_change_up": "jf_production_biomes_row_19"
                           }
                         }
                       ],
@@ -12859,7 +12938,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_19",
                 "focus_change_left": "jf_tab_focus_production",
@@ -12867,7 +12946,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_19"
               }
             }
           ]
@@ -12964,7 +13044,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect20": {
-                            "collection_index": 211
+                            "collection_index": 211,
+                            "focus_identifier": "jf_production_biomes_select_20",
+                            "focus_change_left": "jf_production_biomes_row_20",
+                            "focus_change_up": "jf_production_biomes_row_20"
                           }
                         }
                       ],
@@ -13052,7 +13135,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_20",
                 "focus_change_left": "jf_tab_focus_production",
@@ -13060,7 +13143,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_20"
               }
             }
           ]
@@ -13157,7 +13241,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect21": {
-                            "collection_index": 212
+                            "collection_index": 212,
+                            "focus_identifier": "jf_production_biomes_select_21",
+                            "focus_change_left": "jf_production_biomes_row_21",
+                            "focus_change_up": "jf_production_biomes_row_21"
                           }
                         }
                       ],
@@ -13245,7 +13332,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_21",
                 "focus_change_left": "jf_tab_focus_production",
@@ -13253,7 +13340,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_21"
               }
             }
           ]
@@ -13350,7 +13438,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect22": {
-                            "collection_index": 213
+                            "collection_index": 213,
+                            "focus_identifier": "jf_production_biomes_select_22",
+                            "focus_change_left": "jf_production_biomes_row_22",
+                            "focus_change_up": "jf_production_biomes_row_22"
                           }
                         }
                       ],
@@ -13438,7 +13529,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_22",
                 "focus_change_left": "jf_tab_focus_production",
@@ -13446,7 +13537,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_22"
               }
             }
           ]
@@ -13543,7 +13635,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect23": {
-                            "collection_index": 214
+                            "collection_index": 214,
+                            "focus_identifier": "jf_production_biomes_select_23",
+                            "focus_change_left": "jf_production_biomes_row_23",
+                            "focus_change_up": "jf_production_biomes_row_23"
                           }
                         }
                       ],
@@ -13631,7 +13726,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_23",
                 "focus_change_left": "jf_tab_focus_production",
@@ -13639,7 +13734,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_23"
               }
             }
           ]
@@ -13736,7 +13832,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect24": {
-                            "collection_index": 215
+                            "collection_index": 215,
+                            "focus_identifier": "jf_production_biomes_select_24",
+                            "focus_change_left": "jf_production_biomes_row_24",
+                            "focus_change_up": "jf_production_biomes_row_24"
                           }
                         }
                       ],
@@ -13824,7 +13923,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_24",
                 "focus_change_left": "jf_tab_focus_production",
@@ -13832,7 +13931,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_24"
               }
             }
           ]
@@ -13929,7 +14029,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect25": {
-                            "collection_index": 216
+                            "collection_index": 216,
+                            "focus_identifier": "jf_production_biomes_select_25",
+                            "focus_change_left": "jf_production_biomes_row_25",
+                            "focus_change_up": "jf_production_biomes_row_25"
                           }
                         }
                       ],
@@ -14017,7 +14120,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_25",
                 "focus_change_left": "jf_tab_focus_production",
@@ -14025,7 +14128,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_25"
               }
             }
           ]
@@ -14122,7 +14226,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect26": {
-                            "collection_index": 217
+                            "collection_index": 217,
+                            "focus_identifier": "jf_production_biomes_select_26",
+                            "focus_change_left": "jf_production_biomes_row_26",
+                            "focus_change_up": "jf_production_biomes_row_26"
                           }
                         }
                       ],
@@ -14210,7 +14317,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_26",
                 "focus_change_left": "jf_tab_focus_production",
@@ -14218,7 +14325,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_26"
               }
             }
           ]
@@ -14315,7 +14423,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect27": {
-                            "collection_index": 218
+                            "collection_index": 218,
+                            "focus_identifier": "jf_production_biomes_select_27",
+                            "focus_change_left": "jf_production_biomes_row_27",
+                            "focus_change_up": "jf_production_biomes_row_27"
                           }
                         }
                       ],
@@ -14403,7 +14514,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_27",
                 "focus_change_left": "jf_tab_focus_production",
@@ -14411,7 +14522,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_27"
               }
             }
           ]
@@ -14508,7 +14620,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect28": {
-                            "collection_index": 219
+                            "collection_index": 219,
+                            "focus_identifier": "jf_production_biomes_select_28",
+                            "focus_change_left": "jf_production_biomes_row_28",
+                            "focus_change_up": "jf_production_biomes_row_28"
                           }
                         }
                       ],
@@ -14596,7 +14711,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_28",
                 "focus_change_left": "jf_tab_focus_production",
@@ -14604,7 +14719,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_28"
               }
             }
           ]
@@ -14701,7 +14817,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect29": {
-                            "collection_index": 220
+                            "collection_index": 220,
+                            "focus_identifier": "jf_production_biomes_select_29",
+                            "focus_change_left": "jf_production_biomes_row_29",
+                            "focus_change_up": "jf_production_biomes_row_29"
                           }
                         }
                       ],
@@ -14789,7 +14908,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_29",
                 "focus_change_left": "jf_tab_focus_production",
@@ -14797,7 +14916,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_29"
               }
             }
           ]
@@ -14894,7 +15014,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect30": {
-                            "collection_index": 221
+                            "collection_index": 221,
+                            "focus_identifier": "jf_production_biomes_select_30",
+                            "focus_change_left": "jf_production_biomes_row_30",
+                            "focus_change_up": "jf_production_biomes_row_30"
                           }
                         }
                       ],
@@ -14982,7 +15105,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_30",
                 "focus_change_left": "jf_tab_focus_production",
@@ -14990,7 +15113,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_30"
               }
             }
           ]
@@ -15087,7 +15211,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect31": {
-                            "collection_index": 222
+                            "collection_index": 222,
+                            "focus_identifier": "jf_production_biomes_select_31",
+                            "focus_change_left": "jf_production_biomes_row_31",
+                            "focus_change_up": "jf_production_biomes_row_31"
                           }
                         }
                       ],
@@ -15175,7 +15302,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_31",
                 "focus_change_left": "jf_tab_focus_production",
@@ -15183,7 +15310,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_31"
               }
             }
           ]
@@ -15280,7 +15408,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect32": {
-                            "collection_index": 223
+                            "collection_index": 223,
+                            "focus_identifier": "jf_production_biomes_select_32",
+                            "focus_change_left": "jf_production_biomes_row_32",
+                            "focus_change_up": "jf_production_biomes_row_32"
                           }
                         }
                       ],
@@ -15368,7 +15499,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_32",
                 "focus_change_left": "jf_tab_focus_production",
@@ -15376,7 +15507,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_32"
               }
             }
           ]
@@ -15473,7 +15605,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect33": {
-                            "collection_index": 224
+                            "collection_index": 224,
+                            "focus_identifier": "jf_production_biomes_select_33",
+                            "focus_change_left": "jf_production_biomes_row_33",
+                            "focus_change_up": "jf_production_biomes_row_33"
                           }
                         }
                       ],
@@ -15561,7 +15696,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_33",
                 "focus_change_left": "jf_tab_focus_production",
@@ -15569,7 +15704,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_33"
               }
             }
           ]
@@ -15666,7 +15802,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect34": {
-                            "collection_index": 225
+                            "collection_index": 225,
+                            "focus_identifier": "jf_production_biomes_select_34",
+                            "focus_change_left": "jf_production_biomes_row_34",
+                            "focus_change_up": "jf_production_biomes_row_34"
                           }
                         }
                       ],
@@ -15754,7 +15893,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_34",
                 "focus_change_left": "jf_tab_focus_production",
@@ -15762,7 +15901,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_34"
               }
             }
           ]
@@ -15859,7 +15999,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect35": {
-                            "collection_index": 226
+                            "collection_index": 226,
+                            "focus_identifier": "jf_production_biomes_select_35",
+                            "focus_change_left": "jf_production_biomes_row_35",
+                            "focus_change_up": "jf_production_biomes_row_35"
                           }
                         }
                       ],
@@ -15947,7 +16090,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_35",
                 "focus_change_left": "jf_tab_focus_production",
@@ -15955,7 +16098,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_35"
               }
             }
           ]
@@ -16052,7 +16196,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect36": {
-                            "collection_index": 227
+                            "collection_index": 227,
+                            "focus_identifier": "jf_production_biomes_select_36",
+                            "focus_change_left": "jf_production_biomes_row_36",
+                            "focus_change_up": "jf_production_biomes_row_36"
                           }
                         }
                       ],
@@ -16140,7 +16287,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_36",
                 "focus_change_left": "jf_tab_focus_production",
@@ -16148,7 +16295,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_36"
               }
             }
           ]
@@ -16245,7 +16393,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect37": {
-                            "collection_index": 228
+                            "collection_index": 228,
+                            "focus_identifier": "jf_production_biomes_select_37",
+                            "focus_change_left": "jf_production_biomes_row_37",
+                            "focus_change_up": "jf_production_biomes_row_37"
                           }
                         }
                       ],
@@ -16333,7 +16484,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_37",
                 "focus_change_left": "jf_tab_focus_production",
@@ -16341,7 +16492,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_37"
               }
             }
           ]
@@ -16438,7 +16590,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect38": {
-                            "collection_index": 229
+                            "collection_index": 229,
+                            "focus_identifier": "jf_production_biomes_select_38",
+                            "focus_change_left": "jf_production_biomes_row_38",
+                            "focus_change_up": "jf_production_biomes_row_38"
                           }
                         }
                       ],
@@ -16526,7 +16681,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_38",
                 "focus_change_left": "jf_tab_focus_production",
@@ -16534,7 +16689,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_38"
               }
             }
           ]
@@ -16631,7 +16787,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect39": {
-                            "collection_index": 230
+                            "collection_index": 230,
+                            "focus_identifier": "jf_production_biomes_select_39",
+                            "focus_change_left": "jf_production_biomes_row_39",
+                            "focus_change_up": "jf_production_biomes_row_39"
                           }
                         }
                       ],
@@ -16719,7 +16878,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_39",
                 "focus_change_left": "jf_tab_focus_production",
@@ -16727,7 +16886,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_39"
               }
             }
           ]
@@ -16824,7 +16984,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect40": {
-                            "collection_index": 231
+                            "collection_index": 231,
+                            "focus_identifier": "jf_production_biomes_select_40",
+                            "focus_change_left": "jf_production_biomes_row_40",
+                            "focus_change_up": "jf_production_biomes_row_40"
                           }
                         }
                       ],
@@ -16912,7 +17075,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_40",
                 "focus_change_left": "jf_tab_focus_production",
@@ -16920,7 +17083,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_40"
               }
             }
           ]
@@ -17017,7 +17181,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect41": {
-                            "collection_index": 232
+                            "collection_index": 232,
+                            "focus_identifier": "jf_production_biomes_select_41",
+                            "focus_change_left": "jf_production_biomes_row_41",
+                            "focus_change_up": "jf_production_biomes_row_41"
                           }
                         }
                       ],
@@ -17105,7 +17272,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_41",
                 "focus_change_left": "jf_tab_focus_production",
@@ -17113,7 +17280,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_41"
               }
             }
           ]
@@ -17210,7 +17378,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect42": {
-                            "collection_index": 233
+                            "collection_index": 233,
+                            "focus_identifier": "jf_production_biomes_select_42",
+                            "focus_change_left": "jf_production_biomes_row_42",
+                            "focus_change_up": "jf_production_biomes_row_42"
                           }
                         }
                       ],
@@ -17298,7 +17469,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_42",
                 "focus_change_left": "jf_tab_focus_production",
@@ -17306,7 +17477,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_42"
               }
             }
           ]
@@ -17403,7 +17575,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect43": {
-                            "collection_index": 234
+                            "collection_index": 234,
+                            "focus_identifier": "jf_production_biomes_select_43",
+                            "focus_change_left": "jf_production_biomes_row_43",
+                            "focus_change_up": "jf_production_biomes_row_43"
                           }
                         }
                       ],
@@ -17491,7 +17666,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_43",
                 "focus_change_left": "jf_tab_focus_production",
@@ -17499,7 +17674,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_43"
               }
             }
           ]
@@ -17596,7 +17772,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect44": {
-                            "collection_index": 235
+                            "collection_index": 235,
+                            "focus_identifier": "jf_production_biomes_select_44",
+                            "focus_change_left": "jf_production_biomes_row_44",
+                            "focus_change_up": "jf_production_biomes_row_44"
                           }
                         }
                       ],
@@ -17684,7 +17863,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_44",
                 "focus_change_left": "jf_tab_focus_production",
@@ -17692,7 +17871,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_44"
               }
             }
           ]
@@ -17789,7 +17969,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect45": {
-                            "collection_index": 236
+                            "collection_index": 236,
+                            "focus_identifier": "jf_production_biomes_select_45",
+                            "focus_change_left": "jf_production_biomes_row_45",
+                            "focus_change_up": "jf_production_biomes_row_45"
                           }
                         }
                       ],
@@ -17877,7 +18060,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_45",
                 "focus_change_left": "jf_tab_focus_production",
@@ -17885,7 +18068,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_45"
               }
             }
           ]
@@ -17982,7 +18166,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect46": {
-                            "collection_index": 237
+                            "collection_index": 237,
+                            "focus_identifier": "jf_production_biomes_select_46",
+                            "focus_change_left": "jf_production_biomes_row_46",
+                            "focus_change_up": "jf_production_biomes_row_46"
                           }
                         }
                       ],
@@ -18070,7 +18257,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_46",
                 "focus_change_left": "jf_tab_focus_production",
@@ -18078,7 +18265,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_46"
               }
             }
           ]
@@ -18175,7 +18363,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect47": {
-                            "collection_index": 238
+                            "collection_index": 238,
+                            "focus_identifier": "jf_production_biomes_select_47",
+                            "focus_change_left": "jf_production_biomes_row_47",
+                            "focus_change_up": "jf_production_biomes_row_47"
                           }
                         }
                       ],
@@ -18263,7 +18454,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_47",
                 "focus_change_left": "jf_tab_focus_production",
@@ -18271,7 +18462,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_47"
               }
             }
           ]
@@ -18368,7 +18560,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect48": {
-                            "collection_index": 239
+                            "collection_index": 239,
+                            "focus_identifier": "jf_production_biomes_select_48",
+                            "focus_change_left": "jf_production_biomes_row_48",
+                            "focus_change_up": "jf_production_biomes_row_48"
                           }
                         }
                       ],
@@ -18456,7 +18651,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_48",
                 "focus_change_left": "jf_tab_focus_production",
@@ -18464,7 +18659,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_48"
               }
             }
           ]
@@ -18561,7 +18757,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect49": {
-                            "collection_index": 240
+                            "collection_index": 240,
+                            "focus_identifier": "jf_production_biomes_select_49",
+                            "focus_change_left": "jf_production_biomes_row_49",
+                            "focus_change_up": "jf_production_biomes_row_49"
                           }
                         }
                       ],
@@ -18649,7 +18848,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_49",
                 "focus_change_left": "jf_tab_focus_production",
@@ -18657,7 +18856,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_49"
               }
             }
           ]
@@ -18754,7 +18954,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect50": {
-                            "collection_index": 241
+                            "collection_index": 241,
+                            "focus_identifier": "jf_production_biomes_select_50",
+                            "focus_change_left": "jf_production_biomes_row_50",
+                            "focus_change_up": "jf_production_biomes_row_50"
                           }
                         }
                       ],
@@ -18842,7 +19045,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_50",
                 "focus_change_left": "jf_tab_focus_production",
@@ -18850,7 +19053,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_50"
               }
             }
           ]
@@ -18947,7 +19151,10 @@
                       "controls": [
                         {
                           "record@jagsby_frontier.jf_action_prospectSelect51": {
-                            "collection_index": 242
+                            "collection_index": 242,
+                            "focus_identifier": "jf_production_biomes_select_51",
+                            "focus_change_left": "jf_production_biomes_row_51",
+                            "focus_change_up": "jf_production_biomes_row_51"
                           }
                         }
                       ],
@@ -19035,7 +19242,7 @@
                 ],
                 "type": "button",
                 "focus_enabled": true,
-                "focus_magnet_enabled": true,
+                "focus_magnet_enabled": false,
                 "hover_enabled": true,
                 "focus_identifier": "jf_production_biomes_row_51",
                 "focus_change_left": "jf_tab_focus_production",
@@ -19043,7 +19250,8 @@
                 "default_control": "reading_idle",
                 "hover_control": "reading_focus",
                 "pressed_control": "reading_focus",
-                "tts_name": "Biome production details"
+                "tts_name": "Biome production details",
+                "focus_change_right": "jf_production_biomes_select_51"
               }
             }
           ]
@@ -167538,11 +167746,11 @@
                         12
                       ],
                       "offset": [
-                        3,
-                        3
+                        0,
+                        0
                       ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
+                      "anchor_from": "center",
+                      "anchor_to": "center",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
@@ -167552,7 +167760,8 @@
                         0.92,
                         0.85
                       ],
-                      "shadow": false
+                      "shadow": false,
+                      "text_alignment": "center"
                     }
                   }
                 ]
@@ -167603,11 +167812,11 @@
                         12
                       ],
                       "offset": [
-                        3,
-                        3
+                        0,
+                        0
                       ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
+                      "anchor_from": "center",
+                      "anchor_to": "center",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
@@ -167617,7 +167826,8 @@
                         0.92,
                         0.85
                       ],
-                      "shadow": false
+                      "shadow": false,
+                      "text_alignment": "center"
                     }
                   }
                 ]
@@ -167668,11 +167878,11 @@
                         12
                       ],
                       "offset": [
-                        3,
-                        3
+                        0,
+                        0
                       ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
+                      "anchor_from": "center",
+                      "anchor_to": "center",
                       "layer": 8,
                       "font_type": "unicode",
                       "font_size": "normal",
@@ -167682,7 +167892,8 @@
                         0.92,
                         0.85
                       ],
-                      "shadow": false
+                      "shadow": false,
+                      "text_alignment": "center"
                     }
                   }
                 ]
@@ -177758,11 +177969,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -177772,7 +177983,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -177823,11 +178035,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -177837,7 +178049,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -177888,11 +178101,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -177902,7 +178115,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178035,11 +178249,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178049,7 +178263,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178100,11 +178315,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178114,7 +178329,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178165,11 +178381,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178179,7 +178395,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178312,11 +178529,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178326,7 +178543,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178377,11 +178595,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178391,7 +178609,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178442,11 +178661,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178456,7 +178675,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178589,11 +178809,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178603,7 +178823,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178654,11 +178875,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178668,7 +178889,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178719,11 +178941,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178733,7 +178955,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178866,11 +179089,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178880,7 +179103,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178931,11 +179155,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -178945,7 +179169,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -178996,11 +179221,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179010,7 +179235,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -179143,11 +179369,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179157,7 +179383,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -179208,11 +179435,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179222,7 +179449,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -179273,11 +179501,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179287,7 +179515,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -179420,11 +179649,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179434,7 +179663,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -179485,11 +179715,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179499,7 +179729,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -179550,11 +179781,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179564,7 +179795,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -179697,11 +179929,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179711,7 +179943,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -179762,11 +179995,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179776,7 +180009,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -179827,11 +180061,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179841,7 +180075,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -179974,11 +180209,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -179988,7 +180223,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180039,11 +180275,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180053,7 +180289,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180104,11 +180341,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180118,7 +180355,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180251,11 +180489,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180265,7 +180503,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180316,11 +180555,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180330,7 +180569,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180381,11 +180621,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180395,7 +180635,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180528,11 +180769,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180542,7 +180783,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180593,11 +180835,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180607,7 +180849,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180658,11 +180901,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180672,7 +180915,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180805,11 +181049,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180819,7 +181063,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180870,11 +181115,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180884,7 +181129,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -180935,11 +181181,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -180949,7 +181195,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181082,11 +181329,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181096,7 +181343,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181147,11 +181395,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181161,7 +181409,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181212,11 +181461,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181226,7 +181475,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181359,11 +181609,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181373,7 +181623,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181424,11 +181675,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181438,7 +181689,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181489,11 +181741,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181503,7 +181755,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181636,11 +181889,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181650,7 +181903,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181701,11 +181955,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181715,7 +181969,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181766,11 +182021,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181780,7 +182035,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181913,11 +182169,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181927,7 +182183,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -181978,11 +182235,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -181992,7 +182249,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -182043,11 +182301,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -182057,7 +182315,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -182190,11 +182449,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -182204,7 +182463,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -182255,11 +182515,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -182269,7 +182529,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -182320,11 +182581,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -182334,7 +182595,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -182467,11 +182729,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -182481,7 +182743,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -182532,11 +182795,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -182546,7 +182809,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -182597,11 +182861,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -182611,7 +182875,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -182744,11 +183009,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -182758,7 +183023,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -182809,11 +183075,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -182823,7 +183089,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -182874,11 +183141,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -182888,7 +183155,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183021,11 +183289,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183035,7 +183303,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183086,11 +183355,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183100,7 +183369,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183151,11 +183421,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183165,7 +183435,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183298,11 +183569,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183312,7 +183583,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183363,11 +183635,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183377,7 +183649,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183428,11 +183701,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183442,7 +183715,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183575,11 +183849,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183589,7 +183863,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183640,11 +183915,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183654,7 +183929,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183705,11 +183981,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183719,7 +183995,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183852,11 +184129,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183866,7 +184143,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183917,11 +184195,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183931,7 +184209,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -183982,11 +184261,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -183996,7 +184275,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -184129,11 +184409,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -184143,7 +184423,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -184194,11 +184475,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -184208,7 +184489,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -184259,11 +184541,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -184273,7 +184555,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -184406,11 +184689,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -184420,7 +184703,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -184471,11 +184755,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -184485,7 +184769,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -184536,11 +184821,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -184550,7 +184835,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -184683,11 +184969,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -184697,7 +184983,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -184748,11 +185035,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -184762,7 +185049,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -184813,11 +185101,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -184827,7 +185115,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -184960,11 +185249,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -184974,7 +185263,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185025,11 +185315,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185039,7 +185329,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185090,11 +185381,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185104,7 +185395,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185237,11 +185529,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185251,7 +185543,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185302,11 +185595,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185316,7 +185609,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185367,11 +185661,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185381,7 +185675,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185514,11 +185809,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185528,7 +185823,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185579,11 +185875,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185593,7 +185889,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185644,11 +185941,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185658,7 +185955,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185791,11 +186089,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185805,7 +186103,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185856,11 +186155,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185870,7 +186169,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -185921,11 +186221,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -185935,7 +186235,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186068,11 +186369,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186082,7 +186383,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186133,11 +186435,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186147,7 +186449,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186198,11 +186501,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186212,7 +186515,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186345,11 +186649,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186359,7 +186663,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186410,11 +186715,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186424,7 +186729,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186475,11 +186781,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186489,7 +186795,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186622,11 +186929,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186636,7 +186943,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186687,11 +186995,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186701,7 +187009,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186752,11 +187061,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186766,7 +187075,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186899,11 +187209,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186913,7 +187223,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -186964,11 +187275,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -186978,7 +187289,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -187029,11 +187341,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -187043,7 +187355,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -187176,11 +187489,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -187190,7 +187503,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -187241,11 +187555,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -187255,7 +187569,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -187306,11 +187621,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -187320,7 +187635,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -187453,11 +187769,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -187467,7 +187783,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -187518,11 +187835,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -187532,7 +187849,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -187583,11 +187901,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -187597,7 +187915,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -187730,11 +188049,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -187744,7 +188063,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -187795,11 +188115,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -187809,7 +188129,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -187860,11 +188181,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -187874,7 +188195,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188007,11 +188329,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188021,7 +188343,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188072,11 +188395,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188086,7 +188409,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188137,11 +188461,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188151,7 +188475,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188284,11 +188609,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188298,7 +188623,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188349,11 +188675,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188363,7 +188689,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188414,11 +188741,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188428,7 +188755,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188561,11 +188889,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188575,7 +188903,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188626,11 +188955,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188640,7 +188969,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188691,11 +189021,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188705,7 +189035,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188838,11 +189169,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188852,7 +189183,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188903,11 +189235,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188917,7 +189249,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -188968,11 +189301,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -188982,7 +189315,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -189115,11 +189449,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -189129,7 +189463,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -189180,11 +189515,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -189194,7 +189529,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -189245,11 +189581,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -189259,7 +189595,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -189392,11 +189729,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -189406,7 +189743,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -189457,11 +189795,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -189471,7 +189809,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -189522,11 +189861,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -189536,7 +189875,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -189669,11 +190009,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -189683,7 +190023,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -189734,11 +190075,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -189748,7 +190089,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -189799,11 +190141,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -189813,7 +190155,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -189946,11 +190289,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -189960,7 +190303,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190011,11 +190355,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190025,7 +190369,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190076,11 +190421,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190090,7 +190435,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190223,11 +190569,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190237,7 +190583,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190288,11 +190635,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190302,7 +190649,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190353,11 +190701,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190367,7 +190715,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190500,11 +190849,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190514,7 +190863,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190565,11 +190915,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190579,7 +190929,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190630,11 +190981,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190644,7 +190995,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190777,11 +191129,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190791,7 +191143,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190842,11 +191195,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190856,7 +191209,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -190907,11 +191261,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -190921,7 +191275,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191054,11 +191409,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191068,7 +191423,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191119,11 +191475,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191133,7 +191489,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191184,11 +191541,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191198,7 +191555,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191331,11 +191689,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191345,7 +191703,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191396,11 +191755,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191410,7 +191769,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191461,11 +191821,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191475,7 +191835,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191608,11 +191969,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191622,7 +191983,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191673,11 +192035,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191687,7 +192049,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191738,11 +192101,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191752,7 +192115,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191885,11 +192249,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191899,7 +192263,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -191950,11 +192315,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -191964,7 +192329,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]
@@ -192015,11 +192381,11 @@
                   12
                 ],
                 "offset": [
-                  3,
-                  3
+                  0,
+                  0
                 ],
-                "anchor_from": "top_left",
-                "anchor_to": "top_left",
+                "anchor_from": "center",
+                "anchor_to": "center",
                 "layer": 8,
                 "font_type": "unicode",
                 "font_size": "normal",
@@ -192029,7 +192395,8 @@
                   0.92,
                   0.85
                 ],
-                "shadow": false
+                "shadow": false,
+                "text_alignment": "center"
               }
             }
           ]

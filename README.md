@@ -5,7 +5,10 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.116](downloads/Jagsbys_Frontier_v0.0.116.mcaddon?raw=true)
+[Download Frontier 0.0.117](downloads/Jagsbys_Frontier_v0.0.117.mcaddon?raw=true)
+
+In Resource Prospecting, press Right from a biome row to focus its Select
+button. Press Confirm to assign the biome.
 
 Trail travel costs half a corndog per 50 blocks, with the existing Road and
 Highway discounts. The Resource Prospecting card explains how to use the
@@ -482,10 +485,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.116.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.117.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.116_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.117_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

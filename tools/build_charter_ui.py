@@ -623,13 +623,26 @@ def build():
         })
         details = overview_value("details", DATA[info_key], [30, 2], [171, 28], scale=0.7)
         button = production_button("choose", select_key, "Select", 207, 6, 42, 20)
+        row_focus = f"jf_production_biomes_row_{slot}"
+        select_focus = f"jf_production_biomes_select_{slot}"
+        template = "jf_action_" + select_key
+        button["choose"]["controls"][0]["record@jagsby_frontier." + template].update({
+            "focus_identifier": select_focus,
+            "focus_change_left": row_focus,
+            "focus_change_up": row_focus,
+        })
+        for state in GENERATED_CONTROLS[template + "@common.button"]["controls"]:
+            caption = next(item["caption"] for item in next(iter(state.values()))["controls"] if "caption" in item)
+            caption.update({"text_alignment": "center", "anchor_from": "center", "anchor_to": "center", "offset": [0, 0]})
         selected = label("Selected", [44, 12], (207, 10), WHEAT, 0.6)
         selected["bindings"] = condition("(not ((#form_text - '[JF:prospectSelected:" + str(slot) + "]') = #form_text))", "#form_text")
         visible = condition("(not ((#form_text - '[JF:prospect:" + str(slot) + "]') = #form_text))", "#form_text")
+        row = focusable_scroll_row({"size": [254, 32],
+            "controls": [picture, details, button, control("selected", selected)]}, "production", "biomes", slot)
+        row.update({"focus_change_right": select_focus, "focus_magnet_enabled": False})
         prospect_rows.append(control("biome" + str(slot), {
             "type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"], "bindings": visible,
-            "controls": [control("row", focusable_scroll_row({"size": [254, 32],
-                "controls": [picture, details, button, control("selected", selected)]}, "production", "biomes", slot))],
+            "controls": [control("row", row)],
         }))
     lock_notice = label("§cRequired: Resource Prospecting Lv 1§r", [248, 14], (3, 1), scale=0.7)
     lock_notice["bindings"] = condition("(not ((#form_text - '[JF:prospectLocked]') = #form_text))", "#form_text")
