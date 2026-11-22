@@ -109,6 +109,6 @@ export function localResearchText(v,key,s=null){
   benefit+='\nLimited by completed road tier.\nConstruction: 6 Minecraft days per stage.';
  }
 
- const accepted=key==='efficiency'?'\nStone, cobblestone, deepslate, cobbled deepslate, granite, diorite, andesite or tuff.':'';
+ const accepted=key==='efficiency'?'\nStone, cobblestone, deepslate, cobbled deepslate, granite, diorite, andesite or tuff.':key==='sanctuary'?'\nWheat, potatoes, carrots, cocoa beans, beetroot, sweet berries or glow berries.':'';
  return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}${accepted}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining${required}`:'§eFully upgraded§r'}`;
 }

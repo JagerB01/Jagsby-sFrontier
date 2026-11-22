@@ -21,14 +21,15 @@ test('Prospecting requires exactly 64 paper after Hearthstone I',()=>{
  assert.equal(give(v,'biome','minecraft:paper',20),1);assert.equal(v.biomeUnlocked,true);
  assert.equal(give(v,'biome','minecraft:paper',64),0);
 });
-test('Sanctuary uses mapped crops, mixes eligible items and costs a fixed 250 at every level',()=>{
+test('Sanctuary uses mapped crops, mixes eligible items and costs a fixed 256 at every level',()=>{
  const v=village();v.hearth=1;
- assert.deepEqual(categoryMaterials('crop').sort(),['minecraft:bamboo','minecraft:carrot','minecraft:cocoa_beans','minecraft:potato','minecraft:wheat']);
+ assert.equal(give(v,'sanctuary','minecraft:bamboo',64),0);
+ assert.deepEqual(categoryMaterials('crop').sort(),['minecraft:beetroot','minecraft:carrot','minecraft:cocoa_beans','minecraft:glow_berries','minecraft:potato','minecraft:sweet_berries','minecraft:wheat']);
  for(let level=1;level<=8;level++){
-  assert.equal(localResearchCost(v,'sanctuary').amount,250);
+  assert.equal(localResearchCost(v,'sanctuary').amount,256);
   assert.equal(give(v,'sanctuary','minecraft:wheat',125),125);
   assert.equal(v.sanctuary,level-1);
-  assert.equal(give(v,'sanctuary','minecraft:cocoa_beans',200),125);assert.equal(v.sanctuary,level);
+  assert.equal(give(v,'sanctuary','minecraft:sweet_berries',200),131);assert.equal(v.sanctuary,level);
  }
 });
 test('Prosperity costs 256 blocks per level and accepts only the eight stone types',()=>{
@@ -125,7 +126,7 @@ test('Sanctuary compares colored percentages on one line and states its shared d
  assert.ok(text.includes('Hostile damage reduction: §b5％§r §7→§r §a9.75％§r'));
  assert.equal(text.match(/Persists for 3 minutes after leaving\./g).length,1);
  assert.equal(text.includes('Current:'),false);assert.equal(text.includes('Next:'),false);
- for(const value of ['Stewardship ceiling','Next cost: 250 Crops','Contributed: 0 / 250','250 remaining','Required: Stewardship Lv 2'])assert.ok(text.includes(value),value);
+ for(const value of ['Stewardship ceiling','Next cost: 256 Crops','Contributed: 0 / 256','256 remaining','Required: Stewardship Lv 2'])assert.ok(text.includes(value),value);
 });
 
 test('Percentage comparisons include zero, preserve resets and avoid rounding Sanctuary to immunity',()=>{

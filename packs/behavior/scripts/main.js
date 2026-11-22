@@ -138,7 +138,7 @@ function contributeResearchCard(player,vid,key,shown,view){
     const take=Math.min(left,item.amount);slots.push({slot,before:item.amount,after:item.amount-take});left-=take;
    }
    if(left)throw Error('Inventory changed before payment');
-   s.pendingResearch={playerId:player.id,key,material:shown.material,amount,slots,recipeVersion:2};
+   s.pendingResearch={playerId:player.id,key,material:shown.material,amount,slots,recipeVersion:3};
    if(!global)Object.assign(s.pendingResearch,{scope:'local',vid,level:shown.level,revision:shown.revision});
    save(s);recoverResearch(player);
   }
@@ -156,7 +156,8 @@ function recoverResearch(player){
   const legacyStorage=!tx.recipeVersion&&!target&&tx.key==='storage';
   const legacyProsperity=!tx.recipeVersion&&target&&tx.key==='efficiency';
   const legacyHearthstone=(tx.recipeVersion??0)<2&&target&&tx.key==='hearth';
-  const legacyLocalCost=legacyProsperity?250:legacyHearthstone?[64,128][target.hearth]:undefined;
+  const legacyBamboo=(tx.recipeVersion??0)<3&&target&&tx.key==='sanctuary'&&tx.material==='minecraft:bamboo';
+  const legacyLocalCost=legacyProsperity||legacyBamboo?250:legacyHearthstone?[64,128][target.hearth]:undefined;
   let eligible;
   if(legacyStorage)eligible=lockReason(s,tx.key)?0:Math.min(tx.amount,512-s.researchProgress.storage);
   else if(legacyLocalCost!==undefined)eligible=researchRequirement(target,tx.key,s)?0:Math.min(tx.amount,legacyLocalCost-target.localResearch.progress[tx.key]);

@@ -223,7 +223,7 @@ One food point is half a corndog. Bread is worth five points (2.5 corndogs).
 
 | Food points per item | Accepted foods |
 | --- | --- |
-| 1 | beetroot, dried kelp |
+| 1 | beetroot, dried kelp, potato |
 | 2 | cookie, glow berries, melon slice, sweet berries |
 | 3 | carrot |
 | 4 | apple, chorus fruit, golden apple |

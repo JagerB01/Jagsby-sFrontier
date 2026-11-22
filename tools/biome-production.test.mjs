@@ -58,8 +58,8 @@ test('River multiplies both crop slots once, with RP, Prosperity and Development
 });
 test('crop and research categories stay explicit rather than treating every common resource as crops',()=>{
  const crops=categoryMaterials('crop'),building=categoryMaterials('building');
- for(const id of ['wheat','potato','carrot','cocoa_beans','bamboo'])assert.ok(crops.includes('minecraft:'+id));
- for(const id of ['cod','salmon','red_mushroom','honeycomb'])assert.ok(!crops.includes('minecraft:'+id));
+ for(const id of ['wheat','potato','carrot','cocoa_beans','beetroot','sweet_berries','glow_berries'])assert.ok(crops.includes('minecraft:'+id));
+ for(const id of ['cod','salmon','red_mushroom','honeycomb','bamboo'])assert.ok(!crops.includes('minecraft:'+id));
  assert.ok(building.includes('minecraft:packed_ice'));assert.ok(!building.includes('minecraft:iron_ingot'));
 });
 test('all four category rates and weighted Development values account only successful production',()=>{

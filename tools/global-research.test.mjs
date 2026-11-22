@@ -279,10 +279,29 @@ test('Local journal intent-save failure leaves items and progress untouched',asy
 test('Capped local cards preserve saved progress and inventory until Stewardship rises',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),sanctuary:1,name:'Test',available:[],localResearch:{version:1,progress:{sanctuary:125},revision:0}};
  const h=await runtime(s);h.slots[0]={typeId:'minecraft:wheat',amount:64};click(h,'sanctuary','a');
- assert.ok(h.forms[0].buttons[55].includes('Contributed: 125 / 250'));assert.ok(h.forms[0].buttons[55].includes('Stewardship Lv 2'));assert.ok(h.forms[0].buttons[55].includes('§cRequired: Stewardship Lv 2§r'));assert.equal(h.forms[0].buttons[55].includes('Click to contribute'),false);assert.equal(h.forms[0].buttons[55].includes('Status: Requires'),false);
+ assert.ok(h.forms[0].buttons[55].includes('Contributed: 125 / 256'));assert.ok(h.forms[0].buttons[55].includes('Stewardship Lv 2'));assert.ok(h.forms[0].buttons[55].includes('§cRequired: Stewardship Lv 2§r'));assert.equal(h.forms[0].buttons[55].includes('Click to contribute'),false);assert.equal(h.forms[0].buttons[55].includes('Status: Requires'),false);
  assert.equal(h.slots[0].amount,64);assert.equal(h.read().villages.a.localResearch.progress.sanctuary,125);
  h.update(s=>s.global.innovation=2);click(h,'sanctuary','a');assert.equal(h.slots[0],undefined);assert.equal(h.read().villages.a.localResearch.progress.sanctuary,189);
- h.slots[0]={typeId:'minecraft:wheat',amount:64};click(h,'sanctuary','a');assert.equal(h.slots[0].amount,3);assert.equal(h.read().villages.a.sanctuary,2);
+ h.slots[0]={typeId:'minecraft:beetroot',amount:64};click(h,'sanctuary','a');
+ assert.equal(h.read().villages.a.localResearch.progress.sanctuary,253);
+ h.slots[0]={typeId:'minecraft:glow_berries',amount:64};click(h,'sanctuary','a');
+ assert.equal(h.slots[0].amount,61);assert.equal(h.read().villages.a.sanctuary,2);
+});
+test('Sanctuary recovers bamboo already debited under the old recipe',async()=>{
+ const s=fresh(Date.now());
+ s.villages.a={...village(),hearth:1,sanctuary:0,localResearch:{version:1,progress:{sanctuary:240},revision:4}};
+ s.pendingResearch={playerId:'p',scope:'local',vid:'a',key:'sanctuary',recipeVersion:2,
+  level:0,revision:4,material:'minecraft:bamboo',amount:10,slots:[{slot:0,before:10,after:0}]};
+ const h=await runtime(s);
+ h.slots[0]=undefined;
+ h.api.recoverResearch(h.player);
+ h.api.recoverResearch(h.player);
+ assert.equal(h.read().pendingResearch,undefined);
+ assert.equal(h.read().villages.a.localResearch.progress.sanctuary,250);
+ h.slots[0]={typeId:'minecraft:sweet_berries',amount:8};
+ click(h,'sanctuary','a');
+ assert.equal(h.slots[0].amount,2);
+ assert.equal(h.read().villages.a.sanctuary,1);
 });
 test('Held eligible material is preferred, a single material type is spent, and no click exceeds its hover quote',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),hearth:1,sanctuary:0,name:'Test',available:[]};const h=await runtime(s);

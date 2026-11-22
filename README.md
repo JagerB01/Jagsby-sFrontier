@@ -5,7 +5,10 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.120](downloads/Jagsbys_Frontier_v0.0.120.mcaddon?raw=true)
+[Download Frontier 0.0.121](downloads/Jagsbys_Frontier_v0.0.121.mcaddon?raw=true)
+
+Sanctuary costs 256 crops per level and accepts beetroot, sweet berries and glow
+berries in place of bamboo. Plain potatoes can pay for travel.
 
 Travel spends eligible food from the hotbar left to right before using the
 rest of the inventory. Each stack pays as much of the fare as it can before
@@ -492,10 +495,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.120.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.121.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.120_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.121_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

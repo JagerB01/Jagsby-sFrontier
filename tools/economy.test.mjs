@@ -100,11 +100,13 @@ test('Travel pays from the leftmost hotbar food first and uses backpack food if 
  assert.equal(E.foodPlan(items,16),null);
  assert.deepEqual(items,before);
 });
-test('Travel skips raw meat, raw fish, raw potatoes and excluded special foods',()=>{
+test('Travel skips raw meat, raw fish and excluded special foods',()=>{
  const excluded=['beef','porkchop','chicken','mutton','rabbit','cod','salmon','tropical_fish','pufferfish',
-  'potato','spider_eye','poisonous_potato','rotten_flesh','enchanted_golden_apple'];
+  'spider_eye','poisonous_potato','rotten_flesh','enchanted_golden_apple'];
  const items=excluded.map((id,slot)=>({slot,typeId:'minecraft:'+id,amount:64}));
  assert.equal(E.foodPlan(items,2),null);
+ const potatoes={slot:0,typeId:'minecraft:potato',amount:64};
+ assert.deepEqual(E.foodPlan([potatoes],2),[{...potatoes,count:2}]);
  const pie={slot:items.length,typeId:'minecraft:pumpkin_pie',amount:64};
  assert.deepEqual(E.foodPlan([...items,pie],10),[{...pie,count:2}]);
 });
