@@ -1,5 +1,5 @@
 import { charterKey, preventClosePlacement } from "./charter-placement.js";
-import { world, system, ItemStack } from "@minecraft/server";
+import { world, system, ItemStack, BlockVolume } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { nearbyVillagers, summarizeVillagers } from "./village-census.js";
 import { sampleTradingRanks } from "./villager-trade-bridge.js";
@@ -9,6 +9,7 @@ import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
 import { mapSnapshot, moveMap, mapDetails } from "./settlement-map.js";
+import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, surveyLoadedPois } from "./poi-survey.js";
 
 
 const BLOCK = "jagsby_frontier:village_charter";
@@ -306,15 +307,14 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
 
-// Map data is built only on this explicit Diplomacy action and map interactions.
-// No cache, persistent duplicate registry, block access or scheduled work.
+// Map rendering reads the registry and the POIs previously discovered by clapping.
 function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
  try{
   const villages=state().villages;
   const requested={...viewport,dimension:viewport.dimension||villages[vid]?.dimension||player.dimension?.id||'minecraft:overworld'};
   let spawn=null;
   try{spawn=world.getDefaultSpawnLocation();}catch(error){console.warn(`Frontier map spawn: ${error}`);}
-  const snapshot=mapSnapshot(villages,requested,selectedId,spawn),layout=CHARTER_LAYOUT.settlementMap;
+  const snapshot=mapSnapshot(villages,requested,selectedId,spawn,readSurveyedPois(world)),layout=CHARTER_LAYOUT.settlementMap;
   const records=Array(layout.zTicks.at(-1)+1).fill('');
   snapshot.cells.forEach(([point],index)=>{records[index]=mapDetails(point);});
   const labels={back:'Back',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
@@ -350,6 +350,32 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
   }).catch(error=>{console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not open. Please reopen the charter.');});
  }catch(error){console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not load. Please reopen the charter.');}
 }
+
+let poiSurveyRunning=false;
+world.afterEvents.playerEmote?.subscribe(({player,personaPieceId})=>{
+ if(personaPieceId.toLowerCase()!==CLAPPING_EMOTE)return;
+ const {dimension,location}=player;
+ if(dimension.id!=='minecraft:overworld')return;
+ if(poiSurveyRunning){player.sendMessage('A landmark survey is already running.');return;}
+ const discovered=readSurveyedPois(world);
+ const survey=surveyLoadedPois(dimension,location,BlockVolume,discovered);
+ player.sendMessage(`Surveying loaded landmarks within ${POI_RADIUS} blocks…`);
+ poiSurveyRunning=true;
+ const advance=()=>{
+  try{
+   const step=survey.next();
+   if(!step.done){system.run(advance);return;}
+   if(step.value)world.setDynamicProperty(POI_KEY,JSON.stringify(discovered));
+   poiSurveyRunning=false;
+   if(player.isValid)player.sendMessage(step.value?`Added ${step.value} possible POI(s) to the Settlement Map.`:'No new landmarks found in the loaded survey area.');
+  }catch(error){
+   poiSurveyRunning=false;
+   console.warn(`Frontier landmark survey: ${error}`);
+   try{player.sendMessage('The landmark survey could not finish.');}catch{/* Player left. */}
+  }
+ };
+ system.run(advance);
+});
 
 function openProduction(player,vid,scope='summary',pages={}){open(player,vid,'Production','global',0,'roads',scope==='biomes'?'biomes':'summary',pages);}
 async function renameSettlement(player,vId,view={}){

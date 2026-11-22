@@ -4,6 +4,7 @@ import { development } from './settlement-economy.js';
 import { biomeName } from './settlement-overview.js';
 import { ownerName } from './settlement-realm.js';
 import { settlementTier } from './settlement-tiers.js';
+import { toMapPoi } from './poi-survey.js';
 export const MAP_COLUMNS=40, MAP_ROWS=25, MAP_ASPECT=MAP_COLUMNS/MAP_ROWS;
 export const MAP_MIN_SPAN=64, MAP_MAX_SPAN=200000000;
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
@@ -21,10 +22,11 @@ export function fitMap(points,dimension) {
  for(const p of inDimension){minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);minZ=Math.min(minZ,p.z);maxZ=Math.max(maxZ,p.z);}
  return {dimension,x:(minX+maxX)/2,z:(minZ+maxZ)/2,span:Math.min(MAP_MAX_SPAN,Math.max(256,(maxX-minX)*1.2,(maxZ-minZ)*MAP_ASPECT*1.2))};
 }
-export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=null) {
+export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=null,surveyed=[]) {
  const points=settlementPoints(villages);
  const spawn=finite(spawnLocation?.x)&&finite(spawnLocation?.z)?{id:'world-spawn',type:'spawn',dimension:'minecraft:overworld',name:'World spawn',texture:'textures/ui/frontier/map_markers/world_spawn',x:spawnLocation.x,y:finite(spawnLocation.y)?spawnLocation.y:null,z:spawnLocation.z}:null;
- const fitPoints=spawn?[...points,spawn]:points;
+ const fitPoints=[...points,...surveyed.map(toMapPoi)];
+ if(spawn)fitPoints.push(spawn);
  const dimensions=[...new Set(fitPoints.map(p=>p.dimension))].sort();
  const dimension=typeof requested.dimension==='string'?requested.dimension:dimensions[0]||'minecraft:overworld';
  if(!dimensions.includes(dimension))dimensions.push(dimension);
@@ -66,7 +68,7 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
   cells[closest].push(point);
  }
  const spawnIndex=cells.findIndex(cell=>cell[0]?.type==='spawn');
- const visible=projected.length-Number(projected.some(({point})=>point.type==='spawn'));
+ const visible=projected.filter(({point})=>point.type==='settlement').length;
  return {viewport,bounds,cells,dimensions,count,visible,spawn,spawnCell:spawnIndex<0?null:spawnIndex,page,pageCount,selected:points.find(p=>p.id===selectedId&&p.dimension===dimension)||null};
 }
 export function moveMap(viewport,action){
@@ -85,5 +87,6 @@ function coordinates(point){
 export function mapDetails(point){
  if(!point)return '';
  if(point.type==='spawn')return `World spawn\n${coordinates(point)}`;
+ if(point.type==='survey')return `Possible ${point.name}\n${coordinates(point)}`;
  return `${point.name}\n${coordinates(point)}\nBiome: ${point.biome}\nDevelopment: ${point.development}\nOwner: ${point.owner}`;
 }

@@ -25,6 +25,16 @@ receive separate pins in the nearest free cells. Their tooltips show their
 actual coordinates. If all cells fill up, the POI page control shows the
 remaining pins on subsequent pages.
 
+## Landmark survey
+
+Use the Clapping emote in the Overworld to look for possible villages, trial
+chambers, ancient cities, desert temples and jungle temples. Surveys check
+loaded blocks within 48 horizontal blocks of where you clap, up to 128 blocks
+below and 48 blocks above. The scan runs over multiple ticks. It uses distinctive
+blocks as clues, so modified structures can be missed and player builds can
+produce false positives. Results are shared by the world and use the world-spawn
+icon. Refresh or reopen the map after the survey finishes.
+
 ## Controls
 
 - Opening the map fits registered POIs in the charter’s dimension.
@@ -34,7 +44,8 @@ remaining pins on subsequent pages.
 - Dimension cycles through dimensions containing registered points.
 - Refresh rereads world data. Back returns to Diplomacy.
 
-The map reads the existing settlement registry and does not write world data.
+The map reads the settlement registry and saved landmark discoveries. Opening
+the map does not initiate a scan or write world data.
 Hover and focus operate locally without submitting the form. Zoom and pan
 replace the form with a fresh viewport.
 
