@@ -202,7 +202,7 @@ integration as production.
 
 Travel requires Road Networks I in the departure village. The effective level
 is the lower of its local Road Networks research and the completed connection
-tier. Internal cost is `ceil(distance × 0.01 × levelMultiplier)`, minimum two
+tier. Internal cost is `ceil(distance × 0.02 × levelMultiplier)`, minimum two
 points; Trail/Road/Highway multipliers are 1 / 0.7 / 0.45. Display costs in
 corndogs by dividing those points by two. The food whitelist uses these same
 half-corndog units: bread is five points, or 2.5 corndogs. Whole foods are spent,

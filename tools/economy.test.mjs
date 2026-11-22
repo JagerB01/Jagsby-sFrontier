@@ -214,10 +214,12 @@ test('pending trial timers migrate from their original start; completed roads ar
 test('travel efficiency belongs to the departure village and cannot exceed the completed road tier',()=>{
  const road={level:3,distance:1551};
  assert.equal(E.travelQuote(road,{roads:0}).canTravel,false);
- for(const [roads,points] of [[1,16],[2,11],[3,7]]){
+ for(const [roads,points] of [[1,32],[2,22],[3,14]]){
   const quote=E.travelQuote(road,{roads});assert.equal(quote.effectiveLevel,roads);assert.equal(quote.foodPoints,points);
  }
- assert.equal(E.travelQuote({level:1,distance:1551},{roads:3}).foodPoints,16);
+ assert.equal(E.travelQuote({level:1,distance:1551},{roads:3}).foodPoints,32);
+ assert.equal(E.foodCost({level:1,distance:50}),2);
+ for(const [level,points] of [[1,20],[2,14],[3,9]])assert.equal(E.foodCost({level,distance:1000}),points);
  assert.equal(E.corndogCost(16),'8 corndogs');assert.equal(E.corndogCost(5),'2.5 corndogs');
  const plan=E.foodPlan([{slot:0,typeId:'minecraft:bread',amount:4}],16);
  assert.equal(plan[0].count,4); // Four whole bread pay ten corndogs for an eight-corndog quote.
@@ -237,11 +239,11 @@ test('Lower stockpile limits preserve over-cap saves and pause production until 
 test('Upgrade discounts apply only at completion; pending travel uses the last completed tier',()=>{
  const s=state(village('a',{roads:3}));s.villages.b=village('b',{location:{x:1551,y:64,z:0}});
  const road={id:'r',from:'a',to:'b',level:1,distance:1551,targetLevel:2,startedTick:0,durationTicks:144000,finishTick:144000,timingVersion:1};s.roads.r=road;
- assert.equal(E.travelQuote(road,s.villages.a).canTravel,true);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,16);
- E.completeRoads(s,143999);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,16);
- E.completeRoads(s,144000);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,11);
- assert.equal(E.travelQuote(road,{roads:1}).foodPoints,16,'Local tech still limits usable efficiency');
+ assert.equal(E.travelQuote(road,s.villages.a).canTravel,true);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,32);
+ E.completeRoads(s,143999);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,32);
+ E.completeRoads(s,144000);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,22);
+ assert.equal(E.travelQuote(road,{roads:1}).foodPoints,32,'Local tech still limits usable efficiency');
  road.targetLevel=3;road.startedTick=144000;road.finishTick=288000;
- E.completeRoads(s,287999);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,11);
- E.completeRoads(s,288000);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,7);
+ E.completeRoads(s,287999);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,22);
+ E.completeRoads(s,288000);assert.equal(E.travelQuote(road,s.villages.a).foodPoints,14);
 });

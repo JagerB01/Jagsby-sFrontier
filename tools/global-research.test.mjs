@@ -594,7 +594,7 @@ test('server travel rejects unbuilt roads and an unresearched departure even whe
 });
 
 test('both ends of the same Highway quote and charge their own local research efficiency in corndogs',async()=>{
- for(const [departure,tech,price,breadUsed] of [['a',1,'8 corndogs',4],['b',3,'3.5 corndogs',2]]){
+ for(const [departure,tech,price,breadUsed] of [['a',1,'16 corndogs',7],['b',3,'7 corndogs',3]]){
   const s=fresh(Date.now());s.villages.a={...village(),id:'a',name:'Alpha',roads:1};
   s.villages.b={...village(1551),id:'b',name:'Beta',roads:3};s.roads.r={from:'a',to:'b',level:3,distance:1551};
   const h=await runtime(s);h.slots[0]={typeId:'minecraft:bread',amount:10};
@@ -761,13 +761,13 @@ test('Upgrade travel charges the current tier before completion and the new tier
   h.player.dimension={id:'minecraft:overworld'};h.player.location={x:0,y:64,z:0};
   let arrivals=0;h.player.teleport=()=>arrivals++;
   h.api.open(h.player,'a','Realm');const base=CHARTER_LAYOUT.realmRows.base+16;
-  assert.equal(h.forms[0].buttons[base+3],'8 corndogs');assert.ok(h.forms[0].text.includes('[JF:travel:roads:0]'));
+  assert.equal(h.forms[0].buttons[base+3],'16 corndogs');assert.ok(h.forms[0].text.includes('[JF:travel:roads:0]'));
   assert.equal(h.forms[0].icons[base+6],'textures/ui/frontier/road_icons/road');
-  h.api.travelRoad(h.player,'a','r');assert.equal(h.slots[0].amount,60);assert.equal(h.read().roads.r.level,1);
-  tick=143999;assert.equal(h.api.roadNetworkOverview(h.read(),h.read().villages.a).rows[0].cost,'8 corndogs');
+  h.api.travelRoad(h.player,'a','r');assert.equal(h.slots[0].amount,57);assert.equal(h.read().roads.r.level,1);
+  tick=143999;assert.equal(h.api.roadNetworkOverview(h.read(),h.read().villages.a).rows[0].cost,'16 corndogs');
   tick=144000;h.api.open(h.player,'a','Realm');
-  assert.equal(h.forms.at(-1).buttons[base+3],research===3?'5.5 corndogs':'8 corndogs');
-  h.api.travelRoad(h.player,'a','r');assert.equal(h.slots[0].amount,research===3?57:56);assert.equal(arrivals,2);
+  assert.equal(h.forms.at(-1).buttons[base+3],research===3?'11 corndogs':'16 corndogs');
+  h.api.travelRoad(h.player,'a','r');assert.equal(h.slots[0].amount,research===3?52:50);assert.equal(arrivals,2);
   assert.equal(h.read().roads.r.level,2);assert.equal(h.read().roads.r.targetLevel,undefined);
  }
 });
