@@ -205,15 +205,31 @@ is the lower of its local Road Networks research and the completed connection
 tier. Internal cost is `ceil(distance × 0.02 × levelMultiplier)`, minimum two
 points; Trail/Road/Highway multipliers are 1 / 0.7 / 0.45. Display costs in
 corndogs by dividing those points by two. The food whitelist uses these same
-half-corndog units: bread is five points, or 2.5 corndogs. Whole foods are spent,
-not player hunger bars. The bounded inventory planner minimizes overpayment;
-unavoidable surplus whole-item value is not refunded. This is item spending,
+half-corndog units. Travel spends whole food items from the hotbar, left to
+right, then continues through the rest of the inventory in slot order if
+needed. Spending stops once the fare is covered. Extra value from the last
+item is not refunded. Hunger bars are unaffected. This is item spending,
 so no eating effects or empty containers are generated. Food is restored if the
 teleport throws. Both directions use the same connection but can have different
 costs because their departure villages have different research levels. Players must
 stand within the source settlement. Arrival is one block above the target
 charter; test landing clearance in a disposable world. No persistent forced
 chunk loading is created.
+
+### Food accepted for travel
+
+One food point is half a corndog. Bread is worth five points (2.5 corndogs).
+
+| Food points per item | Accepted foods |
+| --- | --- |
+| 1 | beetroot, dried kelp, potato, pufferfish, tropical fish |
+| 2 | chicken, cod, cookie, glow berries, melon slice, mutton, poisonous potato, salmon, spider eye, sweet berries |
+| 3 | beef, carrot, porkchop, rabbit |
+| 4 | apple, chorus fruit, enchanted golden apple, golden apple, rotten flesh |
+| 5 | baked potato, bread, cooked cod, cooked rabbit |
+| 6 | beetroot soup, cooked chicken, cooked mutton, cooked salmon, golden carrot, honey bottle, mushroom stew, suspicious stew |
+| 8 | cooked beef, cooked porkchop, pumpkin pie |
+| 10 | rabbit stew |
 
 ## UI and verification — current 0.0.38 behavior
 

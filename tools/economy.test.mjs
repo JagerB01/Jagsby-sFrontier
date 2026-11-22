@@ -89,11 +89,16 @@ test('local research prerequisites, repeatable costs and Hearthstone II cap',()=
  v.efficiency=100;assert.ok(E.researchCost(v,'efficiency'));v.sanctuary=100;assert.ok(E.researchCost(v,'sanctuary'));
  v.sanctuary=0;assert.ok(E.researchRequirement(v,'roads'));v.sanctuary=1;assert.equal(E.researchRequirement(v,'roads'),null);
 });
-test('food travel uses food values and refuses insufficient inventories without a mutation',()=>{
- const items=[{slot:0,typeId:'minecraft:bread',amount:1},{slot:1,typeId:'minecraft:apple',amount:2}];
- const plan=E.foodPlan(items,6);assert.ok(plan);assert.ok(plan.reduce((n,p)=>n+C.food[p.typeId]*p.count,0)>=6);
- assert.equal(E.foodPlan(items,14),null);assert.equal(items[0].amount,1);
- const exact=E.foodPlan(items,5);assert.equal(exact.reduce((n,p)=>n+C.food[p.typeId]*p.count,0),5);
+test('Travel pays from the leftmost hotbar food first and uses backpack food if needed',()=>{
+ const items=[{slot:9,typeId:'minecraft:potato',amount:2},{slot:8,typeId:'minecraft:apple',amount:2},
+  {slot:2,typeId:'minecraft:bread',amount:1},{slot:0,typeId:'minecraft:paper',amount:1}];
+ const before=structuredClone(items);
+ const paidSlots=cost=>E.foodPlan(items,cost)?.map(({slot,count})=>[slot,count]);
+ assert.deepEqual(paidSlots(4),[[2,1]],'A later exact match must not override hotbar order');
+ assert.deepEqual(paidSlots(9),[[2,1],[8,1]]);
+ assert.deepEqual(paidSlots(14),[[2,1],[8,2],[9,1]]);
+ assert.equal(E.foodPlan(items,16),null);
+ assert.deepEqual(items,before);
 });
 test('Sanctuary applies only hostile-sourced damage and preserves grant level/expiry',()=>{
  close(F.sanctuaryDamage(20,2),18.05);

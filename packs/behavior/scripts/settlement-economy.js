@@ -230,27 +230,18 @@ export function travelQuote(road,source){
 }
 export function foodPlan(items,cost){
  if(cost<=0)return [];
- const eligible=items.filter(i=>Number.isFinite(C.food[i.typeId])&&C.food[i.typeId]>0);
- const total=eligible.reduce((n,i)=>n+C.food[i.typeId]*i.amount,0);
- if(total<cost)return null;
- const maxValue=Math.max(...eligible.map(i=>C.food[i.typeId]));
- const limit=Math.min(total,Math.ceil(cost)+maxValue-1),plans=Array(limit+1).fill(null);
- plans[0]={prev:null};
- // Bounded knapsack chooses the least food-point overpayment using whole items.
- for(const item of eligible){
-  let remaining=item.amount;
-  for(let group=1;remaining>0;group*=2){
-   const count=Math.min(group,remaining),value=count*C.food[item.typeId];remaining-=count;
-   for(let sum=limit;sum>=value;sum--)if(!plans[sum]&&plans[sum-value])plans[sum]={prev:plans[sum-value],item,count};
-  }
+ const plan=[];
+ let remaining=cost;
+ // Bedrock numbers the hotbar left to right (slots 0–8), then the backpack.
+ for(const item of [...items].sort((a,b)=>a.slot-b.slot)){
+  const value=C.food[item.typeId];
+  if(!Number.isFinite(value)||value<=0||item.amount<=0)continue;
+  const count=Math.min(item.amount,Math.ceil(remaining/value));
+  plan.push({...item,count});
+  remaining-=count*value;
+  if(remaining<=0)return plan;
  }
- let chosen=Math.ceil(cost);while(chosen<=limit&&!plans[chosen])chosen++;
- if(chosen>limit)return null;
- const slots=new Map();
- for(let node=plans[chosen];node?.item;node=node.prev){
-  const entry=slots.get(node.item.slot)||{...node.item,count:0};entry.count+=node.count;slots.set(node.item.slot,entry);
- }
- return [...slots.values()];
+ return null;
 }
 
 export function spendFoodAndTravel(inventory,plan,teleport){
