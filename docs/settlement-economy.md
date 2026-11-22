@@ -207,7 +207,8 @@ points; Trail/Road/Highway multipliers are 1 / 0.7 / 0.45. Display costs in
 corndogs by dividing those points by two. The food whitelist uses these same
 half-corndog units. Travel spends whole food items from the hotbar, left to
 right, then continues through the rest of the inventory in slot order if
-needed. Spending stops once the fare is covered. Extra value from the last
+needed. Each stack covers as much of the remaining fare as possible before
+the next stack is used. Spending stops once the fare is covered. Extra value from the last
 item is not refunded. Hunger bars are unaffected. This is item spending,
 so no eating effects or empty containers are generated. Food is restored if the
 teleport throws. Both directions use the same connection but can have different
@@ -222,10 +223,10 @@ One food point is half a corndog. Bread is worth five points (2.5 corndogs).
 
 | Food points per item | Accepted foods |
 | --- | --- |
-| 1 | beetroot, dried kelp, potato, pufferfish, tropical fish |
-| 2 | chicken, cod, cookie, glow berries, melon slice, mutton, poisonous potato, salmon, spider eye, sweet berries |
-| 3 | beef, carrot, porkchop, rabbit |
-| 4 | apple, chorus fruit, enchanted golden apple, golden apple, rotten flesh |
+| 1 | beetroot, dried kelp |
+| 2 | cookie, glow berries, melon slice, sweet berries |
+| 3 | carrot |
+| 4 | apple, chorus fruit, golden apple |
 | 5 | baked potato, bread, cooked cod, cooked rabbit |
 | 6 | beetroot soup, cooked chicken, cooked mutton, cooked salmon, golden carrot, honey bottle, mushroom stew, suspicious stew |
 | 8 | cooked beef, cooked porkchop, pumpkin pie |

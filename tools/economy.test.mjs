@@ -90,7 +90,7 @@ test('local research prerequisites, repeatable costs and Hearthstone II cap',()=
  v.sanctuary=0;assert.ok(E.researchRequirement(v,'roads'));v.sanctuary=1;assert.equal(E.researchRequirement(v,'roads'),null);
 });
 test('Travel pays from the leftmost hotbar food first and uses backpack food if needed',()=>{
- const items=[{slot:9,typeId:'minecraft:potato',amount:2},{slot:8,typeId:'minecraft:apple',amount:2},
+ const items=[{slot:9,typeId:'minecraft:dried_kelp',amount:2},{slot:8,typeId:'minecraft:apple',amount:2},
   {slot:2,typeId:'minecraft:bread',amount:1},{slot:0,typeId:'minecraft:paper',amount:1}];
  const before=structuredClone(items);
  const paidSlots=cost=>E.foodPlan(items,cost)?.map(({slot,count})=>[slot,count]);
@@ -99,6 +99,14 @@ test('Travel pays from the leftmost hotbar food first and uses backpack food if 
  assert.deepEqual(paidSlots(14),[[2,1],[8,2],[9,1]]);
  assert.equal(E.foodPlan(items,16),null);
  assert.deepEqual(items,before);
+});
+test('Travel skips raw meat, raw fish, raw potatoes and excluded special foods',()=>{
+ const excluded=['beef','porkchop','chicken','mutton','rabbit','cod','salmon','tropical_fish','pufferfish',
+  'potato','spider_eye','poisonous_potato','rotten_flesh','enchanted_golden_apple'];
+ const items=excluded.map((id,slot)=>({slot,typeId:'minecraft:'+id,amount:64}));
+ assert.equal(E.foodPlan(items,2),null);
+ const pie={slot:items.length,typeId:'minecraft:pumpkin_pie',amount:64};
+ assert.deepEqual(E.foodPlan([...items,pie],10),[{...pie,count:2}]);
 });
 test('Sanctuary applies only hostile-sourced damage and preserves grant level/expiry',()=>{
  close(F.sanctuaryDamage(20,2),18.05);

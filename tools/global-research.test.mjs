@@ -600,6 +600,26 @@ test('Per-row Travel uses the completed road while upgrades remain pending',asyn
  }
 });
 
+test('Travel spends two pumpkin pies from the first stack and leaves later bread untouched',async()=>{
+ const s=fresh(Date.now());
+ s.villages.a={...village(),name:'Alpha',roads:1};
+ s.villages.b={...village(500),id:'b',name:'Beta'};
+ s.roads.r={from:'a',to:'b',level:1,distance:500};
+ const h=await runtime(s);
+ h.slots[0]={typeId:'minecraft:pumpkin_pie',amount:64};
+ h.slots[1]={typeId:'minecraft:bread',amount:33};
+ h.slots[2]=undefined;
+ h.player.selectedSlotIndex=1;
+ h.player.dimension={id:'minecraft:overworld'};
+ h.player.location={x:0,y:64,z:0};
+ const arrivals=[];
+ h.player.teleport=position=>arrivals.push(position);
+ h.api.travelRoad(h.player,'a','r');
+ assert.equal(h.slots[0].amount,62);
+ assert.equal(h.slots[1].amount,33);
+ assert.equal(arrivals.length,1);
+});
+
 test('New roads disable Travel and insufficient food never charges or teleports',async()=>{
  for(const level of [0,1]){
   const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',roads:1};s.villages.b={...village(100),id:'b',name:'Beta'};
