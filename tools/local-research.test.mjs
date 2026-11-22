@@ -140,10 +140,10 @@ test('Percentage comparisons include zero, preserve resets and avoid rounding Sa
 test('Prospecting and Roads compare their actual allocation and local efficiency, including maximum levels',()=>{
  const v=village();v.hearth=1;v.sanctuary=1;
  let text=localResearchText(v,'biome',state(3));
- assert.ok(text.includes('Second production slot: §b0％§r §7→§r §a50％§r capacity.'));
- for(const hint of ['native biome to produce more of its resource','Survey within 256 blocks','Production > Resource Prospecting'])assert.ok(text.includes(hint));
+ assert.ok(text.includes('Second production slot: §bLocked§r §7→§r §aUnlocked§r.'));
+ for(const hint of ['double its base output','Survey within 256 blocks','Production > Resource Prospecting'])assert.ok(text.includes(hint));
  v.biomeUnlocked=true;
- text=localResearchText(v,'biome',state(3));assert.ok(text.includes('§b50％§r'));assert.equal(text.includes('→'),false);assert.ok(text.includes('Fully upgraded'));
+ text=localResearchText(v,'biome',state(3));assert.ok(text.includes('Second production slot: §bUnlocked§r.'));assert.equal(text.includes('→'),false);assert.ok(text.includes('Fully upgraded'));
  text=localResearchText(v,'roads',state(3));assert.ok(text.includes('Travel tier: §bLocked§r §7→§r §aTrail§r'));
  v.roads=1;text=localResearchText(v,'roads',state(3));assert.ok(text.includes('Travel tier: §bTrail§r §7→§r §aRoad§r'));
  assert.ok(text.includes('Food cost reduction: §b0％§r §7→§r §a30％§r'));

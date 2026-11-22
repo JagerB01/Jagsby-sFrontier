@@ -102,7 +102,7 @@ export function localResearchText(v,key,s=null){
  else if(key==='hearth'){
   benefit=`Villager healing: ${researchComparison(level?'2':'0','2',level===0)} HP / Minecraft day`;
   if(level>=1)benefit+=`\nPlayer regeneration: ${compare(level>=2?'I':'Off','I')}\nWithin 80 blocks; persists 3 minutes after leaving.`;
- }else if(key==='biome')benefit=`Second production slot: ${compare(researchPercent(level?50:0),researchPercent(50))} capacity.\nChoose your native biome to produce more of its resource, or Survey within 256 blocks to find another resource.\nAssign the slot in Production > Resource Prospecting.`;
+ }else if(key==='biome')benefit=`Second production slot: ${compare(level?'Unlocked':'Locked','Unlocked')}.\nUse both slots for your native biome to double its base output, or Survey within 256 blocks for a different resource.\nChoose in Production > Resource Prospecting.`;
  else if(key==='roads'){
   benefit=`Travel tier: ${compare(tier[level],tier[Math.min(3,level+1)])}`;
   if(level)benefit+=`\nFood cost reduction: ${compare(researchPercent((1-C.roads.foodCostMultipliers[level])*100),researchPercent((1-C.roads.foodCostMultipliers[Math.min(3,level+1)])*100))}`;

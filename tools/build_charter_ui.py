@@ -77,7 +77,7 @@ CHARCOAL = (0.16, 0.17, 0.18)
 RESEARCH_HELP = {
     "efficiency": ("Prosperity", "Each level adds 5% production.\nRepeatable; requires Resource Prospecting."),
     "hearth": ("Hearthstone", "I: villagers recover 2 HP once per Minecraft day.\nII: Regeneration I within 80 blocks."),
-    "biome": ("Resource Prospecting", "Unlocks a second production slot at 50% capacity.\nChoose your native biome or Survey within 256 blocks for another resource.\nAssign it in Production > Resource Prospecting."),
+    "biome": ("Resource Prospecting", "Unlocks a second production slot.\nUse both slots for your native biome to double its base output, or Survey within 256 blocks for a different resource.\nChoose in Production > Resource Prospecting."),
     "sanctuary": ("Sanctuary", "Repeatable hostile-mob protection.\nEach level removes 5% of remaining damage.\nLasts three minutes after leaving."),
     "roads": ("Road Networks", "Establish and upgrade food-powered travel\nroutes. Connections progress from Trail\nto Road to Highway."),
     "capacity": ("Settlement Charters", "64 logs per additional settlement slot."),
