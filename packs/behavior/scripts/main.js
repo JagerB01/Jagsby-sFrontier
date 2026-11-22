@@ -16,7 +16,7 @@ const KEY = "jagsby_frontier:state_v1";
 const BIOME_RADIUS = 256;
 import {DEFINITIONS,ZONES,zoneAt,maxLevel,nextCost,acceptedMaterials,lockReason,contribution,applyContribution,migrateResearch,settlementLimit,foundingReason,storageIncrement,localLevel,colonizationBonus} from "./global-research.js";
 import {ECONOMY_CONFIG} from "./economy-config.js";
-import {accountEconomy,development,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,normalizeRoadTimers,selectTradeRoute,selectedTradeRoutes,roadTicksRemaining,travelQuote,corndogCost,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower,developmentHourlyRate} from "./settlement-economy.js";
+import {accountEconomy,development,developmentThreshold,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,normalizeRoadTimers,selectTradeRoute,selectedTradeRoutes,roadTicksRemaining,travelQuote,corndogCost,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower,developmentHourlyRate} from "./settlement-economy.js";
 import {refreshProtection,protectDamage,within,healVillager} from "./settlement-effects.js";
 import {localContribution,applyLocalContribution,migrateLocalResearch,localResearchText,researchComparison,researchPercent} from "./local-research.js";
 import {productionView} from "./production-display.js";
@@ -219,7 +219,10 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
    records[data[key]]=researchText(s,v,key,player)+(available?'\nClick to contribute':'');
   }
   records[data.zone]=zoneAt(v.location)||'Unknown';
-  records[data.developmentValue]=`Development ${development(v)}`;
+  const devLevel=development(v);
+  const actualDev=Math.max(0,v.developmentValue||0)/developmentThreshold(v);
+  records[data.developmentValue]=`Development ${devLevel}`;
+  records[data.developmentActual]=Math.min(actualDev,devLevel+0.999).toFixed(3);
   records[data.developmentHourly]=developmentRateText(developmentHourlyRate(s,v));
   records[data.tradeRoute]=tradeRouteSummary(s,v);
   for(const key of ['innovation','frontier','capacity','colonization','storage','hearth','biome','sanctuary','efficiency','roads']){
@@ -245,6 +248,7 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   const handlers=new Map();
   handlers.set(actions.settlementMap,()=>openSettlementMap(player,vId,{},vId,view));
   const realmMarkers=[];
+  const activeRoute=selectedTradeRoutes(s)[vId];
   const layout=CHARTER_LAYOUT.realmRows;
   const lists=[mine.rows,all.rows,roadView.rows];
   if(lists.some(rows=>rows.length>layout.limit)){
@@ -255,9 +259,14 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
    const scope=layout.scopes[scopeIndex],base=layout.base+slot*layout.stride+scopeIndex*8;
    realmMarkers.push(`[JF:row:${scope}:${slot}]`);
    if(scope!=='roads'){
-    put(base,[row.name,row.owner,row.coordinates,row.distanceText,row.development,row.roadStatus,'','']);
+    const sending=Boolean(row.sendRoadId&&row.sendRoadId===activeRoute);
+    const canSend=Boolean(row.sendRoadId&&!sending);
+    const action=row.canEstablishRoad?'Establish\nRoad':canSend?'Send Route':'';
+    put(base,[row.name,row.owner,row.coordinates,row.distanceText,row.development,sending?'Sending':action?'':row.roadStatus,action,'']);
     directoryIcons.set(base,row.icon);
-    if(row.canEstablishRoad){realmMarkers.push(`[JF:establish:${scope}:${slot}]`);handlers.set(base+6,()=>establishDirectoryRoad(player,vId,row.id,0,scope));}
+    if(action)realmMarkers.push(`[JF:directoryAction:${scope}:${slot}]`);
+    if(row.canEstablishRoad)handlers.set(base+6,()=>establishDirectoryRoad(player,vId,row.id,0,scope));
+    if(canSend)handlers.set(base+6,()=>changeTradeRoute(player,vId,row.sendRoadId,scope));
    }else{
     put(base,[row.name,row.owner,row.distance,row.cost==='Unavailable'?'—':row.cost,'',row.time,'','']);
     directoryIcons.set(base,row.villageTexture);
@@ -281,7 +290,7 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   handlers.set(actions.collect,()=>collect(player,vId,pages,view));
   handlers.set(actions.claim,()=>{const latest=state();if(claimSettlement(latest,vId,player))save(latest);reopenView(player,vId,{...view,page:'Overview'});});
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
-  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction')&&!key.startsWith('directory')&&!key.startsWith('roadConnection')&&!key.startsWith('prospectInfo'))records[index]=`[JF:data:${key}]${records[index]}`;
+  for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentActual','developmentHourly','owner','realmMine','realmAll'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction')&&!key.startsWith('directory')&&!key.startsWith('roadConnection')&&!key.startsWith('prospectInfo'))records[index]=`[JF:data:${key}]${records[index]}`;
   for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i)])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
@@ -552,15 +561,17 @@ async function roadMenu(player,vid){
   else open(player,vid,'Realm','global',0,'roads');
  }catch(e){player.sendMessage(String(e));}
 }
-function changeTradeRoute(player,vid,roadId){
+function changeTradeRoute(player,vid,roadId,directoryScope){
  try{
   const s=accounted(),v=s.villages[vid];
   if(!v||!within(player,v))throw Error('Stand inside the source settlement to change its trade route.');
+  if(directoryScope&&!s.roads[roadId]?.level)throw Error('That road is no longer connected.');
   const road=selectTradeRoute(s,vid,roadId,gameTick());save(s);
   const target=road?s.villages[road.from===vid?road.to:road.from]:null;
-  player.sendMessage(target?`Trade route switched to ${target.name}. Previous construction is paused.`:'Outgoing trade route stopped; construction progress is saved.');
+  player.sendMessage(target?`Now sending a trade route to ${target.name}.`:'Outgoing trade route stopped; construction progress is saved.');
  }catch(e){player.sendMessage(String(e.message||e));}
- roadMenu(player,vid);
+ if(directoryScope)open(player,vid,'Realm','global',0,directoryScope);
+ else roadMenu(player,vid);
 }
 function establishDirectoryRoad(player,vid,targetId,page,scope){
  try{

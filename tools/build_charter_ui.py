@@ -26,7 +26,7 @@ DATA.update({"sanctuary": 55, "roads": 56})
 ACTIONS.update({"sanctuary": 57, "roads": 58})
 DATA["colonization"] = 61
 ACTIONS["colonization"] = 62
-DATA.update({"zone": 63, "developmentValue": 64, "developmentHourly": 60})
+DATA.update({"zone": 63, "developmentValue": 64, "developmentHourly": 60, "developmentActual": 65})
 TECHS = ["innovation", "frontier", "capacity", "colonization", "storage",
          "hearth", "biome", "sanctuary", "efficiency", "roads"]
 DATA.update({key + "Level": 66 + i for i, key in enumerate(TECHS)})
@@ -176,7 +176,7 @@ def data_template(index, size, scale=0.8):
         view(f"(#record_text - '{marker}')", "#text"),
         view(f"(not ((#record_text - '{marker}') = #record_text))"),
     ]
-    if key in ["census", "developmentValue", "developmentHourly", "owner", "realmMine", "realmAll"] or key.startswith(("stockCount", "productionModifier", "overviewProduction", "directory", "roadConnection", "prospectInfo")):
+    if key in ["census", "developmentValue", "developmentActual", "developmentHourly", "owner", "realmMine", "realmAll"] or key.startswith(("stockCount", "productionModifier", "overviewProduction", "directory", "roadConnection", "prospectInfo")):
         text["text"] = "#form_button_text"
         text["property_bag"] = {"#form_button_text": "Unavailable"}
         text["bindings"] = [
@@ -738,18 +738,20 @@ def build():
         control("developmentHourly_label", label("Dev/Hr", [25, 12], (6, 20), SILVER, 0.65)),
         overview_value("developmentHourly", DATA["developmentHourly"], [38, 20], [27, 12], scale=0.65),
         control("tradeRoute_label", label("Route", [25, 12], (6, 33), SILVER, 0.65)),
-        overview_value("tradeRoute", DATA["tradeRoute"], [38, 33], [27, 21], scale=0.65),
+        overview_value("tradeRoute", DATA["tradeRoute"], [38, 33], [27, 17], scale=0.65),
+        control("developmentActual_label", label("Actual Dev", [32, 10], (6, 51), SILVER, 0.65)),
+        overview_value("developmentActual", DATA["developmentActual"], [38, 51], [27, 10], scale=0.65),
     ]
     GENERATED_CONTROLS["jf_data_developmentValue"]["color"] = list(WHEAT)
     GENERATED_CONTROLS["jf_data_developmentHourly"]["text_alignment"] = "left"
     GENERATED_CONTROLS["jf_data_tradeRoute"]["text_alignment"] = "left"
-    development_box = control("development", {"type": "panel", "size": [71, 56], "offset": [0, 86],
+    development_box = control("development", {"type": "panel", "size": [71, 63], "offset": [0, 86],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
-            control("surface", image("frontier/palette_panel", [71, 56], color=[0.82, 0.82, 0.82])),
+            control("surface", image("frontier/palette_panel", [71, 63], color=[0.82, 0.82, 0.82])),
             *development_rows,
         ]})
     overview_production = [
-        control("surface", image("frontier/palette_panel", [72, 56], color=[0.82, 0.82, 0.82])),
+        control("surface", image("frontier/palette_panel", [72, 63], color=[0.82, 0.82, 0.82])),
         control("title", label("Production", [60, 10], (6, 4), WHEAT, 0.65)),
     ]
     for slot, y in enumerate([17, 36]):
@@ -769,7 +771,7 @@ def build():
                 control("record@jagsby_frontier." + template, {"collection_index": DATA[key]})],
         }))
         overview_production.append(overview_value("rate" + str(slot), DATA[key], [23, y + 3], [43, 12], scale=0.65))
-    production_box = control("production", {"type": "panel", "size": [72, 56], "offset": [75, 86],
+    production_box = control("production", {"type": "panel", "size": [72, 63], "offset": [75, 86],
         "anchor_from": "top_left", "anchor_to": "top_left", "controls": overview_production})
     ui["jf_overview_content"] = {"type": "panel", "size": [257, 158], "controls": [
         control("portrait", {**collection_scope("jf_tier_portrait", [90, 158]),
@@ -844,9 +846,12 @@ def build():
                 state_name, panel = next(iter(state.items()))
                 panel["size"] = [47, 24]
                 panel["controls"] = [control("face", image(button_texture(47, 24, state_name), [47, 24])),
-                    control("caption", {**label("Establish\nRoad", [41, 18], scale=0.65),
+                    control("caption", {**label("#form_button_text", [41, 18], scale=0.65),
+                        "bindings": [
+                            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+                            {"binding_name": "#form_button_text", "binding_type": "collection", "binding_collection_name": "form_buttons"}],
                         "text_alignment": "center", "anchor_from": "center", "anchor_to": "center", "offset": [0, 0]})]
-            ui["jf_realm_establish_" + scope + "@common.button"] = button
+            ui["jf_realm_directory_action_" + scope + "@common.button"] = button
         if road:
             for enabled in [True, False]:
                 button = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
@@ -903,19 +908,19 @@ def build():
                     fields.append(control(key, travel))
             else:
                 fields.append(control("dev_label", label("Dev", [23, 12], (177, 2), SILVER, 0.65)))
-                establish = explicit_scope("jf_realm_establish_" + scope, base + 6, [201, 4], [47, 24])
-                establish["bindings"] = row_present("[JF:establish:" + scope + ":" + str(slot) + "]")
-                establish["controls"][0]["record@jagsby_frontier.jf_realm_establish_" + scope].update({
-                    "focus_identifier": f"jf_realm_{scope}_establish_{slot}",
+                directory_action = explicit_scope("jf_realm_directory_action_" + scope, base + 6, [201, 4], [47, 24])
+                directory_action["bindings"] = row_present("[JF:directoryAction:" + scope + ":" + str(slot) + "]")
+                directory_action["controls"][0]["record@jagsby_frontier.jf_realm_directory_action_" + scope].update({
+                    "focus_identifier": f"jf_realm_{scope}_action_{slot}",
                     "focus_change_left": f"jf_realm_{scope}_row_{slot}",
                     "focus_change_up": f"jf_realm_{scope}_row_{slot}",
                 })
-                fields.append(control("establish", establish))
+                fields.append(control("directory_action", directory_action))
             marker = "[JF:row:" + scope + ":" + str(slot) + "]"
             row = focusable_scroll_row({"size": [251, height], "controls": fields,
                 "bindings": row_present(marker)}, "realm", scope, slot)
             row["focus_magnet_enabled"] = False
-            row["focus_change_right"] = f"jf_realm_roads_travel_{slot}" if road else f"jf_realm_{scope}_establish_{slot}"
+            row["focus_change_right"] = f"jf_realm_roads_travel_{slot}" if road else f"jf_realm_{scope}_action_{slot}"
             if road:
                 row["focus_change_left"] = f"jf_realm_roads_tier_{slot}"
             rows.append(control("row" + str(slot), row))

@@ -90,7 +90,7 @@ test('record bindings use collection-capable stack panels and explicitly indexed
   for(const key of Object.keys(layout.data).filter(key=>!['frontier','capacity','development','storage'].includes(key))) {
     const label=ui['jf_data_'+key];
     assert.equal(label.type,'label');
-    if(['census','developmentValue','developmentHourly','owner','realmMine','realmAll'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')||key.startsWith('overviewProduction')||key.startsWith('directory')||key.startsWith('roadConnection')||key.startsWith('prospectInfo')) {
+    if(['census','developmentValue','developmentActual','developmentHourly','owner','realmMine','realmAll'].includes(key)||key.startsWith('stockCount')||key.startsWith('productionModifier')||key.startsWith('overviewProduction')||key.startsWith('directory')||key.startsWith('roadConnection')||key.startsWith('prospectInfo')) {
       assert.equal(label.text,'#form_button_text');
       assert.equal(label.property_bag['#form_button_text'],'Unavailable');
       assert.equal(label.bindings.some(b=>b.target_property_name==='#visible'),false);
@@ -123,18 +123,21 @@ test('Compact village identity fits without scrolling and Rename remains in the 
   assert.ok(fields.development.offset[0]+fields.development.size[0]<fields.production.offset[0]);
   assert.ok(children(fields.identity).owner.offset[1]<children(fields.identity).tier.offset[1]);
   const developmentFields=children(fields.development);
-  for(const key of ['developmentValue','developmentHourly','tradeRoute']){
+  for(const key of ['developmentValue','developmentActual','developmentHourly','tradeRoute']){
     assert.ok(developmentFields[key]);assert.equal(ui['jf_data_'+key].font_scale_factor,0.65);
   }
   assert.equal(developmentFields.developmentValue_label,undefined);
   assert.equal(developmentFields.title,undefined);
+  assert.equal(developmentFields.developmentActual_label.text,'Actual Dev');
+  assert.ok(developmentFields.developmentActual.offset[1]>=developmentFields.tradeRoute.offset[1]+developmentFields.tradeRoute.size[1]);
+  assert.ok(developmentFields.developmentActual.offset[1]+developmentFields.developmentActual.size[1]<=fields.development.size[1]);
   assert.equal(developmentFields.developmentHourly_label.text,'Dev/Hr');
   assert.equal(developmentFields.developmentHourly_label.font_scale_factor,0.65);
   assert.equal(developmentFields.tradeRoute_label.font_scale_factor,0.65);
   assert.equal(developmentFields.developmentHourly.offset[0],developmentFields.tradeRoute.offset[0]);
   for(const key of ['developmentHourly','tradeRoute'])assert.equal(ui['jf_data_'+key].text_alignment,'left');
   assert.deepEqual(ui.jf_data_developmentValue.color,[0.82,0.70,0.44]);
-  assert.equal(fields.development.size[1],56);
+  assert.equal(fields.development.size[1],63);
 
   assert.equal(children(fields.identity).owner_label,undefined);
   assert.deepEqual(children(fields.identity).owner.offset,[8,18]);
@@ -484,14 +487,15 @@ test('Realm scrolling rows use explicit collection indices and the established c
     assert.equal(fields.current_icon,undefined);assert.equal(fields.next_icon,undefined);
    }else{
     assert.equal(fields.coordinates.offset[1],fields.name.offset[1]);assert.equal(fields.owner.offset[1],fields.distance.offset[1]);
-    assert.equal(Object.values(fields.establish.controls[0])[0].collection_index,base+6);
-    assert.ok(fields.establish.bindings.some(binding=>binding.source_property_name?.includes('[JF:establish:'+scope+':'+slot+']')));
+    assert.equal(Object.values(fields.directory_action.controls[0])[0].collection_index,base+6);
+    assert.ok(fields.directory_action.bindings.some(binding=>binding.source_property_name?.includes('[JF:directoryAction:'+scope+':'+slot+']')));
    }
   }
   if(scope!=='roads'){
-   const button=template(ui,'jf_realm_establish_'+scope);
+   const button=template(ui,'jf_realm_directory_action_'+scope);
    for(const state of Object.values(children(button))){
     const caption=children(state).caption;assert.equal(caption.text_alignment,'center');assert.deepEqual(caption.offset,[0,0]);
+    assert.equal(caption.text,'#form_button_text');
    }
   }
  }
@@ -679,7 +683,7 @@ test('Realm lists use ordinary fixed-height rows without native grids or custom 
    assert.deepEqual(row.button_mappings,[]);
    assert.ok(row.bindings.some(b=>b.source_control_name==='jf_menu_state'&&b.target_property_name==='#visible'&&b.source_property_name.includes(marker)));
    const fields=children(row);
-   for(const field of ['icon','name','owner',...(scope==='roads'?['distance','cost','time','tier_icon','tier_action','travel']:['coordinates','distance','development','status','establish'])]){
+   for(const field of ['icon','name','owner',...(scope==='roads'?['distance','cost','time','tier_icon','tier_action','travel']:['coordinates','distance','development','status','directory_action'])]){
     assert.ok(fields[field].offset[1]+fields[field].size[1]<=row.size[1],`${scope} ${field} must fit`);
    }
   }
@@ -708,7 +712,7 @@ test('Controller has explicit routes from Realm reading rows into real native ac
    assert.ok(action.button_mappings.some(m=>m.from_button_id==='button.menu_ok'&&m.to_button_id==='button.form_button_click'&&m.mapping_type==='focused'));
    const disabled=template(ui,'jf_realm_travel_disabled');assert.equal(disabled.focus_enabled,false);assert.equal(disabled.enabled,false);
   }else{
-   const establish=nativeRecord(fields.establish);
+   const establish=nativeRecord(fields.directory_action);
    assert.equal(row.focus_change_right,establish.focus_identifier);assert.equal(establish.focus_change_left,row.focus_identifier);
    assert.equal(establish.collection_index,base+6);
   }

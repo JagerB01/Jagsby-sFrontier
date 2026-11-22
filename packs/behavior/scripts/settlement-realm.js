@@ -14,9 +14,13 @@ export function directoryRoadState(source,target,roads={}) {
  if(!source)return {canEstablish:false,status:'Open a charter'};
  if(source.id===target.id)return {canEstablish:false,status:'Here'};
  if(source.dimension!==target.dimension)return {canEstablish:false,status:'Different\ndimension'};
- const road=roads[connectionKey(source.id,target.id)]||Object.values(roads).find(r=>(r.from===source.id&&r.to===target.id)||(r.to===source.id&&r.from===target.id));
- if(road?.targetLevel)return {canEstablish:false,status:road.paused?'Paused':'Building'};
- if(road?.level)return {canEstablish:false,status:'Connected'};
+ const matches=r=>(r.from===source.id&&r.to===target.id)||(r.to===source.id&&r.from===target.id);
+ const canonical=connectionKey(source.id,target.id);
+ const roadId=roads[canonical]?canonical:Object.keys(roads).find(id=>matches(roads[id]));
+ const road=roads[roadId];
+ const sendRoadId=road?.level&&source.roads?roadId:undefined;
+ if(road?.targetLevel)return {canEstablish:false,status:road.paused?'Paused':'Building',sendRoadId};
+ if(road?.level)return {canEstablish:false,status:'Connected',sendRoadId};
  if(!source.roads)return {canEstablish:false,status:'Requires\nRoads I'};
  return {canEstablish:true,status:''};
 }
@@ -29,7 +33,7 @@ export function settlementDirectory(villages, player, requestedPage = 0, mine = 
   return {id:target.id,name:target.name,owner:ownerName(target),icon:settlementTier(target.census).iconTexture,
    coordinates:`${Math.floor(target.location.x)}, ${Math.floor(target.location.y)}, ${Math.floor(target.location.z)}`,
    distance, distanceText:sameDimension?`${Math.round(distance)} blocks`:target.dimension.replace('minecraft:',''),
-   development:development(target),canEstablishRoad:road.canEstablish,roadStatus:road.status};
+   development:development(target),canEstablishRoad:road.canEstablish,roadStatus:road.status,sendRoadId:road.sendRoadId};
  });
  return {count:settlements.length,rows,empty:mine?'You do not own any settlements yet.':'No settlements registered.'};
 }

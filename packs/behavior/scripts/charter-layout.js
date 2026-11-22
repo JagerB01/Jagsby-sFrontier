@@ -55,6 +55,7 @@ export const CHARTER_LAYOUT = {
     "zone": 63,
     "developmentValue": 64,
     "developmentHourly": 60,
+    "developmentActual": 65,
     "innovationLevel": 66,
     "frontierLevel": 67,
     "capacityLevel": 68,

@@ -468,12 +468,47 @@ test('Directory road button starts one Trail and returns to the same settlement 
  const index=CHARTER_LAYOUT.realmRows.base+CHARTER_LAYOUT.realmRows.stride;
  assert.equal(h.forms[0].buttons[index],'Beta');assert.equal(h.forms[0].buttons[index+1],'Builder');
  assert.equal(h.forms[0].buttons[index+2],'100, 64, 0');assert.equal(h.forms[0].buttons[index+3],'100 blocks');
- assert.equal(h.forms[0].buttons[index+4],'2');assert.ok(h.forms[0].text.includes('[JF:establish:mine:1]'));
+ assert.equal(h.forms[0].buttons[index+4],'2');assert.ok(h.forms[0].text.includes('[JF:directoryAction:mine:1]'));
  assert.equal(h.forms[0].icons[index],'textures/ui/frontier/settlement_icons/hamlet');
  const roads=Object.values(h.read().roads);assert.equal(roads.length,1);assert.equal(roads[0].from,'a');assert.equal(roads[0].to,'b');assert.equal(roads[0].targetLevel,1);
- assert.equal(h.forms.length,2);assert.ok(h.forms[1].text.includes('[JF:realm:mine]'));assert.equal(h.forms[1].buttons[index+5],'Building');assert.equal(h.forms[1].text.includes('[JF:establish:mine:1]'),false);
+ assert.equal(h.forms.length,2);assert.ok(h.forms[1].text.includes('[JF:realm:mine]'));assert.equal(h.forms[1].buttons[index+5],'Building');assert.equal(h.forms[1].text.includes('[JF:directoryAction:mine:1]'),false);
  h.api.establishDirectoryRoad(h.player,'a','b',0,'mine');assert.equal(Object.values(h.read().roads).length,1);
  assert.equal(Object.values(h.read().roads)[0].targetLevel,1);
+});
+test('Both settlement directories can send an outgoing route on an existing road',async()=>{
+ for(const [scope,scopeIndex] of [['mine',0],['all',1]]){
+  const s=fresh(Date.now()),owner={id:'p',name:'Builder'};
+  s.villages.a={...village(),name:'Alpha',owner,roads:1,developmentValue:387.5};
+  s.villages.b={...village(100),id:'b',name:'Beta',owner};
+  s.villages.c={...village(200),id:'c',name:'City',owner};
+  s.roads.old={from:'a',to:'b',level:1,distance:100};
+  s.roads.savedKey={from:'c',to:'a',level:1,distance:200};
+  s.tradeRouteVersion=1;s.tradeRoutes={a:'old',c:'savedKey'};
+  const layout=CHARTER_LAYOUT.realmRows,index=layout.base+2*layout.stride+scopeIndex*8;
+  let clicked=false;
+  const h=await runtime(s,form=>{
+   if(!clicked&&form.text.includes('[JF:realm:'+scope+']')){
+    clicked=true;return {canceled:false,selection:index+6};
+   }
+   return {canceled:true};
+  });
+  h.player.dimension={id:'minecraft:overworld'};h.player.location={x:0,y:64,z:0};
+  h.api.open(h.player,'a','Overview');
+  assert.equal(h.forms[0].buttons[CHARTER_LAYOUT.data.developmentActual],'3.875');
+  h.api.open(h.player,'a','Realm','global',0,scope);
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(h.forms[1].buttons[index+6],'Send Route');
+  assert.ok(h.forms[1].text.includes('[JF:directoryAction:'+scope+':2]'));
+  assert.deepEqual(h.read().tradeRoutes,{a:'savedKey',c:'savedKey'});
+  assert.deepEqual(Object.keys(h.read().roads),['old','savedKey']);
+  assert.ok(h.forms[2].text.includes('[JF:realm:'+scope+']'));
+  assert.equal(h.forms[2].buttons[index+5],'Sending');
+  assert.equal(h.forms[2].buttons[index+6],'');
+  h.update(saved=>saved.villages.a.developmentValue=399.99);
+  h.api.open(h.player,'a','Overview');
+  assert.equal(h.forms[3].buttons[CHARTER_LAYOUT.data.developmentValue],'Development 3');
+  assert.equal(h.forms[3].buttons[CHARTER_LAYOUT.data.developmentActual],'3.999');
+ }
 });
 test('Directory road creation cannot bypass research, dimension or source-location checks',async()=>{
  for(const scenario of ['research','dimension','distance']){
