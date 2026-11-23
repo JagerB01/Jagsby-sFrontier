@@ -129,8 +129,8 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
     Form, RenameForm,
   };
   let main = await readFile(new URL('main.js', scriptBase), 'utf8');
-  main = main.replace('import { world, system, ItemStack, BlockVolume } from "@minecraft/server";',
-    'const {world,system}=globalThis.__frontierTest; class ItemStack {} class BlockVolume {}')
+  main = main.replace('import { world, system, ItemStack, BlockVolume, BlockTypes } from "@minecraft/server";',
+    'const {world,system}=globalThis.__frontierTest; class ItemStack {} class BlockVolume {} const BlockTypes={get(){}};')
     .replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";',
       'const ActionFormData=globalThis.__frontierTest.Form;const ModalFormData=globalThis.__frontierTest.RenameForm;')
     .replace('"./poi-survey.js"',JSON.stringify(new URL('poi-survey.js',scriptBase).href))

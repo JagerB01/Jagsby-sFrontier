@@ -27,15 +27,18 @@ remaining pins on subsequent pages.
 
 ## Landmark survey
 
-Use the Clapping emote in the Overworld to look for possible villages, trial
-chambers, ancient cities, desert temples and jungle temples. Surveys check
+Use the Clapping emote in the Overworld to survey villages, trial chambers,
+ancient cities, desert and jungle temples, strongholds, ocean monuments and
+trail ruins. With Habitations loaded, surveys also recognize Illager Mines
+and selected camp, watchpost, watchtower, fortress and castle layouts. Surveys check
 loaded blocks within 48 horizontal blocks of where you clap, up to 128 blocks
 below and 48 blocks above. The scan runs over multiple ticks. A bell alone
 can flag a possible village. The survey skips clue blocks recorded as
 player-placed since tracking began. Older placements, moved blocks, and
 structures with missing clues can still affect results. Discoveries use the
 matching POI artwork and are shared across the world. Refresh or reopen the
-map after a survey finishes.
+map after a survey finishes. New Trial Chamber pins require nearby tuff bricks
+and copper grates. Previously saved pins carry over.
 
 ## Controls
 

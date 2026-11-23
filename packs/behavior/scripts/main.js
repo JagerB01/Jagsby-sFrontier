@@ -1,5 +1,5 @@
 import { charterKey, preventClosePlacement } from "./charter-placement.js";
-import { world, system, ItemStack, BlockVolume } from "@minecraft/server";
+import { world, system, ItemStack, BlockVolume, BlockTypes } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { nearbyVillagers, summarizeVillagers } from "./village-census.js";
 import { sampleTradingRanks } from "./villager-trade-bridge.js";
@@ -358,7 +358,7 @@ world.afterEvents.playerEmote?.subscribe(({player,personaPieceId})=>{
  if(dimension.id!=='minecraft:overworld')return;
  if(poiSurveyRunning){player.sendMessage('A landmark survey is already running.');return;}
  const discovered=readSurveyedPois(world);
- const survey=surveyLoadedPois(dimension,location,BlockVolume,discovered,position=>wasPoiPlaced(world,position));
+ const survey=surveyLoadedPois(dimension,location,BlockVolume,discovered,position=>wasPoiPlaced(world,position),type=>Boolean(BlockTypes.get(type)));
  player.sendMessage(`Surveying loaded landmarks within ${POI_RADIUS} blocks…`);
  poiSurveyRunning=true;
  const advance=()=>{
