@@ -51,7 +51,7 @@ for key in ["realmMine", "realmAll"]:
 for key in ["minePrev", "mineNext", "allPrev", "allNext", "roadsPrev", "roadsNext"]:
     ACTIONS.pop(key, None)
 VIEW_ACTIONS = []
-for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("Production", ["summary", "biomes"]), ("Realm", ["roads", "mine", "all"]), ("Diplomacy", [None])]:
+for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("Production", ["summary", "biomes"]), ("Realm", ["roads", "mine", "all"]), ("Diplomacy", ["map", "provinces"])]:
     for scope in scopes:
         entry = {"page": page}
         if scope: entry[page.lower() + "Scope"] = scope
@@ -60,8 +60,9 @@ for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("
             entry[kind] = key
             if key not in ACTIONS: ACTIONS[key] = 700 + len(VIEW_ACTIONS) * 2 + (kind == "rename")
         VIEW_ACTIONS.append(entry)
-# Reuse an unassigned transport slot so existing action and Realm indices stay fixed.
-ACTIONS["settlementMap"] = 11
+# Reuse unassigned transport slots.
+DATA.update({"provinceName": 26, "provinceDetails": 27})
+ACTIONS.update({"settlementMap": 11, "designateCapital": 29, "renameProvince": 30})
 # Preserve the original low transport IDs; pack later additions contiguously.
 # These IDs are form-local, never saved. Avoid transmitting hundreds of holes.
 late = sorted([(index, mapping, key) for mapping in [DATA, ACTIONS]
@@ -284,7 +285,8 @@ def overview_value(name, index, offset, size, scale=0.9):
 
 def research_tab(scope, index, section="research", caption_text=None):
     width, spacing = (124, 129) if section == "production" else (82, 86) if section == "realm" else (124, 129)
-    order = ["summary", "biomes"] if section == "production" else ["roads", "mine", "all"] if section == "realm" else ["local", "global"]
+    order = {"production": ["summary", "biomes"], "realm": ["roads", "mine", "all"],
+             "diplomacy": ["map", "provinces"], "research": ["local", "global"]}[section]
     toggle = tab("Research", index)["jf_tab_research"]
     toggle.update({"size": [width, 23], "offset": [index * spacing, 0],
         "toggle_name": "jagsby_frontier_" + section + "_tabs", "tts_name": caption_text or scope.title(),
@@ -779,12 +781,36 @@ def build():
         identity, development_box, production_box,
     ]}
     GENERATED_CONTROLS["jf_data_tier"].update({"text_alignment": "left"})
-    ui["jf_diplomacy_content"] = {"type": "panel", "size": [257, 158], "controls": [
-        control("heading", label("Diplomacy", [233, 14], (8, 8), WHEAT, 0.95)),
-        control("rule", image("frontier/solid", [233, 1], (8, 29), 2, list(WHEAT))),
-        control("description", label("Settlement Map\nView shared settlement locations, coordinates\nand Development. Select markers for details.\nZoom, pan and switch dimensions on the map.", [233, 65], (8, 40), scale=0.75)),
-        control("open_map", {**action("open", ACTIONS["settlementMap"], "Open Settlement Map", width=233)["open"], "offset": [8, 112], "anchor_from": "top_left", "anchor_to": "top_left"}),
-    ]}
+    def diplomacy_button(key, caption, y):
+        button = action(key, ACTIONS[key], caption, width=233)[key]
+        return control(key, {**button, "offset": [8, y],
+            "anchor_from": "top_left", "anchor_to": "top_left"})
+
+    diplomacy_controls = [
+        research_tab("map", 0, "diplomacy", "Map"),
+        research_tab("provinces", 1, "diplomacy", "Provinces"),
+    ]
+    diplomacy_pages = {
+        "map": [
+            control("description", label(
+                "View settlements, capitals and landmarks.\nZoom out to see province markers.",
+                [233, 37], (8, 10), scale=0.75)),
+            diplomacy_button("settlementMap", "Open Settlement Map", 62),
+        ],
+        "provinces": [
+            control("icon", image("frontier/poi_markers/province", [20, 20], (8, 4), 6)),
+            overview_value("province_name", DATA["provinceName"], [32, 8], [210, 14], scale=0.95),
+            overview_value("province_details", DATA["provinceDetails"], [8, 31], [233, 61]),
+            diplomacy_button("designateCapital", "Designate this settlement as capital", 100),
+            diplomacy_button("renameProvince", "Rename Province", 100),
+        ],
+    }
+    for scope, controls in diplomacy_pages.items():
+        diplomacy_controls.append(control(scope, {"type": "panel", "size": [254, 131],
+            "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "controls": controls,
+            "bindings": [view("#toggle_state", target, "jf_diplomacy_tab_" + scope)
+                         for target in ["#visible", "#enabled"]]}))
+    ui["jf_diplomacy_content"] = {"type": "panel", "size": [257, 158], "controls": diplomacy_controls}
     realm_controls = [research_tab("roads", 0, "realm", "Road Networks"), research_tab("mine", 1, "realm", "My Settlements"), research_tab("all", 2, "realm", "All Settlements")]
     # Use ordinary explicitly indexed rows. Native grid allocation is backed
     # out following crashes during Charter opening; visibility only hides rows.

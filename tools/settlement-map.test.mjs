@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {mapSnapshot,fitMap,provinceLinePixels,settlementPoints,moveMap,mapDetails,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
+import {mapSnapshot,fitMap,provinceLinePixels,settlementPoints,moveMap,mapDetails,mapBoundaryMarkers,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN,PROVINCE_VIEW_SPAN} from '../packs/behavior/scripts/settlement-map.js';
 import {CHARTER_LAYOUT as L} from '../packs/behavior/scripts/charter-layout.js';
+import {capitalStatus,designateCapital,updateProvinceCapitalId} from '../packs/behavior/scripts/provinces.js';
 const village=(name,x,z,dimension='minecraft:overworld')=>({name,location:{x,y:64,z},dimension,developmentValue:250,developmentThreshold:100});
 const points=s=>s.cells.flat();
 const children=v=>Object.assign({},...(v.controls||[]));
@@ -233,9 +234,83 @@ test('Province borders align to signed multiples of 2,048 and Fit frames the cha
  assert.ok(s.bounds.minZ<0&&s.bounds.maxZ>2048);
  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
  const map=children(ui.jf_settlement_map),grid=children(map.grid);
- assert.ok(map.jf_map_province_state.bindings.some(b=>b.binding_name==='#form_text'));
+ assert.ok(map.jf_map_boundary_state.bindings.some(b=>b.binding_name==='#form_text'));
  assert.deepEqual(grid.province_x120.offset,[120,0]);
  assert.deepEqual(grid.province_z75.offset,[0,75]);
- assert.ok(grid.province_x120.bindings.some(b=>b.source_control_name==='jf_map_province_state'
+ assert.ok(grid.province_x120.bindings.some(b=>b.source_control_name==='jf_map_boundary_state'
   &&b.source_property_name.includes('[JF:province:x:120]')&&b.target_property_name==='#visible'));
+});
+
+test('Zone lines trace clipped squares and their markers match the generated map geometry',async()=>{
+ const layout=L.settlementMap;
+ const view={x:0,z:0,span:9600,showZones:true,showProvinces:false};
+ const square=mapBoundaryMarkers(mapSnapshot({},view),layout.width,layout.height);
+ assert.ok(square.includes('[JF:zone:x:10:3]')&&square.includes('[JF:zone:x:30:22]'));
+ assert.ok(square.includes('[JF:zone:z:3:10]')&&square.includes('[JF:zone:z:23:29]'));
+ assert.ok(!square.includes('[JF:zone:x:10:2]')&&!square.includes('[JF:zone:z:3:30]'));
+ assert.ok(!square.includes('[JF:province:'));
+ const clipped=mapBoundaryMarkers(mapSnapshot({},{...view,x:2400,span:200}),layout.width,layout.height);
+ assert.deepEqual(clipped.match(/\[JF:[^\]]+\]/g),
+  Array.from({length:MAP_ROWS},(_,row)=>`[JF:zone:x:20:${row}]`));
+ const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
+ const map=children(ui.jf_settlement_map),grid=children(map.grid);
+ assert.deepEqual(grid.zone_x10_3.offset,[60,18]);
+ assert.deepEqual(grid.zone_z3_10.offset,[60,18]);
+ assert.deepEqual(grid.zone_x40_24.offset,[239,144]);
+ assert.deepEqual(grid.zone_z25_39.offset,[234,149]);
+ assert.ok(grid.zone_x10_3.bindings.some(b=>b.source_control_name==='jf_map_boundary_state'
+  &&b.source_property_name.includes('[JF:zone:x:10:3]')&&b.target_property_name==='#visible'));
+ for(const key of ['provinceLines','zoneLines']){
+  assert.equal(record(map[key]).collection_index,layout[key]);
+  const button=ui['jf_map_'+key+'@common.button'];
+  assert.equal(button.$pressed_button_name,'button.form_button_click');
+  assert.ok(button.bindings.some(b=>b.target_property_name==='#enabled'&&b.source_property_name.includes('#form_button_text')));
+ }
+});
+
+test('The Overworld switches from capital and settlement pins to province centers at one province per cell',()=>{
+ const villages={capital:village('Harbor',-2048,0),local:village('South Gate',-11,1),east:village('East',5,90)};
+ const provinces={'-1,0':{name:'West Reach',capitalId:'capital'}};
+ const detail=mapSnapshot(villages,{span:PROVINCE_VIEW_SPAN-1},null,null,[],provinces);
+ const capital=points(detail).find(point=>point.id==='capital');
+ assert.equal(capital.texture,'textures/ui/frontier/poi_markers/capital');
+ assert.match(mapDetails(capital),/Capital of West Reach/);
+ assert.equal(points(detail).find(point=>point.id==='local').texture,'textures/ui/frontier/poi_markers/village');
+ const wide=mapSnapshot(villages,{x:0,z:0,span:PROVINCE_VIEW_SPAN},null,null,[],provinces);
+ assert.equal(wide.provinceView,true);
+ assert.deepEqual(points(wide).map(({x,z,name,texture})=>[x,z,name,texture]),[
+  [-1024,1024,'West Reach','textures/ui/frontier/poi_markers/province'],
+  [1024,1024,'Province 0,0','textures/ui/frontier/poi_markers/province'],
+ ]);
+ assert.equal(mapDetails(points(wide)[0]),'West Reach\nCenter: X -1024, Z 1024\nCapital: Harbor');
+ const nether=mapSnapshot({fort:village('Fort',0,0,'minecraft:nether')},{span:PROVINCE_VIEW_SPAN});
+ assert.equal(nether.provinceView,false);
+ assert.equal(points(nether)[0].name,'Fort');
+});
+
+test('Province centers sharing a cell paginate without moving either icon',()=>{
+ const villages={a:village('A',1,1),b:village('B',3000,1)};
+ const view={x:0,z:0,span:PROVINCE_VIEW_SPAN*4};
+ const one=mapSnapshot(villages,view),two=mapSnapshot(villages,{...view,page:1});
+ assert.equal(one.pageCount,2);
+ assert.equal(one.cells.findIndex(cell=>cell.length),two.cells.findIndex(cell=>cell.length));
+ assert.deepEqual([points(one)[0].x,points(two)[0].x],[1024,3072]);
+});
+
+test('Capital identity follows legacy charter migration and the province name survives removal',()=>{
+ const old='-1,64,-1',canonical='minecraft:overworld|'+old;
+ const owner={id:'p',name:'Owner'};
+ const capital={...village('Capital',-1,-1),owner,developmentValue:1000};
+ const state={villages:{[old]:capital},provinces:{'-1,-1':{name:'West Reach',capitalId:old}}};
+ updateProvinceCapitalId(state,old,canonical);
+ state.villages[canonical]=capital;
+ delete state.villages[old];
+ assert.equal(capitalStatus(state,canonical,'p').canRename,true);
+ updateProvinceCapitalId(state,canonical);
+ delete state.villages[canonical];
+ assert.deepEqual(state.provinces['-1,-1'],{name:'West Reach'});
+ state.villages.next={...capital,name:'Next'};
+ assert.equal(designateCapital(state,'next','other'),'Only the settlement owner can designate it as capital.');
+ assert.equal(designateCapital(state,'next','p'),'');
+ assert.deepEqual(state.provinces['-1,-1'],{name:'West Reach',capitalId:'next'});
 });

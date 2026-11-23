@@ -17,22 +17,24 @@ export const CHARTER_LAYOUT = {
     "dimension": 1008,
     "refresh": 1009,
     "nextPage": 1010,
+    "provinceLines": 1011,
+    "zoneLines": 1012,
     "xTicks": [
-      1011,
-      1012,
       1013,
       1014,
       1015,
       1016,
-      1017
+      1017,
+      1018,
+      1019
     ],
     "zTicks": [
-      1018,
-      1019,
       1020,
       1021,
       1022,
-      1023
+      1023,
+      1024,
+      1025
     ]
   },
   "data": {
@@ -164,7 +166,9 @@ export const CHARTER_LAYOUT = {
     "prospectInfo51": 190,
     "overviewProduction0": 136,
     "overviewProduction1": 137,
-    "productionModifierTotal": 138
+    "productionModifierTotal": 138,
+    "provinceName": 26,
+    "provinceDetails": 27
   },
   "actions": {
     "efficiency": 14,
@@ -248,11 +252,15 @@ export const CHARTER_LAYOUT = {
     "renameRealmmine": 254,
     "scanRealmall": 255,
     "renameRealmall": 256,
-    "scanDiplomacy": 257,
-    "renameDiplomacy": 258,
-    "settlementMap": 11
+    "scanDiplomacymap": 257,
+    "renameDiplomacymap": 258,
+    "scanDiplomacyprovinces": 259,
+    "renameDiplomacyprovinces": 260,
+    "settlementMap": 11,
+    "designateCapital": 29,
+    "renameProvince": 30
   },
-  "recordCount": 259,
+  "recordCount": 261,
   "tabs": [
     "Overview",
     "Research",
@@ -310,12 +318,19 @@ export const CHARTER_LAYOUT = {
     },
     {
       "page": "Diplomacy",
-      "scan": "scanDiplomacy",
-      "rename": "renameDiplomacy"
+      "diplomacyScope": "map",
+      "scan": "scanDiplomacymap",
+      "rename": "renameDiplomacymap"
+    },
+    {
+      "page": "Diplomacy",
+      "diplomacyScope": "provinces",
+      "scan": "scanDiplomacyprovinces",
+      "rename": "renameDiplomacyprovinces"
     }
   ],
   "realmRows": {
-    "base": 259,
+    "base": 261,
     "limit": 128,
     "stride": 24,
     "scopes": [

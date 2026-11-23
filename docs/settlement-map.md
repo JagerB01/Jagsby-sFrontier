@@ -1,7 +1,21 @@
 # Settlement Map
 
-Open Village Charter → Diplomacy → Open Settlement Map. The controls are on the
+Open Village Charter → Diplomacy → Map → Open Settlement Map. The controls are on the
 left. Hover or focus a POI pin to see its information beside it.
+
+## Provinces and capitals
+
+Village Charter → Diplomacy → Provinces shows the current charter's province,
+its capital and its bounds. When a province has no capital, a settlement owner
+can designate their settlement once it reaches Development 10. The capital's
+current owner can name the province. The name stays with the province if the
+capital is removed.
+
+The detailed map uses the Capital icon for a designated capital. In the
+Overworld, zooming out until one pin cell spans a full province switches to
+Province icons for squares with registered settlements, discovered landmarks or
+world spawn. The map projects each icon from the center of its province, snaps
+it to the pin grid, and uses separate pages if centers share a cell.
 
 ## Pins and hover information
 
@@ -26,12 +40,21 @@ receive separate pins in the nearest free cells. Their tooltips show their
 actual coordinates. If all cells fill up, the POI page control shows the
 remaining pins on subsequent pages.
 
-## Province borders
+## Province and zone lines
 
 Gold lines show the Overworld’s 2,048 × 2,048 block provinces, aligned to
 multiples of 2,048 on X and Z. Fit includes the province around the active
 charter. At very wide zooms the map omits intermediate borders to keep lines
 legible. Zoom in to see the individual province boundaries.
+
+Teal lines show the square MineScape zone boundaries from Heartlands through
+Blackreach. They follow the same distances from the Overworld origin as the
+settlement founding rules. The map rounds zone lines to its six-pixel grid.
+
+Use **Province Lines** and **Zone Lines** at the top of the map to show or hide
+each layer. A newly opened map starts with province lines on and zone lines
+off. Both choices are kept while navigating, refreshing or switching dimensions
+within that map session. The controls appear in the Overworld.
 
 ## Landmark survey
 

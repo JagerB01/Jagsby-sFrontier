@@ -988,6 +988,88 @@ test('Diplomacy form passes discovered artwork, village art and real Overworld p
  assert.equal(h.forms.at(-1).text,'');
 });
 
+test('The Provinces tab enforces Development 10, persists one capital and lets its current owner rename',async()=>{
+ const s=fresh(Date.now());
+ const owner={id:'p',name:'Owner'};
+ s.villages.a={...village(-40),id:'a',name:'Harbor',developmentThreshold:100,developmentValue:999,owner};
+ s.villages.b={...village(-80),id:'b',name:'Hill',developmentThreshold:100,developmentValue:1000,owner};
+ let respond=()=>({canceled:true});
+ const h=await runtime(s,form=>respond(form)),{actions,data}=CHARTER_LAYOUT;
+ const latest=()=>h.forms.at(-1);
+ const open=(id='a')=>h.api.open(h.player,id,'Diplomacy','local',0,'roads','summary',{},'provinces');
+ const flush=()=>new Promise(resolve=>setImmediate(resolve));
+ const clickOnce=selection=>{
+  respond=()=>{respond=()=>({canceled:true});return {selection};};
+  open();
+  return flush();
+ };
+ open();
+ assert.match(latest().text,/\[JF:diplomacy:provinces\]/);
+ assert.match(latest().buttons[data.provinceDetails],/Requires Development 10 \(currently 9\)/);
+ assert.equal(latest().buttons[actions.designateCapital],'[JF:disabled:designateCapital]');
+ h.update(state=>{state.villages.a.developmentValue=1000;});
+ await clickOnce(actions.designateCapital);
+ assert.equal(h.read().provinces['-1,0'].capitalId,'a');
+ assert.equal(latest().buttons[actions.renameProvince],'[JF:action:renameProvince]');
+ open('b');
+ assert.equal(latest().buttons[actions.designateCapital],'[JF:disabled:designateCapital]');
+ assert.match(latest().buttons[data.provinceDetails],/Capital: Harbor/);
+ respond=form=>{
+  if(form.heading==='JF_CHARTER|Rename'){
+   respond=()=>({canceled:true});
+   return {formValues:['West Reach']};
+  }
+  return {selection:actions.renameProvince};
+ };
+ open();await flush();
+ assert.equal(h.read().provinces['-1,0'].name,'West Reach');
+ assert.match(latest().text,/\[JF:diplomacy:provinces\]/);
+ assert.match(latest().buttons[data.provinceName],/West Reach/);
+ respond=form=>{
+  if(form.heading==='JF_CHARTER|Rename'){
+   h.update(state=>{state.villages.a.owner={id:'other',name:'Other player'};});
+   respond=()=>({canceled:true});
+   return {formValues:['Stale name']};
+  }
+  return {selection:actions.renameProvince};
+ };
+ open();await flush();
+ assert.equal(h.read().provinces['-1,0'].name,'West Reach');
+ assert.equal(latest().buttons[actions.renameProvince],'[JF:disabled:renameProvince]');
+});
+
+test('Diplomacy map line toggles act independently and survive viewport changes',async()=>{
+ const s=fresh(Date.now());
+ s.villages.a={...village(2400),id:'a',name:'Alpha'};
+ s.villages.nether={...village(),id:'nether',dimension:'minecraft:nether'};
+ const m=CHARTER_LAYOUT.settlementMap;
+ const actions=['zoneLines','provinceLines','east','refresh','fit','dimension','dimension','zoneLines'];
+ const h=await runtime(s,()=>actions.length?{selection:m[actions.shift()]}:{canceled:true});
+ const before=h.read();
+ h.api.openSettlementMap(h.player,'a',{x:2400,z:0,span:2400});
+ await new Promise(resolve=>setImmediate(resolve));
+ const [initial,both,zones,panned,refreshed,fitted,nether,returned,neither]=h.forms;
+ const flags=form=>[form.buttons[m.provinceLines],form.buttons[m.zoneLines]];
+ assert.deepEqual(flags(initial),['Province Lines: On','Zone Lines: Off']);
+ assert.match(initial.text,/\[JF:province:/);
+ assert.doesNotMatch(initial.text,/\[JF:zone:/);
+ assert.deepEqual(flags(both),['Province Lines: On','Zone Lines: On']);
+ assert.match(both.text,/\[JF:province:/);
+ assert.match(both.text,/\[JF:zone:/);
+ for(const form of [zones,panned,refreshed,fitted,returned]){
+  assert.deepEqual(flags(form),['Province Lines: Off','Zone Lines: On']);
+  assert.doesNotMatch(form.text,/\[JF:province:/);
+  assert.match(form.text,/\[JF:zone:/);
+ }
+ assert.deepEqual(initial.buttons.slice(0,m.cells),zones.buttons.slice(0,m.cells));
+ assert.deepEqual(m.xTicks.map(i=>initial.buttons[i]),m.xTicks.map(i=>zones.buttons[i]));
+ assert.deepEqual(flags(nether),['','']);
+ assert.equal(nether.text,'');
+ assert.deepEqual(flags(neither),['Province Lines: Off','Zone Lines: Off']);
+ assert.equal(neither.text,'');
+ assert.deepEqual(h.read(),before);
+});
+
 test('route changes cancel old completion timers; stale callbacks cannot finish paused construction',async()=>{
  const s=fresh(Date.now());for(const [i,id]of ['a','b','c'].entries())s.villages[id]={...village(i*1000),id,name:id,roads:3,biome:'unknown'};
  let tick=0;const jobs=[],cleared=[];

@@ -8,7 +8,8 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
-import { mapSnapshot, moveMap, mapDetails, provinceLinePixels } from "./settlement-map.js";
+import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
+import { PROVINCE_SIZE, capitalStatus, designateCapital, renameProvince, updateProvinceCapitalId } from "./provinces.js";
 import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from "./poi-survey.js";
 
 
@@ -70,7 +71,10 @@ async function refreshVillage(vId){
   if(!census.error)console.log(`[Frontier census] villagers=${census.villagers} power_tenths=${census.realmPowerTenths} unknown_ranks=${census.unknownRanks}`);
 }
 function addVillage(s,block,creator){const legacy=id(block.location),k=`${block.dimension.id}|${legacy}`;
-if(!s.villages[k]&&s.villages[legacy]?.dimension===block.dimension.id){s.villages[k]=s.villages[legacy];s.villages[k].id=k;delete s.villages[legacy];save(s);}
+if(!s.villages[k]&&s.villages[legacy]?.dimension===block.dimension.id){
+  updateProvinceCapitalId(s,legacy,k);
+  s.villages[k]=s.villages[legacy];s.villages[k].id=k;delete s.villages[legacy];save(s);
+}
 if(!s.villages[k]){
   const reason=foundingReason(s,zoneAt(block.location));
   if(reason){creator?.sendMessage('§e'+reason);return null;}
@@ -196,11 +200,11 @@ function recoverResearch(player){
 }
 
 function reopenView(player,vid,view={}){
- open(player,vid,view.page||'Overview',view.researchScope||'local',view.realmPage||0,view.realmScope||'roads',view.productionScope||'summary',view.productionPages||{});
+ open(player,vid,view.page,view.researchScope,view.realmPage,view.realmScope,view.productionScope,view.productionPages,view.diplomacyScope);
 }
-function open(player,vId,page='Overview',researchScope='local',realmPage=0,realmScope='roads',productionScope='summary',productionPages={}){
+function open(player,vId,page='Overview',researchScope='local',realmPage=0,realmScope='roads',productionScope='summary',productionPages={},diplomacyScope='map'){
   const preparedAt=Date.now();
-  const view={page,researchScope,realmPage,realmScope,productionScope,productionPages};
+  const view={page,researchScope,realmPage,realmScope,productionScope,productionPages,diplomacyScope};
   const s=accounted(),v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
   const {data,actions,recordCount,tabs}=CHARTER_LAYOUT;
   const records=Array(recordCount).fill('');
@@ -248,7 +252,24 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   records[data.roadSummary]=roadView.summary;
   records[data.roadDetails]=roadView.rows.length?'':roadView.details;
   const handlers=new Map();
-  handlers.set(actions.settlementMap,()=>openSettlementMap(player,vId,{},vId,view));
+  handlers.set(actions.settlementMap,()=>openSettlementMap(player,vId,{},vId,{...view,diplomacyScope:'map'}));
+  const provinceView={...view,page:'Diplomacy',diplomacyScope:'provinces'};
+  const status=capitalStatus(s,vId,player.id),province=status.province;
+  records[data.provinceName]=province?.name||'Province unavailable';
+  records[data.provinceDetails]=province?[
+   `Capital: ${province.capital?.name||'None'}`,
+   province.capital?`Capital owner: ${ownerName(province.capital)}`:'',
+   `X ${province.west} to ${province.west+PROVINCE_SIZE-1} · Z ${province.north} to ${province.north+PROVINCE_SIZE-1}`,
+   status.reason||'This settlement is eligible to become the capital.',
+  ].filter(Boolean).join('\n'):status.reason;
+  if(status.canDesignate)handlers.set(actions.designateCapital,()=>{
+   const latest=accounted();
+   const reason=designateCapital(latest,vId,player.id);
+   if(reason)player.sendMessage(reason);
+   else save(latest);
+   reopenView(player,vId,provinceView);
+  });
+  if(status.canRename)handlers.set(actions.renameProvince,()=>openProvinceRename(player,vId,provinceView));
   const realmMarkers=[];
   const activeRoute=selectedTradeRoutes(s)[vId];
   const layout=CHARTER_LAYOUT.realmRows;
@@ -293,11 +314,11 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   handlers.set(actions.claim,()=>{const latest=state();if(claimSettlement(latest,vId,player))save(latest);reopenView(player,vId,{...view,page:'Overview'});});
   for(const [key,index] of Object.entries(actions))records[index]=`[JF:action:${key}]`;
   for(const [key,index] of Object.entries(data))if(!['census','developmentValue','developmentActual','developmentHourly','owner','realmMine','realmAll'].includes(key)&&!key.startsWith('stockCount')&&!key.startsWith('productionModifier')&&!key.startsWith('overviewProduction')&&!key.startsWith('directory')&&!key.startsWith('roadConnection')&&!key.startsWith('prospectInfo'))records[index]=`[JF:data:${key}]${records[index]}`;
-  for(const key of ['clearSecondary',...Array.from({length:52},(_,i)=>'prospectSelect'+i)])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
+  for(const key of ['clearSecondary','designateCapital','renameProvince',...Array.from({length:52},(_,i)=>'prospectSelect'+i)])if(!handlers.has(actions[key]))records[actions[key]]=`[JF:disabled:${key}]`;
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Tab switches stay local; action variants identify their visible page.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}]${realmMarkers.join('')}${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?'':`[JF:directory:${scope}:empty]`).join('')}`);
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}][JF:diplomacy:${diplomacyScope}]${realmMarkers.join('')}${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?'':`[JF:directory:${scope}:empty]`).join('')}`);
   records.forEach((text,index)=>{
    const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:directoryIcons.get(index);
    form.button(text,texture);
@@ -310,16 +331,21 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
 // Map rendering reads the registry and the POIs previously discovered by clapping.
 function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
  try{
-  const villages=state().villages;
+  const {villages,provinces}=state();
   const requested={...viewport,dimension:viewport.dimension||villages[vid]?.dimension||player.dimension?.id||'minecraft:overworld'};
   let spawn=null;
   try{spawn=world.getDefaultSpawnLocation();}catch(error){console.warn(`Frontier map spawn: ${error}`);}
-  const snapshot=mapSnapshot(villages,requested,selectedId,spawn,readSurveyedPois(world)),layout=CHARTER_LAYOUT.settlementMap;
+  const snapshot=mapSnapshot(villages,requested,selectedId,spawn,readSurveyedPois(world),provinces),layout=CHARTER_LAYOUT.settlementMap;
   const records=Array(layout.zTicks.at(-1)+1).fill('');
   snapshot.cells.forEach(([point],index)=>{records[index]=mapDetails(point);});
   const labels={back:'Back',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
+  const {showProvinces,showZones}=snapshot.viewport;
+  if(snapshot.viewport.dimension==='minecraft:overworld'){
+   labels.provinceLines=`Province Lines: ${showProvinces?'On':'Off'}`;
+   labels.zoneLines=`Zone Lines: ${showZones?'On':'Off'}`;
+  }
   for(const [key,text]of Object.entries(labels))records[layout[key]]=text;
-  if(snapshot.pageCount>1)records[layout.nextPage]=`POI page ${snapshot.page+1}/${snapshot.pageCount} >`;
+  if(snapshot.pageCount>1)records[layout.nextPage]=`${snapshot.provinceView?'Province':'POI'} page ${snapshot.page+1}/${snapshot.pageCount} >`;
   const b=snapshot.bounds;
   layout.xTicks.forEach((index,i)=>{
     records[index]=`X ${Math.round(b.minX+(b.maxX-b.minX)*i/(layout.xTicks.length-1))}`;
@@ -327,12 +353,9 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
   layout.zTicks.forEach((index,i)=>{
     records[index]=String(Math.round(b.minZ+(b.maxZ-b.minZ)*i/(layout.zTicks.length-1)));
   });
-  const provinceMarkers=snapshot.viewport.dimension==='minecraft:overworld'?
-   provinceLinePixels(b.minX,b.maxX,layout.width).map(x=>`[JF:province:x:${x}]`).join('')+
-   provinceLinePixels(b.minZ,b.maxZ,layout.height).map(z=>`[JF:province:z:${z}]`).join(''):'';
-  const form=new ActionFormData().title(pageTitle('SettlementMap')).body(provinceMarkers);
+  const form=new ActionFormData().title(pageTitle('SettlementMap')).body(mapBoundaryMarkers(snapshot,layout.width,layout.height));
   records.forEach((text,index)=>form.button(text,snapshot.cells[index]?.[0]?.texture));
-  const show=(next=snapshot.viewport,selection=selectedId)=>openSettlementMap(player,vid,next,selection,returnView);
+  const show=next=>openSettlementMap(player,vid,{showProvinces,showZones,...next},selectedId,returnView);
   displayMenu(player,form,system).then(response=>{
    if(response.canceled)return;
    const index=response.selection;
@@ -342,7 +365,11 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
     show({...snapshot.viewport,page:(snapshot.page+1)%snapshot.pageCount});return;
    }
    const action=Object.keys(labels).find(key=>layout[key]===index);
-   if(action==='back'){reopenView(player,vid,{...returnView,page:'Diplomacy'});return;}
+   if(action==='back'){reopenView(player,vid,{...returnView,page:'Diplomacy',diplomacyScope:'map'});return;}
+   if(action==='provinceLines'||action==='zoneLines'){
+    const layer=action==='provinceLines'?'showProvinces':'showZones';
+    show({...snapshot.viewport,page:snapshot.page,[layer]:!snapshot.viewport[layer]});return;
+   }
    if(action==='fit'){show({dimension:snapshot.viewport.dimension});return;}
    if(action==='dimension'){
     const next=snapshot.dimensions[(snapshot.dimensions.indexOf(snapshot.viewport.dimension)+1)%snapshot.dimensions.length];
@@ -399,6 +426,23 @@ async function renameSettlement(player,vId,view={}){
     reopenView(player,vId,view);
   }catch(e){console.warn(`Frontier rename: ${e}`);player.sendMessage('§cSettlement name could not be saved.');}
 }
+async function openProvinceRename(player,vid,view){
+ const status=capitalStatus(state(),vid,player.id);
+ if(!status.canRename){reopenView(player,vid,view);return;}
+ const form=new ModalFormData().title(pageTitle('Rename'))
+  .textField('Province name (1–24 characters)','Province name',{defaultValue:status.province.name})
+  .submitButton('Save name');
+ try{
+  const response=await displayMenu(player,form,system);
+  if(!response.canceled){
+   const latest=state();
+   const reason=renameProvince(latest,vid,player.id,response.formValues?.[0]);
+   if(reason)player.sendMessage(reason);
+   else save(latest);
+  }
+  reopenView(player,vid,view);
+ }catch(error){console.warn(`Frontier province rename: ${error}`);player.sendMessage('§cProvince name could not be saved.');}
+}
 async function surveySettlement(player,vid,view={}){
  let job=pendingSurveys.get(vid);
  if(!job){
@@ -411,7 +455,7 @@ async function surveySettlement(player,vid,view={}){
  try{await job;player.sendMessage('§aVillager and biome survey updated.');}
  catch(e){console.warn(`Frontier survey: ${e}`);player.sendMessage('§cSurvey could not finish. Try Survey again.');}
  finally{if(pendingSurveys.get(vid)===job)pendingSurveys.delete(vid);}
- open(player,vid,view.page||'Overview',view.researchScope||'local',view.realmPage||0,view.realmScope||'roads',view.productionScope||'summary',view.productionPages||{});
+ reopenView(player,vid,view);
 }
 function surveyVillage(vid){const s=accounted(),v=s.villages[vid];if(!v)return;
   if(v.dimension!=='minecraft:overworld')return;
@@ -501,7 +545,24 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
     finally{pendingCharterInteractions.delete(pendingKey);}
   });
 });
-world.afterEvents.playerBreakBlock.subscribe(ev=>{rememberPoiPlacement(world,ev.block,ev.brokenBlockPermutation.type.id,false);if(ev.brokenBlockPermutation.type.id!==BLOCK)return;const s=accounted(),legacy=id(ev.block.location);if(s.placedCharters){delete s.placedCharters[charterKey(ev.block.dimension.id,ev.block.location)];save(s);}if(s.pendingResearch?.scope==='local'&&[legacy,`${ev.block.dimension.id}|${legacy}`].includes(s.pendingResearch.vid)){ev.player.sendMessage('Research payment recovery is pending. Replace this charter and reopen it before removing the settlement.');return;}delete s.villages[`${ev.block.dimension.id}|${legacy}`];if(s.villages[legacy]?.dimension===ev.block.dimension.id)delete s.villages[legacy];for(const [key,road]of Object.entries(s.roads||{}))if(!s.villages[road.from]||!s.villages[road.to])delete s.roads[key];save(s);});
+world.afterEvents.playerBreakBlock.subscribe(ev=>{
+ rememberPoiPlacement(world,ev.block,ev.brokenBlockPermutation.type.id,false);
+ if(ev.brokenBlockPermutation.type.id!==BLOCK)return;
+ const s=accounted(),dimension=ev.block.dimension.id,legacy=id(ev.block.location);
+ const charter=charterKey(dimension,ev.block.location),villageId=`${dimension}|${legacy}`;
+ if(s.placedCharters){delete s.placedCharters[charter];save(s);}
+ if(s.pendingResearch?.scope==='local'&&[legacy,villageId].includes(s.pendingResearch.vid)){
+  ev.player.sendMessage('Research payment recovery is pending. Replace this charter and reopen it before removing the settlement.');return;
+ }
+ updateProvinceCapitalId(s,villageId);
+ delete s.villages[villageId];
+ if(s.villages[legacy]?.dimension===dimension){
+  updateProvinceCapitalId(s,legacy);
+  delete s.villages[legacy];
+ }
+ for(const [key,road]of Object.entries(s.roads||{}))if(!s.villages[road.from]||!s.villages[road.to])delete s.roads[key];
+ save(s);
+});
 // Player-only buffs are refreshed every six seconds. Villagers are queried
 // at most once per in-game day, only around an occupied loaded settlement.
 system.runInterval(()=>{
