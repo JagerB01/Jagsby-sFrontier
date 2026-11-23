@@ -353,7 +353,8 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
   layout.zTicks.forEach((index,i)=>{
     records[index]=String(Math.round(b.minZ+(b.maxZ-b.minZ)*i/(layout.zTicks.length-1)));
   });
-  const form=new ActionFormData().title(pageTitle('SettlementMap')).body(mapBoundaryMarkers(snapshot,layout.width,layout.height));
+  const body=(snapshot.provinceView?'[JF:provinceView]':'')+mapBoundaryMarkers(snapshot,layout.width,layout.height);
+  const form=new ActionFormData().title(pageTitle('SettlementMap')).body(body);
   records.forEach((text,index)=>form.button(text,snapshot.cells[index]?.[0]?.texture));
   const show=next=>openSettlementMap(player,vid,{showProvinces,showZones,...next},selectedId,returnView);
   displayMenu(player,form,system).then(response=>{

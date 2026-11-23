@@ -1078,13 +1078,14 @@ test('The first minus press shows province icons with no capital, and Fit restor
  h.api.openSettlementMap(h.player,'a');
  await new Promise(resolve=>setImmediate(resolve));
  const [initial,zoomed,refreshed,fitted]=h.forms;
- const provinceIcon='textures/ui/frontier/poi_markers/province';
+ const provinceIcon='textures/ui/frontier/province_pins/0_3';
  assert.ok(initial.icons.includes('textures/ui/frontier/poi_markers/village'));
  assert.ok(!initial.icons.includes(provinceIcon));
  for(const form of [zoomed,refreshed]){
   const index=form.icons.indexOf(provinceIcon);
   assert.ok(index>=0);
-  assert.equal(form.buttons[index],'Province 0,0\nCenter: X 1024, Z 1024\nCapital: None');
+  assert.equal(form.buttons[index],'Province 0,0\nCapital: None\nCombined Development: 0');
+  assert.match(form.text,/\[JF:provinceView\]/);
  }
  assert.deepEqual(fitted.icons,initial.icons);
 });

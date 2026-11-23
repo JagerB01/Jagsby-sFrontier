@@ -9,6 +9,7 @@ import { PROVINCE_SIZE, provinceAt, provinceInfo } from './provinces.js';
 export const MAP_COLUMNS=40, MAP_ROWS=25, MAP_ASPECT=MAP_COLUMNS/MAP_ROWS;
 export const MAP_MIN_SPAN=64, MAP_MAX_SPAN=200000000;
 export {PROVINCE_SIZE};
+const CELL_PIXELS=6;
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
 export function settlementPoints(villages={}) {
  return Object.entries(villages).filter(([,v])=>v&&finite(v.location?.x)&&finite(v.location?.z)&&typeof v.dimension==='string').map(([id,v])=>({
@@ -74,10 +75,15 @@ function provincePoints(points,state) {
  const provinces=new Map();
  for(const point of points){
   const province=provinceAt(point,point.dimension);
-  if(!province||provinces.has(province.key))continue;
-  const info=provinceInfo(state,province);
-  provinces.set(province.key,{...province,id:province.key,type:'province',name:info.name,capital:info.capital?.name,
-   dimension:point.dimension,texture:'textures/ui/frontier/poi_markers/province'});
+  if(!province)continue;
+  let marker=provinces.get(province.key);
+  if(!marker){
+   const info=provinceInfo(state,province);
+   marker={...province,id:province.key,type:'province',name:info.name,capital:info.capital?.name,
+    dimension:point.dimension,development:0};
+   provinces.set(province.key,marker);
+  }
+  if(point.type==='settlement')marker.development+=point.development;
  }
  return [...provinces.values()].sort((a,b)=>a.z-b.z||a.x-b.x);
 }
@@ -93,8 +99,8 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
   }
  }
  const spawn=finite(spawnLocation?.x)&&finite(spawnLocation?.z)?{id:'world-spawn',type:'spawn',dimension:'minecraft:overworld',name:'World spawn',texture:'textures/ui/frontier/map_markers/world_spawn',x:spawnLocation.x,y:finite(spawnLocation.y)?spawnLocation.y:null,z:spawnLocation.z}:null;
- const fitPoints=[...points,...surveyed.map(toMapPoi)];
- if(spawn)fitPoints.push(spawn);
+ const pois=[...points,...surveyed.map(toMapPoi)];
+ const fitPoints=spawn?[...pois,spawn]:pois;
  const dimensions=[...new Set(fitPoints.map(p=>p.dimension))].sort();
  const dimension=typeof requested.dimension==='string'?requested.dimension:dimensions[0]||'minecraft:overworld';
  if(!dimensions.includes(dimension))dimensions.push(dimension);
@@ -107,12 +113,15 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
  const width=viewport.span,height=width/MAP_ASPECT;
  const bounds={minX:viewport.x-width/2,maxX:viewport.x+width/2,minZ:viewport.z-height/2,maxZ:viewport.z+height/2};
  const cells=Array.from({length:MAP_COLUMNS*MAP_ROWS},()=>[]);
- const project=point=>{
+ const projectPixel=point=>{
   if(point.dimension!==dimension||point.x<bounds.minX||point.x>bounds.maxX||point.z<bounds.minZ||point.z>bounds.maxZ)return null;
-  const column=Math.min(MAP_COLUMNS-1,Math.floor((point.x-bounds.minX)/width*MAP_COLUMNS));
-  const row=Math.min(MAP_ROWS-1,Math.floor((point.z-bounds.minZ)/height*MAP_ROWS));
-  return row*MAP_COLUMNS+column;
+  return [
+   Math.min(MAP_COLUMNS*CELL_PIXELS-1,Math.floor((point.x-bounds.minX)/width*(MAP_COLUMNS*CELL_PIXELS))),
+   Math.min(MAP_ROWS*CELL_PIXELS-1,Math.floor((point.z-bounds.minZ)/height*(MAP_ROWS*CELL_PIXELS))),
+  ];
  };
+ const pinCell=([x,z])=>Math.floor(z/CELL_PIXELS)*MAP_COLUMNS+Math.floor(x/CELL_PIXELS);
+ const project=point=>{const pixel=projectPixel(point);return pixel&&pinCell(pixel);};
  const count=points.filter(point=>point.dimension===dimension).length;
  const visible=points.filter(point=>project(point)!==null).length;
  const provinceView=dimension==='minecraft:overworld'&&finite(viewport.provinceViewSpan)&&width>=viewport.provinceViewSpan;
@@ -120,9 +129,12 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
  if(provinceView){
   // Never displace a province marker. Centers sharing a map cell are shown
   // on different pages, each at the cell that contains the actual center.
-  for(const point of provincePoints(fitPoints,state)){
-   const slot=project(point);
-   if(slot!==null)cells[slot].push(point);
+  for(const point of provincePoints(pois,state)){
+   const pixel=projectPixel(point);
+   if(!pixel)continue;
+   const [x,z]=pixel;
+   point.texture=`textures/ui/frontier/province_pins/${x%CELL_PIXELS}_${z%CELL_PIXELS}`;
+   cells[pinCell(pixel)].push(point);
   }
   const pageCount=Math.max(1,...cells.map(cell=>cell.length));
   page=Math.min(page,pageCount-1);
@@ -178,7 +190,7 @@ function coordinates(point){
 }
 export function mapDetails(point){
  if(!point)return '';
- if(point.type==='province')return `${point.name}\nCenter: X ${point.x}, Z ${point.z}\nCapital: ${point.capital||'None'}`;
+ if(point.type==='province')return `${point.name}\nCapital: ${point.capital||'None'}\nCombined Development: ${point.development}`;
  if(point.type==='spawn')return `World spawn\n${coordinates(point)}`;
  if(point.type==='survey')return `${point.name}\n${coordinates(point)}`;
  return `${point.name}\n${coordinates(point)}\nBiome: ${point.biome}\nDevelopment: ${point.development}\nOwner: ${point.owner}`+

@@ -5,12 +5,12 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.128](downloads/Jagsbys_Frontier_v0.0.128.mcaddon?raw=true)
+[Download Frontier 0.0.129](downloads/Jagsbys_Frontier_v0.0.129.mcaddon?raw=true)
 
 The Village Charter's Diplomacy tab now has Map and Provinces subtabs.
 Settlement owners can designate a capital at Development 10, and capital owners
 can name their province. The detailed map uses the Capital icon, and the first press of −
-groups Overworld pins into centered Province icons. See [Settlement Map](docs/settlement-map.md).
+shows centered Province icons for squares with settlements or landmarks. Province tooltips list the capital and combined Development. See [Settlement Map](docs/settlement-map.md).
 
 Clap in the Overworld to survey loaded landmarks and add POIs to the
 Settlement Map. The scan checks characteristic blocks within 48 horizontal
@@ -506,10 +506,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.128.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.129.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.128_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.129_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

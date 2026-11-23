@@ -171,7 +171,7 @@ test('Small idle pins reveal adjacent tooltips that stay inside the expanded map
  assert.equal(tooltipHeight,'100%cm');
  for(let slot=0;slot<L.settlementMap.cells;slot++){
   const target=grid['cell'+slot],states=children(markerFor(ui,target));
-  const idle=states['idle@jagsby_frontier.jf_map_pin_art'];
+  const idle=children(states.idle)['art@jagsby_frontier.jf_map_pin_art'];
   assert.deepEqual(idle.size,[6,6]);
   assert.equal(idle.collection_index,slot);
   const hover=children(states.info);
@@ -279,11 +279,11 @@ test('One zoom-out step from Fit switches Overworld pins to province centers',()
  const wide=mapSnapshot(villages,moveMap(detail.viewport,'zoomOut'),'capital',null,[],provinces);
  assert.equal(wide.viewport.span,detail.viewport.span*2);
  assert.equal(wide.provinceView,true);
- assert.deepEqual(points(wide).map(({x,z,name,texture})=>[x,z,name,texture]),[
-  [-1024,1024,'West Reach','textures/ui/frontier/poi_markers/province'],
-  [1024,1024,'Province 0,0','textures/ui/frontier/poi_markers/province'],
+ assert.deepEqual(points(wide).map(({x,z,name})=>[x,z,name]),[
+  [-1024,1024,'West Reach'],
+  [1024,1024,'Province 0,0'],
  ]);
- assert.equal(mapDetails(points(wide)[0]),'West Reach\nCenter: X -1024, Z 1024\nCapital: Harbor');
+ assert.equal(mapDetails(points(wide)[0]),'West Reach\nCapital: Harbor\nCombined Development: 4');
  const wider=moveMap(wide.viewport,'zoomOut');
  assert.equal(mapSnapshot(villages,moveMap(wider,'zoomIn')).provinceView,true);
  assert.equal(mapSnapshot(villages,moveMap(wide.viewport,'zoomIn')).provinceView,false);
@@ -291,6 +291,47 @@ test('One zoom-out step from Fit switches Overworld pins to province centers',()
   moveMap({dimension:'minecraft:nether',x:0,z:0,span:256},'zoomOut'));
  assert.equal(nether.provinceView,false);
  assert.equal(points(nether)[0].name,'Fort');
+});
+
+test('Province art uses the projected pixel within its pin cell, including hover',async()=>{
+ const view=moveMap({dimension:'minecraft:overworld',x:1000,z:1000,span:1200},'zoomOut');
+ const snapshot=mapSnapshot({a:village('A',20,20)},view);
+ const point=points(snapshot)[0];
+ assert.equal(point.texture,'textures/ui/frontier/province_pins/2_5');
+ const slot=snapshot.cells.findIndex(cell=>cell.length);
+ const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
+ const grid=children(children(ui.jf_settlement_map).grid);
+ const pin=children(markerFor(ui,grid['cell'+slot]));
+ assert.deepEqual(grid['cell'+slot].offset,[120,72]);
+ assert.equal(children(pin.idle)['province_art@jagsby_frontier.jf_map_province_idle'].collection_index,slot);
+ assert.equal(children(pin.info)['province_art@jagsby_frontier.jf_map_province_hover'].collection_index,slot);
+ for(const [name,size,uv] of [['idle',12,0],['hover',22,48]]){
+  const art=ui['jf_map_province_'+name];
+  assert.deepEqual(art.uv,[uv,0]);
+  assert.deepEqual(art.uv_size,[size*4,size*4]);
+  assert.deepEqual(art.offset,[(6-size)/2,(6-size)/2]);
+  assert.ok(art.bindings.some(b=>b.target_property_name==='#visible'&&b.source_property_name.includes('[JF:provinceView]')));
+ }
+});
+
+test('Province icons require a settlement or surveyed landmark, and Development counts all province settlements',()=>{
+ const view=moveMap({dimension:'minecraft:overworld',x:4096,z:1024,span:7000},'zoomOut');
+ const villages={
+  a:{...village('Capital',20,10),developmentValue:1075},
+  b:{...village('Nearby',2047,2047),developmentValue:199},
+  nether:{...village('Nether',10,10,'minecraft:nether'),developmentValue:5000},
+ };
+ const saved={'0,0':{name:'Riverlands',capitalId:'a'},'3,0':{name:'Empty Province'}};
+ const surveyed=[{kind:'stronghold',x:50,y:20,z:50},{kind:'stronghold',x:2200,y:20,z:30}];
+ const spawn={x:4300,y:64,z:0};
+ const visible=points(mapSnapshot(villages,view,'a',spawn,surveyed,saved));
+ assert.deepEqual(visible.map(({key})=>key),['0,0','1,0']);
+ assert.equal(mapDetails(visible[0]),'Riverlands\nCapital: Capital\nCombined Development: 11');
+ assert.equal(mapDetails(visible[1]),'Province 1,0\nCapital: None\nCombined Development: 0');
+ // A settlement outside the viewport still contributes to its visible province.
+ const tight={...view,x:1000,z:1000,span:1000,provinceViewSpan:1000};
+ const province=points(mapSnapshot(villages,tight,'a',spawn,surveyed,saved))[0];
+ assert.equal(province.development,11);
 });
 
 test('Province centers sharing a cell paginate without moving either icon',()=>{

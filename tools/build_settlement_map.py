@@ -56,7 +56,21 @@ def build_map_ui(ui, frame):
          "binding_type": "collection", "binding_collection_name": "form_buttons"},
         {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system",
          "binding_type": "collection", "binding_collection_name": "form_buttons"}]
+    province_mode = "(not ((#form_text - '[JF:provinceView]') = #form_text))"
+    art["bindings"].append({"binding_type": "view", "source_control_name": "jf_map_boundary_state",
+                            "source_property_name": f"(not {province_mode})", "target_property_name": "#visible"})
     ui["jf_map_pin_art"] = art
+    # The texture supplied in the form contains two crops of the same icon.
+    # Each crop includes room for the sub-cell offset in either direction.
+    for name, size, atlas_x, layer in (("idle", CELL, 0, 8), ("hover", ART_SIZE, (CELL * 2) * 4, 20)):
+        padded = size + CELL
+        ui["jf_map_province_" + name] = {
+            **sprite("province_pins/0_0", [padded, padded], [(CELL - padded) // 2] * 2),
+            "uv": [atlas_x, 0], "uv_size": [padded * 4, padded * 4], "layer": layer,
+            "bindings": copy.deepcopy(art["bindings"][:-1]) + [
+                {"binding_type": "view", "source_control_name": "jf_map_boundary_state",
+                 "source_property_name": province_mode, "target_property_name": "#visible"}],
+        }
     ui["jf_map_pin_details"] = {
         "type": "panel", "size": [TOOLTIP_WIDTH, "100%cm"],
         "anchor_from": "top_left", "anchor_to": "top_left",
@@ -91,11 +105,16 @@ def build_map_ui(ui, frame):
             tooltip_x = art_x - TOOLTIP_GAP - TOOLTIP_WIDTH
         tooltip_anchor = "top_left" if z < HEIGHT / 2 else "bottom_left"
         ui[template + "@jagsby_frontier.jf_map_pin"] = {"controls": [
-            c("idle@jagsby_frontier.jf_map_pin_art", {"size": [CELL, CELL], "layer": 8, "collection_index": slot}),
+            c("idle", {"type": "panel", "size": [CELL, CELL], "offset": [0, 0],
+                       "anchor_from": "top_left", "anchor_to": "top_left", "allow_clipping": False,
+                       "controls": [
+                           c("art@jagsby_frontier.jf_map_pin_art", {"size": [CELL, CELL], "layer": 8, "collection_index": slot}),
+                           c("province_art@jagsby_frontier.jf_map_province_idle", {"collection_index": slot})]}),
             c("info", {"type": "panel", "size": [CELL, CELL], "offset": [0, 0],
                        "anchor_from": "top_left", "anchor_to": "top_left", "allow_clipping": False,
                        "controls": [
                            c("art@jagsby_frontier.jf_map_pin_art", {"offset": [art_x - x, art_z - z], "collection_index": slot}),
+                           c("province_art@jagsby_frontier.jf_map_province_hover", {"collection_index": slot}),
                            c("tooltip@jagsby_frontier.jf_map_pin_details",
                              {"offset": [tooltip_x - x, 0],
                               "anchor_from": tooltip_anchor, "anchor_to": tooltip_anchor})]})]}
@@ -147,7 +166,7 @@ def build_map_ui(ui, frame):
         hover_marker(template, slot, x, z)
         grid.append(c("cell"+str(slot), scope(template, slot, [CELL, CELL], [x, z])))
     content.append(c("grid", {"type":"panel","size":[WIDTH,HEIGHT],"offset":[GRID_X,GRID_Y],
-        "anchor_from":"top_left","anchor_to":"top_left","controls":grid}))
+        "anchor_from":"top_left","anchor_to":"top_left","clips_children":True,"controls":grid}))
     # One framed control panel, kept outside the drawing area.
     panel=[c("edge", image([76, 162], [0, 0], [0.30, 0.32, 0.28])),
            c("background", image([74, 160], [1, 1], [0.075, 0.09, 0.08])),

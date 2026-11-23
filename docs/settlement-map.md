@@ -13,10 +13,11 @@ capital is removed.
 
 The detailed map uses the Capital icon for a designated capital. In the
 Overworld, the first press of − switches to Province icons for squares with
-registered settlements, discovered landmarks or world spawn. Press Fit or zoom
-back in past that step to return to individual pins. The map projects each icon
-from the center of its province, snaps it to the pin grid, and uses separate
-pages if centers share a cell.
+registered settlements or discovered landmarks. Press Fit or zoom back in
+past that step to return to individual pins. Province artwork follows the
+center of its square to the nearest map pixel. Centers that share a pin cell
+use separate pages. Hover or focus a province icon to see its name, capital
+and the sum of the Development levels of all settlements in that province.
 
 ## Pins and hover information
 
