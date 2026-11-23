@@ -7,9 +7,10 @@ left. Hover or focus a POI pin to see its information beside it.
 
 Village Charter → Diplomacy → Provinces shows the current charter's province,
 its capital and its bounds. When a province has no capital, a settlement owner
-can designate their settlement once it reaches Development 10. The capital's
-current owner can name the province. The name stays with the province if the
-capital is removed.
+can designate their settlement once it reaches Development 10. Before a rename,
+the map and Provinces tab show a standard name assigned from the province's
+coordinates. The capital's current owner can rename the province. The saved
+name stays with the province if the capital is removed.
 
 The detailed map uses the Capital icon for a designated capital. In the
 Overworld, the first press of − switches to Province icons for squares with

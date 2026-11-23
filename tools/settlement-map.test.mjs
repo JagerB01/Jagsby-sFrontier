@@ -281,7 +281,7 @@ test('One zoom-out step from Fit switches Overworld pins to province centers',()
  assert.equal(wide.provinceView,true);
  assert.deepEqual(points(wide).map(({x,z,name})=>[x,z,name]),[
   [-1024,1024,'West Reach'],
-  [1024,1024,'Province 0,0'],
+  [1024,1024,'Alderwatch'],
  ]);
  assert.equal(mapDetails(points(wide)[0]),'West Reach\nCapital: Harbor\nCombined Development: 4');
  const wider=moveMap(wide.viewport,'zoomOut');
@@ -327,11 +327,35 @@ test('Province icons require a settlement or surveyed landmark, and Development 
  const visible=points(mapSnapshot(villages,view,'a',spawn,surveyed,saved));
  assert.deepEqual(visible.map(({key})=>key),['0,0','1,0']);
  assert.equal(mapDetails(visible[0]),'Riverlands\nCapital: Capital\nCombined Development: 11');
- assert.equal(mapDetails(visible[1]),'Province 1,0\nCapital: None\nCombined Development: 0');
+ assert.equal(mapDetails(visible[1]),'Greyford\nCapital: None\nCombined Development: 0');
  // A settlement outside the viewport still contributes to its visible province.
  const tight={...view,x:1000,z:1000,span:1000,provinceViewSpan:1000};
  const province=points(mapSnapshot(villages,tight,'a',spawn,surveyed,saved))[0];
  assert.equal(province.development,11);
+});
+
+test('Standard province names repeat by coordinates and saved names take priority',()=>{
+ const names=['Alderwatch','Greyford','Flintmarch','Bracken Vale','Foxmere','Stonecross','Westreach','Iron Hollow'];
+ const state={villages:{}};
+ for(let i=-8;i<9;i++){
+  const x=i*2048;
+  state.villages.a=village('A',x,0);
+  const standard=names[(i+8)%8];
+  assert.equal(capitalStatus(state,'a','p').province.name,standard);
+  state.villages.a.location.x=x+2047;
+  assert.equal(capitalStatus(state,'a','p').province.name,standard);
+ }
+ state.villages.a=village('A',0,-1);
+ assert.equal(capitalStatus(state,'a','p').province.name,'Stonecross');
+ state.villages.a.location.z=2048;
+ assert.equal(capitalStatus(state,'a','p').province.name,'Bracken Vale');
+ const owner={id:'p',name:'Owner'};
+ state.villages.a={...village('A',-1,0),owner,developmentValue:1000};
+ assert.equal(designateCapital(state,'a','p'),'');
+ assert.equal(capitalStatus(state,'a','p').province.name,'Iron Hollow');
+ state.provinces['-1,0'].name='Custom Name';
+ updateProvinceCapitalId(state,'a');
+ assert.equal(capitalStatus(state,'a','p').province.name,'Custom Name');
 });
 
 test('Province centers sharing a cell paginate without moving either icon',()=>{

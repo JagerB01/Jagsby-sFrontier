@@ -3,6 +3,10 @@ import { settlementName } from './settlement-overview.js';
 
 export const PROVINCE_SIZE = 2048;
 export const CAPITAL_DEVELOPMENT = 10;
+const STANDARD_PROVINCE_NAMES = [
+  'Alderwatch', 'Greyford', 'Flintmarch', 'Bracken Vale',
+  'Foxmere', 'Stonecross', 'Westreach', 'Iron Hollow',
+];
 
 export function provinceAt(location, dimension) {
   if (dimension !== 'minecraft:overworld' || !Number.isFinite(location?.x) || !Number.isFinite(location?.z)) return null;
@@ -17,7 +21,12 @@ export function provinceInfo(state, province) {
   const record = state.provinces?.[province.key];
   const capital = record?.capitalId ? state.villages[record.capitalId] : null;
   const capitalId = provinceAt(capital?.location, capital?.dimension)?.key === province.key ? record.capitalId : null;
-  return {...province, name: record?.name || `Province ${province.key}`, capitalId, capital: capitalId ? capital : null};
+  // Stagger the name sequence across rows so adjacent provinces use different names.
+  const offset = (province.west + 3 * province.north) / PROVINCE_SIZE;
+  const count = STANDARD_PROVINCE_NAMES.length;
+  const index = ((offset % count) + count) % count;
+  const name = record?.name || STANDARD_PROVINCE_NAMES[index];
+  return {...province, name, capitalId, capital: capitalId ? capital : null};
 }
 
 export function capitalStatus(state, villageId, playerId) {

@@ -1084,7 +1084,7 @@ test('The first minus press shows province icons with no capital, and Fit restor
  for(const form of [zoomed,refreshed]){
   const index=form.icons.indexOf(provinceIcon);
   assert.ok(index>=0);
-  assert.equal(form.buttons[index],'Province 0,0\nCapital: None\nCombined Development: 0');
+  assert.equal(form.buttons[index],'Alderwatch\nCapital: None\nCombined Development: 0');
   assert.match(form.text,/\[JF:provinceView\]/);
  }
  assert.deepEqual(fitted.icons,initial.icons);
