@@ -12,10 +12,11 @@ current owner can name the province. The name stays with the province if the
 capital is removed.
 
 The detailed map uses the Capital icon for a designated capital. In the
-Overworld, zooming out until one pin cell spans a full province switches to
-Province icons for squares with registered settlements, discovered landmarks or
-world spawn. The map projects each icon from the center of its province, snaps
-it to the pin grid, and uses separate pages if centers share a cell.
+Overworld, the first press of − switches to Province icons for squares with
+registered settlements, discovered landmarks or world spawn. Press Fit or zoom
+back in past that step to return to individual pins. The map projects each icon
+from the center of its province, snaps it to the pin grid, and uses separate
+pages if centers share a cell.
 
 ## Pins and hover information
 

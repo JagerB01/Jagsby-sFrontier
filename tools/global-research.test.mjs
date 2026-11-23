@@ -1070,6 +1070,25 @@ test('Diplomacy map line toggles act independently and survive viewport changes'
  assert.deepEqual(h.read(),before);
 });
 
+test('The first minus press shows province icons with no capital, and Fit restores individual pins',async()=>{
+ const s=fresh(Date.now());
+ s.villages.a={...village(),id:'a',name:'Alpha'};
+ const m=CHARTER_LAYOUT.settlementMap,selections=[m.zoomOut,m.refresh,m.fit];
+ const h=await runtime(s,()=>selections.length?{selection:selections.shift()}:{canceled:true});
+ h.api.openSettlementMap(h.player,'a');
+ await new Promise(resolve=>setImmediate(resolve));
+ const [initial,zoomed,refreshed,fitted]=h.forms;
+ const provinceIcon='textures/ui/frontier/poi_markers/province';
+ assert.ok(initial.icons.includes('textures/ui/frontier/poi_markers/village'));
+ assert.ok(!initial.icons.includes(provinceIcon));
+ for(const form of [zoomed,refreshed]){
+  const index=form.icons.indexOf(provinceIcon);
+  assert.ok(index>=0);
+  assert.equal(form.buttons[index],'Province 0,0\nCenter: X 1024, Z 1024\nCapital: None');
+ }
+ assert.deepEqual(fitted.icons,initial.icons);
+});
+
 test('route changes cancel old completion timers; stale callbacks cannot finish paused construction',async()=>{
  const s=fresh(Date.now());for(const [i,id]of ['a','b','c'].entries())s.villages[id]={...village(i*1000),id,name:id,roads:3,biome:'unknown'};
  let tick=0;const jobs=[],cleared=[];

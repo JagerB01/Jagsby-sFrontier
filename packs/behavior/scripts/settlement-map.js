@@ -9,9 +9,6 @@ import { PROVINCE_SIZE, provinceAt, provinceInfo } from './provinces.js';
 export const MAP_COLUMNS=40, MAP_ROWS=25, MAP_ASPECT=MAP_COLUMNS/MAP_ROWS;
 export const MAP_MIN_SPAN=64, MAP_MAX_SPAN=200000000;
 export {PROVINCE_SIZE};
-// Individual pins occupy six pixels. Switch once a province is no wider
-// than one pin, when multiple landmarks can project into the same cell.
-export const PROVINCE_VIEW_SPAN=PROVINCE_SIZE*MAP_COLUMNS;
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
 export function settlementPoints(villages={}) {
  return Object.entries(villages).filter(([,v])=>v&&finite(v.location?.x)&&finite(v.location?.z)&&typeof v.dimension==='string').map(([id,v])=>({
@@ -105,7 +102,8 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
  const fitted=fitMap(fitPoints,dimension,selected);
  const viewport={dimension,x:finite(requested.x)?requested.x:fitted.x,z:finite(requested.z)?requested.z:fitted.z,
   span:finite(requested.span)?Math.min(MAP_MAX_SPAN,Math.max(MAP_MIN_SPAN,requested.span)):fitted.span,
-  showProvinces:requested.showProvinces??true,showZones:requested.showZones??false};
+  showProvinces:requested.showProvinces??true,showZones:requested.showZones??false,
+  provinceViewSpan:requested.provinceViewSpan};
  const width=viewport.span,height=width/MAP_ASPECT;
  const bounds={minX:viewport.x-width/2,maxX:viewport.x+width/2,minZ:viewport.z-height/2,maxZ:viewport.z+height/2};
  const cells=Array.from({length:MAP_COLUMNS*MAP_ROWS},()=>[]);
@@ -117,7 +115,7 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
  };
  const count=points.filter(point=>point.dimension===dimension).length;
  const visible=points.filter(point=>project(point)!==null).length;
- const provinceView=dimension==='minecraft:overworld'&&width>=PROVINCE_VIEW_SPAN;
+ const provinceView=dimension==='minecraft:overworld'&&finite(viewport.provinceViewSpan)&&width>=viewport.provinceViewSpan;
  let page=Number.isInteger(requested.page)?Math.max(0,requested.page):0;
  if(provinceView){
   // Never displace a province marker. Centers sharing a map cell are shown
@@ -159,8 +157,16 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
 }
 export function moveMap(viewport,action){
  const next={...viewport};
- if(action==='zoomIn')next.span=Math.max(MAP_MIN_SPAN,next.span/2);
- if(action==='zoomOut')next.span=Math.min(MAP_MAX_SPAN,next.span*2);
+ if(action==='zoomIn'){
+  next.span=Math.max(MAP_MIN_SPAN,next.span/2);
+  if(next.span<next.provinceViewSpan)delete next.provinceViewSpan;
+ }
+ if(action==='zoomOut'){
+  next.span=Math.min(MAP_MAX_SPAN,next.span*2);
+  // Keep province markers through further zoom steps until the player
+  // zooms back in past the step where they first appeared.
+  if(next.dimension==='minecraft:overworld')next.provinceViewSpan??=next.span;
+ }
  if(action==='west')next.x-=next.span/4;
  if(action==='east')next.x+=next.span/4;
  if(action==='north')next.z-=next.span/MAP_ASPECT/4;

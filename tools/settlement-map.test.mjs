@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {mapSnapshot,fitMap,provinceLinePixels,settlementPoints,moveMap,mapDetails,mapBoundaryMarkers,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN,PROVINCE_VIEW_SPAN} from '../packs/behavior/scripts/settlement-map.js';
+import {mapSnapshot,fitMap,provinceLinePixels,settlementPoints,moveMap,mapDetails,mapBoundaryMarkers,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
 import {CHARTER_LAYOUT as L} from '../packs/behavior/scripts/charter-layout.js';
 import {capitalStatus,designateCapital,updateProvinceCapitalId} from '../packs/behavior/scripts/provinces.js';
 const village=(name,x,z,dimension='minecraft:overworld')=>({name,location:{x,y:64,z},dimension,developmentValue:250,developmentThreshold:100});
@@ -268,29 +268,34 @@ test('Zone lines trace clipped squares and their markers match the generated map
  }
 });
 
-test('The Overworld switches from capital and settlement pins to province centers at one province per cell',()=>{
+test('One zoom-out step from Fit switches Overworld pins to province centers',()=>{
  const villages={capital:village('Harbor',-2048,0),local:village('South Gate',-11,1),east:village('East',5,90)};
  const provinces={'-1,0':{name:'West Reach',capitalId:'capital'}};
- const detail=mapSnapshot(villages,{span:PROVINCE_VIEW_SPAN-1},null,null,[],provinces);
+ const detail=mapSnapshot(villages,{},'capital',null,[],provinces);
  const capital=points(detail).find(point=>point.id==='capital');
  assert.equal(capital.texture,'textures/ui/frontier/poi_markers/capital');
  assert.match(mapDetails(capital),/Capital of West Reach/);
  assert.equal(points(detail).find(point=>point.id==='local').texture,'textures/ui/frontier/poi_markers/village');
- const wide=mapSnapshot(villages,{x:0,z:0,span:PROVINCE_VIEW_SPAN},null,null,[],provinces);
+ const wide=mapSnapshot(villages,moveMap(detail.viewport,'zoomOut'),'capital',null,[],provinces);
+ assert.equal(wide.viewport.span,detail.viewport.span*2);
  assert.equal(wide.provinceView,true);
  assert.deepEqual(points(wide).map(({x,z,name,texture})=>[x,z,name,texture]),[
   [-1024,1024,'West Reach','textures/ui/frontier/poi_markers/province'],
   [1024,1024,'Province 0,0','textures/ui/frontier/poi_markers/province'],
  ]);
  assert.equal(mapDetails(points(wide)[0]),'West Reach\nCenter: X -1024, Z 1024\nCapital: Harbor');
- const nether=mapSnapshot({fort:village('Fort',0,0,'minecraft:nether')},{span:PROVINCE_VIEW_SPAN});
+ const wider=moveMap(wide.viewport,'zoomOut');
+ assert.equal(mapSnapshot(villages,moveMap(wider,'zoomIn')).provinceView,true);
+ assert.equal(mapSnapshot(villages,moveMap(wide.viewport,'zoomIn')).provinceView,false);
+ const nether=mapSnapshot({fort:village('Fort',0,0,'minecraft:nether')},
+  moveMap({dimension:'minecraft:nether',x:0,z:0,span:256},'zoomOut'));
  assert.equal(nether.provinceView,false);
  assert.equal(points(nether)[0].name,'Fort');
 });
 
 test('Province centers sharing a cell paginate without moving either icon',()=>{
  const villages={a:village('A',1,1),b:village('B',3000,1)};
- const view={x:0,z:0,span:PROVINCE_VIEW_SPAN*4};
+ const view=moveMap({dimension:'minecraft:overworld',x:0,z:0,span:100000},'zoomOut');
  const one=mapSnapshot(villages,view),two=mapSnapshot(villages,{...view,page:1});
  assert.equal(one.pageCount,2);
  assert.equal(one.cells.findIndex(cell=>cell.length),two.cells.findIndex(cell=>cell.length));
