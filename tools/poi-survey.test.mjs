@@ -1,22 +1,25 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { POI_KEY, POI_TEXTURE, readSurveyedPois, surveyLoadedPois } from '../packs/behavior/scripts/poi-survey.js';
+import { readFile } from 'node:fs/promises';
+import { POI_KEY, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from '../packs/behavior/scripts/poi-survey.js';
 import { mapDetails, mapSnapshot } from '../packs/behavior/scripts/settlement-map.js';
 
-test('Clap survey scans bounded loaded volumes, records landmark clues and avoids repeat pins',()=>{
+test('Clap surveys flag villages from bells, skip player placements, and use each landmark sprite',async()=>{
  const sample=(id,x,y,z)=>({typeId:'minecraft:'+id,x,y,z});
  const worldBlocks=[
-  sample('bell',0,63,0),sample('bed',4,63,0),
+  sample('bell',0,63,0),
   sample('trial_spawner',12,-20,0),sample('trial_spawner',14,-20,0),
   sample('reinforced_deepslate',20,-50,0),
   sample('tnt',-14,55,12),sample('sandstone',-14,56,12),sample('stone_pressure_plate',-14,57,12),
   sample('dispenser',-12,63,-17),sample('mossy_cobblestone',-12,62,-17),sample('tripwire_hook',-12,63,-16),
-  sample('tnt',30,63,0),sample('bell',40,65,0),
+  sample('tnt',30,63,0),sample('sandstone',30,62,0),sample('stone_pressure_plate',31,63,0),
+  sample('bell',40,-20,0),
   sample('trial_spawner',48,-20,48),
  ];
  class Volume{constructor(from,to){this.from=from;this.to=to;}}
  let queries=0;
  const dimension={
+  id:'minecraft:overworld',
   heightRange:{min:-64,max:320},
   getBlock:pos=>worldBlocks.find(block=>['x','y','z'].every(key=>block[key]===pos[key])),
   getBlocks({from,to},{includeTypes},allowUnloaded){
@@ -28,9 +31,18 @@ test('Clap survey scans bounded loaded volumes, records landmark clues and avoid
    return {getBlockLocationIterator:()=>matches};
   },
  };
+ const properties=new Map();
+ const world={getDynamicProperty:key=>properties.get(key),setDynamicProperty:(key,value)=>{
+  if(value===undefined)properties.delete(key);else properties.set(key,value);
+ }};
+ const trackedBell={x:40,y:-20,z:0},trackedSandstone={x:30,y:62,z:0};
+ rememberPoiPlacement(world,{dimension,location:trackedBell},'minecraft:bell',true);
+ rememberPoiPlacement(world,{dimension,location:trackedSandstone},'minecraft:sandstone',true);
+ assert.equal(wasPoiPlaced(world,trackedBell),true);
+ assert.equal(wasPoiPlaced(world,{x:40,y:-4,z:0}),false);
  const saved=[];
  function scan(){
-  const survey=surveyLoadedPois(dimension,{x:0,y:64,z:0},Volume,saved);
+  const survey=surveyLoadedPois(dimension,{x:0,y:64,z:0},Volume,saved,pos=>wasPoiPlaced(world,pos));
   let step;
   do{
    const before=queries;
@@ -49,7 +61,16 @@ test('Clap survey scans bounded loaded volumes, records landmark clues and avoid
  assert.equal(map.visible,0);
  assert.equal(map.count,0);
  const city=pins.find(pin=>pin.kind==='ancient_city');
- assert.equal(city.texture,POI_TEXTURE);
- assert.equal(mapDetails(city),'Possible Ancient City\nX 20, Y -50, Z 0');
+ assert.equal(city.texture,'textures/ui/frontier/poi_markers/ancient_city');
+ assert.equal(mapDetails(city),'Ancient City\nX 20, Y -50, Z 0');
+ assert.equal(mapDetails(pins.find(pin=>pin.kind==='village')),'Village\nX 0, Y 63, Z 0');
+ assert.equal(new Set(pins.map(pin=>pin.texture)).size,6);
+ for(const pin of pins){
+  const png=await readFile(new URL('../packs/resource/'+pin.texture+'.png',import.meta.url));
+  assert.equal(png.readUInt32BE(16),64);
+  assert.equal(png.readUInt32BE(20),64);
+ }
+ rememberPoiPlacement(world,{dimension,location:trackedBell},'minecraft:bell',false);
+ assert.equal(wasPoiPlaced(world,trackedBell),false);
  assert.deepEqual(readSurveyedPois({getDynamicProperty:()=>'{invalid'}),[]);
 });

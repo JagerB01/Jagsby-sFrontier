@@ -9,7 +9,7 @@ import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
 import { mapSnapshot, moveMap, mapDetails } from "./settlement-map.js";
-import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, surveyLoadedPois } from "./poi-survey.js";
+import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from "./poi-survey.js";
 
 
 const BLOCK = "jagsby_frontier:village_charter";
@@ -358,7 +358,7 @@ world.afterEvents.playerEmote?.subscribe(({player,personaPieceId})=>{
  if(dimension.id!=='minecraft:overworld')return;
  if(poiSurveyRunning){player.sendMessage('A landmark survey is already running.');return;}
  const discovered=readSurveyedPois(world);
- const survey=surveyLoadedPois(dimension,location,BlockVolume,discovered);
+ const survey=surveyLoadedPois(dimension,location,BlockVolume,discovered,position=>wasPoiPlaced(world,position));
  player.sendMessage(`Surveying loaded landmarks within ${POI_RADIUS} blocks…`);
  poiSurveyRunning=true;
  const advance=()=>{
@@ -367,7 +367,7 @@ world.afterEvents.playerEmote?.subscribe(({player,personaPieceId})=>{
    if(!step.done){system.run(advance);return;}
    if(step.value)world.setDynamicProperty(POI_KEY,JSON.stringify(discovered));
    poiSurveyRunning=false;
-   if(player.isValid)player.sendMessage(step.value?`Added ${step.value} possible POI(s) to the Settlement Map.`:'No new landmarks found in the loaded survey area.');
+   if(player.isValid)player.sendMessage(step.value?`Added ${step.value} landmark pin(s) to the Settlement Map.`:'No new landmarks found in the loaded survey area.');
   }catch(error){
    poiSurveyRunning=false;
    console.warn(`Frontier landmark survey: ${error}`);
@@ -472,7 +472,7 @@ system.beforeEvents.startup.subscribe(ev=>{
     }
   });
 });
-world.afterEvents.playerPlaceBlock.subscribe(ev=>{if(ev.block.typeId!==BLOCK)return;let s=accounted();
+world.afterEvents.playerPlaceBlock.subscribe(ev=>{rememberPoiPlacement(world,ev.block,ev.block.typeId,true);if(ev.block.typeId!==BLOCK)return;let s=accounted();
 (s.placedCharters??={})[charterKey(ev.block.dimension.id,ev.block.location)]={dimension:ev.block.dimension.id,location:{...ev.block.location}};save(s);const v=addVillage(s,ev.block,ev.player);if(!v)return;ev.player.sendMessage('§6Village Charter established. Use Survey to refresh villagers and discover nearby biomes.');});
 const pendingCharterInteractions=new Set();
 world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
@@ -498,7 +498,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
     finally{pendingCharterInteractions.delete(pendingKey);}
   });
 });
-world.afterEvents.playerBreakBlock.subscribe(ev=>{if(ev.brokenBlockPermutation.type.id!==BLOCK)return;const s=accounted(),legacy=id(ev.block.location);if(s.placedCharters){delete s.placedCharters[charterKey(ev.block.dimension.id,ev.block.location)];save(s);}if(s.pendingResearch?.scope==='local'&&[legacy,`${ev.block.dimension.id}|${legacy}`].includes(s.pendingResearch.vid)){ev.player.sendMessage('Research payment recovery is pending. Replace this charter and reopen it before removing the settlement.');return;}delete s.villages[`${ev.block.dimension.id}|${legacy}`];if(s.villages[legacy]?.dimension===ev.block.dimension.id)delete s.villages[legacy];for(const [key,road]of Object.entries(s.roads||{}))if(!s.villages[road.from]||!s.villages[road.to])delete s.roads[key];save(s);});
+world.afterEvents.playerBreakBlock.subscribe(ev=>{rememberPoiPlacement(world,ev.block,ev.brokenBlockPermutation.type.id,false);if(ev.brokenBlockPermutation.type.id!==BLOCK)return;const s=accounted(),legacy=id(ev.block.location);if(s.placedCharters){delete s.placedCharters[charterKey(ev.block.dimension.id,ev.block.location)];save(s);}if(s.pendingResearch?.scope==='local'&&[legacy,`${ev.block.dimension.id}|${legacy}`].includes(s.pendingResearch.vid)){ev.player.sendMessage('Research payment recovery is pending. Replace this charter and reopen it before removing the settlement.');return;}delete s.villages[`${ev.block.dimension.id}|${legacy}`];if(s.villages[legacy]?.dimension===ev.block.dimension.id)delete s.villages[legacy];for(const [key,road]of Object.entries(s.roads||{}))if(!s.villages[road.from]||!s.villages[road.to])delete s.roads[key];save(s);});
 // Player-only buffs are refreshed every six seconds. Villagers are queried
 // at most once per in-game day, only around an occupied loaded settlement.
 system.runInterval(()=>{

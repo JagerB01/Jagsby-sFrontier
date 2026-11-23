@@ -87,6 +87,6 @@ function coordinates(point){
 export function mapDetails(point){
  if(!point)return '';
  if(point.type==='spawn')return `World spawn\n${coordinates(point)}`;
- if(point.type==='survey')return `Possible ${point.name}\n${coordinates(point)}`;
+ if(point.type==='survey')return `${point.name}\n${coordinates(point)}`;
  return `${point.name}\n${coordinates(point)}\nBiome: ${point.biome}\nDevelopment: ${point.development}\nOwner: ${point.owner}`;
 }

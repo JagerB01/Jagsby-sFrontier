@@ -30,10 +30,12 @@ remaining pins on subsequent pages.
 Use the Clapping emote in the Overworld to look for possible villages, trial
 chambers, ancient cities, desert temples and jungle temples. Surveys check
 loaded blocks within 48 horizontal blocks of where you clap, up to 128 blocks
-below and 48 blocks above. The scan runs over multiple ticks. It uses distinctive
-blocks as clues, so modified structures can be missed and player builds can
-produce false positives. Results are shared by the world and use the world-spawn
-icon. Refresh or reopen the map after the survey finishes.
+below and 48 blocks above. The scan runs over multiple ticks. A bell alone
+can flag a possible village. The survey skips clue blocks recorded as
+player-placed since tracking began. Older placements, moved blocks, and
+structures with missing clues can still affect results. Discoveries use the
+matching POI artwork and are shared across the world. Refresh or reopen the
+map after a survey finishes.
 
 ## Controls
 
