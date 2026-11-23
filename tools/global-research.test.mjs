@@ -151,7 +151,7 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
  const messages=[],player={id:'p',selectedSlotIndex:0,sendMessage(text){messages.push(text);},getComponent(){return {container:inventory};}};
  const forms=[];
  class Form{constructor(){this.buttons=[];this.icons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}textField(){return this;}submitButton(){return this;}button(text,icon){this.buttons.push(text);this.icons.push(icon);return this;}show(){return Promise.resolve(respond(this));}}
- globalThis.__researchRuntime={world:{getDefaultSpawnLocation(){return options.spawnLocation?.()??{x:0,y:64,z:0};},getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(){return stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(fn,delay){return options.onTimeout?.(fn,delay)??1;},clearRun(handle){options.onClear?.(handle);}},Form};
+ globalThis.__researchRuntime={world:{getDefaultSpawnLocation(){return options.spawnLocation?.()??{x:0,y:64,z:0};},getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(key){return key==='jagsby_frontier:surveyed_pois'?JSON.stringify(options.surveyedPois??[]):stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(fn,delay){return options.onTimeout?.(fn,delay)??1;},clearRun(handle){options.onClear?.(handle);}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack, BlockVolume, BlockTypes } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;const {BlockVolume,BlockTypes}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
  source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openSettlementMap,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad,surveySettlement,travelRoad,roadMenu,changeTradeRoute,buildRoad,accounted};\n//'+Math.random();
@@ -967,9 +967,25 @@ test('Spawn hover record and tier textures are shipped as inert map data without
  assert.ok(spawnIndex>=0&&spawnIndex<m.cells);
  assert.equal(f.icons[spawnIndex],'textures/ui/frontier/map_markers/world_spawn');
  const index=f.buttons.findIndex((text,i)=>i<m.cells&&text.includes('City'));
- assert.ok(index>=0);assert.equal(f.icons[index],'textures/ui/frontier/map_markers/city');
+ assert.ok(index>=0);assert.equal(f.icons[index],'textures/ui/frontier/poi_markers/village');
  assert.equal(f.buttons.length,m.zTicks.at(-1)+1);assert.equal(m.bounds,undefined);
  assert.deepEqual(h.read(),before);
+});
+
+test('Diplomacy form passes discovered artwork, village art and real Overworld province lines to the renderer',async()=>{
+ const s=fresh(Date.now());
+ s.villages.a={...village(),id:'a',name:'Alpha'};
+ const h=await runtime(s,undefined,{surveyedPois:[{kind:'stronghold',x:15,y:20,z:25}]});
+ h.api.openSettlementMap(h.player,'a',{x:0,z:0,span:4096});
+ const form=h.forms.at(-1),layout=CHARTER_LAYOUT.settlementMap;
+ const poi=form.buttons.findIndex((text,index)=>index<layout.cells&&text.startsWith('Stronghold\n'));
+ const villagePin=form.buttons.findIndex((text,index)=>index<layout.cells&&text.startsWith('Alpha\n'));
+ assert.equal(form.icons[poi],'textures/ui/frontier/poi_markers/stronghold');
+ assert.equal(form.icons[villagePin],'textures/ui/frontier/poi_markers/village');
+ assert.ok(form.text.includes('[JF:province:x:120]'));
+ assert.ok(form.text.includes('[JF:province:z:75]'));
+ h.api.openSettlementMap(h.player,'a',{dimension:'minecraft:nether',x:0,z:0,span:4096});
+ assert.equal(h.forms.at(-1).text,'');
 });
 
 test('route changes cancel old completion timers; stale callbacks cannot finish paused construction',async()=>{

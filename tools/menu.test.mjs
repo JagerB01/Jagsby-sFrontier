@@ -533,7 +533,7 @@ test('Scrolling lists resolve late form data and initially hidden indexed record
   }
   for(const child of Object.values(value))countLive(child);
  }
- countLive(ui);assert.equal(liveBindings,13,'Only the twelve tab toggles and shared form body explicitly force always');
+ countLive(ui);assert.equal(liveBindings,14,'Only the twelve tab toggles and two shared form-body readers explicitly force always');
 });
 
 test('Controller can enter and navigate Prospecting and Realm rows even without an available action',async()=>{

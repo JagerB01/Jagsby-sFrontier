@@ -6,7 +6,8 @@ left. Hover or focus a POI pin to see its information beside it.
 ## Pins and hover information
 
 Settlements and world spawn use small pins. Hover or focus a pin to reveal its
-full artwork in the map. Settlement artwork follows the Realm Power tier. World
+full artwork in the map. Charter settlements use the Village icon and surveyed
+landmarks use their own icons, visible at rest. World
 spawn reveals the gold compass star. Expanded artwork stays inside the map
 border, and hovering keeps the original pin's hit area.
 
@@ -24,6 +25,13 @@ per axis of the projected position when the cell is free. Overlapping POIs
 receive separate pins in the nearest free cells. Their tooltips show their
 actual coordinates. If all cells fill up, the POI page control shows the
 remaining pins on subsequent pages.
+
+## Province borders
+
+Gold lines show the Overworld’s 2,048 × 2,048 block provinces, aligned to
+multiples of 2,048 on X and Z. Fit includes the province around the active
+charter. At very wide zooms the map omits intermediate borders to keep lines
+legible. Zoom in to see the individual province boundaries.
 
 ## Landmark survey
 

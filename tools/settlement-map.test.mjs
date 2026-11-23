@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {mapSnapshot,fitMap,settlementPoints,moveMap,mapDetails,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
+import {mapSnapshot,fitMap,provinceLinePixels,settlementPoints,moveMap,mapDetails,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
 import {CHARTER_LAYOUT as L} from '../packs/behavior/scripts/charter-layout.js';
 const village=(name,x,z,dimension='minecraft:overworld')=>({name,location:{x,y:64,z},dimension,developmentValue:250,developmentThreshold:100});
 const points=s=>s.cells.flat();
@@ -168,13 +168,16 @@ test('Small idle pins reveal adjacent tooltips that stay inside the expanded map
  assert.equal(map.bounds,undefined);
  const [tooltipWidth,tooltipHeight]=ui.jf_map_pin_details.size;
  assert.equal(tooltipHeight,'100%cm');
- assert.deepEqual(children(ui.jf_map_pin_idle).pin.size,[4,4]);
  for(let slot=0;slot<L.settlementMap.cells;slot++){
   const target=grid['cell'+slot],states=children(markerFor(ui,target));
-  assert.deepEqual(Object.keys(states['idle@jagsby_frontier.jf_map_pin_idle']),[]);
+  const idle=states['idle@jagsby_frontier.jf_map_pin_art'];
+  assert.deepEqual(idle.size,[6,6]);
+  assert.equal(idle.collection_index,slot);
   const hover=children(states.info);
   const [x,z]=target.offset;
-  const [artX,artZ]=hover['art@jagsby_frontier.jf_map_pin_art'].offset;
+  const expanded=hover['art@jagsby_frontier.jf_map_pin_art'];
+  assert.equal(expanded.collection_index,slot);
+  const [artX,artZ]=expanded.offset;
   const [width,height]=ui.jf_map_pin_art.size;
   assert.ok(x+artX>=0&&x+artX+width<=map.grid.size[0]);
   assert.ok(z+artZ>=0&&z+artZ+height<=map.grid.size[1]);
@@ -205,16 +208,34 @@ test('Points within the old coarse cell project independently and spawn shares t
  assert.equal(mapDetails(s.cells[s.spawnCell][0]),'World spawn\nX -20, Y 70, Z -8');
 });
 
-test('Map settlement art follows all existing Realm Power tiers and spawn info uses the actual configured coordinates',async()=>{
- const names=['outpost','hamlet','village','town','city'];
- for(const [i,power]of [0,20,50,100,200].entries()){
+test('Map charter settlements share the Village artwork, and world spawn keeps its own icon',async()=>{
+ for(const power of [0,20,50,100,200]){
   const p=settlementPoints({a:{...village('A',0,0),census:{realmPowerTenths:power}}})[0];
-  assert.equal(p.texture,'textures/ui/frontier/map_markers/'+names[i]);
+  assert.equal(p.texture,'textures/ui/frontier/poi_markers/village');
  }
  const s=mapSnapshot({}, {}, null,{x:-10.2,y:75,z:20.8});
  assert.equal(mapDetails(s.spawn),'World spawn\nX -10.2, Y 75, Z 20.8');
- for(const name of ['world_spawn',...names]){
-  const data=await readFile(new URL('../packs/resource/textures/ui/frontier/map_markers/'+name+'.png',import.meta.url));
+ for(const art of ['map_markers/world_spawn','poi_markers/village']){
+  const data=await readFile(new URL('../packs/resource/textures/ui/frontier/'+art+'.png',import.meta.url));
   assert.equal(data.readUInt32BE(16),64);assert.equal(data.readUInt32BE(20),64);
  }
+});
+
+test('Province borders align to signed multiples of 2,048 and Fit frames the charter province',async()=>{
+ assert.deepEqual(provinceLinePixels(-4096,4096,240),[0,60,120,180,239]);
+ assert.deepEqual(provinceLinePixels(-3072,3072,240),[40,120,200]);
+ assert.deepEqual(provinceLinePixels(100,200,240),[]);
+ const wide=provinceLinePixels(-30000000,30000000,240);
+ assert.ok(wide.length>1&&wide.length<=31);
+ assert.ok(wide.slice(1).every((pixel,index)=>pixel-wide[index]>=7));
+ const s=mapSnapshot({a:village('A',-100,300)}, {},'a');
+ assert.ok(s.bounds.minX<-2048&&s.bounds.maxX>0);
+ assert.ok(s.bounds.minZ<0&&s.bounds.maxZ>2048);
+ const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
+ const map=children(ui.jf_settlement_map),grid=children(map.grid);
+ assert.ok(map.jf_map_province_state.bindings.some(b=>b.binding_name==='#form_text'));
+ assert.deepEqual(grid.province_x120.offset,[120,0]);
+ assert.deepEqual(grid.province_z75.offset,[0,75]);
+ assert.ok(grid.province_x120.bindings.some(b=>b.source_control_name==='jf_map_province_state'
+  &&b.source_property_name.includes('[JF:province:x:120]')&&b.target_property_name==='#visible'));
 });

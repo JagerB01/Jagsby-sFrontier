@@ -4,6 +4,8 @@ export const CHARTER_LAYOUT = {
     "columns": 40,
     "rows": 25,
     "cells": 1000,
+    "width": 240,
+    "height": 150,
     "back": 1000,
     "fit": 1001,
     "zoomOut": 1002,

@@ -5,7 +5,10 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.124](downloads/Jagsbys_Frontier_v0.0.124.mcaddon?raw=true)
+[Download Frontier 0.0.125](downloads/Jagsbys_Frontier_v0.0.125.mcaddon?raw=true)
+
+The Overworld map draws 2,048-block province boundaries. Charter settlements
+use the Village marker, and POI sprites show before hovering.
 
 Clap in the Overworld to survey loaded landmarks and add POIs to the
 Settlement Map. The scan checks characteristic blocks within 48 horizontal
@@ -501,10 +504,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.124.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.125.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.124_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.125_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

@@ -3,24 +3,40 @@
 import { development } from './settlement-economy.js';
 import { biomeName } from './settlement-overview.js';
 import { ownerName } from './settlement-realm.js';
-import { settlementTier } from './settlement-tiers.js';
 import { toMapPoi } from './poi-survey.js';
 export const MAP_COLUMNS=40, MAP_ROWS=25, MAP_ASPECT=MAP_COLUMNS/MAP_ROWS;
 export const MAP_MIN_SPAN=64, MAP_MAX_SPAN=200000000;
+export const PROVINCE_SIZE=2048;
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
 export function settlementPoints(villages={}) {
  return Object.entries(villages).filter(([,v])=>v&&finite(v.location?.x)&&finite(v.location?.z)&&typeof v.dimension==='string').map(([id,v])=>({
   id,type:'settlement',name:String(v.name||'Unnamed settlement'),dimension:v.dimension,
-  texture:'textures/ui/frontier/map_markers/'+settlementTier(v.census).id,
+  texture:'textures/ui/frontier/poi_markers/village',
   x:v.location.x,y:finite(v.location.y)?v.location.y:null,z:v.location.z,development:development(v),biome:biomeName(v.biome),owner:ownerName(v)
  })).sort((a,b)=>a.name.localeCompare(b.name)||a.id.localeCompare(b.id));
 }
-export function fitMap(points,dimension) {
+export function fitMap(points,dimension,provinceAnchor) {
  const inDimension=points.filter(p=>p.dimension===dimension);
  if(!inDimension.length)return {dimension,x:0,z:0,span:256};
  let minX=Infinity,maxX=-Infinity,minZ=Infinity,maxZ=-Infinity;
  for(const p of inDimension){minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);minZ=Math.min(minZ,p.z);maxZ=Math.max(maxZ,p.z);}
+ if(dimension==='minecraft:overworld'&&provinceAnchor){
+  const west=Math.floor(provinceAnchor.x/PROVINCE_SIZE)*PROVINCE_SIZE;
+  const north=Math.floor(provinceAnchor.z/PROVINCE_SIZE)*PROVINCE_SIZE;
+  minX=Math.min(minX,west);maxX=Math.max(maxX,west+PROVINCE_SIZE);
+  minZ=Math.min(minZ,north);maxZ=Math.max(maxZ,north+PROVINCE_SIZE);
+ }
  return {dimension,x:(minX+maxX)/2,z:(minZ+maxZ)/2,span:Math.min(MAP_MAX_SPAN,Math.max(256,(maxX-minX)*1.2,(maxZ-minZ)*MAP_ASPECT*1.2))};
+}
+export function provinceLinePixels(min,max,pixels){
+ const span=max-min;
+ // Keep wide views readable by retaining a power-of-two subset of real borders.
+ const stride=PROVINCE_SIZE*2**Math.max(0,Math.ceil(Math.log2(8*span/(pixels*PROVINCE_SIZE))));
+ const lines=[];
+ for(let at=Math.ceil(min/stride)*stride;at<=max;at+=stride){
+  lines.push(Math.max(0,Math.min(pixels-1,Math.round((at-min)/span*pixels))));
+ }
+ return lines;
 }
 export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=null,surveyed=[]) {
  const points=settlementPoints(villages);
@@ -30,7 +46,8 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
  const dimensions=[...new Set(fitPoints.map(p=>p.dimension))].sort();
  const dimension=typeof requested.dimension==='string'?requested.dimension:dimensions[0]||'minecraft:overworld';
  if(!dimensions.includes(dimension))dimensions.push(dimension);
- const fitted=fitMap(fitPoints,dimension);
+ const selected=points.find(p=>p.id===selectedId&&p.dimension===dimension)||null;
+ const fitted=fitMap(fitPoints,dimension,selected);
  const viewport={dimension,x:finite(requested.x)?requested.x:fitted.x,z:finite(requested.z)?requested.z:fitted.z,
   span:finite(requested.span)?Math.min(MAP_MAX_SPAN,Math.max(MAP_MIN_SPAN,requested.span)):fitted.span};
  const width=viewport.span,height=width/MAP_ASPECT;
@@ -69,7 +86,7 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
  }
  const spawnIndex=cells.findIndex(cell=>cell[0]?.type==='spawn');
  const visible=projected.filter(({point})=>point.type==='settlement').length;
- return {viewport,bounds,cells,dimensions,count,visible,spawn,spawnCell:spawnIndex<0?null:spawnIndex,page,pageCount,selected:points.find(p=>p.id===selectedId&&p.dimension===dimension)||null};
+ return {viewport,bounds,cells,dimensions,count,visible,spawn,spawnCell:spawnIndex<0?null:spawnIndex,page,pageCount,selected};
 }
 export function moveMap(viewport,action){
  const next={...viewport};

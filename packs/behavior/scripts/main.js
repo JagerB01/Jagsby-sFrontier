@@ -8,7 +8,7 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
-import { mapSnapshot, moveMap, mapDetails } from "./settlement-map.js";
+import { mapSnapshot, moveMap, mapDetails, provinceLinePixels } from "./settlement-map.js";
 import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from "./poi-survey.js";
 
 
@@ -327,7 +327,10 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
   layout.zTicks.forEach((index,i)=>{
     records[index]=String(Math.round(b.minZ+(b.maxZ-b.minZ)*i/(layout.zTicks.length-1)));
   });
-  const form=new ActionFormData().title(pageTitle('SettlementMap'));
+  const provinceMarkers=snapshot.viewport.dimension==='minecraft:overworld'?
+   provinceLinePixels(b.minX,b.maxX,layout.width).map(x=>`[JF:province:x:${x}]`).join('')+
+   provinceLinePixels(b.minZ,b.maxZ,layout.height).map(z=>`[JF:province:z:${z}]`).join(''):'';
+  const form=new ActionFormData().title(pageTitle('SettlementMap')).body(provinceMarkers);
   records.forEach((text,index)=>form.button(text,snapshot.cells[index]?.[0]?.texture));
   const show=(next=snapshot.viewport,selection=selectedId)=>openSettlementMap(player,vid,next,selection,returnView);
   displayMenu(player,form,system).then(response=>{
