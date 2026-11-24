@@ -10,12 +10,16 @@ const STANDARD_PROVINCE_NAMES = [
 ];
 const TRAVEL_THRESHOLDS = [0, 25, 50];
 const PATROL_TIERS = [
-  {threshold: 15, roster: '3 Swordsmen'},
-  {threshold: 20, roster: '3 Swordsmen, 1 Arbalist'},
-  {threshold: 30, roster: '2 Swordsmen, 1 Juggernaut,\n1 Arbalist'},
-  {threshold: 40, roster: '1 Swordsman, 2 Juggernauts,\n1 Arbalist'},
-  {threshold: 50, roster: '1 Horse Lancer, 2 Juggernauts,\n1 Arbalist'},
+  {threshold: 15, swordsman: 3},
+  {threshold: 20, swordsman: 3, arbalist: 1},
+  {threshold: 30, swordsman: 2, juggernaut: 1, arbalist: 1},
+  {threshold: 40, swordsman: 1, juggernaut: 2, arbalist: 1},
+  {threshold: 50, horse_lancer: 1, juggernaut: 2, arbalist: 1},
 ];
+const PATROL_ROLE_NAMES = {
+  swordsman: ['Swordsman', 'Swordsmen'], arbalist: ['Arbalist', 'Arbalists'],
+  juggernaut: ['Juggernaut', 'Juggernauts'], horse_lancer: ['Horse Lancer', 'Horse Lancers'],
+};
 const TIER_NAMES = ['I', 'II', 'III', 'IV', 'V'];
 
 export function provinceAt(location, dimension) {
@@ -48,9 +52,18 @@ export function provinceDevelopment(villages) {
   return totals;
 }
 
+export function provincialPatrolTier(province, combinedDevelopment) {
+  return province.capital ? PATROL_TIERS.filter(({threshold}) => combinedDevelopment >= threshold).length : 0;
+}
+
+export function provincialPatrolRoles(tier) {
+  const {threshold, ...roles} = PATROL_TIERS[tier - 1];
+  return Object.entries(roles);
+}
+
 export function provincePerkText(province, combinedDevelopment) {
   const travelTier = province.capital ? TRAVEL_THRESHOLDS.filter(n => combinedDevelopment >= n).length : 0;
-  const patrolTier = province.capital ? PATROL_TIERS.filter(({threshold}) => combinedDevelopment >= threshold).length : 0;
+  const patrolTier = provincialPatrolTier(province, combinedDevelopment);
   const requiresCapital = 'Locked · Requires a capital';
   let travelStatus = requiresCapital;
   if (travelTier) {
@@ -61,9 +74,12 @@ export function provincePerkText(province, combinedDevelopment) {
   const patrolStatus = patrolTier
     ? `Tier ${TIER_NAMES[patrolTier - 1]}${patrolTier === PATROL_TIERS.length ? ' · Maximum' : ''}`
     : province.capital ? `Locked · Tier I at ${PATROL_TIERS[0].threshold}` : requiresCapital;
+  const roster = provincialPatrolRoles(patrolTier || 1)
+    .map(([role, count]) => `${count} ${PATROL_ROLE_NAMES[role][Number(count > 1)]}`);
+  const patrolRoster = roster.length > 2 ? `${roster.slice(0, 2).join(', ')},\n${roster[2]}` : roster.join(', ');
   return {
-    travel: `${travelStatus}\nCapital → discovered POIs\nII at ${TRAVEL_THRESHOLDS[1]} · III at ${TRAVEL_THRESHOLDS[2]} Development`,
-    patrols: `${patrolStatus}\n${PATROL_TIERS[Math.max(0, patrolTier - 1)].roster}\nTiers at ${PATROL_TIERS.map(({threshold}) => threshold).join(' / ')}`,
+    travel: `${travelStatus}\nPreview · Capital → POIs\nII at ${TRAVEL_THRESHOLDS[1]} · III at ${TRAVEL_THRESHOLDS[2]} Development`,
+    patrols: `${patrolStatus}\n${patrolRoster}\nTiers at ${PATROL_TIERS.map(({threshold}) => threshold).join(' / ')}`,
   };
 }
 

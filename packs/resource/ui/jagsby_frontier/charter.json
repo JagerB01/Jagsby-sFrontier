@@ -23991,7 +23991,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  154,
+                  210,
                   14
                 ],
                 "collection_name": "form_buttons",
@@ -24062,32 +24062,6 @@
                   }
                 ],
                 "controls": [
-                  {
-                    "preview": {
-                      "type": "label",
-                      "text": "Perk preview",
-                      "size": [
-                        50,
-                        9
-                      ],
-                      "offset": [
-                        191,
-                        7
-                      ],
-                      "anchor_from": "top_left",
-                      "anchor_to": "top_left",
-                      "layer": 8,
-                      "font_type": "unicode",
-                      "font_size": "normal",
-                      "font_scale_factor": 0.67,
-                      "color": [
-                        0.73,
-                        0.73,
-                        0.68
-                      ],
-                      "shadow": false
-                    }
-                  },
                   {
                     "provincialTravel": {
                       "type": "panel",
@@ -203697,7 +203671,7 @@
     "type": "label",
     "text": "#text",
     "size": [
-      154,
+      210,
       14
     ],
     "offset": [

@@ -1,4 +1,4 @@
-"""Generate Frontier's manually spawnable guards and their client assets."""
+"""Generate Frontier's guards and their client assets."""
 import json
 from pathlib import Path
 
@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1] / "packs"
 BP, RP = ROOT / "behavior", ROOT / "resource"
 NS = "jagsby_frontier"
 FAMILY = "frontier_guard"
+PATROL_CHANNELS = 12
 GUARD_COLORS = [
     ("Standard", (208, 172, 105)),
     ("Red", (201, 56, 58)),
@@ -132,7 +133,34 @@ def arm_guard(role, identifier, mounted=False, town=False):
     properties[f"{NS}:headband"] = {
         "type": "int", "range": [0, len(GUARD_COLORS) - 1], "default": 0, "client_sync": True,
     }
+    if not town:
+        provincial_patrol(extra)
     return entity(identifier, components, **extra)
+
+
+def provincial_patrol(extra, mount=False):
+    guide = f"{NS}:patrol_guide"
+    walk = f"{NS}:patrol_walk"
+    properties = extra.setdefault("description", {}).setdefault("properties", {})
+    properties[guide] = {"type": "int", "range": [0, PATROL_CHANNELS], "default": 0}
+    groups = extra.setdefault("component_groups", {})
+    events = extra.setdefault("events", {})
+    groups[walk] = {"minecraft:behavior.random_stroll": {
+        "priority": 8, "speed_multiplier": 0.65, "xz_dist": 10, "y_dist": 3,
+    }}
+    events[walk] = {"add": {"component_groups": [walk]}}
+    if mount:
+        return
+    follower_groups = []
+    for channel in range(1, PATROL_CHANNELS + 1):
+        follow = f"{NS}:patrol_follow_{channel}"
+        follower_groups.append(follow)
+        groups[follow] = {"minecraft:behavior.follow_mob": {
+            "priority": 7, "search_range": 48, "stop_distance": 4, "speed_multiplier": 0.8,
+            "filters": filter_("int_property", channel, subject="other", domain=guide),
+        }}
+        events[follow] = {"add": {"component_groups": [walk, follow]}}
+    events[walk]["remove"] = {"component_groups": follower_groups}
 
 
 def town_patrol():
@@ -222,12 +250,16 @@ def guard_horse(town=False):
     if town:
         components.update(town_patrol())
     group = f"{NS}:mounted_crew"
-    return entity(f"{prefix}guard_horse", components,
-                  component_groups={group: {"minecraft:addrider": {
-                      "riders": [{"entity_type": f"{NS}:{prefix}horse_lancer"}],
-                  }}},
-                  events={"minecraft:entity_spawned": {"add": {"component_groups": [group]}},
-                          f"{NS}:spawn_empty": {}})
+    extra = {
+        "component_groups": {group: {"minecraft:addrider": {
+            "riders": [{"entity_type": f"{NS}:{prefix}horse_lancer"}],
+        }}},
+        "events": {"minecraft:entity_spawned": {"add": {"component_groups": [group]}},
+                   f"{NS}:spawn_empty": {}},
+    }
+    if not town:
+        provincial_patrol(extra, mount=True)
+    return entity(f"{prefix}guard_horse", components, **extra)
 
 
 def client(identifier, geometry, textures, animations, animate, **extra):

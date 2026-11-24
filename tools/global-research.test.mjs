@@ -1038,7 +1038,7 @@ test('The Provinces tab enforces Development 10, persists one capital and lets i
  assert.equal(latest().buttons[actions.renameProvince],'[JF:disabled:renameProvince]');
 });
 
-test('The Provinces tab previews the agreed perk tiers from combined Development in the charter province',async()=>{
+test('The Provinces tab shows both perk tiers from combined Development in the charter province',async()=>{
  const s=fresh(Date.now());
  s.villages.a={...village(-1),id:'a',name:'Harbor',developmentValue:1000};
  s.villages.b={...village(-2048),id:'b',name:'Hill',developmentValue:500};
@@ -1069,6 +1069,7 @@ test('The Provinces tab previews the agreed perk tiers from combined Development
   form=open('b');
   assert.ok(form.buttons[data.provinceDetails].includes(`Combined Development: ${total}\n`));
   assert.ok(form.buttons[data.provincialTravel].startsWith(`[JF:data:provincialTravel]${travel}\n`));
+  assert.match(form.buttons[data.provincialTravel],/Preview · Capital → POIs/);
   assert.ok(form.buttons[data.provincialPatrols].startsWith(`[JF:data:provincialPatrols]${patrol}\n`));
  }
  form=open('nether');

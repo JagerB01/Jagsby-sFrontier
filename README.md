@@ -5,7 +5,7 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.138](downloads/Jagsbys_Frontier_v0.0.138.mcaddon?raw=true)
+[Download Frontier 0.0.139](downloads/Jagsbys_Frontier_v0.0.139.mcaddon?raw=true)
 
 In Creative, search for **Frontier** spawn eggs to test the Swordsman, Arbalist,
 Lancer, and Juggernaut. The Horse Lancer Team egg spawns a horse with its lancer.
@@ -38,9 +38,15 @@ can rename their province. Provinces use a standard name based on their
 coordinates until renamed. The detailed map uses the Capital icon, and the
 first press of − shows centered Province icons for squares with settlements or
 landmarks. Province tooltips list the capital and combined Development.
-The Provinces tab previews Provincial Travel and Provincial Patrols. It shows
-the tier each perk would reach at the province's current combined Development.
-Travel and patrol gameplay are planned for a later build.
+The Provinces tab shows Provincial Patrols and previews Provincial Travel.
+In a province with a capital and at least 15 combined Development, each natural
+surface spawn of a cow, pig, sheep, chicken, zombie or skeleton has a 5% chance
+to be replaced by a patrol outside settlement survey areas. Patrols take the
+capital owner's colors. Their roster improves at combined Development 20, 30,
+40 and 50. They follow their highest-ranked guard at a walk outside combat.
+Up to three patrols can be active per province, with new spawns at least 96
+blocks from existing patrols. Patrols retire after about a minute away from
+players.
 See [Settlement Map](docs/settlement-map.md).
 
 Clap in the Overworld to survey loaded landmarks and add POIs to the
@@ -537,10 +543,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.138.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.139.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.138_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.139_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

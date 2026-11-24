@@ -825,13 +825,12 @@ def build():
         ],
         "provinces": [
             control("icon", image("frontier/poi_markers/province", [20, 20], (8, 0), 6)),
-            overview_value("province_name", DATA["provinceName"], [32, 4], [154, 14], scale=0.95),
+            overview_value("province_name", DATA["provinceName"], [32, 4], [210, 14], scale=0.95),
             overview_value("province_details", DATA["provinceDetails"], [8, 20], [233, 38], scale=0.72),
             control("perks", {"type": "panel", "size": [254, 106],
                 "anchor_from": "top_left", "anchor_to": "top_left",
                 "bindings": condition("(not ((#form_text - '[JF:provincePerks]') = #form_text))", "#form_text"),
                 "controls": [
-                    control("preview", label("Perk preview", [50, 9], (191, 7), SILVER, 0.67)),
                     province_perk("provincialTravel", "Provincial Travel", "provincial_travel", 8),
                     province_perk("provincialPatrols", "Provincial Patrols", "provincial_patrols", 127),
                 ]}),

@@ -19,6 +19,14 @@
           ],
           "default": 0,
           "client_sync": true
+        },
+        "jagsby_frontier:patrol_guide": {
+          "type": "int",
+          "range": [
+            0,
+            12
+          ],
+          "default": 0
         }
       }
     },
@@ -176,6 +184,305 @@
         "track_target": true,
         "speed_multiplier": 1,
         "reposition_speed_multiplier": 0.9
+      }
+    },
+    "component_groups": {
+      "jagsby_frontier:patrol_walk": {
+        "minecraft:behavior.random_stroll": {
+          "priority": 8,
+          "speed_multiplier": 0.65,
+          "xz_dist": 10,
+          "y_dist": 3
+        }
+      },
+      "jagsby_frontier:patrol_follow_1": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 1,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_2": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 2,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_3": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 3,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_4": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 4,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_5": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 5,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_6": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 6,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_7": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 7,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_8": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 8,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_9": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 9,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_10": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 10,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_11": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 11,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      },
+      "jagsby_frontier:patrol_follow_12": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 7,
+          "search_range": 48,
+          "stop_distance": 4,
+          "speed_multiplier": 0.8,
+          "filters": {
+            "test": "int_property",
+            "subject": "other",
+            "value": 12,
+            "domain": "jagsby_frontier:patrol_guide"
+          }
+        }
+      }
+    },
+    "events": {
+      "jagsby_frontier:patrol_walk": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk"
+          ]
+        },
+        "remove": {
+          "component_groups": [
+            "jagsby_frontier:patrol_follow_1",
+            "jagsby_frontier:patrol_follow_2",
+            "jagsby_frontier:patrol_follow_3",
+            "jagsby_frontier:patrol_follow_4",
+            "jagsby_frontier:patrol_follow_5",
+            "jagsby_frontier:patrol_follow_6",
+            "jagsby_frontier:patrol_follow_7",
+            "jagsby_frontier:patrol_follow_8",
+            "jagsby_frontier:patrol_follow_9",
+            "jagsby_frontier:patrol_follow_10",
+            "jagsby_frontier:patrol_follow_11",
+            "jagsby_frontier:patrol_follow_12"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_1": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_1"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_2": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_2"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_3": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_3"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_4": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_4"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_5": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_5"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_6": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_6"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_7": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_7"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_8": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_8"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_9": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_9"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_10": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_10"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_11": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_11"
+          ]
+        }
+      },
+      "jagsby_frontier:patrol_follow_12": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:patrol_walk",
+            "jagsby_frontier:patrol_follow_12"
+          ]
+        }
       }
     }
   }

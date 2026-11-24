@@ -1,8 +1,10 @@
 import { recordedPower } from './village-census.js';
 
 export const JUGGERNAUT = 'jagsby_frontier:juggernaut';
+export const GUARD_HORSE = 'jagsby_frontier:guard_horse';
+export const PATROL = 'jagsby_frontier:provincial_patrol';
 const SHIELD_STANCE = 'jagsby_frontier:shield_stance';
-const LEADER_PROPERTY = 'jagsby_frontier:squad_leader';
+export const LEADER_PROPERTY = 'jagsby_frontier:squad_leader';
 const SQUAD_RADIUS = 12;
 const SQUAD_SIZE = 4;
 const LEADERSHIP = new Map([
@@ -38,10 +40,14 @@ function membersOf(world, id) {
   return saved ? JSON.parse(saved) : [];
 }
 
+export function squadLeader(roster) {
+  return roster.length ? roster.reduce((first, guard) =>
+    LEADERSHIP.get(guard.typeId) < LEADERSHIP.get(first.typeId) ? guard : first) : undefined;
+}
+
 function markSquadLeader(world, roster) {
-  if (!roster.length) return;
-  const leader = roster.reduce((first, guard) =>
-    LEADERSHIP.get(guard.typeId) < LEADERSHIP.get(first.typeId) ? guard : first);
+  const leader = squadLeader(roster);
+  if (!leader) return;
   for (const member of roster) {
     const entity = world.getEntity(member.id);
     // Set every loaded member because property changes take effect on the next tick.
@@ -50,7 +56,7 @@ function markSquadLeader(world, roster) {
 }
 
 export function joinGuardSquad(world, guard) {
-  if (!guard.isValid || !LEADERSHIP.has(guard.typeId)) return;
+  if (!guard.isValid || !LEADERSHIP.has(guard.typeId) || guard.getDynamicProperty?.(PATROL)) return;
   const ownSquad = world.getDynamicProperty(membershipKey(guard.id));
   const ownRoster = membersOf(world, ownSquad);
   if (ownRoster.some(member => member.id === guard.id)) {
@@ -61,7 +67,8 @@ export function joinGuardSquad(world, guard) {
   const origin = guard.location;
   const nearby = guard.dimension.getEntities({
     families: ['frontier_guard'], location: origin, maxDistance: SQUAD_RADIUS,
-  }).filter(member => member.id !== guard.id && member.isValid && LEADERSHIP.has(member.typeId));
+  }).filter(member => member.id !== guard.id && member.isValid && LEADERSHIP.has(member.typeId)
+    && !member.getDynamicProperty?.(PATROL));
   const distance = position => Math.hypot(position.x - origin.x, position.y - origin.y, position.z - origin.z);
   nearby.sort((a, b) => distance(a.location) - distance(b.location) || a.id.localeCompare(b.id));
   let squad = guard.id;

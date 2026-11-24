@@ -1,5 +1,5 @@
 import { GUARD_COLORS } from './guard-color-palette.js';
-import { isFrontierGuard } from './frontier-guards.js';
+import { GUARD_HORSE, isFrontierGuard } from './frontier-guards.js';
 import { bindTownPost, nearestTownPost } from './town-guard-posts.js';
 
 export { GUARD_COLORS };
@@ -8,7 +8,7 @@ const HEADBAND = 'jagsby_frontier:headband';
 const DIMENSIONS = ['overworld', 'nether', 'the_end'];
 const ROLES = ['swordsman', 'arbalist', 'lancer', 'juggernaut', 'guard_horse'];
 const HORSE_RIDERS = new Map([
-  ['jagsby_frontier:guard_horse', 'jagsby_frontier:horse_lancer'],
+  [GUARD_HORSE, 'jagsby_frontier:horse_lancer'],
   ['jagsby_frontier:town_guard_horse', 'jagsby_frontier:town_horse_lancer'],
 ]);
 const EGGS = new Map([...ROLES, ...ROLES.map(role => `town_${role}`)].map(role =>
@@ -46,6 +46,21 @@ export function selectGuardColor(world, id, index) {
       }
     }
   }
+}
+
+export function spawnGuard(dimension, type, position, entities) {
+  const rider = HORSE_RIDERS.get(type);
+  if (!rider) {
+    const guard = dimension.spawnEntity(type, position);
+    entities.push(guard);
+    return guard;
+  }
+  const mount = dimension.spawnEntity(type, position, {spawnEvent: 'jagsby_frontier:spawn_empty'});
+  entities.push(mount);
+  const guard = dimension.spawnEntity(rider, position);
+  entities.push(guard);
+  if (!mount.getComponent('minecraft:rideable')?.addRider(guard)) throw Error('Could not seat the Horse Lancer');
+  return guard;
 }
 
 export function handleGuardEgg(event, schedule, villages) {
@@ -88,17 +103,7 @@ export function handleGuardEgg(event, schedule, villages) {
           return;
         }
       }
-      let guard;
-      if (rider) {
-        const mount = dimension.spawnEntity(type, pos, {spawnEvent: 'jagsby_frontier:spawn_empty'});
-        entities.push(mount);
-        guard = dimension.spawnEntity(rider, pos);
-        entities.push(guard);
-        if (!mount.getComponent('minecraft:rideable')?.addRider(guard)) throw Error('Could not seat the Horse Lancer');
-      } else {
-        guard = dimension.spawnEntity(type, pos);
-        entities.push(guard);
-      }
+      const guard = spawnGuard(dimension, type, pos, entities);
       if (post) for (const entity of entities) bindTownPost(entity, post);
       setGuardOwner(guard, player.id);
       if (mode !== 'Creative') {

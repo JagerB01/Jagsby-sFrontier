@@ -634,7 +634,6 @@ test('Provinces renders both perk cards from fixed form records without a submit
  const provincePage=children(ui.jf_diplomacy_content).provinces;
  const province=children(provincePage),perks=children(province.perks);
  assert.ok(province.perks.bindings.some(binding=>binding.source_property_name?.includes('[JF:provincePerks]')));
- assert.equal(perks.preview.text,'Perk preview');
  for(const [key,sprite,title] of [
   ['provincialTravel','provincial_travel','Provincial Travel'],
   ['provincialPatrols','provincial_patrols','Provincial Patrols'],

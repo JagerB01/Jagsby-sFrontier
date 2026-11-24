@@ -23,7 +23,7 @@ const realmSource=(await readFile(new URL('settlement-realm.js',scriptBase),'utf
 const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toString('base64')}`;
 const configSource=(await readFile(new URL('economy-config.js',scriptBase),'utf8')).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',scriptBase).href));
 const configUrl=`data:text/javascript;base64,${Buffer.from(configSource).toString('base64')}`;
-const extraUrls=Object.fromEntries(['settlement-economy','settlement-effects','frontier-guards','town-watch']
+const extraUrls=Object.fromEntries(['settlement-economy','settlement-effects','frontier-guards','town-watch','provincial-patrols']
   .map(name=>[name,new URL(name+'.js',scriptBase).href]));
 
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });
@@ -121,7 +121,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
       getDimension: id => dimensions.get(id), getPlayers: () => [],
       getDynamicProperty: key => properties.get(key),
       setDynamicProperty: (key,value) => properties.set(key,value) },
-    system: { beforeEvents: {startup: {subscribe(fn){handlers.startup=fn;}}}, run: fn => queued.push(fn), runInterval: (fn,ticks) => {assert.ok([10,120].includes(ticks));intervals.push(fn);},
+    system: { beforeEvents: {startup: {subscribe(fn){handlers.startup=fn;}}}, run: fn => queued.push(fn), runInterval: (fn,ticks) => {assert.ok([10,100,120].includes(ticks));intervals.push(fn);},
       runTimeout: fn => {rankWaits++;fn();} },
     Form, RenameForm,
   };

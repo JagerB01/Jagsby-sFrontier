@@ -8,12 +8,13 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
-import { blockGuardShield, isFrontierGuard, isJuggernaut, isTownGuard, joinGuardSquad, removeGuardFromSquad, townGuardLimit } from "./frontier-guards.js";
+import { blockGuardShield, GUARD_HORSE, isFrontierGuard, isJuggernaut, isTownGuard, joinGuardSquad, removeGuardFromSquad, townGuardLimit } from "./frontier-guards.js";
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from "./guard-colors.js";
 import { isTownPatrol, townGuardPatrol, townGuardSettlement } from "./town-guard-posts.js";
 import { fillTownGuardSlot, recordTownGuardDeath, retireTownGuards, validateTownGuard } from "./town-watch.js";
 import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
 import { PROVINCE_SIZE, capitalStatus, designateCapital, provinceDevelopment, provincePerkText, renameProvince, updateProvinceCapitalId } from "./provinces.js";
+import { provincialPatrols } from "./provincial-patrols.js";
 import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from "./poi-survey.js";
 
 
@@ -589,6 +590,7 @@ world.afterEvents.playerBreakBlock.subscribe(ev=>{
  save(s);
 });
 const townPatrol=townGuardPatrol(world,()=>state().villages);
+const provincePatrols=provincialPatrols(world,state,gameTick);
 // Visit occupied settlements every six seconds. The villager scan runs once
 // per day; a town guard that loads later can still receive its daily heal.
 system.runInterval(()=>{
@@ -617,28 +619,38 @@ system.runInterval(()=>{
 world.beforeEvents.entityHurt?.subscribe(event=>protectDamage(event,Date.now(),state));
 world.beforeEvents.entityHurt?.subscribe(blockGuardShield);
 system.runInterval(townPatrol.tick,10);
+system.runInterval(()=>{
+ try{provincePatrols.tick();}catch(error){console.warn(`Frontier patrol update: ${error}`);}
+},100);
 function loadFrontierGuard({entity}){
  if(!entity.isValid)return;
  const town=isTownPatrol(entity),guard=isFrontierGuard(entity);
- if(!town&&!guard)return;
- // Egg ownership is recorded before this callback initializes the new guard.
+ if(!town&&!guard&&entity.typeId!==GUARD_HORSE)return;
+ // Spawn ownership and patrol membership are recorded before initialization.
  system.run(()=>{
   if(!entity.isValid)return;
   if(isTownGuard(entity)&&!validateTownGuard(entity,state,save))return;
   if(town)townPatrol.track(entity);
+  const patrol=!town&&provincePatrols.restore(entity);
+  if(!entity.isValid)return;
   if(!guard)return;
   refreshGuardColor(world,entity);
-  joinGuardSquad(world,entity);
+  if(!patrol)joinGuardSquad(world,entity);
   if(!isJuggernaut(entity))return;
   const equipment=entity.getComponent('minecraft:equippable');
   if(equipment&&!equipment.getEquipment('Offhand'))equipment.setEquipment('Offhand',new ItemStack('minecraft:shield'));
  });
 }
-world.afterEvents.entitySpawn?.subscribe(loadFrontierGuard);
+world.afterEvents.entitySpawn?.subscribe(event=>{
+ loadFrontierGuard(event);
+ try{provincePatrols.replace(event);}catch(error){console.warn(`Frontier patrol spawn: ${error}`);}
+});
 world.afterEvents.entityLoad?.subscribe(loadFrontierGuard);
 world.afterEvents.entityDie?.subscribe(({deadEntity})=>{
  if(isTownGuard(deadEntity))recordTownGuardDeath(deadEntity,gameDay(),state,save);
- else removeGuardFromSquad(world,deadEntity);
+ else if(isFrontierGuard(deadEntity)||deadEntity.typeId===GUARD_HORSE){
+  if(!provincePatrols.onDeath(deadEntity))removeGuardFromSquad(world,deadEntity);
+ }
 });
 world.afterEvents.worldLoad?.subscribe(()=>{try{accounted();}catch(e){console.warn(String(e));}});
 
