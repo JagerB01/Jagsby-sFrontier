@@ -10,6 +10,11 @@
       ],
       "textures": [
         "Texture.default"
+      ],
+      "part_visibility": [
+        {
+          "leaderPlume": "query.property('jagsby_frontier:squad_leader')"
+        }
       ]
     },
     "controller.render.jagsby_frontier.guard_horse": {

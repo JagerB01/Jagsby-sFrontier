@@ -15,6 +15,11 @@
           ],
           "default": "ready",
           "client_sync": true
+        },
+        "jagsby_frontier:squad_leader": {
+          "type": "bool",
+          "default": false,
+          "client_sync": true
         }
       }
     },

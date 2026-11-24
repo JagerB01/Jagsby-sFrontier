@@ -105,6 +105,33 @@
           ]
         },
         {
+          "name": "leaderPlume",
+          "parent": "head",
+          "pivot": [
+            0,
+            33,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1,
+                33,
+                -2
+              ],
+              "size": [
+                2,
+                3,
+                4
+              ],
+              "uv": [
+                52,
+                0
+              ]
+            }
+          ]
+        },
+        {
           "name": "rightArm",
           "parent": "root",
           "pivot": [

@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import test from 'node:test';
-import { blockGuardShield, JUGGERNAUT } from '../packs/behavior/scripts/frontier-guards.js';
+import { blockGuardShield, joinGuardSquad, JUGGERNAUT, removeGuardFromSquad } from '../packs/behavior/scripts/frontier-guards.js';
 
 const read = path => readFile(new URL('../packs/' + path, import.meta.url), 'utf8');
 const json = async path => JSON.parse(await read(path));
 const id = name => 'jagsby_frontier:' + name;
 const guards = ['swordsman', 'arbalist', 'lancer', 'juggernaut', 'horse_lancer'];
 const roster = [...guards, 'guard_horse'];
+const leaderProperty = id('squad_leader');
 
 test('Guard definitions ship distinct combat roles, test eggs and matching client assets', async () => {
   const resource = await json('resource/animations/frontier_guard.animation.json');
@@ -30,6 +31,7 @@ test('Guard definitions ship distinct combat roles, test eggs and matching clien
     if (hasEgg) assert.ok(texts.includes('item.spawn_egg.entity.' + id(name) + '.name='));
     if (guards.includes(name)) {
       assert.ok(behavior.components['minecraft:type_family'].family.includes('frontier_guard'));
+      assert.deepEqual(behavior.description.properties[leaderProperty], {type: 'bool', default: false, client_sync: true});
       const path = behavior.components['minecraft:equipment'].table;
       combat.set(name, {
         components: behavior.components,
@@ -51,6 +53,100 @@ test('Guard definitions ship distinct combat roles, test eggs and matching clien
   }
   assert.deepEqual(combat.get('juggernaut').equipment, ['minecraft:iron_axe', 'minecraft:shield']);
   assert.ok(combat.get('juggernaut').components['minecraft:environment_sensor']);
+  const geometry = (await json('resource/models/entity/frontier_guard.geo.json'))['minecraft:geometry'][0];
+  assert.ok(geometry.bones.some(bone => bone.name === 'leaderPlume'));
+  const controller = (await json('resource/render_controllers/frontier_guard.render_controllers.json'))
+    .render_controllers['controller.render.jagsby_frontier.guard'];
+  assert.deepEqual(controller.part_visibility, [{leaderPlume: `query.property('${leaderProperty}')`}]);
+});
+
+function squadFixture() {
+  const properties = new Map();
+  const entities = new Map();
+  const pending = new Map();
+  const world = {
+    getDynamicProperty: key => properties.get(key),
+    setDynamicProperty(key, value) {
+      if (value === undefined) properties.delete(key);
+      else properties.set(key, value);
+    },
+    getEntity(key) {
+      const entity = entities.get(key);
+      return entity?.isValid ? entity : undefined;
+    },
+  };
+  const dimension = {
+    getEntities({location, maxDistance, families}) {
+      assert.deepEqual(families, ['frontier_guard']);
+      assert.equal(maxDistance, 12);
+      return [...entities.values()].filter(entity => entity.isValid
+        && Math.abs(entity.location.x - location.x) <= maxDistance);
+    },
+  };
+  return {
+    world,
+    spawn(role, x = 0) {
+      const entity = {
+        id: String(entities.size + 1),
+        typeId: id(role),
+        dimension,
+        location: {x, y: 64, z: 0},
+        isValid: true,
+        leader: false,
+        setProperty(key, value) {
+          assert.equal(key, leaderProperty);
+          pending.set(entity, value);
+        },
+      };
+      entities.set(entity.id, entity);
+      joinGuardSquad(world, entity);
+      return entity;
+    },
+    die(entity) {
+      entity.isValid = false;
+      removeGuardFromSquad(world, entity);
+    },
+    leaders() {
+      for (const [entity, value] of pending) entity.leader = value;
+      pending.clear();
+      return [...entities.values()].filter(entity => entity.isValid && entity.leader);
+    },
+  };
+}
+
+test('A squad promotes Lancers, Juggernauts and Swordsmen in order and re-elects after deaths', () => {
+  const squad = squadFixture();
+  const arbalist = squad.spawn('arbalist');
+  const swordsman = squad.spawn('swordsman');
+  const juggernaut = squad.spawn('juggernaut');
+  const lancer = squad.spawn('lancer');
+  // All four join before Bedrock applies the queued leader property changes.
+  assert.deepEqual(squad.leaders(), [lancer]);
+  squad.die(lancer);
+  assert.deepEqual(squad.leaders(), [juggernaut]);
+  squad.die(juggernaut);
+  assert.deepEqual(squad.leaders(), [swordsman]);
+  squad.die(swordsman);
+  assert.deepEqual(squad.leaders(), [arbalist]);
+});
+
+test('Horse Lancers tie foot Lancers, squad membership survives reloading, and other squads keep their leader', () => {
+  const squad = squadFixture();
+  const horseLancer = squad.spawn('horse_lancer');
+  const lancer = squad.spawn('lancer');
+  squad.spawn('swordsman');
+  squad.spawn('juggernaut');
+  const fifthGuard = squad.spawn('arbalist');
+  const distantGuard = squad.spawn('lancer', 30);
+  assert.deepEqual(squad.leaders(), [horseLancer, fifthGuard, distantGuard]);
+  horseLancer.isValid = false;
+  joinGuardSquad(squad.world, lancer);
+  assert.deepEqual(squad.leaders(), [fifthGuard, distantGuard]);
+  horseLancer.isValid = true;
+  joinGuardSquad(squad.world, horseLancer);
+  assert.deepEqual(squad.leaders(), [horseLancer, fifthGuard, distantGuard]);
+  squad.die(horseLancer);
+  assert.deepEqual(squad.leaders(), [lancer, fifthGuard, distantGuard]);
 });
 
 test('The Horse Lancer Team egg spawns a horse and compatible rider without natural guard spawn rules', async () => {

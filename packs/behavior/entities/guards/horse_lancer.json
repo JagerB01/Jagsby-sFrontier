@@ -4,7 +4,14 @@
     "description": {
       "identifier": "jagsby_frontier:horse_lancer",
       "is_spawnable": false,
-      "is_summonable": true
+      "is_summonable": true,
+      "properties": {
+        "jagsby_frontier:squad_leader": {
+          "type": "bool",
+          "default": false,
+          "client_sync": true
+        }
+      }
     },
     "components": {
       "minecraft:type_family": {

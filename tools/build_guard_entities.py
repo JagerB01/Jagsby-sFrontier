@@ -112,6 +112,8 @@ def arm_guard(role, identifier, mounted=False):
     extra = {}
     if role == "juggernaut":
         extra = shield_behavior(components)
+    properties = extra.setdefault("description", {}).setdefault("properties", {})
+    properties[f"{NS}:squad_leader"] = {"type": "bool", "default": False, "client_sync": True}
     return entity(identifier, not mounted, components, **extra)
 
 
@@ -234,6 +236,7 @@ def guard_geometry():
             cube_bone("body", [0, 23, 0], [-4, 11, -2.5], [8, 12, 5], [16, 17]),
             cube_bone("head", [0, 23, 0], [-4, 23, -4], [8, 9, 8], [0, 0]),
             cube_bone("crest", [0, 31, 0], [-0.5, 31, -2], [1, 2, 4], [42, 0], parent="head"),
+            cube_bone("leaderPlume", [0, 33, 0], [-1, 33, -2], [2, 3, 4], [52, 0], parent="head"),
             cube_bone("rightArm", [-5, 22, 0], [-8, 11, -2], [4, 12, 4], [44, 17]),
             cube_bone("leftArm", [5, 22, 0], [4, 11, -2], [4, 12, 4], [44, 17], mirror=True),
             {"name": "rightItem", "parent": "rightArm", "pivot": [-6, 13, 1]},
@@ -272,6 +275,7 @@ def guard_texture(role, accent):
     canvas.rect(13, 11, 2, 1, (55, 43, 36))
     canvas.rect(10, 14, 4, 1, leather)
     canvas.rect(42, 0, 10, 6, accent)
+    canvas.rect(52, 0, 12, 7, gold)
     canvas.grain(0, 20, 16, 15, leather, 5)
     canvas.rect(0, 31, 16, 4, iron)
     canvas.rect(16, 17, 26, 17, iron)
@@ -308,7 +312,9 @@ def build():
     renderer = {"geometry": "Geometry.default", "materials": [{"*": "Material.default"}], "textures": ["Texture.default"]}
     write(RP / "render_controllers/frontier_guard.render_controllers.json", {
         "format_version": "1.8.0", "render_controllers": {
-            f"controller.render.{NS}.guard": renderer,
+            f"controller.render.{NS}.guard": {
+                **renderer, "part_visibility": [{"leaderPlume": f"query.property('{NS}:squad_leader')"}],
+            },
             f"controller.render.{NS}.guard_horse": {**renderer, "part_visibility": [{"Bag*": False}, {"MuleEar*": False}]},
         },
     })
