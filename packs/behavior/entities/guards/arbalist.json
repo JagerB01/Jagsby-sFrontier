@@ -10,8 +10,7 @@
       "minecraft:type_family": {
         "family": [
           "mob",
-          "frontier_guard",
-          "frontier_camel_crew"
+          "frontier_guard"
         ]
       },
       "minecraft:health": {

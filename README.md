@@ -5,11 +5,10 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.131](downloads/Jagsbys_Frontier_v0.0.131.mcaddon?raw=true)
+[Download Frontier 0.0.132](downloads/Jagsbys_Frontier_v0.0.132.mcaddon?raw=true)
 
 In Creative, search for **Frontier** spawn eggs to test the Swordsman, Arbalist,
 Lancer, and Juggernaut. The Horse Lancer Team egg spawns a horse with its lancer.
-The Camel Lancer Team egg spawns a camel with a lancer and an Arbalist.
 The guards target hostile mobs and can also be summoned with their Frontier
 entity IDs. Squad patrols and natural spawning are planned for a later update.
 
@@ -515,10 +514,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.131.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.132.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.131_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.132_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

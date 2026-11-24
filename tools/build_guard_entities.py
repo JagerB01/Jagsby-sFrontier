@@ -14,26 +14,6 @@ ROLES = {
     "lancer": ("iron_spear", 24, (59, 92, 137), "#3B5C89"),
     "juggernaut": ("iron_axe", 38, (134, 104, 55), "#866837"),
 }
-MOUNTS = {
-    "horse": {
-        "health": 30,
-        "speed": 0.23,
-        "bounds": [1.4, 1.6],
-        "seats": [[0, 1.1, -0.2]],
-        "geometry": "geometry.horse.v3",
-        "texture": "textures/entity/horse2/horse_brown",
-        "egg": "#754836",
-    },
-    "camel": {
-        "health": 32,
-        "speed": 0.15,
-        "bounds": [1.7, 2.375],
-        "seats": [[0, 1.55, 0.48], [0, 1.55, -0.68]],
-        "geometry": "geometry.camel",
-        "texture": "textures/entity/camel/camel",
-        "egg": "#B48A53",
-    },
-}
 
 
 def write(path, data):
@@ -72,13 +52,11 @@ def mobility(health, speed, width, height, families):
     }
 
 
-def arm_guard(role, identifier, mount=None):
+def arm_guard(role, identifier, mounted=False):
     _, health, _, _ = ROLES[role]
     families = [FAMILY]
-    if mount:
-        families.append(f"frontier_{mount}_crew")
-    if role == "arbalist":
-        families.append("frontier_camel_crew")
+    if mounted:
+        families.append("frontier_horse_crew")
     components = mobility(health, 0.29, 0.6, 1.95, families)
     distance = 18 if role == "arbalist" else 13
     components.update({
@@ -123,18 +101,18 @@ def arm_guard(role, identifier, mount=None):
     if role == "lancer":
         components["minecraft:behavior.use_kinetic_weapon"] = {
             "priority": 3,
-            "approach_distance": 12 if mount else 9,
-            "reposition_distance": {"min": 7, "max": 9} if mount else {"min": 5, "max": 7},
-            "cooldown_distance": {"min": 9, "max": 11} if mount else {"min": 7, "max": 9},
-            "hijack_mount_navigation": bool(mount),
+            "approach_distance": 12 if mounted else 9,
+            "reposition_distance": {"min": 7, "max": 9} if mounted else {"min": 5, "max": 7},
+            "cooldown_distance": {"min": 9, "max": 11} if mounted else {"min": 7, "max": 9},
+            "hijack_mount_navigation": mounted,
             "track_target": True,
-            "speed_multiplier": 1.35 if mount else 1,
-            "reposition_speed_multiplier": 1.2 if mount else 0.9,
+            "speed_multiplier": 1.35 if mounted else 1,
+            "reposition_speed_multiplier": 1.2 if mounted else 0.9,
         }
     extra = {}
     if role == "juggernaut":
         extra = shield_behavior(components)
-    return entity(identifier, mount is None, components, **extra)
+    return entity(identifier, not mounted, components, **extra)
 
 
 def shield_behavior(components):
@@ -177,23 +155,20 @@ def shield_behavior(components):
     }
 
 
-def cavalry_mount(kind, spec):
-    riders = [f"{NS}:{kind}_lancer"]
-    if kind == "camel":
-        riders.append(f"{NS}:arbalist")
-    components = mobility(spec["health"], spec["speed"], *spec["bounds"], ["frontier_guard_mount"])
-    seats = [{"position": position, "min_rider_count": 0, "max_rider_count": len(riders)}
-             for position in spec["seats"]]
+def guard_horse():
+    components = mobility(30, 0.23, 1.4, 1.6, ["frontier_guard_mount"])
     components.update({
         "minecraft:is_saddled": {},
-        "minecraft:rideable": {"seat_count": len(riders), "controlling_seat": 0,
-                               "family_types": [f"frontier_{kind}_crew"], "seats": seats},
+        "minecraft:rideable": {
+            "seat_count": 1, "controlling_seat": 0, "family_types": ["frontier_horse_crew"],
+            "seats": [{"position": [0, 1.1, -0.2], "min_rider_count": 0, "max_rider_count": 1}],
+        },
         "minecraft:behavior.mount_pathing": {"priority": 2, "track_target": True, "speed_multiplier": 1.1},
     })
     group = f"{NS}:mounted_crew"
-    return entity(f"guard_{kind}", True, components,
+    return entity("guard_horse", True, components,
                   component_groups={group: {"minecraft:addrider": {
-                      "riders": [{"entity_type": rider} for rider in riders],
+                      "riders": [{"entity_type": f"{NS}:horse_lancer"}],
                   }}},
                   events={"minecraft:entity_spawned": {"add": {"component_groups": [group]}}})
 
@@ -232,19 +207,17 @@ def guard_client(role, identifier, egg):
                   enable_attachables=True)
 
 
-def mount_client(kind, spec):
-    if kind == "horse":
-        data = client("guard_horse", spec["geometry"], spec["texture"],
-                      {"walk": "animation.horse.v3.walk"}, ["walk"], spec["egg"])
-        data["minecraft:client_entity"]["description"]["scripts"]["pre_animation"] = [
-            "variable.stand_anim = 0;",
-            "variable.leg_stand_factor = math.cos(query.modified_distance_moved * 38.38 + 180);",
-            "variable.leg_x_rot_anim = variable.leg_stand_factor * 45.8 * query.modified_move_speed;",
-        ]
-        data["minecraft:client_entity"]["description"]["render_controllers"] = [f"controller.render.{NS}.guard_horse"]
-        return data
-    return client("guard_camel", spec["geometry"], spec["texture"],
-                  {"walk": "animation.camel.walk"}, [{"walk": "query.modified_move_speed > 0.01"}], spec["egg"])
+def horse_client():
+    data = client("guard_horse", "geometry.horse.v3", "textures/entity/horse2/horse_brown",
+                  {"walk": "animation.horse.v3.walk"}, ["walk"], "#754836")
+    description = data["minecraft:client_entity"]["description"]
+    description["scripts"]["pre_animation"] = [
+        "variable.stand_anim = 0;",
+        "variable.leg_stand_factor = math.cos(query.modified_distance_moved * 38.38 + 180);",
+        "variable.leg_x_rot_anim = variable.leg_stand_factor * 45.8 * query.modified_move_speed;",
+    ]
+    description["render_controllers"] = [f"controller.render.{NS}.guard_horse"]
+    return data
 
 
 def cube_bone(name, pivot, origin, size, uv, parent="root", **extra):
@@ -326,12 +299,10 @@ def build():
         write(BP / f"entities/guards/{role}.json", arm_guard(role, role))
         write(RP / f"entity/guards/{role}.entity.json", guard_client(role, role, egg))
         guard_texture(role, accent)
-    for kind, spec in MOUNTS.items():
-        rider = f"{kind}_lancer"
-        write(BP / f"entities/guards/{rider}.json", arm_guard("lancer", rider, kind))
-        write(RP / f"entity/guards/{rider}.entity.json", guard_client("lancer", rider, None))
-        write(BP / f"entities/guards/guard_{kind}.json", cavalry_mount(kind, spec))
-        write(RP / f"entity/guards/guard_{kind}.entity.json", mount_client(kind, spec))
+    write(BP / "entities/guards/horse_lancer.json", arm_guard("lancer", "horse_lancer", mounted=True))
+    write(RP / "entity/guards/horse_lancer.entity.json", guard_client("lancer", "horse_lancer", None))
+    write(BP / "entities/guards/guard_horse.json", guard_horse())
+    write(RP / "entity/guards/guard_horse.entity.json", horse_client())
     write(RP / "models/entity/frontier_guard.geo.json", guard_geometry())
     write(RP / "animations/frontier_guard.animation.json", guard_animations())
     renderer = {"geometry": "Geometry.default", "materials": [{"*": "Material.default"}], "textures": ["Texture.default"]}
