@@ -3,6 +3,8 @@ import {migrateResearch,storageCapacity,localLevel,colonizationBonus,zoneAt} fro
 import {migrateLocalResearch,localResearchLevel,localResearchCost,localResearchRequirement} from './local-research.js';
 import {productionAllocations,riverCropBonus,migrateProduction} from './biome-resources.js';
 import {LEGACY_RESOURCES} from './legacy-production.js';
+import {recordedPower} from './village-census.js';
+export {recordedPower};
 const HOUR=3600000,DAY=86400000,EPS=1e-8;
 export function developmentThreshold(v){return v.developmentThreshold??C.developmentThreshold;}
 export function development(v){return Math.floor(Math.max(0,v.developmentValue||0)/developmentThreshold(v)+1e-10);}
@@ -29,13 +31,6 @@ function legacyResources(v){
  for(const biome of [v.biome,...(v.biomeUnlocked&&v.secondary?[v.secondary]:[])])
   for(const r of LEGACY_RESOURCES[biome]||[])result.set(r.id,r);
  return [...result.values()];
-}
-export function recordedPower(v){
- if(Number.isFinite(v.productionPower))return Math.max(0,v.productionPower);
- const c=v.census;
- if(!c||c.error)return 0;
- const n=Number.isFinite(c.realmPowerTenths)?c.realmPowerTenths:c.minimumPowerTenths;
- return Math.max(0,Number.isFinite(n)?n/10:0);
 }
 export function resourceRates(v,s=null,legacy=false,oldProduction=false){
  const prosperity=!legacy&&s?localLevel(s,v,'efficiency'):(v.efficiency||0);

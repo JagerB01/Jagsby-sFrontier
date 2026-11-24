@@ -1,5 +1,6 @@
 import { CENSUS_RADIUS } from './village-census.js';
 import { isTownGuard } from './frontier-guards.js';
+import { charterKey } from './charter-placement.js';
 
 const POST = 'jagsby_frontier:town_guard_post';
 const INSET = 5;
@@ -22,6 +23,19 @@ export function nearestTownPost(villages, dimension, location, radius = CENSUS_R
 
 export function bindTownPost(entity, post) {
   entity.setDynamicProperty(POST, JSON.stringify(post));
+}
+
+function readTownPost(entity) {
+  const saved = entity.getDynamicProperty(POST);
+  return saved ? JSON.parse(saved) : undefined;
+}
+
+export function townGuardSettlement(entity, villages) {
+  const post = readTownPost(entity);
+  if (!post) return;
+  const key = charterKey(post.dimension, post.location);
+  const village = villages[key] ?? villages[key.slice(post.dimension.length + 1)];
+  if (village?.dimension === post.dimension) return village;
 }
 
 export function isTownPatrol(entity) {
@@ -71,12 +85,16 @@ export function townGuardPatrol(world, villages) {
   const loaded = new Map();
   return {
     track(entity) {
-      const saved = entity.getDynamicProperty(POST);
-      const post = saved ? JSON.parse(saved)
-        : nearestTownPost(villages(), entity.dimension.id, entity.location, LEGACY_REACH);
+      const saved = readTownPost(entity);
+      const post = saved ?? nearestTownPost(villages(), entity.dimension.id, entity.location, LEGACY_REACH);
       if (!post) return;
       if (!saved) bindTownPost(entity, post);
       loaded.set(entity.id, {entity, post, inside: loaded.get(entity.id)?.inside});
+    },
+    *guards() {
+      for (const {entity} of loaded.values()) {
+        if (entity.isValid && isTownGuard(entity)) yield entity;
+      }
     },
     tick() {
       for (const [id, entry] of loaded) {

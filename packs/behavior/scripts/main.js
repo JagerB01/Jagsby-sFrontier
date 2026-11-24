@@ -8,9 +8,10 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
-import { blockGuardShield, isFrontierGuard, isJuggernaut, joinGuardSquad, removeGuardFromSquad } from "./frontier-guards.js";
+import { blockGuardShield, isFrontierGuard, isJuggernaut, isTownGuard, joinGuardSquad, removeGuardFromSquad, townGuardLimit } from "./frontier-guards.js";
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from "./guard-colors.js";
-import { isTownPatrol, townGuardPatrol } from "./town-guard-posts.js";
+import { isTownPatrol, townGuardPatrol, townGuardSettlement } from "./town-guard-posts.js";
+import { fillTownGuardSlot, recordTownGuardDeath, retireTownGuards, validateTownGuard } from "./town-watch.js";
 import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
 import { PROVINCE_SIZE, capitalStatus, designateCapital, renameProvince, updateProvinceCapitalId } from "./provinces.js";
 import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from "./poi-survey.js";
@@ -22,13 +23,14 @@ const BIOME_RADIUS = 256;
 import {DEFINITIONS,ZONES,zoneAt,maxLevel,nextCost,acceptedMaterials,lockReason,contribution,applyContribution,migrateResearch,settlementLimit,foundingReason,storageIncrement,localLevel,colonizationBonus} from "./global-research.js";
 import {ECONOMY_CONFIG} from "./economy-config.js";
 import {accountEconomy,development,developmentThreshold,resourceRates,capacity,stockTotal,researchCost,researchLevel,researchRequirement,startRoad,completeRoads,normalizeRoadTimers,selectTradeRoute,selectedTradeRoutes,roadTicksRemaining,travelQuote,corndogCost,foodCost,foodPlan,spendFoodAndTravel,routeRates,recordedPower,developmentHourlyRate} from "./settlement-economy.js";
-import {refreshProtection,protectDamage,within,healVillager} from "./settlement-effects.js";
+import {refreshProtection,protectDamage,within,healTownGuard,healVillager} from "./settlement-effects.js";
 import {localContribution,applyLocalContribution,migrateLocalResearch,localResearchText,researchComparison,researchPercent} from "./local-research.js";
 import {productionView} from "./production-display.js";
 import {canonicalBiome,eligibleBiome,productionAllocations} from "./biome-resources.js";
 const roadTimers=new Map();
 const pendingSurveys=new Map();
 function gameTick(){return world.getAbsoluteTime?.()??0;}
+function gameDay(){return Math.floor(gameTick()/24000);}
 function accounted(){
  const s=state();const result=accountEconomy(s);
  if(!result.complete){save(s);throw Error('Offline accounting is catching up; reopen the charter to continue.');}
@@ -569,32 +571,44 @@ world.afterEvents.playerBreakBlock.subscribe(ev=>{
   ev.player.sendMessage('Research payment recovery is pending. Replace this charter and reopen it before removing the settlement.');return;
  }
  updateProvinceCapitalId(s,villageId);
+ if(s.villages[villageId])retireTownGuards(world,s.villages[villageId]);
  delete s.villages[villageId];
  if(s.villages[legacy]?.dimension===dimension){
   updateProvinceCapitalId(s,legacy);
+  retireTownGuards(world,s.villages[legacy]);
   delete s.villages[legacy];
  }
  for(const [key,road]of Object.entries(s.roads||{}))if(!s.villages[road.from]||!s.villages[road.to])delete s.roads[key];
  save(s);
 });
-// Player-only buffs are refreshed every six seconds. Villagers are queried
-// at most once per in-game day, only around an occupied loaded settlement.
+const townPatrol=townGuardPatrol(world,()=>state().villages);
+// Visit occupied settlements every six seconds. The villager scan runs once
+// per day; a town guard that loads later can still receive its daily heal.
 system.runInterval(()=>{
- const s=state(),day=Math.floor(gameTick()/24000);let changed=false;
- const healing=new Map();
+ const s=state(),day=gameDay();let changed=false;
+ const occupied=new Set();
  for(const player of world.getPlayers())try{
-  for(const v of refreshProtection(player,s.villages,Date.now(),s.global?.innovation??Infinity))if(v.hearth>=1&&v.lastHealDay!==day)healing.set(v.id,v);
+  for(const v of refreshProtection(player,s.villages,Date.now(),s.global?.innovation??Infinity))occupied.add(v);
  }catch(e){console.warn(`Frontier protection: ${e}`);}
- for(const v of healing.values())try{
+ for(const v of occupied)try{
+  const limit=townGuardLimit(v,localLevel(s,v,'sanctuary'));
+  if(retireTownGuards(world,v,limit))changed=true;
+  if(fillTownGuardSlot(world,v,limit,day))changed=true;
+ }catch(e){console.warn(`Frontier town recruitment: ${e}`);}
+ for(const v of occupied)try{
+  if(!(v.hearth>=1)||v.lastHealDay===day)continue;
   const dim=world.getDimension(v.dimension);
   for(const entity of dim.getEntities({location:v.location,maxDistance:ECONOMY_CONFIG.protectionRadius,families:['villager']}))healVillager(entity,day);
   v.lastHealDay=day;changed=true;
  }catch(e){console.warn(`Frontier daily healing: ${e}`);}
+ for(const guard of townPatrol.guards())try{
+  const v=townGuardSettlement(guard,s.villages);
+  if(occupied.has(v))healTownGuard(guard,v,day);
+ }catch(e){console.warn(`Frontier daily guard healing: ${e}`);}
  if(changed)save(s);
 },120);
-world.beforeEvents.entityHurt?.subscribe(protectDamage);
+world.beforeEvents.entityHurt?.subscribe(event=>protectDamage(event,Date.now(),state));
 world.beforeEvents.entityHurt?.subscribe(blockGuardShield);
-const townPatrol=townGuardPatrol(world,()=>state().villages);
 system.runInterval(townPatrol.tick,10);
 function loadFrontierGuard({entity}){
  if(!entity.isValid)return;
@@ -603,6 +617,7 @@ function loadFrontierGuard({entity}){
  // Egg ownership is recorded before this callback initializes the new guard.
  system.run(()=>{
   if(!entity.isValid)return;
+  if(isTownGuard(entity)&&!validateTownGuard(entity,state,save))return;
   if(town)townPatrol.track(entity);
   if(!guard)return;
   refreshGuardColor(world,entity);
@@ -614,7 +629,10 @@ function loadFrontierGuard({entity}){
 }
 world.afterEvents.entitySpawn?.subscribe(loadFrontierGuard);
 world.afterEvents.entityLoad?.subscribe(loadFrontierGuard);
-world.afterEvents.entityDie?.subscribe(({deadEntity})=>removeGuardFromSquad(world,deadEntity));
+world.afterEvents.entityDie?.subscribe(({deadEntity})=>{
+ if(isTownGuard(deadEntity))recordTownGuardDeath(deadEntity,gameDay(),state,save);
+ else removeGuardFromSquad(world,deadEntity);
+});
 world.afterEvents.worldLoad?.subscribe(()=>{try{accounted();}catch(e){console.warn(String(e));}});
 
 function roadNetworkOverview(s,v){

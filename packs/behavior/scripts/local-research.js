@@ -1,4 +1,5 @@
 import {ECONOMY_CONFIG as C} from './economy-config.js';
+import {townGuardLimit} from './frontier-guards.js';
 export const LOCAL_KEYS=['hearth','biome','sanctuary','efficiency','roads'];
 const aliases={hearth:['hearthstone'],biome:['prospecting','resourceProspecting'],sanctuary:[],efficiency:['prosperity'],roads:['roadNetworks']};
 const count=n=>Number.isSafeInteger(n)&&n>=0?n:0;
@@ -97,10 +98,13 @@ export function localResearchText(v,key,s=null){
  const reduction=n=>Math.min(99.9999,(1-0.95**n)*100);
  const tier=['Locked','Trail','Road','Highway'];
  let benefit;
- if(key==='sanctuary')benefit=`Hostile damage reduction: ${compare(researchPercent(reduction(level)),researchPercent(reduction(level+1)))}\nPersists for 3 minutes after leaving.`;
+ if(key==='sanctuary'){
+  const guardLimit=townGuardLimit(v,level);
+  benefit=`Hostile damage reduction: ${compare(researchPercent(reduction(level)),researchPercent(reduction(level+1)))}\nApplies to players and town guards.\nPersists for 3 minutes after leaving for players.\nTown guard capacity: ${compare(guardLimit,townGuardLimit(v,level+1))}\nOne slot per level, capped at half Realm Power (rounded up). Every third slot is an Arbalist. Other slots are Swordsmen.`;
+ }
  else if(key==='efficiency')benefit=`Resource production: ${compare('+'+researchPercent(level*5),'+'+researchPercent((level+1)*5))}`;
  else if(key==='hearth'){
-  benefit=`Villager healing: ${researchComparison(level?'2':'0','2',level===0)} HP / Minecraft day`;
+  benefit=`Villager healing: ${researchComparison(level?'2':'0','2',level===0)} HP / Minecraft day\nAlso heals town guards.`;
   if(level>=1)benefit+=`\nPlayer regeneration: ${compare(level>=2?'I':'Off','I')}\nWithin 80 blocks; persists 3 minutes after leaving.`;
  }else if(key==='biome')benefit=`Second production slot: ${compare(level?'Unlocked':'Locked','Unlocked')}.\nUse both slots for your native biome to double its base output, or Survey within 256 blocks for a different resource.\nChoose in Production > Resource Prospecting.`;
  else if(key==='roads'){

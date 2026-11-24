@@ -27,6 +27,10 @@ export function playerGuardColor(world, id) {
   return validColor(saved) ? saved : 0;
 }
 
+export function setGuardOwner(guard, id) {
+  guard.setDynamicProperty(OWNER, id);
+}
+
 export function refreshGuardColor(world, guard) {
   const owner = guard.getDynamicProperty(OWNER);
   guard.setProperty(HEADBAND, owner ? playerGuardColor(world, owner) : 0);
@@ -96,7 +100,7 @@ export function handleGuardEgg(event, schedule, villages) {
         entities.push(guard);
       }
       if (post) for (const entity of entities) bindTownPost(entity, post);
-      guard.setDynamicProperty(OWNER, player.id);
+      setGuardOwner(guard, player.id);
       if (mode !== 'Creative') {
         if (item.amount > 1) {
           item.amount--;

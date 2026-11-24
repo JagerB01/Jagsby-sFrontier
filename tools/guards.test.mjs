@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import test from 'node:test';
-import { blockGuardShield, joinGuardSquad, JUGGERNAUT, removeGuardFromSquad } from '../packs/behavior/scripts/frontier-guards.js';
+import { blockGuardShield, joinGuardSquad, JUGGERNAUT, removeGuardFromSquad, townGuardLimit } from '../packs/behavior/scripts/frontier-guards.js';
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from '../packs/behavior/scripts/guard-colors.js';
 import { bindTownPost, nearestTownPost, townGuardPatrol } from '../packs/behavior/scripts/town-guard-posts.js';
+import { fillTownGuardSlot, recordTownGuardDeath, retireTownGuards, validateTownGuard } from '../packs/behavior/scripts/town-watch.js';
+import { healTownGuard, protectDamage } from '../packs/behavior/scripts/settlement-effects.js';
 
 const read = path => readFile(new URL('../packs/' + path, import.meta.url), 'utf8');
 const json = async path => JSON.parse(await read(path));
@@ -405,6 +407,92 @@ test('Town horse returns with its rider when teleporting dismounts the rider', (
   assert.ok(horse.location.x < 80);
   assert.deepEqual(rider.location, horse.location);
   assert.equal(mounted, true);
+});
+
+test('Sanctuary recruits the unlocked roles within the RP cap and preserves slots across unloads', () => {
+  const spawned = [];
+  const dimension = {
+    id: 'minecraft:overworld',
+    getBlock: ({y}) => y < 64 ? {typeId: 'minecraft:grass_block'} : {isAir: true},
+    spawnEntity(typeId, location) {
+      const props = new Map();
+      const entity = {
+        typeId, location, id: String(spawned.length + 1), isValid: true,
+        setDynamicProperty: (key, value) => props.set(key, value),
+        getDynamicProperty: key => props.get(key),
+        remove() { this.isValid = false; },
+      };
+      spawned.push(entity);
+      return entity;
+    },
+  };
+  const world = {getDimension: () => dimension, getEntity: key => spawned.find(entity => entity.id === key && entity.isValid)};
+  const village = {dimension: dimension.id, location: {x: 0, y: 64, z: 0}, sanctuary: 6,
+    owner: {id: 'owner-1'}, census: {realmPowerTenths: 50}};
+  let saved = {villages: {'minecraft:overworld|0,64,0': village}, global: {innovation: 6}};
+  const readState = () => saved;
+  const saveState = state => { saved = state; };
+
+  assert.equal(townGuardLimit({}, 6), 0);
+  assert.equal(townGuardLimit(village, 2), 2);
+  const limit = townGuardLimit(village, 6);
+  assert.equal(limit, 3);
+  for (let slot = 0; slot < limit; slot++) assert.equal(fillTownGuardSlot(world, village, limit, 4), true);
+  assert.deepEqual(spawned.map(guard => guard.typeId), ['town_swordsman', 'town_swordsman', 'town_arbalist'].map(id));
+  assert.equal(spawned[2].getDynamicProperty(id('guard_owner')), 'owner-1');
+  spawned[0].isValid = false;
+  village.townGuardSlots = JSON.parse(JSON.stringify(village.townGuardSlots));
+  assert.equal(fillTownGuardSlot(world, village, limit, 4), false, 'unloaded slots stay occupied');
+  spawned[0].isValid = true;
+  assert.equal(validateTownGuard(spawned[0], readState, saveState), true);
+  recordTownGuardDeath(spawned[2], 4, readState, saveState);
+  spawned[2].isValid = false;
+  assert.equal(fillTownGuardSlot(world, village, limit, 4), false);
+  assert.equal(fillTownGuardSlot(world, village, limit, 5), true);
+  assert.equal(spawned[3].typeId, id('town_arbalist'));
+  village.census.realmPowerTenths = 20;
+  spawned[3].isValid = false;
+  assert.equal(retireTownGuards(world, village, townGuardLimit(village, 6)), true);
+  assert.deepEqual(village.townGuardSlots, [spawned[0].id]);
+  assert.equal(spawned[1].isValid, false, 'loaded surplus guards retire immediately');
+  spawned[3].isValid = true;
+  assert.equal(validateTownGuard(spawned[3], readState, saveState), false);
+  assert.equal(spawned[3].isValid, false, 'unloaded surplus guards retire on load');
+});
+
+test('Town guards receive daily Hearthstone healing and their charter’s hostile damage reduction', () => {
+  const props = new Map();
+  let hp = 17;
+  const guard = {
+    typeId: id('town_arbalist'), location: {x: 80, y: 80, z: 0}, dimension: {id: 'minecraft:overworld'},
+    setDynamicProperty: (key, value) => props.set(key, value),
+    getDynamicProperty: key => props.get(key),
+    getComponent: () => ({currentValue: hp, effectiveMax: 20, setCurrentValue: value => {hp = value;}}),
+  };
+  const village = {dimension: guard.dimension.id, location: {x: 0, y: 64, z: 0}, hearth: 1, sanctuary: 3};
+  bindTownPost(guard, village);
+  assert.equal(healTownGuard(guard, village, 4), true);
+  assert.equal(hp, 19);
+  assert.equal(healTownGuard(guard, village, 4), false);
+  assert.equal(healTownGuard(guard, village, 5), true);
+  assert.equal(hp, 20);
+
+  const state = {villages: {'0,64,0': village}, global: {innovation: 2}};
+  const damageFrom = (damagingEntity, cause = 'entityAttack') => {
+    const event = {hurtEntity: guard, damageSource: {cause, damagingEntity}, damage: 20};
+    protectDamage(event, 0, () => state);
+    return event.damage;
+  };
+  const zombie = {typeId: 'minecraft:zombie', matches: ({families}) => families.includes('monster')};
+  assert.ok(Math.abs(damageFrom(zombie) - 18.05) < 1e-6);
+  assert.equal(damageFrom({typeId: 'minecraft:player'}, 'projectile'), 20);
+  assert.equal(damageFrom(zombie, 'fall'), 20);
+  guard.location.x = 80.01;
+  assert.equal(damageFrom(zombie), 20);
+  assert.equal(healTownGuard(guard, village, 6), false);
+  guard.location.x = 0;
+  village.hearth = 0;
+  assert.equal(healTownGuard(guard, village, 6), false);
 });
 
 test('Raised Juggernaut shields block frontal melee and projectile hits only', () => {

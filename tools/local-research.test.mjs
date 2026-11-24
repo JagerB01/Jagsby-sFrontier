@@ -113,6 +113,7 @@ test('Hearthstone I unlocks villager healing and II unlocks player regeneration'
  assert.equal(text.includes('Player regeneration'),false);
  v.hearth=1;text=localResearchText(v,'hearth',state(1));
  assert.ok(text.includes('Villager healing: §b2§r HP / Minecraft day'));
+ assert.ok(text.includes('Also heals town guards.'));
  assert.ok(text.includes('Player regeneration: §bOff§r §7→§r §aI§r'));
  assert.ok(text.includes('Within 80 blocks; persists 3 minutes after leaving.'));
  v.hearth=2;text=localResearchText(v,'hearth',state(1));
@@ -120,11 +121,15 @@ test('Hearthstone I unlocks villager healing and II unlocks player regeneration'
  assert.ok(text.includes('Fully upgraded'));
 });
 
-test('Sanctuary compares colored percentages on one line and states its shared duration once',()=>{
- const v=village();v.hearth=1;v.sanctuary=1;
+test('Sanctuary shows hostile damage reduction and the town guard capacity rules',()=>{
+ const v=village();v.hearth=1;v.sanctuary=1;v.productionPower=1;
  const text=localResearchText(v,'sanctuary',state(1));
  assert.ok(text.includes('Hostile damage reduction: §b5％§r §7→§r §a9.75％§r'));
- assert.equal(text.match(/Persists for 3 minutes after leaving\./g).length,1);
+ assert.ok(text.includes('Applies to players and town guards.'));
+ assert.ok(text.includes('Persists for 3 minutes after leaving for players.'));
+ assert.ok(text.includes('Town guard capacity: §b1§r\n'));
+ assert.ok(text.includes('half Realm Power (rounded up)'));
+ assert.ok(text.includes('Every third slot is an Arbalist. Other slots are Swordsmen.'));
  assert.equal(text.includes('Current:'),false);assert.equal(text.includes('Next:'),false);
  for(const value of ['Stewardship ceiling','Next cost: 256 Crops','Contributed: 0 / 256','256 remaining','Required: Stewardship Lv 2'])assert.ok(text.includes(value),value);
 });

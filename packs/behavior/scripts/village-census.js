@@ -23,6 +23,14 @@ export function takeCensus(dimension, location, readTradeTier, now = Date.now())
   return summarizeVillagers(nearbyVillagers(dimension, location), readTradeTier, now);
 }
 
+export function recordedPower(village) {
+  if (Number.isFinite(village.productionPower)) return Math.max(0, village.productionPower);
+  const census = village.census;
+  if (!census || census.error) return 0;
+  const power = Number.isFinite(census.realmPowerTenths) ? census.realmPowerTenths : census.minimumPowerTenths;
+  return Math.max(0, Number.isFinite(power) ? power / 10 : 0);
+}
+
 export function summarizeVillagers(entities, readTradeTier, now = Date.now()) {
   const seen = new Set();
   const tiers = [0, 0, 0, 0, 0];

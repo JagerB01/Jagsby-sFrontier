@@ -1,3 +1,5 @@
+import { recordedPower } from './village-census.js';
+
 export const JUGGERNAUT = 'jagsby_frontier:juggernaut';
 const SHIELD_STANCE = 'jagsby_frontier:shield_stance';
 const LEADER_PROPERTY = 'jagsby_frontier:squad_leader';
@@ -21,6 +23,10 @@ export function isFrontierGuard(entity) {
 
 export function isTownGuard(entity) {
   return TOWN_GUARDS.has(entity.typeId);
+}
+
+export function townGuardLimit(village, sanctuaryLevel) {
+  return Math.min(sanctuaryLevel, Math.ceil(recordedPower(village) / 2));
 }
 
 export function isJuggernaut(entity) {

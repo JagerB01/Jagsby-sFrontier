@@ -1,13 +1,9 @@
 import {migrateResearch} from '../packs/behavior/scripts/global-research.js';
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
 import test from 'node:test';
-const base=new URL('../packs/behavior/scripts/',import.meta.url);
-const configText=(await readFile(new URL('economy-config.js',base),'utf8')).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',base).href));
-const configUrl='data:text/javascript;base64,'+Buffer.from(configText).toString('base64');
-async function module(name){const source=(await readFile(new URL(name+'.js',base),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',base).href)).replace("'./local-research.js'",JSON.stringify(new URL('local-research.js',base).href)).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',base).href)).replace("'./legacy-production.js'",JSON.stringify(new URL('legacy-production.js',base).href));return import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));}
-const E=await module('settlement-economy'),F=await module('settlement-effects');
-const {ECONOMY_CONFIG:C}=await import(configUrl);
+import * as E from '../packs/behavior/scripts/settlement-economy.js';
+import * as F from '../packs/behavior/scripts/settlement-effects.js';
+import {ECONOMY_CONFIG as C} from '../packs/behavior/scripts/economy-config.js';
 const hour=3600000,day=24*hour;
 function village(id='a',extra={}){return {id,dimension:'minecraft:overworld',location:{x:0,y:64,z:0},biome:'minecraft:plains',census:{realmPowerTenths:100},efficiency:0,hearth:1,biomeUnlocked:false,...extra};}
 function state(v=village()){return migrateResearch({productionVersion:2,developmentVersion:2,villages:{[v.id]:v},global:{storage:20},stock:{},economyAt:0,roads:{}});}
