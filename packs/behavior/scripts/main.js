@@ -10,6 +10,7 @@ import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directory
 import { displayMenu } from "./menu-display.js";
 import { blockGuardShield, isFrontierGuard, isJuggernaut, joinGuardSquad, removeGuardFromSquad } from "./frontier-guards.js";
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from "./guard-colors.js";
+import { isTownPatrol, townGuardPatrol } from "./town-guard-posts.js";
 import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
 import { PROVINCE_SIZE, capitalStatus, designateCapital, renameProvince, updateProvinceCapitalId } from "./provinces.js";
 import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from "./poi-survey.js";
@@ -534,7 +535,7 @@ world.afterEvents.playerPlaceBlock.subscribe(ev=>{rememberPoiPlacement(world,ev.
 const pendingCharterInteractions=new Set();
 world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
   if(ev.block.typeId!==BLOCK){
-    handleGuardEgg(ev,callback=>system.run(callback));
+    handleGuardEgg(ev,callback=>system.run(callback),()=>state().villages);
     return;
   }
   // Custom decorative blocks need not complete a vanilla interaction. Handle
@@ -593,11 +594,17 @@ system.runInterval(()=>{
 },120);
 world.beforeEvents.entityHurt?.subscribe(protectDamage);
 world.beforeEvents.entityHurt?.subscribe(blockGuardShield);
+const townPatrol=townGuardPatrol(world,()=>state().villages);
+system.runInterval(townPatrol.tick,10);
 function loadFrontierGuard({entity}){
- if(!entity.isValid||!isFrontierGuard(entity))return;
+ if(!entity.isValid)return;
+ const town=isTownPatrol(entity),guard=isFrontierGuard(entity);
+ if(!town&&!guard)return;
  // Egg ownership is recorded before this callback initializes the new guard.
  system.run(()=>{
   if(!entity.isValid)return;
+  if(town)townPatrol.track(entity);
+  if(!guard)return;
   refreshGuardColor(world,entity);
   joinGuardSquad(world,entity);
   if(!isJuggernaut(entity))return;

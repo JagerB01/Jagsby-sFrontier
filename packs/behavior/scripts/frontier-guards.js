@@ -16,7 +16,11 @@ const membershipKey = id => `jagsby_frontier:guard_membership:${id}`;
 const squadKey = id => `jagsby_frontier:guard_squad:${id}`;
 
 export function isFrontierGuard(entity) {
-  return LEADERSHIP.has(entity.typeId) || TOWN_GUARDS.has(entity.typeId);
+  return LEADERSHIP.has(entity.typeId) || isTownGuard(entity);
+}
+
+export function isTownGuard(entity) {
+  return TOWN_GUARDS.has(entity.typeId);
 }
 
 export function isJuggernaut(entity) {

@@ -1,5 +1,6 @@
 import { GUARD_COLORS } from './guard-color-palette.js';
 import { isFrontierGuard } from './frontier-guards.js';
+import { bindTownPost, nearestTownPost } from './town-guard-posts.js';
 
 export { GUARD_COLORS };
 const OWNER = 'jagsby_frontier:guard_owner';
@@ -43,7 +44,7 @@ export function selectGuardColor(world, id, index) {
   }
 }
 
-export function handleGuardEgg(event, schedule) {
+export function handleGuardEgg(event, schedule, villages) {
   const egg = event.itemStack?.typeId;
   const type = EGGS.get(egg);
   if (!type) return;
@@ -66,6 +67,14 @@ export function handleGuardEgg(event, schedule) {
 
     const entities = [];
     try {
+      let post;
+      if (type.startsWith('jagsby_frontier:town_')) {
+        post = nearestTownPost(villages(), dimension.id, pos);
+        if (!post) {
+          player.sendMessage('Place Town Guards within 80 blocks of a Village Charter.');
+          return;
+        }
+      }
       // Find room for the two-block-tall guard or mounted rider.
       const rider = HORSE_RIDERS.get(type);
       const headroom = rider ? 4 : 2;
@@ -86,6 +95,7 @@ export function handleGuardEgg(event, schedule) {
         guard = dimension.spawnEntity(type, pos);
         entities.push(guard);
       }
+      if (post) for (const entity of entities) bindTownPost(entity, post);
       guard.setDynamicProperty(OWNER, player.id);
       if (mode !== 'Creative') {
         if (item.amount > 1) {

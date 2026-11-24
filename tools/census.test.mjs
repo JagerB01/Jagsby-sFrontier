@@ -124,7 +124,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
       getDimension: id => dimensions.get(id), getPlayers: () => [],
       getDynamicProperty: key => properties.get(key),
       setDynamicProperty: (key,value) => properties.set(key,value) },
-    system: { beforeEvents: {startup: {subscribe(fn){handlers.startup=fn;}}}, run: fn => queued.push(fn), runInterval: (fn,ticks) => {assert.equal(ticks,120);intervals.push(fn);},
+    system: { beforeEvents: {startup: {subscribe(fn){handlers.startup=fn;}}}, run: fn => queued.push(fn), runInterval: (fn,ticks) => {assert.ok([10,120].includes(ticks));intervals.push(fn);},
       runTimeout: fn => {rankWaits++;fn();} },
     Form, RenameForm,
   };
@@ -137,6 +137,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
     .replace('"./settlement-map.js"',JSON.stringify(new URL('settlement-map.js',scriptBase).href))
     .replace('"./provinces.js"',JSON.stringify(new URL('provinces.js',scriptBase).href))
     .replace('"./guard-colors.js"',JSON.stringify(new URL('guard-colors.js',scriptBase).href))
+    .replace('"./town-guard-posts.js"',JSON.stringify(new URL('town-guard-posts.js',scriptBase).href))
     .replace('"./charter-placement.js"',JSON.stringify(new URL('charter-placement.js',scriptBase).href))
     .replace('"./village-census.js"', JSON.stringify(moduleUrl))
     .replace('"./menu-display.js"', JSON.stringify(menuModuleUrl))

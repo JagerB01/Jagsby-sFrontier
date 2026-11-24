@@ -164,10 +164,6 @@
         "track_target": true,
         "speed_multiplier": 1.05
       },
-      "minecraft:home": {
-        "restriction_radius": 48,
-        "restriction_type": "all_movement"
-      },
       "minecraft:dweller": {
         "dwelling_type": "village",
         "dweller_role": "defender",
@@ -190,10 +186,6 @@
             "cost": 1
           }
         ]
-      },
-      "minecraft:behavior.move_towards_home_restriction": {
-        "priority": 6,
-        "speed_multiplier": 0.8
       },
       "minecraft:behavior.move_towards_dwelling_restriction": {
         "priority": 7,

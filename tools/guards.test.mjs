@@ -3,6 +3,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import test from 'node:test';
 import { blockGuardShield, joinGuardSquad, JUGGERNAUT, removeGuardFromSquad } from '../packs/behavior/scripts/frontier-guards.js';
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from '../packs/behavior/scripts/guard-colors.js';
+import { bindTownPost, nearestTownPost, townGuardPatrol } from '../packs/behavior/scripts/town-guard-posts.js';
 
 const read = path => readFile(new URL('../packs/' + path, import.meta.url), 'utf8');
 const json = async path => JSON.parse(await read(path));
@@ -172,7 +173,7 @@ test('Horse Lancers tie foot Lancers, squad membership survives reloading, and o
   assert.deepEqual(squad.leaders(), [lancer, fifthGuard, distantGuard]);
 });
 
-test('All town variants stay outside squads and favor roads within the area where they spawned', async () => {
+test('All town variants stay outside squads and favor roads during ordinary village patrols', async () => {
   const squad = squadFixture();
   const town = townRoles.map(role => squad.spawn(role));
   const guards = squadRoles.slice(0, 4).map(role => squad.spawn(role));
@@ -186,11 +187,11 @@ test('All town variants stay outside squads and favor roads within the area wher
 
   for (const role of [...townRoles, 'town_guard_horse']) {
     const {components} = (await json('behavior/entities/guards/' + role + '.json'))['minecraft:entity'];
-    assert.deepEqual(components['minecraft:home'], {restriction_radius: 48, restriction_type: 'all_movement'});
+    assert.equal(components['minecraft:home'], undefined);
     const path = components['minecraft:preferred_path'];
     assert.deepEqual(path.preferred_path_blocks[0].blocks, ['grass_path', 'cobblestone', 'gravel']);
     assert.ok(path.preferred_path_blocks[0].cost < path.default_block_cost);
-    const returnHome = components['minecraft:behavior.move_towards_home_restriction'];
+    const returnHome = components['minecraft:behavior.move_towards_dwelling_restriction'];
     const road = components['minecraft:behavior.move_to_block'];
     const wander = components['minecraft:behavior.random_stroll'];
     const attack = components['minecraft:behavior.melee_box_attack']
@@ -256,8 +257,9 @@ test('Player color changes update only their loaded guards and carry over to gua
   assert.deepEqual([own.band, other.band, neutral.band, unloaded.band], [0, 5, 0, 0]);
 });
 
-test('Guard eggs identify the player and seat the mounted guard before spending the egg', () => {
-  function eggAttempt(role, mode, canRide = true) {
+test('Guard eggs identify the player and seat and bind both mounted entities before spending the egg', () => {
+  const village = {dimension: 'minecraft:overworld', location: {x: 1, y: 64, z: 3}};
+  function eggAttempt(role, mode, canRide = true, villages = {a: village}) {
     const spawned = [], scheduled = [];
     const item = {typeId: id(role + '_team_egg'), amount: 2};
     let remaining = item.amount;
@@ -270,7 +272,13 @@ test('Guard eggs identify the player and seat the mounted guard before spending 
         const entity = {
           typeId: type, options, isValid: true,
           getComponent: () => ({addRider: rider => (entity.rider = rider, canRide)}),
-          setDynamicProperty(key, value) { assert.equal(key, id('guard_owner')); entity.owner = value; },
+          setDynamicProperty(key, value) {
+            if (key === id('town_guard_post')) entity.post = JSON.parse(value);
+            else {
+              assert.equal(key, id('guard_owner'));
+              entity.owner = value;
+            }
+          },
           remove() { entity.isValid = false; },
         };
         spawned.push(entity);
@@ -292,7 +300,7 @@ test('Guard eggs identify the player and seat the mounted guard before spending 
         sendMessage: message => events.push(message),
       },
     };
-    handleGuardEgg(event, callback => scheduled.push(callback));
+    handleGuardEgg(event, callback => scheduled.push(callback), () => villages);
     assert.equal(event.cancel, true);
     assert.deepEqual(spawned, []);
     scheduled[0]();
@@ -304,6 +312,11 @@ test('Guard eggs identify the player and seat the mounted guard before spending 
   const town = eggAttempt('town_swordsman', 'Creative');
   assert.equal(town.spawned[0].typeId, id('town_swordsman'));
   assert.equal(town.spawned[0].owner, 'player-1');
+  assert.deepEqual(town.spawned[0].post, village);
+  const outside = eggAttempt('town_swordsman', 'Survival', true, {});
+  assert.deepEqual(outside.spawned, []);
+  assert.equal(outside.remaining, 2);
+  assert.match(outside.events[0], /within 80 blocks/);
   const horse = eggAttempt('guard_horse', 'Survival');
   const [mount, rider] = horse.spawned;
   assert.equal(mount.options.spawnEvent, id('spawn_empty'));
@@ -315,9 +328,83 @@ test('Guard eggs identify the player and seat the mounted guard before spending 
   assert.equal(townHorse.spawned[0].typeId, id('town_guard_horse'));
   assert.equal(townHorse.spawned[0].rider.typeId, id('town_horse_lancer'));
   assert.equal(townHorse.spawned[0].rider.owner, 'player-1');
+  assert.deepEqual(townHorse.spawned.map(entity => entity.post), [village, village]);
   const failed = eggAttempt('guard_horse', 'Survival', false);
   assert.ok(failed.spawned.every(entity => !entity.isValid));
   assert.equal(failed.remaining, 2);
+});
+
+test('Town patrols use the nearest charter in the same dimension and the exact horizontal survey boundary', () => {
+  const dimension = {
+    id: 'minecraft:overworld',
+    getTopmostBlock: ({x, z}) => ({location: {x, y: 64, z}}),
+  };
+  const village = {dimension: dimension.id, location: {x: 0, y: 54, z: 0}};
+  const villages = {a: village, b: {...village, location: {x: -90, y: 50, z: 0}},
+    nether: {...village, dimension: 'minecraft:nether', location: {x: 79, y: 50, z: 0}}};
+  assert.deepEqual(nearestTownPost(villages, dimension.id, {x: 80, y: 160, z: 0}), village);
+  assert.equal(nearestTownPost(villages, dimension.id, {x: 80.01, y: 54, z: 0}), undefined);
+  assert.deepEqual(nearestTownPost(villages, dimension.id, {x: -70, y: 54, z: 0}), villages.b);
+
+  const patrol = townGuardPatrol({getDimension: () => dimension}, () => villages);
+  const properties = new Map(), teleports = [];
+  const entity = {
+    id: 'town-1', typeId: id('town_swordsman'), dimension, location: {x: 100, y: 65, z: 0},
+    isValid: true, isOnGround: true, isInWater: false,
+    getComponent() {},
+    getDynamicProperty: key => properties.get(key),
+    setDynamicProperty: (key, value) => properties.set(key, value),
+    tryTeleport(point, options) {
+      assert.equal(options.checkForBlocks, true);
+      teleports.push(point);
+      this.location = point;
+      return true;
+    },
+  };
+  patrol.track(entity);
+  assert.deepEqual(JSON.parse(properties.get(id('town_guard_post'))), village);
+  patrol.tick();
+  assert.ok(entity.location.x < 80, 'legacy patrol returns within the charter boundary');
+  entity.location = {x: 70, y: 65, z: 0};
+  patrol.tick();
+  entity.location = {x: 80, y: 65, z: 0};
+  patrol.tick();
+  assert.equal(teleports.length, 1);
+  entity.location = {x: 80.1, y: 65, z: 0};
+  patrol.tick();
+  assert.deepEqual(teleports.at(-1), {x: 70, y: 65, z: 0});
+});
+
+test('Town horse returns with its rider when teleporting dismounts the rider', () => {
+  const dimension = {
+    id: 'minecraft:overworld',
+    getTopmostBlock: ({x, z}) => ({location: {x, y: 63, z}}),
+  };
+  const post = {dimension: dimension.id, location: {x: 0, y: 64, z: 0}};
+  const make = (id, typeId) => {
+    const properties = new Map();
+    return {
+      id, typeId, dimension, location: {x: 84, y: 65, z: 0}, isValid: true,
+      getDynamicProperty: key => properties.get(key),
+      setDynamicProperty: (key, value) => properties.set(key, value),
+      tryTeleport(location) { this.location = location; return true; },
+    };
+  };
+  const horse = make('horse', id('town_guard_horse')), rider = make('rider', id('town_horse_lancer'));
+  let mounted = true;
+  const rideable = {getRiders: () => mounted ? [rider] : [], addRider: entity => (mounted = entity === rider)};
+  horse.getComponent = type => type === 'minecraft:rideable' ? rideable : undefined;
+  rider.getComponent = type => type === 'minecraft:riding' && mounted ? {entityRidingOn: horse} : undefined;
+  horse.tryTeleport = function (location) { this.location = location; mounted = false; return true; };
+  bindTownPost(horse, post);
+  bindTownPost(rider, post);
+  const patrol = townGuardPatrol({getDimension: () => dimension}, () => ({}));
+  patrol.track(rider);
+  patrol.track(horse);
+  patrol.tick();
+  assert.ok(horse.location.x < 80);
+  assert.deepEqual(rider.location, horse.location);
+  assert.equal(mounted, true);
 });
 
 test('Raised Juggernaut shields block frontal melee and projectile hits only', () => {

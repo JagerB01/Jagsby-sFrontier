@@ -138,7 +138,6 @@ def arm_guard(role, identifier, mounted=False, town=False):
 def town_patrol():
     roads = ["grass_path", "cobblestone", "gravel"]
     return {
-        "minecraft:home": {"restriction_radius": 48, "restriction_type": "all_movement"},
         "minecraft:dweller": {
             "dwelling_type": "village", "dweller_role": "defender",
             "can_find_poi": False, "can_migrate": False,
@@ -147,9 +146,6 @@ def town_patrol():
         "minecraft:preferred_path": {
             "default_block_cost": 1.5, "jump_cost": 3, "max_fall_blocks": 1,
             "preferred_path_blocks": [{"blocks": roads, "cost": 1}],
-        },
-        "minecraft:behavior.move_towards_home_restriction": {
-            "priority": 6, "speed_multiplier": 0.8,
         },
         "minecraft:behavior.move_towards_dwelling_restriction": {
             "priority": 7, "speed_multiplier": 0.8,
