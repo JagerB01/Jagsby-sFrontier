@@ -168,7 +168,8 @@ export const CHARTER_LAYOUT = {
     "overviewProduction1": 137,
     "productionModifierTotal": 138,
     "provinceName": 26,
-    "provinceDetails": 27
+    "provinceDetails": 27,
+    "guardColor": 31
   },
   "actions": {
     "efficiency": 14,
@@ -256,11 +257,22 @@ export const CHARTER_LAYOUT = {
     "renameDiplomacymap": 258,
     "scanDiplomacyprovinces": 259,
     "renameDiplomacyprovinces": 260,
+    "scanDiplomacycolors": 261,
+    "renameDiplomacycolors": 262,
     "settlementMap": 11,
     "designateCapital": 29,
-    "renameProvince": 30
+    "renameProvince": 30,
+    "guardColor0": 35,
+    "guardColor1": 36,
+    "guardColor2": 37,
+    "guardColor3": 38,
+    "guardColor4": 39,
+    "guardColor5": 40,
+    "guardColor6": 41,
+    "guardColor7": 42,
+    "guardColor8": 43
   },
-  "recordCount": 261,
+  "recordCount": 263,
   "tabs": [
     "Overview",
     "Research",
@@ -327,10 +339,16 @@ export const CHARTER_LAYOUT = {
       "diplomacyScope": "provinces",
       "scan": "scanDiplomacyprovinces",
       "rename": "renameDiplomacyprovinces"
+    },
+    {
+      "page": "Diplomacy",
+      "diplomacyScope": "colors",
+      "scan": "scanDiplomacycolors",
+      "rename": "renameDiplomacycolors"
     }
   ],
   "realmRows": {
-    "base": 261,
+    "base": 263,
     "limit": 128,
     "stride": 24,
     "scopes": [

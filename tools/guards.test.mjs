@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import test from 'node:test';
 import { blockGuardShield, joinGuardSquad, JUGGERNAUT, removeGuardFromSquad } from '../packs/behavior/scripts/frontier-guards.js';
+import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from '../packs/behavior/scripts/guard-colors.js';
 
 const read = path => readFile(new URL('../packs/' + path, import.meta.url), 'utf8');
 const json = async path => JSON.parse(await read(path));
@@ -13,6 +14,7 @@ const leaderProperty = id('squad_leader');
 test('Guard definitions ship distinct combat roles, test eggs and matching client assets', async () => {
   const resource = await json('resource/animations/frontier_guard.animation.json');
   const texts = await read('resource/texts/en_US.lang');
+  const atlas = (await json('resource/textures/item_texture.json')).texture_data;
   const combat = new Map();
   const behaviorFiles = await readdir(new URL('../packs/behavior/entities/guards/', import.meta.url));
   const clientFiles = await readdir(new URL('../packs/resource/entity/guards/', import.meta.url));
@@ -25,19 +27,29 @@ test('Guard definitions ship distinct combat roles, test eggs and matching clien
     assert.equal(behavior.description.identifier, id(name));
     assert.equal(client.identifier, id(name));
     assert.equal(behavior.description.is_summonable, true);
-    assert.equal(behavior.description.is_spawnable, hasEgg);
-    assert.equal(Boolean(client.spawn_egg), hasEgg);
+    assert.equal(behavior.description.is_spawnable, false);
+    assert.equal(client.spawn_egg, undefined);
     assert.ok(texts.includes('entity.' + id(name) + '.name='));
-    if (hasEgg) assert.ok(texts.includes('item.spawn_egg.entity.' + id(name) + '.name='));
+    if (hasEgg) {
+      const egg = (await json('behavior/items/guard_eggs/' + name + '_team_egg.json'))['minecraft:item'];
+      assert.equal(egg.description.identifier, id(name + '_team_egg'));
+      assert.equal(egg.components['minecraft:entity_placer'].entity, id(name));
+      const key = egg.components['minecraft:icon'].textures.default;
+      await read('resource/' + atlas[key].textures + '.png');
+      assert.ok(texts.includes(egg.components['minecraft:display_name'].value + '='));
+    }
     if (guards.includes(name)) {
       assert.ok(behavior.components['minecraft:type_family'].family.includes('frontier_guard'));
       assert.deepEqual(behavior.description.properties[leaderProperty], {type: 'bool', default: false, client_sync: true});
+      assert.deepEqual(behavior.description.properties[id('headband')],
+        {type: 'int', range: [0, GUARD_COLORS.length - 1], default: 0, client_sync: true});
       const path = behavior.components['minecraft:equipment'].table;
       combat.set(name, {
         components: behavior.components,
         equipment: (await json('behavior/' + path)).pools.flatMap(pool => pool.entries.map(entry => entry.name)),
       });
-      await read('resource/' + client.textures.default + '.png');
+      assert.equal(Object.keys(client.textures).length, GUARD_COLORS.length);
+      for (const texture of Object.values(client.textures)) await read('resource/' + texture + '.png');
       for (const animation of Object.values(client.animations)) assert.ok(resource.animations[animation]);
     }
   }
@@ -58,6 +70,7 @@ test('Guard definitions ship distinct combat roles, test eggs and matching clien
   const controller = (await json('resource/render_controllers/frontier_guard.render_controllers.json'))
     .render_controllers['controller.render.jagsby_frontier.guard'];
   assert.deepEqual(controller.part_visibility, [{leaderPlume: `query.property('${leaderProperty}')`}]);
+  assert.equal(controller.arrays.textures['Array.headbands'].length, GUARD_COLORS.length);
 });
 
 function squadFixture() {
@@ -151,6 +164,7 @@ test('Horse Lancers tie foot Lancers, squad membership survives reloading, and o
 
 test('The Horse Lancer Team egg spawns a horse and compatible rider without natural guard spawn rules', async () => {
   const mount = (await json('behavior/entities/guards/guard_horse.json'))['minecraft:entity'];
+  assert.deepEqual(mount.events[id('spawn_empty')], {});
   const rideable = mount.components['minecraft:rideable'];
   assert.equal(rideable.seat_count, 1);
   assert.equal(rideable.seats.length, 1);
@@ -169,6 +183,90 @@ test('The Horse Lancer Team egg spawns a horse and compatible rider without natu
     const {description} = (await json('behavior/spawn_rules/' + rule))['minecraft:spawn_rules'];
     assert.ok(!roster.map(id).includes(description.identifier));
   }
+});
+
+test('Player color changes update only their loaded guards and carry over to guards that load later', () => {
+  const ownerKey = id('guard_owner');
+  const headband = id('headband');
+  const make = (owner, valid = true) => ({
+    typeId: id('swordsman'), isValid: valid, band: 0,
+    getDynamicProperty(key) { assert.equal(key, ownerKey); return owner; },
+    setProperty(key, value) { assert.equal(key, headband); this.band = value; },
+  });
+  const own = make('p'), other = make('q'), neutral = make(undefined), unloaded = make('p', false);
+  const properties = new Map();
+  const world = {
+    getDynamicProperty: key => properties.get(key),
+    setDynamicProperty: (key, value) => properties.set(key, value),
+    getDimension: name => ({getEntities: () => name === 'overworld' ? [own, other, neutral, unloaded] : []}),
+  };
+  selectGuardColor(world, 'p', 1);
+  selectGuardColor(world, 'q', 5);
+  selectGuardColor(world, 'p', 999);
+  assert.deepEqual([own.band, other.band, neutral.band, unloaded.band], [1, 5, 0, 0]);
+  assert.equal(playerGuardColor(world, 'p'), 1);
+  unloaded.isValid = true;
+  refreshGuardColor(world, unloaded);
+  assert.equal(unloaded.band, 1);
+  selectGuardColor(world, 'p', 0);
+  assert.deepEqual([own.band, other.band, neutral.band, unloaded.band], [0, 5, 0, 0]);
+});
+
+test('Guard eggs identify the player and seat the mounted guard before spending the egg', () => {
+  function eggAttempt(role, mode, canRide = true) {
+    const spawned = [], scheduled = [];
+    const item = {typeId: id(role + '_team_egg'), amount: 2};
+    let remaining = item.amount;
+    const events = [];
+    const dimension = {
+      id: 'minecraft:overworld',
+      getBlock: () => ({isAir: true}),
+      spawnEntity(type, position, options) {
+        assert.deepEqual(position, {x: 1.5, y: 65, z: 3.5});
+        const entity = {
+          typeId: type, options, isValid: true,
+          getComponent: () => ({addRider: rider => (entity.rider = rider, canRide)}),
+          setDynamicProperty(key, value) { assert.equal(key, id('guard_owner')); entity.owner = value; },
+          remove() { entity.isValid = false; },
+        };
+        spawned.push(entity);
+        return entity;
+      },
+    };
+    const event = {
+      block: {location: {x: 1, y: 64, z: 3}, dimension}, blockFace: 'Up', itemStack: item,
+      player: {
+        id: 'player-1', isValid: true, dimension, selectedSlotIndex: 4, getGameMode: () => mode,
+        getComponent: () => ({container: {
+          getItem: slot => (assert.equal(slot, 4), {...item}),
+          setItem(slot, value) {
+            assert.equal(slot, 4);
+            assert.equal(spawned.at(-1).owner, 'player-1');
+            remaining = value?.amount || 0;
+          },
+        }}),
+        sendMessage: message => events.push(message),
+      },
+    };
+    handleGuardEgg(event, callback => scheduled.push(callback));
+    assert.equal(event.cancel, true);
+    assert.deepEqual(spawned, []);
+    scheduled[0]();
+    return {spawned, remaining, events};
+  }
+  const foot = eggAttempt('juggernaut', 'Creative');
+  assert.equal(foot.spawned[0].owner, 'player-1');
+  assert.equal(foot.remaining, 2);
+  const horse = eggAttempt('guard_horse', 'Survival');
+  const [mount, rider] = horse.spawned;
+  assert.equal(mount.options.spawnEvent, id('spawn_empty'));
+  assert.equal(mount.rider, rider);
+  assert.equal(rider.typeId, id('horse_lancer'));
+  assert.equal(rider.owner, 'player-1');
+  assert.equal(horse.remaining, 1);
+  const failed = eggAttempt('guard_horse', 'Survival', false);
+  assert.ok(failed.spawned.every(entity => !entity.isValid));
+  assert.equal(failed.remaining, 2);
 });
 
 test('Raised Juggernaut shields block frontal melee and projectile hits only', () => {

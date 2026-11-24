@@ -7,7 +7,15 @@
         "default": "entity_alphatest"
       },
       "textures": {
-        "default": "textures/entity/jagsby_frontier/guards/arbalist"
+        "default": "textures/entity/jagsby_frontier/guards/arbalist",
+        "band1": "textures/entity/jagsby_frontier/guards/arbalist_band_1",
+        "band2": "textures/entity/jagsby_frontier/guards/arbalist_band_2",
+        "band3": "textures/entity/jagsby_frontier/guards/arbalist_band_3",
+        "band4": "textures/entity/jagsby_frontier/guards/arbalist_band_4",
+        "band5": "textures/entity/jagsby_frontier/guards/arbalist_band_5",
+        "band6": "textures/entity/jagsby_frontier/guards/arbalist_band_6",
+        "band7": "textures/entity/jagsby_frontier/guards/arbalist_band_7",
+        "band8": "textures/entity/jagsby_frontier/guards/arbalist_band_8"
       },
       "geometry": {
         "default": "geometry.jagsby_frontier.guard"
@@ -33,11 +41,7 @@
       "render_controllers": [
         "controller.render.jagsby_frontier.guard"
       ],
-      "enable_attachables": true,
-      "spawn_egg": {
-        "base_color": "#3C6B55",
-        "overlay_color": "#D7B56D"
-      }
+      "enable_attachables": true
     }
   }
 }

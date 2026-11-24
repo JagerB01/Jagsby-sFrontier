@@ -2,6 +2,7 @@
 import copy
 import json
 from pathlib import Path
+from build_guard_entities import GUARD_COLORS
 from build_ui_art import build as build_ui_art, button_texture
 from build_settlement_map import build_map_ui, MAP_LAYOUT
 
@@ -51,7 +52,7 @@ for key in ["realmMine", "realmAll"]:
 for key in ["minePrev", "mineNext", "allPrev", "allNext", "roadsPrev", "roadsNext"]:
     ACTIONS.pop(key, None)
 VIEW_ACTIONS = []
-for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("Production", ["summary", "biomes"]), ("Realm", ["roads", "mine", "all"]), ("Diplomacy", ["map", "provinces"])]:
+for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("Production", ["summary", "biomes"]), ("Realm", ["roads", "mine", "all"]), ("Diplomacy", ["map", "provinces", "colors"])]:
     for scope in scopes:
         entry = {"page": page}
         if scope: entry[page.lower() + "Scope"] = scope
@@ -61,8 +62,9 @@ for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("
             if key not in ACTIONS: ACTIONS[key] = 700 + len(VIEW_ACTIONS) * 2 + (kind == "rename")
         VIEW_ACTIONS.append(entry)
 # Reuse unassigned transport slots.
-DATA.update({"provinceName": 26, "provinceDetails": 27})
+DATA.update({"provinceName": 26, "provinceDetails": 27, "guardColor": 31})
 ACTIONS.update({"settlementMap": 11, "designateCapital": 29, "renameProvince": 30})
+ACTIONS.update({f"guardColor{i}": 35 + i for i in range(len(GUARD_COLORS))})
 # Preserve the original low transport IDs; pack later additions contiguously.
 # These IDs are form-local, never saved. Avoid transmitting hundreds of holes.
 late = sorted([(index, mapping, key) for mapping in [DATA, ACTIONS]
@@ -284,9 +286,9 @@ def overview_value(name, index, offset, size, scale=0.9):
 
 
 def research_tab(scope, index, section="research", caption_text=None):
-    width, spacing = (124, 129) if section == "production" else (82, 86) if section == "realm" else (124, 129)
+    width, spacing = (82, 86) if section in ("realm", "diplomacy") else (124, 129)
     order = {"production": ["summary", "biomes"], "realm": ["roads", "mine", "all"],
-             "diplomacy": ["map", "provinces"], "research": ["local", "global"]}[section]
+             "diplomacy": ["map", "provinces", "colors"], "research": ["local", "global"]}[section]
     toggle = tab("Research", index)["jf_tab_research"]
     toggle.update({"size": [width, 23], "offset": [index * spacing, 0],
         "toggle_name": "jagsby_frontier_" + section + "_tabs", "tts_name": caption_text or scope.title(),
@@ -789,7 +791,20 @@ def build():
     diplomacy_controls = [
         research_tab("map", 0, "diplomacy", "Map"),
         research_tab("provinces", 1, "diplomacy", "Provinces"),
+        research_tab("colors", 2, "diplomacy", "Colors"),
     ]
+    style_colors = [overview_value("guard_color", DATA["guardColor"], [8, 6], [236, 14], scale=0.95)]
+    for i, (name, rgb) in enumerate(GUARD_COLORS):
+        key = f"guardColor{i}"
+        button = action(key, ACTIONS[key], name, width=74)[key]
+        style_colors.append(control(key, {**button, "offset": [8 + (i % 3) * 80, 28 + (i // 3) * 25],
+            "anchor_from": "top_left", "anchor_to": "top_left"}))
+        for state in GENERATED_CONTROLS["jf_action_" + key + "@common.button"]["controls"]:
+            panel = next(iter(state.values()))
+            caption = next(c["caption"] for c in panel["controls"] if "caption" in c)
+            caption.update({"size": [51, 12], "offset": [22, 4], "font_scale_factor": 0.75})
+            panel["controls"].append(control("swatch", image(
+                "frontier/solid", [9, 9], (8, 6), 7, color=[value / 255 for value in rgb])))
     diplomacy_pages = {
         "map": [
             control("description", label(
@@ -804,6 +819,7 @@ def build():
             diplomacy_button("designateCapital", "Designate this settlement as capital", 100),
             diplomacy_button("renameProvince", "Rename Province", 100),
         ],
+        "colors": style_colors,
     }
     for scope, controls in diplomacy_pages.items():
         diplomacy_controls.append(control(scope, {"type": "panel", "size": [254, 131],

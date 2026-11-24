@@ -9,8 +9,23 @@
         }
       ],
       "textures": [
-        "Texture.default"
+        "Array.headbands[query.property('jagsby_frontier:headband')]"
       ],
+      "arrays": {
+        "textures": {
+          "Array.headbands": [
+            "Texture.default",
+            "Texture.band1",
+            "Texture.band2",
+            "Texture.band3",
+            "Texture.band4",
+            "Texture.band5",
+            "Texture.band6",
+            "Texture.band7",
+            "Texture.band8"
+          ]
+        }
+      },
       "part_visibility": [
         {
           "leaderPlume": "query.property('jagsby_frontier:squad_leader')"

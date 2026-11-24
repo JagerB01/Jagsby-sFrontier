@@ -1,0 +1,21 @@
+{
+  "resource_pack_name": "jagsby_frontier",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "jagsby_frontier_swordsman_team_egg": {
+      "textures": "textures/items/jagsby_frontier/swordsman_team_egg"
+    },
+    "jagsby_frontier_arbalist_team_egg": {
+      "textures": "textures/items/jagsby_frontier/arbalist_team_egg"
+    },
+    "jagsby_frontier_lancer_team_egg": {
+      "textures": "textures/items/jagsby_frontier/lancer_team_egg"
+    },
+    "jagsby_frontier_juggernaut_team_egg": {
+      "textures": "textures/items/jagsby_frontier/juggernaut_team_egg"
+    },
+    "jagsby_frontier_guard_horse_team_egg": {
+      "textures": "textures/items/jagsby_frontier/guard_horse_team_egg"
+    }
+  }
+}

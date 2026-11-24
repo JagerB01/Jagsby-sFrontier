@@ -3,7 +3,7 @@
   "minecraft:entity": {
     "description": {
       "identifier": "jagsby_frontier:guard_horse",
-      "is_spawnable": true,
+      "is_spawnable": false,
       "is_summonable": true
     },
     "components": {
@@ -94,7 +94,8 @@
             "jagsby_frontier:mounted_crew"
           ]
         }
-      }
+      },
+      "jagsby_frontier:spawn_empty": {}
     }
   }
 }

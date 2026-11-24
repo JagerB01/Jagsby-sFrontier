@@ -8,7 +8,8 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
-import { blockGuardShield, joinGuardSquad, JUGGERNAUT, removeGuardFromSquad } from "./frontier-guards.js";
+import { blockGuardShield, isFrontierGuard, joinGuardSquad, JUGGERNAUT, removeGuardFromSquad } from "./frontier-guards.js";
+import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from "./guard-colors.js";
 import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
 import { PROVINCE_SIZE, capitalStatus, designateCapital, renameProvince, updateProvinceCapitalId } from "./provinces.js";
 import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from "./poi-survey.js";
@@ -254,6 +255,13 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   records[data.roadDetails]=roadView.rows.length?'':roadView.details;
   const handlers=new Map();
   handlers.set(actions.settlementMap,()=>openSettlementMap(player,vId,{},vId,{...view,diplomacyScope:'map'}));
+  records[data.guardColor]=`Your color: ${GUARD_COLORS[playerGuardColor(world,player.id)]}`;
+  for(let index=0;index<GUARD_COLORS.length;index++){
+   handlers.set(actions['guardColor'+index],()=>{
+    selectGuardColor(world,player.id,index);
+    reopenView(player,vId,{...view,page:'Diplomacy',diplomacyScope:'colors'});
+   });
+  }
   const provinceView={...view,page:'Diplomacy',diplomacyScope:'provinces'};
   const status=capitalStatus(s,vId,player.id),province=status.province;
   records[data.provinceName]=province?.name||'Province unavailable';
@@ -525,7 +533,10 @@ world.afterEvents.playerPlaceBlock.subscribe(ev=>{rememberPoiPlacement(world,ev.
 (s.placedCharters??={})[charterKey(ev.block.dimension.id,ev.block.location)]={dimension:ev.block.dimension.id,location:{...ev.block.location}};save(s);const v=addVillage(s,ev.block,ev.player);if(!v)return;ev.player.sendMessage('§6Village Charter established. Use Survey to refresh villagers and discover nearby biomes.');});
 const pendingCharterInteractions=new Set();
 world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
-  if(ev.block.typeId!==BLOCK)return;
+  if(ev.block.typeId!==BLOCK){
+    handleGuardEgg(ev,callback=>system.run(callback));
+    return;
+  }
   // Custom decorative blocks need not complete a vanilla interaction. Handle
   // the attempted interaction, and prevent held items from placing/using here.
   ev.cancel=true;
@@ -582,13 +593,20 @@ system.runInterval(()=>{
 },120);
 world.beforeEvents.entityHurt?.subscribe(protectDamage);
 world.beforeEvents.entityHurt?.subscribe(blockGuardShield);
-world.afterEvents.entitySpawn?.subscribe(({entity})=>{
- joinGuardSquad(world,entity);
- if(entity.typeId!==JUGGERNAUT)return;
- const equipment=entity.getComponent('minecraft:equippable');
- if(equipment&&!equipment.getEquipment('Offhand'))equipment.setEquipment('Offhand',new ItemStack('minecraft:shield'));
-});
-world.afterEvents.entityLoad?.subscribe(({entity})=>joinGuardSquad(world,entity));
+function loadFrontierGuard({entity}){
+ if(!entity.isValid||!isFrontierGuard(entity))return;
+ // Egg ownership is recorded before this callback initializes the new guard.
+ system.run(()=>{
+  if(!entity.isValid)return;
+  refreshGuardColor(world,entity);
+  joinGuardSquad(world,entity);
+  if(entity.typeId!==JUGGERNAUT)return;
+  const equipment=entity.getComponent('minecraft:equippable');
+  if(equipment&&!equipment.getEquipment('Offhand'))equipment.setEquipment('Offhand',new ItemStack('minecraft:shield'));
+ });
+}
+world.afterEvents.entitySpawn?.subscribe(loadFrontierGuard);
+world.afterEvents.entityLoad?.subscribe(loadFrontierGuard);
 world.afterEvents.entityDie?.subscribe(({deadEntity})=>removeGuardFromSquad(world,deadEntity));
 world.afterEvents.worldLoad?.subscribe(()=>{try{accounted();}catch(e){console.warn(String(e));}});
 

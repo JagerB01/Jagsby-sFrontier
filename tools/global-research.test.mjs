@@ -149,9 +149,9 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
  const received=[];
  const inventory={addItem(item){received.push(item);return undefined;},size:slots.length,getItem(i){return slots[i]?{...slots[i]}:undefined;},setItem(i,item){if(i===failSlot){failSlot=-1;throw Error('interrupted inventory write');}slots[i]=item?{...item}:undefined;}};
  const messages=[],player={id:'p',selectedSlotIndex:0,sendMessage(text){messages.push(text);},getComponent(){return {container:inventory};}};
- const forms=[];
+ const forms=[],guardColorProperties=new Map();
  class Form{constructor(){this.buttons=[];this.icons=[];forms.push(this);}title(text){this.heading=text;return this;}body(text){this.text=text;return this;}textField(){return this;}submitButton(){return this;}button(text,icon){this.buttons.push(text);this.icons.push(icon);return this;}show(){return Promise.resolve(respond(this));}}
- globalThis.__researchRuntime={world:{getDefaultSpawnLocation(){return options.spawnLocation?.()??{x:0,y:64,z:0};},getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(key){return key==='jagsby_frontier:surveyed_pois'?JSON.stringify(options.surveyedPois??[]):stored;},setDynamicProperty(k,value){write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(fn,delay){return options.onTimeout?.(fn,delay)??1;},clearRun(handle){options.onClear?.(handle);}},Form};
+ globalThis.__researchRuntime={world:{getDefaultSpawnLocation(){return options.spawnLocation?.()??{x:0,y:64,z:0};},getAbsoluteTime(){return options.gameTick?.()??0;},getDimension(){return {getBiome:loc=>({id:options.biomeAt?options.biomeAt(loc):'minecraft:forest'}),getEntities(query){options.onCensus?.(query);return options.censusEntities||[];}};},getDynamicProperty(key){return key==='jagsby_frontier:surveyed_pois'?JSON.stringify(options.surveyedPois??[]):key.startsWith('jagsby_frontier:player_color:')?guardColorProperties.get(key):stored;},setDynamicProperty(k,value){if(k.startsWith('jagsby_frontier:player_color:')){guardColorProperties.set(k,value);return;}write++;if(write===failWrite)throw Error('interrupted world write');stored=value;},afterEvents:Object.fromEntries(['playerPlaceBlock','playerBreakBlock'].map(x=>[x,{subscribe(){}}])),beforeEvents:{playerInteractWithBlock:{subscribe(){}}}},system:{beforeEvents:{startup:{subscribe(){}}},runInterval(){},run(){},runTimeout(fn,delay){return options.onTimeout?.(fn,delay)??1;},clearRun(handle){options.onClear?.(handle);}},Form};
  let source=await readFile(new URL('../packs/behavior/scripts/main.js',import.meta.url),'utf8');
  source=source.replace('import { world, system, ItemStack, BlockVolume, BlockTypes } from "@minecraft/server";','const {world,system}=globalThis.__researchRuntime;const {BlockVolume,BlockTypes}=globalThis.__researchRuntime;class ItemStack {constructor(typeId,amount){this.typeId=typeId;this.amount=amount;}}').replace('import { ActionFormData, ModalFormData } from "@minecraft/server-ui";','const {Form:ActionFormData,Form:ModalFormData}=globalThis.__researchRuntime;').replace(/from "(\.\/[^\"]+)"/g,(_,path)=>`from ${JSON.stringify(new URL('../packs/behavior/scripts/'+path.slice(2),import.meta.url).href)}`);
  source+='\nexport {cardContribution,contributeResearchCard,recoverResearch,state,open,globalResearchText,roadNetworkOverview,restoreLegacyControls,openSettlementMap,openProduction,selectBiome,applyProductionSelection,productionSelection,clearSecondary,collect,establishDirectoryRoad,surveySettlement,travelRoad,roadMenu,changeTradeRoute,buildRoad,accounted};\n//'+Math.random();
@@ -1130,4 +1130,17 @@ test('route handlers use latest saved state and refuse a departure outside the p
  assert.equal(h.read().tradeRoutes.a,ac.id);assert.equal(Object.keys(h.read().tradeRoutes).length,1);
  h.player.location={x:99999,y:64,z:0};h.api.changeTradeRoute(h.player,'a',ab.id);await new Promise(resolve=>setImmediate(resolve));
  assert.equal(h.read().tradeRoutes.a,ac.id);assert.ok(h.messages.at(-1).includes('Stand inside'));
+});
+
+test('Diplomacy color choices apply on click and reopen the Colors subtab', async()=>{
+ const {actions,data}=CHARTER_LAYOUT;
+ let choose=true;
+ const h=await runtime(undefined,()=>choose?(choose=false,{selection:actions.guardColor5}):{canceled:true});
+ h.api.open(h.player,'none','Diplomacy');
+ await new Promise(resolve=>setImmediate(resolve));
+ assert.match(h.forms[0].buttons[data.guardColor],/Your color: Standard/);
+ assert.match(h.forms.at(-1).text,/\[JF:diplomacy:colors\]/);
+ assert.match(h.forms.at(-1).buttons[data.guardColor],/Your color: Blue/);
+ h.api.open({...h.player,id:'other'},'none','Diplomacy');
+ assert.match(h.forms.at(-1).buttons[data.guardColor],/Your color: Standard/);
 });

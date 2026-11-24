@@ -27,11 +27,7 @@
       },
       "render_controllers": [
         "controller.render.jagsby_frontier.guard_horse"
-      ],
-      "spawn_egg": {
-        "base_color": "#754836",
-        "overlay_color": "#D7B56D"
-      }
+      ]
     }
   }
 }

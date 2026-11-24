@@ -14,6 +14,10 @@ const LEADERSHIP = new Map([
 const membershipKey = id => `jagsby_frontier:guard_membership:${id}`;
 const squadKey = id => `jagsby_frontier:guard_squad:${id}`;
 
+export function isFrontierGuard(entity) {
+  return LEADERSHIP.has(entity.typeId);
+}
+
 function membersOf(world, id) {
   const saved = id && world.getDynamicProperty(squadKey(id));
   return saved ? JSON.parse(saved) : [];
@@ -31,7 +35,7 @@ function markSquadLeader(world, roster) {
 }
 
 export function joinGuardSquad(world, guard) {
-  if (!guard.isValid || !LEADERSHIP.has(guard.typeId)) return;
+  if (!guard.isValid || !isFrontierGuard(guard)) return;
   const ownSquad = world.getDynamicProperty(membershipKey(guard.id));
   const ownRoster = membersOf(world, ownSquad);
   if (ownRoster.some(member => member.id === guard.id)) {
@@ -62,7 +66,7 @@ export function joinGuardSquad(world, guard) {
 }
 
 export function removeGuardFromSquad(world, deadGuard) {
-  if (!LEADERSHIP.has(deadGuard.typeId)) return;
+  if (!isFrontierGuard(deadGuard)) return;
   const membership = membershipKey(deadGuard.id);
   const squad = world.getDynamicProperty(membership);
   if (!squad) return;

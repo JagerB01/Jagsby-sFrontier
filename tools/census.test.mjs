@@ -136,6 +136,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
     .replace('"./poi-survey.js"',JSON.stringify(new URL('poi-survey.js',scriptBase).href))
     .replace('"./settlement-map.js"',JSON.stringify(new URL('settlement-map.js',scriptBase).href))
     .replace('"./provinces.js"',JSON.stringify(new URL('provinces.js',scriptBase).href))
+    .replace('"./guard-colors.js"',JSON.stringify(new URL('guard-colors.js',scriptBase).href))
     .replace('"./charter-placement.js"',JSON.stringify(new URL('charter-placement.js',scriptBase).href))
     .replace('"./village-census.js"', JSON.stringify(moduleUrl))
     .replace('"./menu-display.js"', JSON.stringify(menuModuleUrl))

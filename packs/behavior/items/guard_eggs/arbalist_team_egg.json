@@ -1,0 +1,25 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "jagsby_frontier:arbalist_team_egg",
+      "menu_category": {
+        "category": "nature",
+        "group": "minecraft:itemGroup.name.mobEgg"
+      }
+    },
+    "components": {
+      "minecraft:icon": {
+        "textures": {
+          "default": "jagsby_frontier_arbalist_team_egg"
+        }
+      },
+      "minecraft:display_name": {
+        "value": "item.spawn_egg.entity.jagsby_frontier:arbalist.name"
+      },
+      "minecraft:entity_placer": {
+        "entity": "jagsby_frontier:arbalist"
+      }
+    }
+  }
+}

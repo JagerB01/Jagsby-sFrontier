@@ -533,7 +533,7 @@ test('Scrolling lists resolve late form data and initially hidden indexed record
   }
   for(const child of Object.values(value))countLive(child);
  }
- countLive(ui);assert.equal(liveBindings,16,'Only the fourteen tab toggles and two shared form-body readers explicitly force always');
+ countLive(ui);assert.equal(liveBindings,17,'Only the fifteen tab toggles and two shared form-body readers explicitly force always');
 });
 
 test('Controller can enter and navigate Prospecting and Realm rows even without an available action',async()=>{
@@ -607,7 +607,7 @@ test('form payload packs later records without gaps and preserves contiguous col
 test('Every tab stays local, defaults to its first page and applies refresh selection only once',async()=>{
  const ui=await loadUI(),dashboard=children(ui.jf_dashboard);
  const tabs=['overview','research','production','realm','diplomacy'].map(name=>dashboard['jf_tab_'+name]);
- for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']],['diplomacy',['map','provinces']]]){
+ for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']],['diplomacy',['map','provinces','colors']]]){
   const pane=children(ui['jf_'+section+'_content']);tabs.push(...scopes.map(scope=>pane['jf_'+section+'_tab_'+scope]));
  }
  for(const tab of tabs){
@@ -632,7 +632,7 @@ test('Every tab stays local, defaults to its first page and applies refresh sele
 test('Fresh tab groups have exactly one selected default and refresh markers select the intended view',async()=>{
  const ui=await loadUI(),dashboard=children(ui.jf_dashboard);
  const groups=[['tab',['overview','research','production','realm','diplomacy'].map(name=>dashboard['jf_tab_'+name])]];
- for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']],['diplomacy',['map','provinces']]]){
+ for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']],['diplomacy',['map','provinces','colors']]]){
   const pane=children(ui['jf_'+section+'_content']);groups.push([section,scopes.map(scope=>pane['jf_'+section+'_tab_'+scope])]);
  }
  for(const [section,tabs]of groups){
