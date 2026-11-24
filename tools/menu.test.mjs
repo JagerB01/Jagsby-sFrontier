@@ -629,6 +629,26 @@ test('Every tab stays local, defaults to its first page and applies refresh sele
  }
 });
 
+test('Provinces renders both perk cards from fixed form records without a submit action',async()=>{
+ const ui=await loadUI(),{CHARTER_LAYOUT:layout}=await import('../packs/behavior/scripts/charter-layout.js');
+ const provincePage=children(ui.jf_diplomacy_content).provinces;
+ const province=children(provincePage),perks=children(province.perks);
+ assert.ok(province.perks.bindings.some(binding=>binding.source_property_name?.includes('[JF:provincePerks]')));
+ assert.equal(perks.preview.text,'Perk preview');
+ for(const [key,sprite,title] of [
+  ['provincialTravel','provincial_travel','Provincial Travel'],
+  ['provincialPatrols','provincial_patrols','Provincial Patrols'],
+ ]){
+  const card=perks[key],parts=children(card);
+  assert.equal(card.type,'panel');
+  assert.equal(parts.name.text,title);
+  assert.equal(parts.icon.texture,`textures/ui/frontier/research/${sprite}`);
+  assert.equal(layout.actions[key],undefined);
+  assert.equal(children(parts.details)[`record@jagsby_frontier.jf_data_${key}`].collection_index,layout.data[key]);
+  assert.ok(card.offset[1]+card.size[1]<province.designateCapital.offset[1]);
+ }
+});
+
 test('Fresh tab groups have exactly one selected default and refresh markers select the intended view',async()=>{
  const ui=await loadUI(),dashboard=children(ui.jf_dashboard);
  const groups=[['tab',['overview','research','production','realm','diplomacy'].map(name=>dashboard['jf_tab_'+name])]];

@@ -169,7 +169,9 @@ export const CHARTER_LAYOUT = {
     "productionModifierTotal": 138,
     "provinceName": 26,
     "provinceDetails": 27,
-    "guardColor": 31
+    "guardColor": 31,
+    "provincialTravel": 79,
+    "provincialPatrols": 80
   },
   "actions": {
     "efficiency": 14,

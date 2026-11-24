@@ -13,7 +13,7 @@ import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, sele
 import { isTownPatrol, townGuardPatrol, townGuardSettlement } from "./town-guard-posts.js";
 import { fillTownGuardSlot, recordTownGuardDeath, retireTownGuards, validateTownGuard } from "./town-watch.js";
 import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
-import { PROVINCE_SIZE, capitalStatus, designateCapital, renameProvince, updateProvinceCapitalId } from "./provinces.js";
+import { PROVINCE_SIZE, capitalStatus, designateCapital, provinceDevelopment, provincePerkText, renameProvince, updateProvinceCapitalId } from "./provinces.js";
 import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from "./poi-survey.js";
 
 
@@ -267,13 +267,20 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   }
   const provinceView={...view,page:'Diplomacy',diplomacyScope:'provinces'};
   const status=capitalStatus(s,vId,player.id),province=status.province;
+  const combinedDevelopment=province?provinceDevelopment(s.villages).get(province.key)??0:0;
   records[data.provinceName]=province?.name||'Province unavailable';
   records[data.provinceDetails]=province?[
    `Capital: ${province.capital?.name||'None'}`,
    province.capital?`Capital owner: ${ownerName(province.capital)}`:'',
+   `Combined Development: ${combinedDevelopment}`,
    `X ${province.west} to ${province.west+PROVINCE_SIZE-1} · Z ${province.north} to ${province.north+PROVINCE_SIZE-1}`,
    status.reason||'This settlement is eligible to become the capital.',
   ].filter(Boolean).join('\n'):status.reason;
+  if(province){
+   const perks=provincePerkText(province,combinedDevelopment);
+   records[data.provincialTravel]=perks.travel;
+   records[data.provincialPatrols]=perks.patrols;
+  }
   if(status.canDesignate)handlers.set(actions.designateCapital,()=>{
    const latest=accounted();
    const reason=designateCapital(latest,vId,player.id);
@@ -330,7 +337,7 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Tab switches stay local; action variants identify their visible page.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}][JF:diplomacy:${diplomacyScope}]${realmMarkers.join('')}${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?'':`[JF:directory:${scope}:empty]`).join('')}`);
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}][JF:diplomacy:${diplomacyScope}]${province?'[JF:provincePerks]':''}${realmMarkers.join('')}${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?'':`[JF:directory:${scope}:empty]`).join('')}`);
   records.forEach((text,index)=>{
    const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:directoryIcons.get(index);
    form.button(text,texture);

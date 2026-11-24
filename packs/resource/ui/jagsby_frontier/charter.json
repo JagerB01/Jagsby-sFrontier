@@ -23977,7 +23977,7 @@
                 ],
                 "offset": [
                   8,
-                  4
+                  0
                 ],
                 "keep_ratio": false,
                 "bilinear": false,
@@ -23991,7 +23991,7 @@
                 "type": "stack_panel",
                 "orientation": "vertical",
                 "size": [
-                  210,
+                  154,
                   14
                 ],
                 "collection_name": "form_buttons",
@@ -24006,7 +24006,7 @@
                 "anchor_to": "top_left",
                 "offset": [
                   32,
-                  8
+                  4
                 ],
                 "clips_children": true
               }
@@ -24017,7 +24017,7 @@
                 "orientation": "vertical",
                 "size": [
                   233,
-                  61
+                  38
                 ],
                 "collection_name": "form_buttons",
                 "controls": [
@@ -24031,9 +24031,324 @@
                 "anchor_to": "top_left",
                 "offset": [
                   8,
-                  31
+                  20
                 ],
                 "clips_children": true
+              }
+            },
+            {
+              "perks": {
+                "type": "panel",
+                "size": [
+                  254,
+                  106
+                ],
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "bindings": [
+                  {
+                    "binding_name": "#form_text",
+                    "binding_type": "none"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:provincePerks]') = #form_text))",
+                    "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not ((#form_text - '[JF:provincePerks]') = #form_text))",
+                    "target_property_name": "#enabled"
+                  }
+                ],
+                "controls": [
+                  {
+                    "preview": {
+                      "type": "label",
+                      "text": "Perk preview",
+                      "size": [
+                        50,
+                        9
+                      ],
+                      "offset": [
+                        191,
+                        7
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "layer": 8,
+                      "font_type": "unicode",
+                      "font_size": "normal",
+                      "font_scale_factor": 0.67,
+                      "color": [
+                        0.73,
+                        0.73,
+                        0.68
+                      ],
+                      "shadow": false
+                    }
+                  },
+                  {
+                    "provincialTravel": {
+                      "type": "panel",
+                      "size": [
+                        114,
+                        48
+                      ],
+                      "offset": [
+                        8,
+                        58
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "controls": [
+                        {
+                          "face": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/palette_leather",
+                            "size": [
+                              114,
+                              48
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              114,
+                              1
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 1,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ]
+                          }
+                        },
+                        {
+                          "icon": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/research/provincial_travel",
+                            "size": [
+                              28,
+                              28
+                            ],
+                            "offset": [
+                              0,
+                              -3
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 6
+                          }
+                        },
+                        {
+                          "name": {
+                            "type": "label",
+                            "text": "Provincial Travel",
+                            "size": [
+                              85,
+                              11
+                            ],
+                            "offset": [
+                              25,
+                              6
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.72,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "details": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              106,
+                              28
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_provincialTravel": {
+                                  "collection_index": 79
+                                }
+                              }
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "offset": [
+                              5,
+                              19
+                            ],
+                            "clips_children": true
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "provincialPatrols": {
+                      "type": "panel",
+                      "size": [
+                        114,
+                        48
+                      ],
+                      "offset": [
+                        127,
+                        58
+                      ],
+                      "anchor_from": "top_left",
+                      "anchor_to": "top_left",
+                      "controls": [
+                        {
+                          "face": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/palette_leather",
+                            "size": [
+                              114,
+                              48
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 0
+                          }
+                        },
+                        {
+                          "rule": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/solid",
+                            "size": [
+                              114,
+                              1
+                            ],
+                            "offset": [
+                              0,
+                              0
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 1,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ]
+                          }
+                        },
+                        {
+                          "icon": {
+                            "type": "image",
+                            "texture": "textures/ui/frontier/research/provincial_patrols",
+                            "size": [
+                              28,
+                              28
+                            ],
+                            "offset": [
+                              0,
+                              -3
+                            ],
+                            "keep_ratio": false,
+                            "bilinear": false,
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 6
+                          }
+                        },
+                        {
+                          "name": {
+                            "type": "label",
+                            "text": "Provincial Patrols",
+                            "size": [
+                              85,
+                              11
+                            ],
+                            "offset": [
+                              25,
+                              6
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "layer": 8,
+                            "font_type": "unicode",
+                            "font_size": "normal",
+                            "font_scale_factor": 0.72,
+                            "color": [
+                              0.82,
+                              0.7,
+                              0.44
+                            ],
+                            "shadow": false
+                          }
+                        },
+                        {
+                          "details": {
+                            "type": "stack_panel",
+                            "orientation": "vertical",
+                            "size": [
+                              106,
+                              28
+                            ],
+                            "collection_name": "form_buttons",
+                            "controls": [
+                              {
+                                "record@jagsby_frontier.jf_data_provincialPatrols": {
+                                  "collection_index": 80
+                                }
+                              }
+                            ],
+                            "anchor_from": "top_left",
+                            "anchor_to": "top_left",
+                            "offset": [
+                              5,
+                              19
+                            ],
+                            "clips_children": true
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
               }
             },
             {
@@ -24054,7 +24369,7 @@
                 ],
                 "offset": [
                   8,
-                  100
+                  108
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left"
@@ -24078,7 +24393,7 @@
                 ],
                 "offset": [
                   8,
-                  100
+                  108
                 ],
                 "anchor_from": "top_left",
                 "anchor_to": "top_left"
@@ -203382,7 +203697,7 @@
     "type": "label",
     "text": "#text",
     "size": [
-      210,
+      154,
       14
     ],
     "offset": [
@@ -203429,7 +203744,7 @@
     "text": "#text",
     "size": [
       233,
-      61
+      38
     ],
     "offset": [
       0,
@@ -203440,7 +203755,7 @@
     "layer": 8,
     "font_type": "unicode",
     "font_size": "normal",
-    "font_scale_factor": 0.9,
+    "font_scale_factor": 0.72,
     "color": [
       0.94,
       0.92,
@@ -203466,6 +203781,98 @@
       {
         "binding_type": "view",
         "source_property_name": "(not ((#record_text - '[JF:data:provinceDetails]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_data_provincialTravel": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      106,
+      28
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.64,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:provincialTravel]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:provincialTravel]') = #record_text))",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "jf_data_provincialPatrols": {
+    "type": "label",
+    "text": "#text",
+    "size": [
+      106,
+      28
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 8,
+    "font_type": "unicode",
+    "font_size": "normal",
+    "font_scale_factor": 0.64,
+    "color": [
+      0.94,
+      0.92,
+      0.85
+    ],
+    "shadow": false,
+    "bindings": [
+      {
+        "binding_type": "collection_details",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_name": "#form_button_text",
+        "binding_name_override": "#record_text",
+        "binding_type": "collection",
+        "binding_collection_name": "form_buttons"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#record_text - '[JF:data:provincialPatrols]')",
+        "target_property_name": "#text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not ((#record_text - '[JF:data:provincialPatrols]') = #record_text))",
         "target_property_name": "#visible"
       }
     ]

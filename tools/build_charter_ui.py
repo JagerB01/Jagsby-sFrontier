@@ -63,6 +63,7 @@ for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("
         VIEW_ACTIONS.append(entry)
 # Reuse unassigned transport slots.
 DATA.update({"provinceName": 26, "provinceDetails": 27, "guardColor": 31})
+DATA.update({"provincialTravel": 79, "provincialPatrols": 80})
 ACTIONS.update({"settlementMap": 11, "designateCapital": 29, "renameProvince": 30})
 ACTIONS.update({f"guardColor{i}": 35 + i for i in range(len(GUARD_COLORS))})
 # Preserve the original low transport IDs; pack later additions contiguously.
@@ -788,6 +789,16 @@ def build():
         return control(key, {**button, "offset": [8, y],
             "anchor_from": "top_left", "anchor_to": "top_left"})
 
+    def province_perk(key, title, sprite, x):
+        return control(key, {"type": "panel", "size": [114, 48],
+            "offset": [x, 58], "anchor_from": "top_left", "anchor_to": "top_left", "controls": [
+                control("face", image("frontier/palette_leather", [114, 48])),
+                control("rule", image("frontier/solid", [114, 1], layer=1, color=WHEAT)),
+                control("icon", image("frontier/research/" + sprite, [28, 28], (0, -3), 6)),
+                control("name", label(title, [85, 11], (25, 6), WHEAT, 0.72)),
+                overview_value("details", DATA[key], [5, 19], [106, 28], scale=0.64),
+            ]})
+
     diplomacy_controls = [
         research_tab("map", 0, "diplomacy", "Map"),
         research_tab("provinces", 1, "diplomacy", "Provinces"),
@@ -813,11 +824,19 @@ def build():
             diplomacy_button("settlementMap", "Open Settlement Map", 62),
         ],
         "provinces": [
-            control("icon", image("frontier/poi_markers/province", [20, 20], (8, 4), 6)),
-            overview_value("province_name", DATA["provinceName"], [32, 8], [210, 14], scale=0.95),
-            overview_value("province_details", DATA["provinceDetails"], [8, 31], [233, 61]),
-            diplomacy_button("designateCapital", "Designate this settlement as capital", 100),
-            diplomacy_button("renameProvince", "Rename Province", 100),
+            control("icon", image("frontier/poi_markers/province", [20, 20], (8, 0), 6)),
+            overview_value("province_name", DATA["provinceName"], [32, 4], [154, 14], scale=0.95),
+            overview_value("province_details", DATA["provinceDetails"], [8, 20], [233, 38], scale=0.72),
+            control("perks", {"type": "panel", "size": [254, 106],
+                "anchor_from": "top_left", "anchor_to": "top_left",
+                "bindings": condition("(not ((#form_text - '[JF:provincePerks]') = #form_text))", "#form_text"),
+                "controls": [
+                    control("preview", label("Perk preview", [50, 9], (191, 7), SILVER, 0.67)),
+                    province_perk("provincialTravel", "Provincial Travel", "provincial_travel", 8),
+                    province_perk("provincialPatrols", "Provincial Patrols", "provincial_patrols", 127),
+                ]}),
+            diplomacy_button("designateCapital", "Designate this settlement as capital", 108),
+            diplomacy_button("renameProvince", "Rename Province", 108),
         ],
         "colors": style_colors,
     }

@@ -1,5 +1,6 @@
 import { development } from './settlement-economy.js';
 import { settlementName } from './settlement-overview.js';
+import { ECONOMY_CONFIG } from './economy-config.js';
 
 export const PROVINCE_SIZE = 2048;
 export const CAPITAL_DEVELOPMENT = 10;
@@ -7,6 +8,15 @@ const STANDARD_PROVINCE_NAMES = [
   'Alderwatch', 'Greyford', 'Flintmarch', 'Bracken Vale',
   'Foxmere', 'Stonecross', 'Westreach', 'Iron Hollow',
 ];
+const TRAVEL_THRESHOLDS = [0, 25, 50];
+const PATROL_TIERS = [
+  {threshold: 15, roster: '3 Swordsmen'},
+  {threshold: 20, roster: '3 Swordsmen, 1 Arbalist'},
+  {threshold: 30, roster: '2 Swordsmen, 1 Juggernaut,\n1 Arbalist'},
+  {threshold: 40, roster: '1 Swordsman, 2 Juggernauts,\n1 Arbalist'},
+  {threshold: 50, roster: '1 Horse Lancer, 2 Juggernauts,\n1 Arbalist'},
+];
+const TIER_NAMES = ['I', 'II', 'III', 'IV', 'V'];
 
 export function provinceAt(location, dimension) {
   if (dimension !== 'minecraft:overworld' || !Number.isFinite(location?.x) || !Number.isFinite(location?.z)) return null;
@@ -27,6 +37,34 @@ export function provinceInfo(state, province) {
   const index = ((offset % count) + count) % count;
   const name = record?.name || STANDARD_PROVINCE_NAMES[index];
   return {...province, name, capitalId, capital: capitalId ? capital : null};
+}
+
+export function provinceDevelopment(villages) {
+  const totals = new Map();
+  for (const village of Object.values(villages)) {
+    const province = provinceAt(village?.location, village?.dimension);
+    if (province) totals.set(province.key, (totals.get(province.key) ?? 0) + development(village));
+  }
+  return totals;
+}
+
+export function provincePerkText(province, combinedDevelopment) {
+  const travelTier = province.capital ? TRAVEL_THRESHOLDS.filter(n => combinedDevelopment >= n).length : 0;
+  const patrolTier = province.capital ? PATROL_TIERS.filter(({threshold}) => combinedDevelopment >= threshold).length : 0;
+  const requiresCapital = 'Locked · Requires a capital';
+  let travelStatus = requiresCapital;
+  if (travelTier) {
+    const multiplier = ECONOMY_CONFIG.roads.foodCostMultipliers[travelTier];
+    const discount = Math.round((1 - multiplier) * 100);
+    travelStatus = `Tier ${TIER_NAMES[travelTier - 1]} · ${discount ? discount + '％ less food' : 'Standard food cost'}`;
+  }
+  const patrolStatus = patrolTier
+    ? `Tier ${TIER_NAMES[patrolTier - 1]}${patrolTier === PATROL_TIERS.length ? ' · Maximum' : ''}`
+    : province.capital ? `Locked · Tier I at ${PATROL_TIERS[0].threshold}` : requiresCapital;
+  return {
+    travel: `${travelStatus}\nCapital → discovered POIs\nII at ${TRAVEL_THRESHOLDS[1]} · III at ${TRAVEL_THRESHOLDS[2]} Development`,
+    patrols: `${patrolStatus}\n${PATROL_TIERS[Math.max(0, patrolTier - 1)].roster}\nTiers at ${PATROL_TIERS.map(({threshold}) => threshold).join(' / ')}`,
+  };
 }
 
 export function capitalStatus(state, villageId, playerId) {

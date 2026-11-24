@@ -1038,6 +1038,44 @@ test('The Provinces tab enforces Development 10, persists one capital and lets i
  assert.equal(latest().buttons[actions.renameProvince],'[JF:disabled:renameProvince]');
 });
 
+test('The Provinces tab previews the agreed perk tiers from combined Development in the charter province',async()=>{
+ const s=fresh(Date.now());
+ s.villages.a={...village(-1),id:'a',name:'Harbor',developmentValue:1000};
+ s.villages.b={...village(-2048),id:'b',name:'Hill',developmentValue:500};
+ s.villages.neighbor={...village(-2049),id:'neighbor',name:'Neighbor',developmentValue:10000};
+ s.villages.nether={...village(-10),id:'nether',name:'Nether',dimension:'minecraft:nether',developmentValue:10000};
+ const h=await runtime(s),{data}=CHARTER_LAYOUT;
+ const open=(id='a')=>{
+  h.api.open(h.player,id,'Diplomacy','local',0,'roads','summary',{},'provinces');
+  return h.forms.at(-1);
+ };
+ let form=open('b');
+ assert.match(form.text,/\[JF:provincePerks\]/);
+ assert.match(form.buttons[data.provinceDetails],/Combined Development: 15/);
+ assert.match(form.buttons[data.provincialTravel],/Locked · Requires a capital/);
+ assert.match(form.buttons[data.provincialPatrols],/Locked · Requires a capital/);
+ h.update(state=>{state.provinces={'-1,0':{capitalId:'a'}};});
+ for(const [total, travel, patrol] of [
+  [14,'Tier I · Standard food cost','Locked · Tier I at 15'],
+  [15,'Tier I · Standard food cost','Tier I\n3 Swordsmen'],
+  [20,'Tier I · Standard food cost','Tier II\n3 Swordsmen, 1 Arbalist'],
+  [25,'Tier II · 30％ less food','Tier II\n3 Swordsmen, 1 Arbalist'],
+  [30,'Tier II · 30％ less food','Tier III\n2 Swordsmen, 1 Juggernaut,\n1 Arbalist'],
+  [40,'Tier II · 30％ less food','Tier IV\n1 Swordsman, 2 Juggernauts,\n1 Arbalist'],
+  [50,'Tier III · 55％ less food','Tier V · Maximum\n1 Horse Lancer, 2 Juggernauts,\n1 Arbalist'],
+  [51,'Tier III · 55％ less food','Tier V · Maximum\n1 Horse Lancer, 2 Juggernauts,\n1 Arbalist'],
+ ]){
+  h.update(state=>{state.villages.b.developmentValue=(total-10)*100;});
+  form=open('b');
+  assert.ok(form.buttons[data.provinceDetails].includes(`Combined Development: ${total}\n`));
+  assert.ok(form.buttons[data.provincialTravel].startsWith(`[JF:data:provincialTravel]${travel}\n`));
+  assert.ok(form.buttons[data.provincialPatrols].startsWith(`[JF:data:provincialPatrols]${patrol}\n`));
+ }
+ form=open('nether');
+ assert.doesNotMatch(form.text,/\[JF:provincePerks\]/);
+ assert.match(form.buttons[data.provinceDetails],/Provinces are in the Overworld/);
+});
+
 test('Diplomacy map line toggles act independently and survive viewport changes',async()=>{
  const s=fresh(Date.now());
  s.villages.a={...village(2400),id:'a',name:'Alpha'};

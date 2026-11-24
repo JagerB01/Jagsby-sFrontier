@@ -5,7 +5,7 @@ import { biomeName } from './settlement-overview.js';
 import { ownerName } from './settlement-realm.js';
 import { toMapPoi } from './poi-survey.js';
 import { DISTANCE_STEP, ZONE_LEVELS } from './global-research.js';
-import { PROVINCE_SIZE, provinceAt, provinceInfo } from './provinces.js';
+import { PROVINCE_SIZE, provinceAt, provinceDevelopment, provinceInfo } from './provinces.js';
 export const MAP_COLUMNS=40, MAP_ROWS=25, MAP_ASPECT=MAP_COLUMNS/MAP_ROWS;
 export const MAP_MIN_SPAN=64, MAP_MAX_SPAN=200000000;
 export {PROVINCE_SIZE};
@@ -73,17 +73,13 @@ export function mapBoundaryMarkers({viewport,bounds},width,height){
 }
 function provincePoints(points,state) {
  const provinces=new Map();
+ const developmentByProvince=provinceDevelopment(state.villages);
  for(const point of points){
   const province=provinceAt(point,point.dimension);
-  if(!province)continue;
-  let marker=provinces.get(province.key);
-  if(!marker){
-   const info=provinceInfo(state,province);
-   marker={...province,id:province.key,type:'province',name:info.name,capital:info.capital?.name,
-    dimension:point.dimension,development:0};
-   provinces.set(province.key,marker);
-  }
-  if(point.type==='settlement')marker.development+=point.development;
+  if(!province||provinces.has(province.key))continue;
+  const info=provinceInfo(state,province);
+  provinces.set(province.key,{...province,id:province.key,type:'province',name:info.name,capital:info.capital?.name,
+   dimension:point.dimension,development:developmentByProvince.get(province.key)??0});
  }
  return [...provinces.values()].sort((a,b)=>a.z-b.z||a.x-b.x);
 }
