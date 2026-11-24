@@ -5,9 +5,12 @@ export { GUARD_COLORS };
 const OWNER = 'jagsby_frontier:guard_owner';
 const HEADBAND = 'jagsby_frontier:headband';
 const DIMENSIONS = ['overworld', 'nether', 'the_end'];
-const HORSE = 'jagsby_frontier:guard_horse';
-const HORSE_LANCER = 'jagsby_frontier:horse_lancer';
-const EGGS = new Map(['swordsman', 'arbalist', 'lancer', 'juggernaut', 'guard_horse'].map(role =>
+const ROLES = ['swordsman', 'arbalist', 'lancer', 'juggernaut', 'guard_horse'];
+const HORSE_RIDERS = new Map([
+  ['jagsby_frontier:guard_horse', 'jagsby_frontier:horse_lancer'],
+  ['jagsby_frontier:town_guard_horse', 'jagsby_frontier:town_horse_lancer'],
+]);
+const EGGS = new Map([...ROLES, ...ROLES.map(role => `town_${role}`)].map(role =>
   [`jagsby_frontier:${role}_team_egg`, `jagsby_frontier:${role}`]));
 const OFFSETS = {
   Up: [0, 1, 0], Down: [0, -1, 0],
@@ -64,7 +67,8 @@ export function handleGuardEgg(event, schedule) {
     const entities = [];
     try {
       // Find room for the two-block-tall guard or mounted rider.
-      const headroom = type === HORSE ? 4 : 2;
+      const rider = HORSE_RIDERS.get(type);
+      const headroom = rider ? 4 : 2;
       for (let dy = 0; dy < headroom; dy++) {
         if (!dimension.getBlock({...feet, y: feet.y + dy})?.isAir) {
           player.sendMessage('Find an open spot for the Frontier guard.');
@@ -72,10 +76,10 @@ export function handleGuardEgg(event, schedule) {
         }
       }
       let guard;
-      if (type === HORSE) {
-        const mount = dimension.spawnEntity(HORSE, pos, {spawnEvent: 'jagsby_frontier:spawn_empty'});
+      if (rider) {
+        const mount = dimension.spawnEntity(type, pos, {spawnEvent: 'jagsby_frontier:spawn_empty'});
         entities.push(mount);
-        guard = dimension.spawnEntity(HORSE_LANCER, pos);
+        guard = dimension.spawnEntity(rider, pos);
         entities.push(guard);
         if (!mount.getComponent('minecraft:rideable')?.addRider(guard)) throw Error('Could not seat the Horse Lancer');
       } else {

@@ -10,12 +10,17 @@ const LEADERSHIP = new Map([
   ['jagsby_frontier:swordsman', 2],
   ['jagsby_frontier:arbalist', 3],
 ]);
+const TOWN_GUARDS = new Set([...LEADERSHIP.keys()].map(id => id.replace(':', ':town_')));
 
 const membershipKey = id => `jagsby_frontier:guard_membership:${id}`;
 const squadKey = id => `jagsby_frontier:guard_squad:${id}`;
 
 export function isFrontierGuard(entity) {
-  return LEADERSHIP.has(entity.typeId);
+  return LEADERSHIP.has(entity.typeId) || TOWN_GUARDS.has(entity.typeId);
+}
+
+export function isJuggernaut(entity) {
+  return entity.typeId === JUGGERNAUT || entity.typeId === 'jagsby_frontier:town_juggernaut';
 }
 
 function membersOf(world, id) {
@@ -35,7 +40,7 @@ function markSquadLeader(world, roster) {
 }
 
 export function joinGuardSquad(world, guard) {
-  if (!guard.isValid || !isFrontierGuard(guard)) return;
+  if (!guard.isValid || !LEADERSHIP.has(guard.typeId)) return;
   const ownSquad = world.getDynamicProperty(membershipKey(guard.id));
   const ownRoster = membersOf(world, ownSquad);
   if (ownRoster.some(member => member.id === guard.id)) {
@@ -46,7 +51,7 @@ export function joinGuardSquad(world, guard) {
   const origin = guard.location;
   const nearby = guard.dimension.getEntities({
     families: ['frontier_guard'], location: origin, maxDistance: SQUAD_RADIUS,
-  }).filter(member => member.id !== guard.id && member.isValid);
+  }).filter(member => member.id !== guard.id && member.isValid && LEADERSHIP.has(member.typeId));
   const distance = position => Math.hypot(position.x - origin.x, position.y - origin.y, position.z - origin.z);
   nearby.sort((a, b) => distance(a.location) - distance(b.location) || a.id.localeCompare(b.id));
   let squad = guard.id;
@@ -66,7 +71,7 @@ export function joinGuardSquad(world, guard) {
 }
 
 export function removeGuardFromSquad(world, deadGuard) {
-  if (!isFrontierGuard(deadGuard)) return;
+  if (!LEADERSHIP.has(deadGuard.typeId)) return;
   const membership = membershipKey(deadGuard.id);
   const squad = world.getDynamicProperty(membership);
   if (!squad) return;
@@ -78,7 +83,7 @@ export function removeGuardFromSquad(world, deadGuard) {
 
 export function blockGuardShield(event) {
   const {hurtEntity: guard, damageSource} = event;
-  if (guard.typeId !== JUGGERNAUT || guard.getProperty(SHIELD_STANCE) !== 'raised') return;
+  if (!isJuggernaut(guard) || guard.getProperty(SHIELD_STANCE) !== 'raised') return;
   const {cause, damagingEntity, damagingProjectile} = damageSource;
   if (cause !== 'entityAttack' && cause !== 'projectile') return;
 

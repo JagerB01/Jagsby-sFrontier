@@ -5,7 +5,7 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.134](downloads/Jagsbys_Frontier_v0.0.134.mcaddon?raw=true)
+[Download Frontier 0.0.135](downloads/Jagsbys_Frontier_v0.0.135.mcaddon?raw=true)
 
 In Creative, search for **Frontier** spawn eggs to test the Swordsman, Arbalist,
 Lancer, and Juggernaut. The Horse Lancer Team egg spawns a horse with its lancer.
@@ -14,6 +14,12 @@ entity IDs. Guards spawned within 12 blocks of an available squad can join it,
 up to four guards per squad. A gold crest marks the leader. Lancers, including
 Horse Lancers, outrank Juggernauts, Swordsmen, and Arbalists in that order.
 The squad elects a new leader when its leader dies.
+
+Search **Frontier Town** in Creative for town versions of the Swordsman,
+Arbalist, Lancer, Juggernaut and Horse Lancer Team. Place them inside a
+settlement. Each patrols independently within 48 blocks of where it spawned.
+Town guards defend the area from hostile mobs, favor dirt paths, cobblestone
+and gravel, and occasionally head toward a nearby road during their rounds.
 
 Use **Village Charter → Diplomacy → Colors** to choose your guard headband
 color. Guards placed with the Frontier spawn eggs use the player's color.
@@ -522,10 +528,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.134.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.135.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.134_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.135_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

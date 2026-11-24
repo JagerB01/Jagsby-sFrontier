@@ -16,6 +16,21 @@
     },
     "jagsby_frontier_guard_horse_team_egg": {
       "textures": "textures/items/jagsby_frontier/guard_horse_team_egg"
+    },
+    "jagsby_frontier_town_swordsman_team_egg": {
+      "textures": "textures/items/jagsby_frontier/town_swordsman_team_egg"
+    },
+    "jagsby_frontier_town_arbalist_team_egg": {
+      "textures": "textures/items/jagsby_frontier/town_arbalist_team_egg"
+    },
+    "jagsby_frontier_town_lancer_team_egg": {
+      "textures": "textures/items/jagsby_frontier/town_lancer_team_egg"
+    },
+    "jagsby_frontier_town_juggernaut_team_egg": {
+      "textures": "textures/items/jagsby_frontier/town_juggernaut_team_egg"
+    },
+    "jagsby_frontier_town_guard_horse_team_egg": {
+      "textures": "textures/items/jagsby_frontier/town_guard_horse_team_egg"
     }
   }
 }

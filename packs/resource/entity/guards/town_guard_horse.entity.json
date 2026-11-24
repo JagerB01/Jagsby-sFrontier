@@ -1,0 +1,33 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jagsby_frontier:town_guard_horse",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/horse2/horse_brown"
+      },
+      "geometry": {
+        "default": "geometry.horse.v3"
+      },
+      "animations": {
+        "walk": "animation.horse.v3.walk"
+      },
+      "scripts": {
+        "animate": [
+          "walk"
+        ],
+        "pre_animation": [
+          "variable.stand_anim = 0;",
+          "variable.leg_stand_factor = math.cos(query.modified_distance_moved * 38.38 + 180);",
+          "variable.leg_x_rot_anim = variable.leg_stand_factor * 45.8 * query.modified_move_speed;"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.jagsby_frontier.guard_horse"
+      ]
+    }
+  }
+}

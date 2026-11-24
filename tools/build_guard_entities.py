@@ -63,11 +63,13 @@ def mobility(health, speed, width, height, families):
     }
 
 
-def arm_guard(role, identifier, mounted=False):
+def arm_guard(role, identifier, mounted=False, town=False):
     _, health, _ = ROLES[role]
     families = [FAMILY]
     if mounted:
-        families.append("frontier_horse_crew")
+        families.append("frontier_town_horse_crew" if town else "frontier_horse_crew")
+    if town:
+        families.append("frontier_town_guard")
     components = mobility(health, 0.29, 0.6, 1.95, families)
     distance = 18 if role == "arbalist" else 13
     components.update({
@@ -123,12 +125,50 @@ def arm_guard(role, identifier, mounted=False):
     extra = {}
     if role == "juggernaut":
         extra = shield_behavior(components)
+    if town:
+        components.update(town_patrol())
     properties = extra.setdefault("description", {}).setdefault("properties", {})
     properties[f"{NS}:squad_leader"] = {"type": "bool", "default": False, "client_sync": True}
     properties[f"{NS}:headband"] = {
         "type": "int", "range": [0, len(GUARD_COLORS) - 1], "default": 0, "client_sync": True,
     }
     return entity(identifier, components, **extra)
+
+
+def town_patrol():
+    roads = ["grass_path", "cobblestone", "gravel"]
+    return {
+        "minecraft:home": {"restriction_radius": 48, "restriction_type": "all_movement"},
+        "minecraft:dweller": {
+            "dwelling_type": "village", "dweller_role": "defender",
+            "can_find_poi": False, "can_migrate": False,
+            "update_interval_base": 60, "update_interval_variant": 40,
+        },
+        "minecraft:preferred_path": {
+            "default_block_cost": 1.5, "jump_cost": 3, "max_fall_blocks": 1,
+            "preferred_path_blocks": [{"blocks": roads, "cost": 1}],
+        },
+        "minecraft:behavior.move_towards_home_restriction": {
+            "priority": 6, "speed_multiplier": 0.8,
+        },
+        "minecraft:behavior.move_towards_dwelling_restriction": {
+            "priority": 7, "speed_multiplier": 0.8,
+        },
+        "minecraft:behavior.move_to_block": {
+            "priority": 8, "speed_multiplier": 0.7, "search_range": 8, "search_height": 2,
+            "tick_interval": 100, "start_chance": 0.22, "goal_radius": 1.25,
+            "target_blocks": [f"minecraft:{block}" for block in roads],
+            "target_selection_method": "random", "target_offset": [0, 1, 0],
+        },
+        "minecraft:behavior.move_through_village": {
+            "priority": 9, "speed_multiplier": 0.7, "only_at_night": False,
+        },
+        "minecraft:behavior.random_stroll": {
+            "priority": 10, "speed_multiplier": 0.7, "xz_dist": 10, "y_dist": 3,
+        },
+        "minecraft:behavior.look_at_player": {"priority": 11, "look_distance": 8},
+        "minecraft:behavior.random_look_around": {"priority": 12},
+    }
 
 
 def shield_behavior(components):
@@ -171,20 +211,24 @@ def shield_behavior(components):
     }
 
 
-def guard_horse():
+def guard_horse(town=False):
+    prefix = "town_" if town else ""
     components = mobility(30, 0.23, 1.4, 1.6, ["frontier_guard_mount"])
     components.update({
         "minecraft:is_saddled": {},
         "minecraft:rideable": {
-            "seat_count": 1, "controlling_seat": 0, "family_types": ["frontier_horse_crew"],
+            "seat_count": 1, "controlling_seat": 0,
+            "family_types": ["frontier_town_horse_crew" if town else "frontier_horse_crew"],
             "seats": [{"position": [0, 1.1, -0.2], "min_rider_count": 0, "max_rider_count": 1}],
         },
         "minecraft:behavior.mount_pathing": {"priority": 2, "track_target": True, "speed_multiplier": 1.1},
     })
+    if town:
+        components.update(town_patrol())
     group = f"{NS}:mounted_crew"
-    return entity("guard_horse", components,
+    return entity(f"{prefix}guard_horse", components,
                   component_groups={group: {"minecraft:addrider": {
-                      "riders": [{"entity_type": f"{NS}:horse_lancer"}],
+                      "riders": [{"entity_type": f"{NS}:{prefix}horse_lancer"}],
                   }}},
                   events={"minecraft:entity_spawned": {"add": {"component_groups": [group]}},
                           f"{NS}:spawn_empty": {}})
@@ -223,8 +267,8 @@ def guard_client(role, identifier):
                   enable_attachables=True)
 
 
-def horse_client():
-    data = client("guard_horse", "geometry.horse.v3", {"default": "textures/entity/horse2/horse_brown"},
+def horse_client(identifier):
+    data = client(identifier, "geometry.horse.v3", {"default": "textures/entity/horse2/horse_brown"},
                   {"walk": "animation.horse.v3.walk"}, ["walk"])
     description = data["minecraft:client_entity"]["description"]
     description["scripts"]["pre_animation"] = [
@@ -315,7 +359,8 @@ def build_guard_eggs():
     textures = {}
     egg_dir = RP / f"textures/items/{NS}"
     egg_dir.mkdir(parents=True, exist_ok=True)
-    for role, color in {**{role: spec[2] for role, spec in ROLES.items()}, "guard_horse": (117, 72, 54)}.items():
+    egg_colors = {**{role: spec[2] for role, spec in ROLES.items()}, "guard_horse": (117, 72, 54)}
+    for role, color in {**egg_colors, **{f"town_{role}": color for role, color in egg_colors.items()}}.items():
         item = f"{role}_team_egg"
         texture_key = f"{NS}_{item}"
         textures[texture_key] = {"textures": f"textures/items/{NS}/{item}"}
@@ -324,8 +369,9 @@ def build_guard_eggs():
             x = (16 - width) // 2
             canvas.rect(x, y, width, 1, (49, 37, 33))
             canvas.rect(x + 1, y, width - 2, 1, color)
+        dots = (220, 227, 232) if role.startswith("town_") else (215, 181, 109)
         for x, y in [(7, 4), (8, 4), (6, 7), (9, 8), (6, 10), (8, 11)]:
-            canvas.rect(x, y, 1, 1, (215, 181, 109))
+            canvas.rect(x, y, 1, 1, dots)
         canvas.save(egg_dir / f"{item}.png")
         write(BP / f"items/guard_eggs/{item}.json", {
             "format_version": "1.26.0", "minecraft:item": {
@@ -349,13 +395,18 @@ def build():
         if role == "juggernaut":
             loot.append({"rolls": 1, "entries": [{"type": "item", "name": "minecraft:shield", "weight": 1}]})
         write(BP / f"loot_tables/guards/{role}.json", {"pools": loot})
-        write(BP / f"entities/guards/{role}.json", arm_guard(role, role))
-        write(RP / f"entity/guards/{role}.entity.json", guard_client(role, role))
         guard_texture(role, accent)
-    write(BP / "entities/guards/horse_lancer.json", arm_guard("lancer", "horse_lancer", mounted=True))
-    write(RP / "entity/guards/horse_lancer.entity.json", guard_client("lancer", "horse_lancer"))
-    write(BP / "entities/guards/guard_horse.json", guard_horse())
-    write(RP / "entity/guards/guard_horse.entity.json", horse_client())
+    for prefix in ("", "town_"):
+        town = bool(prefix)
+        for role in (*ROLES, "horse_lancer"):
+            mounted = role == "horse_lancer"
+            kind = "lancer" if mounted else role
+            identifier = prefix + role
+            write(BP / f"entities/guards/{identifier}.json", arm_guard(kind, identifier, mounted=mounted, town=town))
+            write(RP / f"entity/guards/{identifier}.entity.json", guard_client(kind, identifier))
+        horse = f"{prefix}guard_horse"
+        write(BP / f"entities/guards/{horse}.json", guard_horse(town=town))
+        write(RP / f"entity/guards/{horse}.entity.json", horse_client(horse))
     write(RP / "models/entity/frontier_guard.geo.json", guard_geometry())
     write(RP / "animations/frontier_guard.animation.json", guard_animations())
     build_guard_eggs()

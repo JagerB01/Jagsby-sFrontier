@@ -1,0 +1,47 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jagsby_frontier:town_arbalist",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/jagsby_frontier/guards/arbalist",
+        "band1": "textures/entity/jagsby_frontier/guards/arbalist_band_1",
+        "band2": "textures/entity/jagsby_frontier/guards/arbalist_band_2",
+        "band3": "textures/entity/jagsby_frontier/guards/arbalist_band_3",
+        "band4": "textures/entity/jagsby_frontier/guards/arbalist_band_4",
+        "band5": "textures/entity/jagsby_frontier/guards/arbalist_band_5",
+        "band6": "textures/entity/jagsby_frontier/guards/arbalist_band_6",
+        "band7": "textures/entity/jagsby_frontier/guards/arbalist_band_7",
+        "band8": "textures/entity/jagsby_frontier/guards/arbalist_band_8"
+      },
+      "geometry": {
+        "default": "geometry.jagsby_frontier.guard"
+      },
+      "animations": {
+        "look": "animation.jagsby_frontier.guard.look",
+        "walk": "animation.jagsby_frontier.guard.walk",
+        "ride": "animation.jagsby_frontier.guard.ride",
+        "crossbow": "animation.jagsby_frontier.guard.crossbow"
+      },
+      "scripts": {
+        "animate": [
+          "look",
+          {
+            "walk": "!query.is_riding"
+          },
+          {
+            "ride": "query.is_riding"
+          },
+          "crossbow"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.jagsby_frontier.guard"
+      ],
+      "enable_attachables": true
+    }
+  }
+}

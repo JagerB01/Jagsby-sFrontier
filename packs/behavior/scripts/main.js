@@ -8,7 +8,7 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
-import { blockGuardShield, isFrontierGuard, joinGuardSquad, JUGGERNAUT, removeGuardFromSquad } from "./frontier-guards.js";
+import { blockGuardShield, isFrontierGuard, isJuggernaut, joinGuardSquad, removeGuardFromSquad } from "./frontier-guards.js";
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from "./guard-colors.js";
 import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
 import { PROVINCE_SIZE, capitalStatus, designateCapital, renameProvince, updateProvinceCapitalId } from "./provinces.js";
@@ -600,7 +600,7 @@ function loadFrontierGuard({entity}){
   if(!entity.isValid)return;
   refreshGuardColor(world,entity);
   joinGuardSquad(world,entity);
-  if(entity.typeId!==JUGGERNAUT)return;
+  if(!isJuggernaut(entity))return;
   const equipment=entity.getComponent('minecraft:equippable');
   if(equipment&&!equipment.getEquipment('Offhand'))equipment.setEquipment('Offhand',new ItemStack('minecraft:shield'));
  });

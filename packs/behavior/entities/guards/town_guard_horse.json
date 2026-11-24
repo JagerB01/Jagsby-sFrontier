@@ -1,0 +1,163 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "jagsby_frontier:town_guard_horse",
+      "is_spawnable": false,
+      "is_summonable": true
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "mob",
+          "frontier_guard_mount"
+        ]
+      },
+      "minecraft:health": {
+        "value": 30,
+        "max": 30
+      },
+      "minecraft:movement": {
+        "value": 0.23
+      },
+      "minecraft:movement.basic": {},
+      "minecraft:jump.static": {},
+      "minecraft:navigation.walk": {
+        "avoid_water": true,
+        "avoid_damage_blocks": true
+      },
+      "minecraft:collision_box": {
+        "width": 1.4,
+        "height": 1.6
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:nameable": {},
+      "minecraft:persistent": {},
+      "minecraft:behavior.float": {
+        "priority": 0
+      },
+      "minecraft:behavior.random_stroll": {
+        "priority": 10,
+        "speed_multiplier": 0.7,
+        "xz_dist": 10,
+        "y_dist": 3
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 11,
+        "look_distance": 8
+      },
+      "minecraft:behavior.random_look_around": {
+        "priority": 12
+      },
+      "minecraft:is_saddled": {},
+      "minecraft:rideable": {
+        "seat_count": 1,
+        "controlling_seat": 0,
+        "family_types": [
+          "frontier_town_horse_crew"
+        ],
+        "seats": [
+          {
+            "position": [
+              0,
+              1.1,
+              -0.2
+            ],
+            "min_rider_count": 0,
+            "max_rider_count": 1
+          }
+        ]
+      },
+      "minecraft:behavior.mount_pathing": {
+        "priority": 2,
+        "track_target": true,
+        "speed_multiplier": 1.1
+      },
+      "minecraft:home": {
+        "restriction_radius": 48,
+        "restriction_type": "all_movement"
+      },
+      "minecraft:dweller": {
+        "dwelling_type": "village",
+        "dweller_role": "defender",
+        "can_find_poi": false,
+        "can_migrate": false,
+        "update_interval_base": 60,
+        "update_interval_variant": 40
+      },
+      "minecraft:preferred_path": {
+        "default_block_cost": 1.5,
+        "jump_cost": 3,
+        "max_fall_blocks": 1,
+        "preferred_path_blocks": [
+          {
+            "blocks": [
+              "grass_path",
+              "cobblestone",
+              "gravel"
+            ],
+            "cost": 1
+          }
+        ]
+      },
+      "minecraft:behavior.move_towards_home_restriction": {
+        "priority": 6,
+        "speed_multiplier": 0.8
+      },
+      "minecraft:behavior.move_towards_dwelling_restriction": {
+        "priority": 7,
+        "speed_multiplier": 0.8
+      },
+      "minecraft:behavior.move_to_block": {
+        "priority": 8,
+        "speed_multiplier": 0.7,
+        "search_range": 8,
+        "search_height": 2,
+        "tick_interval": 100,
+        "start_chance": 0.22,
+        "goal_radius": 1.25,
+        "target_blocks": [
+          "minecraft:grass_path",
+          "minecraft:cobblestone",
+          "minecraft:gravel"
+        ],
+        "target_selection_method": "random",
+        "target_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "minecraft:behavior.move_through_village": {
+        "priority": 9,
+        "speed_multiplier": 0.7,
+        "only_at_night": false
+      }
+    },
+    "component_groups": {
+      "jagsby_frontier:mounted_crew": {
+        "minecraft:addrider": {
+          "riders": [
+            {
+              "entity_type": "jagsby_frontier:town_horse_lancer"
+            }
+          ]
+        }
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "add": {
+          "component_groups": [
+            "jagsby_frontier:mounted_crew"
+          ]
+        }
+      },
+      "jagsby_frontier:spawn_empty": {}
+    }
+  }
+}
