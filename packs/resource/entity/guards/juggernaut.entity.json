@@ -1,0 +1,47 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jagsby_frontier:juggernaut",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/jagsby_frontier/guards/juggernaut"
+      },
+      "geometry": {
+        "default": "geometry.jagsby_frontier.guard"
+      },
+      "animations": {
+        "look": "animation.jagsby_frontier.guard.look",
+        "walk": "animation.jagsby_frontier.guard.walk",
+        "ride": "animation.jagsby_frontier.guard.ride",
+        "swing": "animation.jagsby_frontier.guard.swing",
+        "brace": "animation.jagsby_frontier.guard.brace"
+      },
+      "scripts": {
+        "animate": [
+          "look",
+          {
+            "walk": "!query.is_riding"
+          },
+          {
+            "ride": "query.is_riding"
+          },
+          "swing",
+          {
+            "brace": "query.property('jagsby_frontier:shield_stance') == 'raised'"
+          }
+        ]
+      },
+      "render_controllers": [
+        "controller.render.jagsby_frontier.guard"
+      ],
+      "enable_attachables": true,
+      "spawn_egg": {
+        "base_color": "#866837",
+        "overlay_color": "#D7B56D"
+      }
+    }
+  }
+}

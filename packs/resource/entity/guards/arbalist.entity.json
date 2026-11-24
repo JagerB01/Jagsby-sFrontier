@@ -1,0 +1,43 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jagsby_frontier:arbalist",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/jagsby_frontier/guards/arbalist"
+      },
+      "geometry": {
+        "default": "geometry.jagsby_frontier.guard"
+      },
+      "animations": {
+        "look": "animation.jagsby_frontier.guard.look",
+        "walk": "animation.jagsby_frontier.guard.walk",
+        "ride": "animation.jagsby_frontier.guard.ride",
+        "crossbow": "animation.jagsby_frontier.guard.crossbow"
+      },
+      "scripts": {
+        "animate": [
+          "look",
+          {
+            "walk": "!query.is_riding"
+          },
+          {
+            "ride": "query.is_riding"
+          },
+          "crossbow"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.jagsby_frontier.guard"
+      ],
+      "enable_attachables": true,
+      "spawn_egg": {
+        "base_color": "#3C6B55",
+        "overlay_color": "#D7B56D"
+      }
+    }
+  }
+}

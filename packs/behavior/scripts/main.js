@@ -8,6 +8,7 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
+import { blockGuardShield, JUGGERNAUT } from "./frontier-guards.js";
 import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
 import { PROVINCE_SIZE, capitalStatus, designateCapital, renameProvince, updateProvinceCapitalId } from "./provinces.js";
 import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from "./poi-survey.js";
@@ -580,6 +581,12 @@ system.runInterval(()=>{
  if(changed)save(s);
 },120);
 world.beforeEvents.entityHurt?.subscribe(protectDamage);
+world.beforeEvents.entityHurt?.subscribe(blockGuardShield);
+world.afterEvents.entitySpawn?.subscribe(({entity})=>{
+ if(entity.typeId!==JUGGERNAUT)return;
+ const equipment=entity.getComponent('minecraft:equippable');
+ if(equipment&&!equipment.getEquipment('Offhand'))equipment.setEquipment('Offhand',new ItemStack('minecraft:shield'));
+});
 world.afterEvents.worldLoad?.subscribe(()=>{try{accounted();}catch(e){console.warn(String(e));}});
 
 function roadNetworkOverview(s,v){

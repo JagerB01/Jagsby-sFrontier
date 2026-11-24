@@ -9,6 +9,7 @@ import subprocess
 import uuid
 import zipfile
 from build_charter_ui import build as build_charter_ui
+from build_guard_entities import build as build_guard_entities
 from build_trade_rank_probe import probe_entity
 from build_villager_bridge import CONTROLLER, PREFIX, build as build_villager_bridge
 
@@ -131,6 +132,7 @@ def cauldron_villager_overlay(addon_path):
 def build(cauldron_addon=None):
     overlay = cauldron_villager_overlay(cauldron_addon) if cauldron_addon else {}
     build_charter_ui()
+    build_guard_entities()
     build_villager_bridge()
     validate()
     entries = []

@@ -24,7 +24,7 @@ const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toS
 const configSource=(await readFile(new URL('economy-config.js',scriptBase),'utf8')).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',scriptBase).href));
 const configUrl=`data:text/javascript;base64,${Buffer.from(configSource).toString('base64')}`;
 const extraUrls={};
-for(const name of ['settlement-economy','settlement-effects']) {
+for(const name of ['settlement-economy','settlement-effects','frontier-guards']) {
  const code=(await readFile(new URL(name+'.js',scriptBase),'utf8')).replace("'./economy-config.js'",JSON.stringify(configUrl)).replace("'./global-research.js'",JSON.stringify(new URL('global-research.js',scriptBase).href)).replace("'./local-research.js'",JSON.stringify(new URL('local-research.js',scriptBase).href)).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',scriptBase).href)).replace("'./legacy-production.js'",JSON.stringify(new URL('legacy-production.js',scriptBase).href));
  extraUrls[name]=`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
 }

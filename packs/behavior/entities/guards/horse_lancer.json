@@ -1,0 +1,167 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "jagsby_frontier:horse_lancer",
+      "is_spawnable": false,
+      "is_summonable": true
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "mob",
+          "frontier_guard",
+          "frontier_horse_crew"
+        ]
+      },
+      "minecraft:health": {
+        "value": 24,
+        "max": 24
+      },
+      "minecraft:movement": {
+        "value": 0.29
+      },
+      "minecraft:movement.basic": {},
+      "minecraft:jump.static": {},
+      "minecraft:navigation.walk": {
+        "avoid_water": true,
+        "avoid_damage_blocks": true
+      },
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.95
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:nameable": {},
+      "minecraft:persistent": {},
+      "minecraft:behavior.float": {
+        "priority": 0
+      },
+      "minecraft:behavior.random_stroll": {
+        "priority": 8,
+        "speed_multiplier": 0.9
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 9,
+        "look_distance": 8
+      },
+      "minecraft:behavior.random_look_around": {
+        "priority": 10
+      },
+      "minecraft:follow_range": {
+        "value": 28
+      },
+      "minecraft:equipment": {
+        "table": "loot_tables/guards/lancer.json",
+        "slot_drop_chance": [
+          {
+            "slot": "slot.weapon.mainhand",
+            "drop_chance": 0
+          },
+          {
+            "slot": "slot.weapon.offhand",
+            "drop_chance": 0
+          }
+        ]
+      },
+      "minecraft:behavior.nearest_attackable_target": {
+        "priority": 2,
+        "must_see": true,
+        "must_see_forget_duration": 3,
+        "reselect_targets": true,
+        "entity_types": [
+          {
+            "max_dist": 13,
+            "filters": {
+              "all_of": [
+                {
+                  "test": "is_family",
+                  "subject": "other",
+                  "value": "monster"
+                },
+                {
+                  "test": "is_family",
+                  "subject": "other",
+                  "value": "creeper",
+                  "operator": "!="
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "entity_attack",
+            "deals_damage": "no",
+            "on_damage": {
+              "filters": {
+                "any_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "frontier_guard"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "frontier_guard_mount"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "cause": "projectile",
+            "deals_damage": "no",
+            "on_damage": {
+              "filters": {
+                "any_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "frontier_guard"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "frontier_guard_mount"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "minecraft:attack": {
+        "damage": 7
+      },
+      "minecraft:behavior.melee_box_attack": {
+        "priority": 5,
+        "track_target": true,
+        "speed_multiplier": 1.05
+      },
+      "minecraft:behavior.use_kinetic_weapon": {
+        "priority": 3,
+        "approach_distance": 12,
+        "reposition_distance": {
+          "min": 7,
+          "max": 9
+        },
+        "cooldown_distance": {
+          "min": 9,
+          "max": 11
+        },
+        "hijack_mount_navigation": true,
+        "track_target": true,
+        "speed_multiplier": 1.35,
+        "reposition_speed_multiplier": 1.2
+      }
+    }
+  }
+}
