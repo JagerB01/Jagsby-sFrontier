@@ -36,7 +36,9 @@
         "can_path_over_water": true,
         "can_pass_doors": false,
         "can_open_doors": false,
-        "avoid_water": true
+        "avoid_water": true,
+        "can_jump": true,
+        "avoid_damage_blocks": true
       },
       "minecraft:collision_box": {
         "width": 1.3965,
@@ -113,7 +115,7 @@
         "priority": 9,
         "speed_multiplier": 0.7,
         "xz_dist": 24,
-        "y_dist": 3,
+        "y_dist": 8,
         "interval": 80
       },
       "minecraft:behavior.look_at_player": {
@@ -136,8 +138,8 @@
       },
       "minecraft:preferred_path": {
         "default_block_cost": 1.5,
-        "jump_cost": 3,
-        "max_fall_blocks": 1,
+        "jump_cost": 1.5,
+        "max_fall_blocks": 2,
         "preferred_path_blocks": [
           {
             "blocks": [
@@ -153,7 +155,7 @@
         "priority": 8,
         "speed_multiplier": 0.7,
         "search_range": 8,
-        "search_height": 2,
+        "search_height": 8,
         "tick_interval": 100,
         "start_chance": 0.15,
         "goal_radius": 1.25,

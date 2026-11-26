@@ -40,7 +40,9 @@ X increases to the right and Z increases downward. The grid lines show their
 world coordinates in blocks, rounded to the nearest block. The labels update
 as you zoom, pan or change dimensions. The 240×150 UI-pixel map
 rounds positions to the centers of 6×6 UI-pixel cells, within three UI pixels
-per axis of the projected position when the cell is free. Surveyed landmarks
+per axis of the projected position when the cell is free. A discovered vanilla
+village within 80 horizontal blocks of a Charter is represented by the Charter
+pin at every zoom level. Other surveyed landmarks
 that share a pin cell with a settlement appear in its tooltip as a row of
 icons, one per landmark type. If two settlements share the cell, the nearest
 one gets the landmark. Zoom in to see individual landmark pins once their

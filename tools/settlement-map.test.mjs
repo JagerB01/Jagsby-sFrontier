@@ -66,15 +66,31 @@ test('The nearest settlement in an overlapping cell gets the icon row; spawn and
  const viewport={dimension:'minecraft:overworld',x:0,z:0,span:240};
  const villages={a:village('A',0,0),b:village('B',5,0)};
  const discoveries=[
-  {kind:'village',x:4,y:63,z:0},
+  {kind:'trial_chamber',x:4,y:25,z:0},
   {kind:'stronghold',x:20,y:25,z:0},{kind:'jungle_temple',x:21,y:68,z:0},
  ];
  const visible=points(mapSnapshot(villages,viewport,'a',{x:4,y:63,z:0},discoveries));
  assert.equal(visible.length,5);
  assert.equal(visible.find(p=>p.id==='a').nearbyPois,undefined);
- assert.equal(visible.find(p=>p.id==='b').nearbyPois[0].kind,'village');
+ assert.equal(visible.find(p=>p.id==='b').nearbyPois[0].kind,'trial_chamber');
  assert.ok(visible.some(p=>p.type==='spawn'));
  assert.deepEqual(visible.filter(p=>p.type==='survey').map(p=>p.kind).sort(),['jungle_temple','stronghold']);
+});
+test('Charter villages replace nearby vanilla village pins before zoom and province projection',()=>{
+ const nearby={kind:'village',x:80,y:90,z:0},distant={kind:'village',x:81,y:90,z:0};
+ const villages={a:village('Hilltop',0,0),nether:village('Nether',81,0,'minecraft:nether')};
+ const surveyed=[nearby,distant],before=JSON.stringify(surveyed);
+ for(const span of [240,1200]){
+  const pins=points(mapSnapshot(villages,{dimension:'minecraft:overworld',x:40,z:0,span},'a',null,surveyed));
+  assert.deepEqual(pins.filter(pin=>pin.kind==='village').map(pin=>pin.x),[81]);
+  assert.equal(pins.find(pin=>pin.id==='a').nearbyPois,undefined,'The duplicate is also absent from the tooltip');
+ }
+ assert.equal(JSON.stringify(surveyed),before);
+ assert.ok(points(mapSnapshot({nether:villages.nether},{dimension:'minecraft:overworld'},null,null,[nearby]))
+  .some(pin=>pin.kind==='village'));
+ const border=mapSnapshot({a:village('Border Charter',2047,400)},
+  {x:2048,z:400,span:8192,provinceViewSpan:8192},'a',null,[{kind:'village',x:2049,y:64,z:400}]);
+ assert.deepEqual(points(border).map(pin=>pin.key),['0,0']);
 });
 test('Empty and invalid locations are safe; zero coordinates and legacy ids remain valid',()=>{
  assert.equal(mapSnapshot({}).count,0);assert.equal(mapDetails(null),'');

@@ -181,6 +181,7 @@ test('Native patrol goals walk and follow only the squad guide, with combat goal
     const base = guard.components['minecraft:behavior.random_stroll']
       ?? guard.component_groups['mn:on_foot']['minecraft:behavior.random_stroll'];
     assert.ok(walk.speed_multiplier < base.speed_multiplier);
+    assert.equal(walk.y_dist, 8);
     if (role === 'guard_horse') continue;
     const follow = guard.component_groups[id('patrol_follow_12')]['minecraft:behavior.follow_mob'];
     assert.deepEqual(follow.filters, {test: 'int_property', subject: 'other', domain: id('patrol_guide'), value: 12});

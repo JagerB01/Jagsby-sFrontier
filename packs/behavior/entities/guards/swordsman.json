@@ -255,7 +255,8 @@
         "minecraft:behavior.random_stroll": {
           "priority": 8,
           "speed_multiplier": 0.44999999999999996,
-          "xz_dist": 16
+          "xz_dist": 16,
+          "y_dist": 8
         },
         "minecraft:behavior.move_through_village": {
           "priority": 9,
@@ -454,7 +455,9 @@
         "can_pass_doors": true,
         "can_open_doors": true,
         "using_door_annotation": true,
-        "avoid_water": true
+        "avoid_water": true,
+        "can_jump": true,
+        "avoid_damage_blocks": true
       },
       "minecraft:annotation.open_door": {},
       "minecraft:collision_box": {
@@ -647,7 +650,8 @@
       "minecraft:behavior.random_stroll": {
         "priority": 8,
         "speed_multiplier": 0.6,
-        "xz_dist": 16
+        "xz_dist": 16,
+        "y_dist": 8
       },
       "minecraft:behavior.look_at_player": {
         "priority": 9,
@@ -670,6 +674,9 @@
       "minecraft:on_target_escape": {
         "event": "mn:stop_aggro",
         "target": "self"
+      },
+      "minecraft:variable_max_auto_step": {
+        "base_value": 1.0
       }
     },
     "events": {

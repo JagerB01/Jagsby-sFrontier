@@ -4,6 +4,7 @@ import { development } from './settlement-economy.js';
 import { biomeName } from './settlement-overview.js';
 import { ownerName } from './settlement-realm.js';
 import { toMapPoi } from './poi-survey.js';
+import { CENSUS_RADIUS } from './village-census.js';
 import { DISTANCE_STEP, ZONE_LEVELS } from './global-research.js';
 import { PROVINCE_SIZE, provinceAt, provinceDevelopment, provinceInfo } from './provinces.js';
 export const MAP_COLUMNS=40, MAP_ROWS=25, MAP_ASPECT=MAP_COLUMNS/MAP_ROWS;
@@ -101,7 +102,11 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
   }
  }
  const spawn=finite(spawnLocation?.x)&&finite(spawnLocation?.z)?{id:'world-spawn',type:'spawn',dimension:'minecraft:overworld',name:'World spawn',texture:'textures/ui/frontier/map_markers/world_spawn',x:spawnLocation.x,y:finite(spawnLocation.y)?spawnLocation.y:null,z:spawnLocation.z}:null;
- const pois=[...points,...surveyed.map(toMapPoi)];
+ // A bell inside a Charter's survey area represents that settlement.
+ // Resolve the duplicate before Fit, province markers, or cell grouping.
+ const landmarks=surveyed.map(toMapPoi).filter(point=>point.kind!=='village'||!points.some(charter=>
+  charter.dimension===point.dimension&&Math.hypot(charter.x-point.x,charter.z-point.z)<=CENSUS_RADIUS));
+ const pois=[...points,...landmarks];
  const fitPoints=spawn?[...pois,spawn]:pois;
  const dimensions=[...new Set(fitPoints.map(p=>p.dimension))].sort();
  const dimension=typeof requested.dimension==='string'?requested.dimension:dimensions[0]||'minecraft:overworld';

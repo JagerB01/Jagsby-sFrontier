@@ -38,6 +38,14 @@ test('Guard variants reuse v1.4.9 models, biome textures, animations and combat 
     assert.equal(behavior.description.is_summonable, true);
     assert.equal(behavior.description.is_spawnable, false);
     assert.equal(client.spawn_egg, undefined);
+    const navigation = behavior.components['minecraft:navigation.walk'];
+    assert.equal(navigation.can_jump, true);
+    assert.equal(navigation.avoid_damage_blocks, true);
+    assert.equal(behavior.components['minecraft:variable_max_auto_step']?.base_value,
+      name.endsWith('guard_horse') ? undefined : 1);
+    const stroll = behavior.components['minecraft:behavior.random_stroll']
+      ?? behavior.component_groups['mn:on_foot']['minecraft:behavior.random_stroll'];
+    assert.equal(stroll.y_dist, 8);
     const group = name.startsWith('town_') ? 'Town Guard' : 'Provincial';
     assert.ok(texts.includes('entity.' + id(name) + '.name=' + group + ' '));
     assert.deepEqual(client.geometry, originalClient.geometry);
@@ -189,6 +197,7 @@ test('All town variants stay outside squads and favor roads during ordinary vill
     const path = components['minecraft:preferred_path'];
     assert.deepEqual(path.preferred_path_blocks[0].blocks, ['grass_path', 'cobblestone', 'gravel']);
     assert.ok(path.preferred_path_blocks[0].cost < path.default_block_cost);
+    assert.equal(path.max_fall_blocks, 2);
     assert.equal(components['minecraft:behavior.move_towards_dwelling_restriction'], undefined);
     const road = components['minecraft:behavior.move_to_block'];
     const wander = components['minecraft:behavior.random_stroll'];
@@ -200,6 +209,7 @@ test('All town variants stay outside squads and favor roads during ordinary vill
     assert.equal(villageWalk.only_at_night, false);
     assert.equal(wander.xz_dist, 24);
     assert.equal(wander.interval, 80);
+    assert.equal(road.search_height, wander.y_dist);
     assert.deepEqual(road.target_blocks, path.preferred_path_blocks[0].blocks.map(block => 'minecraft:' + block));
     assert.ok(road.start_chance > 0 && road.start_chance < 1);
     assert.ok(attack.priority < road.priority && road.priority < wander.priority && wander.priority < villageWalk.priority);

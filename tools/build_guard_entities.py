@@ -9,6 +9,8 @@ NS = "jagsby_frontier"
 FAMILY = "frontier_guard"
 PATROL_CHANNELS = 12
 DWELLING_RETURN = "minecraft:behavior.move_towards_dwelling_restriction"
+STROLL = "minecraft:behavior.random_stroll"
+TERRAIN_SEARCH_HEIGHT = 8
 GUARD_COLORS = [
     ("Standard", (208, 172, 105)),
     ("Red", (201, 56, 58)),
@@ -63,9 +65,8 @@ def patrol_goals(behavior, mount):
     components = behavior["components"]
     groups = behavior.setdefault("component_groups", {})
     events = behavior.setdefault("events", {})
-    stroll_key = "minecraft:behavior.random_stroll"
-    stroll = components.get(stroll_key) or groups["mn:on_foot"][stroll_key]
-    groups[walk] = {stroll_key: {**stroll, "speed_multiplier": stroll["speed_multiplier"] * 0.75}}
+    stroll = components.get(STROLL) or groups["mn:on_foot"][STROLL]
+    groups[walk] = {STROLL: {**stroll, "speed_multiplier": stroll["speed_multiplier"] * 0.75}}
     events[walk] = {"add": {"component_groups": [walk]}}
     if mount:
         return
@@ -97,17 +98,17 @@ def town_patrol():
             "update_interval_base": 60, "update_interval_variant": 40,
         },
         "minecraft:preferred_path": {
-            "default_block_cost": 1.5, "jump_cost": 3, "max_fall_blocks": 1,
+            "default_block_cost": 1.5, "jump_cost": 1.5, "max_fall_blocks": 2,
             "preferred_path_blocks": [{"blocks": roads, "cost": 1}],
         },
         "minecraft:behavior.move_to_block": {
-            "priority": 8, "speed_multiplier": 0.7, "search_range": 8, "search_height": 2,
+            "priority": 8, "speed_multiplier": 0.7, "search_range": 8, "search_height": TERRAIN_SEARCH_HEIGHT,
             "tick_interval": 100, "start_chance": 0.15, "goal_radius": 1.25,
             "target_blocks": [f"minecraft:{block}" for block in roads],
             "target_selection_method": "random", "target_offset": [0, 1, 0],
         },
-        "minecraft:behavior.random_stroll": {
-            "priority": 9, "speed_multiplier": 0.7, "xz_dist": 24, "y_dist": 3, "interval": 80,
+        STROLL: {
+            "priority": 9, "speed_multiplier": 0.7, "xz_dist": 24, "y_dist": TERRAIN_SEARCH_HEIGHT, "interval": 80,
         },
         "minecraft:behavior.move_through_village": {
             "priority": 10, "speed_multiplier": 0.7, "only_at_night": False,
@@ -125,6 +126,10 @@ def behavior_profile(role, prefix):
     components = behavior["components"]
     families = components["minecraft:type_family"]["family"]
     mount = role == "guard_horse"
+    components["minecraft:navigation.walk"].update({"can_jump": True, "avoid_damage_blocks": True})
+    for goals in (components, *behavior.get("component_groups", {}).values()):
+        if STROLL in goals:
+            goals[STROLL]["y_dist"] = TERRAIN_SEARCH_HEIGHT
     if mount:
         families.append("frontier_guard_mount")
         # Commands retain the Frontier mounted-team spawn. SpawnGuard uses
@@ -133,6 +138,9 @@ def behavior_profile(role, prefix):
         behavior["events"][f"{NS}:spawn_empty"] = {}
     else:
         families.append(FAMILY)
+        # Horses already handle steps through their native runtime. Bedrock
+        # supports this step-height component on the foot guards only.
+        components["minecraft:variable_max_auto_step"] = {"base_value": 1.0}
         properties = description.setdefault("properties", {})
         properties[f"{NS}:squad_leader"] = {"type": "bool", "default": False, "client_sync": True}
         properties[f"{NS}:headband"] = {
