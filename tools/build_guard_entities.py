@@ -8,6 +8,7 @@ BP, RP = ROOT / "behavior", ROOT / "resource"
 NS = "jagsby_frontier"
 FAMILY = "frontier_guard"
 PATROL_CHANNELS = 12
+DWELLING_RETURN = "minecraft:behavior.move_towards_dwelling_restriction"
 GUARD_COLORS = [
     ("Standard", (208, 172, 105)),
     ("Red", (201, 56, 58)),
@@ -99,20 +100,17 @@ def town_patrol():
             "default_block_cost": 1.5, "jump_cost": 3, "max_fall_blocks": 1,
             "preferred_path_blocks": [{"blocks": roads, "cost": 1}],
         },
-        "minecraft:behavior.move_towards_dwelling_restriction": {
-            "priority": 7, "speed_multiplier": 0.8,
-        },
         "minecraft:behavior.move_to_block": {
             "priority": 8, "speed_multiplier": 0.7, "search_range": 8, "search_height": 2,
-            "tick_interval": 100, "start_chance": 0.22, "goal_radius": 1.25,
+            "tick_interval": 100, "start_chance": 0.15, "goal_radius": 1.25,
             "target_blocks": [f"minecraft:{block}" for block in roads],
             "target_selection_method": "random", "target_offset": [0, 1, 0],
         },
-        "minecraft:behavior.move_through_village": {
-            "priority": 9, "speed_multiplier": 0.7, "only_at_night": False,
-        },
         "minecraft:behavior.random_stroll": {
-            "priority": 10, "speed_multiplier": 0.7, "xz_dist": 10, "y_dist": 3,
+            "priority": 9, "speed_multiplier": 0.7, "xz_dist": 24, "y_dist": 3, "interval": 80,
+        },
+        "minecraft:behavior.move_through_village": {
+            "priority": 10, "speed_multiplier": 0.7, "only_at_night": False,
         },
         "minecraft:behavior.look_at_player": {"priority": 11, "look_distance": 8},
         "minecraft:behavior.random_look_around": {"priority": 12},
@@ -143,11 +141,15 @@ def behavior_profile(role, prefix):
     if prefix:
         if not mount:
             families.append("frontier_town_guard")
+        # The Charter survey check already returns guards that leave their post.
+        # Let idle movement cover the survey without the vanilla dwelling leash.
+        components.pop(DWELLING_RETURN, None)
         components.update(town_patrol())
         if role == "arbalist":
             # The original on-foot event supplies these goals as a group.
             # Keep the town path preference when that group activates.
             on_foot = behavior["component_groups"]["mn:on_foot"]
+            on_foot.pop(DWELLING_RETURN, None)
             for key in on_foot:
                 on_foot[key] = components[key]
     else:

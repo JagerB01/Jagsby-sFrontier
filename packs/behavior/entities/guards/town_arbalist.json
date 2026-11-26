@@ -71,19 +71,16 @@
       },
       "mn:on_foot": {
         "minecraft:behavior.move_through_village": {
-          "priority": 9,
+          "priority": 10,
           "speed_multiplier": 0.7,
           "only_at_night": false
         },
-        "minecraft:behavior.move_towards_dwelling_restriction": {
-          "priority": 7,
-          "speed_multiplier": 0.8
-        },
         "minecraft:behavior.random_stroll": {
-          "priority": 10,
+          "priority": 9,
           "speed_multiplier": 0.7,
-          "xz_dist": 10,
-          "y_dist": 3
+          "xz_dist": 24,
+          "y_dist": 3,
+          "interval": 80
         }
       },
       "mn:on_camel": {},
@@ -539,17 +536,13 @@
           }
         ]
       },
-      "minecraft:behavior.move_towards_dwelling_restriction": {
-        "priority": 7,
-        "speed_multiplier": 0.8
-      },
       "minecraft:behavior.move_to_block": {
         "priority": 8,
         "speed_multiplier": 0.7,
         "search_range": 8,
         "search_height": 2,
         "tick_interval": 100,
-        "start_chance": 0.22,
+        "start_chance": 0.15,
         "goal_radius": 1.25,
         "target_blocks": [
           "minecraft:grass_path",
@@ -563,16 +556,17 @@
           0
         ]
       },
-      "minecraft:behavior.move_through_village": {
+      "minecraft:behavior.random_stroll": {
         "priority": 9,
         "speed_multiplier": 0.7,
-        "only_at_night": false
+        "xz_dist": 24,
+        "y_dist": 3,
+        "interval": 80
       },
-      "minecraft:behavior.random_stroll": {
+      "minecraft:behavior.move_through_village": {
         "priority": 10,
         "speed_multiplier": 0.7,
-        "xz_dist": 10,
-        "y_dist": 3
+        "only_at_night": false
       }
     },
     "events": {

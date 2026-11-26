@@ -75,7 +75,10 @@ test('Guard variants reuse v1.4.9 models, biome textures, animations and combat 
   }
   const controller = (await json('resource/render_controllers/guard_villagers.render_controllers.json'))
     .render_controllers['controller.render.jagsby_frontier.swordsman'];
-  assert.equal(controller.arrays.textures['Array.biomes'].length, 7 * GUARD_COLORS.length);
+  const biomes = ['plains', 'desert', 'jungle', 'savanna', 'snow', 'swamp', 'taiga'];
+  assert.deepEqual(controller.arrays.textures['Array.biomes'], GUARD_COLORS.flatMap((_, band) =>
+    biomes.map(biome => 'Texture.' + biome + (band ? '_band_' + band : ''))));
+  assert.deepEqual(controller.textures, [`Array.biomes[query.mark_variant + 7 * query.property('${id('headband')}')]`]);
 });
 
 function squadFixture() {
@@ -180,22 +183,31 @@ test('All town variants stay outside squads and favor roads during ordinary vill
   assert.deepEqual(squad.leaders(), [leader]);
 
   for (const role of [...townRoles, 'town_guard_horse']) {
-    const {components} = (await json('behavior/entities/guards/' + role + '.json'))['minecraft:entity'];
+    const {components, component_groups} = (await json('behavior/entities/guards/' + role + '.json'))['minecraft:entity'];
     assert.equal(components['minecraft:home'], undefined);
     const path = components['minecraft:preferred_path'];
     assert.deepEqual(path.preferred_path_blocks[0].blocks, ['grass_path', 'cobblestone', 'gravel']);
     assert.ok(path.preferred_path_blocks[0].cost < path.default_block_cost);
-    const returnHome = components['minecraft:behavior.move_towards_dwelling_restriction'];
+    assert.equal(components['minecraft:behavior.move_towards_dwelling_restriction'], undefined);
     const road = components['minecraft:behavior.move_to_block'];
     const wander = components['minecraft:behavior.random_stroll'];
     const attack = components['minecraft:behavior.melee_box_attack']
       ?? components['minecraft:behavior.ranged_attack'] ?? components['minecraft:behavior.mount_pathing'];
     assert.equal(components['minecraft:dweller'].dweller_role, 'defender');
     assert.equal(components['minecraft:dweller'].can_migrate, false);
-    assert.equal(components['minecraft:behavior.move_through_village'].only_at_night, false);
+    const villageWalk = components['minecraft:behavior.move_through_village'];
+    assert.equal(villageWalk.only_at_night, false);
+    assert.equal(wander.xz_dist, 24);
+    assert.equal(wander.interval, 80);
     assert.deepEqual(road.target_blocks, path.preferred_path_blocks[0].blocks.map(block => 'minecraft:' + block));
     assert.ok(road.start_chance > 0 && road.start_chance < 1);
-    assert.ok(attack.priority < returnHome.priority && returnHome.priority < road.priority && road.priority < wander.priority);
+    assert.ok(attack.priority < road.priority && road.priority < wander.priority && wander.priority < villageWalk.priority);
+    if (role === 'town_arbalist') {
+      const onFoot = component_groups['mn:on_foot'];
+      assert.equal(onFoot['minecraft:behavior.move_towards_dwelling_restriction'], undefined);
+      assert.deepEqual(onFoot['minecraft:behavior.random_stroll'], wander);
+      assert.deepEqual(onFoot['minecraft:behavior.move_through_village'], villageWalk);
+    }
   }
 });
 
