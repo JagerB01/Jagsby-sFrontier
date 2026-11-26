@@ -110,17 +110,6 @@ def condition(expression, binding="#title_text"):
             view(expression), view(expression, "#enabled")]
 
 
-def form_route(template, predicate):
-    # A native stack factory creates one screen root for the matching title.
-    # A hidden, statically inherited screen would still construct its children.
-    return {"type": "stack_panel", "orientation": "vertical", "size": [380, 240],
-            "collection_name": "form_buttons",
-            "factory": {"name": "buttons", "control_name": template},
-            "property_bag": {"#title_text": "JF_CHARTER|", "#collection_length": 0},
-            "bindings": [{"binding_name": "#title_text", "binding_type": "none"},
-                         view(f"({predicate} * 1)", "#collection_length")]}
-
-
 def image(texture, size, offset=(0, 0), layer=0, color=None):
     result = {"type": "image", "texture": "textures/ui/" + texture,
               "size": size, "offset": list(offset), "keep_ratio": False,
@@ -455,14 +444,15 @@ def build():
         ("poi_picker", "jf_poi_picker", "POITravel"),
         ("picker", "jf_picker", "Roads"),
     ]
-    ui["jf_router"] = {"type": "panel", "size": [380, 240], "controls": [
-        control("vanilla", form_route("jagsby_frontier.jf_vanilla_form", is_other_form)),
-        *[control(name, form_route("jagsby_frontier." + template, f"(#title_text = 'JF_CHARTER|{title}')"))
+    # The native form collection supplies action records. Keep the screen
+    # roots outside it so MineScape and standalone route the same way.
+    ui["jf_router"] = {"type": "panel", "size": [380, 240],
+                       "$msfm_standard_long_form|default": "server_form.long_form", "controls": [
+        control("vanilla@$msfm_standard_long_form", {"bindings": condition(is_other_form)}),
+        *[control(f"{name}@jagsby_frontier.{template}", {
+            "bindings": condition(f"(#title_text = 'JF_CHARTER|{title}')")})
           for name, template, title in routes],
     ]}
-    ui["jf_vanilla_form"] = {"type": "panel", "size": [380, 240],
-                            "$msfm_standard_long_form|default": "server_form.long_form",
-                            "controls": [control("vanilla@$msfm_standard_long_form", {})]}
     frame = [
         control("frame", image("frontier/charter_frame", [380, 240], layer=1)),
         control("leather", image("frontier/palette_leather", [347, 199], (17, 29), layer=2, color=[0.58, 0.58, 0.58])),
@@ -1042,7 +1032,8 @@ def build():
             "type": "stack_panel", "orientation": "vertical", "size": [254, "100%c"],
             "collection_name": "form_buttons", "factory": {"name": "buttons",
                 "control_ids": {"button": "jagsby_frontier.jf_choice"}},
-            "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length"}],
+            "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length",
+                          "binding_condition": "always_when_visible"}],
         })]}
     poi_picker = copy.deepcopy(picker)
     next(item["title"] for item in poi_picker if "title" in item)["text"] = "Provincial Travel"

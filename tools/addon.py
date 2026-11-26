@@ -17,13 +17,19 @@ ROOT = Path(__file__).resolve().parents[1]
 PACKS = ROOT / "packs"
 
 
-def validate_ui(value, path):
+def validate_ui(value, path, indexed_child=False):
     if isinstance(value, dict):
         assert "precached_grid_item_count" not in value, f"precached_grid_item_count is rejected by the target Bedrock runtime: {path}"
         assert "text_truncate" not in value, f"text_truncate is unsupported in Bedrock JSON UI: {path}"
         assert not (value.get("type") == "panel" and "collection_name" in value), f"collection_name is unsupported on panel: {path}"
-        for child in value.values():
-            validate_ui(child, path)
+        assert "collection_index" not in value or indexed_child, f"collection_index requires a direct collection child: {path}"
+        for key, child in value.items():
+            if key == "controls" and isinstance(child, list):
+                for entry in child:
+                    for definition in entry.values():
+                        validate_ui(definition, path, indexed_child="collection_name" in value)
+            else:
+                validate_ui(child, path)
     elif isinstance(value, list):
         for child in value:
             validate_ui(child, path)

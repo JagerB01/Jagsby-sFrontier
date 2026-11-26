@@ -8,6 +8,7 @@ const village=(name,x,z,dimension='minecraft:overworld')=>({name,location:{x,y:6
 const points=s=>s.cells.flat();
 const children=v=>Object.assign({},...(v.controls||[]));
 const record=v=>Object.values(v.controls[0])[0];
+const recordName=v=>Object.keys(v.controls[0])[0].split('@')[0];
 const markerFor=(ui,v)=>ui[Object.keys(v.controls[0])[0].split('@')[1].split('.')[1]+'@jagsby_frontier.jf_map_pin'];
 test('Fit maps signed X/Z coordinates with north up and east right without mutation',()=>{
  const villages={nw:village('Northwest',-2000,-1000),se:village('Southeast',2000,1000)},before=JSON.stringify(villages);
@@ -96,7 +97,7 @@ test('Zoom, pan and edge clipping use bounded viewports and correct axes',()=>{
 test('Map UI has fixed indexed form cells, a dedicated router and the ordinary native bindings',async()=>{
  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
  const children=value=>Object.assign({},...(value.controls||[]));
- assert.equal(children(ui.jf_router).map.factory.control_name,'jagsby_frontier.jf_settlement_map');
+ assert.ok(children(ui.jf_router)['map@jagsby_frontier.jf_settlement_map']);
  const map=children(ui.jf_settlement_map),grid=children(map.grid);
  assert.equal(L.settlementMap.cells,MAP_COLUMNS*MAP_ROWS);assert.deepEqual(map.grid.size,[240,150]);
  for(let i=0;i<L.settlementMap.cells;i++){
@@ -116,8 +117,7 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
  const marker=ui.jf_map_pin;assert.equal(marker.$pressed_button_name,undefined);assert.deepEqual(marker.button_mappings,[]);
  assert.equal(marker.hover_enabled,true);assert.equal(marker.focus_enabled,true);
  assert.deepEqual(marker.size,[6,6]);
- const art=ui.jf_map_pin_art;
- assert.ok(art.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_name_override==='#texture'));
+ assert.ok(marker.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_type==='collection'));
  const tooltip=children(ui.jf_map_pin_details);
  const text=children(children(tooltip.content).body).text;
  assert.equal(text.size[1],'default');
@@ -199,15 +199,21 @@ test('Small idle pins reveal adjacent tooltips that stay inside the expanded map
  assert.equal(map.bounds,undefined);
  const [tooltipWidth,tooltipHeight]=ui.jf_map_pin_details.size;
  assert.equal(tooltipHeight,'100%cm');
+ for(const suffix of ['texture','texture_file_system']){
+  assert.ok(ui.jf_map_pin_art.bindings.some(b=>b.source_control_name==='$jf_map_record_name'
+    &&b.source_property_name==='#form_button_'+suffix&&b.target_property_name==='#'+suffix));
+ }
  for(let slot=0;slot<L.settlementMap.cells;slot++){
-  const target=grid['cell'+slot],states=children(markerFor(ui,target));
+  const target=grid['cell'+slot],template=markerFor(ui,target),states=children(template);
   const idle=children(states.idle)['art@jagsby_frontier.jf_map_pin_art'];
   assert.deepEqual(idle.size,[6,6]);
-  assert.equal(idle.collection_index,slot);
   const hover=children(states.info);
   const [x,z]=target.offset;
   const expanded=hover['art@jagsby_frontier.jf_map_pin_art'];
-  assert.equal(expanded.collection_index,slot);
+  assert.equal(recordName(target),'jf_map_record_'+slot);
+  assert.equal(template.$jf_map_record_name,recordName(target));
+  assert.equal(idle.collection_index,undefined);
+  assert.equal(expanded.collection_index,undefined);
   const [artX,artZ]=expanded.offset;
   const [width,height]=ui.jf_map_pin_art.size;
   assert.ok(x+artX>=0&&x+artX+width<=map.grid.size[0]);
@@ -333,14 +339,15 @@ test('Province art uses the projected pixel within its pin cell, including hover
  const grid=children(children(ui.jf_settlement_map).grid);
  const pin=children(markerFor(ui,grid['cell'+slot]));
  assert.deepEqual(grid['cell'+slot].offset,[120,72]);
- assert.equal(children(pin.idle)['province_art@jagsby_frontier.jf_map_province_idle'].collection_index,slot);
- assert.equal(children(pin.info)['province_art@jagsby_frontier.jf_map_province_hover'].collection_index,slot);
+ assert.deepEqual(children(pin.idle)['province_art@jagsby_frontier.jf_map_province_idle'],{});
+ assert.deepEqual(children(pin.info)['province_art@jagsby_frontier.jf_map_province_hover'],{});
  for(const [name,size,uv] of [['idle',12,0],['hover',22,48]]){
   const art=ui['jf_map_province_'+name];
   assert.deepEqual(art.uv,[uv,0]);
   assert.deepEqual(art.uv_size,[size*4,size*4]);
   assert.deepEqual(art.offset,[(6-size)/2,(6-size)/2]);
   assert.ok(art.bindings.some(b=>b.target_property_name==='#visible'&&b.source_property_name.includes('[JF:provinceView]')));
+  assert.ok(art.bindings.some(b=>b.source_control_name==='$jf_map_record_name'&&b.target_property_name==='#texture'));
  }
 });
 

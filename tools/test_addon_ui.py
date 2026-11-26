@@ -29,6 +29,16 @@ class UIValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, "collection_name.*panel"):
             validate_ui({"type": "panel", "collection_name": "form_buttons"}, Path("ui.json"))
 
+    def test_only_direct_collection_children_can_be_indexed(self):
+        record = {"type": "button", "collection_index": 4}
+        scope = {"type": "stack_panel", "collection_name": "form_buttons",
+                 "controls": [{"record": record}]}
+        validate_ui(scope, Path("map.json"))
+        record["controls"] = [{"idle": {"type": "panel", "controls": [
+            {"art": {"type": "image", "collection_index": 4}}]}}]
+        with self.assertRaisesRegex(AssertionError, "collection_index.*map.json"):
+            validate_ui(scope, Path("map.json"))
+
     def test_optional_renderer_hooks_resolve_to_registered_frontier_controls(self):
         ui_root = PACKS / "resource/ui"
         hooks = json.loads((ui_root / "_global_variables.json").read_text())

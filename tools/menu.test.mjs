@@ -45,8 +45,7 @@ test('standalone charter definitions are registered separately with a minimal va
     control_ids:{long_form:'@jagsby_frontier.jf_router',custom_form:'@jagsby_frontier.jf_modal_router'}}});
   assert.deepEqual(registration.ui_defs,['ui/jagsby_frontier/charter.json']);
   assert.equal(ui.namespace,'jagsby_frontier');
-  assert.ok(ui.jf_vanilla_form.controls.some(c=>c['vanilla@$msfm_standard_long_form']));
-  assert.equal(ui.jf_vanilla_form['$msfm_standard_long_form|default'],'server_form.long_form');
+  assert.equal(ui.jf_router['$msfm_standard_long_form|default'],'server_form.long_form');
   assert.equal(JSON.stringify(ui).toLowerCase().includes('minescape'),false);
   assert.equal(ui.long_form,undefined);
   assert.equal(JSON.stringify(ui.jf_dashboard).includes('long_form_dynamic_buttons_panel'),false);
@@ -74,28 +73,28 @@ const loadUI=async()=>JSON.parse(await readFile(uiFile,'utf8'));
 const children=control=>Object.assign({},...control.controls);
 const template=(ui,name)=>ui[name]??ui[Object.keys(ui).find(key=>key.split('@')[0]===name)];
 
-test('the main router allocates only the screen that owns the form title',async()=>{
+test('the main router uses ordinary panels and matches the road picker only to Roads',async()=>{
   const ui=await loadUI(),routes=children(ui.jf_router);
   const expected={
-    vanilla:['jf_vanilla_form',"((#title_text - 'JF_CHARTER|') = #title_text)"],
-    charter:['jf_dashboard',"(#title_text = 'JF_CHARTER|Dashboard')"],
-    waystone:['jf_waystone',"(#title_text = 'JF_CHARTER|Waystone')"],
-    map:['jf_settlement_map',"(#title_text = 'JF_CHARTER|SettlementMap')"],
-    poi_picker:['jf_poi_picker',"(#title_text = 'JF_CHARTER|POITravel')"],
-    picker:['jf_picker',"(#title_text = 'JF_CHARTER|Roads')"],
+    'vanilla@$msfm_standard_long_form':"((#title_text - 'JF_CHARTER|') = #title_text)",
+    'charter@jagsby_frontier.jf_dashboard':"(#title_text = 'JF_CHARTER|Dashboard')",
+    'waystone@jagsby_frontier.jf_waystone':"(#title_text = 'JF_CHARTER|Waystone')",
+    'map@jagsby_frontier.jf_settlement_map':"(#title_text = 'JF_CHARTER|SettlementMap')",
+    'poi_picker@jagsby_frontier.jf_poi_picker':"(#title_text = 'JF_CHARTER|POITravel')",
+    'picker@jagsby_frontier.jf_picker':"(#title_text = 'JF_CHARTER|Roads')",
   };
   assert.deepEqual(Object.keys(routes),Object.keys(expected));
-  for(const [key,[screen,predicate]] of Object.entries(expected)){
+  for(const [key,predicate] of Object.entries(expected)){
     const route=routes[key];
-    assert.equal(route.controls,undefined,'Route starts without a screen subtree');
-    assert.equal(route.type,'stack_panel');
-    assert.deepEqual(route.property_bag,{'#title_text':'JF_CHARTER|','#collection_length':0});
-    assert.deepEqual(route.factory,{name:'buttons',control_name:'jagsby_frontier.'+screen});
-    assert.ok(ui[screen]);
-    assert.deepEqual(route.bindings,[
+    assert.deepEqual(route,{bindings:[
       {binding_name:'#title_text',binding_type:'none'},
-      {binding_type:'view',source_property_name:`(${predicate} * 1)`,target_property_name:'#collection_length'},
-    ]);
+      ...['#visible','#enabled'].map(target_property_name=>({
+        binding_type:'view',source_property_name:predicate,target_property_name,
+      })),
+    ]});
+  }
+  for(const picker of ['jf_picker_content','jf_poi_picker_content']){
+    assert.equal(children(ui[picker]).choices.bindings[0].binding_condition,'always_when_visible');
   }
 });
 

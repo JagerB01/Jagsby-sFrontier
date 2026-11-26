@@ -5,7 +5,7 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.143](downloads/Jagsbys_Frontier_v0.0.143.mcaddon?raw=true)
+[Download Frontier 0.0.144](downloads/Jagsbys_Frontier_v0.0.144.mcaddon?raw=true)
 
 The **Village Charter** opens on Overview and keeps Research, Production, and
 Diplomacy. The **Waystone** opens Road Networks, My Settlements, and All
@@ -13,9 +13,10 @@ Settlements. The **Map Table** opens the Diplomacy Map on Fit. Place the Wayston
 Map Table within 80 horizontal blocks of a charter to link it. All three
 blocks rotate to face the player on placement.
 
-Both station recipes are always unlocked at the crafting table. For a Waystone,
-put a compass above two cobblestone blocks in a single column. For a Map Table,
-put an empty map in the center slot with three planks across the bottom row.
+Both station recipes unlock in the recipe book when you pick up an ingredient.
+At a crafting table, put a compass above two cobblestone blocks in a single
+column for a Waystone. For a Map Table, put an empty map in the center slot
+with three planks across the bottom row.
 
 In Creative, search for **Frontier** spawn eggs to test the Swordsman, Arbalist,
 Lancer, and Juggernaut. The Horse Lancer Team egg spawns a horse with its lancer.
@@ -559,10 +560,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.143.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.144.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.143_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.144_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

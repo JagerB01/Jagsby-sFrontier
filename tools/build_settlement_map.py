@@ -36,10 +36,10 @@ def build_map_ui(ui, frame):
                 "keep_ratio": False, "bilinear": False, "layer": 3}
     bindings = [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
                 {"binding_name": "#form_button_text", "binding_type": "collection", "binding_collection_name": "form_buttons"}]
-    def scope(template, index, size, offset):
+    def scope(template, index, size, offset, record="record"):
         return {"type": "stack_panel", "orientation": "vertical", "collection_name": "form_buttons",
                 "size": size, "offset": offset, "anchor_from": "top_left", "anchor_to": "top_left",
-                "controls": [c("record@jagsby_frontier." + template, {"collection_index": index})]}
+                "controls": [c(record + "@jagsby_frontier." + template, {"collection_index": index})]}
     def sprite(texture, size, offset):
         return {"type": "image", "texture": "textures/ui/frontier/"+texture, "size": size,
                 "offset": offset, "anchor_from": "top_left", "anchor_to": "top_left", "layer": 8,
@@ -51,15 +51,16 @@ def build_map_ui(ui, frame):
 
     art = sprite("poi_markers/village", [ART_SIZE, ART_SIZE], [0, 0])
     art["layer"] = 20
-    art["bindings"] = [
-        {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
-        {"binding_name": "#form_button_texture", "binding_name_override": "#texture",
-         "binding_type": "collection", "binding_collection_name": "form_buttons"},
-        {"binding_name": "#form_button_texture_file_system", "binding_name_override": "#texture_file_system",
-         "binding_type": "collection", "binding_collection_name": "form_buttons"}]
+    # The indexed pin button supplies the texture to both of its states.
+    texture_bindings = [
+        {"binding_type": "view", "source_control_name": "$jf_map_record_name",
+         "source_property_name": source, "target_property_name": target}
+        for source, target in (("#form_button_texture", "#texture"),
+                               ("#form_button_texture_file_system", "#texture_file_system"))]
     province_mode = "(not ((#form_text - '[JF:provinceView]') = #form_text))"
-    art["bindings"].append({"binding_type": "view", "source_control_name": "jf_map_boundary_state",
-                            "source_property_name": f"(not {province_mode})", "target_property_name": "#visible"})
+    art["bindings"] = texture_bindings + [
+        {"binding_type": "view", "source_control_name": "jf_map_boundary_state",
+         "source_property_name": f"(not {province_mode})", "target_property_name": "#visible"}]
     ui["jf_map_pin_art"] = art
     # The texture supplied in the form contains two crops of the same icon.
     # Each crop includes room for the sub-cell offset in either direction.
@@ -68,7 +69,7 @@ def build_map_ui(ui, frame):
         ui["jf_map_province_" + name] = {
             **sprite("province_pins/0_0", [padded, padded], [(CELL - padded) // 2] * 2),
             "uv": [atlas_x, 0], "uv_size": [padded * 4, padded * 4], "layer": layer,
-            "bindings": copy.deepcopy(art["bindings"][:-1]) + [
+            "bindings": texture_bindings + [
                 {"binding_type": "view", "source_control_name": "jf_map_boundary_state",
                  "source_property_name": province_mode, "target_property_name": "#visible"}],
         }
@@ -95,10 +96,13 @@ def build_map_ui(ui, frame):
         "focus_enabled": True, "hover_enabled": True, "button_mappings": [],
         "default_control": "idle", "hover_control": "info", "pressed_control": "info",
         "bindings": copy.deepcopy(bindings) + [
+            {"binding_name": prop, "binding_type": "collection", "binding_collection_name": "form_buttons"}
+            for prop in ("#form_button_texture", "#form_button_texture_file_system")
+        ] + [
             {"binding_type": "view", "source_property_name": "(not (#form_button_text = ''))", "target_property_name": prop}
             for prop in ["#visible", "#enabled"]]
     }
-    def hover_marker(template, slot, x, z):
+    def hover_marker(template, record, x, z):
         # The hit area stays fixed. Clamp the expanded art at the map border.
         art_x = min(WIDTH - ART_SIZE, max(0, x + (CELL - ART_SIZE) // 2))
         art_z = min(HEIGHT - ART_SIZE, max(0, z + (CELL - ART_SIZE) // 2))
@@ -106,17 +110,17 @@ def build_map_ui(ui, frame):
         if tooltip_x + TOOLTIP_WIDTH > WIDTH:
             tooltip_x = art_x - TOOLTIP_GAP - TOOLTIP_WIDTH
         tooltip_anchor = "top_left" if z < HEIGHT / 2 else "bottom_left"
-        ui[template + "@jagsby_frontier.jf_map_pin"] = {"controls": [
+        ui[template + "@jagsby_frontier.jf_map_pin"] = {"$jf_map_record_name": record, "controls": [
             c("idle", {"type": "panel", "size": [CELL, CELL], "offset": [0, 0],
                        "anchor_from": "top_left", "anchor_to": "top_left", "allow_clipping": False,
                        "controls": [
-                           c("art@jagsby_frontier.jf_map_pin_art", {"size": [CELL, CELL], "layer": 8, "collection_index": slot}),
-                           c("province_art@jagsby_frontier.jf_map_province_idle", {"collection_index": slot})]}),
+                           c("art@jagsby_frontier.jf_map_pin_art", {"size": [CELL, CELL], "layer": 8}),
+                           c("province_art@jagsby_frontier.jf_map_province_idle", {})]}),
             c("info", {"type": "panel", "size": [CELL, CELL], "offset": [0, 0],
                        "anchor_from": "top_left", "anchor_to": "top_left", "allow_clipping": False,
                        "controls": [
-                           c("art@jagsby_frontier.jf_map_pin_art", {"offset": [art_x - x, art_z - z], "collection_index": slot}),
-                           c("province_art@jagsby_frontier.jf_map_province_hover", {"collection_index": slot}),
+                           c("art@jagsby_frontier.jf_map_pin_art", {"offset": [art_x - x, art_z - z]}),
+                           c("province_art@jagsby_frontier.jf_map_province_hover", {}),
                            c("tooltip@jagsby_frontier.jf_map_pin_details",
                              {"offset": [tooltip_x - x, 0],
                               "anchor_from": tooltip_anchor, "anchor_to": tooltip_anchor})]})]}
@@ -165,8 +169,9 @@ def build_map_ui(ui, frame):
     for slot in range(COLUMNS*ROWS):
         x, z = (slot % COLUMNS) * CELL, (slot // COLUMNS) * CELL
         template = f"jf_map_marker_{slot}"
-        hover_marker(template, slot, x, z)
-        grid.append(c("cell"+str(slot), scope(template, slot, [CELL, CELL], [x, z])))
+        record = f"jf_map_record_{slot}"
+        hover_marker(template, record, x, z)
+        grid.append(c("cell"+str(slot), scope(template, slot, [CELL, CELL], [x, z], record)))
     content.append(c("grid", {"type":"panel","size":[WIDTH,HEIGHT],"offset":[GRID_X,GRID_Y],
         "anchor_from":"top_left","anchor_to":"top_left","clips_children":True,"controls":grid}))
     # One framed control panel, kept outside the drawing area.

@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.100",
+  "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
       "identifier": "jagsby_frontier:waystone"
@@ -22,7 +22,10 @@
     },
     "unlock": [
       {
-        "context": "AlwaysUnlocked"
+        "item": "minecraft:compass"
+      },
+      {
+        "item": "minecraft:cobblestone"
       }
     ],
     "result": {

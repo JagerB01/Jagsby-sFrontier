@@ -24,7 +24,7 @@ test('Crafting result is the registered, visible Village Charter block with a di
  assert.ok(language.includes('tile.jagsby_frontier:village_charter.name=Village Charter'));
 });
 
-test('The two station recipes ship unlocked, with the agreed ingredients and block assets',async()=>{
+test('Station recipes unlock from their ingredients and reference valid block models',async()=>{
  const terrain=JSON.parse(await readFile(new URL('packs/resource/textures/terrain_texture.json',root),'utf8'));
  for(const [slug,pattern,key] of [
   ['waystone',['P','C','C'],{P:{item:'minecraft:compass'},C:{item:'minecraft:cobblestone'}}],
@@ -35,11 +35,15 @@ test('The two station recipes ship unlocked, with the agreed ingredients and blo
   const block=(await read(`packs/behavior/blocks/${slug}.json`))['minecraft:block'];
   const geometry=await read(`packs/resource/models/blocks/${slug}.geo.json`);
   assert.deepEqual(shaped.tags,['crafting_table']);
-  assert.deepEqual(shaped.unlock,[{context:'AlwaysUnlocked'}]);
+  const unlock=slug==='waystone'?['minecraft:compass','minecraft:cobblestone']:['minecraft:empty_map',...plankItems];
+  assert.deepEqual(shaped.unlock,unlock.map(item=>({item})));
   assert.deepEqual(shaped.pattern,pattern);
   assert.deepEqual(shaped.key,key);
   assert.deepEqual(shaped.result,{item:block.description.identifier,count:1});
   assert.equal(block.components['minecraft:geometry'],geometry['minecraft:geometry'][0].description.identifier);
+  for(const bone of geometry['minecraft:geometry'][0].bones){
+   for(const cube of bone.cubes??[])assert.ok(!('inflate' in cube)||typeof cube.inflate==='number');
+  }
   const texture=terrain.texture_data[block.components['minecraft:material_instances']['*'].texture].textures;
   await readFile(new URL(`packs/resource/${texture}.png`,root));
  }
