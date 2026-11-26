@@ -10,6 +10,10 @@ export const MAP_COLUMNS=40, MAP_ROWS=25, MAP_ASPECT=MAP_COLUMNS/MAP_ROWS;
 export const MAP_MIN_SPAN=64, MAP_MAX_SPAN=200000000;
 export {PROVINCE_SIZE};
 const CELL_PIXELS=6;
+export const MAP_POI_GLYPHS=Object.fromEntries([
+ 'village','trial_chambers','ancient_city','desert_temple','jungle_temple','stronghold',
+ 'ocean_monument','trail_ruins','illager_mine','illager_camp','illager_outpost','illager_stronghold',
+].map((texture,index)=>[`textures/ui/frontier/poi_markers/${texture}`,String.fromCodePoint(0xF7D0+index)]));
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
 export function settlementPoints(villages={}) {
  return Object.entries(villages).filter(([,v])=>v&&finite(v.location?.x)&&finite(v.location?.z)&&typeof v.dimension==='string').map(([id,v])=>({
@@ -138,9 +142,21 @@ export function mapSnapshot(villages,requested={},selectedId=null,spawnLocation=
    spawnCell:null,page,pageCount,selected,provinceView};
  }
  const projected=[];
+ const settlementsByCell=new Map();
  for(const point of fitPoints){
   const slot=project(point);
-  if(slot!==null)projected.push({point,slot});
+  if(slot===null)continue;
+  const settlements=settlementsByCell.get(slot);
+  if(point.type==='settlement'){
+   if(settlements)settlements.push(point);
+   else settlementsByCell.set(slot,[point]);
+  }else if(point.type==='survey'&&settlements){
+   const distance=village=>(point.x-village.x)**2+(point.z-village.z)**2;
+   const nearest=settlements.reduce((first,village)=>distance(village)<distance(first)?village:first);
+   (nearest.nearbyPois??=[]).push(point);
+   continue;
+  }
+  projected.push({point,slot});
  }
  const pageCount=Math.max(1,Math.ceil(projected.length/cells.length));
  page=Math.min(page,pageCount-1);
@@ -189,6 +205,8 @@ export function mapDetails(point){
  if(point.type==='province')return `${point.name}\nCapital: ${point.capital||'None'}\nCombined Development: ${point.development}`;
  if(point.type==='spawn')return `World spawn\n${coordinates(point)}`;
  if(point.type==='survey')return `${point.name}\n${coordinates(point)}`;
+ const icons=new Set(point.nearbyPois?.map(poi=>MAP_POI_GLYPHS[poi.texture]).filter(Boolean));
  return `${point.name}\n${coordinates(point)}\nBiome: ${point.biome}\nDevelopment: ${point.development}\nOwner: ${point.owner}`+
-  (point.provinceName?`\nCapital of ${point.provinceName}`:'');
+  (point.provinceName?`\nCapital of ${point.provinceName}`:'')+
+  (icons.size?`\n§f${[...icons].join(' ')}`:'');
 }

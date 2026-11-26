@@ -5,7 +5,7 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.140](downloads/Jagsbys_Frontier_v0.0.140.mcaddon?raw=true)
+[Download Frontier 0.0.141](downloads/Jagsbys_Frontier_v0.0.141.mcaddon?raw=true)
 
 The **Village Charter** opens on Overview and keeps Research, Production, and
 Diplomacy. The **Waystone** opens Road Networks, My Settlements, and All
@@ -556,10 +556,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.140.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.141.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.140_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.141_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

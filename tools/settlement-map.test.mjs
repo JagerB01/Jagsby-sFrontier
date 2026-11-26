@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {mapSnapshot,fitMap,provinceLinePixels,settlementPoints,moveMap,mapDetails,mapBoundaryMarkers,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN} from '../packs/behavior/scripts/settlement-map.js';
+import {mapSnapshot,fitMap,provinceLinePixels,settlementPoints,moveMap,mapDetails,mapBoundaryMarkers,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN,MAP_POI_GLYPHS} from '../packs/behavior/scripts/settlement-map.js';
 import {CHARTER_LAYOUT as L} from '../packs/behavior/scripts/charter-layout.js';
 import {capitalStatus,designateCapital,updateProvinceCapitalId} from '../packs/behavior/scripts/provinces.js';
 const village=(name,x,z,dimension='minecraft:overworld')=>({name,location:{x,y:64,z},dimension,developmentValue:250,developmentThreshold:100});
@@ -32,7 +32,7 @@ test('Registry is the only source: creation, rename, removal and world serializa
  delete saved.a;const s=mapSnapshot(saved,{},'a');assert.equal(s.count,1);assert.equal(s.selected,null);
  assert.equal(points(s)[0].id,'b');
 });
-test('Overlapping POIs get separate pins and a full map spills onto another page',()=>{
+test('Overlapping settlements get separate pins and a full map spills onto another page',()=>{
  const capacity=MAP_COLUMNS*MAP_ROWS;
  const villages=Object.fromEntries(Array.from({length:capacity+2},(_,i)=>['v'+i,village('Settlement '+i,0,0)]));
  const first=mapSnapshot(villages),second=mapSnapshot(villages,{page:1});
@@ -42,6 +42,38 @@ test('Overlapping POIs get separate pins and a full map spills onto another page
  assert.ok(second.cells.every(cell=>cell.length<=1));
  assert.equal(points(second).length,2);
  assert.equal(new Set([...points(first),...points(second)].map(p=>p.id)).size,capacity+2);
+});
+test('Landmarks sharing a settlement cell move into its tooltip and separate as the map zooms in',()=>{
+ const viewport={dimension:'minecraft:overworld',x:0,z:0,span:240};
+ const villages={a:village('Home',0,0)};
+ const discoveries=[
+  {kind:'stronghold',x:5,y:25,z:1},{kind:'trial_chamber',x:4,y:13,z:2},
+  {kind:'stronghold',x:5,y:-40,z:2},{kind:'desert_temple',x:20,y:69,z:0},
+ ];
+ const visible=points(mapSnapshot(villages,viewport,'a',null,discoveries));
+ const home=visible.find(p=>p.id==='a');
+ assert.equal(visible.length,2);
+ assert.equal(home.nearbyPois.length,3);
+ assert.equal(visible.find(p=>p.kind==='desert_temple').type,'survey');
+ const glyph=name=>MAP_POI_GLYPHS[`textures/ui/frontier/poi_markers/${name}`];
+ assert.ok(mapDetails(home).endsWith(`\n§f${glyph('stronghold')} ${glyph('trial_chambers')}`));
+ const zoomed=points(mapSnapshot(villages,{...viewport,span:64},'a',null,discoveries));
+ assert.equal(zoomed.find(p=>p.id==='a').nearbyPois,undefined);
+ assert.equal(zoomed.length,5);
+});
+test('The nearest settlement in an overlapping cell gets the icon row; spawn and independent landmarks stay separate',()=>{
+ const viewport={dimension:'minecraft:overworld',x:0,z:0,span:240};
+ const villages={a:village('A',0,0),b:village('B',5,0)};
+ const discoveries=[
+  {kind:'village',x:4,y:63,z:0},
+  {kind:'stronghold',x:20,y:25,z:0},{kind:'jungle_temple',x:21,y:68,z:0},
+ ];
+ const visible=points(mapSnapshot(villages,viewport,'a',{x:4,y:63,z:0},discoveries));
+ assert.equal(visible.length,5);
+ assert.equal(visible.find(p=>p.id==='a').nearbyPois,undefined);
+ assert.equal(visible.find(p=>p.id==='b').nearbyPois[0].kind,'village');
+ assert.ok(visible.some(p=>p.type==='spawn'));
+ assert.deepEqual(visible.filter(p=>p.type==='survey').map(p=>p.kind).sort(),['jungle_temple','stronghold']);
 });
 test('Empty and invalid locations are safe; zero coordinates and legacy ids remain valid',()=>{
  assert.equal(mapSnapshot({}).count,0);assert.equal(mapDetails(null),'');
@@ -90,6 +122,7 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
  const tooltip=children(ui.jf_map_pin_details);
  const text=children(children(tooltip.content).body).text;
  assert.equal(text.size[1],'default');
+ assert.equal(text.font_type,'unicode');
  assert.equal(tooltip.background.size[1],'100%sm');
  assert.ok(text.bindings.some(b=>b.binding_name==='#form_button_text'&&b.binding_type==='collection'));
  const code=await readFile(new URL('../packs/behavior/scripts/settlement-map.js',import.meta.url),'utf8');

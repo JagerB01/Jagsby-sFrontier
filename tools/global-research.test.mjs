@@ -5,6 +5,7 @@ import {readFile} from 'node:fs/promises';
 import * as R from '../packs/behavior/scripts/global-research.js';
 import * as E from '../packs/behavior/scripts/settlement-economy.js';
 import {refreshProtection} from '../packs/behavior/scripts/settlement-effects.js';
+import {MAP_POI_GLYPHS} from '../packs/behavior/scripts/settlement-map.js';
 const hour=3600000;
 const fresh=(now=0)=>R.migrateResearch({productionVersion:2,developmentVersion:2,villages:{},global:{},stock:{},roads:{},economyAt:now});
 const reload=s=>R.migrateResearch(JSON.parse(JSON.stringify(s)));
@@ -971,16 +972,21 @@ test('Spawn hover record and tier textures are shipped as inert map data without
  assert.deepEqual(h.read(),before);
 });
 
-test('Diplomacy form passes discovered artwork, village art and real Overworld province lines to the renderer',async()=>{
+test('The Diplomacy form sends clustered icons in the village tooltip and ships separate landmark pins',async()=>{
  const s=fresh(Date.now());
  s.villages.a={...village(),id:'a',name:'Alpha'};
- const h=await runtime(s,undefined,{surveyedPois:[{kind:'stronghold',x:15,y:20,z:25}]});
+ const h=await runtime(s,undefined,{surveyedPois:[
+  {kind:'stronghold',x:250,y:20,z:25},{kind:'trial_chamber',x:15,y:18,z:25},
+ ]});
  h.api.openSettlementMap(h.player,'a',{x:0,z:0,span:4096});
  const form=h.forms.at(-1),layout=CHARTER_LAYOUT.settlementMap;
  const poi=form.buttons.findIndex((text,index)=>index<layout.cells&&text.startsWith('Stronghold\n'));
  const villagePin=form.buttons.findIndex((text,index)=>index<layout.cells&&text.startsWith('Alpha\n'));
  assert.equal(form.icons[poi],'textures/ui/frontier/poi_markers/stronghold');
  assert.equal(form.icons[villagePin],'textures/ui/frontier/poi_markers/village');
+ assert.ok(form.buttons[villagePin].endsWith('\n§f'+MAP_POI_GLYPHS['textures/ui/frontier/poi_markers/trial_chambers']));
+ assert.ok(!form.buttons.some(text=>text.startsWith('Trial Chamber\n')));
+ assert.equal(form.buttons.length,layout.poiTravel+1);
  assert.ok(form.text.includes('[JF:province:x:120]'));
  assert.ok(form.text.includes('[JF:province:z:75]'));
  h.api.openSettlementMap(h.player,'a',{dimension:'minecraft:nether',x:0,z:0,span:4096});

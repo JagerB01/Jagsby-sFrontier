@@ -85,6 +85,7 @@ def build_map_ui(ui, frame):
                     c("top_padding", {"type": "panel", "size": [TOOLTIP_WIDTH, 5]}),
                     c("body", {"type": "panel", "size": [TOOLTIP_WIDTH, "100%cm"], "controls": [
                         c("text", {**label("#form_button_text", [TOOLTIP_WIDTH - 12, "default"], (6, 0), scale=0.65),
+                                   "font_type": "unicode",
                                    "property_bag": {"#form_button_text": ""}, "bindings": copy.deepcopy(bindings)})]}),
                     c("bottom_padding", {"type": "panel", "size": [TOOLTIP_WIDTH, 5]}),
                 ]})]}

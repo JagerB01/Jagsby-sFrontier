@@ -40,10 +40,13 @@ X increases to the right and Z increases downward. The grid lines show their
 world coordinates in blocks, rounded to the nearest block. The labels update
 as you zoom, pan or change dimensions. The 240×150 UI-pixel map
 rounds positions to the centers of 6×6 UI-pixel cells, within three UI pixels
-per axis of the projected position when the cell is free. Overlapping POIs
-receive separate pins in the nearest free cells. Their tooltips show their
-actual coordinates. If all cells fill up, the POI page control shows the
-remaining pins on subsequent pages.
+per axis of the projected position when the cell is free. Surveyed landmarks
+that share a pin cell with a settlement appear in its tooltip as a row of
+icons, one per landmark type. If two settlements share the cell, the nearest
+one gets the landmark. Zoom in to see individual landmark pins once their
+positions resolve to separate cells. Other overlapping pins use the nearest
+free cells and show their actual coordinates in their tooltips. Once a page
+fills up, the POI page control shows the remaining pins.
 
 ## Province and zone lines
 
