@@ -1,0 +1,189 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.mn_horse_destrier": {
+      "arrays": {
+        "textures": {
+          "Array.colors": [
+            "Texture.white",
+            "Texture.creamy",
+            "Texture.chestnut",
+            "Texture.brown",
+            "Texture.black",
+            "Texture.gray",
+            "Texture.darkbrown"
+          ]
+        }
+      },
+      "geometry": "geometry.default",
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "textures": [
+        "array.colors[query.variant]"
+      ]
+    },
+    "controller.render.jagsby_frontier.swordsman": {
+      "arrays": {
+        "textures": {
+          "Array.biomes": [
+            "Texture.plains",
+            "Texture.desert",
+            "Texture.jungle",
+            "Texture.savanna",
+            "Texture.snow",
+            "Texture.swamp",
+            "Texture.taiga",
+            "Texture.plains_band_1",
+            "Texture.desert_band_1",
+            "Texture.jungle_band_1",
+            "Texture.savanna_band_1",
+            "Texture.snow_band_1",
+            "Texture.swamp_band_1",
+            "Texture.taiga_band_1",
+            "Texture.plains_band_2",
+            "Texture.desert_band_2",
+            "Texture.jungle_band_2",
+            "Texture.savanna_band_2",
+            "Texture.snow_band_2",
+            "Texture.swamp_band_2",
+            "Texture.taiga_band_2",
+            "Texture.plains_band_3",
+            "Texture.desert_band_3",
+            "Texture.jungle_band_3",
+            "Texture.savanna_band_3",
+            "Texture.snow_band_3",
+            "Texture.swamp_band_3",
+            "Texture.taiga_band_3",
+            "Texture.plains_band_4",
+            "Texture.desert_band_4",
+            "Texture.jungle_band_4",
+            "Texture.savanna_band_4",
+            "Texture.snow_band_4",
+            "Texture.swamp_band_4",
+            "Texture.taiga_band_4",
+            "Texture.plains_band_5",
+            "Texture.desert_band_5",
+            "Texture.jungle_band_5",
+            "Texture.savanna_band_5",
+            "Texture.snow_band_5",
+            "Texture.swamp_band_5",
+            "Texture.taiga_band_5",
+            "Texture.plains_band_6",
+            "Texture.desert_band_6",
+            "Texture.jungle_band_6",
+            "Texture.savanna_band_6",
+            "Texture.snow_band_6",
+            "Texture.swamp_band_6",
+            "Texture.taiga_band_6",
+            "Texture.plains_band_7",
+            "Texture.desert_band_7",
+            "Texture.jungle_band_7",
+            "Texture.savanna_band_7",
+            "Texture.snow_band_7",
+            "Texture.swamp_band_7",
+            "Texture.taiga_band_7",
+            "Texture.plains_band_8",
+            "Texture.desert_band_8",
+            "Texture.jungle_band_8",
+            "Texture.savanna_band_8",
+            "Texture.snow_band_8",
+            "Texture.swamp_band_8",
+            "Texture.taiga_band_8"
+          ]
+        }
+      },
+      "geometry": "geometry.default",
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "textures": [
+        "Array.biomes[query.mark_variant + 7 * query.property('jagsby_frontier:headband')]"
+      ]
+    },
+    "controller.render.jagsby_frontier.arbalist": {
+      "arrays": {
+        "textures": {
+          "Array.biomes": [
+            "Texture.plains",
+            "Texture.desert",
+            "Texture.jungle",
+            "Texture.savanna",
+            "Texture.snow",
+            "Texture.swamp",
+            "Texture.taiga",
+            "Texture.plains_band_1",
+            "Texture.desert_band_1",
+            "Texture.jungle_band_1",
+            "Texture.savanna_band_1",
+            "Texture.snow_band_1",
+            "Texture.swamp_band_1",
+            "Texture.taiga_band_1",
+            "Texture.plains_band_2",
+            "Texture.desert_band_2",
+            "Texture.jungle_band_2",
+            "Texture.savanna_band_2",
+            "Texture.snow_band_2",
+            "Texture.swamp_band_2",
+            "Texture.taiga_band_2",
+            "Texture.plains_band_3",
+            "Texture.desert_band_3",
+            "Texture.jungle_band_3",
+            "Texture.savanna_band_3",
+            "Texture.snow_band_3",
+            "Texture.swamp_band_3",
+            "Texture.taiga_band_3",
+            "Texture.plains_band_4",
+            "Texture.desert_band_4",
+            "Texture.jungle_band_4",
+            "Texture.savanna_band_4",
+            "Texture.snow_band_4",
+            "Texture.swamp_band_4",
+            "Texture.taiga_band_4",
+            "Texture.plains_band_5",
+            "Texture.desert_band_5",
+            "Texture.jungle_band_5",
+            "Texture.savanna_band_5",
+            "Texture.snow_band_5",
+            "Texture.swamp_band_5",
+            "Texture.taiga_band_5",
+            "Texture.plains_band_6",
+            "Texture.desert_band_6",
+            "Texture.jungle_band_6",
+            "Texture.savanna_band_6",
+            "Texture.snow_band_6",
+            "Texture.swamp_band_6",
+            "Texture.taiga_band_6",
+            "Texture.plains_band_7",
+            "Texture.desert_band_7",
+            "Texture.jungle_band_7",
+            "Texture.savanna_band_7",
+            "Texture.snow_band_7",
+            "Texture.swamp_band_7",
+            "Texture.taiga_band_7",
+            "Texture.plains_band_8",
+            "Texture.desert_band_8",
+            "Texture.jungle_band_8",
+            "Texture.savanna_band_8",
+            "Texture.snow_band_8",
+            "Texture.swamp_band_8",
+            "Texture.taiga_band_8"
+          ]
+        }
+      },
+      "geometry": "geometry.default",
+      "materials": [
+        {
+          "*": "material.default"
+        }
+      ],
+      "textures": [
+        "Array.biomes[query.mark_variant + 7 * query.property('jagsby_frontier:headband')]"
+      ]
+    }
+  }
+}

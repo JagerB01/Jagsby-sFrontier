@@ -1,0 +1,30 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.mn_juggernaut.shield": {
+      "loop": true,
+      "animation_length": 1.0,
+      "bones": {
+        "leftArm": {
+          "rotation": [
+            "-54.3074-this",
+            "19.5229-this",
+            "14.2374-this"
+          ]
+        },
+        "leftItem": {
+          "rotation": [
+            -0.79398,
+            60.59063,
+            63.58475
+          ],
+          "position": [
+            1,
+            -4,
+            -1
+          ]
+        }
+      }
+    }
+  }
+}

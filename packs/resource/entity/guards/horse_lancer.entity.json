@@ -1,45 +1,171 @@
 {
-  "format_version": "1.10.0",
+  "format_version": "1.26.0",
   "minecraft:client_entity": {
     "description": {
       "identifier": "jagsby_frontier:horse_lancer",
+      "min_engine_version": "1.8.0",
       "materials": {
-        "default": "entity_alphatest"
+        "default": "pillager"
       },
       "textures": {
-        "default": "textures/entity/jagsby_frontier/guards/lancer",
-        "band1": "textures/entity/jagsby_frontier/guards/lancer_band_1",
-        "band2": "textures/entity/jagsby_frontier/guards/lancer_band_2",
-        "band3": "textures/entity/jagsby_frontier/guards/lancer_band_3",
-        "band4": "textures/entity/jagsby_frontier/guards/lancer_band_4",
-        "band5": "textures/entity/jagsby_frontier/guards/lancer_band_5",
-        "band6": "textures/entity/jagsby_frontier/guards/lancer_band_6",
-        "band7": "textures/entity/jagsby_frontier/guards/lancer_band_7",
-        "band8": "textures/entity/jagsby_frontier/guards/lancer_band_8"
+        "plains": "textures/entity/guards/lancer/plains",
+        "desert": "textures/entity/guards/lancer/desert",
+        "jungle": "textures/entity/guards/lancer/jungle",
+        "savanna": "textures/entity/guards/lancer/savanna",
+        "snow": "textures/entity/guards/lancer/snow",
+        "swamp": "textures/entity/guards/lancer/swamp",
+        "taiga": "textures/entity/guards/lancer/taiga",
+        "plains_band_1": "textures/entity/guards/lancer/band_1/plains",
+        "desert_band_1": "textures/entity/guards/lancer/band_1/desert",
+        "jungle_band_1": "textures/entity/guards/lancer/band_1/jungle",
+        "savanna_band_1": "textures/entity/guards/lancer/band_1/savanna",
+        "snow_band_1": "textures/entity/guards/lancer/band_1/snow",
+        "swamp_band_1": "textures/entity/guards/lancer/band_1/swamp",
+        "taiga_band_1": "textures/entity/guards/lancer/band_1/taiga",
+        "plains_band_2": "textures/entity/guards/lancer/band_2/plains",
+        "desert_band_2": "textures/entity/guards/lancer/band_2/desert",
+        "jungle_band_2": "textures/entity/guards/lancer/band_2/jungle",
+        "savanna_band_2": "textures/entity/guards/lancer/band_2/savanna",
+        "snow_band_2": "textures/entity/guards/lancer/band_2/snow",
+        "swamp_band_2": "textures/entity/guards/lancer/band_2/swamp",
+        "taiga_band_2": "textures/entity/guards/lancer/band_2/taiga",
+        "plains_band_3": "textures/entity/guards/lancer/band_3/plains",
+        "desert_band_3": "textures/entity/guards/lancer/band_3/desert",
+        "jungle_band_3": "textures/entity/guards/lancer/band_3/jungle",
+        "savanna_band_3": "textures/entity/guards/lancer/band_3/savanna",
+        "snow_band_3": "textures/entity/guards/lancer/band_3/snow",
+        "swamp_band_3": "textures/entity/guards/lancer/band_3/swamp",
+        "taiga_band_3": "textures/entity/guards/lancer/band_3/taiga",
+        "plains_band_4": "textures/entity/guards/lancer/band_4/plains",
+        "desert_band_4": "textures/entity/guards/lancer/band_4/desert",
+        "jungle_band_4": "textures/entity/guards/lancer/band_4/jungle",
+        "savanna_band_4": "textures/entity/guards/lancer/band_4/savanna",
+        "snow_band_4": "textures/entity/guards/lancer/band_4/snow",
+        "swamp_band_4": "textures/entity/guards/lancer/band_4/swamp",
+        "taiga_band_4": "textures/entity/guards/lancer/band_4/taiga",
+        "plains_band_5": "textures/entity/guards/lancer/band_5/plains",
+        "desert_band_5": "textures/entity/guards/lancer/band_5/desert",
+        "jungle_band_5": "textures/entity/guards/lancer/band_5/jungle",
+        "savanna_band_5": "textures/entity/guards/lancer/band_5/savanna",
+        "snow_band_5": "textures/entity/guards/lancer/band_5/snow",
+        "swamp_band_5": "textures/entity/guards/lancer/band_5/swamp",
+        "taiga_band_5": "textures/entity/guards/lancer/band_5/taiga",
+        "plains_band_6": "textures/entity/guards/lancer/band_6/plains",
+        "desert_band_6": "textures/entity/guards/lancer/band_6/desert",
+        "jungle_band_6": "textures/entity/guards/lancer/band_6/jungle",
+        "savanna_band_6": "textures/entity/guards/lancer/band_6/savanna",
+        "snow_band_6": "textures/entity/guards/lancer/band_6/snow",
+        "swamp_band_6": "textures/entity/guards/lancer/band_6/swamp",
+        "taiga_band_6": "textures/entity/guards/lancer/band_6/taiga",
+        "plains_band_7": "textures/entity/guards/lancer/band_7/plains",
+        "desert_band_7": "textures/entity/guards/lancer/band_7/desert",
+        "jungle_band_7": "textures/entity/guards/lancer/band_7/jungle",
+        "savanna_band_7": "textures/entity/guards/lancer/band_7/savanna",
+        "snow_band_7": "textures/entity/guards/lancer/band_7/snow",
+        "swamp_band_7": "textures/entity/guards/lancer/band_7/swamp",
+        "taiga_band_7": "textures/entity/guards/lancer/band_7/taiga",
+        "plains_band_8": "textures/entity/guards/lancer/band_8/plains",
+        "desert_band_8": "textures/entity/guards/lancer/band_8/desert",
+        "jungle_band_8": "textures/entity/guards/lancer/band_8/jungle",
+        "savanna_band_8": "textures/entity/guards/lancer/band_8/savanna",
+        "snow_band_8": "textures/entity/guards/lancer/band_8/snow",
+        "swamp_band_8": "textures/entity/guards/lancer/band_8/swamp",
+        "taiga_band_8": "textures/entity/guards/lancer/band_8/taiga"
       },
       "geometry": {
-        "default": "geometry.jagsby_frontier.guard"
-      },
-      "animations": {
-        "look": "animation.jagsby_frontier.guard.look",
-        "walk": "animation.jagsby_frontier.guard.walk",
-        "ride": "animation.jagsby_frontier.guard.ride",
-        "swing": "animation.jagsby_frontier.guard.swing"
+        "default": "geometry.mn_lancer"
       },
       "scripts": {
+        "pre_animation": [
+          "v.use_dedicated_baby_armor = true;",
+          "v.tcos0 = Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / v.gliding_speed_value * 57.3;",
+          "v.riding_y_offset_baby_scaling = query.is_baby ? -0.5 : 0.0;",
+          "v.riding_y_offset_with_respect_to_player = 1.25;",
+          "v.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "v.unscaled_riding_y_offset = v.riding_y_offset_with_respect_to_player + v.riding_y_offset_on_vehicle_where_other_entites_can_stand;",
+          "v.riding_y_offset = v.riding_y_offset_baby_scaling * math.abs(v.unscaled_riding_y_offset) + v.unscaled_riding_y_offset + v.riding_y_offset_baby_scaling * 0.2f;",
+          "v.item_use_duration = (query.is_using_item || query.is_angry) ? ((v.item_use_duration ?? 0.0) + query.delta_time * 20.0) : 0.0; v.item_use_duration = v.item_use_duration > 260.0 ? 0.0 : v.item_use_duration;",
+          "v.item_use_normalized = v.item_use_duration / query.main_hand_item_max_duration;",
+          "v.melee_spear_equipped = query.equipped_item_any_tag('slot.weapon.mainhand', 'minecraft:is_spear');",
+          "(v.melee_spear_equipped) ? {",
+          "  t.melee_spear_use_finish_raise_tick = query.kinetic_weapon_delay;",
+          "  t.melee_spear_use_finish_sway_tick = t.melee_spear_use_finish_raise_tick + query.kinetic_weapon_dismount_duration;",
+          "  t.melee_spear_use_start_sway_tick = t.melee_spear_use_finish_sway_tick - 20.0;",
+          "  t.melee_spear_use_finish_lower_tick = t.melee_spear_use_finish_raise_tick + query.kinetic_weapon_knockback_duration;",
+          "  t.melee_spear_use_start_lower_tick = t.melee_spear_use_finish_lower_tick - 40.0;",
+          "  t.melee_spear_use_finish_raise_back_tick = t.melee_spear_use_finish_raise_tick + query.kinetic_weapon_damage_duration;",
+          "  t.melee_spear_use_start_raise_back_tick = t.melee_spear_use_finish_raise_back_tick - 5.0;",
+          "  t.melee_spear_use_raise_progress = math.clamp(math.inverse_lerp(0.0, t.melee_spear_use_finish_raise_tick, v.item_use_duration), 0.0, 1.0);",
+          "  t.melee_spear_use_raise_progress_start = math.clamp(math.inverse_lerp(0.0, 0.5, t.melee_spear_use_raise_progress), 0.0, 1.0);",
+          "  t.melee_spear_use_raise_progress_middle = math.clamp(math.inverse_lerp(0.5, 0.8, t.melee_spear_use_raise_progress), 0.0, 1.0);",
+          "  t.melee_spear_use_raise_progress_end = math.clamp(math.inverse_lerp(0.8, 1.0, t.melee_spear_use_raise_progress), 0.0, 1.0);",
+          "  t.melee_spear_use_sway_progress = math.clamp(math.inverse_lerp(t.melee_spear_use_start_sway_tick, t.melee_spear_use_finish_sway_tick, v.item_use_duration), 0.0, 1.0);",
+          "  t.melee_spear_use_lower_progress = math.ease_in_out_elastic(0.0, 1.0, math.clamp(math.inverse_lerp(t.melee_spear_use_start_lower_tick, t.melee_spear_use_finish_lower_tick, v.item_use_duration - 20.0), 0.0, 1.0));",
+          "  t.melee_spear_use_raise_back_progress = math.clamp(math.inverse_lerp(t.melee_spear_use_start_raise_back_tick, t.melee_spear_use_finish_raise_back_tick, v.item_use_duration), 0.0, 1.0);",
+          "  t.melee_spear_use_sway_intensity = math.ease_out_circ(0.0, 2.0, t.melee_spear_use_sway_progress) + math.ease_in_circ(0.0, -2.0, t.melee_spear_use_raise_back_progress);",
+          "  t.melee_spear_use_sway_scale_slow = math.sin(v.item_use_duration * 19.0) * t.melee_spear_use_sway_intensity;",
+          "  t.melee_spear_use_sway_scale_fast = math.sin(v.item_use_duration * 30.0) * t.melee_spear_use_sway_intensity;",
+          "  v.tp_melee_spear_use_arm_rotation_x = t.melee_spear_use_raise_progress_start * -40.0 + t.melee_spear_use_raise_progress_middle * 30.0 + t.melee_spear_use_raise_progress_end * -20.0 + t.melee_spear_use_lower_progress * 20.0 + t.melee_spear_use_raise_back_progress * 10.0;",
+          "  v.tp_melee_spear_use_arm_rotation_x = v.tp_melee_spear_use_arm_rotation_x + t.melee_spear_use_sway_scale_slow * 0.6;",
+          "  v.tp_melee_spear_use_arm_rotation_y = t.melee_spear_use_sway_scale_fast * 1.0;",
+          "  v.tp_melee_spear_use_arm_rotation_z = t.melee_spear_use_sway_scale_slow * 0.5;",
+          "  v.tp_melee_spear_use_item_rotation_x = t.melee_spear_use_raise_progress * 60.0 + t.melee_spear_use_raise_back_progress * -60.0;",
+          "  v.tp_melee_spear_use_attachable_rotation_z = t.melee_spear_use_raise_progress * 90.0 + t.melee_spear_use_sway_progress * -90.0;",
+          "};"
+        ],
+        "variables": {
+          "variable.item_use_normalized": "public",
+          "variable.tp_melee_spear_use_attachable_rotation_z": "public"
+        },
+        "initialize": [
+          "v.tp_melee_spear_base_arm_rotation_x = -30.0;"
+        ],
         "animate": [
-          "look",
+          "look_at_target_controller",
+          "move_controller",
+          "riding_controller",
+          "holding_controller",
+          "brandish_spear_controller",
+          "charging_controller",
+          "attack_controller",
+          "bob_controller",
+          "use_item_progress_controller",
           {
-            "walk": "!query.is_riding"
-          },
-          {
-            "ride": "query.is_riding"
-          },
-          "swing"
-        ]
+            "melee_spear_controller": "v.melee_spear_equipped"
+          }
+        ],
+        "scale": "0.9375"
+      },
+      "animations": {
+        "look_at_target_default": "animation.humanoid.look_at_target.default",
+        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
+        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
+        "move": "animation.humanoid.move",
+        "riding.arms": "animation.humanoid.riding.arms",
+        "riding.legs": "animation.humanoid.riding.legs",
+        "riding.body": "animation.humanoid.riding.body",
+        "holding": "animation.humanoid.holding",
+        "brandish_spear": "animation.humanoid.brandish_spear",
+        "charging": "animation.humanoid.charging",
+        "attack.rotations": "animation.humanoid.attack.rotations",
+        "bob": "animation.humanoid.bob",
+        "use_item_progress": "animation.humanoid.use_item_progress",
+        "look_at_target_controller": "controller.animation.humanoid.look_at_target",
+        "move_controller": "controller.animation.humanoid.move",
+        "riding_controller": "controller.animation.humanoid.riding",
+        "holding_controller": "controller.animation.humanoid.holding",
+        "brandish_spear_controller": "controller.animation.humanoid.brandish_spear",
+        "charging_controller": "controller.animation.humanoid.charging",
+        "attack_controller": "controller.animation.humanoid.attack",
+        "bob_controller": "controller.animation.humanoid.bob",
+        "use_item_progress_controller": "controller.animation.humanoid.use_item_progress",
+        "melee_spear_use": "animation.humanoid.melee_spear_use",
+        "melee_spear_hold": "animation.humanoid.melee_spear_hold",
+        "melee_spear_controller": "controller.animation.humanoid.melee_spear",
+        "celebrating": "animation.humanoid.celebrating"
       },
       "render_controllers": [
-        "controller.render.jagsby_frontier.guard"
+        "controller.render.jagsby_frontier.arbalist"
       ],
       "enable_attachables": true
     }

@@ -188,6 +188,19 @@ export function provincialPatrols(world, readState, tickNow, random = Math.rando
       return true;
     },
 
+    replaceEntity(previous, next) {
+      const id = previous.getDynamicProperty(PATROL);
+      if (!id) return false;
+      const patrols = readPatrols(), patrol = patrols[id];
+      if (!patrol) return false;
+      if (patrol.mount === previous.id) delete patrol.mount;
+      else patrol.guards = patrol.guards.map(guard => guard.id === previous.id
+        ? {id: next.id, typeId: next.typeId} : guard);
+      savePatrols(patrols);
+      restoreSquadBehavior(world, patrol);
+      return true;
+    },
+
     onDeath(entity) {
       const patrols = readPatrols();
       // A dead entity's ID is readable even after its dynamic properties
@@ -198,7 +211,11 @@ export function provincialPatrols(world, readState, tickNow, random = Math.rando
       const [id, patrol] = entry;
       const member = patrol.guards.find(({id}) => id === entity.id);
       if (entity.id === patrol.mount || member?.typeId === 'jagsby_frontier:horse_lancer') {
-        if (entity.id !== patrol.mount) livingEntity(world, patrol.mount)?.remove();
+        if (entity.id !== patrol.mount) {
+          const horse = livingEntity(world, patrol.mount);
+          horse?.setProperty(GUIDE, 0);
+          horse?.setDynamicProperty(PATROL, undefined);
+        }
         delete patrol.mount;
       }
       patrol.guards = patrol.guards.filter(({id}) => id !== entity.id);

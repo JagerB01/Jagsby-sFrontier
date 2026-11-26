@@ -11,7 +11,7 @@
     "components": {
       "minecraft:icon": {
         "textures": {
-          "default": "jagsby_frontier_juggernaut_team_egg"
+          "default": "mn_juggernaut_egg"
         }
       },
       "minecraft:display_name": {

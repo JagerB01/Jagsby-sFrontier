@@ -1,0 +1,82 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "mn:juggernaut",
+      "min_engine_version": "1.8.0",
+      "materials": {
+        "default": "vindicator"
+      },
+      "textures": {
+        "swamp": "textures/entity/guards/juggernaut/swamp",
+        "savanna": "textures/entity/guards/juggernaut/savanna",
+        "desert": "textures/entity/guards/juggernaut/desert",
+        "jungle": "textures/entity/guards/juggernaut/jungle",
+        "snow": "textures/entity/guards/juggernaut/snow",
+        "taiga": "textures/entity/guards/juggernaut/taiga",
+        "plains": "textures/entity/guards/juggernaut/plains"
+      },
+      "geometry": {
+        "default": "geometry.mn_juggernaut"
+      },
+      "spawn_egg": {
+        "texture": "mn_juggernaut_egg"
+      },
+      "scripts": {
+        "scale": "0.9375",
+        "animate": [
+          {
+            "vindicator_base": "query.is_angry"
+          },
+          "vindicator_walk",
+          "controller_look_at_target",
+          {
+            "controller_vindicator_base": "query.is_angry"
+          },
+          "controller_riding",
+          {
+            "controller_move": "!query.is_angry"
+          },
+          {
+            "controller_bob": "!query.is_angry"
+          },
+          {
+            "shield": "query.property('mn:shield_state') == 'shielding' || query.property('mn:shield_state') == 'lowering'"
+          }
+        ],
+        "pre_animation": [
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.riding_y_offset_with_respect_to_player = 1.25;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
+        ]
+      },
+      "animations": {
+        "look_at_target_default": "animation.humanoid.look_at_target.default",
+        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
+        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
+        "move": "animation.humanoid.move",
+        "bob": "animation.humanoid.bob",
+        "controller_move": "controller.animation.humanoid.move",
+        "controller_bob": "controller.animation.humanoid.bob",
+        "riding.arms": "animation.vindicator.riding.arms",
+        "riding.legs": "animation.vindicator.riding.legs",
+        "vindicator_base": "animation.vindicator.base",
+        "vindicator_attack": "animation.vindicator.attack",
+        "vindicator_walk": "animation.mn_guard.sword.walk",
+        "celebrating": "animation.humanoid.celebrating",
+        "controller_look_at_target": "controller.animation.humanoid.look_at_target",
+        "controller_vindicator_base": "controller.animation.vindicator.base",
+        "controller_riding": "controller.animation.humanoid.riding",
+        "vindicator_hand_attack": "animation.vindicator.hand_attack",
+        "riding.body": "animation.humanoid.riding.body",
+        "shield": "animation.mn_juggernaut.shield"
+      },
+      "render_controllers": [
+        "controller.render.mn_swordsman"
+      ],
+      "enable_attachables": true,
+      "hide_armor": true
+    }
+  }
+}

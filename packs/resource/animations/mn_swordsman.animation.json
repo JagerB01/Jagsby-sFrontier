@@ -1,0 +1,24 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.mn_guard.sword.walk": {
+			"loop": true,
+			"bones": {
+				"leg0": {
+					"rotation": [
+						"(math.cos(query.modified_distance_moved*38.17)*80.21)*query.modified_move_speed",
+						0,
+						0
+					]
+				},
+				"leg1": {
+					"rotation": [
+						"(math.cos(query.modified_distance_moved*38.17+180)*80.21)*query.modified_move_speed",
+						0,
+						0
+					]
+				}
+			}
+		}
+	}
+}

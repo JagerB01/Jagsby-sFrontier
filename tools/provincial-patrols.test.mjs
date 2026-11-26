@@ -112,7 +112,8 @@ test('Development 50 creates a mounted Lancer guide and promotes a Juggernaut if
   }
   lancer.isValid = false;
   assert.equal(f.patrol.onDeath(lancer), true);
-  assert.equal(horse.isValid, false);
+  assert.equal(horse.isValid, true, 'The upstream riderless horse lifecycle can release it');
+  assert.equal(horse.getDynamicProperty(id('provincial_patrol')), undefined);
   assert.equal(firstJuggernaut.getDynamicProperty(id('squad_leader')), true);
   assert.equal(firstJuggernaut.getDynamicProperty(id('patrol_guide')), channel);
   assert.equal(firstJuggernaut.events.at(-1), id('patrol_walk'));
@@ -129,6 +130,27 @@ test('Failed placement or partial spawn leaves the original mob and no patrol', 
   assert.equal(source.isValid, true);
   assert.deepEqual(f.guards(), []);
   assert.deepEqual(f.registry(), {});
+});
+
+test('An original Horse Lancer can become a foot Lancer and keep its provincial patrol', () => {
+  const f = fixture();
+  f.state.villages.settlement.developmentValue = 4000;
+  assert.equal(f.spawn(f.source('skeleton')), true);
+  const [horse, lancer, juggernaut] = f.guards();
+  const patrolKey = id('provincial_patrol');
+  const patrolId = lancer.getDynamicProperty(patrolKey);
+  const channel = horse.getDynamicProperty(id('patrol_guide'));
+  assert.equal(f.patrol.replaceEntity(horse), true);
+  horse.remove();
+  const foot = f.dimension.spawnEntity(id('lancer'), lancer.location, {spawnEvent:'mn:spawn_hired'});
+  foot.setDynamicProperty(patrolKey, patrolId);
+  assert.equal(f.patrol.replaceEntity(lancer, foot), true);
+  lancer.remove();
+  assert.equal(f.registry()[patrolId].mount, undefined);
+  assert.deepEqual(f.registry()[patrolId].guards[0], {id:foot.id,typeId:id('lancer')});
+  assert.equal(foot.getDynamicProperty(id('squad_leader')), true);
+  assert.equal(foot.getDynamicProperty(id('patrol_guide')), channel);
+  assert.equal(juggernaut.events.at(-1), id(`patrol_follow_${channel}`));
 });
 
 test('Patrol spacing, province slots and expiry survive a reload without duplicating unloaded guards', () => {
@@ -156,7 +178,9 @@ test('Native patrol goals walk and follow only the squad guide, with combat goal
     const data = JSON.parse(await readFile(new URL(`../packs/behavior/entities/guards/${role}.json`, import.meta.url)));
     const guard = data['minecraft:entity'];
     const walk = guard.component_groups[id('patrol_walk')]['minecraft:behavior.random_stroll'];
-    assert.ok(walk.speed_multiplier < guard.components['minecraft:behavior.random_stroll'].speed_multiplier);
+    const base = guard.components['minecraft:behavior.random_stroll']
+      ?? guard.component_groups['mn:on_foot']['minecraft:behavior.random_stroll'];
+    assert.ok(walk.speed_multiplier < base.speed_multiplier);
     if (role === 'guard_horse') continue;
     const follow = guard.component_groups[id('patrol_follow_12')]['minecraft:behavior.follow_mob'];
     assert.deepEqual(follow.filters, {test: 'int_property', subject: 'other', domain: id('patrol_guide'), value: 12});

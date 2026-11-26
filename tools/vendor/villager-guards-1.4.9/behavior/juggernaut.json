@@ -1,0 +1,1198 @@
+{
+  "format_version": "1.21.130",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "mn:juggernaut",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "properties": {
+        "mn:shield_state": {
+          "type": "enum",
+          "values": [
+            "ready",
+            "shielding",
+            "lowering",
+            "cooldown",
+            "broken"
+          ],
+          "default": "ready",
+          "client_sync": true
+        },
+        "mn:engaged": {
+          "type": "bool",
+          "default": false,
+          "client_sync": false
+        }
+      }
+    },
+    "component_groups": {
+      "mn:aggro": {
+        "minecraft:angry": {
+          "broadcast_anger": false,
+          "duration": 30,
+          "calm_event": {
+            "event": "mn:stop_aggro",
+            "target": "self"
+          }
+        }
+      },
+      "biome_desert": {
+        "minecraft:mark_variant": {
+          "value": 1
+        }
+      },
+      "biome_jungle": {
+        "minecraft:mark_variant": {
+          "value": 2
+        }
+      },
+      "biome_savanna": {
+        "minecraft:mark_variant": {
+          "value": 3
+        }
+      },
+      "biome_snow": {
+        "minecraft:mark_variant": {
+          "value": 4
+        }
+      },
+      "biome_swamp": {
+        "minecraft:mark_variant": {
+          "value": 5
+        }
+      },
+      "biome_taiga": {
+        "minecraft:mark_variant": {
+          "value": 6
+        }
+      },
+      "mn:hired_gear": {
+        "minecraft:equipment": {
+          "table": "loot_tables/guard_villagers/axe_gear_plain.json"
+        }
+      },
+      "mn:shielding": {
+        "minecraft:movement": {
+          "value": 0.245
+        },
+        "minecraft:timer": {
+          "looping": false,
+          "time": 8,
+          "time_down_event": {
+            "event": "mn:shield_end",
+            "target": "self"
+          }
+        }
+      },
+      "mn:shield_cooldown": {
+        "minecraft:timer": {
+          "looping": false,
+          "time": 2.5,
+          "time_down_event": {
+            "event": "mn:cooldown_end",
+            "target": "self"
+          }
+        },
+        "minecraft:movement": {
+          "value": 0.35
+        }
+      },
+      "mn:shield_broken": {
+        "minecraft:timer": {
+          "looping": false,
+          "time": 5,
+          "time_down_event": {
+            "event": "mn:broken_end",
+            "target": "self"
+          }
+        },
+        "minecraft:movement": {
+          "value": 0.35
+        }
+      },
+      "mn:shield_lowering": {
+        "minecraft:movement": {
+          "value": 0.245
+        },
+        "minecraft:timer": {
+          "looping": false,
+          "time": 0.5,
+          "time_down_event": {
+            "event": "mn:shield_close",
+            "target": "self"
+          }
+        }
+      },
+      "mn:raid_alert": {
+        "minecraft:behavior.move_towards_target": {
+          "priority": 2,
+          "speed_multiplier": 0.9,
+          "within_radius": 64
+        },
+        "minecraft:behavior.nearest_attackable_target": {
+          "priority": 3,
+          "must_see": false,
+          "reselect_targets": true,
+          "within_radius": 64,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "any_of": [
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "monster"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "hoglin_adult"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "zoglin"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "hoglin_baby"
+                      }
+                    ]
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "operator": "not",
+                    "value": "creeper"
+                  }
+                ]
+              },
+              "max_dist": 12,
+              "reevaluate_description": true
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "has_tag",
+                    "subject": "other",
+                    "value": "mn_threat"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "other",
+                    "operator": "not",
+                    "value": "village_hero"
+                  }
+                ]
+              },
+              "max_dist": 20,
+              "reevaluate_description": true
+            },
+            {
+              "filters": {
+                "any_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "illager"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "ravager"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "witch"
+                  }
+                ]
+              },
+              "max_dist": 64,
+              "reevaluate_description": true
+            }
+          ]
+        }
+      },
+      "mn:ready": {
+        "minecraft:movement": {
+          "value": 0.35
+        }
+      },
+      "mn:raid_restore": {
+        "minecraft:behavior.nearest_attackable_target": {
+          "priority": 3,
+          "must_see": true,
+          "reselect_targets": true,
+          "within_radius": 32,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "any_of": [
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "monster"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "hoglin_adult"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "zoglin"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "hoglin_baby"
+                      }
+                    ]
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "operator": "not",
+                    "value": "creeper"
+                  }
+                ]
+              },
+              "max_dist": 12,
+              "reevaluate_description": true
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "has_tag",
+                    "subject": "other",
+                    "value": "mn_threat"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "other",
+                    "operator": "not",
+                    "value": "village_hero"
+                  }
+                ]
+              },
+              "max_dist": 20,
+              "reevaluate_description": true
+            }
+          ]
+        },
+        "minecraft:behavior.move_towards_target": {
+          "priority": 2,
+          "speed_multiplier": 0.8,
+          "within_radius": 32
+        }
+      }
+    },
+    "components": {
+      "minecraft:health": {
+        "value": 38,
+        "max": 38
+      },
+      "minecraft:follow_range": {
+        "value": 64
+      },
+      "minecraft:movement.basic": {},
+      "minecraft:jump.static": {},
+      "minecraft:navigation.walk": {
+        "can_path_over_water": true,
+        "can_pass_doors": true,
+        "can_open_doors": true,
+        "using_door_annotation": true,
+        "avoid_water": true
+      },
+      "minecraft:annotation.open_door": {},
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.9
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": 0
+      },
+      "minecraft:nameable": {},
+      "minecraft:persistent": {},
+      "minecraft:is_hidden_when_invisible": {},
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:type_family": {
+        "family": [
+          "juggernaut",
+          "villager_guard",
+          "irongolem",
+          "mob"
+        ]
+      },
+      "minecraft:hurt_on_condition": {
+        "damage_conditions": [
+          {
+            "cause": "lava",
+            "damage_per_tick": 4,
+            "filters": {
+              "test": "in_lava",
+              "subject": "self",
+              "operator": "==",
+              "value": true
+            }
+          }
+        ]
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "entity_attack",
+            "on_damage": {
+              "filters": {
+                "test": "is_family",
+                "subject": "other",
+                "value": "villager_guard"
+              }
+            },
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:dweller": {
+        "dwelling_type": "village",
+        "dweller_role": "defender",
+        "can_find_poi": false,
+        "can_migrate": true,
+        "first_founding_reward": 0,
+        "update_interval_base": 60,
+        "update_interval_variant": 40
+      },
+      "minecraft:behavior.float": {
+        "priority": 0
+      },
+      "minecraft:behavior.hurt_by_target": {
+        "priority": 1,
+        "entity_types": {
+          "filters": {
+            "all_of": [
+              {
+                "test": "is_family",
+                "subject": "other",
+                "operator": "not",
+                "value": "creeper"
+              },
+              {
+                "test": "is_family",
+                "subject": "other",
+                "operator": "not",
+                "value": "villager"
+              },
+              {
+                "test": "is_family",
+                "subject": "other",
+                "operator": "not",
+                "value": "villager_guard"
+              },
+              {
+                "test": "has_mob_effect",
+                "subject": "other",
+                "operator": "not",
+                "value": "village_hero"
+              }
+            ]
+          }
+        }
+      },
+      "minecraft:attack": {
+        "damage": 6
+      },
+      "minecraft:behavior.melee_box_attack": {
+        "priority": 1,
+        "track_target": true,
+        "speed_multiplier": 0.85
+      },
+      "minecraft:behavior.move_towards_target": {
+        "priority": 2,
+        "speed_multiplier": 0.8,
+        "within_radius": 32
+      },
+      "minecraft:behavior.move_through_village": {
+        "priority": 4,
+        "speed_multiplier": 0.6,
+        "only_at_night": true
+      },
+      "minecraft:behavior.move_towards_dwelling_restriction": {
+        "priority": 5,
+        "speed_multiplier": 0.85
+      },
+      "minecraft:behavior.random_stroll": {
+        "priority": 8,
+        "speed_multiplier": 0.6,
+        "xz_dist": 16
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 9,
+        "look_distance": 6,
+        "look_time": {
+          "min": 1,
+          "max": 2
+        }
+      },
+      "minecraft:behavior.random_look_around": {
+        "priority": 10
+      },
+      "minecraft:equipment": {
+        "table": "loot_tables/guard_villagers/axe_gear.json"
+      },
+      "minecraft:on_target_acquired": {
+        "event": "mn:become_aggro",
+        "target": "self"
+      },
+      "minecraft:on_target_escape": {
+        "event": "mn:stop_aggro",
+        "target": "self"
+      },
+      "minecraft:knockback_resistance": {
+        "value": 0.2
+      },
+      "minecraft:environment_sensor": {
+        "triggers": [
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "enum_property",
+                  "domain": "mn:shield_state",
+                  "value": "ready"
+                },
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "value": true
+                },
+                {
+                  "test": "target_distance",
+                  "subject": "self",
+                  "operator": "<=",
+                  "value": 12
+                },
+                {
+                  "any_of": [
+                    {
+                      "test": "target_distance",
+                      "subject": "self",
+                      "operator": ">=",
+                      "value": 4
+                    },
+                    {
+                      "all_of": [
+                        {
+                          "test": "bool_property",
+                          "domain": "mn:engaged",
+                          "value": true
+                        },
+                        {
+                          "test": "target_distance",
+                          "subject": "self",
+                          "operator": ">=",
+                          "value": 2.5
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "event": "mn:shield_start"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "enum_property",
+                  "domain": "mn:shield_state",
+                  "value": "shielding"
+                },
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "value": true
+                },
+                {
+                  "test": "target_distance",
+                  "subject": "self",
+                  "operator": "<=",
+                  "value": 1.5
+                }
+              ]
+            },
+            "event": "mn:shield_lower"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "enum_property",
+                  "domain": "mn:shield_state",
+                  "value": "shielding"
+                },
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "value": false
+                }
+              ]
+            },
+            "event": "mn:shield_reset"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "bool_property",
+                  "domain": "mn:engaged",
+                  "value": true
+                },
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "value": false
+                }
+              ]
+            },
+            "event": "mn:disengage"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "enum_property",
+                  "domain": "mn:shield_state",
+                  "value": "shielding"
+                },
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "value": true
+                },
+                {
+                  "test": "target_distance",
+                  "subject": "self",
+                  "operator": ">",
+                  "value": 14
+                }
+              ]
+            },
+            "event": "mn:shield_end"
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "enum_property",
+                  "domain": "mn:shield_state",
+                  "value": "lowering"
+                },
+                {
+                  "test": "has_target",
+                  "subject": "self",
+                  "value": false
+                }
+              ]
+            },
+            "event": "mn:shield_reset"
+          }
+        ]
+      },
+      "minecraft:behavior.nearest_attackable_target": {
+        "priority": 3,
+        "must_see": true,
+        "reselect_targets": true,
+        "within_radius": 32,
+        "entity_types": [
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "any_of": [
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "monster"
+                    },
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "hoglin_adult"
+                    },
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "zoglin"
+                    },
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "hoglin_baby"
+                    }
+                  ]
+                },
+                {
+                  "test": "is_family",
+                  "subject": "other",
+                  "operator": "not",
+                  "value": "creeper"
+                }
+              ]
+            },
+            "max_dist": 12,
+            "reevaluate_description": true
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_tag",
+                  "subject": "other",
+                  "value": "mn_threat"
+                },
+                {
+                  "test": "has_mob_effect",
+                  "subject": "other",
+                  "operator": "not",
+                  "value": "village_hero"
+                }
+              ]
+            },
+            "max_dist": 20,
+            "reevaluate_description": true
+          }
+        ]
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "sequence": [
+          {
+            "filters": {
+              "any_of": [
+                {
+                  "test": "has_biome_tag",
+                  "operator": "==",
+                  "value": "desert"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "operator": "==",
+                  "value": "mesa"
+                }
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "biome_desert"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "jungle"
+            },
+            "add": {
+              "component_groups": [
+                "biome_jungle"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "savanna"
+            },
+            "add": {
+              "component_groups": [
+                "biome_savanna"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "any_of": [
+                {
+                  "all_of": [
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "==",
+                      "value": "cold"
+                    },
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "!=",
+                      "value": "ocean"
+                    }
+                  ]
+                },
+                {
+                  "test": "has_biome_tag",
+                  "operator": "==",
+                  "value": "frozen"
+                }
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "biome_snow"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "swamp"
+            },
+            "add": {
+              "component_groups": [
+                "biome_swamp"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "any_of": [
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "==",
+                      "value": "taiga"
+                    },
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "==",
+                      "value": "extreme_hills"
+                    }
+                  ]
+                },
+                {
+                  "test": "has_biome_tag",
+                  "operator": "!=",
+                  "value": "cold"
+                }
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "biome_taiga"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mn:ready"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:become_aggro": {
+        "add": {
+          "component_groups": [
+            "mn:aggro"
+          ]
+        }
+      },
+      "mn:stop_aggro": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "mn:aggro"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "enum_property",
+              "domain": "mn:shield_state",
+              "value": "shielding"
+            },
+            "remove": {
+              "component_groups": [
+                "mn:shielding"
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "mn:ready"
+              ]
+            },
+            "set_property": {
+              "mn:shield_state": "ready"
+            }
+          },
+          {
+            "filters": {
+              "test": "enum_property",
+              "domain": "mn:shield_state",
+              "value": "lowering"
+            },
+            "remove": {
+              "component_groups": [
+                "mn:shield_lowering"
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "mn:ready"
+              ]
+            },
+            "set_property": {
+              "mn:shield_state": "ready"
+            }
+          }
+        ]
+      },
+      "mn:spawn_hired": {
+        "sequence": [
+          {
+            "filters": {
+              "any_of": [
+                {
+                  "test": "has_biome_tag",
+                  "operator": "==",
+                  "value": "desert"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "operator": "==",
+                  "value": "mesa"
+                }
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "biome_desert"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "jungle"
+            },
+            "add": {
+              "component_groups": [
+                "biome_jungle"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "savanna"
+            },
+            "add": {
+              "component_groups": [
+                "biome_savanna"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "any_of": [
+                {
+                  "all_of": [
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "==",
+                      "value": "cold"
+                    },
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "!=",
+                      "value": "ocean"
+                    }
+                  ]
+                },
+                {
+                  "test": "has_biome_tag",
+                  "operator": "==",
+                  "value": "frozen"
+                }
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "biome_snow"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "swamp"
+            },
+            "add": {
+              "component_groups": [
+                "biome_swamp"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "any_of": [
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "==",
+                      "value": "taiga"
+                    },
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "==",
+                      "value": "extreme_hills"
+                    }
+                  ]
+                },
+                {
+                  "test": "has_biome_tag",
+                  "operator": "!=",
+                  "value": "cold"
+                }
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "biome_taiga"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mn:hired_gear"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mn:ready"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:shield_start": {
+        "add": {
+          "component_groups": [
+            "mn:shielding"
+          ]
+        },
+        "set_property": {
+          "mn:shield_state": "shielding"
+        },
+        "remove": {
+          "component_groups": [
+            "mn:ready"
+          ]
+        }
+      },
+      "mn:shield_end": {
+        "remove": {
+          "component_groups": [
+            "mn:shielding"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "mn:shield_cooldown"
+          ]
+        },
+        "set_property": {
+          "mn:shield_state": "cooldown"
+        }
+      },
+      "mn:shield_close": {
+        "remove": {
+          "component_groups": [
+            "mn:shield_lowering"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "mn:shield_cooldown"
+          ]
+        },
+        "set_property": {
+          "mn:shield_state": "cooldown",
+          "mn:engaged": true
+        }
+      },
+      "mn:cooldown_end": {
+        "remove": {
+          "component_groups": [
+            "mn:shield_cooldown"
+          ]
+        },
+        "set_property": {
+          "mn:shield_state": "ready"
+        },
+        "add": {
+          "component_groups": [
+            "mn:ready"
+          ]
+        }
+      },
+      "mn:shield_disabled": {
+        "remove": {
+          "component_groups": [
+            "mn:shielding",
+            "mn:shield_lowering",
+            "mn:ready"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "mn:shield_broken"
+          ]
+        },
+        "set_property": {
+          "mn:shield_state": "broken"
+        }
+      },
+      "mn:broken_end": {
+        "remove": {
+          "component_groups": [
+            "mn:shield_broken"
+          ]
+        },
+        "set_property": {
+          "mn:shield_state": "ready"
+        },
+        "add": {
+          "component_groups": [
+            "mn:ready"
+          ]
+        }
+      },
+      "mn:shield_blocked": {
+        "filters": {
+          "test": "enum_property",
+          "domain": "mn:shield_state",
+          "value": "shielding"
+        },
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "mn:shielding"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mn:shielding"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:disengage": {
+        "set_property": {
+          "mn:engaged": false
+        }
+      },
+      "mn:shield_lower": {
+        "remove": {
+          "component_groups": [
+            "mn:shielding"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "mn:shield_lowering"
+          ]
+        },
+        "set_property": {
+          "mn:shield_state": "lowering"
+        }
+      },
+      "mn:raid_alert": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "mn:raid_alert",
+                "mn:raid_restore"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mn:raid_alert"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:raid_end": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "mn:raid_alert",
+                "mn:raid_restore"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mn:raid_restore"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:shield_reset": {
+        "remove": {
+          "component_groups": [
+            "mn:shielding",
+            "mn:shield_lowering",
+            "mn:shield_cooldown"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "mn:ready"
+          ]
+        },
+        "set_property": {
+          "mn:shield_state": "ready"
+        }
+      }
+    }
+  }
+}

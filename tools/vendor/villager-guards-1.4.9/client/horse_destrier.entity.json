@@ -1,0 +1,37 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "mn:horse_destrier",
+			"min_engine_version": "1.8.0",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"white": "textures/entity/horse2/horse_white",
+				"creamy": "textures/entity/horse2/horse_creamy",
+				"chestnut": "textures/entity/horse2/horse_chestnut",
+				"brown": "textures/entity/horse2/horse_brown",
+				"black": "textures/entity/horse2/horse_black",
+				"gray": "textures/entity/horse2/horse_gray",
+				"darkbrown": "textures/entity/horse2/horse_darkbrown"
+			},
+			"geometry": {
+				"default": "geometry.horse.v3"
+			},
+			"animations": {
+				"walk": "animation.horse.v3.walk",
+				"tail": "animation.horse.v3.tail"
+			},
+			"scripts": {
+				"animate": [
+					"walk",
+					"tail"
+				]
+			},
+			"render_controllers": [
+				"controller.render.mn_horse_destrier"
+			]
+		}
+	}
+}

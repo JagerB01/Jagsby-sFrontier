@@ -1,0 +1,841 @@
+{
+  "format_version": "1.21.130",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "mn:lancer",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "properties": {
+        "mn:is_riding_horse": {
+          "type": "bool",
+          "default": false,
+          "client_sync": false
+        },
+        "mn:is_aggro": {
+          "type": "bool",
+          "default": false,
+          "client_sync": false
+        }
+      }
+    },
+    "component_groups": {
+      "mn:aggro": {
+        "minecraft:angry": {
+          "broadcast_anger": false,
+          "duration": 30,
+          "calm_event": {
+            "event": "mn:stop_aggro",
+            "target": "self"
+          }
+        }
+      },
+      "biome_desert": {
+        "minecraft:mark_variant": {
+          "value": 1
+        }
+      },
+      "biome_jungle": {
+        "minecraft:mark_variant": {
+          "value": 2
+        }
+      },
+      "biome_savanna": {
+        "minecraft:mark_variant": {
+          "value": 3
+        }
+      },
+      "biome_snow": {
+        "minecraft:mark_variant": {
+          "value": 4
+        }
+      },
+      "biome_swamp": {
+        "minecraft:mark_variant": {
+          "value": 5
+        }
+      },
+      "biome_taiga": {
+        "minecraft:mark_variant": {
+          "value": 6
+        }
+      },
+      "mn:not_on_horse": {
+        "minecraft:behavior.use_kinetic_weapon": {
+          "approach_distance": 10,
+          "reposition_distance": {
+            "min": 6,
+            "max": 7
+          },
+          "cooldown_distance": {
+            "min": 9,
+            "max": 11
+          },
+          "weapon_reach_multiplier": 0.5,
+          "weapon_min_speed_multiplier": 0.2,
+          "hijack_mount_navigation": true,
+          "track_target": true,
+          "priority": 3,
+          "speed_multiplier": 0.6,
+          "reposition_speed_multiplier": 0.6,
+          "cooldown_speed_multiplier": 0.6
+        }
+      },
+      "mn:on_horse": {
+        "minecraft:behavior.use_kinetic_weapon": {
+          "approach_distance": 12,
+          "reposition_distance": {
+            "min": 8,
+            "max": 9
+          },
+          "reposition_speed_multiplier": 1.25,
+          "cooldown_distance": {
+            "min": 11,
+            "max": 13
+          },
+          "cooldown_speed_multiplier": 1.25,
+          "weapon_reach_multiplier": 0.5,
+          "weapon_min_speed_multiplier": 0.2,
+          "hijack_mount_navigation": true,
+          "speed_multiplier": 1.25,
+          "track_target": true,
+          "priority": 3
+        }
+      },
+      "mn:hired_gear": {
+        "minecraft:equipment": {
+          "table": "loot_tables/guard_villagers/spear_gear_plain.json"
+        }
+      },
+      "mn:raid_alert": {
+        "minecraft:timer": {
+          "looping": false,
+          "time": 300,
+          "time_down_event": {
+            "event": "mn:raid_end",
+            "target": "self"
+          }
+        },
+        "minecraft:behavior.nearest_attackable_target": {
+          "priority": 3,
+          "must_see": false,
+          "reselect_targets": true,
+          "within_radius": 64,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "any_of": [
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "monster"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "hoglin_adult"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "zoglin"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "hoglin_baby"
+                      }
+                    ]
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "operator": "not",
+                    "value": "creeper"
+                  }
+                ]
+              },
+              "max_dist": 12,
+              "reevaluate_description": true
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "has_tag",
+                    "subject": "other",
+                    "value": "mn_threat"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "other",
+                    "operator": "not",
+                    "value": "village_hero"
+                  }
+                ]
+              },
+              "max_dist": 20,
+              "reevaluate_description": true
+            },
+            {
+              "filters": {
+                "any_of": [
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "illager"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "ravager"
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "value": "witch"
+                  }
+                ]
+              },
+              "max_dist": 64,
+              "reevaluate_description": true
+            }
+          ]
+        },
+        "minecraft:behavior.move_towards_target": {
+          "priority": 2,
+          "speed_multiplier": 0.9,
+          "within_radius": 64
+        }
+      },
+      "mn:raid_restore": {
+        "minecraft:behavior.nearest_attackable_target": {
+          "priority": 3,
+          "must_see": true,
+          "reselect_targets": true,
+          "within_radius": 32,
+          "entity_types": [
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "any_of": [
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "monster"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "hoglin_adult"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "zoglin"
+                      },
+                      {
+                        "test": "is_family",
+                        "subject": "other",
+                        "value": "hoglin_baby"
+                      }
+                    ]
+                  },
+                  {
+                    "test": "is_family",
+                    "subject": "other",
+                    "operator": "not",
+                    "value": "creeper"
+                  }
+                ]
+              },
+              "max_dist": 12,
+              "reevaluate_description": true
+            },
+            {
+              "filters": {
+                "all_of": [
+                  {
+                    "test": "has_tag",
+                    "subject": "other",
+                    "value": "mn_threat"
+                  },
+                  {
+                    "test": "has_mob_effect",
+                    "subject": "other",
+                    "operator": "not",
+                    "value": "village_hero"
+                  }
+                ]
+              },
+              "max_dist": 20,
+              "reevaluate_description": true
+            }
+          ]
+        },
+        "minecraft:behavior.move_towards_target": {
+          "priority": 2,
+          "speed_multiplier": 0.8,
+          "within_radius": 32
+        }
+      }
+    },
+    "components": {
+      "minecraft:health": {
+        "value": 24,
+        "max": 24
+      },
+      "minecraft:movement": {
+        "value": 0.35
+      },
+      "minecraft:follow_range": {
+        "value": 64
+      },
+      "minecraft:movement.basic": {},
+      "minecraft:jump.static": {},
+      "minecraft:navigation.walk": {
+        "can_path_over_water": true,
+        "can_pass_doors": true,
+        "can_open_doors": true,
+        "using_door_annotation": true,
+        "avoid_water": true
+      },
+      "minecraft:annotation.open_door": {},
+      "minecraft:collision_box": {
+        "width": 0.6,
+        "height": 1.9
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": 0
+      },
+      "minecraft:nameable": {},
+      "minecraft:persistent": {},
+      "minecraft:is_hidden_when_invisible": {},
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:type_family": {
+        "family": [
+          "lancer",
+          "villager_guard",
+          "irongolem",
+          "mob"
+        ]
+      },
+      "minecraft:hurt_on_condition": {
+        "damage_conditions": [
+          {
+            "cause": "lava",
+            "damage_per_tick": 4,
+            "filters": {
+              "test": "in_lava",
+              "subject": "self",
+              "operator": "==",
+              "value": true
+            }
+          }
+        ]
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "entity_attack",
+            "on_damage": {
+              "filters": {
+                "test": "is_family",
+                "subject": "other",
+                "value": "villager_guard"
+              }
+            },
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:dweller": {
+        "dwelling_type": "village",
+        "dweller_role": "defender",
+        "can_find_poi": false,
+        "can_migrate": true,
+        "first_founding_reward": 0,
+        "update_interval_base": 60,
+        "update_interval_variant": 40
+      },
+      "minecraft:behavior.float": {
+        "priority": 0
+      },
+      "minecraft:behavior.hurt_by_target": {
+        "priority": 1,
+        "entity_types": {
+          "filters": {
+            "all_of": [
+              {
+                "test": "is_family",
+                "subject": "other",
+                "operator": "not",
+                "value": "creeper"
+              },
+              {
+                "test": "is_family",
+                "subject": "other",
+                "operator": "not",
+                "value": "villager"
+              },
+              {
+                "test": "is_family",
+                "subject": "other",
+                "operator": "not",
+                "value": "villager_guard"
+              },
+              {
+                "test": "has_mob_effect",
+                "subject": "other",
+                "operator": "not",
+                "value": "village_hero"
+              }
+            ]
+          }
+        }
+      },
+      "minecraft:behavior.nearest_attackable_target": {
+        "priority": 3,
+        "must_see": true,
+        "reselect_targets": true,
+        "within_radius": 32,
+        "entity_types": [
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "any_of": [
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "monster"
+                    },
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "hoglin_adult"
+                    },
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "zoglin"
+                    },
+                    {
+                      "test": "is_family",
+                      "subject": "other",
+                      "value": "hoglin_baby"
+                    }
+                  ]
+                },
+                {
+                  "test": "is_family",
+                  "subject": "other",
+                  "operator": "not",
+                  "value": "creeper"
+                }
+              ]
+            },
+            "max_dist": 12,
+            "reevaluate_description": true
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "test": "has_tag",
+                  "subject": "other",
+                  "value": "mn_threat"
+                },
+                {
+                  "test": "has_mob_effect",
+                  "subject": "other",
+                  "operator": "not",
+                  "value": "village_hero"
+                }
+              ]
+            },
+            "max_dist": 20,
+            "reevaluate_description": true
+          }
+        ]
+      },
+      "minecraft:attack": {
+        "damage": 8
+      },
+      "minecraft:behavior.melee_box_attack": {
+        "priority": 1,
+        "track_target": true,
+        "speed_multiplier": 0.85
+      },
+      "minecraft:behavior.move_towards_target": {
+        "priority": 2,
+        "speed_multiplier": 0.8,
+        "within_radius": 32
+      },
+      "minecraft:behavior.move_through_village": {
+        "priority": 4,
+        "speed_multiplier": 0.6,
+        "only_at_night": true
+      },
+      "minecraft:behavior.move_towards_dwelling_restriction": {
+        "priority": 5,
+        "speed_multiplier": 0.85
+      },
+      "minecraft:behavior.random_stroll": {
+        "priority": 8,
+        "speed_multiplier": 0.6,
+        "xz_dist": 16
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 9,
+        "look_distance": 6,
+        "look_time": {
+          "min": 1,
+          "max": 2
+        }
+      },
+      "minecraft:behavior.random_look_around": {
+        "priority": 10
+      },
+      "minecraft:equipment": {
+        "table": "loot_tables/guard_villagers/spear_gear.json"
+      },
+      "minecraft:on_target_acquired": {
+        "event": "mn:become_aggro",
+        "target": "self"
+      },
+      "minecraft:on_target_escape": {
+        "event": "mn:stop_aggro",
+        "target": "self"
+      },
+      "minecraft:rotation_locked_to_vehicle": {},
+      "minecraft:environment_sensor": {
+        "triggers": [
+          {
+            "event": "mn:on_start_riding_horse",
+            "filters": {
+              "all_of": [
+                {
+                  "test": "is_vehicle_family",
+                  "value": "destrier"
+                },
+                {
+                  "domain": "mn:is_riding_horse",
+                  "test": "bool_property",
+                  "value": false
+                }
+              ]
+            }
+          },
+          {
+            "event": "mn:on_stop_riding_horse",
+            "filters": {
+              "all_of": [
+                {
+                  "operator": "not",
+                  "test": "is_vehicle_family",
+                  "value": "destrier"
+                },
+                {
+                  "domain": "mn:is_riding_horse",
+                  "test": "bool_property"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "trigger": "mn:init"
+      },
+      "mn:become_aggro": {
+        "sequence": [
+          {
+            "add": {
+              "component_groups": [
+                "mn:aggro"
+              ]
+            },
+            "set_property": {
+              "mn:is_aggro": true
+            }
+          },
+          {
+            "filters": {
+              "test": "bool_property",
+              "domain": "mn:is_riding_horse",
+              "value": false
+            },
+            "add": {
+              "component_groups": [
+                "mn:not_on_horse"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "bool_property",
+              "domain": "mn:is_riding_horse",
+              "value": true
+            },
+            "add": {
+              "component_groups": [
+                "mn:on_horse"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:stop_aggro": {
+        "remove": {
+          "component_groups": [
+            "mn:aggro",
+            "mn:not_on_horse",
+            "mn:on_horse"
+          ]
+        },
+        "set_property": {
+          "mn:is_aggro": false
+        }
+      },
+      "mn:init": {
+        "sequence": [
+          {
+            "filters": {
+              "any_of": [
+                {
+                  "test": "has_biome_tag",
+                  "operator": "==",
+                  "value": "desert"
+                },
+                {
+                  "test": "has_biome_tag",
+                  "operator": "==",
+                  "value": "mesa"
+                }
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "biome_desert"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "jungle"
+            },
+            "add": {
+              "component_groups": [
+                "biome_jungle"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "savanna"
+            },
+            "add": {
+              "component_groups": [
+                "biome_savanna"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "any_of": [
+                {
+                  "all_of": [
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "==",
+                      "value": "cold"
+                    },
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "!=",
+                      "value": "ocean"
+                    }
+                  ]
+                },
+                {
+                  "test": "has_biome_tag",
+                  "operator": "==",
+                  "value": "frozen"
+                }
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "biome_snow"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "swamp"
+            },
+            "add": {
+              "component_groups": [
+                "biome_swamp"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "all_of": [
+                {
+                  "any_of": [
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "==",
+                      "value": "taiga"
+                    },
+                    {
+                      "test": "has_biome_tag",
+                      "operator": "==",
+                      "value": "extreme_hills"
+                    }
+                  ]
+                },
+                {
+                  "test": "has_biome_tag",
+                  "operator": "!=",
+                  "value": "cold"
+                }
+              ]
+            },
+            "add": {
+              "component_groups": [
+                "biome_taiga"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:spawn_as_rider": {
+        "trigger": "mn:init"
+      },
+      "mn:on_start_riding_horse": {
+        "sequence": [
+          {
+            "set_property": {
+              "mn:is_riding_horse": true
+            },
+            "remove": {
+              "component_groups": [
+                "mn:not_on_horse"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "bool_property",
+              "domain": "mn:is_aggro",
+              "value": true
+            },
+            "add": {
+              "component_groups": [
+                "mn:on_horse"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:on_stop_riding_horse": {
+        "sequence": [
+          {
+            "set_property": {
+              "mn:is_riding_horse": false
+            },
+            "remove": {
+              "component_groups": [
+                "mn:on_horse"
+              ]
+            }
+          },
+          {
+            "filters": {
+              "test": "bool_property",
+              "domain": "mn:is_aggro",
+              "value": true
+            },
+            "add": {
+              "component_groups": [
+                "mn:not_on_horse"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:spawn_hired": {
+        "sequence": [
+          {
+            "trigger": "mn:init"
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mn:hired_gear"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:raid_alert": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "mn:raid_alert",
+                "mn:raid_restore"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mn:raid_alert"
+              ]
+            }
+          }
+        ]
+      },
+      "mn:raid_end": {
+        "sequence": [
+          {
+            "remove": {
+              "component_groups": [
+                "mn:raid_alert",
+                "mn:raid_restore"
+              ]
+            }
+          },
+          {
+            "add": {
+              "component_groups": [
+                "mn:raid_restore"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

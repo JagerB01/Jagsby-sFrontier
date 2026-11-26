@@ -1,0 +1,117 @@
+{
+	"entity_sounds": {
+		"entities": {
+			"mn:swordsman": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.villager.idle",
+					"hurt": "mob.villager.hit",
+					"death": "mob.villager.death"
+				}
+			},
+			"mn:arbalist": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.villager.idle",
+					"hurt": "mob.villager.hit",
+					"death": "mob.villager.death"
+				}
+			},
+			"mn:lancer": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.villager.idle",
+					"hurt": "mob.villager.hit",
+					"death": "mob.villager.death"
+				}
+			},
+			"mn:horse_destrier": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.horse.idle",
+					"hurt": "mob.horse.hit",
+					"death": "mob.horse.death"
+				}
+			},
+			"mn:healer": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.villager.idle",
+					"hurt": "mob.villager.hit",
+					"death": "mob.villager.death",
+					"throw": "mob.witch.throw"
+				}
+			},
+			"mn:camel_destrier": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.camel.ambient",
+					"death": "mob.camel.death",
+					"hurt": "mob.camel.hurt",
+					"step": "mob.camel.step",
+					"step_sand": "mob.camel.step_sand"
+				}
+			},
+			"mn:camel_lancer": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.villager.idle",
+					"hurt": "mob.villager.hit",
+					"death": "mob.villager.death"
+				}
+			},
+			"mn:horse_lancer": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.villager.idle",
+					"hurt": "mob.villager.hit",
+					"death": "mob.villager.death"
+				}
+			},
+			"mn:juggernaut": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.villager.idle",
+					"hurt": "mob.villager.hit",
+					"death": "mob.villager.death"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,71 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "mn:arbalist",
+			"materials": {
+				"default": "pillager"
+			},
+			"textures": {
+				"plains": "textures/entity/guards/arbalist/plains",
+				"desert": "textures/entity/guards/arbalist/desert",
+				"jungle": "textures/entity/guards/arbalist/jungle",
+				"savanna": "textures/entity/guards/arbalist/savanna",
+				"snow": "textures/entity/guards/arbalist/snow",
+				"swamp": "textures/entity/guards/arbalist/swamp",
+				"taiga": "textures/entity/guards/arbalist/taiga"
+			},
+			"geometry": {
+				"default": "geometry.mn_arbalist"
+			},
+			"spawn_egg": {
+				"texture": "mn_arbalist_egg"
+			},
+			"scripts": {
+				"pre_animation": [
+					"variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+					"variable.riding_y_offset_with_respect_to_player = 1.25;",
+					"variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+					"variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
+				],
+				"animate": [
+					"pillager_root_controller",
+					{
+						"camel_lift": "query.is_riding_any_entity_of_type('mn:camel_destrier')"
+					}
+				],
+				"scale": "0.9375"
+			},
+			"animations": {
+				"humanoid_base_pose": "animation.humanoid.base_pose",
+				"look_at_target_default": "animation.humanoid.look_at_target.default",
+				"look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
+				"look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
+				"move": "animation.humanoid.move",
+				"riding.arms": "animation.humanoid.riding.arms",
+				"riding.legs": "animation.humanoid.riding.legs",
+				"holding": "animation.humanoid.holding",
+				"attack.rotations": "animation.humanoid.attack.rotations",
+				"bob": "animation.humanoid.bob",
+				"crossbow_hold": "animation.mn_guard.crossbow.hold",
+				"crossbow_charge": "animation.mn_guard.crossbow.charge",
+				"celebrating": "animation.humanoid.celebrating",
+				"controller_humanoid_base_pose": "controller.animation.humanoid.base_pose",
+				"controller_look_at_target": "controller.animation.humanoid.look_at_target",
+				"controller_move": "controller.animation.humanoid.move",
+				"controller_riding": "controller.animation.humanoid.riding",
+				"controller_attack": "controller.animation.humanoid.attack",
+				"controller_bob": "controller.animation.humanoid.bob",
+				"controller_pillager_attack": "controller.animation.mn_guard.crossbow.attack",
+				"pillager_root_controller": "controller.animation.mn_guard.crossbow.root",
+				"riding.body": "animation.humanoid.riding.body",
+				"camel_lift": "animation.mn_arbalist.camel_lift"
+			},
+			"render_controllers": [
+				"controller.render.mn_arbalist"
+			],
+			"enable_attachables": true,
+			"hide_armor": true
+		}
+	}
+}

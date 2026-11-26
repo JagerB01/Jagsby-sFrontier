@@ -4,44 +4,121 @@
     "description": {
       "identifier": "jagsby_frontier:arbalist",
       "materials": {
-        "default": "entity_alphatest"
+        "default": "pillager"
       },
       "textures": {
-        "default": "textures/entity/jagsby_frontier/guards/arbalist",
-        "band1": "textures/entity/jagsby_frontier/guards/arbalist_band_1",
-        "band2": "textures/entity/jagsby_frontier/guards/arbalist_band_2",
-        "band3": "textures/entity/jagsby_frontier/guards/arbalist_band_3",
-        "band4": "textures/entity/jagsby_frontier/guards/arbalist_band_4",
-        "band5": "textures/entity/jagsby_frontier/guards/arbalist_band_5",
-        "band6": "textures/entity/jagsby_frontier/guards/arbalist_band_6",
-        "band7": "textures/entity/jagsby_frontier/guards/arbalist_band_7",
-        "band8": "textures/entity/jagsby_frontier/guards/arbalist_band_8"
+        "plains": "textures/entity/guards/arbalist/plains",
+        "desert": "textures/entity/guards/arbalist/desert",
+        "jungle": "textures/entity/guards/arbalist/jungle",
+        "savanna": "textures/entity/guards/arbalist/savanna",
+        "snow": "textures/entity/guards/arbalist/snow",
+        "swamp": "textures/entity/guards/arbalist/swamp",
+        "taiga": "textures/entity/guards/arbalist/taiga",
+        "plains_band_1": "textures/entity/guards/arbalist/band_1/plains",
+        "desert_band_1": "textures/entity/guards/arbalist/band_1/desert",
+        "jungle_band_1": "textures/entity/guards/arbalist/band_1/jungle",
+        "savanna_band_1": "textures/entity/guards/arbalist/band_1/savanna",
+        "snow_band_1": "textures/entity/guards/arbalist/band_1/snow",
+        "swamp_band_1": "textures/entity/guards/arbalist/band_1/swamp",
+        "taiga_band_1": "textures/entity/guards/arbalist/band_1/taiga",
+        "plains_band_2": "textures/entity/guards/arbalist/band_2/plains",
+        "desert_band_2": "textures/entity/guards/arbalist/band_2/desert",
+        "jungle_band_2": "textures/entity/guards/arbalist/band_2/jungle",
+        "savanna_band_2": "textures/entity/guards/arbalist/band_2/savanna",
+        "snow_band_2": "textures/entity/guards/arbalist/band_2/snow",
+        "swamp_band_2": "textures/entity/guards/arbalist/band_2/swamp",
+        "taiga_band_2": "textures/entity/guards/arbalist/band_2/taiga",
+        "plains_band_3": "textures/entity/guards/arbalist/band_3/plains",
+        "desert_band_3": "textures/entity/guards/arbalist/band_3/desert",
+        "jungle_band_3": "textures/entity/guards/arbalist/band_3/jungle",
+        "savanna_band_3": "textures/entity/guards/arbalist/band_3/savanna",
+        "snow_band_3": "textures/entity/guards/arbalist/band_3/snow",
+        "swamp_band_3": "textures/entity/guards/arbalist/band_3/swamp",
+        "taiga_band_3": "textures/entity/guards/arbalist/band_3/taiga",
+        "plains_band_4": "textures/entity/guards/arbalist/band_4/plains",
+        "desert_band_4": "textures/entity/guards/arbalist/band_4/desert",
+        "jungle_band_4": "textures/entity/guards/arbalist/band_4/jungle",
+        "savanna_band_4": "textures/entity/guards/arbalist/band_4/savanna",
+        "snow_band_4": "textures/entity/guards/arbalist/band_4/snow",
+        "swamp_band_4": "textures/entity/guards/arbalist/band_4/swamp",
+        "taiga_band_4": "textures/entity/guards/arbalist/band_4/taiga",
+        "plains_band_5": "textures/entity/guards/arbalist/band_5/plains",
+        "desert_band_5": "textures/entity/guards/arbalist/band_5/desert",
+        "jungle_band_5": "textures/entity/guards/arbalist/band_5/jungle",
+        "savanna_band_5": "textures/entity/guards/arbalist/band_5/savanna",
+        "snow_band_5": "textures/entity/guards/arbalist/band_5/snow",
+        "swamp_band_5": "textures/entity/guards/arbalist/band_5/swamp",
+        "taiga_band_5": "textures/entity/guards/arbalist/band_5/taiga",
+        "plains_band_6": "textures/entity/guards/arbalist/band_6/plains",
+        "desert_band_6": "textures/entity/guards/arbalist/band_6/desert",
+        "jungle_band_6": "textures/entity/guards/arbalist/band_6/jungle",
+        "savanna_band_6": "textures/entity/guards/arbalist/band_6/savanna",
+        "snow_band_6": "textures/entity/guards/arbalist/band_6/snow",
+        "swamp_band_6": "textures/entity/guards/arbalist/band_6/swamp",
+        "taiga_band_6": "textures/entity/guards/arbalist/band_6/taiga",
+        "plains_band_7": "textures/entity/guards/arbalist/band_7/plains",
+        "desert_band_7": "textures/entity/guards/arbalist/band_7/desert",
+        "jungle_band_7": "textures/entity/guards/arbalist/band_7/jungle",
+        "savanna_band_7": "textures/entity/guards/arbalist/band_7/savanna",
+        "snow_band_7": "textures/entity/guards/arbalist/band_7/snow",
+        "swamp_band_7": "textures/entity/guards/arbalist/band_7/swamp",
+        "taiga_band_7": "textures/entity/guards/arbalist/band_7/taiga",
+        "plains_band_8": "textures/entity/guards/arbalist/band_8/plains",
+        "desert_band_8": "textures/entity/guards/arbalist/band_8/desert",
+        "jungle_band_8": "textures/entity/guards/arbalist/band_8/jungle",
+        "savanna_band_8": "textures/entity/guards/arbalist/band_8/savanna",
+        "snow_band_8": "textures/entity/guards/arbalist/band_8/snow",
+        "swamp_band_8": "textures/entity/guards/arbalist/band_8/swamp",
+        "taiga_band_8": "textures/entity/guards/arbalist/band_8/taiga"
       },
       "geometry": {
-        "default": "geometry.jagsby_frontier.guard"
-      },
-      "animations": {
-        "look": "animation.jagsby_frontier.guard.look",
-        "walk": "animation.jagsby_frontier.guard.walk",
-        "ride": "animation.jagsby_frontier.guard.ride",
-        "crossbow": "animation.jagsby_frontier.guard.crossbow"
+        "default": "geometry.mn_arbalist"
       },
       "scripts": {
+        "pre_animation": [
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.riding_y_offset_with_respect_to_player = 1.25;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
+        ],
         "animate": [
-          "look",
+          "pillager_root_controller",
           {
-            "walk": "!query.is_riding"
-          },
-          {
-            "ride": "query.is_riding"
-          },
-          "crossbow"
-        ]
+            "camel_lift": "query.is_riding_any_entity_of_type('mn:camel_destrier')"
+          }
+        ],
+        "scale": "0.9375"
+      },
+      "animations": {
+        "humanoid_base_pose": "animation.humanoid.base_pose",
+        "look_at_target_default": "animation.humanoid.look_at_target.default",
+        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
+        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
+        "move": "animation.humanoid.move",
+        "riding.arms": "animation.humanoid.riding.arms",
+        "riding.legs": "animation.humanoid.riding.legs",
+        "holding": "animation.humanoid.holding",
+        "attack.rotations": "animation.humanoid.attack.rotations",
+        "bob": "animation.humanoid.bob",
+        "crossbow_hold": "animation.mn_guard.crossbow.hold",
+        "crossbow_charge": "animation.mn_guard.crossbow.charge",
+        "celebrating": "animation.humanoid.celebrating",
+        "controller_humanoid_base_pose": "controller.animation.humanoid.base_pose",
+        "controller_look_at_target": "controller.animation.humanoid.look_at_target",
+        "controller_move": "controller.animation.humanoid.move",
+        "controller_riding": "controller.animation.humanoid.riding",
+        "controller_attack": "controller.animation.humanoid.attack",
+        "controller_bob": "controller.animation.humanoid.bob",
+        "controller_pillager_attack": "controller.animation.mn_guard.crossbow.attack",
+        "pillager_root_controller": "controller.animation.mn_guard.crossbow.root",
+        "riding.body": "animation.humanoid.riding.body",
+        "camel_lift": "animation.mn_arbalist.camel_lift"
       },
       "render_controllers": [
-        "controller.render.jagsby_frontier.guard"
+        "controller.render.jagsby_frontier.arbalist"
       ],
-      "enable_attachables": true
+      "enable_attachables": true,
+      "hide_armor": true
     }
   }
 }

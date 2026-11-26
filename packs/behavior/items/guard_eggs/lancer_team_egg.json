@@ -11,7 +11,7 @@
     "components": {
       "minecraft:icon": {
         "textures": {
-          "default": "jagsby_frontier_lancer_team_egg"
+          "default": "mn_lancer_egg"
         }
       },
       "minecraft:display_name": {

@@ -11,7 +11,7 @@
     "components": {
       "minecraft:icon": {
         "textures": {
-          "default": "jagsby_frontier_town_arbalist_team_egg"
+          "default": "mn_arbalist_egg"
         }
       },
       "minecraft:display_name": {

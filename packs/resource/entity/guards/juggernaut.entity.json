@@ -3,49 +3,133 @@
   "minecraft:client_entity": {
     "description": {
       "identifier": "jagsby_frontier:juggernaut",
+      "min_engine_version": "1.8.0",
       "materials": {
-        "default": "entity_alphatest"
+        "default": "vindicator"
       },
       "textures": {
-        "default": "textures/entity/jagsby_frontier/guards/juggernaut",
-        "band1": "textures/entity/jagsby_frontier/guards/juggernaut_band_1",
-        "band2": "textures/entity/jagsby_frontier/guards/juggernaut_band_2",
-        "band3": "textures/entity/jagsby_frontier/guards/juggernaut_band_3",
-        "band4": "textures/entity/jagsby_frontier/guards/juggernaut_band_4",
-        "band5": "textures/entity/jagsby_frontier/guards/juggernaut_band_5",
-        "band6": "textures/entity/jagsby_frontier/guards/juggernaut_band_6",
-        "band7": "textures/entity/jagsby_frontier/guards/juggernaut_band_7",
-        "band8": "textures/entity/jagsby_frontier/guards/juggernaut_band_8"
+        "swamp": "textures/entity/guards/juggernaut/swamp",
+        "savanna": "textures/entity/guards/juggernaut/savanna",
+        "desert": "textures/entity/guards/juggernaut/desert",
+        "jungle": "textures/entity/guards/juggernaut/jungle",
+        "snow": "textures/entity/guards/juggernaut/snow",
+        "taiga": "textures/entity/guards/juggernaut/taiga",
+        "plains": "textures/entity/guards/juggernaut/plains",
+        "plains_band_1": "textures/entity/guards/juggernaut/band_1/plains",
+        "desert_band_1": "textures/entity/guards/juggernaut/band_1/desert",
+        "jungle_band_1": "textures/entity/guards/juggernaut/band_1/jungle",
+        "savanna_band_1": "textures/entity/guards/juggernaut/band_1/savanna",
+        "snow_band_1": "textures/entity/guards/juggernaut/band_1/snow",
+        "swamp_band_1": "textures/entity/guards/juggernaut/band_1/swamp",
+        "taiga_band_1": "textures/entity/guards/juggernaut/band_1/taiga",
+        "plains_band_2": "textures/entity/guards/juggernaut/band_2/plains",
+        "desert_band_2": "textures/entity/guards/juggernaut/band_2/desert",
+        "jungle_band_2": "textures/entity/guards/juggernaut/band_2/jungle",
+        "savanna_band_2": "textures/entity/guards/juggernaut/band_2/savanna",
+        "snow_band_2": "textures/entity/guards/juggernaut/band_2/snow",
+        "swamp_band_2": "textures/entity/guards/juggernaut/band_2/swamp",
+        "taiga_band_2": "textures/entity/guards/juggernaut/band_2/taiga",
+        "plains_band_3": "textures/entity/guards/juggernaut/band_3/plains",
+        "desert_band_3": "textures/entity/guards/juggernaut/band_3/desert",
+        "jungle_band_3": "textures/entity/guards/juggernaut/band_3/jungle",
+        "savanna_band_3": "textures/entity/guards/juggernaut/band_3/savanna",
+        "snow_band_3": "textures/entity/guards/juggernaut/band_3/snow",
+        "swamp_band_3": "textures/entity/guards/juggernaut/band_3/swamp",
+        "taiga_band_3": "textures/entity/guards/juggernaut/band_3/taiga",
+        "plains_band_4": "textures/entity/guards/juggernaut/band_4/plains",
+        "desert_band_4": "textures/entity/guards/juggernaut/band_4/desert",
+        "jungle_band_4": "textures/entity/guards/juggernaut/band_4/jungle",
+        "savanna_band_4": "textures/entity/guards/juggernaut/band_4/savanna",
+        "snow_band_4": "textures/entity/guards/juggernaut/band_4/snow",
+        "swamp_band_4": "textures/entity/guards/juggernaut/band_4/swamp",
+        "taiga_band_4": "textures/entity/guards/juggernaut/band_4/taiga",
+        "plains_band_5": "textures/entity/guards/juggernaut/band_5/plains",
+        "desert_band_5": "textures/entity/guards/juggernaut/band_5/desert",
+        "jungle_band_5": "textures/entity/guards/juggernaut/band_5/jungle",
+        "savanna_band_5": "textures/entity/guards/juggernaut/band_5/savanna",
+        "snow_band_5": "textures/entity/guards/juggernaut/band_5/snow",
+        "swamp_band_5": "textures/entity/guards/juggernaut/band_5/swamp",
+        "taiga_band_5": "textures/entity/guards/juggernaut/band_5/taiga",
+        "plains_band_6": "textures/entity/guards/juggernaut/band_6/plains",
+        "desert_band_6": "textures/entity/guards/juggernaut/band_6/desert",
+        "jungle_band_6": "textures/entity/guards/juggernaut/band_6/jungle",
+        "savanna_band_6": "textures/entity/guards/juggernaut/band_6/savanna",
+        "snow_band_6": "textures/entity/guards/juggernaut/band_6/snow",
+        "swamp_band_6": "textures/entity/guards/juggernaut/band_6/swamp",
+        "taiga_band_6": "textures/entity/guards/juggernaut/band_6/taiga",
+        "plains_band_7": "textures/entity/guards/juggernaut/band_7/plains",
+        "desert_band_7": "textures/entity/guards/juggernaut/band_7/desert",
+        "jungle_band_7": "textures/entity/guards/juggernaut/band_7/jungle",
+        "savanna_band_7": "textures/entity/guards/juggernaut/band_7/savanna",
+        "snow_band_7": "textures/entity/guards/juggernaut/band_7/snow",
+        "swamp_band_7": "textures/entity/guards/juggernaut/band_7/swamp",
+        "taiga_band_7": "textures/entity/guards/juggernaut/band_7/taiga",
+        "plains_band_8": "textures/entity/guards/juggernaut/band_8/plains",
+        "desert_band_8": "textures/entity/guards/juggernaut/band_8/desert",
+        "jungle_band_8": "textures/entity/guards/juggernaut/band_8/jungle",
+        "savanna_band_8": "textures/entity/guards/juggernaut/band_8/savanna",
+        "snow_band_8": "textures/entity/guards/juggernaut/band_8/snow",
+        "swamp_band_8": "textures/entity/guards/juggernaut/band_8/swamp",
+        "taiga_band_8": "textures/entity/guards/juggernaut/band_8/taiga"
       },
       "geometry": {
-        "default": "geometry.jagsby_frontier.guard"
-      },
-      "animations": {
-        "look": "animation.jagsby_frontier.guard.look",
-        "walk": "animation.jagsby_frontier.guard.walk",
-        "ride": "animation.jagsby_frontier.guard.ride",
-        "swing": "animation.jagsby_frontier.guard.swing",
-        "brace": "animation.jagsby_frontier.guard.brace"
+        "default": "geometry.mn_juggernaut"
       },
       "scripts": {
+        "scale": "0.9375",
         "animate": [
-          "look",
           {
-            "walk": "!query.is_riding"
+            "vindicator_base": "query.is_angry"
+          },
+          "vindicator_walk",
+          "controller_look_at_target",
+          {
+            "controller_vindicator_base": "query.is_angry"
+          },
+          "controller_riding",
+          {
+            "controller_move": "!query.is_angry"
           },
           {
-            "ride": "query.is_riding"
+            "controller_bob": "!query.is_angry"
           },
-          "swing",
           {
-            "brace": "query.property('jagsby_frontier:shield_stance') == 'raised'"
+            "shield": "query.property('mn:shield_state') == 'shielding' || query.property('mn:shield_state') == 'lowering'"
           }
+        ],
+        "pre_animation": [
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.riding_y_offset_with_respect_to_player = 1.25;",
+          "variable.riding_y_offset_on_vehicle_where_other_entites_can_stand = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat') ? -3.0 : 0.0;",
+          "variable.riding_y_offset = variable.riding_y_offset_with_respect_to_player + variable.riding_y_offset_on_vehicle_where_other_entites_can_stand;"
         ]
       },
+      "animations": {
+        "look_at_target_default": "animation.humanoid.look_at_target.default",
+        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding",
+        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming",
+        "move": "animation.humanoid.move",
+        "bob": "animation.humanoid.bob",
+        "controller_move": "controller.animation.humanoid.move",
+        "controller_bob": "controller.animation.humanoid.bob",
+        "riding.arms": "animation.vindicator.riding.arms",
+        "riding.legs": "animation.vindicator.riding.legs",
+        "vindicator_base": "animation.vindicator.base",
+        "vindicator_attack": "animation.vindicator.attack",
+        "vindicator_walk": "animation.mn_guard.sword.walk",
+        "celebrating": "animation.humanoid.celebrating",
+        "controller_look_at_target": "controller.animation.humanoid.look_at_target",
+        "controller_vindicator_base": "controller.animation.vindicator.base",
+        "controller_riding": "controller.animation.humanoid.riding",
+        "vindicator_hand_attack": "animation.vindicator.hand_attack",
+        "riding.body": "animation.humanoid.riding.body",
+        "shield": "animation.mn_juggernaut.shield"
+      },
       "render_controllers": [
-        "controller.render.jagsby_frontier.guard"
+        "controller.render.jagsby_frontier.swordsman"
       ],
-      "enable_attachables": true
+      "enable_attachables": true,
+      "hide_armor": true
     }
   }
 }

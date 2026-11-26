@@ -8,9 +8,10 @@ import { settlementName, biomeName, powerValue, tradeRouteSummary, developmentRa
 import { settlementTier } from "./settlement-tiers.js";
 import { ownerName, ownerRecord, claimSettlement, settlementDirectory, directoryRoadState } from "./settlement-realm.js";
 import { displayMenu } from "./menu-display.js";
-import { blockGuardShield, GUARD_HORSE, isFrontierGuard, isJuggernaut, isTownGuard, joinGuardSquad, removeGuardFromSquad, townGuardLimit } from "./frontier-guards.js";
+import { GUARD_HORSE, isFrontierGuard, isTownGuard, joinGuardSquad, removeGuardFromSquad, replaceGuardInSquad, townGuardLimit } from "./frontier-guards.js";
+import { startVillagerGuards } from "./villager-guards.js";
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from "./guard-colors.js";
-import { isTownPatrol, townGuardPatrol, townGuardSettlement } from "./town-guard-posts.js";
+import { isTownPatrol, nearestTownPost, townGuardPatrol, townGuardSettlement } from "./town-guard-posts.js";
 import { fillTownGuardSlot, recordTownGuardDeath, retireTownGuards, validateTownGuard } from "./town-watch.js";
 import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
 import { PROVINCE_SIZE, capitalStatus, designateCapital, provinceDevelopment, provincePerkText, renameProvince, updateProvinceCapitalId } from "./provinces.js";
@@ -713,12 +714,20 @@ system.runInterval(()=>{
  if(changed)save(s);
 },120);
 world.beforeEvents.entityHurt?.subscribe(event=>protectDamage(event,Date.now(),state));
-world.beforeEvents.entityHurt?.subscribe(blockGuardShield);
+startVillagerGuards(world,system,ItemStack,{
+ inCharter: (dimension,location)=>Boolean(nearestTownPost(state().villages,dimension.id,location)),
+ onReplacement(previous,next){
+  if(next)for(const key of previous.getDynamicPropertyIds()){
+   if(key.startsWith('jagsby_frontier:'))next.setDynamicProperty(key,previous.getDynamicProperty(key));
+  }
+  if(!provincePatrols.replaceEntity(previous,next)&&next)replaceGuardInSquad(world,previous,next);
+ },
+});
 system.runInterval(townPatrol.tick,10);
 system.runInterval(()=>{
  try{provincePatrols.tick();}catch(error){console.warn(`Frontier patrol update: ${error}`);}
 },100);
-function loadFrontierGuard({entity}){
+function loadFrontierGuard({entity},spawned=false){
  if(!entity.isValid)return;
  const town=isTownPatrol(entity),guard=isFrontierGuard(entity);
  if(!town&&!guard&&entity.typeId!==GUARD_HORSE)return;
@@ -727,18 +736,20 @@ function loadFrontierGuard({entity}){
   if(!entity.isValid)return;
   if(isTownGuard(entity)&&!validateTownGuard(entity,state,save))return;
   if(town)townPatrol.track(entity);
+  const imported='jagsby_frontier:guard_assets_149';
+  if(guard&&!entity.getDynamicProperty(imported)){
+   // Old Frontier guards never ran the original biome and role setup.
+   if(!spawned)entity.triggerEvent('minecraft:entity_spawned');
+   entity.setDynamicProperty(imported,true);
+  }
   const patrol=!town&&provincePatrols.restore(entity);
-  if(!entity.isValid)return;
-  if(!guard)return;
+  if(!entity.isValid||!guard)return;
   refreshGuardColor(world,entity);
   if(!patrol)joinGuardSquad(world,entity);
-  if(!isJuggernaut(entity))return;
-  const equipment=entity.getComponent('minecraft:equippable');
-  if(equipment&&!equipment.getEquipment('Offhand'))equipment.setEquipment('Offhand',new ItemStack('minecraft:shield'));
  });
 }
 world.afterEvents.entitySpawn?.subscribe(event=>{
- loadFrontierGuard(event);
+ loadFrontierGuard(event,true);
  try{provincePatrols.replace(event);}catch(error){console.warn(`Frontier patrol spawn: ${error}`);}
 });
 world.afterEvents.entityLoad?.subscribe(loadFrontierGuard);

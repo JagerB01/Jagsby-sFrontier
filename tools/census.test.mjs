@@ -23,7 +23,7 @@ const realmSource=(await readFile(new URL('settlement-realm.js',scriptBase),'utf
 const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toString('base64')}`;
 const configSource=(await readFile(new URL('economy-config.js',scriptBase),'utf8')).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',scriptBase).href));
 const configUrl=`data:text/javascript;base64,${Buffer.from(configSource).toString('base64')}`;
-const extraUrls=Object.fromEntries(['settlement-economy','settlement-effects','frontier-guards','town-watch','provincial-patrols','settlement-stations','provincial-travel']
+const extraUrls=Object.fromEntries(['settlement-economy','settlement-effects','frontier-guards','town-watch','provincial-patrols','settlement-stations','provincial-travel','villager-guards']
   .map(name=>[name,new URL(name+'.js',scriptBase).href]));
 
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });

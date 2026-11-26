@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import test from 'node:test';
-import { blockGuardShield, joinGuardSquad, JUGGERNAUT, removeGuardFromSquad, townGuardLimit } from '../packs/behavior/scripts/frontier-guards.js';
+import { joinGuardSquad, JUGGERNAUT, removeGuardFromSquad, townGuardLimit } from '../packs/behavior/scripts/frontier-guards.js';
+import { startVillagerGuards } from '../packs/behavior/scripts/villager-guards.js';
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from '../packs/behavior/scripts/guard-colors.js';
 import { bindTownPost, nearestTownPost, townGuardPatrol } from '../packs/behavior/scripts/town-guard-posts.js';
 import { fillTownGuardSlot, recordTownGuardDeath, retireTownGuards, validateTownGuard } from '../packs/behavior/scripts/town-watch.js';
@@ -16,74 +17,65 @@ const guards = [...squadRoles, ...townRoles];
 const roster = [...guards, 'guard_horse', 'town_guard_horse'];
 const leaderProperty = id('squad_leader');
 
-test('Guard definitions ship distinct combat roles, test eggs and matching client assets', async () => {
-  const resource = await json('resource/animations/frontier_guard.animation.json');
+test('Guard variants reuse v1.4.9 models, biome textures, animations and combat data', async () => {
   const texts = await read('resource/texts/en_US.lang');
   const atlas = (await json('resource/textures/item_texture.json')).texture_data;
-  const combat = new Map();
+  const source = async path => JSON.parse(await readFile(
+    new URL('../tools/vendor/villager-guards-1.4.9/' + path, import.meta.url), 'utf8'));
   const behaviorFiles = await readdir(new URL('../packs/behavior/entities/guards/', import.meta.url));
   const clientFiles = await readdir(new URL('../packs/resource/entity/guards/', import.meta.url));
   assert.deepEqual(behaviorFiles.sort(), roster.map(name => name + '.json').sort());
   assert.deepEqual(clientFiles.sort(), roster.map(name => name + '.entity.json').sort());
+  const combat = /attack|shooter|charge_held_item|use_kinetic_weapon|knockback_resistance|environment_sensor|damage_sensor|health|equipment/;
   for (const name of roster) {
+    const role = name.replace(/^town_/, '').replace(/^guard_horse$/, 'horse_destrier');
+    const original = (await source('behavior/' + role + '.json'))['minecraft:entity'];
+    const originalClient = (await source('client/' + role + '.entity.json'))['minecraft:client_entity'].description;
     const behavior = (await json('behavior/entities/guards/' + name + '.json'))['minecraft:entity'];
     const client = (await json('resource/entity/guards/' + name + '.entity.json'))['minecraft:client_entity'].description;
-    const hasEgg = !name.endsWith('horse_lancer');
     assert.equal(behavior.description.identifier, id(name));
     assert.equal(client.identifier, id(name));
     assert.equal(behavior.description.is_summonable, true);
     assert.equal(behavior.description.is_spawnable, false);
     assert.equal(client.spawn_egg, undefined);
     assert.ok(texts.includes('entity.' + id(name) + '.name='));
-    if (hasEgg) {
+    assert.deepEqual(client.geometry, originalClient.geometry);
+    assert.deepEqual(client.scripts, originalClient.scripts);
+    assert.deepEqual(client.animations, originalClient.animations);
+    for (const [key, texture] of Object.entries(originalClient.textures)) assert.equal(client.textures[key], texture);
+    if (!name.endsWith('horse_lancer')) {
       const egg = (await json('behavior/items/guard_eggs/' + name + '_team_egg.json'))['minecraft:item'];
       assert.equal(egg.description.identifier, id(name + '_team_egg'));
       assert.equal(egg.components['minecraft:entity_placer'].entity, id(name));
       const key = egg.components['minecraft:icon'].textures.default;
+      assert.ok(key.startsWith('mn_'));
       await read('resource/' + atlas[key].textures + '.png');
       assert.ok(texts.includes(egg.components['minecraft:display_name'].value + '='));
     }
     if (guards.includes(name)) {
       assert.ok(behavior.components['minecraft:type_family'].family.includes('frontier_guard'));
+      assert.ok(behavior.components['minecraft:type_family'].family.includes('villager_guard'));
       assert.deepEqual(behavior.description.properties[leaderProperty], {type: 'bool', default: false, client_sync: true});
       assert.deepEqual(behavior.description.properties[id('headband')],
         {type: 'int', range: [0, GUARD_COLORS.length - 1], default: 0, client_sync: true});
-      const path = behavior.components['minecraft:equipment'].table;
-      combat.set(name, {
-        components: behavior.components,
-        equipment: (await json('behavior/' + path)).pools.flatMap(pool => pool.entries.map(entry => entry.name)),
-      });
-      assert.equal(Object.keys(client.textures).length, GUARD_COLORS.length);
+      assert.equal(Object.keys(client.textures).length, 7 * GUARD_COLORS.length);
       for (const texture of Object.values(client.textures)) await read('resource/' + texture + '.png');
-      for (const animation of Object.values(client.animations)) assert.ok(resource.animations[animation]);
+      assert.deepEqual(behavior.events['mn:raid_alert'], original.events['mn:raid_alert']);
+      assert.deepEqual(behavior.events['mn:spawn_hired'], original.events['mn:spawn_hired']);
+      await json('behavior/' + behavior.components['minecraft:equipment'].table);
+    }
+    for (const [key, value] of Object.entries(original.components).filter(([key]) => combat.test(key))) {
+      assert.deepEqual(behavior.components[key], value, name + ' ' + key);
+    }
+    for (const [group, components] of Object.entries(original.component_groups ?? {})) {
+      for (const [key, value] of Object.entries(components).filter(([key]) => combat.test(key))) {
+        assert.deepEqual(behavior.component_groups[group][key], value, name + ' ' + group + ' ' + key);
+      }
     }
   }
-  assert.deepEqual(combat.get('swordsman').equipment, ['minecraft:iron_sword']);
-  assert.ok(combat.get('swordsman').components['minecraft:behavior.melee_box_attack']);
-  assert.deepEqual(combat.get('arbalist').equipment, ['minecraft:crossbow']);
-  assert.equal(combat.get('arbalist').components['minecraft:shooter'].def, 'minecraft:arrow');
-  assert.ok(combat.get('arbalist').components['minecraft:behavior.ranged_attack']);
-  for (const name of ['lancer', 'horse_lancer']) {
-    assert.deepEqual(combat.get(name).equipment, ['minecraft:iron_spear']);
-    assert.equal(combat.get(name).components['minecraft:behavior.use_kinetic_weapon'].hijack_mount_navigation,
-      name !== 'lancer');
-  }
-  assert.deepEqual(combat.get('juggernaut').equipment, ['minecraft:iron_axe', 'minecraft:shield']);
-  assert.ok(combat.get('juggernaut').components['minecraft:environment_sensor']);
-  for (const role of squadRoles) {
-    const squad = combat.get(role), town = combat.get('town_' + role);
-    assert.deepEqual(town.equipment, squad.equipment);
-    for (const key of Object.keys(squad.components).filter(key =>
-      /attack|shooter|charge_held_item|use_kinetic_weapon|knockback_resistance|environment_sensor|health/.test(key))) {
-      assert.deepEqual(town.components[key], squad.components[key], role + ' ' + key);
-    }
-  }
-  const geometry = (await json('resource/models/entity/frontier_guard.geo.json'))['minecraft:geometry'][0];
-  assert.ok(geometry.bones.some(bone => bone.name === 'leaderPlume'));
-  const controller = (await json('resource/render_controllers/frontier_guard.render_controllers.json'))
-    .render_controllers['controller.render.jagsby_frontier.guard'];
-  assert.deepEqual(controller.part_visibility, [{leaderPlume: `query.property('${leaderProperty}')`}]);
-  assert.equal(controller.arrays.textures['Array.headbands'].length, GUARD_COLORS.length);
+  const controller = (await json('resource/render_controllers/guard_villagers.render_controllers.json'))
+    .render_controllers['controller.render.jagsby_frontier.swordsman'];
+  assert.equal(controller.arrays.textures['Array.biomes'].length, 7 * GUARD_COLORS.length);
 });
 
 function squadFixture() {
@@ -213,8 +205,9 @@ test('Both Horse Lancer Team eggs match the correct horse and rider without natu
     assert.deepEqual(mount.events[id('spawn_empty')], {});
     const rideable = mount.components['minecraft:rideable'];
     assert.equal(rideable.seat_count, 1);
-    assert.equal(rideable.seats.length, 1);
-    const [group] = mount.events['minecraft:entity_spawned'].add.component_groups;
+    assert.deepEqual(rideable.seats.position, [0, 0.7, -0.2]);
+    assert.equal(mount.events['minecraft:entity_spawned'].trigger, 'mn:spawn_with_rider');
+    const [group] = mount.events['mn:spawn_with_rider'].add.component_groups;
     const riders = mount.component_groups[group]['minecraft:addrider'].riders;
     assert.deepEqual(riders.map(rider => rider.entity_type), [id(prefix + 'horse_lancer')]);
     const entity = (await json('behavior/entities/guards/' + prefix + 'horse_lancer.json'))['minecraft:entity'];
@@ -495,16 +488,26 @@ test('Town guards receive daily Hearthstone healing and their charter’s hostil
   assert.equal(healTownGuard(guard, village, 6), false);
 });
 
-test('Raised Juggernaut shields block frontal melee and projectile hits only', () => {
+test('The original Juggernaut shield handles front, back, projectiles and axe breaks', () => {
+  let shield;
+  const signal = {subscribe() {}};
+  startVillagerGuards({
+    afterEvents: {dataDrivenEntityTrigger: signal, entityHurt: signal, entityDie: signal,
+      playerSpawn: signal, playerInteractWithEntity: signal},
+    beforeEvents: {playerInteractWithEntity: signal, entityHurt: {subscribe(handler) { shield = handler; }}},
+  }, {run: callback => callback(), runInterval() {}}, undefined, {});
+  const events = [], sounds = [];
   const guard = {
-    typeId: JUGGERNAUT,
-    getProperty: () => 'raised',
+    typeId: JUGGERNAUT, isValid: true,
+    getProperty(key) { assert.equal(key, 'mn:shield_state'); return 'shielding'; },
+    triggerEvent(name) { events.push(name); },
+    dimension: {playSound(name) { sounds.push(name); }},
     location: {x: 0, z: 0},
     getViewDirection: () => ({x: 0, z: 1}),
   };
   const check = (damageSource, target = guard) => {
     const event = {hurtEntity: target, damageSource, cancel: false};
-    blockGuardShield(event);
+    shield(event);
     return event.cancel;
   };
   const melee = {cause: 'entityAttack', damagingEntity: {location: {x: 0, z: 3}}};
@@ -512,8 +515,13 @@ test('Raised Juggernaut shields block frontal melee and projectile hits only', (
   assert.equal(check(melee, {...guard, typeId: id('town_juggernaut')}), true);
   assert.equal(check({...melee, damagingEntity: {location: {x: 0, z: -3}}}), false);
   assert.equal(check({...melee, cause: 'fall'}), false);
-  assert.equal(check(melee, {...guard, getProperty: () => 'recovering'}), false);
+  assert.equal(check(melee, {...guard, getProperty: () => 'ready'}), false);
   assert.equal(check(melee, {...guard, typeId: id('swordsman')}), false);
-  assert.equal(check({cause: 'projectile', damagingProjectile: {getVelocity: () => ({x: 0, z: -1})}}), true);
-  assert.equal(check({cause: 'projectile', damagingProjectile: {getVelocity: () => ({x: 0, z: 1})}}), false);
+  assert.equal(check({cause: 'projectile', damagingProjectile: {location: {x: 0, z: 1}}}), true);
+  assert.equal(check({cause: 'projectile', damagingProjectile: {location: {x: 0, z: -1}}}), false);
+  const axe = {...melee.damagingEntity, isValid: true, typeId: 'minecraft:vindicator',
+    getComponent: () => ({getEquipment: () => ({typeId: 'minecraft:iron_axe'}), hasTypeFamily: () => true})};
+  assert.equal(check({...melee, damagingEntity: axe}), true);
+  assert.deepEqual(events, ['mn:shield_blocked', 'mn:shield_blocked', 'mn:shield_blocked', 'mn:shield_disabled']);
+  assert.equal(sounds.at(-1), 'random.break');
 });

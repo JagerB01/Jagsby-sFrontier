@@ -23,3 +23,4 @@ item.spawn_egg.entity.jagsby_frontier:town_arbalist.name=Frontier Town Arbalist 
 item.spawn_egg.entity.jagsby_frontier:town_lancer.name=Frontier Town Lancer Spawn Egg
 item.spawn_egg.entity.jagsby_frontier:town_juggernaut.name=Frontier Town Juggernaut Spawn Egg
 item.spawn_egg.entity.jagsby_frontier:town_guard_horse.name=Frontier Town Horse Lancer Team Spawn Egg
+mn.guard_villagers.enchanted_hire=Enchanted items can't be used to hire guards.

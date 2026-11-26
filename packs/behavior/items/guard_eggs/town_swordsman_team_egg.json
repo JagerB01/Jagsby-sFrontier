@@ -11,7 +11,7 @@
     "components": {
       "minecraft:icon": {
         "textures": {
-          "default": "jagsby_frontier_town_swordsman_team_egg"
+          "default": "mn_swordsman_egg"
         }
       },
       "minecraft:display_name": {

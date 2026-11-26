@@ -3,7 +3,6 @@ import { recordedPower } from './village-census.js';
 export const JUGGERNAUT = 'jagsby_frontier:juggernaut';
 export const GUARD_HORSE = 'jagsby_frontier:guard_horse';
 export const PATROL = 'jagsby_frontier:provincial_patrol';
-const SHIELD_STANCE = 'jagsby_frontier:shield_stance';
 export const LEADER_PROPERTY = 'jagsby_frontier:squad_leader';
 const SQUAD_RADIUS = 12;
 const SQUAD_SIZE = 4;
@@ -29,10 +28,6 @@ export function isTownGuard(entity) {
 
 export function townGuardLimit(village, sanctuaryLevel) {
   return Math.min(sanctuaryLevel, Math.ceil(recordedPower(village) / 2));
-}
-
-export function isJuggernaut(entity) {
-  return entity.typeId === JUGGERNAUT || entity.typeId === 'jagsby_frontier:town_juggernaut';
 }
 
 function membersOf(world, id) {
@@ -98,19 +93,14 @@ export function removeGuardFromSquad(world, deadGuard) {
   markSquadLeader(world, roster);
 }
 
-export function blockGuardShield(event) {
-  const {hurtEntity: guard, damageSource} = event;
-  if (!isJuggernaut(guard) || guard.getProperty(SHIELD_STANCE) !== 'raised') return;
-  const {cause, damagingEntity, damagingProjectile} = damageSource;
-  if (cause !== 'entityAttack' && cause !== 'projectile') return;
-
-  const velocity = cause === 'projectile' ? damagingProjectile?.getVelocity() : undefined;
-  const origin = damagingEntity?.location ?? damagingProjectile?.location;
-  const flying = velocity && Math.hypot(velocity.x, velocity.z) > 0.001;
-  if (!flying && !origin) return;
-
-  const x = flying ? -velocity.x : origin.x - guard.location.x;
-  const z = flying ? -velocity.z : origin.z - guard.location.z;
-  const view = guard.getViewDirection();
-  if (view.x * x + view.z * z > 0) event.cancel = true;
+export function replaceGuardInSquad(world, previous, next) {
+  const oldKey = membershipKey(previous.id);
+  const squad = world.getDynamicProperty(oldKey);
+  if (!squad) return;
+  const roster = membersOf(world, squad).map(member => member.id === previous.id
+    ? {id: next.id, typeId: next.typeId} : member);
+  world.setDynamicProperty(squadKey(squad), JSON.stringify(roster));
+  world.setDynamicProperty(membershipKey(next.id), squad);
+  world.setDynamicProperty(oldKey, undefined);
+  markSquadLeader(world, roster);
 }

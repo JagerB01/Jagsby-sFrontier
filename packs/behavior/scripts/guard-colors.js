@@ -57,7 +57,7 @@ export function spawnGuard(dimension, type, position, entities) {
   }
   const mount = dimension.spawnEntity(type, position, {spawnEvent: 'jagsby_frontier:spawn_empty'});
   entities.push(mount);
-  const guard = dimension.spawnEntity(rider, position);
+  const guard = dimension.spawnEntity(rider, position, {spawnEvent: 'mn:spawn_as_rider'});
   entities.push(guard);
   if (!mount.getComponent('minecraft:rideable')?.addRider(guard)) throw Error('Could not seat the Horse Lancer');
   return guard;
