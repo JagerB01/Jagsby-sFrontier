@@ -1,4 +1,4 @@
-import { townGuardLimit } from './frontier-guards.js';
+import { TOWN_ARBALIST_INTERVAL, townGuardLimit } from './frontier-guards.js';
 import { localLevel } from './global-research.js';
 import { setGuardOwner } from './guard-colors.js';
 import { bindTownPost, townGuardSettlement } from './town-guard-posts.js';
@@ -54,7 +54,7 @@ export function fillTownGuardSlot(world, village, limit, day) {
   const position = spawnPosition(dimension, village.location, slot);
   if (!position) return false;
 
-  const type = slot % 3 === 0 ? 'jagsby_frontier:town_arbalist' : 'jagsby_frontier:town_swordsman';
+  const type = slot % TOWN_ARBALIST_INTERVAL === 0 ? 'jagsby_frontier:town_arbalist' : 'jagsby_frontier:town_swordsman';
   const guard = dimension.spawnEntity(type, position);
   try {
     bindTownPost(guard, {dimension: village.dimension, location: village.location});

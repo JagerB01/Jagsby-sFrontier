@@ -335,12 +335,13 @@ test('All ten research hover records describe effects, next cost, progress, prer
   const text=records[index];
   for(const label of ['Next cost:','Contributed:','remaining'])assert.ok(text.includes(label),`${index}: ${label}`);
   assert.equal(text.includes('Status:'),false);
+  assert.doesNotMatch(text,/\(Stewardship ceiling\)/);
   assert.equal(text.includes('Click to contribute'),!text.includes('Required:'));
   assert.equal(text.includes('Carry the required material'),false);
   assert.equal(text.includes('Select for materials'),false);
  }
  assert.ok(records[5].includes('Villager healing: §b0§r §7→§r §a2§r'));
- assert.ok(records[55].includes('3 minutes after leaving'));
+ assert.ok(records[55].includes('3 min after leaving'));
  assert.ok(records[9].includes('every other local and global tech'));
  assert.equal(records[9].includes('Required:'),false);
  assert.ok(records[61].includes('Bonus resources do not earn Development'));

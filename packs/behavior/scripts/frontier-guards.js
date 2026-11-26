@@ -4,6 +4,7 @@ export const JUGGERNAUT = 'jagsby_frontier:juggernaut';
 export const GUARD_HORSE = 'jagsby_frontier:guard_horse';
 export const PATROL = 'jagsby_frontier:provincial_patrol';
 export const LEADER_PROPERTY = 'jagsby_frontier:squad_leader';
+export const TOWN_ARBALIST_INTERVAL = 3;
 const SQUAD_RADIUS = 12;
 const SQUAD_SIZE = 4;
 const LEADERSHIP = new Map([

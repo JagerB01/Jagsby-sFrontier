@@ -121,17 +121,22 @@ test('Hearthstone I unlocks villager healing and II unlocks player regeneration'
  assert.ok(text.includes('Fully upgraded'));
 });
 
-test('Sanctuary shows hostile damage reduction and the town guard capacity rules',()=>{
- const v=village();v.hearth=1;v.sanctuary=1;v.productionPower=1;
- const text=localResearchText(v,'sanctuary',state(1));
+test('Sanctuary previews the next guard class count and omits the preview at the RP cap',()=>{
+ const v=village();v.hearth=1;v.sanctuary=1;v.productionPower=12;
+ const text=localResearchText(v,'sanctuary',state(3));
+ assert.equal(text.split('\n')[0],'Lv 1 / 3');
  assert.ok(text.includes('Hostile damage reduction: §b5％§r §7→§r §a9.75％§r'));
- assert.ok(text.includes('Applies to players and town guards.'));
- assert.ok(text.includes('Persists for 3 minutes after leaving for players.'));
- assert.ok(text.includes('Town guard capacity: §b1§r\n'));
- assert.ok(text.includes('half Realm Power (rounded up)'));
- assert.ok(text.includes('Every third slot is an Arbalist. Other slots are Swordsmen.'));
- assert.equal(text.includes('Current:'),false);assert.equal(text.includes('Next:'),false);
- for(const value of ['Stewardship ceiling','Next cost: 256 Crops','Contributed: 0 / 256','256 remaining','Required: Stewardship Lv 2'])assert.ok(text.includes(value),value);
+ assert.match(text,/Players and town guards\. Players keep it 3 min after leaving\./);
+ for(const [level,role,current,next] of [[1,'Swordsman',1,2],[2,'Arbalist',0,1],[3,'Swordsman',2,3],[5,'Arbalist',1,2]]){
+  v.sanctuary=level;
+  const lines=localResearchText(v,'sanctuary',state(6)).split('\n');
+  assert.deepEqual(lines.filter(line=>line.startsWith('Town Guard ')),[`Town Guard ${role} §b${current}§r §7→§r §a${next}§r`]);
+ }
+ v.sanctuary=1;v.productionPower=1;
+ const capped=localResearchText(v,'sanctuary',state(1));
+ assert.doesNotMatch(capped,/Town Guard |guard capacity|half Realm Power|Stewardship ceiling/);
+ for(const value of ['Next cost: 256 Crops','Contributed: 0 / 256','256 remaining','Required: Stewardship Lv 2'])assert.ok(capped.includes(value),value);
+ assert.equal(localResearchText(v,'efficiency',state(3)).split('\n')[0],'Lv 0 / 3');
 });
 
 test('Percentage comparisons include zero, preserve resets and avoid rounding Sanctuary to immunity',()=>{

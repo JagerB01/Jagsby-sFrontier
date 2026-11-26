@@ -1,5 +1,5 @@
 import {ECONOMY_CONFIG as C} from './economy-config.js';
-import {townGuardLimit} from './frontier-guards.js';
+import {TOWN_ARBALIST_INTERVAL,townGuardLimit} from './frontier-guards.js';
 export const LOCAL_KEYS=['hearth','biome','sanctuary','efficiency','roads'];
 const aliases={hearth:['hearthstone'],biome:['prospecting','resourceProspecting'],sanctuary:[],efficiency:['prosperity'],roads:['roadNetworks']};
 const count=n=>Number.isSafeInteger(n)&&n>=0?n:0;
@@ -100,7 +100,14 @@ export function localResearchText(v,key,s=null){
  let benefit;
  if(key==='sanctuary'){
   const guardLimit=townGuardLimit(v,level);
-  benefit=`Hostile damage reduction: ${compare(researchPercent(reduction(level)),researchPercent(reduction(level+1)))}\nApplies to players and town guards.\nPersists for 3 minutes after leaving for players.\nTown guard capacity: ${compare(guardLimit,townGuardLimit(v,level+1))}\nOne slot per level, capped at half Realm Power (rounded up). Every third slot is an Arbalist. Other slots are Swordsmen.`;
+  const nextGuardLimit=townGuardLimit(v,level+1);
+  benefit=`Hostile damage reduction: ${compare(researchPercent(reduction(level)),researchPercent(reduction(level+1)))}\nPlayers and town guards. Players keep it 3 min after leaving.`;
+  if(nextGuardLimit>guardLimit){
+   const arbalist=nextGuardLimit%TOWN_ARBALIST_INTERVAL===0;
+   const arbalists=Math.floor(guardLimit/TOWN_ARBALIST_INTERVAL);
+   const previous=arbalist?arbalists:guardLimit-arbalists;
+   benefit+=`\nTown Guard ${arbalist?'Arbalist':'Swordsman'} ${compare(previous,previous+1)}`;
+  }
  }
  else if(key==='efficiency')benefit=`Resource production: ${compare('+'+researchPercent(level*5),'+'+researchPercent((level+1)*5))}`;
  else if(key==='hearth'){
@@ -114,5 +121,5 @@ export function localResearchText(v,key,s=null){
  }
 
  const accepted=key==='efficiency'?'\nStone, cobblestone, deepslate, cobbled deepslate, granite, diorite, andesite or tuff.':key==='sanctuary'?'\nWheat, potatoes, carrots, cocoa beans, beetroot, sweet berries or glow berries.':'';
- return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation+' (Stewardship ceiling)':' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}${accepted}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining${required}`:'§eFully upgraded§r'}`;
+ return `Lv ${level}${d.max?' / '+d.max:s?' / '+s.global.innovation:' (endless)'}\n${benefit}\n${cost?`Next cost: ${cost.amount} ${cost.label}${accepted}\nContributed: ${progress} / ${cost.amount}; ${Math.max(0,cost.amount-progress)} remaining${required}`:'§eFully upgraded§r'}`;
 }
