@@ -5,7 +5,7 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.146](downloads/Jagsbys_Frontier_v0.0.146.mcaddon?raw=true)
+[Download Frontier 0.0.147](downloads/Jagsbys_Frontier_v0.0.147.mcaddon?raw=true)
 
 The **Village Charter** opens on Overview and keeps Research, Production, and
 Diplomacy. The **Waystone** opens Road Networks, My Settlements, and All
@@ -79,8 +79,10 @@ Travel spends eligible food from the hotbar left to right before using the
 rest of the inventory. Each stack pays as much of the fare as it can before
 travel uses another stack. See the [accepted foods and values](docs/settlement-economy.md#food-accepted-for-travel).
 
-My Settlements and All Settlements both offer Send Route for existing
-connections. The Overview shows Actual Dev to three decimal places.
+All three Waystone lists scroll. Road Networks shows Travel for usable roads,
+with upgrades and construction under Manage Roads in the header. My
+Settlements and All Settlements offer Establish Road or Send Route where
+available. The Overview shows Actual Dev to three decimal places.
 
 In Resource Prospecting, press Right from a biome row to focus its Select
 button. Press Confirm to assign the biome.
@@ -560,10 +562,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.146.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.147.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.146_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.147_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

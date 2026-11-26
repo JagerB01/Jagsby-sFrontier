@@ -329,8 +329,8 @@ function reopenView(player,vId,requestedView={},s){
 function openWaystone(player,vId,scope='roads',station){
   const s=accounted(),v=s.villages[vId];
   if(!v || (station&&!atStation(world,player,v,station,WAYSTONE)))return;
-  const {data,realmRows}=CHARTER_LAYOUT;
-  const records=Array(realmRows.base).fill('');
+  const {data,realmRows:layout}=CHARTER_LAYOUT;
+  const records=Array(layout.base).fill('');
   const all=settlementDirectory(s.villages,player,0,false,v,s.roads);
   const mine=all.rows.filter(row=>row.ownerId===player.id);
   const roadView=roadNetworkOverview(s,v);
@@ -339,8 +339,11 @@ function openWaystone(player,vId,scope='roads',station){
   records[data.roadSummary]=`[JF:data:roadSummary]${roadView.summary}`;
   records[data.roadDetails]=`[JF:data:roadDetails]${roadView.rows.length?'':roadView.details}`;
   const realmMarkers=[];
+  if(v.roads&&(roadView.rows.length||all.rows.some(row=>row.canEstablishRoad))){
+   realmMarkers.push('[JF:manageRoads]');
+   handlers.set(layout.manageRoads,()=>roadMenu(player,vId,station));
+  }
   const activeRoute=selectedTradeRoutes(s)[vId];
-  const layout=CHARTER_LAYOUT.realmRows;
   const lists=[mine,all.rows,roadView.rows];
   if(lists.some(rows=>rows.length>layout.limit)){
    player.sendMessage(`§cRealm lists exceed this pack's ${layout.limit}-row layout. Increase the Realm row limit and rebuild the pack; no settlements have been removed.`);return;
@@ -362,9 +365,10 @@ function openWaystone(player,vId,scope='roads',station){
     put(base,[row.name,row.owner,row.distance,row.cost==='Unavailable'?'—':row.cost,'',row.time,'','']);
     directoryIcons.set(base,row.villageTexture);
     directoryIcons.set(base+6,row.nextTexture||row.texture);
-    handlers.set(base+6,()=>roadMenu(player,vId,station));
-    realmMarkers.push(`[JF:${row.canTravel?'travel':'travel_disabled'}:roads:${slot}]`);
-    if(row.canTravel)handlers.set(base+7,()=>travelRoad(player,vId,row.roadId,station));
+    if(row.canTravel){
+     realmMarkers.push(`[JF:travel:roads:${slot}]`);
+     handlers.set(base+7,()=>travelRoad(player,vId,row.roadId,station));
+    }
    }
   }));
   const body=`[JF:realm:${layout.scopes.includes(scope)?scope:'roads'}]${realmMarkers.join('')}`

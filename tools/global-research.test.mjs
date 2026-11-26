@@ -610,6 +610,24 @@ test('Compact road records show the upgrade icon and days, with a direct Travel 
  assert.ok(form.text.includes('[JF:travel:roads:0]'));assert.equal(form.text.includes('[JF:travel_disabled:roads:0]'),false);
 });
 
+test('The Waystone road icons are inert and the header opens road management',async()=>{
+ const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',roads:1};
+ s.villages.b={...village(100),id:'b',name:'Beta'};
+ s.roads.r={from:'a',to:'b',level:1,distance:100};
+ const {realmRows}=CHARTER_LAYOUT;
+ const selections=[realmRows.base+16+6,realmRows.manageRoads];
+ const h=await runtime(s,()=>selections.length?{selection:selections.shift()}:{canceled:true});
+ h.api.open(h.player,'a','Realm');
+ await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.forms.length,1,'A road-tier icon cannot open a form');
+ assert.match(h.forms[0].text,/\[JF:manageRoads\]/);
+ h.api.open(h.player,'a','Realm');
+ await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.forms[2].heading,'JF_CHARTER|Roads');
+ assert.ok(h.forms[2].buttons.includes('Upgrade Trail to Beta'));
+ assert.match(h.forms[3].text,/^\[JF:realm:roads\]/);
+});
+
 test('Realm layout overflow is reported rather than silently discarding settlements',async()=>{
  const h=await runtime();h.update(s=>{
   s.villages=Object.fromEntries(Array.from({length:CHARTER_LAYOUT.realmRows.limit+1},(_,i)=>['v'+i,{...village(i*100),id:'v'+i,name:'Village '+i}]));
@@ -655,7 +673,7 @@ test('Travel spends two pumpkin pies from the first stack and leaves later bread
  assert.equal(arrivals.length,1);
 });
 
-test('New roads disable Travel and insufficient food never charges or teleports',async()=>{
+test('New roads omit Travel and insufficient food never charges or teleports',async()=>{
  for(const level of [0,1]){
   const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',roads:1};s.villages.b={...village(100),id:'b',name:'Beta'};
   s.roads.r={from:'a',to:'b',level,distance:100,...(!level?{targetLevel:1,startedTick:0,durationTicks:60000,finishTick:60000}:{})};
@@ -665,7 +683,7 @@ test('New roads disable Travel and insufficient food never charges or teleports'
   const before=JSON.stringify(h.slots);
   h.api.open(h.player,'a','Realm');await new Promise(resolve=>setImmediate(resolve));
   assert.equal(JSON.stringify(h.slots),before);
-  assert.ok(h.forms[0].text.includes(level?'[JF:travel:roads:0]':'[JF:travel_disabled:roads:0]'));
+  assert.equal(h.forms[0].text.includes('[JF:travel:roads:0]'),Boolean(level));
   if(level)assert.ok(h.messages.some(text=>text.includes('Need')&&text.includes('corndogs')));
  }
 });
@@ -831,7 +849,7 @@ test('New Trails and road upgrades show their target icon and greater-than six-d
   const base=CHARTER_LAYOUT.realmRows.base+16;
   assert.equal(h.forms[0].buttons[base+5],'> 6 days');assert.equal(h.forms[0].buttons[base+4],'');
   assert.equal(h.forms[0].icons[base+6],'textures/ui/frontier/road_icons/'+(level?'road':'trail'));
-  assert.ok(h.forms[0].text.includes(level?'[JF:travel:roads:0]':'[JF:travel_disabled:roads:0]'));
+  assert.equal(h.forms[0].text.includes('[JF:travel:roads:0]'),Boolean(level));
  }
 });
 
@@ -963,7 +981,7 @@ test('A single unowned settlement supplies exactly one Realm row creation marker
    const slot=Number(key.slice(3)),marker=`[JF:row:${scope}:${slot}]`;
    const creation=gate.bindings.find(b=>b.target_property_name==='#visible');
    assert.ok(creation.source_property_name.includes(marker));
-   assert.equal(gate.type,'button');assert.equal('precached_grid_item_count' in gate,false);
+   assert.equal(gate.type,'panel');assert.equal('precached_grid_item_count' in gate,false);
    if(form.text.includes(marker))assert.equal(scope,'all');
   }
  }

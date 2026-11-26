@@ -128,15 +128,14 @@ def label(text, size, offset=(0, 0), color=IVORY, scale=0.8):
 
 
 def focusable_scroll_row(row, section, scope, slot):
-    # A scroll_view follows controller focus, not inert labels/images. Keep a
-    # reading target even when the row's native action is hidden or disabled.
+    # Keep a Prospecting reading target even when Select is unavailable.
     # This raw button has no submit mapping; its child actions keep their own.
     row.update({"type": "button", "focus_enabled": True, "focus_magnet_enabled": True, "hover_enabled": True,
         "focus_identifier": f"jf_{section}_{scope}_row_{slot}",
-        "focus_change_left": f"jf_realm_focus_{scope}" if section == "realm" else "jf_tab_focus_" + section,
+        "focus_change_left": "jf_tab_focus_" + section,
         "button_mappings": [], "default_control": "reading_idle",
         "hover_control": "reading_focus", "pressed_control": "reading_focus",
-        "tts_name": "Biome production details" if section == "production" else "Settlement details"})
+        "tts_name": "Biome production details"})
     if slot == 0:
         row["focus_change_up"] = f"jf_{section}_focus_{scope}"
     row["controls"] += [
@@ -298,7 +297,7 @@ def research_tab(scope, index, section="research", caption_text=None):
         "focus_change_right": "jf_" + section + "_focus_" + order[min(len(order) - 1, index + 1)]})
     toggle.pop("focus_change_up", None)
     toggle.pop("focus_change_down", None)
-    if section == "realm" or (section == "production" and scope == "biomes"):
+    if section == "production" and scope == "biomes":
         toggle["focus_change_down"] = f"jf_{section}_{scope}_row_0"
     for binding in toggle["bindings"]:
         for field in ["binding_name", "source_property_name"]:
@@ -853,6 +852,7 @@ def build():
     # Interleave scopes by slot so a small world transmits only a short prefix.
     row_base = max(DATA[key] for key in ["overview", "roadSummary", "roadDetails"]) + 1
     row_limit, row_stride = 128, 24
+    manage_roads_index = 1  # Waystone form records have their own indices.
     ui["jf_realm_icon"] = image("frontier/settlement_icons/outpost", [24, 24], layer=8)
     ui["jf_realm_icon"]["keep_ratio"] = True
     ui["jf_realm_icon"]["bindings"] = [
@@ -869,6 +869,28 @@ def build():
     def row_present(marker):
         return condition("(not ((#form_text - '" + marker + "') = #form_text))", "#form_text")
 
+    def realm_action(name, caption, size, scale=0.7):
+        width, height = size
+        button = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
+        button.update({"size": size, "bindings": [{"binding_type": "collection_details",
+                                                   "binding_collection_name": "form_buttons"}]})
+        for state in button["controls"]:
+            state_name, panel = next(iter(state.items()))
+            text = label(caption, [width - 6, height - 6], scale=scale)
+            text.update({"text_alignment": "center", "anchor_from": "center", "anchor_to": "center"})
+            if caption == "#form_button_text":
+                text["bindings"] = [
+                    {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
+                    {"binding_name": "#form_button_text", "binding_type": "collection",
+                     "binding_collection_name": "form_buttons"}]
+            panel["size"] = size
+            panel["controls"] = [
+                control("face", image(button_texture(width, height, state_name), size)),
+                control("caption", text)]
+        ui[name + "@common.button"] = button
+
+    realm_action("jf_realm_manage_roads", "Manage Roads", [84, 17], scale=0.8)
+    realm_action("jf_realm_travel", "Travel", [43, 22])
     for scope_index, scope in enumerate(["mine", "all", "roads"]):
         road = scope == "roads"
         height = 33 if road else 32
@@ -902,34 +924,8 @@ def build():
                 text["text_alignment"] = "center"
             ui[template] = text
         if not road:
-            button = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
-            button.update({"size": [47, 24], "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}]})
-            for state in button["controls"]:
-                state_name, panel = next(iter(state.items()))
-                panel["size"] = [47, 24]
-                panel["controls"] = [control("face", image(button_texture(47, 24, state_name), [47, 24])),
-                    control("caption", {**label("#form_button_text", [41, 18], scale=0.65),
-                        "bindings": [
-                            {"binding_type": "collection_details", "binding_collection_name": "form_buttons"},
-                            {"binding_name": "#form_button_text", "binding_type": "collection", "binding_collection_name": "form_buttons"}],
-                        "text_alignment": "center", "anchor_from": "center", "anchor_to": "center", "offset": [0, 0]})]
-            ui["jf_realm_directory_action_" + scope + "@common.button"] = button
-        if road:
-            for enabled in [True, False]:
-                button = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
-                button.update({"size": [43, 22], "enabled": enabled, "focus_enabled": enabled,
-                    "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}]})
-                for state in button["controls"]:
-                    state_name, panel = next(iter(state.items()))
-                    panel["size"] = [43, 22]
-                    panel["controls"] = [control("face", image(button_texture(43, 22, state_name), [43, 22])),
-                        control("caption", {**label("Travel", [37, 12], color=IVORY if enabled else SILVER, scale=0.7),
-                            "text_alignment": "center", "anchor_from": "center", "anchor_to": "center", "offset": [0, 0]})]
-                ui["jf_realm_travel" + ("" if enabled else "_disabled") + "@common.button"] = button
-            tier_action = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
-            tier_action.update({"size": [24, 24], "controls": [],
-                "bindings": [{"binding_type": "collection_details", "binding_collection_name": "form_buttons"}]})
-            ui["jf_realm_tier_action@common.button"] = tier_action
+            realm_action("jf_realm_directory_action_" + scope, "#form_button_text", [47, 24], scale=0.65)
+        else:
             tier_icon = copy.deepcopy(ui["jf_realm_icon"])
             tier_icon["size"] = [20, 20]
             ui["jf_realm_road_tier_icon"] = tier_icon
@@ -948,50 +944,39 @@ def build():
                 road_label = label("Road", [29, 5], (176, 0), SILVER, 0.6)
                 road_label["text_alignment"] = "center"
                 fields.append(control("road_label", road_label))
-                tier_action = explicit_scope("jf_realm_tier_action", base + 6, [178.5, 3], [24, 24])
-                tier_record = tier_action["controls"][0]["record@jagsby_frontier.jf_realm_tier_action"]
-                tier_record.update({
-                    "focus_identifier": f"jf_realm_roads_tier_{slot}",
+                travel = explicit_scope("jf_realm_travel", base + 7, [205, 5], [43, 22])
+                travel["controls"][0]["record@jagsby_frontier.jf_realm_travel"].update({
+                    "focus_identifier": f"jf_realm_roads_travel_{slot}",
                     "focus_change_left": "jf_realm_focus_roads",
-                    "focus_change_right": f"jf_realm_roads_travel_{slot}",
-                    "focus_change_up": f"jf_realm_roads_row_{slot}",
                 })
-                fields.append(control("tier_action", tier_action))
-                for enabled in [True, False]:
-                    key = "travel" if enabled else "travel_disabled"
-                    travel = explicit_scope("jf_realm_" + key, base + 7, [205, 5], [43, 22])
-                    if enabled:
-                        travel["controls"][0]["record@jagsby_frontier.jf_realm_travel"].update({
-                            "focus_identifier": f"jf_realm_roads_travel_{slot}",
-                            "focus_change_left": f"jf_realm_roads_tier_{slot}",
-                            "focus_change_up": f"jf_realm_roads_row_{slot}",
-                        })
-                    travel["bindings"] = row_present("[JF:" + key + ":roads:" + str(slot) + "]")
-                    fields.append(control(key, travel))
+                travel["bindings"] = row_present(f"[JF:travel:roads:{slot}]")
+                fields.append(control("travel", travel))
             else:
                 fields.append(control("dev_label", label("Dev", [23, 12], (177, 2), SILVER, 0.65)))
                 directory_action = explicit_scope("jf_realm_directory_action_" + scope, base + 6, [201, 4], [47, 24])
                 directory_action["bindings"] = row_present("[JF:directoryAction:" + scope + ":" + str(slot) + "]")
                 directory_action["controls"][0]["record@jagsby_frontier.jf_realm_directory_action_" + scope].update({
                     "focus_identifier": f"jf_realm_{scope}_action_{slot}",
-                    "focus_change_left": f"jf_realm_{scope}_row_{slot}",
-                    "focus_change_up": f"jf_realm_{scope}_row_{slot}",
+                    "focus_change_left": f"jf_realm_focus_{scope}",
                 })
                 fields.append(control("directory_action", directory_action))
             marker = "[JF:row:" + scope + ":" + str(slot) + "]"
-            row = focusable_scroll_row({"size": [251, height], "controls": fields,
-                "bindings": row_present(marker)}, "realm", scope, slot)
-            row["focus_magnet_enabled"] = False
-            row["focus_change_right"] = f"jf_realm_roads_travel_{slot}" if road else f"jf_realm_{scope}_action_{slot}"
-            if road:
-                row["focus_change_left"] = f"jf_realm_roads_tier_{slot}"
-            rows.append(control("row" + str(slot), row))
+            rows.append(control("row" + str(slot), {"type": "panel", "size": [251, height],
+                "controls": fields, "bindings": row_present(marker)}))
         ui["jf_realm_" + scope + "_rows"] = {"type": "stack_panel", "orientation": "vertical", "size": [251, "100%c"], "controls": rows}
         scroll = control("entries@common.scrolling_panel", {
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 12 if road else 0],
             "size": [257, 119 if road else 131], "$show_background": False,
             "$scrolling_content": "jagsby_frontier.jf_realm_" + scope + "_rows",
-            "$scroll_size": [4, "100% - 4px"], "$scrolling_pane_size": ["100% - 5px", "100% - 2px"]})
+            "$scroll_size": [4, "100% - 4px"], "$scrolling_pane_size": ["100%", "100%"],
+            "$scroll_bar_right_padding_size": [0, 0], "$always_handle_scrolling": True,
+            "$allow_scroll_even_when_content_fits": False, "$allow_scrolling_even_when_content_fits": False,
+            # Use the native scroll input even when there is no action to focus.
+            "$scrolling_panel_base_button_mappings": [
+                {"from_button_id": f"button.turn_{direction}", "to_button_id": f"button.scroll_{direction}",
+                 "mapping_type": "global", "input_mode_condition": "gamepad_and_not_gaze"}
+                for direction in ("up", "down")
+            ]})
         content = [scroll]
         if road:
             content.append(overview_value("summary", DATA["roadSummary"], [3, 0], [248, 10], scale=0.6))
@@ -1005,11 +990,17 @@ def build():
             "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "size": [257, 131],
             "bindings": [view("#toggle_state", target, "jf_realm_tab_" + scope) for target in ["#visible", "#enabled"]]}))
     ui["jf_realm_content"] = {"type": "panel", "size": [257, 158], "controls": realm_controls}
+    manage_roads = explicit_scope("jf_realm_manage_roads", manage_roads_index, [0, 0], [84, 17])
+    manage_roads["bindings"] = row_present("[JF:manageRoads]")
     ui["jf_waystone"] = {"type": "panel", "size": [380, 240], "controls": [
         *[copy.deepcopy(item) for item in frame if "title" not in item],
         control("jf_waystone_state", copy.deepcopy(menu_state["jf_menu_state"])),
         overview_value("header_name", DATA["overview"], [30, 34], [185, 12], scale=1.0),
         control("subtitle", label("Waystone", [185, 8], (30, 46), SILVER, 0.65)),
+        control("road_management", {"type": "panel", "size": [84, 17], "offset": [265, 34],
+            "anchor_from": "top_left", "anchor_to": "top_left", "controls": [control("action", manage_roads)],
+            "bindings": [view("#toggle_state", target, "jf_realm_tab_roads")
+                         for target in ["#visible", "#enabled"]]}),
         control("realm@jagsby_frontier.jf_realm_content", {
             "anchor_from": "top_left", "anchor_to": "top_left", "offset": [61, 62],
             "size": [257, 158], "layer": 5}),
@@ -1104,8 +1095,10 @@ def build():
         elif isinstance(value, list):
             for child in value: bind_static_list_state(child, provider)
     for key, value in ui.items():
-        if key.startswith(("jf_realm_", "jf_prospect_", "jf_prospecting_", "jf_data_prospectInfo", "jf_action_prospectSelect")):
-            bind_static_list_state(value, "jf_waystone_state" if key.startswith("jf_realm_") else "jf_menu_state")
+        if key == "jf_waystone" or key.startswith("jf_realm_"):
+            bind_static_list_state(value, "jf_waystone_state")
+        elif key.startswith(("jf_prospect_", "jf_prospecting_", "jf_data_prospectInfo", "jf_action_prospectSelect")):
+            bind_static_list_state(value, "jf_menu_state")
     build_map_ui(ui, frame)
     custom_path = RP / "ui/jagsby_frontier/charter.json"
     custom_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1118,7 +1111,7 @@ def build():
         "namespace": "server_form", "main_screen_content/server_form_factory": {
             "control_ids": {"long_form": "@jagsby_frontier.jf_router",
                             "custom_form": "@jagsby_frontier.jf_modal_router"}}}, indent=2) + "\n")
-    layout = {"settlementMap": MAP_LAYOUT, "data": DATA, "actions": ACTIONS, "recordCount": max([*DATA.values(), *ACTIONS.values()]) + 1, "tabs": TABS, "viewActions": VIEW_ACTIONS, "realmRows": {"base": row_base, "limit": row_limit, "stride": row_stride, "scopes": ["mine", "all", "roads"]}}
+    layout = {"settlementMap": MAP_LAYOUT, "data": DATA, "actions": ACTIONS, "recordCount": max([*DATA.values(), *ACTIONS.values()]) + 1, "tabs": TABS, "viewActions": VIEW_ACTIONS, "realmRows": {"base": row_base, "limit": row_limit, "stride": row_stride, "manageRoads": manage_roads_index, "scopes": ["mine", "all", "roads"]}}
     (ROOT / "packs/behavior/scripts/charter-layout.js").write_text(
         "// Generated by tools/build_charter_ui.py; indices match the JSON UI.\n"
         "export const CHARTER_LAYOUT = " + json.dumps(layout, indent=2) + ";\n")

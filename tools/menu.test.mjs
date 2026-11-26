@@ -489,7 +489,7 @@ test('Realm scrolling rows use explicit collection indices and the established c
   const rows=children(list);assert.equal(Object.keys(rows).length,layout.realmRows.limit);
   for(const slot of [0,1,39,layout.realmRows.limit-1]){
    const row=rows['row'+slot],fields=children(row);
-   assert.equal(row.type,'button');assert.ok(row.bindings.some(binding=>binding.target_property_name==='#visible'&&binding.source_property_name.includes('[JF:row:'+scope+':'+slot+']')));
+   assert.equal(row.type,'panel');assert.ok(row.bindings.some(binding=>binding.target_property_name==='#visible'&&binding.source_property_name.includes('[JF:row:'+scope+':'+slot+']')));
    const base=layout.realmRows.base+slot*layout.realmRows.stride+scopeIndex*8;
    for(const [field,offset] of [['name',0],['owner',1],...(scope==='roads'?[['distance',2],['cost',3],['time',5]]:[['coordinates',2],['distance',3],['development',4],['status',5]])]){
     const wrapper=fields[field];assert.equal(wrapper.type,'stack_panel');assert.equal(wrapper.collection_name,'form_buttons');
@@ -502,9 +502,8 @@ test('Realm scrolling rows use explicit collection indices and the established c
     assert.deepEqual(row.size,[251,33]);
     assert.equal(Object.values(fields.tier_icon.controls[0])[0].collection_index,base+6);
     assert.equal(Object.values(fields.travel.controls[0])[0].collection_index,base+7);
-    assert.equal(Object.values(fields.travel_disabled.controls[0])[0].collection_index,base+7);
+    assert.equal(fields.travel_disabled,undefined);
     assert.ok(fields.travel.bindings.some(binding=>binding.source_property_name?.includes('[JF:travel:roads:'+slot+']')));
-    assert.ok(fields.travel_disabled.bindings.some(binding=>binding.source_property_name?.includes('[JF:travel_disabled:roads:'+slot+']')));
     assert.ok(fields.name.offset[0]<fields.distance.offset[0]);assert.ok(fields.distance.offset[0]<fields.cost.offset[0]);
     assert.ok(fields.cost.offset[0]<fields.tier_icon.offset[0]);assert.ok(fields.tier_icon.offset[0]<fields.travel.offset[0]);
     assert.equal(fields.current_icon,undefined);assert.equal(fields.next_icon,undefined);
@@ -569,7 +568,7 @@ test('Controller can enter and navigate Prospecting and Realm rows even without 
   assert.equal(row.$pressed_button_name,undefined);assert.equal(row.collection_name,undefined);
   assert.equal(row.focus_identifier,`jf_${section}_${scope}_row_${slot}`);
   assert.ok(!identifiers.has(row.focus_identifier));identifiers.add(row.focus_identifier);
-  assert.equal(row.focus_change_left,section==='realm'?(scope==='roads'?`jf_realm_roads_tier_${slot}`:`jf_realm_focus_${scope}`):'jf_tab_focus_'+section);
+  assert.equal(row.focus_change_left,'jf_tab_focus_'+section);
   if(slot===0)assert.equal(row.focus_change_up,`jf_${section}_focus_${scope}`);
   else assert.equal(row.focus_change_up,undefined);
   assert.equal(row.focus_change_down,undefined,'Let native navigation reach the next visible row or footer');
@@ -602,16 +601,7 @@ test('Controller can enter and navigate Prospecting and Realm rows even without 
   }
  }
  assert.equal(children(ui.jf_production_content).jf_production_tab_biomes.focus_change_down,'jf_production_biomes_row_0');
- for(const scope of layout.realmRows.scopes){
-  const rows=children(ui['jf_realm_'+scope+'_rows']);
-  for(let slot=0;slot<layout.realmRows.limit;slot++){
-   const row=rows['row'+slot];checkReader(row,'realm',scope,slot);
-   assert.ok(row.bindings.every(b=>b.source_property_name?.includes(`[JF:row:${scope}:${slot}]`)),
-    'Read focus follows row membership, not whether Establish/Travel is enabled');
-  }
-  assert.equal(children(ui.jf_realm_content)['jf_realm_tab_'+scope].focus_change_down,`jf_realm_${scope}_row_0`);
- }
- assert.equal(identifiers.size,52+3*layout.realmRows.limit);
+ assert.equal(identifiers.size,52);
 });
 
 test('form payload packs later records without gaps and preserves contiguous collection ranges',async()=>{
@@ -719,44 +709,58 @@ test('Realm lists use ordinary fixed-height rows without native grids or custom 
   const list=ui['jf_realm_'+scope+'_rows'];assert.equal(list.type,'stack_panel');
   for(const [key,row]of Object.entries(children(list))){
    const marker=`[JF:row:${scope}:${Number(key.slice(3))}]`;
-   assert.equal(row.type,'button');assert.equal(row.grid_item_template,undefined);
+   assert.equal(row.type,'panel');assert.equal(row.grid_item_template,undefined);
    assert.equal(row.collection_name,undefined);assert.equal(row.maximum_grid_items,undefined);
    assert.equal(row.size[1],scope==='roads'?33:32);
-   assert.deepEqual(row.button_mappings,[]);
+   assert.equal(row.button_mappings,undefined);
    assert.ok(row.bindings.some(b=>b.source_control_name==='jf_waystone_state'&&b.target_property_name==='#visible'&&b.source_property_name.includes(marker)));
    const fields=children(row);
-   for(const field of ['icon','name','owner',...(scope==='roads'?['distance','cost','time','tier_icon','tier_action','travel']:['coordinates','distance','development','status','directory_action'])]){
+   for(const field of ['icon','name','owner',...(scope==='roads'?['distance','cost','time','tier_icon','travel']:['coordinates','distance','development','status','directory_action'])]){
     assert.ok(fields[field].offset[1]+fields[field].size[1]<=row.size[1],`${scope} ${field} must fit`);
    }
   }
  }
 });
 
-test('Controller has explicit routes from Realm reading rows into real native action buttons',async()=>{
+test('Waystone lists scroll independently of focus and only their real actions are selectable',async()=>{
  const ui=await loadUI(),{CHARTER_LAYOUT:layout}=await import('../packs/behavior/scripts/charter-layout.js');
  const nativeRecord=scope=>Object.values(scope.controls[0])[0];
- for(const [scopeIndex,scope]of layout.realmRows.scopes.entries())for(let slot=0;slot<layout.realmRows.limit;slot++){
-  const row=children(ui['jf_realm_'+scope+'_rows'])['row'+slot],fields=children(row);
-  assert.equal(row.focus_magnet_enabled,false,'Reading targets must not pull focus away from actions');
-  assert.deepEqual(row.button_mappings,[],'Reading rows must not submit a wrong action');
-  const base=layout.realmRows.base+slot*layout.realmRows.stride+scopeIndex*8;
-  if(scope==='roads'){
-   const tier=nativeRecord(fields.tier_action),travel=nativeRecord(fields.travel);
-   assert.equal(row.focus_change_right,travel.focus_identifier);
-   assert.equal(row.focus_change_left,tier.focus_identifier);
-   assert.equal(tier.focus_change_right,travel.focus_identifier);
-   assert.equal(travel.focus_change_left,tier.focus_identifier);
-   assert.equal(tier.focus_change_left,'jf_realm_focus_roads');
-   assert.equal(travel.focus_change_up,row.focus_identifier);
-   assert.equal(tier.collection_index,base+6);assert.equal(travel.collection_index,base+7);
-   const action=template(ui,'jf_realm_travel');
-   assert.equal(action.focus_enabled,true);assert.equal(action.enabled,true);
-   assert.ok(action.button_mappings.some(m=>m.from_button_id==='button.menu_ok'&&m.to_button_id==='button.form_button_click'&&m.mapping_type==='focused'));
-   const disabled=template(ui,'jf_realm_travel_disabled');assert.equal(disabled.focus_enabled,false);assert.equal(disabled.enabled,false);
-  }else{
-   const establish=nativeRecord(fields.directory_action);
-   assert.equal(row.focus_change_right,establish.focus_identifier);assert.equal(establish.focus_change_left,row.focus_identifier);
-   assert.equal(establish.collection_index,base+6);
+ const tabs=children(ui.jf_realm_content);
+ for(const [scopeIndex,scope]of layout.realmRows.scopes.entries()){
+  const scroll=children(ui['jf_realm_'+scope+'_content'])['entries@common.scrolling_panel'];
+  assert.equal(scroll.$scrolling_content,'jagsby_frontier.jf_realm_'+scope+'_rows');
+  assert.deepEqual(scroll.$scrolling_pane_size,['100%','100%']);
+  assert.deepEqual(scroll.$scroll_bar_right_padding_size,[0,0]);
+  assert.equal(scroll.$always_handle_scrolling,true);
+  assert.equal(scroll.$allow_scroll_even_when_content_fits,false);
+  assert.deepEqual(scroll.$scrolling_panel_base_button_mappings.map(mapping=>[mapping.from_button_id,mapping.to_button_id]),
+   [['button.turn_up','button.scroll_up'],['button.turn_down','button.scroll_down']]);
+  assert.equal(tabs['jf_realm_tab_'+scope].focus_change_down,undefined);
+  const rows=children(ui['jf_realm_'+scope+'_rows']);
+  for(let slot=0;slot<layout.realmRows.limit;slot++){
+   const row=rows['row'+slot],fields=children(row);
+   assert.equal(row.type,'panel');
+   for(const property of ['focus_identifier','focus_enabled','hover_enabled','default_control','hover_control','button_mappings']){
+    assert.equal(row[property],undefined,scope+' rows must be display-only');
+   }
+   assert.equal(fields.tier_action,undefined);
+   assert.equal(fields.travel_disabled,undefined);
+   for(const field of ['surface','icon','name','owner','tier_icon']){
+    if(fields[field])assert.equal(fields[field].button_mappings,undefined);
+   }
+   const action=nativeRecord(fields[scope==='roads'?'travel':'directory_action']);
+   assert.equal(action.focus_change_left,'jf_realm_focus_'+scope);
+   assert.equal(action.focus_change_up,undefined);
+   const base=layout.realmRows.base+slot*layout.realmRows.stride+scopeIndex*8;
+   assert.equal(action.collection_index,base+(scope==='roads'?7:6));
   }
  }
+ const action=template(ui,'jf_realm_travel');
+ assert.equal(action.focus_enabled,true);
+ assert.ok(action.button_mappings.some(m=>m.from_button_id==='button.menu_ok'&&m.to_button_id==='button.form_button_click'&&m.mapping_type==='focused'));
+ const header=children(ui.jf_waystone).road_management;
+ assert.ok(header.bindings.some(b=>b.source_control_name==='jf_realm_tab_roads'&&b.target_property_name==='#visible'));
+ const manage=children(header).action;
+ assert.equal(nativeRecord(manage).collection_index,layout.realmRows.manageRoads);
+ assert.ok(manage.bindings.some(b=>b.source_control_name==='jf_waystone_state'&&b.source_property_name.includes('[JF:manageRoads]')));
 });

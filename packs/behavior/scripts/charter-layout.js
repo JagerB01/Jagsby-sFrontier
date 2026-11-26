@@ -394,6 +394,7 @@ export const CHARTER_LAYOUT = {
     "base": 35,
     "limit": 128,
     "stride": 24,
+    "manageRoads": 1,
     "scopes": [
       "mine",
       "all",
