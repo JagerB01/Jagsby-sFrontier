@@ -161,6 +161,16 @@ async function runtime(initial=fresh(Date.now()),respond=()=>({canceled:true}),o
 }
 function choice(h,key,vid='none',player=h.player){const s=h.read();return h.api.cardContribution(player,s,s.villages[vid],key);}
 function click(h,key,vid='none',shown=choice(h,key,vid),player=h.player){h.api.contributeResearchCard(player,vid,key,shown);}
+test('Opening the Charter reads each inventory slot once for its research cards',async()=>{
+ const h=await runtime(),getComponent=h.player.getComponent;
+ const reads=[];
+ h.player.getComponent=()=>{
+  const {container}=getComponent();
+  return {container:{size:container.size,getItem(i){reads.push(i);return container.getItem(i);}}};
+ };
+ h.api.open(h.player,'none');
+ assert.deepEqual(reads,[0,1,2]);
+});
 test('A global card click is clipped, journaled and cannot be credited again on recovery',async()=>{
  const s=fresh();s.researchProgress.innovation=190;const h=await runtime(s);click(h,'innovation');
  assert.equal(h.read().global.innovation,2);assert.equal(h.slots[0].amount,62);

@@ -30,7 +30,7 @@ export function settlementDirectory(villages, player, requestedPage = 0, mine = 
   const sameDimension=source?.dimension===target.dimension;
   const distance=sameDimension?Math.hypot(target.location.x-source.location.x,target.location.z-source.location.z):null;
   const road=directoryRoadState(source,target,roads);
-  return {id:target.id,name:target.name,owner:ownerName(target),icon:settlementTier(target.census).iconTexture,
+  return {id:target.id,name:target.name,owner:ownerName(target),ownerId:target.owner?.id,icon:settlementTier(target.census).iconTexture,
    coordinates:`${Math.floor(target.location.x)}, ${Math.floor(target.location.y)}, ${Math.floor(target.location.z)}`,
    distance, distanceText:sameDimension?`${Math.round(distance)} blocks`:target.dimension.replace('minecraft:',''),
    development:development(target),canEstablishRoad:road.canEstablish,roadStatus:road.status,sendRoadId:road.sendRoadId};

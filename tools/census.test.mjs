@@ -248,9 +248,11 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
   assert.equal(forms.at(-1).heading,'JF_CHARTER|Waystone');
   assert.match(forms.at(-1).text,/\[JF:realm:roads\]/);
   assert.match(forms.at(-1).text,/\[JF:row:all:0\]/);
+  assert.match(forms.at(-1).text,/\[JF:row:mine:0\]/);
+  assert.doesNotMatch(forms.at(-1).text,/\[JF:(?:tab|research|provinceView):/);
   assert.equal(forms.at(-1).records[0],'[JF:data:overview]Oakfield');
 
-  const {poiTravel}=CHARTER_LAYOUT.settlementMap;
+  const {poiTravel,fit}=CHARTER_LAYOUT.settlementMap;
   player.location=table.location;
   await interact({canceled:true},table);
   assert.equal(forms.at(-1).heading,'JF_CHARTER|SettlementMap');
@@ -262,6 +264,11 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
   properties.set('jagsby_frontier:surveyed_pois',JSON.stringify([
     {kind:'stronghold',x:500,y:22,z:100},{kind:'village',x:2800,y:63,z:0},
   ]));
+  await interact([{selection:fit},{canceled:true}],table);
+  assert.equal(forms.at(-2).heading,'JF_CHARTER|SettlementMap');
+  assert.deepEqual(forms.at(-2).records,forms.at(-1).records,'The first view matches pressing Fit');
+  assert.equal(forms.at(-2).text,forms.at(-1).text);
+  assert.doesNotMatch(forms.at(-1).text,/\[JF:(?:tab|research|realm):/);
   let bread=5;
   player.getComponent=()=>({container:{size:1,getItem:()=>({typeId:'minecraft:bread',amount:bread}),
     setItem:(_,item)=>{bread=item?.amount??0;}}});

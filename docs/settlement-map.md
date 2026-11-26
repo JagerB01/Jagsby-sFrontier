@@ -1,6 +1,6 @@
 # Settlement Map
 
-Interact with a Map Table to open the Diplomacy Map. At the capital's table, use
+Interact with a Map Table to open the Diplomacy Map on Fit. At the capital's table, use
 **POI Travel** to choose a discovered landmark in the province and confirm its fare.
 The map controls are on the
 left. Hover or focus a POI pin to see its information beside it.

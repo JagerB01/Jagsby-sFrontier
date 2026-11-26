@@ -12,8 +12,8 @@ import { blockGuardShield, GUARD_HORSE, isFrontierGuard, isJuggernaut, isTownGua
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from "./guard-colors.js";
 import { isTownPatrol, townGuardPatrol, townGuardSettlement } from "./town-guard-posts.js";
 import { fillTownGuardSlot, recordTownGuardDeath, retireTownGuards, validateTownGuard } from "./town-watch.js";
-import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers, MAP_ASPECT } from "./settlement-map.js";
-import { PROVINCE_SIZE, capitalStatus, designateCapital, provinceAt, provinceDevelopment, provincePerkText, renameProvince, updateProvinceCapitalId } from "./provinces.js";
+import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
+import { PROVINCE_SIZE, capitalStatus, designateCapital, provinceDevelopment, provincePerkText, renameProvince, updateProvinceCapitalId } from "./provinces.js";
 import { provincialPatrols } from "./provincial-patrols.js";
 import { atStation, bindStation, clearStation, isSettlementStation, MAP_TABLE, WAYSTONE } from "./settlement-stations.js";
 import { provincialDestinations, withPoiArrival } from "./provincial-travel.js";
@@ -112,12 +112,19 @@ function globalResearchText(s,key){
  const required=missing.length?'\n§cRequired: '+missing.join('; ')+'§r':'';
  return `Lv ${level}${Number.isFinite(maximum)?' / '+Math.max(level,maximum):' (endless)'}\n${description}\n${cost===undefined?'§eFully upgraded§r':`Next cost: ${cost} ${resource}\nContributed: ${s.researchProgress[key]} / ${cost}; ${Math.max(0,cost-s.researchProgress[key])} remaining${required}`}`;
 }
-function inventoryMaterials(player,s,key,materials=acceptedMaterials(s,key)){
+function researchInventory(player){
  const inv=player.getComponent('minecraft:inventory')?.container,counts=new Map();
- if(inv)for(let slot=0;slot<inv.size;slot++){const item=inv.getItem(slot);if(item&&materials.includes(item.typeId))counts.set(item.typeId,(counts.get(item.typeId)||0)+item.amount);}
- return [...counts];
+ const selected=Number.isInteger(player.selectedSlotIndex)?player.selectedSlotIndex:0;
+ let held;
+ if(inv)for(let slot=0;slot<inv.size;slot++){
+  const item=inv.getItem(slot);
+  if(!item)continue;
+  if(slot===selected)held=item.typeId;
+  counts.set(item.typeId,(counts.get(item.typeId)||0)+item.amount);
+ }
+ return {held,counts};
 }
-function cardContribution(player,s,v,key){
+function cardContribution(player,s,v,key,readInventory=()=>researchInventory(player)){
  const global=key in DEFINITIONS;
  const cost=global?nextCost(s,key):researchCost(v,key);
  const locked=global?lockReason(s,key):researchRequirement(v,key,s);
@@ -125,9 +132,8 @@ function cardContribution(player,s,v,key){
  const level=global?s.global[key]:researchLevel(v,key);
  if(locked||!cost)return {level,revision,reason:locked||'Fully upgraded'};
  const materials=global?acceptedMaterials(s,key):cost.materials;
- const inv=player.getComponent('minecraft:inventory')?.container;
- const held=inv?.getItem(Number.isInteger(player.selectedSlotIndex)?player.selectedSlotIndex:0)?.typeId;
- const available=inventoryMaterials(player,s,key,materials);
+ const {held,counts}=readInventory();
+ const available=[...counts].filter(([id])=>materials.includes(id));
  const choice=available.find(([id])=>id===held)||available[0];
  if(!choice)return {level,revision,reason:'No eligible materials to contribute'};
  const [material,count]=choice;
@@ -207,14 +213,16 @@ function recoverResearch(player){
   player.sendMessage(`§aContributed ${tx.amount} toward ${tx.scope==='local'?ECONOMY_CONFIG.research[tx.key].name:DEFINITIONS[tx.key].name}.`);
 }
 
-function reopenView(player,vid,view={}){
- open(player,vid,view.page,view.researchScope,view.realmPage,view.realmScope,view.productionScope,view.productionPages,view.diplomacyScope);
-}
-function open(player,vId,page='Overview',researchScope='local',realmPage=0,realmScope='roads',productionScope='summary',productionPages={},diplomacyScope='provinces'){
+function open(player,vId,page,researchScope,realmPage,realmScope,productionScope,productionPages,diplomacyScope){
   if(page==='Realm')return openWaystone(player,vId,realmScope);
+  reopenView(player,vId,{page,researchScope,realmPage,realmScope,productionScope,productionPages,diplomacyScope});
+}
+function reopenView(player,vId,requestedView={},s){
   const preparedAt=Date.now();
+  const {page='Overview',researchScope='local',realmPage=0,realmScope='roads',productionScope='summary',productionPages={},diplomacyScope='provinces'}=requestedView;
   const view={page,researchScope,realmPage,realmScope,productionScope,productionPages,diplomacyScope};
-  const s=accounted(),v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
+  s??=accounted();
+  const v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
   const {data,actions,recordCount,tabs}=CHARTER_LAYOUT;
   const records=Array(recordCount).fill('');
   records[data.overview]=v.name;
@@ -225,8 +233,10 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   const tier=settlementTier(v.census);
   records[data.tier]=tier.label;
   const researchChoices=new Map();
+  let inventory;
+  const readInventory=()=>inventory??=researchInventory(player);
   for(const key of ['efficiency','hearth','biome','sanctuary','roads','frontier','capacity','innovation','colonization','storage']){
-   const choice=cardContribution(player,s,v,key);researchChoices.set(key,choice);
+   const choice=cardContribution(player,s,v,key,readInventory);researchChoices.set(key,choice);
    const available=key in DEFINITIONS?nextCost(s,key)!==undefined&&!lockReason(s,key):Boolean(researchCost(v,key))&&!researchRequirement(v,key,s);
    records[data[key]]=researchText(s,v,key,player)+(available?'\nClick to contribute':'');
   }
@@ -320,8 +330,8 @@ function openWaystone(player,vId,scope='roads',station){
   if(!v || (station&&!atStation(world,player,v,station,WAYSTONE)))return;
   const {data,realmRows}=CHARTER_LAYOUT;
   const records=Array(realmRows.base).fill('');
-  const mine=settlementDirectory(s.villages,player,0,true,v,s.roads);
   const all=settlementDirectory(s.villages,player,0,false,v,s.roads);
+  const mine=all.rows.filter(row=>row.ownerId===player.id);
   const roadView=roadNetworkOverview(s,v);
   const directoryIcons=new Map(),handlers=new Map();
   records[data.overview]=`[JF:data:overview]${v.name}`;
@@ -330,7 +340,7 @@ function openWaystone(player,vId,scope='roads',station){
   const realmMarkers=[];
   const activeRoute=selectedTradeRoutes(s)[vId];
   const layout=CHARTER_LAYOUT.realmRows;
-  const lists=[mine.rows,all.rows,roadView.rows];
+  const lists=[mine,all.rows,roadView.rows];
   if(lists.some(rows=>rows.length>layout.limit)){
    player.sendMessage(`§cRealm lists exceed this pack's ${layout.limit}-row layout. Increase the Realm row limit and rebuild the pack; no settlements have been removed.`);return;
   }
@@ -357,7 +367,7 @@ function openWaystone(player,vId,scope='roads',station){
    }
   }));
   const body=`[JF:realm:${layout.scopes.includes(scope)?scope:'roads'}]${realmMarkers.join('')}`
-    +[['mine',mine],['all',all]].map(([key,directory])=>directory.rows.length?'':`[JF:directory:${key}:empty]`).join('');
+    +(mine.length?'':'[JF:directory:mine:empty]')+(all.rows.length?'':'[JF:directory:all:empty]');
   const form=new ActionFormData().title(pageTitle('Waystone')).body(body);
   records.forEach((text,index)=>form.button(text,directoryIcons.get(index)));
   displayMenu(player,form,system).then(response=>{
@@ -643,17 +653,13 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
        if(type===WAYSTONE){
         if(village)openWaystone(player,village.id,'roads',station);
         else player.sendMessage('Place the Waystone within 80 blocks of a Village Charter.');
-       }else{
-        const province=provinceAt(village?.location,dim.id);
-        const viewport=province?{x:province.x,z:province.z,span:PROVINCE_SIZE*MAP_ASPECT*1.05}:{};
-        openSettlementMap(player,village?.id,viewport,village?.id,station);
-       }
+       }else openSettlementMap(player,village?.id,{},village?.id,station);
        return;
       }
       recoverResearch(player);
-      let s=accounted(),v=addVillage(s,block,player);
+      const s=accounted(),v=addVillage(s,block,player);
       if(!v)return;
-      open(player,v.id);
+      reopenView(player,v.id,{},s);
     }catch(e){console.warn(`Frontier charter interaction: ${e}`);player.sendMessage(String(e).includes('catching up')?'Production is catching up. Interact with the charter again to continue.':'§cThe Village Charter could not open. Check the Minecraft content log for Frontier charter errors.');}
     finally{pendingCharterInteractions.delete(pendingKey);}
   });

@@ -110,6 +110,17 @@ def condition(expression, binding="#title_text"):
             view(expression), view(expression, "#enabled")]
 
 
+def form_route(template, predicate):
+    # A native stack factory creates one screen root for the matching title.
+    # A hidden, statically inherited screen would still construct its children.
+    return {"type": "stack_panel", "orientation": "vertical", "size": [380, 240],
+            "collection_name": "form_buttons",
+            "factory": {"name": "buttons", "control_name": template},
+            "property_bag": {"#title_text": "JF_CHARTER|", "#collection_length": 0},
+            "bindings": [{"binding_name": "#title_text", "binding_type": "none"},
+                         view(f"({predicate} * 1)", "#collection_length")]}
+
+
 def image(texture, size, offset=(0, 0), layer=0, color=None):
     result = {"type": "image", "texture": "textures/ui/" + texture,
               "size": size, "offset": list(offset), "keep_ratio": False,
@@ -436,19 +447,22 @@ def build():
     build_ui_art()
     GENERATED_CONTROLS.clear()
     ui = {"namespace": "jagsby_frontier"}
-    is_charter = "(not ((#title_text - 'JF_CHARTER|') = #title_text))"
-    is_dashboard = "(#title_text = 'JF_CHARTER|Dashboard')"
-    is_waystone = "(#title_text = 'JF_CHARTER|Waystone')"
-    is_map = "(#title_text = 'JF_CHARTER|SettlementMap')"
-    is_poi_picker = "(#title_text = 'JF_CHARTER|POITravel')"
-    ui["jf_router"] = {"type": "panel", "size": [380, 240], "$msfm_standard_long_form|default": "server_form.long_form", "controls": [
-        control("vanilla@$msfm_standard_long_form", {"bindings": condition(f"(not {is_charter})")}),
-        control("charter@jagsby_frontier.jf_dashboard", {"bindings": condition(is_dashboard)}),
-        control("waystone@jagsby_frontier.jf_waystone", {"bindings": condition(is_waystone)}),
-        control("map@jagsby_frontier.jf_settlement_map", {"bindings": condition(is_map)}),
-        control("poi_picker@jagsby_frontier.jf_poi_picker", {"bindings": condition(is_poi_picker)}),
-        control("picker@jagsby_frontier.jf_picker", {"bindings": condition(f"({is_charter} and (not {is_dashboard}) and (not {is_waystone}) and (not {is_map}) and (not {is_poi_picker}))")}),
+    is_other_form = "((#title_text - 'JF_CHARTER|') = #title_text)"
+    routes = [
+        ("charter", "jf_dashboard", "Dashboard"),
+        ("waystone", "jf_waystone", "Waystone"),
+        ("map", "jf_settlement_map", "SettlementMap"),
+        ("poi_picker", "jf_poi_picker", "POITravel"),
+        ("picker", "jf_picker", "Roads"),
+    ]
+    ui["jf_router"] = {"type": "panel", "size": [380, 240], "controls": [
+        control("vanilla", form_route("jagsby_frontier.jf_vanilla_form", is_other_form)),
+        *[control(name, form_route("jagsby_frontier." + template, f"(#title_text = 'JF_CHARTER|{title}')"))
+          for name, template, title in routes],
     ]}
+    ui["jf_vanilla_form"] = {"type": "panel", "size": [380, 240],
+                            "$msfm_standard_long_form|default": "server_form.long_form",
+                            "controls": [control("vanilla@$msfm_standard_long_form", {})]}
     frame = [
         control("frame", image("frontier/charter_frame", [380, 240], layer=1)),
         control("leather", image("frontier/palette_leather", [347, 199], (17, 29), layer=2, color=[0.58, 0.58, 0.58])),
@@ -1012,8 +1026,7 @@ def build():
     ]}
     GENERATED_CONTROLS["jf_data_overview"]["color"] = list(WHEAT)
     picker = copy.deepcopy(frame)
-    # Secondary-biome choices have their own custom button renderer, not the
-    # vanilla long-form dynamic list used by the previous prototype.
+    # Road management and Provincial Travel each build their own choice list.
     picker.append(control("options@common.scrolling_panel", {
         "anchor_from": "top_left", "anchor_to": "top_left", "offset": [104, 62],
         "size": [257, 158], "layer": 5, "$show_background": False,
@@ -1042,7 +1055,7 @@ def build():
     ui["jf_poi_picker_content"] = {**ui["jf_picker_content"], "controls": [
         control("details", poi_details), copy.deepcopy(ui["jf_picker_content"]["controls"][-1]),
     ]}
-    # Native factory context supplies the chosen biome's real record index.
+    # The native choice factory supplies the real form record index.
     picker_template = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
     picker_template["size"] = [254, 21]
     picker_template["bindings"] = collection_bindings()

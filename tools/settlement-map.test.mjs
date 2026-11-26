@@ -96,8 +96,7 @@ test('Zoom, pan and edge clipping use bounded viewports and correct axes',()=>{
 test('Map UI has fixed indexed form cells, a dedicated router and the ordinary native bindings',async()=>{
  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
  const children=value=>Object.assign({},...(value.controls||[]));
- const router=children(ui.jf_router);assert.ok(router['map@jagsby_frontier.jf_settlement_map']);
- assert.match(JSON.stringify(router['picker@jagsby_frontier.jf_picker']),/not \(#title_text = 'JF_CHARTER\|SettlementMap'\)/);
+ assert.equal(children(ui.jf_router).map.factory.control_name,'jagsby_frontier.jf_settlement_map');
  const map=children(ui.jf_settlement_map),grid=children(map.grid);
  assert.equal(L.settlementMap.cells,MAP_COLUMNS*MAP_ROWS);assert.deepEqual(map.grid.size,[240,150]);
  for(let i=0;i<L.settlementMap.cells;i++){
@@ -153,8 +152,6 @@ test('Map D-pad zoom is gamepad-only, scoped to the zoom controls and keeps nati
   for(const [key,child]of Object.entries(value))check(child,path+'/'+key);
  }
  check(ui);
- const route=children(ui.jf_router)['map@jagsby_frontier.jf_settlement_map'];
- for(const target of ['#visible','#enabled'])assert.ok(route.bindings.some(b=>b.target_property_name===target&&b.source_property_name==="(#title_text = 'JF_CHARTER|SettlementMap')"));
 });
 
 test('World spawn is fitted and projected in Overworld without affecting settlement counts or registry',()=>{
