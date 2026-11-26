@@ -35,7 +35,8 @@ export const CHARTER_LAYOUT = {
       1023,
       1024,
       1025
-    ]
+    ],
+    "poiTravel": 1026
   },
   "data": {
     "overview": 0,
@@ -249,19 +250,10 @@ export const CHARTER_LAYOUT = {
     "renameProductionsummary": 248,
     "scanProductionbiomes": 249,
     "renameProductionbiomes": 250,
-    "scanRealmroads": 251,
-    "renameRealmroads": 252,
-    "scanRealmmine": 253,
-    "renameRealmmine": 254,
-    "scanRealmall": 255,
-    "renameRealmall": 256,
-    "scanDiplomacymap": 257,
-    "renameDiplomacymap": 258,
-    "scanDiplomacyprovinces": 259,
-    "renameDiplomacyprovinces": 260,
-    "scanDiplomacycolors": 261,
-    "renameDiplomacycolors": 262,
-    "settlementMap": 11,
+    "scanDiplomacyprovinces": 251,
+    "renameDiplomacyprovinces": 252,
+    "scanDiplomacycolors": 253,
+    "renameDiplomacycolors": 254,
     "designateCapital": 29,
     "renameProvince": 30,
     "guardColor0": 35,
@@ -274,12 +266,11 @@ export const CHARTER_LAYOUT = {
     "guardColor7": 42,
     "guardColor8": 43
   },
-  "recordCount": 263,
+  "recordCount": 255,
   "tabs": [
     "Overview",
     "Research",
     "Production",
-    "Realm",
     "Diplomacy"
   ],
   "viewActions": [
@@ -313,30 +304,6 @@ export const CHARTER_LAYOUT = {
       "rename": "renameProductionbiomes"
     },
     {
-      "page": "Realm",
-      "realmScope": "roads",
-      "scan": "scanRealmroads",
-      "rename": "renameRealmroads"
-    },
-    {
-      "page": "Realm",
-      "realmScope": "mine",
-      "scan": "scanRealmmine",
-      "rename": "renameRealmmine"
-    },
-    {
-      "page": "Realm",
-      "realmScope": "all",
-      "scan": "scanRealmall",
-      "rename": "renameRealmall"
-    },
-    {
-      "page": "Diplomacy",
-      "diplomacyScope": "map",
-      "scan": "scanDiplomacymap",
-      "rename": "renameDiplomacymap"
-    },
-    {
       "page": "Diplomacy",
       "diplomacyScope": "provinces",
       "scan": "scanDiplomacyprovinces",
@@ -350,7 +317,7 @@ export const CHARTER_LAYOUT = {
     }
   ],
   "realmRows": {
-    "base": 263,
+    "base": 35,
     "limit": 128,
     "stride": 24,
     "scopes": [

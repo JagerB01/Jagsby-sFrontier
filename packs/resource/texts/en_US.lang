@@ -1,4 +1,6 @@
 tile.jagsby_frontier:village_charter.name=Village Charter
+tile.jagsby_frontier:map_table.name=Map Table
+tile.jagsby_frontier:waystone.name=Waystone
 entity.jagsby_frontier:swordsman.name=Frontier Swordsman
 entity.jagsby_frontier:arbalist.name=Frontier Arbalist
 entity.jagsby_frontier:lancer.name=Frontier Lancer

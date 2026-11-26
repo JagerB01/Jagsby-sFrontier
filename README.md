@@ -5,7 +5,17 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.139](downloads/Jagsbys_Frontier_v0.0.139.mcaddon?raw=true)
+[Download Frontier 0.0.140](downloads/Jagsbys_Frontier_v0.0.140.mcaddon?raw=true)
+
+The **Village Charter** opens on Overview and keeps Research, Production, and
+Diplomacy. The **Waystone** opens Road Networks, My Settlements, and All
+Settlements. The **Map Table** opens the Diplomacy Map. Place the Waystone or
+Map Table within 80 horizontal blocks of a charter to link it. All three
+blocks rotate to face the player on placement.
+
+Both station recipes are always unlocked at the crafting table. For a Waystone,
+put a compass above two cobblestone blocks in a single column. For a Map Table,
+put an empty map in the center slot with three planks across the bottom row.
 
 In Creative, search for **Frontier** spawn eggs to test the Swordsman, Arbalist,
 Lancer, and Juggernaut. The Horse Lancer Team egg spawns a horse with its lancer.
@@ -32,13 +42,16 @@ Sanctuary recruits use the settlement owner's color.
 Changing your selection updates your loaded guards and applies when your
 other guards load. The Standard swatch restores the original band.
 
-The Village Charter's Diplomacy tab has Map, Provinces and Colors subtabs.
+The Village Charter's Diplomacy tab has Provinces and Colors subtabs.
 Settlement owners can designate a capital at Development 10, and capital owners
 can rename their province. Provinces use a standard name based on their
 coordinates until renamed. The detailed map uses the Capital icon, and the
 first press of − shows centered Province icons for squares with settlements or
 landmarks. Province tooltips list the capital and combined Development.
-The Provinces tab shows Provincial Patrols and previews Provincial Travel.
+The Provinces tab shows Provincial Patrols and Provincial Travel tiers.
+At the capital's Map Table, choose **POI Travel** and select a discovered
+landmark in the province. Food fares fall by 30% at 25 combined Development and
+55% at 50. A road-linked settlement's Waystone provides the return trip.
 In a province with a capital and at least 15 combined Development, each natural
 surface spawn of a cow, pig, sheep, chicken, zombie or skeleton has a 5% chance
 to be replaced by a patrol outside settlement survey areas. Patrols take the
@@ -543,10 +556,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.139.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.140.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.139_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.140_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

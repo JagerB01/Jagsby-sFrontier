@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "jagsby_frontier:waystone"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "P",
+      "C",
+      "C"
+    ],
+    "key": {
+      "P": {
+        "item": "minecraft:compass"
+      },
+      "C": {
+        "item": "minecraft:cobblestone"
+      }
+    },
+    "unlock": [
+      {
+        "context": "AlwaysUnlocked"
+      }
+    ],
+    "result": {
+      "item": "jagsby_frontier:waystone",
+      "count": 1
+    }
+  }
+}

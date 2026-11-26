@@ -4,6 +4,7 @@ import test from 'node:test';
 import * as E from '../packs/behavior/scripts/settlement-economy.js';
 import * as F from '../packs/behavior/scripts/settlement-effects.js';
 import {ECONOMY_CONFIG as C} from '../packs/behavior/scripts/economy-config.js';
+import {withPoiArrival} from '../packs/behavior/scripts/provincial-travel.js';
 const hour=3600000,day=24*hour;
 function village(id='a',extra={}){return {id,dimension:'minecraft:overworld',location:{x:0,y:64,z:0},biome:'minecraft:plains',census:{realmPowerTenths:100},efficiency:0,hearth:1,biomeUnlocked:false,...extra};}
 function state(v=village()){return migrateResearch({productionVersion:2,developmentVersion:2,villages:{[v.id]:v},global:{storage:20},stock:{},economyAt:0,roads:{}});}
@@ -131,6 +132,36 @@ test('food spending is atomic across failed teleport and preserves item metadata
  assert.deepEqual(stack,original);
  let travelled=false;E.spendFoodAndTravel(inventory,plan,()=>travelled=true);
  assert.equal(travelled,true);assert.equal(stack.amount,1);assert.equal(stack.nameTag,'Packed lunch');
+});
+
+test('POI travel temporarily loads distant terrain and releases it after success or failure',async()=>{
+ let loaded=false;
+ const calls=[];
+ const dimension={
+  id:'minecraft:overworld',heightRange:{max:320},
+  isChunkLoaded:()=>loaded,
+  getTopmostBlock:({x,z})=>({
+   typeId:x===1500&&z===500?'minecraft:lava':'minecraft:stone',
+   isLiquidBlocking:()=>true,location:{y:63},
+  }),
+  getBlock:()=>({isAir:true}),
+ };
+ const world={tickingAreaManager:{
+  async createTickingArea(id,options){
+   calls.push(['load',id,options]);loaded=true;
+  },
+  removeTickingArea(id){calls.push(['remove',id]);loaded=false;},
+ }};
+ const poi={x:1500,y:25,z:500};
+ const landed=await withPoiArrival(world,dimension,poi,position=>{
+  assert.equal(loaded,true);
+  return position;
+ });
+ assert.deepEqual(landed,{x:1499.5,y:64,z:500.5});
+ assert.equal(calls[0][2].dimension,dimension);
+ assert.deepEqual(calls[1],['remove',calls[0][1]]);
+ await assert.rejects(withPoiArrival(world,dimension,poi,()=>{throw Error('Teleport failed');}),/Teleport failed/);
+ assert.deepEqual(calls[3],['remove',calls[2][1]]);
 });
 test('Sanctuary retains its source strength for three minutes outside the settlement',()=>{
  const props=new Map();const p={dimension:{id:'minecraft:overworld'},location:{x:0,y:64,z:0},setDynamicProperty:(k,v)=>props.set(k,v),addEffect(){}};

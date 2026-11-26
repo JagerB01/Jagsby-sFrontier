@@ -1,6 +1,8 @@
 # Settlement Map
 
-Open Village Charter → Diplomacy → Map → Open Settlement Map. The controls are on the
+Interact with a Map Table to open the Diplomacy Map. At the capital's table, use
+**POI Travel** to choose a discovered landmark in the province and confirm its fare.
+The map controls are on the
 left. Hover or focus a POI pin to see its information beside it.
 
 ## Provinces and capitals

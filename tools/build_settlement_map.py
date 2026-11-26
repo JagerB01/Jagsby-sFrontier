@@ -16,6 +16,7 @@ MAP_LAYOUT.update({key: COLUMNS * ROWS + i for i, key in enumerate([
     "nextPage", "provinceLines", "zoneLines"])})
 MAP_LAYOUT["xTicks"] = list(range(MAP_LAYOUT["zoneLines"] + 1, MAP_LAYOUT["zoneLines"] + 1 + len(X_TICKS)))
 MAP_LAYOUT["zTicks"] = list(range(MAP_LAYOUT["xTicks"][-1] + 1, MAP_LAYOUT["xTicks"][-1] + 1 + len(Z_TICKS)))
+MAP_LAYOUT["poiTravel"] = MAP_LAYOUT["zTicks"][-1] + 1
 
 
 def build_map_ui(ui, frame):
@@ -119,7 +120,7 @@ def build_map_ui(ui, frame):
                              {"offset": [tooltip_x - x, 0],
                               "anchor_from": tooltip_anchor, "anchor_to": tooltip_anchor})]})]}
     content=copy.deepcopy([item for item in frame if 'title' not in item])
-    content.append(c("title", label("Settlement Map", [170, 14], (28, 34), color=(0.86, 0.73, 0.44), scale=1)))
+    content.append(c("title", label("Diplomacy Map", [170, 14], (28, 34), color=(0.86, 0.73, 0.44), scale=1)))
     content.append(c("jf_map_boundary_state", {
         "type": "panel", "size": [0, 0], "property_bag": {"#form_text": ""},
         "bindings": [{"binding_name": "#form_text", "binding_type": "none", "binding_condition": "always"}]}))
@@ -176,6 +177,7 @@ def build_map_ui(ui, frame):
               ("south",28,14,24,90), ("dimension",62,16,7,109),
               ("refresh",62,14,7,128), ("back",62,14,7,145),
               ("nextPage",120,12,GRID_X,221),
+              ("poiTravel",108,12,242,221),
               ("provinceLines",90,16,168,34), ("zoneLines",90,16,262,34)]
     for key,width,height,x,y in controls:
         template="jf_map_"+key
@@ -195,12 +197,12 @@ def build_map_ui(ui, frame):
         if key in ['zoomIn','zoomOut']:
             button['button_mappings'].append({'from_button_id':'button.menu_up' if key=='zoomIn' else 'button.menu_down',
                 'to_button_id':'button.form_button_click','mapping_type':'global','scope':'view','input_mode_condition':'gamepad_and_not_gaze'})
-        if key == "nextPage" or key in overlay_controls:
+        if key in ("nextPage", "poiTravel") or key in overlay_controls:
             button["bindings"].extend(
                 {"binding_type": "view", "source_property_name": "(not (#form_button_text = ''))",
                  "target_property_name": prop} for prop in ("#visible", "#enabled"))
         ui[template+'@common.button']=button
-        target = content if key == "nextPage" or key in overlay_controls else panel
+        target = content if key in ("nextPage", "poiTravel") or key in overlay_controls else panel
         target.append(c(key,scope(template,MAP_LAYOUT[key],[width,height],[x,y])))
     content.append(c('controls',{'type':'panel','size':[76,162],'offset':[26,61],
         'anchor_from':'top_left','anchor_to':'top_left','controls':panel}))

@@ -53,14 +53,14 @@ test('standalone charter definitions are registered separately with a minimal va
   assert.equal(JSON.stringify(ui.jf_dashboard).includes('long_form_dynamic_buttons_panel'),false);
 });
 
-test('five local sidebar toggles control custom pages without submitting form buttons', async () => {
+test('four local sidebar toggles control custom pages without submitting form buttons', async () => {
   const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8'));
-  for(const name of ['overview','research','production','realm','diplomacy']) {
+  for(const name of ['overview','research','production','diplomacy']) {
     const tab=ui.jf_dashboard.controls.find(c=>c['jf_tab_'+name])['jf_tab_'+name];
     assert.equal(tab.type,'toggle');
     assert.ok(tab.offset[1]+tab.size[1]<=220);
-    if(name==='realm')assert.equal(tab.focus_change_down,'jf_tab_focus_diplomacy');
-    if(name==='diplomacy')assert.equal(tab.focus_change_up,'jf_tab_focus_realm');
+    if(name==='production')assert.equal(tab.focus_change_down,'jf_tab_focus_diplomacy');
+    if(name==='diplomacy')assert.equal(tab.focus_change_up,'jf_tab_focus_production');
     assert.equal(tab.radio_toggle_group,true);
     assert.equal(JSON.stringify(tab).includes('button.form_button_click'),false);
     const key=name+'@jagsby_frontier.jf_'+name+'_content';
@@ -249,7 +249,7 @@ test('Research subtabs isolate the correct native action factories',async()=>{
 test('approved transparent sprites appear in every state of their sidebar tabs',async()=>{
   const ui=await loadUI();
   const dashboard=children(ui.jf_dashboard);
-  for(const name of ['overview','research','production','realm','diplomacy']) {
+  for(const name of ['overview','research','production','diplomacy']) {
     for(const state of dashboard['jf_tab_'+name].controls) {
       const icon=children(Object.values(state)[0]).icon;
       assert.equal(icon.texture,'textures/ui/frontier/icons/'+name);
@@ -506,7 +506,7 @@ test('Scrolling lists resolve late form data and initially hidden indexed record
  assert.equal(state.type,'panel');assert.equal(state.visible,undefined);
  assert.deepEqual(state.bindings,[{binding_name:'#form_text',binding_type:'none',binding_condition:'always'}]);
  let markerBindings=0,collectionBindings=0;
- function check(value){
+ function check(value,provider){
   if(!value||typeof value!=='object')return;
   if(value.type==='toggle')return; // User-controlled radio state must stay live.
   for(const binding of value.bindings||[]){
@@ -515,13 +515,13 @@ test('Scrolling lists resolve late form data and initially hidden indexed record
     assert.equal(binding.binding_condition,undefined,'Indexed text/icons must resolve even before their tab or scroll row is visible');collectionBindings++;
    }
    if(binding.binding_type==='view'&&['#visible','#enabled'].includes(binding.target_property_name)&&binding.source_property_name.includes('#form_text')){
-    assert.equal(binding.source_control_name,'jf_menu_state');assert.equal(binding.binding_condition,undefined,'Row membership must update when the shared form body arrives');markerBindings++;
+    assert.equal(binding.source_control_name,provider);assert.equal(binding.binding_condition,undefined,'Row membership must update when the shared form body arrives');markerBindings++;
     assert.ok(!(value.bindings||[]).some(b=>b.binding_name==='#form_text'),'Read shared state instead of a hidden local body binding');
    }
   }
-  for(const child of Object.values(value))check(child);
+  for(const child of Object.values(value))check(child,provider);
  }
- for(const [key,value]of Object.entries(ui))if(/^(jf_realm_|jf_prospect_|jf_prospecting_|jf_data_prospectInfo|jf_action_prospectSelect)/.test(key)&&!key.startsWith('jf_realm_tab_'))check(value);
+ for(const [key,value]of Object.entries(ui))if(/^(jf_realm_|jf_prospect_|jf_prospecting_|jf_data_prospectInfo|jf_action_prospectSelect)/.test(key)&&!key.startsWith('jf_realm_tab_'))check(value,key.startsWith('jf_realm_')?'jf_waystone_state':'jf_menu_state');
  assert.ok(markerBindings>0);assert.ok(collectionBindings>0);
  let liveBindings=0;
  function countLive(value){
@@ -533,7 +533,7 @@ test('Scrolling lists resolve late form data and initially hidden indexed record
   }
   for(const child of Object.values(value))countLive(child);
  }
- countLive(ui);assert.equal(liveBindings,17,'Only the fifteen tab toggles and two shared form-body readers explicitly force always');
+ countLive(ui);assert.equal(liveBindings,16,'Only thirteen tab toggles and the three form-body readers explicitly force always');
 });
 
 test('Controller can enter and navigate Prospecting and Realm rows even without an available action',async()=>{
@@ -546,7 +546,7 @@ test('Controller can enter and navigate Prospecting and Realm rows even without 
   assert.equal(row.$pressed_button_name,undefined);assert.equal(row.collection_name,undefined);
   assert.equal(row.focus_identifier,`jf_${section}_${scope}_row_${slot}`);
   assert.ok(!identifiers.has(row.focus_identifier));identifiers.add(row.focus_identifier);
-  assert.equal(row.focus_change_left,section==='realm'&&scope==='roads'?`jf_realm_roads_tier_${slot}`:'jf_tab_focus_'+section);
+  assert.equal(row.focus_change_left,section==='realm'?(scope==='roads'?`jf_realm_roads_tier_${slot}`:`jf_realm_focus_${scope}`):'jf_tab_focus_'+section);
   if(slot===0)assert.equal(row.focus_change_up,`jf_${section}_focus_${scope}`);
   else assert.equal(row.focus_change_up,undefined);
   assert.equal(row.focus_change_down,undefined,'Let native navigation reach the next visible row or footer');
@@ -606,8 +606,8 @@ test('form payload packs later records without gaps and preserves contiguous col
 
 test('Every tab stays local, defaults to its first page and applies refresh selection only once',async()=>{
  const ui=await loadUI(),dashboard=children(ui.jf_dashboard);
- const tabs=['overview','research','production','realm','diplomacy'].map(name=>dashboard['jf_tab_'+name]);
- for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']],['diplomacy',['map','provinces','colors']]]){
+ const tabs=['overview','research','production','diplomacy'].map(name=>dashboard['jf_tab_'+name]);
+ for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']],['diplomacy',['provinces','colors']]]){
   const pane=children(ui['jf_'+section+'_content']);tabs.push(...scopes.map(scope=>pane['jf_'+section+'_tab_'+scope]));
  }
  for(const tab of tabs){
@@ -650,8 +650,8 @@ test('Provinces renders both perk cards from fixed form records without a submit
 
 test('Fresh tab groups have exactly one selected default and refresh markers select the intended view',async()=>{
  const ui=await loadUI(),dashboard=children(ui.jf_dashboard);
- const groups=[['tab',['overview','research','production','realm','diplomacy'].map(name=>dashboard['jf_tab_'+name])]];
- for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']],['diplomacy',['map','provinces','colors']]]){
+ const groups=[['tab',['overview','research','production','diplomacy'].map(name=>dashboard['jf_tab_'+name])]];
+ for(const [section,scopes]of [['research',['local','global']],['production',['summary','biomes']],['realm',['roads','mine','all']],['diplomacy',['provinces','colors']]]){
   const pane=children(ui['jf_'+section+'_content']);groups.push([section,scopes.map(scope=>pane['jf_'+section+'_tab_'+scope])]);
  }
  for(const [section,tabs]of groups){
@@ -700,7 +700,7 @@ test('Realm lists use ordinary fixed-height rows without native grids or custom 
    assert.equal(row.collection_name,undefined);assert.equal(row.maximum_grid_items,undefined);
    assert.equal(row.size[1],scope==='roads'?33:32);
    assert.deepEqual(row.button_mappings,[]);
-   assert.ok(row.bindings.some(b=>b.source_control_name==='jf_menu_state'&&b.target_property_name==='#visible'&&b.source_property_name.includes(marker)));
+   assert.ok(row.bindings.some(b=>b.source_control_name==='jf_waystone_state'&&b.target_property_name==='#visible'&&b.source_property_name.includes(marker)));
    const fields=children(row);
    for(const field of ['icon','name','owner',...(scope==='roads'?['distance','cost','time','tier_icon','tier_action','travel']:['coordinates','distance','development','status','directory_action'])]){
     assert.ok(fields[field].offset[1]+fields[field].size[1]<=row.size[1],`${scope} ${field} must fit`);
@@ -723,7 +723,7 @@ test('Controller has explicit routes from Realm reading rows into real native ac
    assert.equal(row.focus_change_left,tier.focus_identifier);
    assert.equal(tier.focus_change_right,travel.focus_identifier);
    assert.equal(travel.focus_change_left,tier.focus_identifier);
-   assert.equal(tier.focus_change_left,'jf_tab_focus_realm');
+   assert.equal(tier.focus_change_left,'jf_realm_focus_roads');
    assert.equal(travel.focus_change_up,row.focus_identifier);
    assert.equal(tier.collection_index,base+6);assert.equal(travel.collection_index,base+7);
    const action=template(ui,'jf_realm_travel');

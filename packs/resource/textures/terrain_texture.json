@@ -4,6 +4,12 @@
   "texture_data": {
     "frontier_charter": {
       "textures": "textures/blocks/village_charter"
+    },
+    "frontier_waystone": {
+      "textures": "textures/blocks/waystone"
+    },
+    "frontier_map_table": {
+      "textures": "textures/blocks/map_table"
     }
   }
 }

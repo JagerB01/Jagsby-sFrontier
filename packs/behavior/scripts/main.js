@@ -12,9 +12,11 @@ import { blockGuardShield, GUARD_HORSE, isFrontierGuard, isJuggernaut, isTownGua
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from "./guard-colors.js";
 import { isTownPatrol, townGuardPatrol, townGuardSettlement } from "./town-guard-posts.js";
 import { fillTownGuardSlot, recordTownGuardDeath, retireTownGuards, validateTownGuard } from "./town-watch.js";
-import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
-import { PROVINCE_SIZE, capitalStatus, designateCapital, provinceDevelopment, provincePerkText, renameProvince, updateProvinceCapitalId } from "./provinces.js";
+import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers, MAP_ASPECT } from "./settlement-map.js";
+import { PROVINCE_SIZE, capitalStatus, designateCapital, provinceAt, provinceDevelopment, provincePerkText, renameProvince, updateProvinceCapitalId } from "./provinces.js";
 import { provincialPatrols } from "./provincial-patrols.js";
+import { atStation, bindStation, clearStation, isSettlementStation, MAP_TABLE, WAYSTONE } from "./settlement-stations.js";
+import { provincialDestinations, withPoiArrival } from "./provincial-travel.js";
 import { CLAPPING_EMOTE, POI_KEY, POI_RADIUS, readSurveyedPois, rememberPoiPlacement, surveyLoadedPois, wasPoiPlaced } from "./poi-survey.js";
 
 
@@ -208,7 +210,8 @@ function recoverResearch(player){
 function reopenView(player,vid,view={}){
  open(player,vid,view.page,view.researchScope,view.realmPage,view.realmScope,view.productionScope,view.productionPages,view.diplomacyScope);
 }
-function open(player,vId,page='Overview',researchScope='local',realmPage=0,realmScope='roads',productionScope='summary',productionPages={},diplomacyScope='map'){
+function open(player,vId,page='Overview',researchScope='local',realmPage=0,realmScope='roads',productionScope='summary',productionPages={},diplomacyScope='provinces'){
+  if(page==='Realm')return openWaystone(player,vId,realmScope);
   const preparedAt=Date.now();
   const view={page,researchScope,realmPage,realmScope,productionScope,productionPages,diplomacyScope};
   const s=accounted(),v=s.villages[vId];if(!v){player.sendMessage('§cVillage Charter not registered.');return;}
@@ -219,9 +222,6 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   const power=powerValue(v.census);
   records[data.census]=power==='Unavailable'?power:`${power} RP`;
   records[data.owner]=`Owner: ${ownerName(v)}`;
-  const mine=settlementDirectory(s.villages,player,realmPage,true,v,s.roads);
-  const all=settlementDirectory(s.villages,player,realmPage,false,v,s.roads);
-  const directoryIcons=new Map();
   const tier=settlementTier(v.census);
   records[data.tier]=tier.label;
   const researchChoices=new Map();
@@ -254,11 +254,7 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
    records[data['overviewProduction'+slot]]=item?`+ ${item.actual.toFixed(3)}/hr`:slot===0?'None':'';
   }
   production.choices.forEach((choice,slot)=>records[data['prospectInfo'+slot]]=choice.text);
-  const roadView=roadNetworkOverview(s,v,realmPage);
-  records[data.roadSummary]=roadView.summary;
-  records[data.roadDetails]=roadView.rows.length?'':roadView.details;
   const handlers=new Map();
-  handlers.set(actions.settlementMap,()=>openSettlementMap(player,vId,{},vId,{...view,diplomacyScope:'map'}));
   records[data.guardColor]=`Your color: ${GUARD_COLORS[playerGuardColor(world,player.id)]}`;
   for(let index=0;index<GUARD_COLORS.length;index++){
    handlers.set(actions['guardColor'+index],()=>{
@@ -290,35 +286,6 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
    reopenView(player,vId,provinceView);
   });
   if(status.canRename)handlers.set(actions.renameProvince,()=>openProvinceRename(player,vId,provinceView));
-  const realmMarkers=[];
-  const activeRoute=selectedTradeRoutes(s)[vId];
-  const layout=CHARTER_LAYOUT.realmRows;
-  const lists=[mine.rows,all.rows,roadView.rows];
-  if(lists.some(rows=>rows.length>layout.limit)){
-   player.sendMessage(`§cRealm lists exceed this pack's ${layout.limit}-row layout. Increase the Realm row limit and rebuild the pack; no settlements have been removed.`);return;
-  }
-  const put=(index,values)=>{while(records.length<index+values.length)records.push('');values.forEach((value,offset)=>records[index+offset]=String(value??''));};
-  lists.forEach((rows,scopeIndex)=>rows.forEach((row,slot)=>{
-   const scope=layout.scopes[scopeIndex],base=layout.base+slot*layout.stride+scopeIndex*8;
-   realmMarkers.push(`[JF:row:${scope}:${slot}]`);
-   if(scope!=='roads'){
-    const sending=Boolean(row.sendRoadId&&row.sendRoadId===activeRoute);
-    const canSend=Boolean(row.sendRoadId&&!sending);
-    const action=row.canEstablishRoad?'Establish\nRoad':canSend?'Send Route':'';
-    put(base,[row.name,row.owner,row.coordinates,row.distanceText,row.development,sending?'Sending':action?'':row.roadStatus,action,'']);
-    directoryIcons.set(base,row.icon);
-    if(action)realmMarkers.push(`[JF:directoryAction:${scope}:${slot}]`);
-    if(row.canEstablishRoad)handlers.set(base+6,()=>establishDirectoryRoad(player,vId,row.id,0,scope));
-    if(canSend)handlers.set(base+6,()=>changeTradeRoute(player,vId,row.sendRoadId,scope));
-   }else{
-    put(base,[row.name,row.owner,row.distance,row.cost==='Unavailable'?'—':row.cost,'',row.time,'','']);
-    directoryIcons.set(base,row.villageTexture);
-    directoryIcons.set(base+6,row.nextTexture||row.texture);
-    handlers.set(base+6,()=>roadMenu(player,vId));
-    realmMarkers.push(`[JF:${row.canTravel?'travel':'travel_disabled'}:roads:${slot}]`);
-    if(row.canTravel)handlers.set(base+7,()=>travelRoad(player,vId,row.roadId));
-   }
-  }));
   for(const entry of CHARTER_LAYOUT.viewActions){
    const targetView={...view,...entry};
    handlers.set(actions[entry.scan],()=>surveySettlement(player,vId,targetView));
@@ -338,27 +305,79 @@ function open(player,vId,page='Overview',researchScope='local',realmPage=0,realm
   const tab=tabs.includes(page)?page.toLowerCase():'overview';
   // Records transport village data to Frontier's own custom JSON UI
   // controls. Tab switches stay local; action variants identify their visible page.
-  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:realm:${realmScope}][JF:production:${productionScope}][JF:diplomacy:${diplomacyScope}]${province?'[JF:provincePerks]':''}${realmMarkers.join('')}${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}${[['mine',mine],['all',all]].map(([scope,directory])=>directory.rows.length?'':`[JF:directory:${scope}:empty]`).join('')}`);
+  const form=new ActionFormData().title(pageTitle('Dashboard')).body(`[JF:tab:${tab}][JF:research:${researchScope}][JF:production:${productionScope}][JF:diplomacy:${diplomacyScope}]${province?'[JF:provincePerks]':''}${v.owner?'':'[JF:unclaimed]'}${production.stock.map((_,slot)=>`[JF:stock:${slot}]`).join('')}${production.modifierRows.map((_,slot)=>`[JF:modifier:${slot}]`).join('')}${production.choices.map((choice,slot)=>`[JF:prospect:${slot}]${choice.selected?'[JF:prospectSelected:'+slot+']':''}`).join('')}${v.biomeUnlocked?'':'[JF:prospectLocked]'}`);
   records.forEach((text,index)=>{
-   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:directoryIcons.get(index);
+   const texture=index===data.tier?tier.texture:index===data.productionItem0?production.items[0]?.texture:index===data.productionItem1?production.items[1]?.texture:index===data.overviewProduction0?production.items[0]?.texture:index===data.overviewProduction1?production.items[1]?.texture:index>=data.stockCount0&&index<data.stockCount0+30?production.stock[index-data.stockCount0]?.texture:index>=data.prospectInfo0&&index<data.prospectInfo0+52?production.choices[index-data.prospectInfo0]?.texture:undefined;
    form.button(text,texture);
   });
-  console.log(`[Frontier menu data] view=${page}/${researchScope}/${realmScope}/${productionScope} mine=${mine.rows.length} all=${all.rows.length} roads=${roadView.rows.length} prospects=${production.choices.length} realm_base=${layout.base} prospect_base=${data.prospectInfo0}`);
+  console.log(`[Frontier menu data] view=${page}/${researchScope}/${productionScope} prospects=${production.choices.length} prospect_base=${data.prospectInfo0}`);
   console.log(`[Frontier menu] prepare_ms=${Date.now()-preparedAt} records=${records.length}`);
   displayMenu(player,form,system).then(r=>{if(!r.canceled){const handler=handlers.get(r.selection);if(handler)handler();else{console.warn(`Frontier unmapped action: ${r.selection}`);player.sendMessage('§eThe charter did not recognize that action. Please reopen it.');}}}).catch(e=>{console.warn(`Frontier menu: ${e}`);player.sendMessage('§cThe Village Charter menu could not open. Check the Minecraft content log for Frontier menu errors.');});
 }
 
+function openWaystone(player,vId,scope='roads',station){
+  const s=accounted(),v=s.villages[vId];
+  if(!v || (station&&!atStation(world,player,v,station,WAYSTONE)))return;
+  const {data,realmRows}=CHARTER_LAYOUT;
+  const records=Array(realmRows.base).fill('');
+  const mine=settlementDirectory(s.villages,player,0,true,v,s.roads);
+  const all=settlementDirectory(s.villages,player,0,false,v,s.roads);
+  const roadView=roadNetworkOverview(s,v);
+  const directoryIcons=new Map(),handlers=new Map();
+  records[data.overview]=`[JF:data:overview]${v.name}`;
+  records[data.roadSummary]=`[JF:data:roadSummary]${roadView.summary}`;
+  records[data.roadDetails]=`[JF:data:roadDetails]${roadView.rows.length?'':roadView.details}`;
+  const realmMarkers=[];
+  const activeRoute=selectedTradeRoutes(s)[vId];
+  const layout=CHARTER_LAYOUT.realmRows;
+  const lists=[mine.rows,all.rows,roadView.rows];
+  if(lists.some(rows=>rows.length>layout.limit)){
+   player.sendMessage(`§cRealm lists exceed this pack's ${layout.limit}-row layout. Increase the Realm row limit and rebuild the pack; no settlements have been removed.`);return;
+  }
+  const put=(index,values)=>{while(records.length<index+values.length)records.push('');values.forEach((value,offset)=>records[index+offset]=String(value??''));};
+  lists.forEach((rows,scopeIndex)=>rows.forEach((row,slot)=>{
+   const scope=layout.scopes[scopeIndex],base=layout.base+slot*layout.stride+scopeIndex*8;
+   realmMarkers.push(`[JF:row:${scope}:${slot}]`);
+   if(scope!=='roads'){
+    const sending=Boolean(row.sendRoadId&&row.sendRoadId===activeRoute);
+    const canSend=Boolean(row.sendRoadId&&!sending);
+    const action=row.canEstablishRoad?'Establish\nRoad':canSend?'Send Route':'';
+    put(base,[row.name,row.owner,row.coordinates,row.distanceText,row.development,sending?'Sending':action?'':row.roadStatus,action,'']);
+    directoryIcons.set(base,row.icon);
+    if(action)realmMarkers.push(`[JF:directoryAction:${scope}:${slot}]`);
+    if(row.canEstablishRoad)handlers.set(base+6,()=>establishDirectoryRoad(player,vId,row.id,0,scope,station));
+    if(canSend)handlers.set(base+6,()=>changeTradeRoute(player,vId,row.sendRoadId,scope,station));
+   }else{
+    put(base,[row.name,row.owner,row.distance,row.cost==='Unavailable'?'—':row.cost,'',row.time,'','']);
+    directoryIcons.set(base,row.villageTexture);
+    directoryIcons.set(base+6,row.nextTexture||row.texture);
+    handlers.set(base+6,()=>roadMenu(player,vId,station));
+    realmMarkers.push(`[JF:${row.canTravel?'travel':'travel_disabled'}:roads:${slot}]`);
+    if(row.canTravel)handlers.set(base+7,()=>travelRoad(player,vId,row.roadId,station));
+   }
+  }));
+  const body=`[JF:realm:${layout.scopes.includes(scope)?scope:'roads'}]${realmMarkers.join('')}`
+    +[['mine',mine],['all',all]].map(([key,directory])=>directory.rows.length?'':`[JF:directory:${key}:empty]`).join('');
+  const form=new ActionFormData().title(pageTitle('Waystone')).body(body);
+  records.forEach((text,index)=>form.button(text,directoryIcons.get(index)));
+  displayMenu(player,form,system).then(response=>{
+   if(!response.canceled)handlers.get(response.selection)?.();
+  }).catch(error=>{console.warn(`Frontier Waystone: ${error}`);player.sendMessage('§cThe Waystone menu could not open.');});
+}
+
 // Map rendering reads the registry and the POIs previously discovered by clapping.
-function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
+function openSettlementMap(player,vid,viewport={},selectedId=vid,station){
  try{
   const {villages,provinces}=state();
-  const requested={...viewport,dimension:viewport.dimension||villages[vid]?.dimension||player.dimension?.id||'minecraft:overworld'};
+  const requested={...viewport,dimension:viewport.dimension||station?.dimension.id||villages[vid]?.dimension||player.dimension?.id||'minecraft:overworld'};
   let spawn=null;
   try{spawn=world.getDefaultSpawnLocation();}catch(error){console.warn(`Frontier map spawn: ${error}`);}
   const snapshot=mapSnapshot(villages,requested,selectedId,spawn,readSurveyedPois(world),provinces),layout=CHARTER_LAYOUT.settlementMap;
-  const records=Array(layout.zTicks.at(-1)+1).fill('');
+  const records=Array(layout.poiTravel+1).fill('');
   snapshot.cells.forEach(([point],index)=>{records[index]=mapDetails(point);});
-  const labels={back:'Back',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
+  const labels={back:'Close',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
+  if(station&&vid&&snapshot.viewport.dimension==='minecraft:overworld'
+     &&capitalStatus({villages,provinces},vid,player.id).province?.capitalId===vid)labels.poiTravel='POI Travel';
   const {showProvinces,showZones}=snapshot.viewport;
   if(snapshot.viewport.dimension==='minecraft:overworld'){
    labels.provinceLines=`Province Lines: ${showProvinces?'On':'Off'}`;
@@ -376,7 +395,7 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
   const body=(snapshot.provinceView?'[JF:provinceView]':'')+mapBoundaryMarkers(snapshot,layout.width,layout.height);
   const form=new ActionFormData().title(pageTitle('SettlementMap')).body(body);
   records.forEach((text,index)=>form.button(text,snapshot.cells[index]?.[0]?.texture));
-  const show=next=>openSettlementMap(player,vid,{showProvinces,showZones,...next},selectedId,returnView);
+  const show=next=>openSettlementMap(player,vid,{showProvinces,showZones,...next},selectedId,station);
   displayMenu(player,form,system).then(response=>{
    if(response.canceled)return;
    const index=response.selection;
@@ -386,7 +405,8 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
     show({...snapshot.viewport,page:(snapshot.page+1)%snapshot.pageCount});return;
    }
    const action=Object.keys(labels).find(key=>layout[key]===index);
-   if(action==='back'){reopenView(player,vid,{...returnView,page:'Diplomacy',diplomacyScope:'map'});return;}
+   if(action==='back')return;
+   if(action==='poiTravel'){openPoiTravel(player,vid,station,()=>show({...snapshot.viewport,page:snapshot.page}));return;}
    if(action==='provinceLines'||action==='zoneLines'){
     const layer=action==='provinceLines'?'showProvinces':'showZones';
     show({...snapshot.viewport,page:snapshot.page,[layer]:!snapshot.viewport[layer]});return;
@@ -398,8 +418,61 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,returnView={}){
    }
    if(action==='refresh'){show({...snapshot.viewport,page:snapshot.page});return;}
    if(action)show(moveMap(snapshot.viewport,action));
-  }).catch(error=>{console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not open. Please reopen the charter.');});
- }catch(error){console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not load. Please reopen the charter.');}
+  }).catch(error=>{console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not open. Please reopen the Map Table.');});
+ }catch(error){console.warn(`Frontier map: ${error}`);player.sendMessage('§cSettlement Map could not load. Please reopen the Map Table.');}
+}
+
+function availablePoiTravel(player,vid,station){
+ const s=accounted();
+ if(!atStation(world,player,s.villages[vid],station,MAP_TABLE))throw Error('Return to the capital’s Map Table to travel.');
+ const destinations=provincialDestinations(world,s,vid);
+ if(!destinations)throw Error('Provincial Travel departs from the capital.');
+ return destinations;
+}
+
+async function openPoiTravel(player,vid,station,back){
+ try{
+  const destinations=availablePoiTravel(player,vid,station);
+  const form=new ActionFormData().title(pageTitle('POITravel')).body(destinations.length
+   ?'Choose a discovered landmark in this province.'
+   :'Clap near a landmark to discover it before travelling.');
+  for(const point of destinations){
+   form.button(`${point.name} · X ${point.x}, Z ${point.z}`,point.texture);
+  }
+  form.button('Back to Map');
+  const response=await displayMenu(player,form,system);
+  if(response.canceled)return;
+  const selected=destinations[response.selection];
+  if(!selected){back();return;}
+  const confirm=new ActionFormData().title(pageTitle('POITravel')).body(mapDetails(selected))
+   .button(`Travel · ${corndogCost(selected.foodPoints)}`,selected.texture).button('Back to Destinations');
+  const choice=await displayMenu(player,confirm,system);
+  if(choice.canceled)return;
+  if(choice.selection===1){await openPoiTravel(player,vid,station,back);return;}
+  if(choice.selection===0)await travelToPoi(player,vid,station,selected);
+ }catch(error){player.sendMessage(String(error.message||error));}
+}
+
+const pendingPoiTravel=new Set();
+async function travelToPoi(player,vid,station,quoted){
+ if(pendingPoiTravel.has(player.id))return;
+ pendingPoiTravel.add(player.id);
+ try{
+  const validate=()=>{
+   const point=availablePoiTravel(player,vid,station).find(p=>p.id===quoted.id);
+   if(!point)throw Error('That landmark is no longer available from this capital.');
+   if(point.foodPoints!==quoted.foodPoints)throw Error('The travel cost changed. Choose the landmark again.');
+   return point;
+  };
+  const point=validate(),dimension=world.getDimension(point.dimension);
+  await withPoiArrival(world,dimension,point,position=>{
+   validate();
+   payForTravel(player,point.foodPoints,()=>{
+    if(!player.tryTeleport(position,{dimension,checkForBlocks:true}))throw Error('Could not arrive safely at that landmark.');
+   });
+  });
+  player.sendMessage(`Arrived near ${point.name}.`);
+ }finally{pendingPoiTravel.delete(player.id);}
 }
 
 let poiSurveyRunning=false;
@@ -540,11 +613,14 @@ system.beforeEvents.startup.subscribe(ev=>{
     }
   });
 });
-world.afterEvents.playerPlaceBlock.subscribe(ev=>{rememberPoiPlacement(world,ev.block,ev.block.typeId,true);if(ev.block.typeId!==BLOCK)return;let s=accounted();
+world.afterEvents.playerPlaceBlock.subscribe(ev=>{rememberPoiPlacement(world,ev.block,ev.block.typeId,true);
+if(isSettlementStation(ev.block.typeId)){bindStation(world,state(),ev.block,true);return;}
+if(ev.block.typeId!==BLOCK)return;let s=accounted();
 (s.placedCharters??={})[charterKey(ev.block.dimension.id,ev.block.location)]={dimension:ev.block.dimension.id,location:{...ev.block.location}};save(s);const v=addVillage(s,ev.block,ev.player);if(!v)return;ev.player.sendMessage('§6Village Charter established. Use Survey to refresh villagers and discover nearby biomes.');});
 const pendingCharterInteractions=new Set();
 world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
-  if(ev.block.typeId!==BLOCK){
+  const type=ev.block.typeId;
+  if(type!==BLOCK&&!isSettlementStation(type)){
     handleGuardEgg(ev,callback=>system.run(callback),()=>state().villages);
     return;
   }
@@ -560,7 +636,20 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
   system.run(()=>{
     try{
       const block=dim.getBlock(location);
-      if(block?.typeId!==BLOCK)return;
+      if(block?.typeId!==type)return;
+      if(isSettlementStation(type)){
+       const station={typeId:type,dimension:dim,location};
+       const village=bindStation(world,state(),station);
+       if(type===WAYSTONE){
+        if(village)openWaystone(player,village.id,'roads',station);
+        else player.sendMessage('Place the Waystone within 80 blocks of a Village Charter.');
+       }else{
+        const province=provinceAt(village?.location,dim.id);
+        const viewport=province?{x:province.x,z:province.z,span:PROVINCE_SIZE*MAP_ASPECT*1.05}:{};
+        openSettlementMap(player,village?.id,viewport,village?.id,station);
+       }
+       return;
+      }
       recoverResearch(player);
       let s=accounted(),v=addVillage(s,block,player);
       if(!v)return;
@@ -571,6 +660,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe(ev=>{
 });
 world.afterEvents.playerBreakBlock.subscribe(ev=>{
  rememberPoiPlacement(world,ev.block,ev.brokenBlockPermutation.type.id,false);
+ if(isSettlementStation(ev.brokenBlockPermutation.type.id)){clearStation(world,ev.block);return;}
  if(ev.brokenBlockPermutation.type.id!==BLOCK)return;
  const s=accounted(),dimension=ev.block.dimension.id,legacy=id(ev.block.location);
  const charter=charterKey(dimension,ev.block.location),villageId=`${dimension}|${legacy}`;
@@ -694,78 +784,88 @@ function restoreLegacyControls(player){
 world.afterEvents.playerSpawn?.subscribe(({player})=>restoreLegacyControls(player));
 world.afterEvents.worldLoad?.subscribe(()=>{for(const player of world.getPlayers())restoreLegacyControls(player);});
 
-async function roadMenu(player,vid){
+function canDepartRoad(player,village,station){
+ return station?atStation(world,player,village,station,WAYSTONE):!!village&&within(player,village);
+}
+async function roadMenu(player,vid,station){
  try{
-  const s=accounted(),v=s.villages[vid];if(!v)return;
+  const s=accounted(),v=s.villages[vid];if(!v||(station&&!canDepartRoad(player,v,station)))return;
   const options=[];
   const add=(caption,run)=>options.push({caption,run});
-  if(v.roads<3)add('Contribute to Road Networks research',()=>open(player,vid,'Research','local'));
   for(const target of Object.values(s.villages).sort((a,b)=>a.id.localeCompare(b.id))){
    if(target.id===vid||target.dimension!==v.dimension)continue;
    const entry=Object.entries(s.roads).find(([,r])=>(r.from===vid&&r.to===target.id)||(r.to===vid&&r.from===target.id));
    const roadId=entry?.[0],road=entry?.[1];
-   if(!road){if(v.roads)add(`Establish Trail to ${target.name}`,()=>buildRoad(player,vid,target.id));}
+   if(!road){if(v.roads)add(`Establish Trail to ${target.name}`,()=>buildRoad(player,vid,target.id,station));}
    else{
     const name=['Unbuilt','Trail','Road','Highway'][road.level];
     const selected=selectedTradeRoutes(s)[vid]===roadId;
-    if(v.roads)add(`${selected?'Stop sending trade route to':'Send trade route to'} ${target.name}`,()=>changeTradeRoute(player,vid,selected?null:roadId));
+    if(v.roads)add(`${selected?'Stop sending trade route to':'Send trade route to'} ${target.name}`,()=>changeTradeRoute(player,vid,selected?null:roadId,undefined,station));
     if(road.targetLevel){
      const done=Math.max(0,Math.min(100,100*(1-roadTicksRemaining(road,gameTick())/road.durationTicks)));
-     if(road.paused&&road.constructionFrom===vid)add(`Resume construction to ${target.name} (${done.toFixed(1)}%)`,()=>buildRoad(player,vid,target.id));
-     else add(`${target.name}: ${road.paused?'paused':'building'} level ${road.targetLevel} (${done.toFixed(1)}%)`,()=>roadMenu(player,vid));
-    }else if(road.level<3&&v.roads)add(`Upgrade ${name} to ${target.name}`,()=>buildRoad(player,vid,target.id));
-    const quote=travelQuote(road,v);if(quote.canTravel)add(`Travel to ${target.name}: ${corndogCost(quote.foodPoints)}`,()=>travelRoad(player,vid,road.id));
+     if(road.paused&&road.constructionFrom===vid)add(`Resume construction to ${target.name} (${done.toFixed(1)}%)`,()=>buildRoad(player,vid,target.id,station));
+     else add(`${target.name}: ${road.paused?'paused':'building'} level ${road.targetLevel} (${done.toFixed(1)}%)`,()=>roadMenu(player,vid,station));
+    }else if(road.level<3&&v.roads)add(`Upgrade ${name} to ${target.name}`,()=>buildRoad(player,vid,target.id,station));
+    const quote=travelQuote(road,v);if(quote.canTravel)add(`Travel to ${target.name}: ${corndogCost(quote.foodPoints)}`,()=>travelRoad(player,vid,road.id,station));
    }
   }
-  add('Back to Road Networks',()=>open(player,vid,'Realm','global',0,'roads'));
-  const form=new ActionFormData().title(pageTitle('Roads')).body('Connections / construction / food-powered travel');
+  add('Back to Road Networks',()=>openWaystone(player,vid,'roads',station));
+  const form=new ActionFormData().title(pageTitle('Roads')).body(v.roads
+   ?'Connections / construction / food-powered travel'
+   :'Research Road Networks at the Village Charter to establish roads.');
   options.forEach(o=>form.button(o.caption));
   const response=await displayMenu(player,form,system);
   if(!response.canceled)options[response.selection]?.run();
-  else open(player,vid,'Realm','global',0,'roads');
+  else openWaystone(player,vid,'roads',station);
  }catch(e){player.sendMessage(String(e));}
 }
-function changeTradeRoute(player,vid,roadId,directoryScope){
+function changeTradeRoute(player,vid,roadId,directoryScope,station){
  try{
   const s=accounted(),v=s.villages[vid];
-  if(!v||!within(player,v))throw Error('Stand inside the source settlement to change its trade route.');
+  if(!canDepartRoad(player,v,station))throw Error('Stand inside the source settlement to change its trade route.');
   if(directoryScope&&!s.roads[roadId]?.level)throw Error('That road is no longer connected.');
   const road=selectTradeRoute(s,vid,roadId,gameTick());save(s);
   const target=road?s.villages[road.from===vid?road.to:road.from]:null;
   player.sendMessage(target?`Now sending a trade route to ${target.name}.`:'Outgoing trade route stopped; construction progress is saved.');
  }catch(e){player.sendMessage(String(e.message||e));}
- if(directoryScope)open(player,vid,'Realm','global',0,directoryScope);
- else roadMenu(player,vid);
+ if(directoryScope)openWaystone(player,vid,directoryScope,station);
+ else roadMenu(player,vid,station);
 }
-function establishDirectoryRoad(player,vid,targetId,page,scope){
+function establishDirectoryRoad(player,vid,targetId,page,scope,station){
  try{
   const s=accounted(),source=s.villages[vid],target=s.villages[targetId];
   if(!source||!target)throw Error('That settlement is no longer available.');
-  if(!within(player,source))throw Error('Stand inside the source settlement to establish a road.');
+  if(!canDepartRoad(player,source,station))throw Error('Stand inside the source settlement to establish a road.');
   const status=directoryRoadState(source,target,s.roads);
   if(!status.canEstablish)throw Error(status.status.replace('\n',' '));
   startRoad(s,vid,targetId,gameTick());save(s);
   player.sendMessage(`Trail construction to ${target.name} started: 6 Minecraft days until completion.`);
  }catch(e){player.sendMessage(String(e.message||e));}
- open(player,vid,'Realm','global',page,scope);
+ openWaystone(player,vid,scope,station);
 }
-function buildRoad(player,vid,target){
- try{const s=accounted(),v=s.villages[vid];if(!v||!within(player,v))throw Error('Stand inside the source settlement to manage roads.');
+function buildRoad(player,vid,target,station){
+ try{const s=accounted(),v=s.villages[vid];if(!canDepartRoad(player,v,station))throw Error('Stand inside the source settlement to manage roads.');
   const road=startRoad(s,vid,target,gameTick());save(s);
   player.sendMessage(`Construction active: ${Number((roadTicksRemaining(road,gameTick())/24000).toFixed(2))} Minecraft days remaining. Previous construction is paused.`);
  }catch(e){player.sendMessage(String(e));}
- roadMenu(player,vid);
+ roadMenu(player,vid,station);
 }
-function travelRoad(player,vid,roadId){
+function travelRoad(player,vid,roadId,station){
  try{
   const s=accounted(),v=s.villages[vid],road=s.roads[roadId];
-  if(!v||!within(player,v)||!road?.level||![road.from,road.to].includes(vid))throw Error('No completed route from this settlement.');
+  if(!canDepartRoad(player,v,station)||!road?.level||![road.from,road.to].includes(vid))throw Error('No completed route from this settlement.');
   const quote=travelQuote(road,v);if(!quote.canTravel)throw Error(quote.reason);
   const target=s.villages[road.from===vid?road.to:road.from];if(!target)throw Error('Destination no longer exists.');
-  const inventory=player.getComponent('minecraft:inventory')?.container;if(!inventory)throw Error('Inventory unavailable.');
-  const items=[];for(let slot=0;slot<inventory.size;slot++){const item=inventory.getItem(slot);if(item)items.push({slot,typeId:item.typeId,amount:item.amount});}
-  const plan=foodPlan(items,quote.foodPoints);if(!plan)throw Error(`Need ${corndogCost(quote.foodPoints)} worth of food. Bread is worth 2.5 corndogs each.`);
-  spendFoodAndTravel(inventory,plan,()=>player.teleport({x:target.location.x+0.5,y:target.location.y+1,z:target.location.z+0.5},{dimension:world.getDimension(target.dimension)}));
+  payForTravel(player,quote.foodPoints,()=>player.teleport({x:target.location.x+0.5,y:target.location.y+1,z:target.location.z+0.5},{dimension:world.getDimension(target.dimension)}));
   player.sendMessage(`Arrived at ${target.name}.`);
  }catch(e){player.sendMessage(String(e));}
+}
+
+function payForTravel(player,foodPoints,teleport){
+ const inventory=player.getComponent('minecraft:inventory')?.container;if(!inventory)throw Error('Inventory unavailable.');
+ const items=[];
+ for(let slot=0;slot<inventory.size;slot++){const item=inventory.getItem(slot);if(item)items.push({slot,typeId:item.typeId,amount:item.amount});}
+ const plan=foodPlan(items,foodPoints);
+ if(!plan)throw Error(`Need ${corndogCost(foodPoints)} worth of food. Bread is worth 2.5 corndogs each.`);
+ spendFoodAndTravel(inventory,plan,teleport);
 }

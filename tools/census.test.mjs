@@ -23,7 +23,7 @@ const realmSource=(await readFile(new URL('settlement-realm.js',scriptBase),'utf
 const realmModuleUrl=`data:text/javascript;base64,${Buffer.from(realmSource).toString('base64')}`;
 const configSource=(await readFile(new URL('economy-config.js',scriptBase),'utf8')).replace("'./biome-resources.js'",JSON.stringify(new URL('biome-resources.js',scriptBase).href));
 const configUrl=`data:text/javascript;base64,${Buffer.from(configSource).toString('base64')}`;
-const extraUrls=Object.fromEntries(['settlement-economy','settlement-effects','frontier-guards','town-watch','provincial-patrols']
+const extraUrls=Object.fromEntries(['settlement-economy','settlement-effects','frontier-guards','town-watch','provincial-patrols','settlement-stations','provincial-travel']
   .map(name=>[name,new URL(name+'.js',scriptBase).href]));
 
 const villager = (id, tier) => ({ id, tier, typeId: 'minecraft:villager_v2' });
@@ -84,11 +84,17 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
   let scans = 0, biomeReads = 0, rankWaits = 0, biomeResult = 'minecraft:plains';
   let nativeTier = 0;
   let population = 1;
+  const placedStations = new Map();
   const nativeVillager = {...villager('a'), triggerEvent() {}, getProperty: name => name.endsWith("ready") ? true : nativeTier};
   const makeDimension = id => {
     const dim = { id, getEntities() { scans++; return Array.from({length:population},(_,i)=>({...nativeVillager,id:'v'+i})); },
       getBiome() { biomeReads++; return {id:biomeResult}; },
-      getBlock: location => ({ typeId:'jagsby_frontier:village_charter', location, dimension:dim }) };
+      isChunkLoaded: () => true, heightRange:{max:320},
+      getTopmostBlock: () => ({typeId:'minecraft:stone',location:{y:63},isLiquidBlocking:()=>true}),
+      getBlock: location => {
+        const station = placedStations.get(`${id}|${location.x},${location.y},${location.z}`);
+        return station ?? { typeId:'jagsby_frontier:village_charter', location, dimension:dim, isAir:location.x>=500 };
+      } };
     dimensions.set(id, dim);
     return dim;
   };
@@ -101,7 +107,11 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
     constructor() { this.records=[]; this.icons=[]; forms.push(this); }
     title(value) {this.heading=value; return this; } body(value) {this.text=value; return this; }
     button(value,icon) {this.records.push(value); this.icons.push(icon); return this; }
-    show() { const response = menuResponse; menuResponse = {canceled:true}; return Promise.resolve(response ?? {canceled:true}); }
+    show() {
+      const response = Array.isArray(menuResponse) ? menuResponse.shift() : menuResponse;
+      if(!Array.isArray(menuResponse))menuResponse = {canceled:true};
+      return Promise.resolve(response ?? {canceled:true});
+    }
   }
   class RenameForm {
     title() {return this;}
@@ -118,7 +128,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
     world: { afterEvents: Object.fromEntries(['playerPlaceBlock','playerInteractWithBlock','playerBreakBlock']
       .map(name => [name,{subscribe: fn => {handlers[name] = fn;}}])),
       beforeEvents: {playerInteractWithBlock: {subscribe: fn => {handlers.beforeInteract = fn;}}},
-      getDimension: id => dimensions.get(id), getPlayers: () => [],
+      getDimension: id => dimensions.get(id), getPlayers: () => [], getDefaultSpawnLocation: () => ({x:0,y:64,z:0}),
       getDynamicProperty: key => properties.get(key),
       setDynamicProperty: (key,value) => properties.set(key,value) },
     system: { beforeEvents: {startup: {subscribe(fn){handlers.startup=fn;}}}, run: fn => queued.push(fn), runInterval: (fn,ticks) => {assert.ok([10,100,120].includes(ticks));intervals.push(fn);},
@@ -192,7 +202,7 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
   assert.equal(saved.villages[sourceId].census.realmPowerTenths,2);
   assert.equal(saved.villages[sourceId].nativeBiome,'minecraft:plains');
   const surveyed=forms.at(-1);assert.equal(surveyed.heading,'JF_CHARTER|Dashboard');
-  assert.equal(surveyed.records.length,CHARTER_LAYOUT.recordCount+16);assert.equal(surveyed.records[2],'0.2 RP');
+  assert.equal(surveyed.records.length,CHARTER_LAYOUT.recordCount);assert.equal(surveyed.records[2],'0.2 RP');
   assert.equal(surveyed.records[3],'[JF:data:tier]Outpost');assert.equal(surveyed.records[25],'Owner: Builder');
   assert.equal(surveyed.records[64],'Development 0');assert.equal(surveyed.records[60],'+ 0.000');
   assert.equal(surveyed.icons[3],'textures/ui/frontier/settlements/outpost');
@@ -223,7 +233,50 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
   await interact();
   assert.equal(CHARTER_LAYOUT.actions.roadsNext,undefined);
   assert.equal(scans,4);assert.equal(biomeReads,previousBiomeReads,'Navigation never scans nearby biomes or adds another census');
-  assert.ok(forms.at(-1).text.includes('[JF:row:all:0]'));
+  assert.doesNotMatch(forms.at(-1).text,/\[JF:row:/);
+
+  const placeStation = (type, x) => {
+    const station = {typeId:`jagsby_frontier:${type}`,location:{x,y:64,z:0},dimension};
+    placedStations.set(`${dimension.id}|${x},64,0`,station);
+    handlers.playerPlaceBlock({player,block:station});
+    return station;
+  };
+  const waystone=placeStation('waystone',75),table=placeStation('map_table',76);
+  player.dimension=dimension;
+  player.location=waystone.location;
+  await interact({canceled:true},waystone);
+  assert.equal(forms.at(-1).heading,'JF_CHARTER|Waystone');
+  assert.match(forms.at(-1).text,/\[JF:realm:roads\]/);
+  assert.match(forms.at(-1).text,/\[JF:row:all:0\]/);
+  assert.equal(forms.at(-1).records[0],'[JF:data:overview]Oakfield');
+
+  const {poiTravel}=CHARTER_LAYOUT.settlementMap;
+  player.location=table.location;
+  await interact({canceled:true},table);
+  assert.equal(forms.at(-1).heading,'JF_CHARTER|SettlementMap');
+  assert.equal(forms.at(-1).records[poiTravel],'');
+  saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
+  saved.villages[sourceId].developmentValue=2500;
+  saved.provinces={'0,0':{capitalId:sourceId}};
+  properties.set('jagsby_frontier:state_v1',JSON.stringify(saved));
+  properties.set('jagsby_frontier:surveyed_pois',JSON.stringify([
+    {kind:'stronghold',x:500,y:22,z:100},{kind:'village',x:2800,y:63,z:0},
+  ]));
+  let bread=5;
+  player.getComponent=()=>({container:{size:1,getItem:()=>({typeId:'minecraft:bread',amount:bread}),
+    setItem:(_,item)=>{bread=item?.amount??0;}}});
+  const choices=[poiTravel,0,0];
+  player.tryTeleport=()=>false;
+  await interact(choices.map(selection=>({selection})),table);
+  assert.equal(bread,5,'Failed POI travel restores the fare');
+  assert.equal(forms.at(-2).records.length,2,'Destinations in a different province are excluded');
+  assert.equal(forms.at(-1).records[0],'Travel · 4 corndogs');
+  let arrival;
+  player.tryTeleport=(position,options)=>{arrival={position,options};return true;};
+  await interact(choices.map(selection=>({selection})),table);
+  assert.deepEqual(arrival.position,{x:500.5,y:64,z:100.5});
+  assert.equal(arrival.options.checkForBlocks,true);
+  assert.equal(bread,3);
   delete globalThis.__frontierTest;
 });
 test('80-block radius includes villagers beyond the old 64-block limit and excludes farther ones',()=>{

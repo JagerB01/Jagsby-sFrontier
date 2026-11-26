@@ -52,7 +52,7 @@ for key in ["realmMine", "realmAll"]:
 for key in ["minePrev", "mineNext", "allPrev", "allNext", "roadsPrev", "roadsNext"]:
     ACTIONS.pop(key, None)
 VIEW_ACTIONS = []
-for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("Production", ["summary", "biomes"]), ("Realm", ["roads", "mine", "all"]), ("Diplomacy", ["map", "provinces", "colors"])]:
+for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("Production", ["summary", "biomes"]), ("Diplomacy", ["provinces", "colors"])]:
     for scope in scopes:
         entry = {"page": page}
         if scope: entry[page.lower() + "Scope"] = scope
@@ -64,7 +64,7 @@ for page, scopes in [("Overview", [None]), ("Research", ["local", "global"]), ("
 # Reuse unassigned transport slots.
 DATA.update({"provinceName": 26, "provinceDetails": 27, "guardColor": 31})
 DATA.update({"provincialTravel": 79, "provincialPatrols": 80})
-ACTIONS.update({"settlementMap": 11, "designateCapital": 29, "renameProvince": 30})
+ACTIONS.update({"designateCapital": 29, "renameProvince": 30})
 ACTIONS.update({f"guardColor{i}": 35 + i for i in range(len(GUARD_COLORS))})
 # Preserve the original low transport IDs; pack later additions contiguously.
 # These IDs are form-local, never saved. Avoid transmitting hundreds of holes.
@@ -72,7 +72,7 @@ late = sorted([(index, mapping, key) for mapping in [DATA, ACTIONS]
                for key, index in mapping.items() if index >= 98], key=lambda entry: entry[0])
 for index, (_, mapping, key) in enumerate(late, start=98):
     mapping[key] = index
-TABS = ["Overview", "Research", "Production", "Realm", "Diplomacy"]
+TABS = ["Overview", "Research", "Production", "Diplomacy"]
 # Shared palette: ivory text, aged silver labels, wheat gold accents.
 IVORY = (0.94, 0.92, 0.85)
 SILVER = (0.73, 0.73, 0.68)
@@ -133,7 +133,7 @@ def focusable_scroll_row(row, section, scope, slot):
     # This raw button has no submit mapping; its child actions keep their own.
     row.update({"type": "button", "focus_enabled": True, "focus_magnet_enabled": True, "hover_enabled": True,
         "focus_identifier": f"jf_{section}_{scope}_row_{slot}",
-        "focus_change_left": "jf_tab_focus_" + section,
+        "focus_change_left": f"jf_realm_focus_{scope}" if section == "realm" else "jf_tab_focus_" + section,
         "button_mappings": [], "default_control": "reading_idle",
         "hover_control": "reading_focus", "pressed_control": "reading_focus",
         "tts_name": "Biome production details" if section == "production" else "Settlement details"})
@@ -287,9 +287,9 @@ def overview_value(name, index, offset, size, scale=0.9):
 
 
 def research_tab(scope, index, section="research", caption_text=None):
-    width, spacing = (82, 86) if section in ("realm", "diplomacy") else (124, 129)
+    width, spacing = (82, 86) if section == "realm" else (124, 129)
     order = {"production": ["summary", "biomes"], "realm": ["roads", "mine", "all"],
-             "diplomacy": ["map", "provinces", "colors"], "research": ["local", "global"]}[section]
+             "diplomacy": ["provinces", "colors"], "research": ["local", "global"]}[section]
     toggle = tab("Research", index)["jf_tab_research"]
     toggle.update({"size": [width, 23], "offset": [index * spacing, 0],
         "toggle_name": "jagsby_frontier_" + section + "_tabs", "tts_name": caption_text or scope.title(),
@@ -438,12 +438,16 @@ def build():
     ui = {"namespace": "jagsby_frontier"}
     is_charter = "(not ((#title_text - 'JF_CHARTER|') = #title_text))"
     is_dashboard = "(#title_text = 'JF_CHARTER|Dashboard')"
+    is_waystone = "(#title_text = 'JF_CHARTER|Waystone')"
     is_map = "(#title_text = 'JF_CHARTER|SettlementMap')"
+    is_poi_picker = "(#title_text = 'JF_CHARTER|POITravel')"
     ui["jf_router"] = {"type": "panel", "size": [380, 240], "$msfm_standard_long_form|default": "server_form.long_form", "controls": [
         control("vanilla@$msfm_standard_long_form", {"bindings": condition(f"(not {is_charter})")}),
         control("charter@jagsby_frontier.jf_dashboard", {"bindings": condition(is_dashboard)}),
+        control("waystone@jagsby_frontier.jf_waystone", {"bindings": condition(is_waystone)}),
         control("map@jagsby_frontier.jf_settlement_map", {"bindings": condition(is_map)}),
-        control("picker@jagsby_frontier.jf_picker", {"bindings": condition(f"({is_charter} and (not {is_dashboard}) and (not {is_map}))")}),
+        control("poi_picker@jagsby_frontier.jf_poi_picker", {"bindings": condition(is_poi_picker)}),
+        control("picker@jagsby_frontier.jf_picker", {"bindings": condition(f"({is_charter} and (not {is_dashboard}) and (not {is_waystone}) and (not {is_map}) and (not {is_poi_picker}))")}),
     ]}
     frame = [
         control("frame", image("frontier/charter_frame", [380, 240], layer=1)),
@@ -457,16 +461,17 @@ def build():
     dashboard = [copy.deepcopy(item) for item in frame if 'title' not in item]
     # Read the form body outside all tab/scroll visibility gates. Scrolling rows
     # reference this single provider rather than resolving a hidden local one.
-    dashboard.append(control("jf_menu_state", {"type": "panel", "size": [0, 0],
+    menu_state = control("jf_menu_state", {"type": "panel", "size": [0, 0],
         "property_bag": {"#form_text": ""}, "bindings": [
-            {"binding_name": "#form_text", "binding_type": "none", "binding_condition": "always"}]}))
+            {"binding_name": "#form_text", "binding_type": "none", "binding_condition": "always"}]})
+    dashboard.append(menu_state)
     dashboard.append(overview_value("header_name", DATA["overview"], [30, 34], [185, 12], scale=1.0))
     GENERATED_CONTROLS["jf_data_overview"]["color"] = list(WHEAT)
     dashboard.append(control("subtitle", label("Village Charter", [185, 8], (30, 46), SILVER, 0.65)))
     dashboard += [tab(name, index) for index, name in enumerate(TABS)]
     for name in TABS:
         lower = name.lower()
-        if lower in ["overview", "research", "production", "realm", "diplomacy"]:
+        if lower in ["overview", "research", "production", "diplomacy"]:
             dashboard.append(control(lower + "@jagsby_frontier.jf_" + lower + "_content", {
                 "anchor_from": "top_left", "anchor_to": "top_left", "offset": [104, 62],
                 "size": [257, 158], "layer": 5,
@@ -800,9 +805,8 @@ def build():
             ]})
 
     diplomacy_controls = [
-        research_tab("map", 0, "diplomacy", "Map"),
-        research_tab("provinces", 1, "diplomacy", "Provinces"),
-        research_tab("colors", 2, "diplomacy", "Colors"),
+        research_tab("provinces", 0, "diplomacy", "Provinces"),
+        research_tab("colors", 1, "diplomacy", "Colors"),
     ]
     style_colors = [overview_value("guard_color", DATA["guardColor"], [8, 6], [236, 14], scale=0.95)]
     for i, (name, rgb) in enumerate(GUARD_COLORS):
@@ -817,12 +821,6 @@ def build():
             panel["controls"].append(control("swatch", image(
                 "frontier/solid", [9, 9], (8, 6), 7, color=[value / 255 for value in rgb])))
     diplomacy_pages = {
-        "map": [
-            control("description", label(
-                "View settlements, capitals and landmarks.\nZoom out to see province markers.",
-                [233, 37], (8, 10), scale=0.75)),
-            diplomacy_button("settlementMap", "Open Settlement Map", 62),
-        ],
         "provinces": [
             control("icon", image("frontier/poi_markers/province", [20, 20], (8, 0), 6)),
             overview_value("province_name", DATA["provinceName"], [32, 4], [210, 14], scale=0.95),
@@ -849,7 +847,7 @@ def build():
     # Use ordinary explicitly indexed rows. Native grid allocation is backed
     # out following crashes during Charter opening; visibility only hides rows.
     # Interleave scopes by slot so a small world transmits only a short prefix.
-    row_base = max([*DATA.values(), *ACTIONS.values()]) + 1
+    row_base = max(DATA[key] for key in ["overview", "roadSummary", "roadDetails"]) + 1
     row_limit, row_stride = 128, 24
     ui["jf_realm_icon"] = image("frontier/settlement_icons/outpost", [24, 24], layer=8)
     ui["jf_realm_icon"]["keep_ratio"] = True
@@ -950,7 +948,7 @@ def build():
                 tier_record = tier_action["controls"][0]["record@jagsby_frontier.jf_realm_tier_action"]
                 tier_record.update({
                     "focus_identifier": f"jf_realm_roads_tier_{slot}",
-                    "focus_change_left": "jf_tab_focus_realm",
+                    "focus_change_left": "jf_realm_focus_roads",
                     "focus_change_right": f"jf_realm_roads_travel_{slot}",
                     "focus_change_up": f"jf_realm_roads_row_{slot}",
                 })
@@ -1003,6 +1001,16 @@ def build():
             "offset": [0, 27], "anchor_from": "top_left", "anchor_to": "top_left", "size": [257, 131],
             "bindings": [view("#toggle_state", target, "jf_realm_tab_" + scope) for target in ["#visible", "#enabled"]]}))
     ui["jf_realm_content"] = {"type": "panel", "size": [257, 158], "controls": realm_controls}
+    ui["jf_waystone"] = {"type": "panel", "size": [380, 240], "controls": [
+        *[copy.deepcopy(item) for item in frame if "title" not in item],
+        control("jf_waystone_state", copy.deepcopy(menu_state["jf_menu_state"])),
+        overview_value("header_name", DATA["overview"], [30, 34], [185, 12], scale=1.0),
+        control("subtitle", label("Waystone", [185, 8], (30, 46), SILVER, 0.65)),
+        control("realm@jagsby_frontier.jf_realm_content", {
+            "anchor_from": "top_left", "anchor_to": "top_left", "offset": [61, 62],
+            "size": [257, 158], "layer": 5}),
+    ]}
+    GENERATED_CONTROLS["jf_data_overview"]["color"] = list(WHEAT)
     picker = copy.deepcopy(frame)
     # Secondary-biome choices have their own custom button renderer, not the
     # vanilla long-form dynamic list used by the previous prototype.
@@ -1023,6 +1031,17 @@ def build():
                 "control_ids": {"button": "jagsby_frontier.jf_choice"}},
             "bindings": [{"binding_name": "#form_button_contents", "binding_name_override": "#collection_length"}],
         })]}
+    poi_picker = copy.deepcopy(picker)
+    next(item["title"] for item in poi_picker if "title" in item)["text"] = "Provincial Travel"
+    next(item["caption"] for item in poi_picker if "caption" in item)["text"] = "Map Table"
+    next(item["options@common.scrolling_panel"] for item in poi_picker if "options@common.scrolling_panel" in item)[
+        "$scrolling_content"] = "jagsby_frontier.jf_poi_picker_content"
+    ui["jf_poi_picker"] = {"type": "panel", "size": [380, 240], "controls": poi_picker}
+    poi_details = copy.deepcopy(details)
+    poi_details["size"] = [244, 27]
+    ui["jf_poi_picker_content"] = {**ui["jf_picker_content"], "controls": [
+        control("details", poi_details), copy.deepcopy(ui["jf_picker_content"]["controls"][-1]),
+    ]}
     # Native factory context supplies the chosen biome's real record index.
     picker_template = copy.deepcopy(GENERATED_CONTROLS["jf_action_rename@common.button"])
     picker_template["size"] = [254, 21]
@@ -1062,7 +1081,7 @@ def build():
         control("submit@common.button", submit),
     ]}
     ui.update(GENERATED_CONTROLS)
-    def bind_static_list_state(value):
+    def bind_static_list_state(value, provider):
         if isinstance(value, dict):
             bindings = value.get("bindings", [])
             for binding in bindings:
@@ -1071,18 +1090,18 @@ def build():
                     # hidden and rows outside the scroll viewport.
                     binding.pop("binding_condition", None)
                 if binding.get("binding_type") == "view" and binding.get("target_property_name") in ["#visible", "#enabled"] and "#form_text" in binding.get("source_property_name", ""):
-                    binding["source_control_name"] = "jf_menu_state"
+                    binding["source_control_name"] = provider
                     # The shared body can arrive after this control is created.
                     # Do not freeze an empty initial read for the life of the form.
                     binding.pop("binding_condition", None)
-            if any(binding.get("source_control_name") == "jf_menu_state" for binding in bindings):
+            if any(binding.get("source_control_name") == provider for binding in bindings):
                 value["bindings"] = [binding for binding in bindings if binding.get("binding_name") != "#form_text"]
-            for child in value.values(): bind_static_list_state(child)
+            for child in value.values(): bind_static_list_state(child, provider)
         elif isinstance(value, list):
-            for child in value: bind_static_list_state(child)
+            for child in value: bind_static_list_state(child, provider)
     for key, value in ui.items():
         if key.startswith(("jf_realm_", "jf_prospect_", "jf_prospecting_", "jf_data_prospectInfo", "jf_action_prospectSelect")):
-            bind_static_list_state(value)
+            bind_static_list_state(value, "jf_waystone_state" if key.startswith("jf_realm_") else "jf_menu_state")
     build_map_ui(ui, frame)
     custom_path = RP / "ui/jagsby_frontier/charter.json"
     custom_path.parent.mkdir(parents=True, exist_ok=True)

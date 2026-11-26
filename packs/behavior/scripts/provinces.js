@@ -61,8 +61,12 @@ export function provincialPatrolRoles(tier) {
   return Object.entries(roles);
 }
 
+export function provincialTravelTier(province, combinedDevelopment) {
+  return province.capital ? TRAVEL_THRESHOLDS.filter(n => combinedDevelopment >= n).length : 0;
+}
+
 export function provincePerkText(province, combinedDevelopment) {
-  const travelTier = province.capital ? TRAVEL_THRESHOLDS.filter(n => combinedDevelopment >= n).length : 0;
+  const travelTier = provincialTravelTier(province, combinedDevelopment);
   const patrolTier = provincialPatrolTier(province, combinedDevelopment);
   const requiresCapital = 'Locked · Requires a capital';
   let travelStatus = requiresCapital;
@@ -78,7 +82,7 @@ export function provincePerkText(province, combinedDevelopment) {
     .map(([role, count]) => `${count} ${PATROL_ROLE_NAMES[role][Number(count > 1)]}`);
   const patrolRoster = roster.length > 2 ? `${roster.slice(0, 2).join(', ')},\n${roster[2]}` : roster.join(', ');
   return {
-    travel: `${travelStatus}\nPreview · Capital → POIs\nII at ${TRAVEL_THRESHOLDS[1]} · III at ${TRAVEL_THRESHOLDS[2]} Development`,
+    travel: `${travelStatus}\nCapital Map Table → POIs\nII at ${TRAVEL_THRESHOLDS[1]} · III at ${TRAVEL_THRESHOLDS[2]} Development`,
     patrols: `${patrolStatus}\n${patrolRoster}\nTiers at ${PATROL_TIERS.map(({threshold}) => threshold).join(' / ')}`,
   };
 }

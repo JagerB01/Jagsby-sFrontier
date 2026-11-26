@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "jagsby_frontier:map_table"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " M ",
+      "PPP"
+    ],
+    "key": {
+      "M": {
+        "item": "minecraft:empty_map"
+      },
+      "P": {
+        "tag": "minecraft:planks"
+      }
+    },
+    "unlock": [
+      {
+        "context": "AlwaysUnlocked"
+      }
+    ],
+    "result": {
+      "item": "jagsby_frontier:map_table",
+      "count": 1
+    }
+  }
+}

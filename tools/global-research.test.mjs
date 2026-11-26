@@ -392,18 +392,23 @@ test('Selecting a verified biome applies immediately without a confirmation form
  h.api.clearSecondary(h.player,'a');assert.equal(h.read().villages.a.secondary,null);
 });
 
-test('The initial dashboard transports owned settlements and locked Prospecting previews before any tab click',async()=>{
+test('The Charter transports Prospecting previews and the Waystone owns the Realm rows',async()=>{
  const s=fresh(Date.now());
  s.villages.a={...village(),id:'a',name:'Dornwick',owner:{id:'p',name:'Jagsby'},biomeUnlocked:false,
   available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:32,y:64,z:0}}};
  const h=await runtime(s);h.api.open(h.player,'a');
  const form=h.forms[0],layout=CHARTER_LAYOUT;
  assert.ok(form.text.includes('[JF:tab:overview]'));
+ assert.equal(form.buttons.length,layout.recordCount);
+ assert.doesNotMatch(form.text,/\[JF:row:/);
+ h.api.open(h.player,'a','Realm');
+ const waystone=h.forms[1];
+ assert.equal(waystone.heading,'JF_CHARTER|Waystone');
  for(const scope of ['mine','all']){
-  assert.ok(form.text.includes(`[JF:row:${scope}:0]`));
+  assert.ok(waystone.text.includes(`[JF:row:${scope}:0]`));
   const base=layout.realmRows.base+layout.realmRows.scopes.indexOf(scope)*8;
-  assert.equal(form.buttons[base],'Dornwick');assert.equal(form.buttons[base+1],'Jagsby');
-  assert.ok(form.icons[base].startsWith('textures/ui/frontier/settlement_icons/'));
+  assert.equal(waystone.buttons[base],'Dornwick');assert.equal(waystone.buttons[base+1],'Jagsby');
+  assert.ok(waystone.icons[base].startsWith('textures/ui/frontier/settlement_icons/'));
  }
  assert.ok(form.text.includes('[JF:prospectLocked]'));
  for(const slot of [0,1]){
@@ -413,7 +418,7 @@ test('The initial dashboard transports owned settlements and locked Prospecting 
   assert.ok(form.icons[layout.data['prospectInfo'+slot]].startsWith('textures/ui/frontier/production/'));
   assert.equal(form.buttons[layout.actions['prospectSelect'+slot]],`[JF:disabled:prospectSelect${slot}]`);
  }
- assert.equal(h.forms.length,1);assert.equal(h.read().villages.a.biomeUnlocked,false);
+ assert.equal(h.forms.length,2);assert.equal(h.read().villages.a.biomeUnlocked,false);
 });
 test('Unverified/out-of-range biome controls are disabled and selecting unloaded samples never changes the second biome',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Test',biomeUnlocked:true,available:['minecraft:forest'],biomeSamples:{'minecraft:forest':{x:300,y:64,z:0}}};
@@ -744,7 +749,7 @@ test('Research tab navigation and contributions reopen the same Local or Global 
  }
 });
 
-test('Production clearing, collection and Survey preserve their selected tabs and remembered research/Realm views',async()=>{
+test('Production clearing, collection and Survey preserve their selected tabs and remembered Research view',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Alpha',biomeUnlocked:true,secondary:'minecraft:forest',productionMode:'diversify'};
  const steps=[CHARTER_LAYOUT.actions.clearSecondary,CHARTER_LAYOUT.actions.collect,CHARTER_LAYOUT.actions.scanProductionsummary];
  const h=await runtime(s,()=>steps.length?{canceled:false,selection:steps.shift()}:{canceled:true});
@@ -753,15 +758,8 @@ test('Production clearing, collection and Survey preserve their selected tabs an
  assert.equal(h.forms.length,4);
  for(const index of [1])assert.ok(h.forms[index].text.includes('[JF:production:biomes]'));
  for(const index of [2,3])assert.ok(h.forms[index].text.includes('[JF:production:summary]'));
- for(const form of h.forms){assert.ok(form.text.startsWith('[JF:tab:production]'));assert.ok(form.text.includes('[JF:research:local]'));assert.ok(form.text.includes('[JF:realm:all]'));}
+ for(const form of h.forms){assert.ok(form.text.startsWith('[JF:tab:production]'));assert.ok(form.text.includes('[JF:research:local]'));}
  assert.equal(h.read().villages.a.secondary,null);
-});
-
-test('Survey identifies the current Realm subtab even when opened on Overview',async()=>{
- const steps=[CHARTER_LAYOUT.actions.scanRealmall];
- const h=await runtime(undefined,()=>steps.length?{canceled:false,selection:steps.shift()}:{canceled:true});
- h.api.open(h.player,'none');await new Promise(resolve=>setImmediate(resolve));
- assert.equal(h.forms.length,2);assert.ok(h.forms.at(-1).text.startsWith('[JF:tab:realm]'));assert.ok(h.forms.at(-1).text.includes('[JF:realm:all]'));
 });
 
 test('Saving or canceling Rename returns to the same Production subtab',async()=>{
@@ -775,7 +773,7 @@ test('Saving or canceling Rename returns to the same Production subtab',async()=
   });
   h.api.open(h.player,'a','Production','local',0,'all','biomes');await new Promise(resolve=>setImmediate(resolve));
   const last=h.forms.at(-1);assert.ok(last.text.startsWith('[JF:tab:production]'));assert.ok(last.text.includes('[JF:production:biomes]'));
-  assert.ok(last.text.includes('[JF:research:local]'));assert.ok(last.text.includes('[JF:realm:all]'));
+  assert.ok(last.text.includes('[JF:research:local]'));
   assert.equal(h.read().villages.a.name,canceled?'Alpha':'Beta');
  }
 });
@@ -794,7 +792,7 @@ test('Each header Survey variant returns to its visible client-side page and sub
 test('Fresh charters request Overview and the first subtab of every section',async()=>{
  const h=await runtime();h.api.open(h.player,'none');
  const body=h.forms[0].text;
- for(const marker of ['[JF:tab:overview]','[JF:research:local]','[JF:production:summary]','[JF:realm:roads]'])assert.ok(body.includes(marker));
+ for(const marker of ['[JF:tab:overview]','[JF:research:local]','[JF:production:summary]','[JF:diplomacy:provinces]'])assert.ok(body.includes(marker));
  assert.equal(h.forms.length,1);
 });
 
@@ -885,11 +883,11 @@ test('Road display leaves the completed-tier caption empty while retaining upgra
  h.api.open(h.player,'a','Realm');assert.equal(h.forms.at(-1).buttons[base+4],'');assert.equal(h.forms.at(-1).buttons[base+5],'> 6 days');
 });
 
-test('Diplomacy opens map on demand, reads fresh shared data and never scans or changes research',async()=>{
+test('Map Table reads fresh map data separately from the Charter and never scans or changes research',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Map home',id:'a'};
  const h=await runtime(s,()=>({canceled:true}),{onCensus(){assert.fail('Map must not scan villagers');}});
  const before=h.read();h.api.open(h.player,'a','Diplomacy');
- assert.equal(h.forms.at(-1).buttons[CHARTER_LAYOUT.actions.settlementMap],'[JF:action:settlementMap]');
+ assert.equal(CHARTER_LAYOUT.actions.settlementMap,undefined);
  assert.ok(h.forms.every(f=>f.heading!=='JF_CHARTER|SettlementMap'),'Switching local tabs must not generate a map');
  const prior=h.read();h.api.openSettlementMap(h.player,'a');
  const m=CHARTER_LAYOUT.settlementMap,form=h.forms.at(-1);
@@ -902,7 +900,7 @@ test('Diplomacy opens map on demand, reads fresh shared data and never scans or 
  assert.deepEqual(h.read().global,before.global);assert.deepEqual(h.read().researchProgress,before.researchProgress);
 });
 
-test('Map controls retain zoom, dimensions and Back; marker records never dispatch click actions',async()=>{
+test('Map controls retain zoom and dimensions; closing the map returns to play',async()=>{
  const s=fresh(Date.now());s.villages.a={...village(),name:'Map home',id:'a'};
  s.villages.b={...village(),name:'Map neighbour',id:'b'};
  s.villages.end={...village(200),name:'End',id:'end',dimension:'minecraft:the_end'};
@@ -924,8 +922,9 @@ test('Map controls retain zoom, dimensions and Back; marker records never dispat
  respond=()=>{respond=()=>({canceled:true});return {selection:m.dimension};};
  h.api.openSettlementMap(h.player,'a');await flush();assert.ok(h.forms.at(-1).buttons.slice(0,m.cells).some(text=>text.startsWith('End\n')));
  respond=()=>{respond=()=>({canceled:true});return {selection:m.back};};
- h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.at(-1).heading,'JF_CHARTER|Dashboard');
- assert.match(h.forms.at(-1).text,/\[JF:tab:diplomacy\]/);
+ const beforeClose=h.forms.length;
+ h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.length,beforeClose+1);
+ assert.equal(h.forms.at(-1).buttons[m.back],'Close');
 });
 
 test('Hover records include coordinates, biome, Development and owner; world spawn is fresh map data',async()=>{
@@ -942,7 +941,7 @@ test('Hover records include coordinates, biome, Development and owner; world spa
 });
 
 test('A single unowned settlement supplies exactly one Realm row creation marker',async()=>{
- const h=await runtime();h.api.open(h.player,'none');
+ const h=await runtime();h.api.open(h.player,'none','Realm');
  const form=h.forms.at(-1),markers=form.text.match(/\[JF:row:(mine|all|roads):\d+\]/g)||[];
  assert.deepEqual(markers,['[JF:row:all:0]']);
  const source=await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url),'utf8');
@@ -968,7 +967,7 @@ test('Spawn hover record and tier textures are shipped as inert map data without
  assert.equal(f.icons[spawnIndex],'textures/ui/frontier/map_markers/world_spawn');
  const index=f.buttons.findIndex((text,i)=>i<m.cells&&text.includes('City'));
  assert.ok(index>=0);assert.equal(f.icons[index],'textures/ui/frontier/poi_markers/village');
- assert.equal(f.buttons.length,m.zTicks.at(-1)+1);assert.equal(m.bounds,undefined);
+ assert.equal(f.buttons.length,m.poiTravel+1);assert.equal(m.bounds,undefined);
  assert.deepEqual(h.read(),before);
 });
 
@@ -1069,7 +1068,7 @@ test('The Provinces tab shows both perk tiers from combined Development in the c
   form=open('b');
   assert.ok(form.buttons[data.provinceDetails].includes(`Combined Development: ${total}\n`));
   assert.ok(form.buttons[data.provincialTravel].startsWith(`[JF:data:provincialTravel]${travel}\n`));
-  assert.match(form.buttons[data.provincialTravel],/Preview · Capital → POIs/);
+  assert.match(form.buttons[data.provincialTravel],/Capital Map Table → POIs/);
   assert.ok(form.buttons[data.provincialPatrols].startsWith(`[JF:data:provincialPatrols]${patrol}\n`));
  }
  form=open('nether');
