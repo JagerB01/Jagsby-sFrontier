@@ -47,15 +47,20 @@ export function provinceLinePixels(min,max,pixels){
 }
 // Square zone rings are centered on the Overworld origin. The UI draws their
 // clipped edges on the same six-pixel lattice used to place POI pins.
-function zoneLineMarkers({minX,maxX,minZ,maxZ}){
- const markers=new Set();
+export function mapZoneEdges({viewport,bounds:{minX,maxX,minZ,maxZ}}){
+ if(viewport.dimension!=='minecraft:overworld'||!viewport.showZones)return [];
+ const edges=new Map();
  const project=(at,min,max,cells)=>Math.round((at-min)/(max-min)*cells);
  function edge(axis,at,radius,min,max,alongMin,alongMax,acrossCells,alongCells){
   if(at<min||at>max||radius<=alongMin||-radius>=alongMax)return;
   const line=project(at,min,max,acrossCells);
   const start=project(Math.max(-radius,alongMin),alongMin,alongMax,alongCells);
   const end=project(Math.min(radius,alongMax),alongMin,alongMax,alongCells);
-  for(let cell=start;cell<end;cell++)markers.add(`[JF:zone:${axis}:${line}:${cell}]`);
+  if(start>=end)return;
+  const key=axis+line,previous=edges.get(key);
+  // All these squares share an origin. Where their projected edges land
+  // on the same column or row, their projected spans are nested.
+  if(!previous||end-start>previous.end-previous.start)edges.set(key,{axis,line,start,end});
  }
  for(const level of ZONE_LEVELS.slice(1)){
   const radius=level*DISTANCE_STEP;
@@ -64,16 +69,13 @@ function zoneLineMarkers({minX,maxX,minZ,maxZ}){
    edge('z',at,radius,minZ,maxZ,minX,maxX,MAP_ROWS,MAP_COLUMNS);
   }
  }
- return [...markers].join('');
+ return [...edges.values()];
 }
-export function mapBoundaryMarkers({viewport,bounds},width,height){
- if(viewport.dimension!=='minecraft:overworld')return '';
+export function mapProvinceMarkers({viewport,bounds},width,height){
+ if(viewport.dimension!=='minecraft:overworld'||!viewport.showProvinces)return '';
  const {minX,maxX,minZ,maxZ}=bounds;
- const province=viewport.showProvinces
-  ?provinceLinePixels(minX,maxX,width).map(x=>`[JF:province:x:${x}]`).join('')+
-   provinceLinePixels(minZ,maxZ,height).map(z=>`[JF:province:z:${z}]`).join('')
-  :'';
- return province+(viewport.showZones?zoneLineMarkers(bounds):'');
+ return provinceLinePixels(minX,maxX,width).map(x=>`[JF:province:x:${x}]`).join('')+
+        provinceLinePixels(minZ,maxZ,height).map(z=>`[JF:province:z:${z}]`).join('');
 }
 function provincePoints(points,state) {
  const provinces=new Map();

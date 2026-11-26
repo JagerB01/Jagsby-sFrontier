@@ -32,13 +32,16 @@ class Canvas:
         self.rect(x, y + height - 1, width, 1, shadow)
         self.rect(x + width - 1, y, 1, height, shadow)
 
-    def save(self, name):
+    def png_bytes(self):
         def chunk(kind, data):
             return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data) & 0xffffffff)
         raw = b"".join(b"\0" + bytes(c for pixel in row for c in pixel) for row in self.pixels)
         data = b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", self.width, self.height, 8, 6 if self.channels == 4 else 2, 0, 0, 0))
         data += chunk(b"IDAT", zlib.compress(raw, 9)) + chunk(b"IEND", b"")
-        (DEST / name).write_bytes(data)
+        return data
+
+    def save(self, name):
+        (DEST / name).write_bytes(self.png_bytes())
 
 
 def icon(c, name, x, y):

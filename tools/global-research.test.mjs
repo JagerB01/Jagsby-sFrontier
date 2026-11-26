@@ -902,12 +902,12 @@ test('Map Table reads fresh map data separately from the Charter and never scans
  assert.ok(h.forms.every(f=>f.heading!=='JF_CHARTER|SettlementMap'),'Switching local tabs must not generate a map');
  const prior=h.read();h.api.openSettlementMap(h.player,'a');
  const m=CHARTER_LAYOUT.settlementMap,form=h.forms.at(-1);
- assert.equal(form.heading,'JF_CHARTER|SettlementMap');assert.match(form.buttons.slice(0,m.cells).join('\n'),/Map home/);
- assert.match(form.buttons.slice(0,m.cells).join('\n'),/Development:/);assert.deepEqual(h.read(),prior);
+ assert.equal(form.heading,'JF_CHARTER|SettlementMap');assert.match(form.buttons.slice(m.pinBase,m.pinBase+m.cells).join('\n'),/Map home/);
+ assert.match(form.buttons.slice(m.pinBase,m.pinBase+m.cells).join('\n'),/Development:/);assert.deepEqual(h.read(),prior);
  h.update(s=>{s.villages.a.name='Renamed';s.villages.b={...village(1000),name:'Second',id:'b'};});
- h.api.openSettlementMap(h.player,'a');assert.ok(h.forms.at(-1).buttons.slice(0,m.cells).some(text=>text.startsWith('Second\n')));
- assert.match(h.forms.at(-1).buttons.slice(0,m.cells).join('\n'),/Renamed/);
- h.update(s=>delete s.villages.a);h.api.openSettlementMap(h.player,'a');assert.ok(!h.forms.at(-1).buttons.slice(0,m.cells).join('\n').includes('Renamed'));
+ h.api.openSettlementMap(h.player,'a');assert.ok(h.forms.at(-1).buttons.slice(m.pinBase,m.pinBase+m.cells).some(text=>text.startsWith('Second\n')));
+ assert.match(h.forms.at(-1).buttons.slice(m.pinBase,m.pinBase+m.cells).join('\n'),/Renamed/);
+ h.update(s=>delete s.villages.a);h.api.openSettlementMap(h.player,'a');assert.ok(!h.forms.at(-1).buttons.slice(m.pinBase,m.pinBase+m.cells).join('\n').includes('Renamed'));
  assert.deepEqual(h.read().global,before.global);assert.deepEqual(h.read().researchProgress,before.researchProgress);
 });
 
@@ -928,10 +928,10 @@ test('Map controls retain zoom and dimensions; closing the map returns to play',
  h.api.openSettlementMap(h.player,'a',{x:0,z:0,span:240});await flush();
  assert.deepEqual(m.zTicks.map(i=>h.forms.at(-1).buttons[i]),['-37','-7','23','53','83','113']);
  const previousCount=h.forms.length;
- respond=form=>{respond=()=>({canceled:true});return {selection:form.buttons.findIndex((text,i)=>i<m.cells&&text.includes('Map home'))};};
+ respond=form=>{respond=()=>({canceled:true});return {selection:form.buttons.findIndex((text,i)=>i>=m.pinBase&&i<m.pinBase+m.cells&&text.includes('Map home'))};};
  h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.length,previousCount+1,'Marker data must not open a replacement or a cluster chooser');
  respond=()=>{respond=()=>({canceled:true});return {selection:m.dimension};};
- h.api.openSettlementMap(h.player,'a');await flush();assert.ok(h.forms.at(-1).buttons.slice(0,m.cells).some(text=>text.startsWith('End\n')));
+ h.api.openSettlementMap(h.player,'a');await flush();assert.ok(h.forms.at(-1).buttons.slice(m.pinBase,m.pinBase+m.cells).some(text=>text.startsWith('End\n')));
  respond=()=>{respond=()=>({canceled:true});return {selection:m.back};};
  const beforeClose=h.forms.length;
  h.api.openSettlementMap(h.player,'a');await flush();assert.equal(h.forms.length,beforeClose+1);
@@ -943,8 +943,8 @@ test('Hover records include coordinates, biome, Development and owner; world spa
  let spawn={x:-1000,y:80,z:0};
  const h=await runtime(s,()=>({canceled:true}),{spawnLocation:()=>spawn});
  h.api.openSettlementMap(h.player,'a');const m=CHARTER_LAYOUT.settlementMap,form=h.forms.at(-1);
- assert.ok(form.buttons.slice(0,m.cells).some(text=>text.includes('X -1000, Y 80, Z 0')));
- const info=form.buttons.slice(0,m.cells).find(text=>text.includes('Map home'));
+ assert.ok(form.buttons.slice(m.pinBase,m.pinBase+m.cells).some(text=>text.includes('X -1000, Y 80, Z 0')));
+ const info=form.buttons.slice(m.pinBase,m.pinBase+m.cells).find(text=>text.includes('Map home'));
  assert.match(info,/Map home\nX 500, Y \d+, Z 0\nBiome: Forest\nDevelopment: \d+\nOwner: Jagsby/);
  const before=h.read();spawn={x:10000,y:60,z:10000};h.api.openSettlementMap(h.player,'a');
  assert.notEqual(h.forms.at(-1).buttons[m.xTicks[0]],form.buttons[m.xTicks[0]],'Auto-fit must use the updated configured spawn');
@@ -974,11 +974,11 @@ test('Spawn hover record and tier textures are shipped as inert map data without
  const h=await runtime(s,()=>({canceled:true}),{spawnLocation:()=>({x:20,y:73,z:-50})});
  const before=h.read();h.api.openSettlementMap(h.player,'a');const f=h.forms.at(-1),m=CHARTER_LAYOUT.settlementMap;
  const spawnIndex=f.buttons.indexOf('World spawn\nX 20, Y 73, Z -50');
- assert.ok(spawnIndex>=0&&spawnIndex<m.cells);
+ assert.ok(spawnIndex>=m.pinBase&&spawnIndex<m.pinBase+m.cells);
  assert.equal(f.icons[spawnIndex],'textures/ui/frontier/map_markers/world_spawn');
- const index=f.buttons.findIndex((text,i)=>i<m.cells&&text.includes('City'));
+ const index=f.buttons.findIndex((text,i)=>i>=m.pinBase&&i<m.pinBase+m.cells&&text.includes('City'));
  assert.ok(index>=0);assert.equal(f.icons[index],'textures/ui/frontier/poi_markers/village');
- assert.equal(f.buttons.length,m.poiTravel+1);assert.equal(m.bounds,undefined);
+ assert.equal(f.buttons.length,Math.max(index,spawnIndex)+1);assert.equal(m.bounds,undefined);
  assert.deepEqual(h.read(),before);
 });
 
@@ -990,13 +990,13 @@ test('The Diplomacy form sends clustered icons in the village tooltip and ships 
  ]});
  h.api.openSettlementMap(h.player,'a',{x:0,z:0,span:4096});
  const form=h.forms.at(-1),layout=CHARTER_LAYOUT.settlementMap;
- const poi=form.buttons.findIndex((text,index)=>index<layout.cells&&text.startsWith('Stronghold\n'));
- const villagePin=form.buttons.findIndex((text,index)=>index<layout.cells&&text.startsWith('Alpha\n'));
+ const poi=form.buttons.findIndex((text,index)=>index>=layout.pinBase&&index<layout.pinBase+layout.cells&&text.startsWith('Stronghold\n'));
+ const villagePin=form.buttons.findIndex((text,index)=>index>=layout.pinBase&&index<layout.pinBase+layout.cells&&text.startsWith('Alpha\n'));
  assert.equal(form.icons[poi],'textures/ui/frontier/poi_markers/stronghold');
  assert.equal(form.icons[villagePin],'textures/ui/frontier/poi_markers/village');
  assert.ok(form.buttons[villagePin].endsWith('\n§f'+MAP_POI_GLYPHS['textures/ui/frontier/poi_markers/trial_chambers']));
  assert.ok(!form.buttons.some(text=>text.startsWith('Trial Chamber\n')));
- assert.equal(form.buttons.length,layout.poiTravel+1);
+ assert.ok(form.buttons.length<layout.pinBase+layout.cells);
  assert.ok(form.text.includes('[JF:province:x:120]'));
  assert.ok(form.text.includes('[JF:province:z:75]'));
  h.api.openSettlementMap(h.player,'a',{dimension:'minecraft:nether',x:0,z:0,span:4096});
@@ -1106,21 +1106,29 @@ test('Diplomacy map line toggles act independently and survive viewport changes'
  const flags=form=>[form.buttons[m.provinceLines],form.buttons[m.zoneLines]];
  assert.deepEqual(flags(initial),['Province Lines: On','Zone Lines: Off']);
  assert.match(initial.text,/\[JF:province:/);
- assert.doesNotMatch(initial.text,/\[JF:zone:/);
+ const zoneIcons=form=>form.icons.filter(icon=>icon?.startsWith('textures/ui/frontier/zone_spans/'));
+ assert.equal(zoneIcons(initial).length,0);
+ assert.ok(initial.buttons.length<m.pinBase+m.cells);
  assert.deepEqual(flags(both),['Province Lines: On','Zone Lines: On']);
  assert.match(both.text,/\[JF:province:/);
- assert.match(both.text,/\[JF:zone:/);
+ assert.deepEqual(zoneIcons(both),['textures/ui/frontier/zone_spans/x_0_25']);
  for(const form of [zones,panned,refreshed,fitted,returned]){
   assert.deepEqual(flags(form),['Province Lines: Off','Zone Lines: On']);
   assert.doesNotMatch(form.text,/\[JF:province:/);
-  assert.match(form.text,/\[JF:zone:/);
+  assert.ok(zoneIcons(form).length>0);
+  for(const index of [...m.zoneEdges.x,...m.zoneEdges.z]){
+   if(form.icons[index])assert.equal(form.buttons[index],'[JF:zone]');
+  }
  }
- assert.deepEqual(initial.buttons.slice(0,m.cells),zones.buttons.slice(0,m.cells));
+ const markerInfo=form=>form.buttons.slice(m.pinBase,m.pinBase+m.cells).filter(Boolean);
+ assert.deepEqual(markerInfo(initial),markerInfo(zones));
  assert.deepEqual(m.xTicks.map(i=>initial.buttons[i]),m.xTicks.map(i=>zones.buttons[i]));
  assert.deepEqual(flags(nether),['','']);
  assert.equal(nether.text,'');
+ assert.equal(zoneIcons(nether).length,0);
  assert.deepEqual(flags(neither),['Province Lines: Off','Zone Lines: Off']);
  assert.equal(neither.text,'');
+ assert.equal(zoneIcons(neither).length,0);
  assert.deepEqual(h.read(),before);
 });
 

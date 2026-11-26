@@ -10,6 +10,7 @@ import uuid
 import zipfile
 from build_charter_ui import build as build_charter_ui
 from build_guard_entities import build as build_guard_entities
+from build_settlement_map import zone_span_textures
 from build_trade_rank_probe import probe_entity
 from build_villager_bridge import CONTROLLER, PREFIX, build as build_villager_bridge
 
@@ -148,6 +149,8 @@ def build(cauldron_addon=None):
                  for p in base.rglob("*") if p.is_file()}
         if kind == "behavior":
             files.update(overlay)
+        else:
+            files.update(zone_span_textures())
         content = archive(files.items())
         entries.append((f"Jagsbys_Frontier_{suffix}.mcpack", content))
     version = ".".join(map(str, json.loads((PACKS / "behavior/manifest.json").read_text())["header"]["version"]))

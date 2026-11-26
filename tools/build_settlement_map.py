@@ -1,6 +1,6 @@
 """Map geometry uses explicit rectangles; markers expose ordinary hover panels."""
 import copy
-from build_ui_art import button_texture, map_tooltip_texture
+from build_ui_art import Canvas, button_texture, map_tooltip_texture
 
 CELL = 6
 COLUMNS, ROWS = 40, 25
@@ -11,12 +11,35 @@ GRID_X, GRID_Y = 110, 68
 X_TICKS = range(0, WIDTH + 1, 40)
 Z_TICKS = range(0, HEIGHT + 1, 30)
 MAP_LAYOUT = {"columns": COLUMNS, "rows": ROWS, "cells": COLUMNS * ROWS, "width": WIDTH, "height": HEIGHT}
-MAP_LAYOUT.update({key: COLUMNS * ROWS + i for i, key in enumerate([
+MAP_LAYOUT.update({key: i for i, key in enumerate([
     "back", "fit", "zoomOut", "zoomIn", "west", "east", "north", "south", "dimension", "refresh",
     "nextPage", "provinceLines", "zoneLines"])})
 MAP_LAYOUT["xTicks"] = list(range(MAP_LAYOUT["zoneLines"] + 1, MAP_LAYOUT["zoneLines"] + 1 + len(X_TICKS)))
 MAP_LAYOUT["zTicks"] = list(range(MAP_LAYOUT["xTicks"][-1] + 1, MAP_LAYOUT["xTicks"][-1] + 1 + len(Z_TICKS)))
 MAP_LAYOUT["poiTravel"] = MAP_LAYOUT["zTicks"][-1] + 1
+MAP_LAYOUT["pinBase"] = MAP_LAYOUT["poiTravel"] + 1
+ZONE_EDGE_BASE = MAP_LAYOUT["pinBase"] + MAP_LAYOUT["cells"]
+MAP_LAYOUT["zoneEdges"] = {
+    "x": list(range(ZONE_EDGE_BASE, ZONE_EDGE_BASE + COLUMNS + 1)),
+    "z": list(range(ZONE_EDGE_BASE + COLUMNS + 1, ZONE_EDGE_BASE + COLUMNS + ROWS + 2)),
+}
+
+
+def zone_span_textures():
+    # Each texture has one opaque span and a transparent margin. The map
+    # selects a clipped span by its endpoints, so a whole line uses one image.
+    for axis, cells in (("x", ROWS), ("z", COLUMNS)):
+        length = cells * CELL
+        for start in range(cells):
+            for end in range(start + 1, cells + 1):
+                first, stop = start * CELL, min(end * CELL + 1, length)
+                if axis == "x":
+                    canvas = Canvas(1, length, (0, 0, 0, 0))
+                    canvas.rect(0, first, 1, stop - first, (255, 255, 255))
+                else:
+                    canvas = Canvas(length, 1, (0, 0, 0, 0))
+                    canvas.rect(first, 0, stop - first, 1, (255, 255, 255))
+                yield f"textures/ui/frontier/zone_spans/{axis}_{start}_{end}.png", canvas.png_bytes()
 
 
 def build_map_ui(ui, frame):
@@ -94,6 +117,7 @@ def build_map_ui(ui, frame):
         "type": "button", "size": [CELL, CELL], "offset": [0, 0],
         "anchor_from": "top_left", "anchor_to": "top_left", "allow_clipping": False,
         "focus_enabled": True, "hover_enabled": True, "button_mappings": [],
+        "property_bag": {"#form_button_text": ""},
         "default_control": "idle", "hover_control": "info", "pressed_control": "info",
         "bindings": copy.deepcopy(bindings) + [
             {"binding_name": prop, "binding_type": "collection", "binding_collection_name": "form_buttons"}
@@ -155,23 +179,29 @@ def build_map_ui(ui, frame):
             size, offset = ([1, HEIGHT], [pixel, 0]) if axis == "x" else ([WIDTH, 1], [0, pixel])
             grid.append(c(f"province_{axis}{pixel}",
                           boundary_line(size, offset, province_color, 5, f"[JF:province:{axis}:{pixel}]")))
-    for axis, across, along in (("x", COLUMNS, ROWS), ("z", ROWS, COLUMNS)):
-        for line in range(across + 1):
-            perpendicular = min(line * CELL, across * CELL - 1)
-            for cell in range(along):
-                parallel = cell * CELL
-                # Include the endpoint pixel so the two sides meet at a corner.
-                length = min(CELL + 1, along * CELL - parallel)
-                size, offset = ([1, length], [perpendicular, parallel]) if axis == "x" else (
-                    [length, 1], [parallel, perpendicular])
-                grid.append(c(f"zone_{axis}{line}_{cell}",
-                              boundary_line(size, offset, zone_color, 4, f"[JF:zone:{axis}:{line}:{cell}]")))
+    for axis, length in (("x", HEIGHT), ("z", WIDTH)):
+        size = [1, length] if axis == "x" else [length, 1]
+        template = f"jf_map_zone_{axis}"
+        edge = image(size, [0, 0], zone_color)
+        edge.update({"layer": 4, "bindings": copy.deepcopy(bindings) + [
+            {"binding_name": source, "binding_name_override": target, "binding_type": "collection",
+             "binding_collection_name": "form_buttons"}
+            for source, target in (("#form_button_texture", "#texture"),
+                                   ("#form_button_texture_file_system", "#texture_file_system"))
+        ] + [{"binding_type": "view", "source_property_name": "(#form_button_text = '[JF:zone]')",
+              "target_property_name": "#visible"}]})
+        ui[template] = edge
+        across = WIDTH if axis == "x" else HEIGHT
+        for line, index in enumerate(MAP_LAYOUT["zoneEdges"][axis]):
+            perpendicular = min(line * CELL, across - 1)
+            offset = [perpendicular, 0] if axis == "x" else [0, perpendicular]
+            grid.append(c(f"zone_{axis}{line}", scope(template, index, size, offset)))
     for slot in range(COLUMNS*ROWS):
         x, z = (slot % COLUMNS) * CELL, (slot // COLUMNS) * CELL
         template = f"jf_map_marker_{slot}"
         record = f"jf_map_record_{slot}"
         hover_marker(template, record, x, z)
-        grid.append(c("cell"+str(slot), scope(template, slot, [CELL, CELL], [x, z], record)))
+        grid.append(c("cell"+str(slot), scope(template, MAP_LAYOUT["pinBase"] + slot, [CELL, CELL], [x, z], record)))
     content.append(c("grid", {"type":"panel","size":[WIDTH,HEIGHT],"offset":[GRID_X,GRID_Y],
         "anchor_from":"top_left","anchor_to":"top_left","clips_children":True,"controls":grid}))
     # One framed control panel, kept outside the drawing area.

@@ -13,7 +13,7 @@ import { startVillagerGuards } from "./villager-guards.js";
 import { GUARD_COLORS, handleGuardEgg, playerGuardColor, refreshGuardColor, selectGuardColor } from "./guard-colors.js";
 import { isTownPatrol, nearestTownPost, townGuardPatrol, townGuardSettlement } from "./town-guard-posts.js";
 import { fillTownGuardSlot, recordTownGuardDeath, retireTownGuards, validateTownGuard } from "./town-watch.js";
-import { mapSnapshot, moveMap, mapDetails, mapBoundaryMarkers } from "./settlement-map.js";
+import { mapSnapshot, moveMap, mapDetails, mapProvinceMarkers, mapZoneEdges } from "./settlement-map.js";
 import { PROVINCE_SIZE, capitalStatus, designateCapital, provinceDevelopment, provincePerkText, renameProvince, updateProvinceCapitalId } from "./provinces.js";
 import { provincialPatrols } from "./provincial-patrols.js";
 import { atStation, bindStation, clearStation, isSettlementStation, MAP_TABLE, WAYSTONE } from "./settlement-stations.js";
@@ -384,8 +384,16 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,station){
   let spawn=null;
   try{spawn=world.getDefaultSpawnLocation();}catch(error){console.warn(`Frontier map spawn: ${error}`);}
   const snapshot=mapSnapshot(villages,requested,selectedId,spawn,readSurveyedPois(world),provinces),layout=CHARTER_LAYOUT.settlementMap;
-  const records=Array(layout.poiTravel+1).fill('');
-  snapshot.cells.forEach(([point],index)=>{records[index]=mapDetails(point);});
+  // Fixed controls come first. Stop sending pin records after the last
+  // occupied cell unless optional zone line records follow the pins.
+  const records=Array(layout.pinBase).fill('');
+  const textures=new Map();
+  snapshot.cells.forEach(([point],cell)=>{
+   if(!point)return;
+   const index=layout.pinBase+cell;
+   records[index]=mapDetails(point);
+   textures.set(index,point.texture);
+  });
   const labels={back:'Close',fit:'Fit',zoomOut:'-',zoomIn:'+',west:'<',east:'>',north:'N',south:'S',dimension:'Dimension',refresh:'Refresh'};
   if(station&&vid&&snapshot.viewport.dimension==='minecraft:overworld'
      &&capitalStatus({villages,provinces},vid,player.id).province?.capitalId===vid)labels.poiTravel='POI Travel';
@@ -403,15 +411,22 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,station){
   layout.zTicks.forEach((index,i)=>{
     records[index]=String(Math.round(b.minZ+(b.maxZ-b.minZ)*i/(layout.zTicks.length-1)));
   });
-  const body=(snapshot.provinceView?'[JF:provinceView]':'')+mapBoundaryMarkers(snapshot,layout.width,layout.height);
+  for(const {axis,line,start,end} of mapZoneEdges(snapshot)){
+   const index=layout.zoneEdges[axis][line];
+   records[index]='[JF:zone]';
+   textures.set(index,`textures/ui/frontier/zone_spans/${axis}_${start}_${end}`);
+  }
+  const body=(snapshot.provinceView?'[JF:provinceView]':'')+mapProvinceMarkers(snapshot,layout.width,layout.height);
   const form=new ActionFormData().title(pageTitle('SettlementMap')).body(body);
-  records.forEach((text,index)=>form.button(text,snapshot.cells[index]?.[0]?.texture));
+  for(let index=0;index<records.length;index++){
+   form.button(records[index]??'',textures.get(index));
+  }
   const show=next=>openSettlementMap(player,vid,{showProvinces,showZones,...next},selectedId,station);
   displayMenu(player,form,system).then(response=>{
    if(response.canceled)return;
    const index=response.selection;
-   // Marker records are data-only. Hover/focus never submits or replaces a form.
-   if(index<layout.cells)return;
+   // Pin and overlay records are data-only.
+   if(index>=layout.pinBase)return;
    if(index===layout.nextPage&&snapshot.pageCount>1){
     show({...snapshot.viewport,page:(snapshot.page+1)%snapshot.pageCount});return;
    }

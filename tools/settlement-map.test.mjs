@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
-import {mapSnapshot,fitMap,provinceLinePixels,settlementPoints,moveMap,mapDetails,mapBoundaryMarkers,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN,MAP_POI_GLYPHS} from '../packs/behavior/scripts/settlement-map.js';
+import {mapSnapshot,fitMap,provinceLinePixels,settlementPoints,moveMap,mapDetails,mapProvinceMarkers,mapZoneEdges,MAP_ASPECT,MAP_COLUMNS,MAP_ROWS,MAP_MIN_SPAN,MAP_MAX_SPAN,MAP_POI_GLYPHS} from '../packs/behavior/scripts/settlement-map.js';
 import {CHARTER_LAYOUT as L} from '../packs/behavior/scripts/charter-layout.js';
 import {capitalStatus,designateCapital,updateProvinceCapitalId} from '../packs/behavior/scripts/provinces.js';
 const village=(name,x,z,dimension='minecraft:overworld')=>({name,location:{x,y:64,z},dimension,developmentValue:250,developmentThreshold:100});
@@ -102,7 +102,7 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
  assert.equal(L.settlementMap.cells,MAP_COLUMNS*MAP_ROWS);assert.deepEqual(map.grid.size,[240,150]);
  for(let i=0;i<L.settlementMap.cells;i++){
   assert.equal(grid['cell'+i].collection_name,'form_buttons');
-  assert.equal(record(grid['cell'+i]).collection_index,i);
+  assert.equal(record(grid['cell'+i]).collection_index,L.settlementMap.pinBase+i);
   assert.deepEqual(grid['cell'+i].offset,[i%MAP_COLUMNS*6,Math.floor(i/MAP_COLUMNS)*6]);
  }
  for(const [axis,ticks] of [['x',L.settlementMap.xTicks],['z',L.settlementMap.zTicks]]){
@@ -277,25 +277,34 @@ test('Province borders align to signed multiples of 2,048 and Fit frames the cha
   &&b.source_property_name.includes('[JF:province:x:120]')&&b.target_property_name==='#visible'));
 });
 
-test('Zone lines trace clipped squares and their markers match the generated map geometry',async()=>{
+test('Zone lines trace clipped squares with a single image per row or column',async()=>{
  const layout=L.settlementMap;
  const view={x:0,z:0,span:9600,showZones:true,showProvinces:false};
- const square=mapBoundaryMarkers(mapSnapshot({},view),layout.width,layout.height);
- assert.ok(square.includes('[JF:zone:x:10:3]')&&square.includes('[JF:zone:x:30:22]'));
- assert.ok(square.includes('[JF:zone:z:3:10]')&&square.includes('[JF:zone:z:23:29]'));
- assert.ok(!square.includes('[JF:zone:x:10:2]')&&!square.includes('[JF:zone:z:3:30]'));
- assert.ok(!square.includes('[JF:province:'));
- const clipped=mapBoundaryMarkers(mapSnapshot({},{...view,x:2400,span:200}),layout.width,layout.height);
- assert.deepEqual(clipped.match(/\[JF:[^\]]+\]/g),
-  Array.from({length:MAP_ROWS},(_,row)=>`[JF:zone:x:20:${row}]`));
+ const snapshot=mapSnapshot({},view);
+ const edges=mapZoneEdges(snapshot);
+ assert.deepEqual(edges.find(edge=>edge.axis==='x'&&edge.line===10),{axis:'x',line:10,start:3,end:23});
+ assert.deepEqual(edges.find(edge=>edge.axis==='x'&&edge.line===30),{axis:'x',line:30,start:3,end:23});
+ assert.deepEqual(edges.find(edge=>edge.axis==='z'&&edge.line===3),{axis:'z',line:3,start:10,end:30});
+ assert.deepEqual(edges.find(edge=>edge.axis==='z'&&edge.line===23),{axis:'z',line:23,start:10,end:30});
+ assert.equal(mapProvinceMarkers(snapshot,layout.width,layout.height),'');
+ const clipped=mapZoneEdges(mapSnapshot({},{...view,x:2400,span:200}));
+ assert.deepEqual(clipped,[{axis:'x',line:20,start:0,end:MAP_ROWS}]);
+ const veryWide=mapZoneEdges(mapSnapshot({},{...view,span:MAP_MAX_SPAN}));
+ assert.equal(new Set(veryWide.map(edge=>edge.axis+edge.line)).size,veryWide.length);
+ assert.deepEqual(mapZoneEdges(mapSnapshot({},{...view,dimension:'minecraft:nether'})),[]);
  const ui=JSON.parse(await readFile(new URL('../packs/resource/ui/jagsby_frontier/charter.json',import.meta.url)));
  const map=children(ui.jf_settlement_map),grid=children(map.grid);
- assert.deepEqual(grid.zone_x10_3.offset,[60,18]);
- assert.deepEqual(grid.zone_z3_10.offset,[60,18]);
- assert.deepEqual(grid.zone_x40_24.offset,[239,144]);
- assert.deepEqual(grid.zone_z25_39.offset,[234,149]);
- assert.ok(grid.zone_x10_3.bindings.some(b=>b.source_control_name==='jf_map_boundary_state'
-  &&b.source_property_name.includes('[JF:zone:x:10:3]')&&b.target_property_name==='#visible'));
+ assert.equal(Object.keys(grid).filter(key=>key.startsWith('zone_')).length,MAP_COLUMNS+MAP_ROWS+2);
+ assert.deepEqual(grid.zone_x10.offset,[60,0]);
+ assert.deepEqual(grid.zone_z3.offset,[0,18]);
+ assert.deepEqual(grid.zone_x40.offset,[239,0]);
+ assert.deepEqual(grid.zone_z25.offset,[0,149]);
+ for(const [axis,count] of [['x',MAP_COLUMNS],['z',MAP_ROWS]]){
+  for(let line=0;line<=count;line++)assert.equal(record(grid['zone_'+axis+line]).collection_index,layout.zoneEdges[axis][line]);
+  const art=ui['jf_map_zone_'+axis];
+  assert.ok(art.bindings.some(b=>b.binding_name==='#form_button_texture'&&b.binding_name_override==='#texture'));
+  assert.ok(art.bindings.some(b=>b.target_property_name==='#visible'&&b.source_property_name==="(#form_button_text = '[JF:zone]')"));
+ }
  for(const key of ['provinceLines','zoneLines']){
   assert.equal(record(map[key]).collection_index,layout[key]);
   const button=ui['jf_map_'+key+'@common.button'];
