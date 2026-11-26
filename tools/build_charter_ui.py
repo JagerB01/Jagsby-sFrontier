@@ -1099,7 +1099,7 @@ def build():
             bind_static_list_state(value, "jf_waystone_state")
         elif key.startswith(("jf_prospect_", "jf_prospecting_", "jf_data_prospectInfo", "jf_action_prospectSelect")):
             bind_static_list_state(value, "jf_menu_state")
-    build_map_ui(ui, frame)
+    build_map_ui(ui, frame, control("subtitle", label("Map Table", [134, 8], (30, 46), SILVER, 0.65)))
     custom_path = RP / "ui/jagsby_frontier/charter.json"
     custom_path.parent.mkdir(parents=True, exist_ok=True)
     custom_path.write_text(json.dumps(ui, indent=2) + "\n")

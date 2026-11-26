@@ -38,7 +38,8 @@ test('Guard variants reuse v1.4.9 models, biome textures, animations and combat 
     assert.equal(behavior.description.is_summonable, true);
     assert.equal(behavior.description.is_spawnable, false);
     assert.equal(client.spawn_egg, undefined);
-    assert.ok(texts.includes('entity.' + id(name) + '.name='));
+    const group = name.startsWith('town_') ? 'Town Guard' : 'Provincial';
+    assert.ok(texts.includes('entity.' + id(name) + '.name=' + group + ' '));
     assert.deepEqual(client.geometry, originalClient.geometry);
     assert.deepEqual(client.scripts, originalClient.scripts);
     assert.deepEqual(client.animations, originalClient.animations);
@@ -50,7 +51,7 @@ test('Guard variants reuse v1.4.9 models, biome textures, animations and combat 
       const key = egg.components['minecraft:icon'].textures.default;
       assert.ok(key.startsWith('mn_'));
       await read('resource/' + atlas[key].textures + '.png');
-      assert.ok(texts.includes(egg.components['minecraft:display_name'].value + '='));
+      assert.ok(texts.includes(egg.components['minecraft:display_name'].value + '=' + group + ' '));
     }
     if (guards.includes(name)) {
       assert.ok(behavior.components['minecraft:type_family'].family.includes('frontier_guard'));

@@ -920,12 +920,15 @@ test('Map Table reads fresh map data separately from the Charter and never scans
  assert.ok(h.forms.every(f=>f.heading!=='JF_CHARTER|SettlementMap'),'Switching local tabs must not generate a map');
  const prior=h.read();h.api.openSettlementMap(h.player,'a');
  const m=CHARTER_LAYOUT.settlementMap,form=h.forms.at(-1);
+ assert.equal(form.buttons[m.headerName],'[JF:data:overview]Map home');
  assert.equal(form.heading,'JF_CHARTER|SettlementMap');assert.match(form.buttons.slice(m.pinBase,m.pinBase+m.cells).join('\n'),/Map home/);
  assert.match(form.buttons.slice(m.pinBase,m.pinBase+m.cells).join('\n'),/Development:/);assert.deepEqual(h.read(),prior);
  h.update(s=>{s.villages.a.name='Renamed';s.villages.b={...village(1000),name:'Second',id:'b'};});
  h.api.openSettlementMap(h.player,'a');assert.ok(h.forms.at(-1).buttons.slice(m.pinBase,m.pinBase+m.cells).some(text=>text.startsWith('Second\n')));
+ assert.equal(h.forms.at(-1).buttons[m.headerName],'[JF:data:overview]Renamed');
  assert.match(h.forms.at(-1).buttons.slice(m.pinBase,m.pinBase+m.cells).join('\n'),/Renamed/);
  h.update(s=>delete s.villages.a);h.api.openSettlementMap(h.player,'a');assert.ok(!h.forms.at(-1).buttons.slice(m.pinBase,m.pinBase+m.cells).join('\n').includes('Renamed'));
+ assert.equal(h.forms.at(-1).buttons[m.headerName],'[JF:data:overview]Diplomacy Map');
  assert.deepEqual(h.read().global,before.global);assert.deepEqual(h.read().researchProgress,before.researchProgress);
 });
 

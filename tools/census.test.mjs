@@ -252,10 +252,11 @@ test('opening uses cached results; Survey refreshes villagers and nearby biomes'
   assert.doesNotMatch(forms.at(-1).text,/\[JF:(?:tab|research|provinceView):/);
   assert.equal(forms.at(-1).records[0],'[JF:data:overview]Oakfield');
 
-  const {poiTravel,fit}=CHARTER_LAYOUT.settlementMap;
+  const {poiTravel,fit,headerName}=CHARTER_LAYOUT.settlementMap;
   player.location=table.location;
   await interact({canceled:true},table);
   assert.equal(forms.at(-1).heading,'JF_CHARTER|SettlementMap');
+  assert.equal(forms.at(-1).records[headerName],'[JF:data:overview]Oakfield');
   assert.equal(forms.at(-1).records[poiTravel],'');
   saved=JSON.parse(properties.get('jagsby_frontier:state_v1'));
   saved.villages[sourceId].developmentValue=2500;

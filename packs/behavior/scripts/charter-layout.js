@@ -37,10 +37,10 @@ export const CHARTER_LAYOUT = {
       25
     ],
     "poiTravel": 26,
-    "pinBase": 27,
+    "headerName": 27,
+    "pinBase": 28,
     "zoneEdges": {
       "x": [
-        1027,
         1028,
         1029,
         1030,
@@ -80,10 +80,10 @@ export const CHARTER_LAYOUT = {
         1064,
         1065,
         1066,
-        1067
+        1067,
+        1068
       ],
       "z": [
-        1068,
         1069,
         1070,
         1071,
@@ -108,7 +108,8 @@ export const CHARTER_LAYOUT = {
         1090,
         1091,
         1092,
-        1093
+        1093,
+        1094
       ]
     }
   },

@@ -99,6 +99,13 @@ test('Map UI has fixed indexed form cells, a dedicated router and the ordinary n
  const children=value=>Object.assign({},...(value.controls||[]));
  assert.ok(children(ui.jf_router)['map@jagsby_frontier.jf_settlement_map']);
  const map=children(ui.jf_settlement_map),grid=children(map.grid);
+ const waystone=children(ui.jf_waystone);
+ assert.deepEqual(map.header_name.offset,waystone.header_name.offset);
+ assert.deepEqual(map.header_name.controls,[{'record@jagsby_frontier.jf_data_overview':{collection_index:L.settlementMap.headerName}}]);
+ assert.equal(map.header_name.clips_children,true);
+ assert.ok(map.header_name.offset[0]+map.header_name.size[0]<=map.provinceLines.offset[0]);
+ assert.deepEqual(map.subtitle,{...waystone.subtitle,text:'Map Table',size:[map.header_name.size[0],8]});
+ assert.equal(map.title,undefined);
  assert.equal(L.settlementMap.cells,MAP_COLUMNS*MAP_ROWS);assert.deepEqual(map.grid.size,[240,150]);
  for(let i=0;i<L.settlementMap.cells;i++){
   assert.equal(grid['cell'+i].collection_name,'form_buttons');

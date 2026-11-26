@@ -5,7 +5,7 @@ prototype. **This is not a completed implementation of the specification**.
 
 ## Download
 
-[Download Frontier 0.0.147](downloads/Jagsbys_Frontier_v0.0.147.mcaddon?raw=true)
+[Download Frontier 0.0.148](downloads/Jagsbys_Frontier_v0.0.148.mcaddon?raw=true)
 
 The **Village Charter** opens on Overview and keeps Research, Production, and
 Diplomacy. The **Waystone** opens Road Networks, My Settlements, and All
@@ -18,7 +18,7 @@ At a crafting table, put a compass above two cobblestone blocks in a single
 column for a Waystone. For a Map Table, put an empty map in the center slot
 with three planks across the bottom row.
 
-In Creative, search for **Frontier** spawn eggs to test the Swordsman, Arbalist,
+In Creative, search for **Provincial** spawn eggs to test the Swordsman, Arbalist,
 Lancer, and Juggernaut. The Horse Lancer Team egg spawns a horse with its lancer.
 The guards use the models, outfits, animations and combat behavior from the
 supplied Villager Guards v1.4.9 addon, including villager defense, raid alerts,
@@ -36,7 +36,7 @@ starting the next Minecraft day. Town guards patrol independently within the
 charter's 80-block survey radius. They gain Sanctuary's hostile-mob damage
 reduction and recover 2 HP per Minecraft day with Hearthstone I.
 
-Search **Frontier Town** in Creative for test eggs. Town guards defend the area
+Search **Town Guard** in Creative for test eggs. Town guards defend the area
 from hostile mobs. They take longer walks around the survey area, favor dirt
 paths, cobblestone and gravel, and occasionally head toward a nearby road.
 
@@ -562,10 +562,10 @@ node --test tools/*.test.mjs
 python tools/addon.py build
 ```
 
-The default build outputs `dist/Jagsbys_Frontier_v0.0.147.mcaddon`. To reproduce
+The default build outputs `dist/Jagsbys_Frontier_v0.0.148.mcaddon`. To reproduce
 the Cauldron build, run
 `python tools/addon.py build --cauldron-addon /path/to/Jagsbys_Cauldron_v0.0.18.mcaddon`.
-This outputs `dist/Jagsbys_Frontier_v0.0.147_Cauldron.mcaddon`. Packaging is
+This outputs `dist/Jagsbys_Frontier_v0.0.148_Cauldron.mcaddon`. Packaging is
 deterministic; the build regenerates the custom UI and controller bridge. The included native villager definitions preserve vanilla AI/trades and add
 the controller bridge.
 The pack targets Bedrock 1.26.40+ with `@minecraft/server` 2.9.0 and

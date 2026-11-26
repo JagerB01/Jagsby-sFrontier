@@ -17,7 +17,8 @@ MAP_LAYOUT.update({key: i for i, key in enumerate([
 MAP_LAYOUT["xTicks"] = list(range(MAP_LAYOUT["zoneLines"] + 1, MAP_LAYOUT["zoneLines"] + 1 + len(X_TICKS)))
 MAP_LAYOUT["zTicks"] = list(range(MAP_LAYOUT["xTicks"][-1] + 1, MAP_LAYOUT["xTicks"][-1] + 1 + len(Z_TICKS)))
 MAP_LAYOUT["poiTravel"] = MAP_LAYOUT["zTicks"][-1] + 1
-MAP_LAYOUT["pinBase"] = MAP_LAYOUT["poiTravel"] + 1
+MAP_LAYOUT["headerName"] = MAP_LAYOUT["poiTravel"] + 1
+MAP_LAYOUT["pinBase"] = MAP_LAYOUT["headerName"] + 1
 ZONE_EDGE_BASE = MAP_LAYOUT["pinBase"] + MAP_LAYOUT["cells"]
 MAP_LAYOUT["zoneEdges"] = {
     "x": list(range(ZONE_EDGE_BASE, ZONE_EDGE_BASE + COLUMNS + 1)),
@@ -42,7 +43,7 @@ def zone_span_textures():
                 yield f"textures/ui/frontier/zone_spans/{axis}_{start}_{end}.png", canvas.png_bytes()
 
 
-def build_map_ui(ui, frame):
+def build_map_ui(ui, frame, subtitle):
     province_color = [0.66, 0.51, 0.26]
     zone_color = [0.30, 0.65, 0.62]
     overlay_controls = ("provinceLines", "zoneLines")
@@ -149,7 +150,9 @@ def build_map_ui(ui, frame):
                              {"offset": [tooltip_x - x, 0],
                               "anchor_from": tooltip_anchor, "anchor_to": tooltip_anchor})]})]}
     content=copy.deepcopy([item for item in frame if 'title' not in item])
-    content.append(c("title", label("Diplomacy Map", [170, 14], (28, 34), color=(0.86, 0.73, 0.44), scale=1)))
+    name = scope("jf_data_overview", MAP_LAYOUT["headerName"], [134, 12], [30, 34])
+    name["clips_children"] = True
+    content += [c("header_name", name), subtitle]
     content.append(c("jf_map_boundary_state", {
         "type": "panel", "size": [0, 0], "property_bag": {"#form_text": ""},
         "bindings": [{"binding_name": "#form_text", "binding_type": "none", "binding_condition": "always"}]}))

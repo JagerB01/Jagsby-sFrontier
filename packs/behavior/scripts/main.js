@@ -391,6 +391,7 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,station){
   // Fixed controls come first. Stop sending pin records after the last
   // occupied cell unless optional zone line records follow the pins.
   const records=Array(layout.pinBase).fill('');
+  records[layout.headerName]=`[JF:data:overview]${villages[vid]?.name||'Diplomacy Map'}`;
   const textures=new Map();
   snapshot.cells.forEach(([point],cell)=>{
    if(!point)return;
@@ -429,8 +430,8 @@ function openSettlementMap(player,vid,viewport={},selectedId=vid,station){
   displayMenu(player,form,system).then(response=>{
    if(response.canceled)return;
    const index=response.selection;
-   // Pin and overlay records are data-only.
-   if(index>=layout.pinBase)return;
+   // The header, pins, and overlays are data-only.
+   if(index===layout.headerName||index>=layout.pinBase)return;
    if(index===layout.nextPage&&snapshot.pageCount>1){
     show({...snapshot.viewport,page:(snapshot.page+1)%snapshot.pageCount});return;
    }

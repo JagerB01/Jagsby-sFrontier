@@ -1,13 +1,13 @@
 {
   "format_version": 2,
   "header": {
-    "name": "Jagsby's Frontier 0.0.147 [MineScape UI Adapter v3]",
+    "name": "Jagsby's Frontier 0.0.148 [MineScape UI Adapter v3]",
     "description": "Village Charter prototype and settlement management Optional UI renderer hooks; works alone or with MineScape. Original gameplay/UI retained.",
     "uuid": "3cc6a938-a48b-41fe-9bca-64d6003abd40",
     "version": [
       0,
       0,
-      147
+      148
     ],
     "min_engine_version": [
       1,
@@ -22,7 +22,7 @@
       "version": [
         0,
         0,
-        147
+        148
       ]
     },
     {
@@ -33,7 +33,7 @@
       "version": [
         0,
         0,
-        147
+        148
       ]
     }
   ],
@@ -43,7 +43,7 @@
       "version": [
         0,
         0,
-        147
+        148
       ]
     },
     {
